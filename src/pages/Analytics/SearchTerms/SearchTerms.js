@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, memo} from 'react'
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 import {STColumnsList} from "./STTableComponents/columnsList"
 import MainMetrics from "../componentsV2/MainMetrics/MainMetrics"
@@ -10,6 +10,9 @@ import {debounce} from "throttle-debounce"
 import SegmentFilter from "./STTableComponents/SegmentFilter"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {expandedRowRender} from "./STTableComponents/expandRowRender"
+import moment from 'moment'
+import preciseDiff from "moment-precise-range-plugin"
+import _ from 'lodash'
 
 let prevActiveMetrics = []
 
@@ -47,70 +50,6 @@ const SearchTerms = () => {
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
-    const getPageData = debounce(50, false, async (pageParts) => {
-        try {
-            if (pageParts.includes('table')) setTableFetchingStatus(true)
-            if (pageParts.includes('chart')) setChartFetchingStatus(true)
-
-            const filtersWithState = [
-                ...filters,
-                ...Object.keys(mainState).map(key => ({
-                    filterBy: key,
-                    type: 'eq',
-                    value: mainState[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
-
-            const res = await analyticsServices.getSearchTermsData({
-                ...tableRequestParams,
-                sorterColumn: localSorterColumn,
-                segment: localSegmentValue,
-                pageParts,
-                filtersWithState,
-                activeMetrics,
-            })
-
-            setPageData(prevState => ({
-                metrics: res.metrics || prevState.metrics,
-                chart: res.chart || prevState.chart,
-                table: res.table || prevState.table
-            }))
-
-            setChartFetchingStatus(false)
-            setTableFetchingStatus(false)
-        } catch (e) {
-
-        }
-    })
-
-    const changeTableOptionsHandler = (data) => {
-        localStorage.setItem('analyticsTableOptions', JSON.stringify({
-            ...tableOptionsFromLocalStorage,
-            [location]: data
-        }))
-
-        setLocalTableOptions(data)
-    }
-
-    const changeSegmentHandler = (value) => {
-        localStorage.setItem('analyticsSTSegmentValue', value)
-        setLocalSegmentValue(value)
-    }
-
-    const changeSorterColumnHandler = (data) => {
-        localStorage.setItem('analyticsSorterColumn', JSON.stringify({
-            ...sorterColumnFromLocalStorage,
-            [location]: data
-        }))
-
-        setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
-    }
 
     const setStateHandler = (location, state) => {
         dispatch(analyticsActions.setLocation(location))
@@ -145,6 +84,159 @@ const SearchTerms = () => {
         }
     }
 
+    const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms)
+
+    const getPageData = debounce(50, false, async (pageParts) => {
+        try {
+            if (pageParts.includes('table')) setTableFetchingStatus(true)
+            if (pageParts.includes('chart')) setChartFetchingStatus(true)
+
+            const filtersWithState = [
+                ...filters,
+                ...Object.keys(mainState).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: mainState[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+
+            const res = await analyticsServices.getSearchTermsData({
+                ...tableRequestParams,
+                sorterColumn: localSorterColumn,
+                segment: localSegmentValue,
+                pageParts,
+                filtersWithState,
+                activeMetrics,
+            })
+
+            if (localTableOptions.comparePreviousPeriod) {
+                getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
+            }
+
+            if (localSegmentValue === 'targetings') {
+                setPageData(prevState => ({
+                    metrics: res.metrics || prevState.metrics,
+                    chart: res.chart || prevState.chart,
+                    table: res.table
+                        ? {
+                            ...res.table,
+                            response: res.table.response.map(item => {
+                                item.targetingsData = item.targetingId.map((target, index) => {
+                                    const targetObj = {targetingId: target}
+
+                                    columns.forEach(column => {
+                                        targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
+                                    })
+
+                                    targetObj.campaignId = item.campaignId[index]
+                                    targetObj.adGroupId = item.adGroupId[index]
+
+                                    return targetObj
+                                })
+
+                                return item
+                            })
+                        } : prevState.table
+                }))
+
+            } else {
+                setPageData(prevState => ({
+                    metrics: res.metrics || prevState.metrics,
+                    chart: res.chart || prevState.chart,
+                    table: res.table || prevState.table
+                }))
+            }
+
+
+            setChartFetchingStatus(false)
+            setTableFetchingStatus(false)
+        } catch (e) {
+
+        }
+    })
+
+    const changeTableOptionsHandler = (data) => {
+        localStorage.setItem('analyticsTableOptions', JSON.stringify({
+            ...tableOptionsFromLocalStorage,
+            [location]: data
+        }))
+
+        setLocalTableOptions(data)
+    }
+
+    const getPreviousPeriodData = async (idList) => {
+        if (selectedRangeDate.startDate !== 'lifetime') {
+            try {
+                const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+
+                const filtersWithState = [
+                    ...filters,
+                    ...Object.keys(mainState).map(key => ({
+                        filterBy: key,
+                        type: 'eq',
+                        value: mainState[key]
+                    })).filter(item => !!item.value),
+                    {
+                        filterBy: 'datetime',
+                        type: 'range',
+                        value: {
+                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                        }
+                    },
+                ]
+
+                const res = await analyticsServices.getSearchTermsData({
+                    ...tableRequestParams,
+                    sorterColumn: localSorterColumn,
+                    segment: localSegmentValue,
+                    pageParts: ['table'],
+                    filtersWithState,
+                    activeMetrics,
+                }, `&queryCRC64:in=${idList.join(',')}`)
+
+                setPageData(prevState => {
+                    return {
+                        ...prevState,
+                        table: {
+                            ...prevState.table,
+                            response: [...prevState.table.response.map(item => ({
+                                ...item,
+                                compareWithPrevious: true,
+                                ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['queryCRC64']}), (value, key) => {
+                                    return `${key}_prev`
+                                })
+                            }))]
+                        }
+                    }
+                })
+            } catch (e) {
+
+            }
+        }
+    }
+
+    const changeSegmentHandler = (value) => {
+        localStorage.setItem('analyticsSTSegmentValue', value)
+        setLocalSegmentValue(value)
+    }
+
+    const changeSorterColumnHandler = (data) => {
+        localStorage.setItem('analyticsSorterColumn', JSON.stringify({
+            ...sorterColumnFromLocalStorage,
+            [location]: data
+        }))
+
+        setLocalSorterColumn(data)
+        setTableRequestParams(prevState => ({...prevState, page: 1}))
+    }
+
+
     useEffect(() => {
         if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
             getPageData(['chart'])
@@ -154,13 +246,14 @@ const SearchTerms = () => {
 
     useEffect(() => {
         getPageData(['table'])
-    }, [tableRequestParams, localSegmentValue])
+
+        if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.response.map(i => i.queryCRC64))
+        else setOpenedSearchTerms([])
+    }, [tableRequestParams, localSegmentValue, localTableOptions])
 
     useEffect(() => {
         getPageData(['metrics', 'table', 'chart'])
     }, [selectedRangeDate, filters])
-
-    const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms)
 
     return (
         <div className="search-terms-page">
@@ -189,8 +282,10 @@ const SearchTerms = () => {
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
                 localTableOptions={localTableOptions}
-                moreActions={<SegmentFilter segment={localSegmentValue} onChange={changeSegmentHandler}/>}
-                expandedRowRender={expandedRowRender}
+                moreActions={<SegmentFilter showTargetingsColumns={openedSearchTerms.length > 0}
+                                            onChange={changeSegmentHandler}/>}
+                openedRow={(row) => openedSearchTerms.includes(row.queryCRC64)}
+                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0, setStateHandler)}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}
@@ -200,4 +295,4 @@ const SearchTerms = () => {
     )
 }
 
-export default SearchTerms
+export default memo(SearchTerms)

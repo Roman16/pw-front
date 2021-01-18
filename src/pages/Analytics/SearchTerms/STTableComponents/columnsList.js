@@ -39,7 +39,7 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 <div className="query-field">
                     <span className={'overflow-text'}>{text}</span>
 
-                   {segment !== 'targetings' && <button
+                    {segment !== 'targetings' && <button
                         className={`btn icon ${openedSearchTerms.includes(item.queryCRC64) ? 'active' : ''}`}
                         onClick={() => getTargetings(item.queryCRC64)}
                     >
@@ -48,7 +48,7 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 </div>
             )
         },
-        ...segment === 'targetings' ? [
+        ...(segment === 'targetings' || openedSearchTerms.length > 0) ? [
             {
                 title: 'Keyword / PT',
                 dataIndex: 'calculatedTargetingText',
@@ -58,26 +58,17 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 locked: true,
                 search: true,
                 filter: false,
-                ...keywordPTColumn
+                noTotal: true,
+                ...keywordPTColumn,
+                render: () => ''
             },
-            {...matchTypeColumn, filter: false},
             {
                 ...campaignColumn,
                 locked: true,
                 noTotal: true,
                 filter: false,
                 width: '250px',
-                render: (campaign, item) => (<Link
-                    to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                    title={campaign}
-                    className={'state-link'}
-                    onClick={() => setStateHandler('ad-groups', {
-                        name: {campaignName: item.campaignName},
-                        campaignId: item.campaignId
-                    })}
-                >
-                    {campaign}
-                </Link>)
+                render: () => ''
             },
             {
                 title: 'Ad Group',
@@ -88,27 +79,16 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 filter: false,
                 locked: true,
                 noTotal: true,
-                render: (adGroup, item) => (
-                    <Link
-                        to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
-                        title={item.adGroupName}
-                        className={'state-link'}
-                        onClick={() => setStateHandler('products', {
-                            name: {
-                                campaignName: item.campaignName,
-                                adGroupName: item.adGroupName
-                            }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                        })}
-                    >
-                        {item.adGroupName}
-                    </Link>
-                )
+                render: () => ''
             },
-            {...matchTypeColumn, filter: false},
+            {
+                ...matchTypeColumn, filter: false, render: () => ''
+            },
             {
                 ...statusColumn,
                 filter: false,
                 locked: true,
+                render: () => ''
             },
             {
                 title: 'Bid',
@@ -118,7 +98,7 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 sorter: true,
                 noTotal: true,
                 filter: false,
-                render: (bid) => <InputCurrency disabled value={bid}/>
+                render: () => ''
             },
         ] : [],
 

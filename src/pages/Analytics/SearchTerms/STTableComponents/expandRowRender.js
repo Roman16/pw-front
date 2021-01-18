@@ -5,16 +5,70 @@ import {
     clicksColumn, cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, roasColumn, salesShareColumn
+    impressionsColumn, matchTypeColumn, roasColumn, salesShareColumn, statusColumn
 } from "../../components/TableList/tableColumns"
 import React from "react"
+import {Link} from "react-router-dom"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-export const expandedRowRender = (props) => {
+export const expandedRowRender = (props, showTargetingsColumns, setStateHandler) => {
     const columns = [
         {
             width: '400px',
             dataIndex: 'advertisingType',
         },
+        ...showTargetingsColumns ? [
+            {
+                dataIndex: 'calculatedTargetingText',
+                width: '200px',
+                render: text => <span>{text}</span>
+            },
+            {
+                dataIndex: 'campaignName',
+                width: '250px',
+                render: (campaign, item) => (<Link
+                    to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                    title={campaign}
+                    className={'state-link'}
+                    onClick={() => setStateHandler('ad-groups', {
+                        name: {campaignName: item.campaignName},
+                        campaignId: item.campaignId
+                    })}
+                >
+                    {campaign}
+                </Link>)
+            },
+            {
+                dataIndex: 'adGroupName',
+                width: '250px',
+                render: (adGroup, item) => (
+                    <Link
+                        to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                        title={item.adGroupName}
+                        className={'state-link'}
+                        onClick={() => setStateHandler('products', {
+                            name: {
+                                campaignName: item.campaignName,
+                                adGroupName: item.adGroupName
+                            }, campaignId: item.campaignId, adGroupId: item.adGroupId
+                        })}
+                    >
+                        {item.adGroupName}
+                    </Link>
+                )
+            },
+            {
+                ...matchTypeColumn
+            },
+            {
+                ...statusColumn
+            },
+            {
+                dataIndex: 'calculatedBid',
+                key: 'calculatedBid',
+                width: '150px',
+                render: (bid) => <InputCurrency disabled value={bid}/>
+            }] : [],
         impressionsColumn,
         clicksColumn,
         ctrColumn,

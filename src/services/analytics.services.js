@@ -115,9 +115,9 @@ function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function getSearchTermsData(params) {
+function getSearchTermsData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
-    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}`)
+    return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
 };
 
 function fetchTargetingsDetails(id, date) {

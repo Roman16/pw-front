@@ -56,7 +56,8 @@ const TableList = ({
                        fetching,
                        localSorterColumn,
                        onChangeSorterColumn,
-                       onChangeTableOptions
+                       onChangeTableOptions,
+                       openedRow
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
@@ -121,126 +122,6 @@ const TableList = ({
         })
     }
 
-    // const getData = async () => {
-    //     document.querySelector('.table-overflow').scrollTop = 0
-    //
-    //     setFetchingStatus(true)
-    //
-    //     source && source.cancel()
-    //     source = CancelToken.source()
-    //
-    //     try {
-    //         const filtersWithState = [
-    //             ...filters,
-    //             ...Object.keys(mainState).map(key => ({
-    //                 filterBy: key,
-    //                 type: 'eq',
-    //                 value: mainState[key]
-    //             })).filter(item => !!item.value),
-    //             {
-    //                 filterBy: 'datetime',
-    //                 type: 'range',
-    //                 value: selectedRangeDate
-    //             },
-    //         ]
-    //
-    //         if (location === 'placements') {
-    //             filtersWithState.push({
-    //                 filterBy: 'segment',
-    //                 type: 'eq',
-    //                 value: placementSegment
-    //             })
-    //         }
-    //
-    //         const res = await analyticsServices.fetchTableDataV2(location, paginationParams, localSorterColumn, filtersWithState, source.token)
-    //         console.log(res)
-    //         setPaginationParams({
-    //             ...paginationParams,
-    //             totalSize: res.total_count
-    //         })
-    //
-    //         if (res.response) {
-    //             setTableData(res.response)
-    //
-    //             if (localTableOptions.comparePreviousPeriod) {
-    //                 getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
-    //             }
-    //         }
-    //         setFetchingStatus(false)
-    //
-    //     } catch (e) {
-    //
-    //     }
-    // }
-
-    // const getPreviousPeriodData = async (idList) => {
-    //     source && source.cancel()
-    //     source = CancelToken.source()
-    //
-    //     if (selectedRangeDate.startDate !== 'lifetime') {
-    //         try {
-    //             const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
-    //
-    //             const filtersWithState = [
-    //                 ...filters,
-    //                 ...Object.keys(mainState).map(key => ({
-    //                     filterBy: key,
-    //                     type: 'eq',
-    //                     value: mainState[key]
-    //                 })).filter(item => !!item.value),
-    //                 {
-    //                     filterBy: 'datetime',
-    //                     type: 'range',
-    //                     value: {
-    //                         startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-    //                         endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
-    //                     }
-    //                 },
-    //             ]
-    //
-    //             const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
-    //
-    //             if (res.response) {
-    //                 if (responseFilter) {
-    //                     setTableData(prevState => {
-    //                         return prevState.map(item => ({
-    //                             ...item,
-    //                             compareWithPrevious: true,
-    //                             ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
-    //                                 return `${key}_prev`
-    //                             })
-    //                         }))
-    //                     })
-    //                 } else {
-    //                     setTableData(prevState => {
-    //                         return prevState.map(item => ({
-    //                             ...item,
-    //                             compareWithPrevious: true,
-    //                             ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
-    //                                 return `${key}_prev`
-    //                             })
-    //                         }))
-    //                     })
-    //                 }
-    //             }
-    //         } catch (e) {
-    //
-    //         }
-    //     }
-    // }
-
-    // useEffect(() => {
-    //     getData()
-    // }, [location, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
-    //
-    // useEffect(() => {
-    //     setPaginationParams({
-    //         ...paginationParams,
-    //         page: 1
-    //     })
-    //     getData()
-    // }, [filters, placementSegment])
-
     useEffect(() => {
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
@@ -294,6 +175,7 @@ const TableList = ({
                     columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                     fixedColumns={fixedColumns}
                     expandedRowRender={expandedRowRender}
+                    openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
                 />
 

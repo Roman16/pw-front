@@ -21,9 +21,9 @@ const CustomTable = ({
                          selectedAll,
                          emptyText,
                          fixedColumns = [],
-                         onScroll
+                         onScroll,
+                         showExpandRow
                      }) => {
-
     const devicePixelRatio = window.devicePixelRatio
 
     const [checkedRows, setCheckedRows] = useState([]),
@@ -167,7 +167,7 @@ const CustomTable = ({
                                 })}
                             </div>
 
-                            {expandedRowRender && openedRow === report.id &&
+                            {expandedRowRender && openedRow(report) &&
                             <div
                                 className={`table-body__row expand-row ${checkedRows.length > 0 && checkedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
                                 {expandedRowRender(report)}
