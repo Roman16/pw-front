@@ -282,8 +282,11 @@ const SearchTerms = () => {
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
                 localTableOptions={localTableOptions}
-                moreActions={<SegmentFilter showTargetingsColumns={openedSearchTerms.length > 0}
-                                            onChange={changeSegmentHandler}/>}
+                moreActions={<SegmentFilter
+                    segment={localSegmentValue}
+                    onChange={changeSegmentHandler}
+                />
+                }
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64)}
                 expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0, setStateHandler)}
 
