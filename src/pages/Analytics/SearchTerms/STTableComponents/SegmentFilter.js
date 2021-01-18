@@ -5,7 +5,7 @@ const SegmentFilter = ({segment, onChange}) => {
     const setSegmentHandler = (value) => {
         onChange(value)
     }
-    console.log(segment)
+
     return (
         <Popover
             trigger="click"
