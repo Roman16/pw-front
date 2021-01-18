@@ -421,7 +421,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataSource={productsList}
                 columns={columns[selectedTab]}
                 loading={processing}
-                openedRow={openedProduct}
+                openedRow={(product) => product.id === openedProduct}
 
                 expandedRowRender={expandedRowRender}
             />
