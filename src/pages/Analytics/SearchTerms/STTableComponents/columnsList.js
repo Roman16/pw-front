@@ -50,19 +50,6 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
         },
         ...(segment === 'targetings' || openedSearchTerms.length > 0) ? [
             {
-                title: 'Keyword / PT',
-                dataIndex: 'calculatedTargetingText',
-                key: 'calculatedTargetingText',
-                width: '200px',
-                sorter: true,
-                locked: true,
-                search: true,
-                filter: false,
-                noTotal: true,
-                ...keywordPTColumn,
-                render: () => ''
-            },
-            {
                 ...campaignColumn,
                 locked: true,
                 noTotal: true,

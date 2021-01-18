@@ -162,9 +162,10 @@ export const RenderProduct = ({product, isParent = false}) => {
 
 export const keywordPTColumn = {
     render: (text, item) => {
-        if (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN') {
+        console.log(text)
+        console.log(item)
+        if (text && (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN')) {
             const asin = text.replace('asin="', '').replace('"', '')
-
             return (<div className="asin-link"><span>asin="</span>
                 <a
                     href={`https://www.amazon.com/dp/${asin}`}
