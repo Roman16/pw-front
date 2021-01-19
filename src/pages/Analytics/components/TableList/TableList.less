@@ -583,6 +583,11 @@
                 svg {
                   stroke: #17175a;
                 }
+
+                .ant-spin-spinning {
+                  display: flex;
+                  align-items: center;
+                }
               }
             }
 
@@ -738,11 +743,9 @@
             }
           }
 
-          &:hover {
-            & > div {
-              .table-body__field:first-child {
-                background: #FAFAFF;
-              }
+          & > div:hover {
+            .table-body__field:first-child {
+              background: #FAFAFF;
             }
           }
         }

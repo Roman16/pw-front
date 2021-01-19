@@ -227,10 +227,18 @@
           }
         }
 
-        &:hover {
+        &:not(.expand-row):hover {
           background: #FAFAFF;
 
           .table-body__field.fixed {
+            background: #FAFAFF;
+          }
+        }
+      }
+
+      .expand-row  {
+        & > div {
+          &:hover {
             background: #FAFAFF;
           }
         }
