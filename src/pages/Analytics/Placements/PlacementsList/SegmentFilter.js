@@ -1,12 +1,15 @@
-import React from "react"
+import React, {useState} from "react"
 import {Popover} from "antd"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
 const SegmentFilter = ({placementSegment}) => {
+    const [visible, setVisible] = useState(false)
+
     const dispatch = useDispatch()
 
     const setSegmentHandler = (value) => {
+        setVisible(false)
         dispatch(analyticsActions.setSegmentValue(value))
     }
 
@@ -17,6 +20,7 @@ const SegmentFilter = ({placementSegment}) => {
             getPopupContainer={(node) => node.parentNode}
             destroyTooltipOnHide={true}
             overlayClassName={'popover-segment-filter'}
+            visible={visible}
             content={<ul>
                 <li onClick={() => setSegmentHandler(null)} className={placementSegment === null ? 'active' : ''}>
                     None
@@ -30,6 +34,7 @@ const SegmentFilter = ({placementSegment}) => {
         >
             <button
                 className={`segment-filter icon-btn ${(placementSegment !== null) ? 'active' : ''}`}
+                onClick={() => setVisible(prevState => !prevState)}
             >
                 <i className={'btn icon'}>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
