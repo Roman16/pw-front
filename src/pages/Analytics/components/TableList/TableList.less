@@ -583,6 +583,11 @@
                 svg {
                   stroke: #17175a;
                 }
+
+                .ant-spin-spinning {
+                  display: flex;
+                  align-items: center;
+                }
               }
             }
 
@@ -714,7 +719,6 @@
             align-items: center;
             justify-content: flex-start;
             width: 100%;
-            border-bottom: 1px solid #c9cbd4;
 
             &:last-child {
               border: 0;
@@ -739,11 +743,9 @@
             }
           }
 
-          &:hover {
-            & > div {
-              .table-body__field:first-child {
-                background: #FAFAFF;
-              }
+          & > div:hover {
+            .table-body__field:first-child {
+              background: #FAFAFF;
             }
           }
         }

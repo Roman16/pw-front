@@ -24,8 +24,9 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import TableList from "../../componentsV2/TableList/TableList"
 import {SVG} from "../../../../utils/icons"
+import {Spin} from "antd"
 
-export const STColumnsList = (segment, setStateHandler, getTargetings, openedSearchTerms) => {
+export const STColumnsList = (segment, setStateHandler, getTargetings, openedSearchTerms, processingRows) => {
     return [
         {
             title: 'Query',
@@ -43,25 +44,12 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                         className={`btn icon ${openedSearchTerms.includes(item.queryCRC64) ? 'active' : ''}`}
                         onClick={() => getTargetings(item.queryCRC64)}
                     >
-                        <SVG id={'select-icon'}/>
+                        {processingRows.includes(item.queryCRC64) ? <Spin/> : <SVG id={'select-icon'}/>}
                     </button>}
                 </div>
             )
         },
         ...(segment === 'targetings' || openedSearchTerms.length > 0) ? [
-            {
-                title: 'Keyword / PT',
-                dataIndex: 'calculatedTargetingText',
-                key: 'calculatedTargetingText',
-                width: '200px',
-                sorter: true,
-                locked: true,
-                search: true,
-                filter: false,
-                noTotal: true,
-                ...keywordPTColumn,
-                render: () => ''
-            },
             {
                 ...campaignColumn,
                 locked: true,

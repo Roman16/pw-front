@@ -5,7 +5,7 @@ import {
     clicksColumn, cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, matchTypeColumn, roasColumn, salesShareColumn, statusColumn
+    impressionsColumn, keywordPTColumn, matchTypeColumn, roasColumn, salesShareColumn, statusColumn
 } from "../../components/TableList/tableColumns"
 import React from "react"
 import {Link} from "react-router-dom"
@@ -15,14 +15,11 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler)
     const columns = [
         {
             width: '400px',
-            dataIndex: 'advertisingType',
+            dataIndex: 'calculatedTargetingText',
+            key: 'calculatedTargetingText',
+            ...keywordPTColumn
         },
         ...showTargetingsColumns ? [
-            {
-                dataIndex: 'calculatedTargetingText',
-                width: '200px',
-                render: text => <span>{text}</span>
-            },
             {
                 dataIndex: 'campaignName',
                 width: '250px',

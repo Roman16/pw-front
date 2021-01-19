@@ -42,7 +42,8 @@ const SearchTerms = () => {
         [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location]),
         [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
         [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false}),
-        [openedSearchTerms, setOpenedSearchTerms] = useState([])
+        [openedSearchTerms, setOpenedSearchTerms] = useState([]),
+        [processingRows, setProcessingRows] = useState([])
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
@@ -59,7 +60,7 @@ const SearchTerms = () => {
     const getTargetingsDetails = async (id) => {
         if (openedSearchTerms.includes(id)) setOpenedSearchTerms(prevState => [...prevState.filter(i => i !== id)])
         else try {
-            setTableFetchingStatus(true)
+            setProcessingRows(prevState => [...prevState, id])
 
             const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate)
 
@@ -77,14 +78,13 @@ const SearchTerms = () => {
                 }
             }))
             setOpenedSearchTerms(prevState => [...prevState, id])
-
-            setTableFetchingStatus(false)
+            setProcessingRows(prevState => [...prevState.filter(i => i !== id)])
         } catch (e) {
 
         }
     }
 
-    const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms)
+    const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms, processingRows)
 
     const getPageData = debounce(50, false, async (pageParts) => {
         try {
@@ -135,6 +135,7 @@ const SearchTerms = () => {
 
                                     targetObj.campaignId = item.campaignId[index]
                                     targetObj.adGroupId = item.adGroupId[index]
+                                    targetObj.calculatedTargetingText = item.calculatedTargetingText_segmented[index]
 
                                     return targetObj
                                 })
@@ -286,8 +287,8 @@ const SearchTerms = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                openedRow={(row) => openedSearchTerms.includes(row.queryCRC64)}
-                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0, setStateHandler)}
+                openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue === 'targetings'}
+                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler)}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}
