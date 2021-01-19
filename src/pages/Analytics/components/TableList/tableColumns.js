@@ -211,7 +211,7 @@ export const skuAsinColumn = {
         <div title={item.sku}><b>SKU:</b> {item.sku}</div>
         <div title={item.asin}><b>ASIN:</b>
             <a target={'_blank'}
-               href={`https://www.amazon.${item.marketplaceId ? marketplaceIdValues[item.marketplaceId].domain : 'com'}/dp/${item.asin}`}
+               href={`https://www.amazon.${item.product_marketplace_id ? marketplaceIdValues[item.product_marketplace_id].domain : 'com'}/dp/${item.asin}`}
             >
                 {item.asin}
             </a>
