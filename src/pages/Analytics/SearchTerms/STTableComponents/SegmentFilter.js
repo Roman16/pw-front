@@ -1,8 +1,11 @@
-import React from "react"
+import React, {useState} from "react"
 import {Popover} from "antd"
 
 const SegmentFilter = ({segment, onChange}) => {
+    const [visible, setVisible] = useState(false)
+
     const setSegmentHandler = (value) => {
+        setVisible(false)
         onChange(value)
     }
 
@@ -13,6 +16,7 @@ const SegmentFilter = ({segment, onChange}) => {
             getPopupContainer={(node) => node.parentNode}
             destroyTooltipOnHide={true}
             overlayClassName={'popover-segment-filter'}
+            visible={visible}
             content={<ul>
                 <li onClick={() => setSegmentHandler('none')} className={segment === 'none' ? 'active' : ''}>
                     None
@@ -26,6 +30,7 @@ const SegmentFilter = ({segment, onChange}) => {
         >
             <button
                 className={`segment-filter icon-btn ${(segment === 'targetings') ? 'active' : ''}`}
+                onClick={() => setVisible(prevState => !prevState)}
             >
                 <i className={'btn icon'}>
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
