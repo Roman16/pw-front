@@ -17,6 +17,7 @@ const SegmentFilter = ({segment, onChange}) => {
             destroyTooltipOnHide={true}
             overlayClassName={'popover-segment-filter'}
             visible={visible}
+            onVisibleChange={v => setVisible(v)}
             content={<ul>
                 <li onClick={() => setSegmentHandler('none')} className={segment === 'none' ? 'active' : ''}>
                     None

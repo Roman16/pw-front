@@ -55,6 +55,7 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 locked: true,
                 noTotal: true,
                 filter: false,
+                sorter: false,
                 width: '250px',
                 render: () => ''
             },
@@ -63,19 +64,20 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 dataIndex: 'adGroupName',
                 key: 'adGroupName',
                 width: '250px',
-                sorter: true,
+                sorter: false,
                 filter: false,
                 locked: true,
                 noTotal: true,
                 render: () => ''
             },
             {
-                ...matchTypeColumn, filter: false, render: () => ''
+                ...matchTypeColumn, filter: false, render: () => '', sorter: false,
             },
             {
                 ...statusColumn,
                 filter: false,
                 locked: true,
+                sorter: false,
                 render: () => ''
             },
             {
@@ -83,7 +85,7 @@ export const STColumnsList = (segment, setStateHandler, getTargetings, openedSea
                 dataIndex: 'calculatedBid',
                 key: 'calculatedBid',
                 width: '150px',
-                sorter: true,
+                sorter: false,
                 noTotal: true,
                 filter: false,
                 render: () => ''

@@ -43,14 +43,26 @@ const PlacementsList = ({location}) => {
             return Object.values(chartAreaKeys).map(key => {
                 const advertisingGroup = advertisingOrder.map(advertisingKey => _.find(response, item => item.placementName === key && item.advertisingType && item.advertisingType === advertisingKey)).filter(item => item)
 
-                return ({
+                const resultObj = {
                     advertisingGroup,
-                    ..._.mapValues(_.find(response, {placementName: key}), (value, key) => _.reduce(advertisingGroup, (total, current) => {
-                        return +total[key] + +current[key]
-                    })),
                     placementName: key,
+                }
+
+                _.forIn(_.find(response, {placementName: key}), function (value, key) {
+                    if (key !== 'placementName') {
+                        resultObj[key] = +advertisingGroup[0][key] + (advertisingGroup[1] ? +advertisingGroup[1][key] : 0)
+                    }
                 })
-            })
+
+                resultObj.ctr = resultObj.impressions === 0 || resultObj.impressions == null ? null : resultObj.clicks / resultObj.impressions
+                resultObj.cpc = resultObj.clicks === 0 || resultObj.clicks == null ? null : resultObj.cost / resultObj.clicks
+                resultObj.acos = resultObj.attributedSales30d === 0 || resultObj.attributedSales30d == null ? null : resultObj.cost / resultObj.attributedSales30d
+                resultObj.roas = resultObj.acos === 0 || resultObj.acos == null ? null : 1 / resultObj.acos
+                resultObj.conversion_rate = resultObj.clicks === 0 || resultObj.clicks == null ? null : resultObj.attributedConversions30d / resultObj.clicks
+                resultObj.cpa = resultObj.attributedConversions30d === 0 || resultObj.attributedConversions30d == null ? null : resultObj.cost / resultObj.attributedConversions30d
+
+                return resultObj
+            }).filter(item => item.advertisingGroup.length > 0)
         } else {
             if (response.length > 0) {
                 return Object.values(chartAreaKeys).map(key => _.find(response, {'placementName': key}) || undefined).filter(item => item)
@@ -95,7 +107,8 @@ const PlacementsList = ({location}) => {
                 sorter: false,
                 locked: true,
                 noTotal: true,
-                render: (bid_adjustment) => <InputCurrency disabled value={bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}/>
+                render: (bid_adjustment) => <InputCurrency disabled
+                                                           value={bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}/>
             }
         ] : [],
         {...impressionsColumn, sorter: false},
