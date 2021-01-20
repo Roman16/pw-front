@@ -20,16 +20,16 @@ import {automatePatDescription} from "../../Targetings/TargetingsList/Targetings
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
         case 'number':
-            return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
+            return ((number !== null && number !== undefined  ? numberMask(number, 0) : '-'))
 
         case 'percent':
-            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
+            return ((number !== null && number !== undefined  ? `${round(+number * 100, 2)}%` : '-'))
 
         case 'roas':
-            return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
+            return `${(number !== null  ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+            return ((number !== null && number !== undefined  ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
     }
 }
 
