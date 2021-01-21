@@ -12,15 +12,30 @@ import {
     cpaColumn, cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField,
+    renderNumberField, RenderProduct,
     roasColumn,
-    salesShareColumn,
+    salesShareColumn, skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import './ProductMetrics.less'
 
-const ProductMetrics = ({location}) => {
+const ProductMetrics = ({location, isParent}) => {
     const columns = [
+        // ...isParent ? [
+        //     {
+        //         title: 'Product',
+        //         dataIndex: 'product_name',
+        //         key: 'product_name',
+        //         width: '300px',
+        //         sorter: true,
+        //         locked: true,
+        //         search: true,
+        //         render: (name, item) => <RenderProduct
+        //             product={item}
+        //         />
+        //     },
+        //     skuAsinColumn,
+        // ] : [],
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',

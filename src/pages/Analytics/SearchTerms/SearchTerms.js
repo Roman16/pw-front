@@ -26,7 +26,8 @@ const SearchTerms = () => {
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
         segmentValueFromLocalStorage = localStorage.getItem('analyticsSTSegmentValue') ? localStorage.getItem('analyticsSTSegmentValue') : 'none',
-        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {}
+        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
+    pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
 
     const [pageData, setPageData] = useState({
             metrics: {},
@@ -37,7 +38,7 @@ const SearchTerms = () => {
         }),
         [tableRequestParams, setTableRequestParams] = useState({
             page: 1,
-            pageSize: 30,
+            pageSize: pageSizeFromLocalStorage || 30,
         }),
         [chartFetchingStatus, setChartFetchingStatus] = useState(false),
         [tableFetchingStatus, setTableFetchingStatus] = useState(false),
@@ -272,6 +273,8 @@ const SearchTerms = () => {
     }, [activeMetrics])
 
     useEffect(() => {
+        localStorage.setItem('analyticsPageSize', tableRequestParams.pageSize)
+
         getPageData(['table'])
 
         if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.response.map(i => i.queryCRC64))

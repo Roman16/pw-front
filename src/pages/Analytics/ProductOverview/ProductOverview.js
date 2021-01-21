@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
 import ProductAds from "./ProductAds/ProductAds"
@@ -10,6 +10,7 @@ import ProductMetrics from "./ProductMetrics/ProductMetrics"
 import {metricKeys} from "../components/MainMetrics/metricsList"
 
 const ProductOverview = () => {
+    const [isParent, setParentStatus] = useState(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
     const filters = useSelector(state => state.analytics.filters.overview || [])
     const dispatch = useDispatch()
 
@@ -20,6 +21,7 @@ const ProductOverview = () => {
 
     useEffect(() => {
         const isParent = queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent'
+        setParentStatus(isParent)
 
         if (_.find(filters, {filterBy: 'productView'})) {
             dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {
@@ -56,6 +58,7 @@ const ProductOverview = () => {
             {/*<ProductSettings/>*/}
 
             <ProductMetrics
+                isParent={isParent === 'parent'}
                 location={location}
             />
         </div>

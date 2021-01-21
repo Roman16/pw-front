@@ -56,7 +56,9 @@ const TableList = ({
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
         sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
-        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions'))
+        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions')),
+        pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
+
 
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
@@ -65,7 +67,7 @@ const TableList = ({
         [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {}),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
-            pageSize: 30,
+            pageSize: pageSizeFromLocalStorage || 30,
             totalSize: 0,
         })
 
@@ -141,6 +143,8 @@ const TableList = ({
     }
 
     const paginationChangeHandler = (params) => {
+        localStorage.setItem('analyticsPageSize', params.pageSize)
+
         setPaginationParams(prevState => ({
             ...prevState,
             ...params
