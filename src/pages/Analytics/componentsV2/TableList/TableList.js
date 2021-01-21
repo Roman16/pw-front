@@ -182,7 +182,7 @@ const TableList = ({
                 {tableData.total_count !== 0 && showPagination && <Pagination
                     {...{...tableRequestParams, totalSize: tableData.total_count}}
 
-                    pageSizeOptions={[10, 30, 50, 100, 200]}
+                    pageSizeOptions={[10, 30, 50, 100, 200, 500]}
                     showQuickJumper={true}
                     listLength={tableData.response.length}
                     processing={fetching}
