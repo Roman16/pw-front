@@ -64,7 +64,7 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler)
                 dataIndex: 'calculatedBid',
                 key: 'calculatedBid',
                 width: '150px',
-                render: (bid) => <InputCurrency disabled value={bid}/>
+                render: (bid) => <InputCurrency disabled value={bid} type={'text'}/>
             }] : [],
         impressionsColumn,
         clicksColumn,

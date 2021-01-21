@@ -1,17 +1,17 @@
-import React from 'react';
-import {InputNumber} from 'antd';
-import './InputCurrency.less';
-import {SVG} from "../../utils/icons";
+import React from 'react'
+import {InputNumber} from 'antd'
+import './InputCurrency.less'
+import {SVG} from "../../utils/icons"
 import {string} from "prop-types"
 import InformationTooltip from "../Tooltip/Tooltip"
 
 const Dollar = ({typeIcon}) => (
     <span className={`Dollar ${typeIcon}`}>{typeIcon === 'percent' ? <SVG id={'percent-icon'}/> :
         <SVG id={'dollar-icon'}/>}</span>
-);
+)
 
 const InputCurrency = ({
-                           isError = false, value, errorText = '', typeIcon, ...props
+                           isError = false, value, errorText = '', type = 'number', typeIcon, ...props
                        }) => (
     <div className="InputCurrency">
         <Dollar
@@ -20,7 +20,7 @@ const InputCurrency = ({
         <InputNumber
             {...props}
             value={value}
-            type="number"
+            type={type}
         />
         {isError && (
             <span className="error">
@@ -28,7 +28,7 @@ const InputCurrency = ({
             </span>
         )}
     </div>
-);
+)
 
 //typeIcon:
 //percent -> %
@@ -36,6 +36,6 @@ const InputCurrency = ({
 
 InputCurrency.propTypes = {
     typeIcon: string,
-};
+}
 
-export default React.memo(InputCurrency);
+export default React.memo(InputCurrency)
