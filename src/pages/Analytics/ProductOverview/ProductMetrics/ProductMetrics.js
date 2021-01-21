@@ -21,21 +21,21 @@ import './ProductMetrics.less'
 
 const ProductMetrics = ({location, isParent}) => {
     const columns = [
-        ...isParent ? [
-            {
-                title: 'Product',
-                dataIndex: 'product_name',
-                key: 'product_name',
-                width: '300px',
-                sorter: true,
-                locked: true,
-                search: true,
-                render: (name, item) => <RenderProduct
-                    product={item}
-                />
-            },
-            skuAsinColumn,
-        ] : [],
+        // ...isParent ? [
+        //     {
+        //         title: 'Product',
+        //         dataIndex: 'product_name',
+        //         key: 'product_name',
+        //         width: '300px',
+        //         sorter: true,
+        //         locked: true,
+        //         search: true,
+        //         render: (name, item) => <RenderProduct
+        //             product={item}
+        //         />
+        //     },
+        //     skuAsinColumn,
+        // ] : [],
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',
