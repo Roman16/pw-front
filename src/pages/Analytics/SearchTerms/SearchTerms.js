@@ -13,6 +13,8 @@ import {expandedRowRender} from "./STTableComponents/expandRowRender"
 import moment from 'moment'
 import preciseDiff from "moment-precise-range-plugin"
 import _ from 'lodash'
+import queryString from "query-string"
+import {history} from "../../../utils/history"
 
 let prevActiveMetrics = []
 
@@ -61,8 +63,13 @@ const SearchTerms = () => {
         if (openedSearchTerms.includes(id)) setOpenedSearchTerms(prevState => [...prevState.filter(i => i !== id)])
         else try {
             setProcessingRows(prevState => [...prevState, id])
+            const queryParams = queryString.parse(history.location.search)
 
-            const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate)
+            const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate, localSorterColumn, [...Object.keys(queryParams).map(key => ({
+                filterBy: key,
+                type: 'eq',
+                value: queryParams[key]
+            })).filter(item => !!item.value)])
 
             setPageData(prevState => ({
                 ...prevState,
@@ -87,23 +94,42 @@ const SearchTerms = () => {
     const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms, processingRows)
 
     const getPageData = debounce(50, false, async (pageParts) => {
+        setOpenedSearchTerms([])
+
         try {
             if (pageParts.includes('table')) setTableFetchingStatus(true)
             if (pageParts.includes('chart')) setChartFetchingStatus(true)
 
-            const filtersWithState = [
-                ...filters,
-                ...Object.keys(mainState).map(key => ({
-                    filterBy: key,
-                    type: 'eq',
-                    value: mainState[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
+            const queryParams = queryString.parse(history.location.search)
+
+            let filtersWithState = []
+
+            if (Object.keys(queryParams).length !== 0) {
+                filtersWithState = [
+                    ...filters,
+                    ...Object.keys(queryParams).map(key => ({
+                        filterBy: key,
+                        type: 'eq',
+                        value: queryParams[key]
+                    })).filter(item => !!item.value),
+                    {
+                        filterBy: 'datetime',
+                        type: 'range',
+                        value: selectedRangeDate
+                    },
+                ]
+
+            } else {
+                filtersWithState = [
+                    ...filters,
+                    {
+                        filterBy: 'datetime',
+                        type: 'range',
+                        value: selectedRangeDate
+                    },
+                ]
+            }
+
 
             const res = await analyticsServices.getSearchTermsData({
                 ...tableRequestParams,
