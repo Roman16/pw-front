@@ -11,6 +11,7 @@ import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
 import {analyticsActions} from "../../actions/analytics.actions"
 import ToggleMarketplace from "./ToggleMarketplace"
+import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -34,16 +35,13 @@ const Sidebar = () => {
         })),
         accountLinks = user.account_links[0]
 
+    const activeMarketplace = marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]
 
     const toggleCollapsed = () => {
         setCollapsed((prevState) => !prevState)
     }
 
     const className = getClassNames(collapsed ? "open" : "closed")
-
-    const activeCountry = regions.map(region =>
-        region.countries.find(country => country.active)
-    )[0]
 
     const handleLogout = () => {
         history.push('/login/logout')
@@ -99,81 +97,81 @@ const Sidebar = () => {
 
                     <nav className="top-nav">
                         <ul className="top-nav-list">
-                            <li className="top-nav-item ">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<ul className="collapsed-automate-list">
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/campaign'}
-                                            >
-                                                Campaigns Setup
-                                            </NavLink>
-                                        </li>
+                            {/*<li className="top-nav-item ">*/}
+                            {/*    <InformationTooltip*/}
+                            {/*        type={'custom'}*/}
+                            {/*        description={<ul className="collapsed-automate-list">*/}
+                            {/*            <li className="automate-item">*/}
+                            {/*                <NavLink*/}
+                            {/*                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                    activeClassName="automate-link-active"*/}
+                            {/*                    exact*/}
+                            {/*                    to={'/zero-to-hero/campaign'}*/}
+                            {/*                >*/}
+                            {/*                    Campaigns Setup*/}
+                            {/*                </NavLink>*/}
+                            {/*            </li>*/}
 
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/settings'}
-                                            >
-                                                ZTH Status
-                                            </NavLink>
-                                        </li>
-                                    </ul>}
-                                    position={'rightTop'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                                >
-                                    <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
-                                        <NavLink
-                                            className="top-nav-link"
-                                            activeClassName="top-nav-link-active"
-                                            exact
-                                            to="/"
-                                            disabled
-                                        >
-                                            <div className="link-icon">
-                                                <SVG id='zth-icon'/>
-                                            </div>
+                            {/*            <li className="automate-item">*/}
+                            {/*                <NavLink*/}
+                            {/*                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                    activeClassName="automate-link-active"*/}
+                            {/*                    exact*/}
+                            {/*                    to={'/zero-to-hero/settings'}*/}
+                            {/*                >*/}
+                            {/*                    ZTH Status*/}
+                            {/*                </NavLink>*/}
+                            {/*            </li>*/}
+                            {/*        </ul>}*/}
+                            {/*        position={'rightTop'}*/}
+                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}*/}
+                            {/*    >*/}
+                            {/*        <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>*/}
+                            {/*            <NavLink*/}
+                            {/*                className="top-nav-link"*/}
+                            {/*                activeClassName="top-nav-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to="/"*/}
+                            {/*                disabled*/}
+                            {/*            >*/}
+                            {/*                <div className="link-icon">*/}
+                            {/*                    <SVG id='zth-icon'/>*/}
+                            {/*                </div>*/}
 
-                                            <span className="top-span">
-                                        Zero to Hero
-                                                {/*<span className="new-fiches">new</span>*/}
-                                </span>
-                                        </NavLink>
-                                    </div>
-                                </InformationTooltip>
+                            {/*                <span className="top-span">*/}
+                            {/*            Zero to Hero*/}
+                            {/*                    /!*<span className="new-fiches">new</span>*!/*/}
+                            {/*    </span>*/}
+                            {/*            </NavLink>*/}
+                            {/*        </div>*/}
+                            {/*    </InformationTooltip>*/}
 
-                                <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/campaign'}
-                                        >
-                                            Campaigns Setup
-                                        </NavLink>
-                                    </li>
+                            {/*    <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>*/}
+                            {/*        <li className="automate-item">*/}
+                            {/*            <NavLink*/}
+                            {/*                className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                activeClassName="automate-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to={'/zero-to-hero/campaign'}*/}
+                            {/*            >*/}
+                            {/*                Campaigns Setup*/}
+                            {/*            </NavLink>*/}
+                            {/*        </li>*/}
 
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/settings'}
-                                        >
-                                            ZTH Status
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            </li>
+                            {/*        <li className="automate-item">*/}
+                            {/*            <NavLink*/}
+                            {/*                className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                activeClassName="automate-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to={'/zero-to-hero/settings'}*/}
+                            {/*            >*/}
+                            {/*                ZTH Status*/}
+                            {/*            </NavLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
 
-                            <li className="top-nav-item">
+                            {activeMarketplace.countryCode !== 'CA' && <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
                                     description={<Link onClick={setAnalyticState}
@@ -196,34 +194,40 @@ const Sidebar = () => {
                                          </span>
                                     </NavLink>
                                 </InformationTooltip>
-                            </li>
+                            </li>}
 
                             <li className="top-nav-item ppc-automate-link">
                                 <InformationTooltip
                                     type={'custom'}
                                     description={<ul
                                         className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
-                                        {ppcAutomateMenu.map(item => (
-                                            <li className="automate-item" key={item.link}>
-                                                <NavLink
-                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                    activeClassName="automate-link-active"
-                                                    data-intercom-target={`${item.link}-link`}
-                                                    exact
-                                                    to={item.soon && (production && user.user.id !== 714) ?
-                                                        '/'
-                                                        :
-                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
-                                                    onClick={e => {
-                                                        if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                    }}
-                                                >
-                                                    {item.title}
-                                                    {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
-                                                    {item.new && <span className="new-fiches">new</span>}
-                                                </NavLink>
-                                            </li>
-                                        ))}
+                                        {ppcAutomateMenu
+                                            .filter(menuItem => {
+                                                if (activeMarketplace.countryCode === 'CA' && menuItem.link === 'product-settings') return true
+                                                else if (activeMarketplace.countryCode === 'US') return true
+                                                else return false
+                                            })
+                                            .map(item => (
+                                                <li className="automate-item" key={item.link}>
+                                                    <NavLink
+                                                        className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                        activeClassName="automate-link-active"
+                                                        data-intercom-target={`${item.link}-link`}
+                                                        exact
+                                                        to={item.soon && (production && user.user.id !== 714) ?
+                                                            '/'
+                                                            :
+                                                            item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
+                                                        onClick={e => {
+                                                            if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                                        }}
+                                                    >
+                                                        {item.title}
+                                                        {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                                        {item.new && <span className="new-fiches">new</span>}
+                                                    </NavLink>
+                                                </li>
+                                            ))}
                                     </ul>}
                                     position={'rightTop'}
                                     overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
@@ -246,27 +250,33 @@ const Sidebar = () => {
                                 </InformationTooltip>
 
                                 <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
-                                    {ppcAutomateMenu.map(item => (
-                                        <li className="automate-item" key={item.link}>
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                data-intercom-target={`${item.link}-link`}
-                                                exact
-                                                to={item.soon && (production && user.user.id !== 714) ?
-                                                    '/'
-                                                    :
-                                                    item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
-                                                onClick={e => {
-                                                    if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
-                                                }}
-                                            >
-                                                {item.title}
-                                                {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
-                                                {item.new && <span className="new-fiches">new</span>}
-                                            </NavLink>
-                                        </li>
-                                    ))}
+                                    {ppcAutomateMenu
+                                        .filter(menuItem => {
+                                            if (activeMarketplace.countryCode === 'CA' && menuItem.link === 'product-settings') return true
+                                            else if (activeMarketplace.countryCode === 'US') return true
+                                            else return false
+                                        })
+                                        .map(item => (
+                                            <li className="automate-item" key={item.link}>
+                                                <NavLink
+                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
+                                                    activeClassName="automate-link-active"
+                                                    data-intercom-target={`${item.link}-link`}
+                                                    exact
+                                                    to={item.soon && (production && user.user.id !== 714) ?
+                                                        '/'
+                                                        :
+                                                        item.link === 'optimization' && bootstrapInProgress ? '/ppc/optimization-loading' : `/ppc/${item.link}`}
+                                                    onClick={e => {
+                                                        if (item.soon && (production && user.user.id !== 714)) e.preventDefault()
+                                                    }}
+                                                >
+                                                    {item.title}
+                                                    {/*{item.new && <img className="new-fiches" src={newLabel}/>}*/}
+                                                    {item.new && <span className="new-fiches">new</span>}
+                                                </NavLink>
+                                            </li>
+                                        ))}
                                 </ul>
                             </li>
 

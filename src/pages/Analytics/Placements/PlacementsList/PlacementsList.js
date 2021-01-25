@@ -127,7 +127,7 @@ const PlacementsList = ({location}) => {
         {...budgetAllocationColumn, sorter: false},
     ]
 
-    const expandedRowRender = (props) => {
+    const expandedRowRender = (props, columnsBlackList) => {
         const columns = [
             {
                 width: '250px',
@@ -158,11 +158,12 @@ const PlacementsList = ({location}) => {
             budgetAllocationColumn,
         ]
 
-
         return (
             props.advertisingGroup && props.advertisingGroup.map(advertisingItem => (
                     <div>
-                        {columns.map((item, index) => {
+                        {columns
+                            .filter(column => !columnsBlackList.includes(column.key))
+                            .map((item, index) => {
                                 const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
                                 return (
                                     <div
