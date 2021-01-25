@@ -10,6 +10,7 @@ import '../../style/variables.less'
 import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
 import {analyticsActions} from "../../actions/analytics.actions"
+import ToggleMarketplace from "./ToggleMarketplace"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -92,18 +93,9 @@ const Sidebar = () => {
                 </div>
 
                 <div className="sidebar-menu">
-                    <div className="country-active">
-                        <div className="country-active__title">
-                            <SVG id='us-flag'/>
-                            <h5>{activeCountry.name}</h5>
-                        </div>
-
-                        {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                            ? <div className="country-active__description">
-                                {user.default_accounts.amazon_mws.seller_id}
-                            </div>
-                            : ""}
-                    </div>
+                    <ToggleMarketplace
+                        user={user}
+                    />
 
                     <nav className="top-nav">
                         <ul className="top-nav-list">
@@ -184,7 +176,8 @@ const Sidebar = () => {
                             <li className="top-nav-item">
                                 <InformationTooltip
                                     type={'custom'}
-                                    description={<Link onClick={setAnalyticState} to={'/analytics/products'}>Analytics</Link>}
+                                    description={<Link onClick={setAnalyticState}
+                                                       to={'/analytics/products'}>Analytics</Link>}
                                     position={'right'}
                                     overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                                 >

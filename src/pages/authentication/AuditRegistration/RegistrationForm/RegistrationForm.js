@@ -211,7 +211,7 @@ const RegistrationForm = ({setStep}) => {
                     </ul>
 
                     <div className="actions">
-                        <button className="btn default" onClick={onNextStep}>
+                        <button disabled={!formParams.main_goal} className="btn default" onClick={onNextStep}>
                             Get a Free Audit
                         </button>
                     </div>
@@ -236,7 +236,7 @@ const RegistrationForm = ({setStep}) => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={onNextStep}>
+                        <button disabled={!formParams.avg_monthly_ad_spend} className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -261,7 +261,7 @@ const RegistrationForm = ({setStep}) => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={onNextStep}>
+                        <button disabled={!formParams.avg_monthly_ad_sales} className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -289,7 +289,7 @@ const RegistrationForm = ({setStep}) => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={onNextStep}>
+                        <button disabled={!formParams.active_marketplaces} className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
@@ -314,7 +314,7 @@ const RegistrationForm = ({setStep}) => {
                             Back
                         </button>
 
-                        <button className="btn default" onClick={onNextStep}>
+                        <button disabled={!formParams.amazon_number_of_active_products} className="btn default" onClick={onNextStep}>
                             Next
                         </button>
                     </div>
