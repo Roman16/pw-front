@@ -39,7 +39,7 @@ const Impersonations = (props) => {
     }
 
     const updateUserInformation = () => {
-        dispatch(userActions.getUserInfo())
+        dispatch(userActions.getImpersonationUserInformation())
     }
 
     const impersonateHandler = async (e) => {
@@ -62,8 +62,6 @@ const Impersonations = (props) => {
             }
 
             updateUserInformation()
-
-            history.push('/ppc/optimization')
         } catch (e) {
             console.log(e)
         }

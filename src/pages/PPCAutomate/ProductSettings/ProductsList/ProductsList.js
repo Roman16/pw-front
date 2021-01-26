@@ -8,7 +8,7 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import MultiApply from "../MultiApply/MultiApply"
 import CustomSelect from "../../../../components/Select/Select"
-import {Checkbox, Select} from "antd"
+import {Checkbox, Input, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import $ from 'jquery'
@@ -26,6 +26,7 @@ const TOTAL_CHANGES = 'total_changes'
 const BSR_TRACKING = 'bsr_tracking'
 const OPTIMIZATION_STATUS = 'optimization_status'
 const ADVERTISING_STRATEGY = 'advertising_strategy'
+const FRIENDLY_NAME = 'Friendly name'
 
 const DESIRED_ACOS = 'desired_acos'
 const BREAK_EVEN_ACOS = 'break_even_acos'
@@ -599,61 +600,60 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 </div>
             )
         }] : [],
-        ...isAgencyClient ? [
-                {
-                    title: 'Optimization Status',
-                    dataIndex: OPTIMIZATION_STATUS,
-                    key: OPTIMIZATION_STATUS,
-                    width: '135px',
-                    render: (index, item) => (
-                        <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
-                            <span className={'paused'}>Paused</span>}</span>)
-                },
-                {
-                    title: () => <div onClick={switchStrategyDescription}>
-                        <span>Advertising <br/> Strategy</span>
+        {
+            title: 'Optimization Status',
+            dataIndex: OPTIMIZATION_STATUS,
+            key: OPTIMIZATION_STATUS,
+            width: '135px',
+            render: (index, item) => (
+                <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
+                    <span className={'paused'}>Paused</span>}</span>)
+        },
+        ...isAdmin ? [{
+            title: 'Friendly name',
+            dataIndex: FRIENDLY_NAME,
+            key: FRIENDLY_NAME,
+            width: '200px',
+            align: 'center',
+            render: (value, item, indexRow) => (
+                <div className="form-group">
+                    <Input type="text"/>
+                </div>
+            )
+        }] : [],
+        ...isAgencyClient ? [{
+            title: () => <div onClick={switchStrategyDescription}>
+                <span>Advertising <br/> Strategy</span>
 
-                        <i className={strategiesDescriptionState ? 'opened' : ''}>
-                            <SVG id={'right-icon'}/>
-                        </i>
-                    </div>,
-                    dataIndex: ADVERTISING_STRATEGY,
-                    key: ADVERTISING_STRATEGY,
-                    width: '18.571428571428573rem',
-                    render: (index, item, indexRow) => (
-                        <CustomSelect
-                            getPopupContainer={triggerNode => triggerNode.parentNode}
-                            value={item[ADVERTISING_STRATEGY] || undefined}
-                            onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
-                            placeholder={'Select a goal'}
-                        >
-                            <Option value={null}>
-                                Select a goal
-                            </Option>
+                <i className={strategiesDescriptionState ? 'opened' : ''}>
+                    <SVG id={'right-icon'}/>
+                </i>
+            </div>,
+            dataIndex: ADVERTISING_STRATEGY,
+            key: ADVERTISING_STRATEGY,
+            width: '18.571428571428573rem',
+            render: (index, item, indexRow) => (
+                <CustomSelect
+                    getPopupContainer={triggerNode => triggerNode.parentNode}
+                    value={item[ADVERTISING_STRATEGY] || undefined}
+                    onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
+                    placeholder={'Select a goal'}
+                >
+                    <Option value={null}>
+                        Select a goal
+                    </Option>
 
-                            {advertisingStrategyVariations.map(item => (
-                                <Option value={item.value}>
-                                    <i style={{fill: `#${item.fill}`}}>
-                                        <SVG id={item.icon}/>
-                                    </i>
-                                    {item.label}
-                                </Option>
-                            ))}
-                        </CustomSelect>
-                    )
-                }
-            ] :
-            [
-                {
-                    title: 'Optimization Status',
-                    dataIndex: OPTIMIZATION_STATUS,
-                    key: OPTIMIZATION_STATUS,
-                    width: '135px',
-                    render: (index, item) => (
-                        <span> {item[OPTIMIZATION_STATUS] === ACTIVE ? <span className={'running'}>Running</span> :
-                            <span className={'paused'}>Paused</span>}</span>)
-                }
-            ]
+                    {advertisingStrategyVariations.map(item => (
+                        <Option value={item.value}>
+                            <i style={{fill: `#${item.fill}`}}>
+                                <SVG id={item.icon}/>
+                            </i>
+                            {item.label}
+                        </Option>
+                    ))}
+                </CustomSelect>
+            )
+        }] : []
     ]
 
     return (
