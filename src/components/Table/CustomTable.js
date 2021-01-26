@@ -64,6 +64,7 @@ const CustomTable = ({
         } else {
             // if (scrolling) setScrollingValue(false)
             if (scrollingNow) document.querySelector('.custom-table').classList.remove('scrolling')
+            scrollingNow = false
         }
     }
 
