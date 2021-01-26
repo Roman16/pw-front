@@ -6,18 +6,24 @@
   height: 100%;
   position: relative;
 
+  .fixed.with-shadow {
+    &:after {
+      content: " ";
+      height: 100%;
+      position: absolute;
+      top: 0;
+      width: 15px;
+      box-shadow: 5px 0 10px -10px inset;
+      right: -15px;
+      opacity: 0;
+    }
+  }
+
   &.scrolling {
     .fixed.with-shadow {
       border-color: #fff !important;
-
       &:after {
-        content: " ";
-        height: 100%;
-        position: absolute;
-        top: 0;
-        width: 15px;
-        box-shadow: 5px 0 10px -10px inset;
-        right: -15px;
+        opacity: 1;
       }
     }
   }
@@ -236,7 +242,7 @@
         }
       }
 
-      .expand-row  {
+      .expand-row {
         & > div {
           &:hover {
             background: #FAFAFF;
