@@ -12,128 +12,117 @@
     max-width: 1360px;
     margin: 0 auto;
   }
+}
 
-  .box {
-    min-height: calc(100vh - 96px);
+
+.not-found-page .box {
+  background: #6D6DF6;
+  position: relative;
+  padding: 0 0 280px 0;
+
+  .container {
+    position: relative;
+  }
+
+  .modal-window {
+    width: 60%;
+    background: #fff;
+    border-radius: 4px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    z-index: 1000;
+    margin-left: 100px;
+    position: absolute;
+    top: 168px;
+
+    -webkit-box-shadow: 45px 45px 8px 0px rgba(86, 86, 235, 0.5);
+    -moz-box-shadow: 45px 45px 8px 0px rgba(86, 86, 235, 0.5);
+    box-shadow: 45px 45px 8px 0px rgba(86, 86, 235, 0.5);
+
+
+    .window-header {
+      width: 100%;
+      height: 42px;
+      background: #83FED0;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      grid-column-gap: 8px;
+      border-radius: 4px 4px 0 0;
+
+      div {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #71F0C1;
+      }
+    }
+
+    svg {
+      margin: 80px 0 46px;
+    }
+
+    h2 {
+      font-size: 60px;
+      font-weight: 500;
+      line-height: 72px;
+      text-align: center;
+      color: #6D6DF6;
+      margin-bottom: 12px;
+    }
+
+    p {
+      font-size: 21px;
+      line-height: 25px;
+      text-align: center;
+      color: #6D6DF6;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      height: 56px;
+      margin-bottom: 64px;
+      font-size: 21px;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+  }
+
+  .background-text {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 33px;
+    margin-top: -8px;
+
+    p {
+      font-size: 18px;
+      line-height: 25px;
+      color: #83FED0;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 800px) {
+    padding: 50px 20px;
+
+    .modal-window {
+      width: 100%;
+      position: initial;
+      left: 0;
+      right: 0;
+      margin: 0;
+      box-shadow: none;
+
+      svg {
+        width: 85%;
+        max-width: 430px;
+      }
+    }
+
+    .background-text {
+      display: none;
+    }
   }
 }
 
-.not-found-page .img {
-  margin-bottom: 75px;
-  position: relative;
-  display: inline-block
-}
-.not-found-page .img:after {
-  content: '';
-  position: absolute;
-  top: 51%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background: url('../../../assets/img/not-found.gif') center no-repeat;
-  background-size: contain;
-  width: 37%;
-  height: 100%;
-}
-
-
-.not-found-page .img img {
-  vertical-align: top
-}
-
-.not-found-page h1 {
-  font-size: 33px;
-  line-height: 1.4;
-  color: #363694;
-  margin-bottom: 15px;
-  font-weight: 700
-}
-
-.not-found-page p {
-  font-size: 16px;
-  line-height: 1.75;
-  color: #7c8a95;
-  max-width: 590px;
-  margin: 0 auto;
-  margin-bottom: 45px
-}
-
-.not-found-page .box .btn {
-  height: max-content;
-  font-size: 20px;
-  text-align: center;
-  display: inline-block;
-  vertical-align: middle;
-  -webkit-transition: .2s;
-  -o-transition: .2s;
-  transition: .2s;
-  background: #8fd39d;
-  border-radius: 8px;
-  text-transform: uppercase;
-  font-weight: 700;
-  border: 0;
-
-  a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    padding: 20px 65px;
-    color: #fff;
-  }
-}
-
-@media screen and (max-height:750px) {
-  .not-found-page .img {
-    margin-bottom: 25px
-  }
-  .not-found-page .img img {
-    width: 500px
-  }
-  .not-found-page h1 {
-    margin-bottom: 10px
-  }
-  .not-found-page p {
-    margin-bottom: 30px
-  }
-}
-
-@media screen and (max-width:760px) {
-  .not-found-page .img {
-    margin-bottom: 25px
-  }
-  .not-found-page .img img {
-    width: 90%
-  }
-  .not-found-page h1 {
-    margin-bottom: 10px
-  }
-  .not-found-page p {
-    margin-bottom: 30px
-  }
-}
-
-
-@media screen and (max-width:480px) {
-  .box {
-    padding-left: 10px!important;
-    padding-right: 10px!important
-  }
-  .not-found-page {
-    padding: 50px 0
-  }
-  .not-found-page h1 {
-    font-size: 25px
-  }
-  .not-found-page p {
-    font-size: 14px
-  }
-  .not-found-page .btn {
-    padding: 20px 50px;
-    font-size: 18px
-  }
-}

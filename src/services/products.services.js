@@ -38,6 +38,7 @@ function updateProductSettings(parameters) {
         'cogs': parameters.cogs,
         'advertising_strategy': parameters.advertising_strategy,
         'bsr_tracking': parameters.bsr_tracking,
+        'friendly_name': parameters.friendly_name,
     })
 }
 

@@ -174,7 +174,7 @@ const TableList = ({
                     sorterColumn={localSorterColumn}
                     columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                     fixedColumns={fixedColumns}
-                    expandedRowRender={expandedRowRender}
+                    expandedRowRender={(props) => expandedRowRender(props, localColumnBlackList)}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
                 />

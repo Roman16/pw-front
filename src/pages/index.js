@@ -12,6 +12,7 @@ import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage
 import CampaignList from "../components/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
+import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 
 const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
@@ -77,9 +78,10 @@ const AdminRoute = (props) => {
 }
 
 const ConnectedAmazonRoute = props => {
-    const {mwsConnected, ppcConnected} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, marketplace} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
+        marketplace: marketplaceIdValues[state.user.default_accounts.amazon_ppc.marketplace_id]
     }))
     if (!mwsConnected && !ppcConnected) {
         return <Redirect to="/connect-amazon-account"/>
@@ -88,7 +90,15 @@ const ConnectedAmazonRoute = props => {
     } else if (!ppcConnected && mwsConnected) {
         return <Redirect to="/connect-ppc-account"/>
     } else {
-        return <Route {...props} />
+        if (marketplace.countryCode === 'CA') {
+            if (props.path === '/ppc/product-settings' || props.path === '/account') {
+                return <Route {...props} />
+            } else {
+                return <Redirect to="/account/settings"/>
+            }
+        } else {
+            return <Route {...props} />
+        }
     }
 }
 

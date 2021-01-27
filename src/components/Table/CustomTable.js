@@ -49,13 +49,22 @@ const CustomTable = ({
         }
     }
 
+    let scrollingNow = false
+
     const scrollHandler = (e) => {
         onScroll && onScroll(e)
 
+        // const setScrollingValue = value => setTimeout(() => setScrolling(value), 10)
+
         if (e.target.scrollLeft > 5) {
-            setScrolling(true)
+            if (!scrollingNow) document.querySelector('.custom-table').classList.add('scrolling')
+
+            scrollingNow = true
+            // if (!scrolling) setScrollingValue(true)
         } else {
-            setScrolling(false)
+            // if (scrolling) setScrollingValue(false)
+            if (scrollingNow) document.querySelector('.custom-table').classList.remove('scrolling')
+            scrollingNow = false
         }
     }
 
@@ -67,7 +76,7 @@ const CustomTable = ({
     }, [checkedRows])
 
     return (
-        <div className={`custom-table ${scrolling ? 'scrolling' : ''}`}>
+        <div className={`custom-table`}>
             <div className="table-overflow" onScroll={scrollHandler}>
                 <div className="table-head" key={'table-head'}>
                     {rowSelection && <div className={'th checkbox-column'}>

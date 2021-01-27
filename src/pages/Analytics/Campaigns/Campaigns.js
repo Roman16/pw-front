@@ -3,6 +3,7 @@ import CampaignsList from "./CampaignsList/CampaignsList"
 import MainChart from "../components/MainChart/MainChart"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import CreateCampaignWindow from "./CreateCampaignWindow/CreateCampaignWindow"
 
 const Campaigns = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
@@ -23,6 +24,8 @@ const Campaigns = () => {
             <CampaignsList
                 location={location}
             />
+
+            <CreateCampaignWindow/>
         </div>
     )
 }

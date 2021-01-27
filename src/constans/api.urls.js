@@ -32,6 +32,7 @@ export const userUrls = {
     updateStatus: 'user/account/subscription/all/update-preview',
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
+    toggleMarketplace: id => `user/account/tokens/${id}/set-as-default`,
     ebookSubscribe: 'landings/ebook/send-me',
     userSubscribe: 'landings/subscribe',
     contacts: 'landings/contact-us',

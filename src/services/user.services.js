@@ -43,6 +43,7 @@ export const userService = {
     onSubscribe,
     sendContacts,
     startFreeTrial,
+    toggleMarketplace,
 
     getBlogPosts,
     sendContactForm,
@@ -197,6 +198,10 @@ function applyCoupon(id, planId, coupon) {
 
 function getCouponStatus(coupon) {
     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
+}
+
+function toggleMarketplace(id) {
+    return api('post', `${userUrls.toggleMarketplace(id)}`)
 }
 
 //-------------------------------------

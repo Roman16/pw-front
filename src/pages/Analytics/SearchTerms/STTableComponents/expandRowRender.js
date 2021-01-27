@@ -11,7 +11,7 @@ import React from "react"
 import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-export const expandedRowRender = (props, showTargetingsColumns, setStateHandler) => {
+export const expandedRowRender = (props, showTargetingsColumns, setStateHandler, columnsBlackList) => {
     const columns = [
         {
             width: '400px',
@@ -86,7 +86,9 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler)
     return (
         props.targetingsData && props.targetingsData.map(target => (
                 <div>
-                    {columns.map((item, index) => {
+                    {columns
+                        .filter(column => !columnsBlackList.includes(column.key))
+                        .map((item, index) => {
                             const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
                             return (
                                 <div

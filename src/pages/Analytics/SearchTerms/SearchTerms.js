@@ -317,7 +317,7 @@ const SearchTerms = () => {
                     onChange={changeSegmentHandler}
                 />}
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue === 'targetings'}
-                expandedRowRender={(props) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler)}
+                expandedRowRender={(props, columnsBlackList) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList)}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}

@@ -15,6 +15,10 @@
     flex-direction: column;
   }
 
+  .ant-steps-item * {
+    transition: 0s;
+  }
+
   .ant-steps-item-icon {
     border: 0;
     position: relative;
@@ -28,12 +32,14 @@
     .ant-steps-icon {
       display: flex;
       width: 9px;
+      min-width: 9px;
       height: 9px;
       background: #C9CBD4;
       border-radius: 50%;
       font-size: 1px;
-      margin: 2px auto 0 auto;
+      margin: auto;
       text-indent: -9999px;
+      position: initial;
     }
   }
 
@@ -73,14 +79,25 @@
 
     .ant-steps-item-icon {
       background: #6D6DF6;
+      filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
 
       .ant-steps-icon {
-        background: #fff;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAACE4AAAhOAFFljFgAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADaSURBVHgBtZbhEYIwDIVTJsANcBJH0E3sBrAJrOAE6AZuABvABjFPcyc/sFLafHfhcoW+16ZcW6IAzFxK1BK9xMBfJm3zEhXFgk4qsJV2s5F8eNURxoI+/p94zenUoZHnwq/VfE9ZfgGtamnQcn56aDt1GsiGQyGPC9nhYXAmO04o0SRJSTaMMGAypCBjYDCSHbO1wRMGD7LjhkXGHzSRDcfCOTdLcqf8dKI9vjO23uzUxHM+1g8eedFwOk2wcPyZic2RuTDBmnQR4j0n3C68CixnNWgbShrcKF8SvnhY0BsXLAAAAABJRU5ErkJggg==') no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+        @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+          width: 40%;
+          height: 40%;
+        }
       }
     }
 
     .ant-steps-item-title {
       color: #6D6DF6;
+      font-weight: 600;
     }
 
   }
