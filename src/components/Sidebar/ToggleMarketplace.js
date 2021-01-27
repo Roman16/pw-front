@@ -30,45 +30,60 @@ const ToggleMarketplace = ({user}) => {
         setProcessing(false)
     }
 
-    return (<InformationTooltip
-        type={'custom'}
-        description={<>
-            <h3>Choose marketplace</h3>
+    return (<div className="country-active">
+        <div className="country-active__title">
+            <SVG
+                id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>
 
-            <ul>
-                <li
-                    onClick={() => toggleMarketplaceHandler('US')}
-                    className={activeMarketplace.countryCode === 'US' ? 'active' : ''}
-                >
-                    <SVG id='us-flag'/> US
-                </li>
-                <li
-                    onClick={() => toggleMarketplaceHandler('CA')}
-                    className={activeMarketplace.countryCode === 'CA' ? 'active' : ''}
-                >
-                    <SVG id='ca-flag'/> CA
-                </li>
-            </ul>
-        </>}
-        position={'rightTop'}
-        className={'marketplace-toggle-button'}
-        overlayClassName={'toggle-marketplace-window'}
-    >
-        <div className="country-active">
-            <div className="country-active__title">
-                <SVG
-                    id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>
-
-                <h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>
-            </div>
-
-            {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
-                ? <div className="country-active__description">
-                    {user.default_accounts.amazon_mws.seller_id}
-                </div>
-                : ""}
+            <h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>
         </div>
-    </InformationTooltip>)
+
+        {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+            ? <div className="country-active__description">
+                {user.default_accounts.amazon_mws.seller_id}
+            </div>
+            : ""}
+    </div>)
+
+    // return (<InformationTooltip
+    //     type={'custom'}
+    //     description={<>
+    //         <h3>Choose marketplace</h3>
+    //
+    //         <ul>
+    //             <li
+    //                 onClick={() => toggleMarketplaceHandler('US')}
+    //                 className={activeMarketplace.countryCode === 'US' ? 'active' : ''}
+    //             >
+    //                 <SVG id='us-flag'/> US
+    //             </li>
+    //             <li
+    //                 onClick={() => toggleMarketplaceHandler('CA')}
+    //                 className={activeMarketplace.countryCode === 'CA' ? 'active' : ''}
+    //             >
+    //                 <SVG id='ca-flag'/> CA
+    //             </li>
+    //         </ul>
+    //     </>}
+    //     position={'rightTop'}
+    //     className={'marketplace-toggle-button'}
+    //     overlayClassName={'toggle-marketplace-window'}
+    // >
+    //     <div className="country-active">
+    //         <div className="country-active__title">
+    //             <SVG
+    //                 id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>
+    //
+    //             <h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>
+    //         </div>
+    //
+    //         {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
+    //             ? <div className="country-active__description">
+    //                 {user.default_accounts.amazon_mws.seller_id}
+    //             </div>
+    //             : ""}
+    //     </div>
+    // </InformationTooltip>)
 }
 
 export default React.memo(ToggleMarketplace)

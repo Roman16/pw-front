@@ -26,7 +26,7 @@ const TOTAL_CHANGES = 'total_changes'
 const BSR_TRACKING = 'bsr_tracking'
 const OPTIMIZATION_STATUS = 'optimization_status'
 const ADVERTISING_STRATEGY = 'advertising_strategy'
-const FRIENDLY_NAME = 'Friendly name'
+const FRIENDLY_NAME = 'friendly_name'
 
 const DESIRED_ACOS = 'desired_acos'
 const BREAK_EVEN_ACOS = 'break_even_acos'
@@ -153,7 +153,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     })
                 }, 1000)
                 return
-            } else if (item === BSR_TRACKING) {
+            } else if (item === BSR_TRACKING || item === FRIENDLY_NAME) {
                 setRowData(value, item, index)
             } else if (item !== NET_MARGIN) {
                 if (value < 0.02 || ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null)) {
@@ -617,7 +617,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             align: 'center',
             render: (value, item, indexRow) => (
                 <div className="form-group">
-                    <Input type="text"/>
+                    <Input
+                        value={value}
+                        onChange={e => onChangeRow(e.target.value, FRIENDLY_NAME, indexRow)}
+                        type="text"
+                    />
                 </div>
             )
         }] : [],
