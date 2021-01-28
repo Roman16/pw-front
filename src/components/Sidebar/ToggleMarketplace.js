@@ -8,7 +8,8 @@ import {userActions} from "../../actions/user.actions"
 import {Spin} from "antd"
 
 const ToggleMarketplace = ({user}) => {
-    const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]),
+    // const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]),
+    const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues['ATVPDKIKX0DER']),
         [processing, setProcessing] = useState(true)
 
     const dispatch = useDispatch()
@@ -32,10 +33,11 @@ const ToggleMarketplace = ({user}) => {
 
     return (<div className="country-active">
         <div className="country-active__title">
-            <SVG
-                id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>
+            {/*<SVG id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>*/}
+            <SVG id={`${marketplaceIdValues['ATVPDKIKX0DER']['countryCode'].toLowerCase()}-flag`}/>
 
-            <h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>
+            {/*<h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>*/}
+            <h5>{marketplaceIdValues['ATVPDKIKX0DER']['countryCode']}</h5>
         </div>
 
         {user.default_accounts && user.default_accounts.amazon_mws && user.default_accounts.amazon_mws.seller_id
