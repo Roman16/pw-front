@@ -7,7 +7,7 @@ const WindowHeader = ({onClose}) => {
         <h2>Create Campaign</h2>
 
         <button
-            className="btn close"
+            className="btn icon close"
             onClick={onClose}
         >
             <SVG id={'close-window-icon'}/>
