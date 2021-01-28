@@ -81,7 +81,8 @@ const ConnectedAmazonRoute = props => {
     const {mwsConnected, ppcConnected, marketplace} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        marketplace: marketplaceIdValues[state.user.default_accounts.amazon_ppc.marketplace_id]
+        marketplace: marketplaceIdValues['ATVPDKIKX0DER']
+        // marketplace: marketplaceIdValues[state.user.default_accounts.amazon_ppc.marketplace_id]
     }))
     if (!mwsConnected && !ppcConnected) {
         return <Redirect to="/connect-amazon-account"/>
