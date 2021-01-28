@@ -35,7 +35,8 @@ const Sidebar = () => {
         })),
         accountLinks = user.account_links[0]
 
-    const activeMarketplace = marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]
+    const activeMarketplace = marketplaceIdValues['ATVPDKIKX0DER']
+    // const activeMarketplace = marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]
 
     const toggleCollapsed = () => {
         setCollapsed((prevState) => !prevState)
