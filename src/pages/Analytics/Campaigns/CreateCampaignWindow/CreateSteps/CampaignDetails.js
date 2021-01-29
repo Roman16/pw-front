@@ -30,7 +30,7 @@ const CampaignDetails = () => {
 
         <div className="row">
             <div className="col">
-                <div className="form-row">
+                <div className="form-row date">
                     <div className="form-group">
                         <label htmlFor="">Start</label>
                         <DatePicker/>

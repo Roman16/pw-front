@@ -12,7 +12,8 @@ export const analyticsActions = {
     expandWorkplace,
     setSegmentValue,
     setStateDetails,
-    setSortingColumn
+    setSortingColumn,
+    setVisibleCreateWindow
 }
 
 function setMainState(state) {
@@ -118,6 +119,14 @@ function setSortingColumn(data) {
         dispatch({
             type: analyticsConstants.SET_SORTING_COLUMN,
             payload: data
+        })
+    }
+}
+function setVisibleCreateWindow(window) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_VISIBLE_CREATION_WINDOWS,
+            payload: window
         })
     }
 }

@@ -34,7 +34,7 @@
 
     .section-header {
       display: grid;
-      grid-template-areas: 'filters segmentFilter columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters segmentFilter createButton columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters  currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
 
@@ -49,6 +49,10 @@
           cursor: auto;
         }
       }
+    }
+
+    .create-button {
+      grid-area: createButton;
     }
 
     .segment-filter {
@@ -117,6 +121,17 @@
           font-size: 1rem;
           color: #38454F;
         }
+      }
+    }
+
+    .create-button {
+      padding: 0 15px;
+      margin: 0 20px 0 0;
+      font-size: 0.8571428571428571rem;
+      font-weight: 500;
+
+      svg {
+        margin: 0 12px 0 0;
       }
     }
 

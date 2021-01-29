@@ -199,11 +199,28 @@
         display: flex;
         flex-direction: column;
 
+        &.w-50 {
+          width: 50%;
+        }
+
         label {
           font-size: 1rem;
           font-weight: 500;
           color: #343C5A;
           margin-bottom: 8px;
+        }
+
+        input, .InputCurrency {
+          height: 2.2857142857142856rem;
+          font-size: 1rem;
+        }
+
+        .InputCurrency {
+          width: 120px;
+        }
+
+        .pw-date-picker {
+          width: 180px;
         }
       }
     }
@@ -296,6 +313,12 @@
           display: flex;
           grid-column-gap: 20px;
 
+          &.date {
+            & > div {
+              flex: initial;
+            }
+          }
+
           & > div {
             flex: 1;
           }
@@ -309,6 +332,87 @@
 
         & > div {
           flex: 1;
+        }
+      }
+    }
+
+    .targetings-details-step {
+      display: flex;
+      flex-direction: column;
+      grid-row-gap: 20px;
+
+      h3 {
+        font-size: 1.4285714285714286rem;
+        line-height: 1.7142857142857142rem;
+        font-weight: 500;
+        color: #343C5A;
+        margin-bottom: 12px;
+      }
+
+      & > .row {
+        display: grid;
+        grid-template-columns: 1fr 40%;
+
+
+        .col {
+          display: flex;
+          flex-direction: column;
+
+          &:first-child {
+            padding-right: 40px;
+          }
+
+          &.description {
+            height: max-content;
+            padding-left: 10px;
+            border-left: 0.5px solid #C9CBD4;
+
+            font-size: 0.8571428571428571rem;
+            line-height: 1rem;
+            color: #656A84;
+          }
+        }
+      }
+
+      .switch-table {
+        display: flex;
+        flex-direction: column;
+        border: 0.5px solid #C9CBD4;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        .row {
+          height: 3.5714285714285716rem;
+          display: grid;
+          grid-template-columns: 65% 1fr;
+          border-bottom: 0.5px solid #C9CBD4;
+
+          &.header {
+            border-bottom: 2px solid #C9CBD4;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #343C5A;
+          }
+
+          &:last-child {
+            border: 0;
+          }
+
+          & > div {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #343C5A;
+
+            &:first-child {
+              border-right: 0.5px solid #C9CBD4;
+            }
+
+            button {
+              margin: 0 12px 0 0;
+            }
+          }
         }
       }
     }

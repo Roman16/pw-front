@@ -8,18 +8,29 @@ import AdvertisingType from "./CreateSteps/AdvertisingType"
 import CampaignDetails from "./CreateSteps/CampaignDetails"
 import AdGroupDetails from "./CreateSteps/AdGroupDetails"
 import ProductAdsDetails from "./CreateSteps/ProductAdsDetails"
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../../actions/analytics.actions"
+import TargetingsDetails from "./CreateSteps/TargetingsDetails"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0)
+    const dispatch = useDispatch()
+
+    const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.campaign)
 
     const goToNextStepHandler = () => setCurrentStep(prevState => prevState + 1)
     const goToPreviousStepHandler = () => setCurrentStep(prevState => prevState - 1)
 
-    const closeWindowHandler = () => false
+    const closeWindowHandler = () => {
+        dispatch(analyticsActions.setVisibleCreateWindow({campaign: false}))
+
+        setTimeout(() => setCurrentStep(0), 700)
+
+    }
 
     return (<ModalWindow
             className={'create-campaign-window'}
-            visible={false}
+            visible={visibleWindow}
             footer={false}
             handleCancel={closeWindowHandler}
         >
@@ -36,6 +47,7 @@ const CreateCampaignWindow = () => {
                 {currentStep === 1 && <CampaignDetails/>}
                 {currentStep === 2 && <AdGroupDetails/>}
                 {currentStep === 3 && <ProductAdsDetails/>}
+                {currentStep === 4 && <TargetingsDetails/>}
             </div>
 
             <WindowFooter

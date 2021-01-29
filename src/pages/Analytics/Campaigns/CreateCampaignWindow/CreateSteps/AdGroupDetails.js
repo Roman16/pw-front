@@ -30,7 +30,7 @@ const AdGroupDetails = () => {
 
         <div className="row">
             <div className="col">
-               <div className="form-group">
+               <div className="form-group w-50">
                    <label htmlFor="">Ad Group Name</label>
                    <Input/>
                </div>
