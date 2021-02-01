@@ -98,7 +98,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         likelihood a sale. <a href="">Learn more</a>
                     </div>
 
-                    <Radio value={'automatic_targetig'}>
+                    <Radio value={'manual_targetig'}>
                         Manual Targeting
                     </Radio>
 
