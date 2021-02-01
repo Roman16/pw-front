@@ -4,18 +4,18 @@ import sponsoredBrandsImage from "../../../../../assets/img/zth/sponsored-brands
 import sponsoredDisplayImage from "../../../../../assets/img/zth/sponsored-display-image.svg"
 import {Radio} from "antd"
 
-const AdvertisingType = () => {
+const AdvertisingType = ({campaignData, onChange}) => {
 
     return (<div className={'step step-0 advertising-type-step'}>
         <h4>Choose your campaign type</h4>
 
         <ul>
-            <Radio.Group defaultValue={1}>
+            <Radio.Group value={campaignData.campaign_type} onChange={({target: {value}}) => onChange({campaign_type: value})}>
                 <li>
                     <img src={sponsoredProductsImage} alt=""/>
 
                     <Radio value={'sponsored_products'}>
-                        Dynamic bids - up and down
+                        Sponsored Products
                     </Radio>
 
                     <div className="description">
@@ -27,8 +27,8 @@ const AdvertisingType = () => {
                 <li>
                     <img src={sponsoredBrandsImage} alt=""/>
 
-                    <Radio value={'sponsored_brands'}>
-                        Dynamic bids - up and down
+                    <Radio disabled value={'sponsored_brands'}>
+                        Sponsored Brands
                     </Radio>
                     <div className="description">
                         Showcase a collection of products to shoppers actively searching with related keywords on
@@ -39,13 +39,13 @@ const AdvertisingType = () => {
                 <li>
                     <img src={sponsoredDisplayImage} alt=""/>
 
-                    <Radio value={'sponsored_display'}>
-                        Dynamic bids - up and down
+                    <Radio disabled value={'sponsored_display'}>
+                        Sponsored Display
                     </Radio>
 
                     <div className="description">
-                        Re-engage shoppers off Amazon who viewed your products or similar products, and drive them
-                        to your detail pages.
+                        Re-engage shoppers off Amazon who viewed your products or similar products, and drive them to
+                        your detail pages.
                     </div>
                 </li>
             </Radio.Group>

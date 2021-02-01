@@ -15,7 +15,8 @@ const Pagination = ({
                         totalSize,
                         listLength,
                         processing,
-                        showQuickJumper=false
+                        showQuickJumper = false,
+                        disabled = false
                     }) => {
     const [paginationParams, setPaginationParams] = useState({
         page,
@@ -73,7 +74,7 @@ const Pagination = ({
     }
 
     return (
-        <div className="pw-pagination">
+        <div className={`pw-pagination ${disabled ? 'disabled' : ''}`}>
             <div className="page-size">
                 <label>
                     Items per page:
@@ -83,6 +84,7 @@ const Pagination = ({
                     onChange={changePageSizeHandler}
                     value={pageSize}
                     dropdownClassName={'pagination-select'}
+                    disabled={disabled}
                 >
                     {pageSizeOptions.map(item => (
                         <Option value={item} key={item}>{item}</Option>
@@ -97,7 +99,7 @@ const Pagination = ({
             </div>
 
             <div className="pagination-actions">
-               {showQuickJumper && <button
+                {showQuickJumper && <button
                     className={'first-page'}
                     disabled={page === 1}
                     onClick={goFirstPage}
@@ -121,7 +123,7 @@ const Pagination = ({
                     <SVG id={'change-page-icon'}/>
                 </button>
 
-               {showQuickJumper && <button
+                {showQuickJumper && <button
                     className={'last-page'}
                     disabled={page >= Math.ceil(totalSize / pageSize)}
                     onClick={goLastPage}

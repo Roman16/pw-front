@@ -1,21 +1,24 @@
 import React from "react"
 import {Radio, Switch} from "antd"
-import InputCurrency from "../../../../../components/Inputs/InputCurrency"
-import NegativeKeywords from "../../../../ZeroToHero/CreatingCampaign/ProductSettings/NegativeKeywords/NegativeKeywords"
+import InputCurrency from "../../../../../../components/Inputs/InputCurrency"
+import './TargetingsDetails.less'
+import NegativeKeywords from "./NegativeKeywords"
+import NegativePats from "./NegativePats"
 
-const TargetingsDetails = () => {
+const TargetingsDetails = ({campaignData, onChange}) => {
 
     return (<div className={'step step-4 targetings-details-step'}>
         <div className="row">
             <div className="col">
-                <Radio.Group>
+                <Radio.Group value={campaignData.create_targetings}
+                             onChange={({target: {value}}) => onChange({create_targetings: value})}>
                     <h4>Targetings</h4>
 
-                    <Radio value={'create'}>
+                    <Radio value={true}>
                         Create Targetings
                     </Radio>
 
-                    <Radio value={'not'}>
+                    <Radio value={false}>
                         Do not create Targetings
                     </Radio>
                 </Radio.Group>
@@ -59,12 +62,15 @@ const TargetingsDetails = () => {
             </div>
         </div>
 
-        <div className="row">
-            <NegativeKeywords
-                keywords={[]}
-                onUpdate={() => {}}
-            />
-        </div>
+        <NegativeKeywords
+            keywords={campaignData.negative_keywords}
+            onUpdate={onChange}
+        />
+
+        <NegativePats
+            keywords={campaignData.negative_pats}
+            onUpdate={onChange}
+        />
     </div>)
 }
 

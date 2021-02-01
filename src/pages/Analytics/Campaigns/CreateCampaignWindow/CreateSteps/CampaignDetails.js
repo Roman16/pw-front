@@ -1,9 +1,13 @@
 import React from "react"
-import {Input, Radio} from "antd"
+import {Input, Radio, Select} from "antd"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
+import CustomSelect from "../../../../../components/Select/Select"
+import moment from "moment"
 
-const CampaignDetails = () => {
+const Option = Select.Option
+
+const CampaignDetails = ({campaignData, onChange}) => {
 
     return (<div className={'step step-1 campaign-details-step'}>
         <div className="row">
@@ -11,12 +15,26 @@ const CampaignDetails = () => {
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="">Campaign Name</label>
-                        <Input/>
+                        <Input
+                            placeholder={'Campaign Name'}
+                            value={campaignData.campaign_name}
+                            onChange={({target: {value}}) => onChange({campaign_name: value})}
+                        />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">Portfolio</label>
-                        <Input/>
+                        <CustomSelect
+                            placeholder={'Select by'}
+                            getPopupContainer={trigger => trigger.parentNode}
+                            onChange={({target: {value}}) => onChange({portfolio_name: value})}
+                        >
+                            <Option
+                                value={'item.id'}
+                            >
+                                Portfolio
+                            </Option>
+                        </CustomSelect>
                     </div>
                 </div>
             </div>
@@ -55,7 +73,7 @@ const CampaignDetails = () => {
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="">Daily budget</label>
-                       <InputCurrency/>
+                        <InputCurrency/>
                     </div>
                 </div>
             </div>
@@ -141,7 +159,7 @@ const CampaignDetails = () => {
         <div className="row">
             <div className="col">
                 <h4>Adjust bids by placement:</h4>
-                
+
                 <div className="form-group row">
                     <label htmlFor="">Top of Search (first page)</label>
                     <InputCurrency typeIcon={'percent'}/>

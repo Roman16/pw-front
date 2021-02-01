@@ -122,6 +122,7 @@
           margin-right: 2px;
         }
       }
+
       &.last-page {
         svg {
           margin-left: 2px;
@@ -139,6 +140,34 @@
           stroke: #C9CBD4;
         }
       }
+    }
+  }
+
+  &.disabled {
+    .page-size label {
+      color: #C9CBD4;
+    }
+
+    .custom-select {
+      .ant-select-selection {
+        background: initial;
+
+        .ant-select-selection-selected-value {
+          color: #C9CBD4;
+        }
+
+        .ant-select-arrow {
+          svg {
+            use {
+              stroke: #C9CBD4;
+            }
+          }
+        }
+      }
+    }
+
+    .items-count {
+      color: #C9CBD4;
     }
   }
 }

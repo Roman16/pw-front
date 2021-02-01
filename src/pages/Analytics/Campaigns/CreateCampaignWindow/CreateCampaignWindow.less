@@ -58,7 +58,7 @@
 
   .processing-steps {
     border-right: 0.5px solid #C9CBD4;
-    padding: 1.4285714285714286rem 2.857142857142857rem;
+    padding: 1.4285714285714286rem 15px 1.4285714285714286rem 2.857142857142857rem;
     overflow: auto;
 
     .ant-steps-item * {
@@ -210,9 +210,14 @@
           margin-bottom: 8px;
         }
 
-        input, .InputCurrency {
+        input, .InputCurrency, .custom-select {
           height: 2.2857142857142856rem;
           font-size: 1rem;
+          transition: 0s !important;
+
+          & * {
+            transition: 0s !important;
+          }
         }
 
         .InputCurrency {
@@ -221,6 +226,33 @@
 
         .pw-date-picker {
           width: 180px;
+        }
+      }
+
+      .ant-radio-wrapper {
+        display: flex;
+        align-items: center;
+
+        & > span:last-child {
+          font-size: 1rem;
+          color: #343C5A;
+          margin: 0 0 0 1rem;
+          padding: 0;
+        }
+      }
+
+      .radio-description {
+        font-size: 0.8571428571428571rem;
+        line-height: 1rem;
+        color: #656A84;
+        margin: 10px 0 10px 33px;
+
+        a {
+          color: #6D6DF6;
+
+          &:hover {
+            text-decoration: underline;
+          }
         }
       }
     }
@@ -249,7 +281,6 @@
         li {
           border: 0.5px solid #C9CBD4;
           border-radius: 4px;
-          cursor: pointer;
 
           .ant-radio-wrapper {
             width: 100%;
@@ -271,6 +302,7 @@
             font-size: 0.8571428571428571rem;
             line-height: 1rem;
             color: #656A84;
+            padding: 0 5px 0 0;
           }
         }
       }
@@ -284,6 +316,23 @@
       & > .row {
         display: grid;
         grid-template-columns: 1fr 40%;
+
+        &.disable {
+          .form-group {
+            label {
+              color: #C9CBD4;
+            }
+
+            svg {
+              -webkit-filter: grayscale(100%); /* Safari 6.0 - 9.0 */
+              filter: grayscale(100%);
+            }
+          }
+
+          .col.description {
+            color: #C9CBD4;
+          }
+        }
 
 
         .col {
@@ -307,6 +356,20 @@
 
         .row {
           display: flex;
+        }
+
+        .form-group.row {
+          flex-direction: row;
+          align-items: center;
+          margin-bottom: 20px;
+
+          label {
+            width: 55%;
+            font-size: 1rem;
+            font-weight: 400;
+            color: #343C5A;
+            margin: 0;
+          }
         }
 
         .form-row {
@@ -323,24 +386,15 @@
             flex: 1;
           }
         }
-      }
-    }
 
-    .product-ads-details-step {
-      .row {
-        display: flex;
-
-        & > div {
-          flex: 1;
+        .ant-radio-wrapper {
+          margin-bottom: 10px;
         }
       }
     }
 
-    .targetings-details-step {
-      display: flex;
-      flex-direction: column;
-      grid-row-gap: 20px;
 
+    .campaign-overview-step {
       h3 {
         font-size: 1.4285714285714286rem;
         line-height: 1.7142857142857142rem;
@@ -349,69 +403,37 @@
         margin-bottom: 12px;
       }
 
-      & > .row {
-        display: grid;
-        grid-template-columns: 1fr 40%;
-
-
-        .col {
-          display: flex;
-          flex-direction: column;
-
-          &:first-child {
-            padding-right: 40px;
-          }
-
-          &.description {
-            height: max-content;
-            padding-left: 10px;
-            border-left: 0.5px solid #C9CBD4;
-
-            font-size: 0.8571428571428571rem;
-            line-height: 1rem;
-            color: #656A84;
-          }
-        }
-      }
-
-      .switch-table {
-        display: flex;
-        flex-direction: column;
+      .campaign-information {
         border: 0.5px solid #C9CBD4;
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: 4px;
+        display: flex;
+        flex-direction: column;
 
         .row {
-          height: 3.5714285714285716rem;
-          display: grid;
-          grid-template-columns: 65% 1fr;
+          display: flex;
+          min-height: 2.857142857142857rem;
           border-bottom: 0.5px solid #C9CBD4;
-
-          &.header {
-            border-bottom: 2px solid #C9CBD4;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #343C5A;
-          }
 
           &:last-child {
             border: 0;
           }
 
-          & > div {
+          .label {
+            width: 45%;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #343C5A;
             display: flex;
             align-items: center;
-            padding: 10px 20px;
+            padding: 0 0 0 1.4285714285714286rem;
+            border-right: 0.5px solid #C9CBD4;
+          }
+
+          .value {
+            flex: 1;
             font-size: 1rem;
             color: #343C5A;
-
-            &:first-child {
-              border-right: 0.5px solid #C9CBD4;
-            }
-
-            button {
-              margin: 0 12px 0 0;
-            }
           }
         }
       }

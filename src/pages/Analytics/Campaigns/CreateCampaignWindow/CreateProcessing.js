@@ -12,13 +12,13 @@ const steps = [
     'Overview',
 ]
 
-const CreateProcessing = ({step}) => {
+const CreateProcessing = ({step, skippedSteps}) => {
 
     return (
         <div className="processing-steps">
             <Steps direction="vertical" size="small" current={step}>
                 {steps.map((item, index) => (
-                    <Step title={item}/>
+                    <Step title={item} status={skippedSteps.includes(index) ? 'error' : index < step ? 'finish' : 'wait'}/>
                 ))}
             </Steps>
 
