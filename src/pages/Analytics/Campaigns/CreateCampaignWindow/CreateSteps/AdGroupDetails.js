@@ -34,7 +34,10 @@ const AdGroupDetails = ({campaignData, onChange}) => {
             <div className="col">
                 <div className="form-group w-50">
                     <label htmlFor="">Ad Group Name</label>
-                    <Input disabled={!campaignData.create_ad_group}/>
+                    <Input
+                        value={campaignData.ad_group_name}
+                        onChange={({target: {value}}) => onChange({ad_group_name: value})}
+                        disabled={!campaignData.create_ad_group}/>
                 </div>
 
             </div>
@@ -51,7 +54,12 @@ const AdGroupDetails = ({campaignData, onChange}) => {
             <div className="col">
                 <div className="form-group">
                     <label htmlFor="">Default bid</label>
-                    <InputCurrency disabled={!campaignData.create_ad_group}/>
+                    <InputCurrency
+                        step={0.01}
+                        value={campaignData.ad_group_default_bid}
+                        onChange={(value) => onChange({ad_group_default_bid: value})}
+                        disabled={!campaignData.create_ad_group}
+                    />
                 </div>
 
             </div>

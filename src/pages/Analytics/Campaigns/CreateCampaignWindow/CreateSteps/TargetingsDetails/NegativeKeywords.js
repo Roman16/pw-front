@@ -3,7 +3,7 @@ import {SVG} from "../../../../../../utils/icons"
 import {Radio} from "antd"
 import {unique, uniqueArrOfObj} from "../../../../../../utils/unique"
 
-const NegativeKeywords = ({keywords, onUpdate}) => {
+const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
         [keywordsCount, setKeywordsCount] = useState(null),
@@ -41,28 +41,32 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
     }
 
     return (
-        <div className={`negative-keywords relevant-keywords`}>
-            <h3>Negative keywords</h3>
+        <div className={`negative-keywords relevant-keywords ${disabled ? 'disabled' : ''}`}>
+            <h3>{title}</h3>
 
             <div className="row">
                 <form className="col new-keyword" onSubmit={addKeywordsHandler}>
                     <div className="row">
-                        <label htmlFor="">Match type:</label>
+                        {withMatchType && <>
+                            <label htmlFor="">Match type:</label>
 
-                        <Radio.Group value={keywordType} onChange={({target: {value}}) => setKeywordType(value)}>
-                            <Radio value={'exact'}>
-                                Negative Exact
-                            </Radio>
+                            <Radio.Group disabled={disabled} value={keywordType}
+                                         onChange={({target: {value}}) => setKeywordType(value)}>
+                                <Radio value={'exact'}>
+                                    Negative Exact
+                                </Radio>
 
 
-                            <Radio value={'phrase'}>
-                                Negative Phrase
-                            </Radio>
-                        </Radio.Group>
+                                <Radio value={'phrase'}>
+                                    Negative Phrase
+                                </Radio>
+                            </Radio.Group>
+                        </>}
                     </div>
 
                     <div className="form-group">
                             <textarea
+                                disabled={disabled}
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value)}
                                 required
@@ -71,7 +75,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                     </div>
 
                     <div className="actions">
-                        <button className={'btn default p15 add'}>
+                        <button disabled={disabled} className={'btn default p15 add'}>
                             <SVG id={'plus-icon'}/>
                             Add Keyword
                         </button>
@@ -81,7 +85,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                 <div className="col added-keywords">
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
-                        <button onClick={clearKeywordsListHandler}>Remove All</button>
+                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>
                     </div>
 
                     <div className="keywords-list">
@@ -90,9 +94,9 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                                 Keywords
                             </div>
 
-                            <div>
+                            {withMatchType && <div>
                                 Match type
-                            </div>
+                            </div>}
                         </div>
 
                         <ul>
@@ -102,9 +106,9 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                                         {keyword.text}
                                     </div>
 
-                                    <div className="type">
+                                    {withMatchType && <div className="type">
                                         {keyword.type === 'exact' ? 'Negative Exact' : 'Negative Phrase'}
-                                    </div>
+                                    </div>}
 
                                     <button className={'btn icon'} onClick={() => removeKeywordHandler(index)}>
                                         <SVG id={'remove-filter-icon'}/>

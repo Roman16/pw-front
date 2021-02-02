@@ -1,10 +1,14 @@
 import React, {useState} from "react"
-import {SVG} from "../../../../../../utils/icons"
 import {unique, uniqueArrOfObj} from "../../../../../../utils/unique"
+import {Radio} from "antd"
+import {SVG} from "../../../../../../utils/icons"
+import InputCurrency from "../../../../../../components/Inputs/InputCurrency"
 
-const NegativePats = ({keywords, onUpdate, disabled}) => {
+const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) => {
     const [newKeyword, setNewKeyword] = useState(''),
-        [keywordType, setKeywordType] = useState('exact')
+        [keywordType, setKeywordType] = useState('exact'),
+        [keywordsCount, setKeywordsCount] = useState(null),
+        [validKeywordsCount, setValidKeywordsCount] = useState(null)
 
 
     const addKeywordsHandler = (e) => {
@@ -21,24 +25,47 @@ const NegativePats = ({keywords, onUpdate, disabled}) => {
             }))
         ]
 
-        onUpdate({negative_pats: [...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'phrase'), 'text')]})
+        onUpdate({negative_keywords: [...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'phrase'), 'text')]})
+
+        setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
+        setValidKeywordsCount(validKeywords.length)
+
         setNewKeyword('')
     }
 
     const clearKeywordsListHandler = () => {
-        onUpdate({negative_pats: []})
+        onUpdate({negative_keywords: []})
     }
 
     const removeKeywordHandler = (index) => {
-        onUpdate({negative_pats: keywords.filter((item, itemIndex) => itemIndex !== index)})
+        onUpdate({negative_keywords: keywords.filter((item, itemIndex) => itemIndex !== index)})
     }
 
     return (
-        <div className={`negative-keywords negative-pats ${disabled ? 'disabled' : ''}`}>
-
+        <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
             <div className="row">
                 <form className="col new-keyword" onSubmit={addKeywordsHandler}>
-                    <h3>Negative PATs</h3>
+                    <div className="row">
+                        {withMatchType && <>
+                            <label htmlFor="">Match type:</label>
+
+                            <Radio.Group disabled={disabled} value={keywordType}
+                                         onChange={({target: {value}}) => setKeywordType(value)}>
+                                <Radio value={'broad'}>
+                                    Broad
+                                </Radio>
+
+                                <Radio value={'phrase'}>
+                                    Phrase
+                                </Radio>
+
+
+                                <Radio value={'exact'}>
+                                    Exact
+                                </Radio>
+                            </Radio.Group>
+                        </>}
+                    </div>
 
                     <div className="form-group">
                             <textarea
@@ -60,14 +87,22 @@ const NegativePats = ({keywords, onUpdate, disabled}) => {
 
                 <div className="col added-keywords">
                     <div className="row">
-                        <div className="count"><b>{keywords.length || 0}</b> ASINs added</div>
+                        <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
                         <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>
                     </div>
 
                     <div className="keywords-list">
                         <div className="header">
                             <div>
-                                ASIN
+                                Keywords
+                            </div>
+
+                            {withMatchType && < div>
+                                Match type
+                            </div>}
+
+                            <div>
+                                Bid
                             </div>
                         </div>
 
@@ -76,6 +111,14 @@ const NegativePats = ({keywords, onUpdate, disabled}) => {
                                 <li>
                                     <div className="text">
                                         {keyword.text}
+                                    </div>
+
+                                    {withMatchType && <div className="type">
+                                        {keyword.type === 'exact' ? 'Negative Exact' : 'Negative Phrase'}
+                                    </div>}
+
+                                    <div className="value">
+                                        <InputCurrency disabled={disabled}/>
                                     </div>
 
                                     <button className={'btn icon'} onClick={() => removeKeywordHandler(index)}>
@@ -91,4 +134,4 @@ const NegativePats = ({keywords, onUpdate, disabled}) => {
     )
 }
 
-export default NegativePats
+export default KeywordTargetingsList

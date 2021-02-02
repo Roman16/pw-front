@@ -1,9 +1,8 @@
 import React from "react"
 import {Input, Radio, Select} from "antd"
-import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import CustomSelect from "../../../../../components/Select/Select"
-import moment from "moment"
+import DatePicker from "../../../../../components/DatePicker/DatePicker"
 
 const Option = Select.Option
 
@@ -27,7 +26,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         <CustomSelect
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={({target: {value}}) => onChange({portfolio_name: value})}
+                            onChange={(value) => onChange({portfolio_name: value})}
                         >
                             <Option
                                 value={'item.id'}
@@ -51,12 +50,18 @@ const CampaignDetails = ({campaignData, onChange}) => {
                 <div className="form-row date">
                     <div className="form-group">
                         <label htmlFor="">Start</label>
-                        <DatePicker/>
+                        <DatePicker
+                            getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
+                            showToday={false}
+                        />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">End</label>
-                        <DatePicker/>
+                        <DatePicker
+                            getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
+                            showToday={false}
+                        />
                     </div>
                 </div>
             </div>
@@ -73,7 +78,11 @@ const CampaignDetails = ({campaignData, onChange}) => {
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="">Daily budget</label>
-                        <InputCurrency/>
+                        <InputCurrency
+                            step={0.01}
+                            value={campaignData.daily_budget}
+                            onChange={(value) => onChange({daily_budget: value})}
+                        />
                     </div>
                 </div>
             </div>
@@ -87,10 +96,13 @@ const CampaignDetails = ({campaignData, onChange}) => {
 
         <div className="row">
             <div className="col">
-                <Radio.Group>
+                <Radio.Group
+                    value={campaignData.targetings_type}
+                    onChange={({target: {value}}) => onChange({targetings_type: value})}
+                >
                     <h4>Choose Targeting</h4>
 
-                    <Radio value={'automatic_targetig'}>
+                    <Radio value={'automatic_targeting'}>
                         Automatic Targeting
                     </Radio>
                     <div className="radio-description">
@@ -98,7 +110,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         likelihood a sale. <a href="">Learn more</a>
                     </div>
 
-                    <Radio value={'manual_targetig'}>
+                    <Radio value={'manual_targeting'}>
                         Manual Targeting
                     </Radio>
 
@@ -118,7 +130,10 @@ const CampaignDetails = ({campaignData, onChange}) => {
 
         <div className="row">
             <div className="col">
-                <Radio.Group>
+                <Radio.Group
+                    value={campaignData.bidding_strategy}
+                    onChange={({target: {value}}) => onChange({bidding_strategy: value})}
+                >
                     <h4>Campaign bidding strategy:</h4>
 
                     <Radio value={'down'}>
@@ -162,12 +177,20 @@ const CampaignDetails = ({campaignData, onChange}) => {
 
                 <div className="form-group row">
                     <label htmlFor="">Top of Search (first page)</label>
-                    <InputCurrency typeIcon={'percent'}/>
+                    <InputCurrency
+                        step={0.01}
+                        value={campaignData.top_search_bid}
+                        typeIcon={'percent'}
+                    />
                 </div>
 
                 <div className="form-group row">
                     <label htmlFor="">Product pages (competitors pages)</label>
-                    <InputCurrency typeIcon={'percent'}/>
+                    <InputCurrency
+                        step={0.01}
+                        value={campaignData.product_pages_bid}
+                        typeIcon={'percent'}
+                    />
                 </div>
             </div>
 
