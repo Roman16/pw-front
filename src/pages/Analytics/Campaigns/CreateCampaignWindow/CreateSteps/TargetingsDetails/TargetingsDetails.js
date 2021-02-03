@@ -39,21 +39,82 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                             <div>Bid</div>
                         </div>
                         <div className="row">
-                            <div className={'switch-block'}><Switch disabled={disabledBlock}/>Close match</div>
-                            <div className={'form-group'}><InputCurrency disabled={disabledBlock}/></div>
+                            <div className={'switch-block'}>
+                                <Switch
+                                    checked={campaignData.enabled_target_close_match}
+                                    onChange={(value) => onChange({enabled_target_close_match: value})}
+                                    disabled={disabledBlock}
+                                />
+                                Close match
+                            </div>
+
+                            <div className={'form-group'}>
+                                <InputCurrency
+                                    step={0.01}
+                                    disabled={disabledBlock || !campaignData.enabled_target_close_match}
+                                    value={campaignData.target_close_match}
+                                    onChange={value => onChange({target_close_match: value})}
+                                />
+                            </div>
                         </div>
 
                         <div className="row">
-                            <div><Switch disabled={disabledBlock}/>Loose match</div>
-                            <div className={'form-group'}><InputCurrency disabled={disabledBlock}/></div>
+                            <div>
+                                <Switch
+                                    checked={campaignData.enabled_target_loose_match}
+                                    onChange={(value) => onChange({enabled_target_loose_match: value})}
+                                    disabled={disabledBlock}
+                                />
+                                Loose match
+                            </div>
+                            <div className={'form-group'}>
+                                <InputCurrency
+                                    step={0.01}
+                                    disabled={disabledBlock || !campaignData.enabled_target_loose_match}
+                                    value={campaignData.target_loose_match}
+                                    onChange={value => onChange({target_loose_match: value})}
+                                />
+                            </div>
                         </div>
+
                         <div className="row">
-                            <div><Switch disabled={disabledBlock}/>Substitutes</div>
-                            <div className={'form-group'}><InputCurrency disabled={disabledBlock}/></div>
+                            <div>
+                                <Switch
+                                    checked={campaignData.enabled_target_substitutes}
+                                    onChange={(value) => onChange({enabled_target_substitutes: value})}
+                                    disabled={disabledBlock}
+                                />
+                                Substitutes
+                            </div>
+
+                            <div className={'form-group'}>
+                                <InputCurrency
+                                    step={0.01}
+                                    disabled={disabledBlock || !campaignData.enabled_target_substitutes}
+                                    value={campaignData.target_substitutes}
+                                    onChange={value => onChange({target_substitutes: value})}
+                                />
+                            </div>
                         </div>
+
                         <div className="row">
-                            <div><Switch disabled={disabledBlock}/>Complements</div>
-                            <div className={'form-group'}><InputCurrency disabled={disabledBlock}/></div>
+                            <div>
+                                <Switch
+                                    checked={campaignData.enabled_target_complements}
+                                    onChange={(value) => onChange({enabled_target_complements: value})}
+                                    disabled={disabledBlock}
+                                />
+                                Complements
+                            </div>
+
+                            <div className={'form-group'}>
+                                <InputCurrency
+                                    step={0.01}
+                                    disabled={disabledBlock || !campaignData.enabled_target_complements}
+                                    value={campaignData.target_complements}
+                                    onChange={value => onChange({target_complements: value})}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -82,8 +143,10 @@ const TargetingsDetails = ({campaignData, onChange}) => {
         return (<div className={'step step-4 targetings-details-step'}>
             <div className="row">
                 <div className="col">
-                    <Radio.Group value={campaignData.create_targetings}
-                                 onChange={({target: {value}}) => onChange({create_targetings: value})}>
+                    <Radio.Group
+                        value={campaignData.create_targetings}
+                        onChange={({target: {value}}) => onChange({create_targetings: value})}
+                    >
                         <h4>Targetings</h4>
 
                         <Radio value={true}>

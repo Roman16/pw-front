@@ -52,6 +52,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
+                            onChange={(date) => onChange({start_date: date})}
                             showToday={false}
                         />
                     </div>
@@ -60,6 +61,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         <label htmlFor="">End</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
+                            onChange={(date) => onChange({end_date: date})}
                             showToday={false}
                         />
                     </div>
@@ -180,6 +182,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                     <InputCurrency
                         step={0.01}
                         value={campaignData.top_search_bid}
+                        onChange={value => onChange({top_search_bid: value})}
                         typeIcon={'percent'}
                     />
                 </div>
@@ -189,6 +192,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                     <InputCurrency
                         step={0.01}
                         value={campaignData.product_pages_bid}
+                        onChange={value => onChange({product_pages_bid: value})}
                         typeIcon={'percent'}
                     />
                 </div>

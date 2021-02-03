@@ -43,7 +43,15 @@ const CreateCampaignWindow = () => {
             negative_pats: [],
             keyword_targetings: [],
             t_targeting_type: 'keyword',
-            targeting_bid: 0
+            targeting_bid: 0,
+            enabled_target_close_match: true,
+            target_close_match: 0,
+            enabled_target_loose_match: true,
+            target_loose_match: 0,
+            enabled_target_substitutes: true,
+            target_substitutes: 0,
+            enabled_target_complements: true,
+            target_complements: 0,
         })
 
     const dispatch = useDispatch()

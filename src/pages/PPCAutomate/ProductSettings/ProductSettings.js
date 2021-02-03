@@ -7,6 +7,7 @@ import axios from "axios"
 import {productsServices} from "../../../services/products.services"
 import {notification} from '../../../components/Notification'
 import {useSelector} from "react-redux"
+import {Prompt} from "react-router-dom"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -14,6 +15,9 @@ let source = null
 let timerId = null
 
 let editableRow = null
+
+let savedRow = null,
+    savedValue = null
 
 
 const ProductSettingsMain = () => {
@@ -113,6 +117,7 @@ const ProductSettingsMain = () => {
             notification.success({
                 title: 'Changes saved'
             })
+
         } catch (e) {
             console.log(e)
         }
@@ -128,6 +133,8 @@ const ProductSettingsMain = () => {
     }
 
     const setRowData = (value, item, index) => {
+        editableRow = index
+
         const newList = productsList.map((product, productIndex) => {
             if (productIndex === index) {
                 product[item] = value
@@ -140,16 +147,21 @@ const ProductSettingsMain = () => {
 
         clearTimeout(timerId)
         timerId = setTimeout(() => {
+            savedRow = index
+            savedValue = value
+
             updateSettingsHandlerById(productsList[index])
-            editableRow = null
         }, 2000)
+    }
 
-        if (editableRow !== null && editableRow !== index) {
-            updateSettingsHandlerById(productsList[editableRow])
-            clearTimeout(timerId)
+    const blurRowHandler = (value, item, index) => {
+        clearTimeout(timerId)
+        if (editableRow === index) {
+            if (value != savedValue || index != savedRow) {
+                updateSettingsHandlerById(productsList[index])
+                editableRow = null
+            }
         }
-
-        editableRow = index
     }
 
     const changePaginationHandler = (params) => {
@@ -172,6 +184,20 @@ const ProductSettingsMain = () => {
         })
     }, [paginationOptions])
 
+    useEffect(() => {
+        if (productsList.length > 0) {
+            document.addEventListener("mouseleave", (event) => {
+                if (event.clientY <= 0 || event.clientX <= 0 || (event.clientX >= window.innerWidth || event.clientY >= window.innerHeight)) {
+                    if (editableRow !== null) {
+                        clearTimeout(timerId)
+                        updateSettingsHandlerById(productsList[editableRow])
+                        editableRow = null
+                    }
+                }
+            })
+        }
+    }, [productsList])
+
     return (
         <div className="product-settings-page">
             <Filters
@@ -189,9 +215,9 @@ const ProductSettingsMain = () => {
 
                 changePagination={changePaginationHandler}
                 setRowData={setRowData}
+                onBlur={blurRowHandler}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
             />
-
         </div>
     )
 }
