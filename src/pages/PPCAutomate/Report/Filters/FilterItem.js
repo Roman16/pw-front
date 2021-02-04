@@ -21,6 +21,7 @@ export const valueTile = {
     'exact': 'Exact',
     'phrase': 'Phrase',
     'broad': 'Broad',
+    'views': 'Views',
     'negativeExact': 'Negative Exact',
     'negativePhrase': 'Negative Phrase',
     //---------------------------

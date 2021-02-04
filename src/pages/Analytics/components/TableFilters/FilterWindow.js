@@ -244,7 +244,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             ...locationKey === 'targetings' ? [
                     {title: 'Exact', key: 'exact', value: 'exact'},
                     {title: 'Phrase', key: 'phrase', value: 'phrase'},
-                    {title: 'Broad', key: 'broad', value: 'broad'}
+                    {title: 'Broad', key: 'broad', value: 'broad'},
+                    {title: 'Views', key: 'views', value: 'views'},
                 ]
                 :
                 [

@@ -410,7 +410,7 @@ export const matchTypeColumn = {
     locked: true,
     noTotal: true,
     filter: true,
-    render: (type) => valueTile[type]
+    render: (type) => valueTile[type] || type
 }
 
 export const adGroupColumn = {
