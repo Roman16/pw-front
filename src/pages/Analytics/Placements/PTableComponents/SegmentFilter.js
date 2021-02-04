@@ -1,16 +1,12 @@
 import React, {useState} from "react"
 import {Popover} from "antd"
-import {useDispatch} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const SegmentFilter = ({placementSegment}) => {
+const SegmentFilter = ({segment, onChange}) => {
     const [visible, setVisible] = useState(false)
-
-    const dispatch = useDispatch()
 
     const setSegmentHandler = (value) => {
         setVisible(false)
-        dispatch(analyticsActions.setSegmentValue(value))
+        onChange(value)
     }
 
     return (
@@ -23,18 +19,18 @@ const SegmentFilter = ({placementSegment}) => {
             visible={visible}
             onVisibleChange={v => setVisible(v)}
             content={<ul>
-                <li onClick={() => setSegmentHandler(null)} className={placementSegment === null ? 'active' : ''}>
+                <li onClick={() => setSegmentHandler('none')} className={segment === 'none' ? 'active' : ''}>
                     None
                 </li>
                 <li onClick={() => setSegmentHandler('advertisingType')}
-                    className={placementSegment === 'advertisingType' ? 'active' : ''}
+                    className={segment === 'advertisingType' ? 'active' : ''}
                 >
                     Advertising Type
                 </li>
             </ul>}
         >
             <button
-                className={`segment-filter icon-btn ${(placementSegment !== null) ? 'active' : ''}`}
+                className={`segment-filter icon-btn ${(segment === 'advertisingType') ? 'active' : ''}`}
                 onClick={() => setVisible(prevState => !prevState)}
             >
                 <i className={'btn icon'}>

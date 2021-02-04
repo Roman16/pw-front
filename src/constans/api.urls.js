@@ -140,5 +140,6 @@ export const analyticsUrls = {
     settingsDetails: (page, id) => `analytics/${page}/${id}/settings`,
 
     searchTermsData: 'analytics/v2/search-terms',
+    placementData: 'analytics/v2/placements',
     targetingsDetails: 'analytics/v2/search-terms/targetings-data',
 }
