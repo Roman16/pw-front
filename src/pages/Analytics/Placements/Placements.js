@@ -150,7 +150,7 @@ const Placements = () => {
                 getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
             }
 
-            if (localSegmentValue === 'targetings') {
+            if (localSegmentValue === 'advertisingType') {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
                     chart: res.chart || prevState.chart,
@@ -158,16 +158,12 @@ const Placements = () => {
                         ? {
                             ...res.table,
                             response: res.table.response.map(item => {
-                                item.targetingsData = item.targetingId.map((target, index) => {
-                                    const targetObj = {targetingId: target}
+                                item.segmentData = item.advertisingType_segmented.map((key, index) => {
+                                    const targetObj = {advertisingType: key}
 
                                     columns.forEach(column => {
                                         targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
                                     })
-
-                                    targetObj.campaignId = item.campaignId[index]
-                                    targetObj.adGroupId = item.adGroupId[index]
-                                    targetObj.calculatedTargetingText = item.calculatedTargetingText_segmented[index]
 
                                     return targetObj
                                 })

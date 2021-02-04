@@ -57,7 +57,7 @@ export const expandedRowRender = (props, columnsBlackList) => {
 
 
     return (
-        props.targetingsData && props.targetingsData.map(target => (
+        props.segmentData && props.segmentData.map(target => (
                 <div>
                     {columns
                         .filter(column => !columnsBlackList.includes(column.key))
