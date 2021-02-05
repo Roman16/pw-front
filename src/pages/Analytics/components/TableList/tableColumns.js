@@ -409,7 +409,7 @@ export const matchTypeColumn = {
     locked: true,
     noTotal: true,
     filter: true,
-    render: (type) => valueTile[type]
+    render: (type) => valueTile[type] || type
 }
 
 export const adGroupColumn = {
@@ -421,7 +421,7 @@ export const adGroupColumn = {
     filter: true,
     noTotal: true,
     render: (adGroup, item) => (
-        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupName}`}>
+        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}>
             {item.adGroupName}
         </Link>
     )
