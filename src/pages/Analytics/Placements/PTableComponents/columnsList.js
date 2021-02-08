@@ -65,7 +65,7 @@ export const PColumnsList = (selectedCampaign) => {
                 noTotal: true,
                 render: (bid_adjustment) => <InputCurrency
                     disabled
-                    value={bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}
+                    value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}
                 />
             }
         ] : [],

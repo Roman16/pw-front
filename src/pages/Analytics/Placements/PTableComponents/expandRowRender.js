@@ -36,7 +36,7 @@ export const expandedRowRender = (props, columnsBlackList, selectedCampaign) => 
                 width: '250px',
             },
             {
-                width: '200px',
+                width: '150px',
             }
         ] : [],
         impressionsColumn,
