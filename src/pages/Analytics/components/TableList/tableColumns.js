@@ -35,11 +35,8 @@ export const RenderMetricValue = ({number, type}) => {
 
 
 export const renderNumberField = (type = 'number', showDiff = true) => {
-
     return ({
         render: (number, item, array, dataIndex) => {
-            console.log(item)
-            console.log(showDiff)
             return (<div className={'metric-value'}>
                 <RenderMetricValue number={number} type={type}/>
 
