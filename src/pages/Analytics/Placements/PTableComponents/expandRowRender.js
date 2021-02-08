@@ -68,7 +68,7 @@ export const expandedRowRender = (props, columnsBlackList) => {
                                         className={`table-body__field ${item.align || ''}`}
                                         style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                     >
-                                        {item.render && item.render(target[item.dataIndex], target)}
+                                        {item.render && item.render(target[item.dataIndex], target, props.segmentData, item.dataIndex)}
                                     </div>
                                 )
                             }

@@ -15,6 +15,7 @@ import MainChart from "../componentsV2/MainChart/MainChart"
 import {PColumnsList} from "./PTableComponents/columnsList"
 import SegmentFilter from "./PTableComponents/SegmentFilter"
 import {expandedRowRender} from "./PTableComponents/expandRowRender"
+import {chartAreaKeys} from "./PlacementsStatistics/Chart"
 
 let prevActiveMetrics = []
 
@@ -147,29 +148,31 @@ const Placements = () => {
             })
 
             if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
+                getPreviousPeriodData()
             }
 
             if (localSegmentValue === 'advertisingType') {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
                     chart: res.chart || prevState.chart,
+                    stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
                     table: res.table
                         ? {
                             ...res.table,
-                            response: res.table.response.map(item => {
-                                item.segmentData = item.advertisingType_segmented.map((key, index) => {
-                                    const targetObj = {advertisingType: key}
+                            response: res.table.response
+                                .map(item => {
+                                    item.segmentData = item.advertisingType_segmented.map((key, index) => {
+                                        const targetObj = {advertisingType: key}
 
-                                    columns.forEach(column => {
-                                        targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
+                                        columns.forEach(column => {
+                                            targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
+                                        })
+
+                                        return targetObj
                                     })
 
-                                    return targetObj
+                                    return item
                                 })
-
-                                return item
-                            })
                         } : prevState.table
                 }))
 
@@ -177,7 +180,8 @@ const Placements = () => {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
                     chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table
+                    table: res.table || prevState.table,
+                    stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
                 }))
             }
 
@@ -199,7 +203,7 @@ const Placements = () => {
         setLocalTableOptions(data)
     }
 
-    const getPreviousPeriodData = async (idList) => {
+    const getPreviousPeriodData = async () => {
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
                 const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
@@ -221,14 +225,15 @@ const Placements = () => {
                     },
                 ]
 
-                const res = await analyticsServices.getSearchTermsData({
+                const res = await analyticsServices.getPlacementData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
-                }, `&queryCRC64:in=${idList.join(',')}`)
+                    areaChartMetric
+                })
 
                 setPageData(prevState => {
                     return {
@@ -238,9 +243,20 @@ const Placements = () => {
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
                                 compareWithPrevious: true,
-                                ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['queryCRC64']}), (value, key) => {
+                                ..._.mapKeys(_.find(res.table.response, {placementName: item['placementName']}), (value, key) => {
                                     return `${key}_prev`
-                                })
+                                }),
+                                // ...localSegmentValue === 'advertisingType' ? {
+                                //     segmentData: item.advertisingType_segmented.map((key, index) => {
+                                //         const targetObj = {..._.find(item.segmentData, {advertisingType: key}), compareWithPrevious: true}
+                                //
+                                //         columns.forEach(column => {
+                                //             targetObj[`${column.dataIndex}_prev`] = _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`] ? _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`][index] : null
+                                //         })
+                                //
+                                //         return targetObj
+                                //     })
+                                // } : {}
                             }))]
                         }
                     }
@@ -275,7 +291,7 @@ const Placements = () => {
     }, [activeMetrics])
 
     useEffect(() => {
-            getPageData(['stacked_area_chart'])
+        getPageData(['stacked_area_chart'])
     }, [areaChartMetric])
 
     useEffect(() => {
@@ -291,6 +307,7 @@ const Placements = () => {
         getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
     }, [selectedRangeDate, filters])
 
+    console.log(pageData.table)
     return (
         <div className={'placements-workplace'}>
             <MainMetrics
@@ -319,7 +336,10 @@ const Placements = () => {
             <TableList
                 tableRequestParams={tableRequestParams}
                 fetching={tableFetchingStatus}
-                tableData={pageData.table}
+                tableData={{
+                    ...pageData.table,
+                    response: Object.values(chartAreaKeys).map(key => _.find(pageData.table.response, {placementName: key})).filter(i => !!i)
+                }}
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}

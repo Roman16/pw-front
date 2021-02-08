@@ -7,7 +7,6 @@ import axios from "axios"
 import {productsServices} from "../../../services/products.services"
 import {notification} from '../../../components/Notification'
 import {useSelector} from "react-redux"
-import {Prompt} from "react-router-dom"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -19,6 +18,7 @@ let editableRow = null
 let savedRow = null,
     savedValue = null
 
+let showNotPopup = true
 
 const ProductSettingsMain = () => {
     const [productsList, setProductsList] = useState([]),
@@ -75,13 +75,24 @@ const ProductSettingsMain = () => {
         })
     }
 
+    const showNotification = (title, type = 'success') => {
+        if (showNotPopup) {
+            notification[type]({
+                title: title
+            })
+
+            showNotPopup = false
+
+            setTimeout(() => {
+                showNotPopup = true
+            }, 3500)
+        }
+    }
+
     const updateSettingsHandlerById = async (data) => {
         try {
             await productsServices.updateProductSettings(data)
-
-            notification.success({
-                title: 'Changes saved'
-            })
+            showNotification('Changes saved')
         } catch (e) {
             console.log(e)
         }
@@ -114,9 +125,7 @@ const ProductSettingsMain = () => {
                 setProductsList([...newList])
             }
 
-            notification.success({
-                title: 'Changes saved'
-            })
+            showNotification('Changes saved')
 
         } catch (e) {
             console.log(e)
