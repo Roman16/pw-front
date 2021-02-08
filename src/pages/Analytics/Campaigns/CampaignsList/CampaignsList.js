@@ -174,7 +174,7 @@ const CampaignsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<CreateCampaignButton/>}
+                // moreActions={<CreateCampaignButton/>}
             />
         </section>
     )

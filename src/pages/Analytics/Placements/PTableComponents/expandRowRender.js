@@ -24,21 +24,21 @@ const advertisingOrder = ['SponsoredProducts', 'SponsoredBrands'],
     }
 
 
-export const expandedRowRender = (props, columnsBlackList) => {
+export const expandedRowRender = (props, columnsBlackList, selectedCampaign) => {
     const columns = [
         {
             width: '250px',
             dataIndex: 'advertisingType',
             render: (text) => advertisingTitle[text]
         },
-        // ...selectedCampaign ? [
-        //     {
-        //         width: '250px',
-        //     },
-        //     {
-        //         width: '200px',
-        //     }
-        // ] : [],
+        ...selectedCampaign ? [
+            {
+                width: '250px',
+            },
+            {
+                width: '200px',
+            }
+        ] : [],
         impressionsColumn,
         clicksColumn,
         ctrColumn,

@@ -65,39 +65,8 @@ const Placements = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
-    const getTargetingsDetails = async (id) => {
-        if (openedSearchTerms.includes(id)) setOpenedSearchTerms(prevState => [...prevState.filter(i => i !== id)])
-        else try {
-            setProcessingRows(prevState => [...prevState, id])
-            const queryParams = queryString.parse(history.location.search)
 
-            const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate, localSorterColumn, [...Object.keys(queryParams).map(key => ({
-                filterBy: key,
-                type: 'eq',
-                value: queryParams[key]
-            })).filter(item => !!item.value)])
-
-            setPageData(prevState => ({
-                ...prevState,
-                table: {
-                    ...prevState.table,
-                    response: prevState.table.response.map(item => {
-                        if (item.queryCRC64 === id) {
-                            item.targetingsData = res.response
-                        }
-
-                        return item
-                    })
-                }
-            }))
-            setOpenedSearchTerms(prevState => [...prevState, id])
-            setProcessingRows(prevState => [...prevState.filter(i => i !== id)])
-        } catch (e) {
-
-        }
-    }
-
-    const columns = PColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms, processingRows)
+    const columns = PColumnsList(!!mainState.campaignId)
 
     const getPageData = debounce(50, false, async (pageParts) => {
         setOpenedSearchTerms([])
@@ -334,6 +303,7 @@ const Placements = () => {
             />
 
             <TableList
+                searchField={false}
                 tableRequestParams={tableRequestParams}
                 fetching={tableFetchingStatus}
                 tableData={{
@@ -350,7 +320,7 @@ const Placements = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList) : undefined}
+                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}
