@@ -46,7 +46,8 @@ const initialState = {
     placementSegment: localStorage.getItem('placementSegmentValue') ? JSON.parse(localStorage.getItem('placementSegmentValue')) : null,
     visibleNavigation: true,
     visibleCreationWindows: {
-        campaign: false
+        campaign: false,
+        portfolio: false,
     },
     mainState: {
         campaignId: undefined,

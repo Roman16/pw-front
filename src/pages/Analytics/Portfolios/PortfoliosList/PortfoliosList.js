@@ -21,6 +21,7 @@ import {
 import TableList from "../../components/TableList/TableList"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 
 const PortfoliosList = ({location}) => {
@@ -86,6 +87,7 @@ const PortfoliosList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
         </section>
     )

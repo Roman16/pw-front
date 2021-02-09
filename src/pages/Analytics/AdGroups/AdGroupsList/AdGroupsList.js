@@ -23,6 +23,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 const AdGroupsList = ({location}) => {
     const {selectedCampaign} = useSelector(state => ({
@@ -129,6 +130,7 @@ const AdGroupsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
         </section>
     )

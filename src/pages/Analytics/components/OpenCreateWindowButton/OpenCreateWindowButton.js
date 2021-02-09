@@ -3,18 +3,18 @@ import {SVG} from "../../../../utils/icons"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const CreateCampaignButton = () => {
+const OpenCreateWindowButton = ({title, window}) => {
     const dispatch = useDispatch()
 
-    const openCreateWindowHandler = () => dispatch(analyticsActions.setVisibleCreateWindow({campaign: true}))
+    const openCreateWindowHandler = () => dispatch(analyticsActions.setVisibleCreateWindow({[window]: true}))
 
     return (<button
         className="btn default create-button"
         onClick={openCreateWindowHandler}
     >
         <SVG id={'plus-white'}/>
-        Add Campaign
+        {title}
     </button>)
 }
 
-export default CreateCampaignButton
+export default OpenCreateWindowButton
