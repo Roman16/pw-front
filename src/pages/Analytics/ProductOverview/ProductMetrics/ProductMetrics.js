@@ -9,16 +9,18 @@ import {
     adUnitsColumn,
     budgetAllocationColumn,
     clicksColumn,
-    cpaColumn, cpcColumn,
+    cpaColumn,
+    cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField, RenderProduct,
+    renderNumberField,
+    RenderProduct,
     roasColumn,
-    salesShareColumn, skuAsinColumn,
+    salesShareColumn,
+    skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import './ProductMetrics.less'
-import Pagination from "../../../../components/Pagination/Pagination"
 
 const ProductMetrics = ({location, isParent}) => {
     const columns = [
@@ -174,7 +176,6 @@ const ProductMetrics = ({location, isParent}) => {
         adProfitColumn
     ]
 
-
     return (
         <section className={'list-section'}>
             <TableList
@@ -185,7 +186,6 @@ const ProductMetrics = ({location, isParent}) => {
                 location={location}
                 isParent={isParent}
             />
-
         </section>
     )
 }
