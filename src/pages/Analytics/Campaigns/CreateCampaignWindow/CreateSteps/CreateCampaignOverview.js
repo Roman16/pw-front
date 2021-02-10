@@ -3,7 +3,7 @@ import moment from "moment"
 import {numberMask} from "../../../../../utils/numberMask"
 import {round} from "../../../../../utils/round"
 
-const CreateCampaignOverview = ({campaignData}) => {
+const CreateCampaignOverview = ({createData}) => {
     const targetingsTypeEnum = {
             'automatic_targeting': 'Automatic Targeting',
             'manual_targeting': 'Manual Targeting',
@@ -138,7 +138,7 @@ const CreateCampaignOverview = ({campaignData}) => {
         fieldsWithoutAdGroup = ['campaignType', 'campaignName', 'portfolioName', 'startDate', 'endDate', 'dailyBudget', 'targeting', 'biddingStrategy', 'bidsTopOfSearch', 'bidsProductPage']
 
 
-    if (!campaignData.create_ad_group) {
+    if (!createData.create_ad_group) {
         return (<div className={'step step-5 campaign-overview-step'}>
             <h3>Overview</h3>
 
@@ -147,12 +147,12 @@ const CreateCampaignOverview = ({campaignData}) => {
                     <div className="row">
                         <div className="label">{fields[key].title}</div>
                         <div
-                            className="value">{fields[key].render ? fields[key].render(campaignData[fields[key].fieldKey]) : campaignData[fields[key].fieldKey]}</div>
+                            className="value">{fields[key].render ? fields[key].render(createData[fields[key].fieldKey]) : createData[fields[key].fieldKey]}</div>
                     </div>
                 ))}
             </div>
         </div>)
-    } else if (campaignData.targetings_type === 'automatic_targeting') {
+    } else if (createData.targetings_type === 'automatic_targeting') {
         return (<div className={'step step-5 campaign-overview-step'}>
             <h3>Overview</h3>
 
@@ -161,12 +161,12 @@ const CreateCampaignOverview = ({campaignData}) => {
                     <div className="row">
                         <div className="label">{fields[key].title}</div>
                         <div
-                            className="value">{fields[key].render ? fields[key].render(campaignData[fields[key].fieldKey]) : campaignData[fields[key].fieldKey]}</div>
+                            className="value">{fields[key].render ? fields[key].render(createData[fields[key].fieldKey]) : createData[fields[key].fieldKey]}</div>
                     </div>
                 ))}
             </div>
         </div>)
-    } else if (campaignData.targetings_type === 'manual_targeting' && campaignData.t_targeting_type === 'product') {
+    } else if (createData.targetings_type === 'manual_targeting' && createData.t_targeting_type === 'product') {
         return (<div className={'step step-5 campaign-overview-step'}>
             <h3>Overview</h3>
 
@@ -175,7 +175,7 @@ const CreateCampaignOverview = ({campaignData}) => {
                     <div className="row">
                         <div className="label">{fields[key].title}</div>
                         <div
-                            className="value">{fields[key].render ? fields[key].render(campaignData[fields[key].fieldKey]) : campaignData[fields[key].fieldKey]}</div>
+                            className="value">{fields[key].render ? fields[key].render(createData[fields[key].fieldKey]) : createData[fields[key].fieldKey]}</div>
                     </div>
                 ))}
             </div>
@@ -189,7 +189,7 @@ const CreateCampaignOverview = ({campaignData}) => {
                     <div className="row">
                         <div className="label">{fields[key].title}</div>
                         <div
-                            className="value">{fields[key].render ? fields[key].render(campaignData[fields[key].fieldKey]) : campaignData[fields[key].fieldKey]}</div>
+                            className="value">{fields[key].render ? fields[key].render(createData[fields[key].fieldKey]) : createData[fields[key].fieldKey]}</div>
                     </div>
                 ))}
             </div>

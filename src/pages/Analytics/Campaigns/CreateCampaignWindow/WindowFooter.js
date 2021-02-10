@@ -1,6 +1,6 @@
 import React from "react"
 
-const WindowFooter = ({currentStep, goNext, goPrevious, onCreate}) => {
+const WindowFooter = ({steps, currentStep, goNext, goPrevious, onCreate, createButtonTitle}) => {
 
     return (
         <div className="window-footer">
@@ -12,18 +12,18 @@ const WindowFooter = ({currentStep, goNext, goPrevious, onCreate}) => {
                 Previous
             </button>}
 
-            {currentStep !== 5 && <button
+            {currentStep !== steps.length - 1 && <button
                 className="btn default"
                 onClick={goNext}
             >
                 Next
             </button>}
 
-            {currentStep === 5 && <button
+            {currentStep === steps.length - 1 && <button
                 className="btn default"
                 onClick={onCreate}
             >
-                Create Campaign
+                {createButtonTitle}
             </button>}
         </div>
     )

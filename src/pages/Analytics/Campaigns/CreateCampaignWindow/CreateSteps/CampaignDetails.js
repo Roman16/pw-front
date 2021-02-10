@@ -6,7 +6,7 @@ import DatePicker from "../../../../../components/DatePicker/DatePicker"
 
 const Option = Select.Option
 
-const CampaignDetails = ({campaignData, onChange}) => {
+const CampaignDetails = ({createData, onChange}) => {
 
     return (<div className={'step step-1 campaign-details-step'}>
         <div className="row">
@@ -16,7 +16,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         <label htmlFor="">Campaign Name</label>
                         <Input
                             placeholder={'Campaign Name'}
-                            value={campaignData.campaign_name}
+                            value={createData.campaign_name}
                             onChange={({target: {value}}) => onChange({campaign_name: value})}
                         />
                     </div>
@@ -82,7 +82,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                         <label htmlFor="">Daily budget</label>
                         <InputCurrency
                             step={0.01}
-                            value={campaignData.daily_budget}
+                            value={createData.daily_budget}
                             onChange={(value) => onChange({daily_budget: value})}
                         />
                     </div>
@@ -99,7 +99,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
         <div className="row">
             <div className="col">
                 <Radio.Group
-                    value={campaignData.targetings_type}
+                    value={createData.targetings_type}
                     onChange={({target: {value}}) => onChange({targetings_type: value})}
                 >
                     <h4>Choose Targeting</h4>
@@ -133,7 +133,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
         <div className="row">
             <div className="col">
                 <Radio.Group
-                    value={campaignData.bidding_strategy}
+                    value={createData.bidding_strategy}
                     onChange={({target: {value}}) => onChange({bidding_strategy: value})}
                 >
                     <h4>Campaign bidding strategy:</h4>
@@ -181,7 +181,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                     <label htmlFor="">Top of Search (first page)</label>
                     <InputCurrency
                         step={0.01}
-                        value={campaignData.top_search_bid}
+                        value={createData.top_search_bid}
                         onChange={value => onChange({top_search_bid: value})}
                         typeIcon={'percent'}
                     />
@@ -191,7 +191,7 @@ const CampaignDetails = ({campaignData, onChange}) => {
                     <label htmlFor="">Product pages (competitors pages)</label>
                     <InputCurrency
                         step={0.01}
-                        value={campaignData.product_pages_bid}
+                        value={createData.product_pages_bid}
                         onChange={value => onChange({product_pages_bid: value})}
                         typeIcon={'percent'}
                     />

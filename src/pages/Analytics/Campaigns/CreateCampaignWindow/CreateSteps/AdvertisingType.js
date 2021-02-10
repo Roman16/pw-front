@@ -4,13 +4,13 @@ import sponsoredBrandsImage from "../../../../../assets/img/zth/sponsored-brands
 import sponsoredDisplayImage from "../../../../../assets/img/zth/sponsored-display-image.svg"
 import {Radio} from "antd"
 
-const AdvertisingType = ({campaignData, onChange}) => {
+const AdvertisingType = ({createData, onChange}) => {
 
     return (<div className={'step step-0 advertising-type-step'}>
         <h4>Choose your campaign type</h4>
 
         <ul>
-            <Radio.Group value={campaignData.campaign_type} onChange={({target: {value}}) => onChange({campaign_type: value})}>
+            <Radio.Group value={createData.campaign_type} onChange={({target: {value}}) => onChange({campaign_type: value})}>
                 <li>
                     <img src={sponsoredProductsImage} alt=""/>
 

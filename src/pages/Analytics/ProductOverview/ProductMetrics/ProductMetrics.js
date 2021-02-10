@@ -18,6 +18,7 @@ import {
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import './ProductMetrics.less'
+import Pagination from "../../../../components/Pagination/Pagination"
 
 const ProductMetrics = ({location, isParent}) => {
     const columns = [
@@ -179,11 +180,12 @@ const ProductMetrics = ({location, isParent}) => {
             <TableList
                 columns={columns}
                 showFilters={false}
-                showPagination={false}
-                showTotal={false}
+                showPagination={isParent}
+                showTotal={isParent}
                 location={location}
                 isParent={isParent}
             />
+
         </section>
     )
 }

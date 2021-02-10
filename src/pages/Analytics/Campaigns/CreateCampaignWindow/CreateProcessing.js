@@ -4,16 +4,7 @@ import {SVG} from "../../../../utils/icons"
 
 const {Step} = Steps
 
-const steps = [
-    'Advertising Type',
-    'Campaign',
-    'Ad Group',
-    'Product Ads',
-    'Targetings',
-    'Overview',
-]
-
-const CreateProcessing = ({step, skippedSteps, setStep, finishedSteps, processSteps}) => {
+const CreateProcessing = ({steps, step, skippedSteps, setStep, finishedSteps, processSteps}) => {
     const getStepStatus = (step) => {
         if (skippedSteps.includes(step)) return 'error'
         else if (finishedSteps.includes(step) && !skippedSteps.includes(step + 1)) return 'finish'

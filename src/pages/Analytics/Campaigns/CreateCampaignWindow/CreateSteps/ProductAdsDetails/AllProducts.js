@@ -10,7 +10,7 @@ import _ from 'lodash'
 const {Search} = Input;
 
 
-const AllProducts = ({onChange, campaignData, disabledBlock}) => {
+const AllProducts = ({onChange, createData, disabledBlock}) => {
     const [allProducts, setAllProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [searchStr, setSearchStr] = useState(''),
@@ -78,7 +78,7 @@ const AllProducts = ({onChange, campaignData, disabledBlock}) => {
                         <button
                             disabled={allProducts.length === 0 || disabledBlock}
                             className={'btn default p15'}
-                            onClick={() => onChange({selectedProductAds: [...campaignData.selectedProductAds, ...allProducts]})}
+                            onClick={() => onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts]})}
                         >
                             Add all on this page
                         </button>
@@ -91,10 +91,10 @@ const AllProducts = ({onChange, campaignData, disabledBlock}) => {
                     <ProductItem
                         key={product.id}
                         product={product}
-                        isAdded={!!_.find(campaignData.selectedProductAds, {id: product.id})}
+                        isAdded={!!_.find(createData.selectedProductAds, {id: product.id})}
                         disabledBlock={disabledBlock}
 
-                        onAdd={() => onChange({selectedProductAds: [...campaignData.selectedProductAds, product]})}
+                        onAdd={() => onChange({selectedProductAds: [...createData.selectedProductAds, product]})}
                     />
                 ))}
             </div>

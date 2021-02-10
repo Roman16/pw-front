@@ -54,6 +54,16 @@ const CreateCampaignWindow = () => {
             target_complements: 0,
         })
 
+
+    const steps = [
+        'Advertising Type',
+        'Campaign',
+        'Ad Group',
+        'Product Ads',
+        'Targetings',
+        'Overview',
+    ]
+
     const dispatch = useDispatch()
 
     const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.campaign)
@@ -137,6 +147,7 @@ const CreateCampaignWindow = () => {
             />
 
             <CreateProcessing
+                steps={steps}
                 step={currentStep}
                 skippedSteps={skippedSteps}
                 finishedSteps={finishedSteps}
@@ -146,28 +157,30 @@ const CreateCampaignWindow = () => {
 
             <div className="create-steps">
                 {currentStep === 0 &&
-                <AdvertisingType campaignData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <AdvertisingType createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 1 &&
-                <CampaignDetails campaignData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <CampaignDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 2 &&
-                <AdGroupDetails campaignData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <AdGroupDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 3 &&
-                <ProductAdsDetails campaignData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <ProductAdsDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 4 &&
-                <TargetingsDetails campaignData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <TargetingsDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
-                {currentStep === 5 && <CreateCampaignOverview campaignData={createCampaignData}/>}
+                {currentStep === 5 && <CreateCampaignOverview createData={createCampaignData}/>}
             </div>
 
             <WindowFooter
+                steps={steps}
                 currentStep={currentStep}
                 goNext={goToNextStepHandler}
                 goPrevious={goToPreviousStepHandler}
                 onCreate={createCampaignHandler}
+                createButtonTitle={'Create Campaign'}
             />
         </ModalWindow>
     )

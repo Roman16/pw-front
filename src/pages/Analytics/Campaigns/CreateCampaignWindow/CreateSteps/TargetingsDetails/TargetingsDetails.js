@@ -6,15 +6,15 @@ import NegativeKeywords from "./NegativeKeywords"
 import NegativePats from "./NegativePats"
 import KeywordTargetingsList from "./KeywordTargetingsList"
 
-const TargetingsDetails = ({campaignData, onChange}) => {
+const TargetingsDetails = ({createData, onChange}) => {
 
-    const disabledBlock = !campaignData.create_targetings
+    const disabledBlock = !createData.create_targetings
 
-    if (campaignData.targetings_type === 'automatic_targeting') {
+    if (createData.targetings_type === 'automatic_targeting') {
         return (<div className={'step step-4 targetings-details-step'}>
             <div className="row">
                 <div className="col">
-                    <Radio.Group value={campaignData.create_targetings}
+                    <Radio.Group value={createData.create_targetings}
                                  onChange={({target: {value}}) => onChange({create_targetings: value})}>
                         <h4>Targetings</h4>
 
@@ -41,7 +41,7 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                         <div className="row">
                             <div className={'switch-block'}>
                                 <Switch
-                                    checked={campaignData.enabled_target_close_match}
+                                    checked={createData.enabled_target_close_match}
                                     onChange={(value) => onChange({enabled_target_close_match: value})}
                                     disabled={disabledBlock}
                                 />
@@ -51,8 +51,8 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                             <div className={'form-group'}>
                                 <InputCurrency
                                     step={0.01}
-                                    disabled={disabledBlock || !campaignData.enabled_target_close_match}
-                                    value={campaignData.target_close_match}
+                                    disabled={disabledBlock || !createData.enabled_target_close_match}
+                                    value={createData.target_close_match}
                                     onChange={value => onChange({target_close_match: value})}
                                 />
                             </div>
@@ -61,7 +61,7 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                         <div className="row">
                             <div>
                                 <Switch
-                                    checked={campaignData.enabled_target_loose_match}
+                                    checked={createData.enabled_target_loose_match}
                                     onChange={(value) => onChange({enabled_target_loose_match: value})}
                                     disabled={disabledBlock}
                                 />
@@ -70,8 +70,8 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                             <div className={'form-group'}>
                                 <InputCurrency
                                     step={0.01}
-                                    disabled={disabledBlock || !campaignData.enabled_target_loose_match}
-                                    value={campaignData.target_loose_match}
+                                    disabled={disabledBlock || !createData.enabled_target_loose_match}
+                                    value={createData.target_loose_match}
                                     onChange={value => onChange({target_loose_match: value})}
                                 />
                             </div>
@@ -80,7 +80,7 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                         <div className="row">
                             <div>
                                 <Switch
-                                    checked={campaignData.enabled_target_substitutes}
+                                    checked={createData.enabled_target_substitutes}
                                     onChange={(value) => onChange({enabled_target_substitutes: value})}
                                     disabled={disabledBlock}
                                 />
@@ -90,8 +90,8 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                             <div className={'form-group'}>
                                 <InputCurrency
                                     step={0.01}
-                                    disabled={disabledBlock || !campaignData.enabled_target_substitutes}
-                                    value={campaignData.target_substitutes}
+                                    disabled={disabledBlock || !createData.enabled_target_substitutes}
+                                    value={createData.target_substitutes}
                                     onChange={value => onChange({target_substitutes: value})}
                                 />
                             </div>
@@ -100,7 +100,7 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                         <div className="row">
                             <div>
                                 <Switch
-                                    checked={campaignData.enabled_target_complements}
+                                    checked={createData.enabled_target_complements}
                                     onChange={(value) => onChange({enabled_target_complements: value})}
                                     disabled={disabledBlock}
                                 />
@@ -110,8 +110,8 @@ const TargetingsDetails = ({campaignData, onChange}) => {
                             <div className={'form-group'}>
                                 <InputCurrency
                                     step={0.01}
-                                    disabled={disabledBlock || !campaignData.enabled_target_complements}
-                                    value={campaignData.target_complements}
+                                    disabled={disabledBlock || !createData.enabled_target_complements}
+                                    value={createData.target_complements}
                                     onChange={value => onChange({target_complements: value})}
                                 />
                             </div>
@@ -128,23 +128,23 @@ const TargetingsDetails = ({campaignData, onChange}) => {
 
             <NegativeKeywords
                 disabled={disabledBlock}
-                keywords={campaignData.negative_keywords}
+                keywords={createData.negative_keywords}
                 onUpdate={onChange}
                 title={'Negative Keywords'}
             />
 
             <NegativePats
                 disabled={disabledBlock}
-                keywords={campaignData.negative_pats}
+                keywords={createData.negative_pats}
                 onUpdate={onChange}
             />
         </div>)
-    } else if (campaignData.targetings_type === 'manual_targeting') {
+    } else if (createData.targetings_type === 'manual_targeting') {
         return (<div className={'step step-4 targetings-details-step'}>
             <div className="row">
                 <div className="col">
                     <Radio.Group
-                        value={campaignData.create_targetings}
+                        value={createData.create_targetings}
                         onChange={({target: {value}}) => onChange({create_targetings: value})}
                     >
                         <h4>Targetings</h4>
@@ -163,7 +163,7 @@ const TargetingsDetails = ({campaignData, onChange}) => {
             <div className={`row ${disabledBlock ? 'disabled' : ''}`}>
                 <div className="col">
                     <Radio.Group
-                        value={campaignData.t_targeting_type}
+                        value={createData.t_targeting_type}
                         onChange={({target: {value}}) => onChange({t_targeting_type: value})}
                     >
                         <h4>Targeting type</h4>
@@ -204,16 +204,16 @@ const TargetingsDetails = ({campaignData, onChange}) => {
 
             <KeywordTargetingsList
                 disabled={disabledBlock}
-                keywords={campaignData.keyword_targetings}
+                keywords={createData.keyword_targetings}
                 onUpdate={onChange}
-                withMatchType={campaignData.t_targeting_type === 'keyword'}
+                withMatchType={createData.t_targeting_type === 'keyword'}
             />
 
             <NegativeKeywords
                 disabled={disabledBlock}
-                keywords={campaignData.negative_keywords}
+                keywords={createData.negative_keywords}
                 onUpdate={onChange}
-                withMatchType={campaignData.t_targeting_type === 'keyword'}
+                withMatchType={createData.t_targeting_type === 'keyword'}
                 title={'Negative Keyword Targeting'}
             />
         </div>)

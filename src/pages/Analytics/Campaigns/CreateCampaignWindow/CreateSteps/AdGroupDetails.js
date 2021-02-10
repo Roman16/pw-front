@@ -2,13 +2,13 @@ import React from "react"
 import {Input, Radio} from "antd"
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 
-const AdGroupDetails = ({campaignData, onChange}) => {
+const AdGroupDetails = ({createData, onChange}) => {
 
     return (<div className={'step step-2 ad-group-details-step'}>
         <div className="row">
             <div className="col">
                 <Radio.Group
-                    value={campaignData.create_ad_group}
+                    value={createData.create_ad_group}
                     onChange={({target: {value}}) => onChange({create_ad_group: value})}
                 >
                     <h4>Ad Group</h4>
@@ -30,14 +30,15 @@ const AdGroupDetails = ({campaignData, onChange}) => {
             </div>
         </div>
 
-        <div className={`row ${!campaignData.create_ad_group ? 'disable' : ''}`}>
+        <div className={`row ${!createData.create_ad_group ? 'disable' : ''}`}>
             <div className="col">
                 <div className="form-group w-50">
                     <label htmlFor="">Ad Group Name</label>
                     <Input
-                        value={campaignData.ad_group_name}
+                        placeholder={'Ad Group Name'}
+                        value={createData.ad_group_name}
                         onChange={({target: {value}}) => onChange({ad_group_name: value})}
-                        disabled={!campaignData.create_ad_group}/>
+                        disabled={!createData.create_ad_group}/>
                 </div>
 
             </div>
@@ -50,15 +51,15 @@ const AdGroupDetails = ({campaignData, onChange}) => {
             </div>
         </div>
 
-        <div className={`row ${!campaignData.create_ad_group ? 'disable' : ''}`}>
+        <div className={`row ${!createData.create_ad_group ? 'disable' : ''}`}>
             <div className="col">
                 <div className="form-group">
                     <label htmlFor="">Default bid</label>
                     <InputCurrency
                         step={0.01}
-                        value={campaignData.ad_group_default_bid}
+                        value={createData.ad_group_default_bid}
                         onChange={(value) => onChange({ad_group_default_bid: value})}
-                        disabled={!campaignData.create_ad_group}
+                        disabled={!createData.create_ad_group}
                     />
                 </div>
 
