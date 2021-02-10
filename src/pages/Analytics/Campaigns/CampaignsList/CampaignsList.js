@@ -25,6 +25,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 
 const CampaignsList = ({location}) => {
@@ -173,6 +174,7 @@ const CampaignsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                // moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
             />
         </section>
     )

@@ -35,7 +35,6 @@ export const RenderMetricValue = ({number, type}) => {
 
 
 export const renderNumberField = (type = 'number', showDiff = true) => {
-
     return ({
         render: (number, item, array, dataIndex) => {
             return (<div className={'metric-value'}>
@@ -141,17 +140,16 @@ export const RenderProduct = ({product, isParent = false}) => {
 
                     {product.childs_sku_array.length > 5 && <p>And others</p>}
 
-
-                    {/*<Link*/}
-                    {/*    to={`/analytics/overview?productId=${product.productId}&isParent=${true}`}*/}
-                    {/*    className={'see-all-link'}*/}
-                    {/*    onClick={() => setStateHandler('ad-groups', {*/}
-                    {/*        name: {productName: product.product_name},*/}
-                    {/*        productId: product.productId*/}
-                    {/*    })}*/}
-                    {/*>*/}
-                    {/*    See all*/}
-                    {/*</Link>*/}
+                    <Link
+                        to={`/analytics/overview?productId=${product.productId}&isParent=${true}`}
+                        className={'see-all-link'}
+                        onClick={() => setStateHandler('ad-groups', {
+                            name: {productName: product.product_name},
+                            productId: product.productId
+                        })}
+                    >
+                        See all
+                    </Link>
                 </div>}
             >
                 <i> <SVG id={'home-icon'}/></i>
@@ -422,7 +420,7 @@ export const adGroupColumn = {
     filter: true,
     noTotal: true,
     render: (adGroup, item) => (
-        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupName}`}>
+        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}>
             {item.adGroupName}
         </Link>
     )

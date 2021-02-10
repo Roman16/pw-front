@@ -1,51 +1,20 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import {useSelector} from "react-redux"
-import axios from "axios"
-import './PlacementsStatistics.less'
 import SectionHeader from "./SectionHeader"
 import Chart from "./Chart"
-import {analyticsServices} from "../../../../services/analytics.services"
 
-const CancelToken = axios.CancelToken
-let source = null
+import './PlacementsStatistics.less'
 
-const PlacementsStatistics = () => {
-    const [chartData, setChartData] = useState([]),
-        [selectedMetric, setSelectedMetric] = useState(localStorage.getItem('placementActiveMetric') || 'impressions'),
-        [processing, setProcessing] = useState(false)
-
-    const {selectedRangeDate, mainState, visibleChart} = useSelector(state => ({
-        selectedRangeDate: state.analytics.selectedRangeDate,
-        mainState: state.analytics.mainState,
+const PlacementsStatistics = ({chartData, selectedMetric, processing, onSelectMetric}) => {
+    const { visibleChart} = useSelector(state => ({
         visibleChart: state.analytics.visibleChart,
     }))
 
-    const changeMetricHandler = (value) => setSelectedMetric(value)
+    const changeMetricHandler = (value) => {
+        localStorage.setItem('placementActiveMetric', value)
 
-    const fetchData = async () => {
-        setProcessing(true)
-
-        source && source.cancel()
-        source = CancelToken.source()
-
-        try {
-            const res = await analyticsServices.fetchPlacementStatistic(selectedMetric, selectedRangeDate, mainState, source.token)
-            setChartData(res.response)
-        } catch (e) {
-            console.log(e)
-        }
-
-        setProcessing(false)
+        onSelectMetric(value)
     }
-
-    useEffect(() => {
-        fetchData()
-    }, [selectedMetric, selectedRangeDate, mainState])
-
-    useEffect(() => {
-        localStorage.setItem('placementActiveMetric', selectedMetric)
-    }, [selectedMetric])
-
 
     return (
         <div className={`placements-area-statistics ${visibleChart ? 'visible' : 'hidden'}`}>

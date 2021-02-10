@@ -8,10 +8,12 @@ import {useDispatch, useSelector} from "react-redux"
 import queryString from 'query-string'
 import ProductMetrics from "./ProductMetrics/ProductMetrics"
 import {metricKeys} from "../components/MainMetrics/metricsList"
+import {history} from "../../../utils/history"
 
 const ProductOverview = () => {
     const [isParent, setParentStatus] = useState(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
     const filters = useSelector(state => state.analytics.filters.overview || [])
+    const mainState = useSelector(state => state.analytics.mainState)
     const dispatch = useDispatch()
 
     const availableMetrics = Object.values(metricKeys)
@@ -43,6 +45,10 @@ const ProductOverview = () => {
         }
     }, [])
 
+    useEffect(() => {
+        setParentStatus(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
+    }, [window.location])
+
     return (
         <div className={'product-overview-workplace'}>
             <MainMetrics
@@ -58,7 +64,7 @@ const ProductOverview = () => {
             {/*<ProductSettings/>*/}
 
             <ProductMetrics
-                isParent={isParent === 'parent'}
+                isParent={queryString.parse(window.location.search).isParent === 'true'}
                 location={location}
             />
         </div>

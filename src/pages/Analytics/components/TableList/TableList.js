@@ -29,6 +29,7 @@ const idKey = {
     'products': 'product',
     'products-regular': 'product',
     'products-parents': 'product',
+    'overview': 'product',
     'portfolios': 'portfolio',
     'campaigns': 'campaign',
     'placements': 'placement',
@@ -51,7 +52,8 @@ const TableList = ({
                        showTotal = true,
                        dateRange = true,
                        responseFilter = false,
-                       expandedRowRender
+                       expandedRowRender,
+                       isParent
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -160,7 +162,7 @@ const TableList = ({
         source = CancelToken.source()
 
         try {
-            const filtersWithState = [
+            let filtersWithState = [
                 ...filters,
                 ...Object.keys(mainState).map(key => ({
                     filterBy: key,
@@ -179,6 +181,16 @@ const TableList = ({
                     filterBy: 'segment',
                     type: 'eq',
                     value: placementSegment
+                })
+            }
+
+            if (isParent) {
+                filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+
+                filtersWithState.push({
+                    filterBy: 'parent_productId',
+                    type: 'eq',
+                    value: mainState.productId
                 })
             }
 
@@ -211,7 +223,7 @@ const TableList = ({
             try {
                 const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
-                const filtersWithState = [
+                let filtersWithState = [
                     ...filters,
                     ...Object.keys(mainState).map(key => ({
                         filterBy: key,
@@ -227,6 +239,11 @@ const TableList = ({
                         }
                     },
                 ]
+
+                if (isParent) {
+                    filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+                }
+
 
                 const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 

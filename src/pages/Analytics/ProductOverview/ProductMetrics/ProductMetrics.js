@@ -9,33 +9,36 @@ import {
     adUnitsColumn,
     budgetAllocationColumn,
     clicksColumn,
-    cpaColumn, cpcColumn,
+    cpaColumn,
+    cpcColumn,
     ctrColumn,
     impressionsColumn,
-    renderNumberField, RenderProduct,
+    renderNumberField,
+    RenderProduct,
     roasColumn,
-    salesShareColumn, skuAsinColumn,
+    salesShareColumn,
+    skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import './ProductMetrics.less'
 
 const ProductMetrics = ({location, isParent}) => {
     const columns = [
-        // ...isParent ? [
-        //     {
-        //         title: 'Product',
-        //         dataIndex: 'product_name',
-        //         key: 'product_name',
-        //         width: '300px',
-        //         sorter: true,
-        //         locked: true,
-        //         search: true,
-        //         render: (name, item) => <RenderProduct
-        //             product={item}
-        //         />
-        //     },
-        //     skuAsinColumn,
-        // ] : [],
+        ...isParent ? [
+            {
+                title: 'Product',
+                dataIndex: 'product_name',
+                key: 'product_name',
+                width: '300px',
+                sorter: true,
+                locked: true,
+                search: true,
+                render: (name, item) => <RenderProduct
+                    product={item}
+                />
+            },
+            skuAsinColumn,
+        ] : [],
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',
@@ -44,7 +47,7 @@ const ProductMetrics = ({location, isParent}) => {
             sorter: true,
             noTotal: true,
             filter: true,
-            ...renderNumberField()
+            ...renderNumberField('number', false)
         },
         impressionsColumn,
         clicksColumn,
@@ -173,15 +176,15 @@ const ProductMetrics = ({location, isParent}) => {
         adProfitColumn
     ]
 
-
     return (
         <section className={'list-section'}>
             <TableList
                 columns={columns}
                 showFilters={false}
-                showPagination={false}
-                showTotal={false}
+                showPagination={isParent}
+                showTotal={isParent}
                 location={location}
+                isParent={isParent}
             />
         </section>
     )

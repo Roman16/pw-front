@@ -114,27 +114,17 @@ const advertisingStrategyVariations = [
 ]
 
 
-const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList}) => {
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList, onBlur}) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false)
 
     const isAdmin = localStorage.getItem('adminToken')
 
-
     const switchStrategyDescription = () => {
         setStrategiesDescriptionState(prevState => !prevState)
-
-        // setTimeout(() => {
-
         $('.table-overflow').animate({scrollLeft: 100000}, 400)
-
-        // const objDiv = document.querySelector('.table-overflow');
-        // objDiv.scro = 10000000;
-        // }, 300)
-
     }
-
 
     const onChangeRow = (value, item, index) => {
         if (products[index][item] !== value) {
@@ -447,8 +437,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={0}
                     step={0.01}
                     onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
-                    onBlur={(e) => {
-                    }}
+                    onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow)}
                 />
             )
         },
@@ -471,6 +460,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         typeIcon='percent'
                         data-intercom-target="net-margin-field"
                         onChange={event => onChangeRow(event, NET_MARGIN, indexRow)}
+                        onBlur={({target: {value}}) => onBlur(value, NET_MARGIN, indexRow)}
                     />
                 )
             }
@@ -488,6 +478,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     step={0.01}
                     data-intercom-target="min-bid-field"
                     onChange={event => onChangeRow(event, MIN_BID_MANUAL_CAMPING, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, MIN_BID_MANUAL_CAMPING, indexRow)}
                 />
             )
         },
@@ -502,6 +493,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={item[MIN_BID_MANUAL_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_MANUAL_CAMPING, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, MAX_BID_MANUAL_CAMPING, indexRow)}
                 />
             )
         },
@@ -517,6 +509,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     max={item[MAX_BID_AUTO_CAMPING] || 999999999}
                     step={0.01}
                     onChange={event => onChangeRow(event, MIN_BID_AUTO_CAMPING, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, MIN_BID_AUTO_CAMPING, indexRow)}
                 />
             )
         },
@@ -531,6 +524,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     min={item[MIN_BID_AUTO_CAMPING] || 0}
                     step={0.01}
                     onChange={event => onChangeRow(event, MAX_BID_AUTO_CAMPING, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, MAX_BID_AUTO_CAMPING, indexRow)}
                 />
             )
         },
@@ -545,6 +539,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     step={0.01}
                     typeIcon='percent'
                     onChange={event => onChangeRow(event, DESIRED_ACOS, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, DESIRED_ACOS, indexRow)}
                 />
             )
         },
@@ -559,6 +554,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     step={0.01}
                     typeIcon='percent'
                     onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, BREAK_EVEN_ACOS, indexRow)}
                 />
             )
         },
@@ -572,6 +568,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     value={item[COGS]}
                     step={0.01}
                     onChange={event => onChangeRow(event, COGS, indexRow)}
+                    onBlur={({target: {value}}) => onBlur(value, COGS, indexRow)}
                 />
             )
         },
@@ -596,6 +593,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     <Checkbox
                         checked={value}
                         onChange={e => onChangeRow(e.target.checked, BSR_TRACKING, indexRow)}
+                        onBlur={({target: {value}}) => onBlur(value, BSR_TRACKING, indexRow)}
                     />
                 </div>
             )
@@ -620,6 +618,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     <Input
                         value={value}
                         onChange={e => onChangeRow(e.target.value, FRIENDLY_NAME, indexRow)}
+                        onBlur={({target: {value}}) => onBlur(value, FRIENDLY_NAME, indexRow)}
                         type="text"
                     />
                 </div>
@@ -641,6 +640,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     getPopupContainer={triggerNode => triggerNode.parentNode}
                     value={item[ADVERTISING_STRATEGY] || undefined}
                     onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
+                    onBlur={(value) => onBlur(value, ADVERTISING_STRATEGY, indexRow)}
                     placeholder={'Select a goal'}
                 >
                     <Option value={null}>

@@ -45,6 +45,10 @@ const initialState = {
     sortingColumns: sortingColumnFromLocalStorage ? sortingColumnFromLocalStorage : {},
     placementSegment: localStorage.getItem('placementSegmentValue') ? JSON.parse(localStorage.getItem('placementSegmentValue')) : null,
     visibleNavigation: true,
+    visibleCreationWindows: {
+        campaign: false,
+        portfolio: false,
+    },
     mainState: {
         campaignId: undefined,
         productId: undefined,
@@ -177,6 +181,15 @@ export function analytics(state = initialState, action) {
             return {
                 ...state,
                 stateDetails: action.payload
+            }
+
+        case analyticsConstants.SET_VISIBLE_CREATION_WINDOWS:
+            return {
+                ...state,
+                visibleCreationWindows: {
+                    ...state.visibleCreationWindows,
+                    ...action.payload
+                }
             }
 
 

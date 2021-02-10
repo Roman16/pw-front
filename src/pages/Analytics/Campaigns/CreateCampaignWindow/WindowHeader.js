@@ -1,13 +1,13 @@
 import React from "react"
 import {SVG} from "../../../../utils/icons"
 
-const WindowHeader = ({onClose}) => {
+const WindowHeader = ({onClose, title = 'Create Campaign'}) => {
 
     return <div className="window-header">
-        <h2>Create Campaign</h2>
+        <h2>{title}</h2>
 
         <button
-            className="btn close"
+            className="btn icon close"
             onClick={onClose}
         >
             <SVG id={'close-window-icon'}/>

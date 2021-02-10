@@ -3,6 +3,7 @@ import AdGroupsList from "./AdGroupsList/AdGroupsList"
 import MainChart from "../components/MainChart/MainChart"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
+import CreateAdGroupWindow from "./CreateAdGroupWindow/CreateAdGroupWindow"
 
 const AdGroups = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
@@ -23,6 +24,8 @@ const AdGroups = () => {
             <AdGroupsList
                 location={location}
             />
+
+            <CreateAdGroupWindow/>
         </div>
     )
 }
