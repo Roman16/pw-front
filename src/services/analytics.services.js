@@ -2,7 +2,6 @@ import api from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
-import {func} from "prop-types"
 
 export const analyticsServices = {
     fetchTableData,
@@ -10,7 +9,6 @@ export const analyticsServices = {
     fetchChartData,
     fetchStateInformation,
     fetchSettingsDetails,
-    fetchPlacementStatistic,
     getSearchTermsData,
     getPlacementData,
     fetchTargetingsDetails
@@ -29,7 +27,8 @@ const dateRangeToIso = (dateRange) => {
 }
 
 
-const filtersHandler = (filters) => {
+const filtersHandler = (f) => {
+    let filters = [...f]
     const parameters = []
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
@@ -80,7 +79,7 @@ function fetchTableData(locationKey, paginationParams, sortingParams = {}, filte
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
     let key = ''
     if (locationKey === 'products-regular') key = 'products'
-    else if (locationKey === 'overview') key = 'products'
+    else if (locationKey === 'overview') key = _.find(filters, {filterBy: 'productView'}).value ? 'products-parents' : 'products'
     else key = locationKey
 
     return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters)}`, null, null, cancelToken)
@@ -89,7 +88,7 @@ function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToke
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     let key = ''
     if (location === 'products-regular') key = 'products'
-    else if (location === 'overview') key = 'products'
+    else if (location === 'overview') key = _.find(filters, {filterBy: 'productView'}).value ? 'products-parents' : 'products'
     else key = location
 
     return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters)}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
@@ -103,28 +102,16 @@ function fetchSettingsDetails(page, id) {
     return api('get', `${analyticsUrls.settingsDetails(page, id)}`)
 }
 
-function fetchPlacementStatistic(metric, date, mainState, cancelToken) {
-    const stateValues = []
-
-    Object.keys(mainState).forEach(key => {
-        if (mainState[key] && key !== 'name') {
-            stateValues.push(`${key}:eq=${mainState[key]}`)
-        }
-    })
-
-    return api('get', `${analyticsUrls.placementStatistic}?metric[]=${metric}&datetime:range=${dateRangeToIso(date)}${stateValues.length > 0 ? '&' + stateValues.join('&') : ''}`, null, null, cancelToken)
-}
-
 //----------------------------------------------------------------------------------------------------------------------
 function getSearchTermsData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
     return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
-};
+}
 
 function getPlacementData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment, areaChartMetric} = params
     return api('get', `${analyticsUrls.placementData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}${idList || ''}&stacked_area_chart_metric[]=${areaChartMetric}`)
-};
+}
 
 function fetchTargetingsDetails(id, date, sorterColumn, filters) {
     return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeToIso(date)}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
