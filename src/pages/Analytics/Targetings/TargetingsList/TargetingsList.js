@@ -24,6 +24,7 @@ import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 export const automatePatDescription = {
     'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
@@ -138,6 +139,7 @@ const TargetingsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
             />
         </section>
     )

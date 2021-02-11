@@ -4,6 +4,7 @@ import TargetingsList from "./TargetingsList/TargetingsList"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import _ from "lodash"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import CreateTargetingsWindow from "./CreateTargetingsWindow/CreateTargetingsWindow"
 
 const Targetings = () => {
     const availableMetrics = _.filter([...metricsKeysWithoutOrganic], v => v !== 'ad_profit')
@@ -23,6 +24,8 @@ const Targetings = () => {
             <TargetingsList
                 location={location}
             />
+
+            <CreateTargetingsWindow/>
         </div>
     )
 }

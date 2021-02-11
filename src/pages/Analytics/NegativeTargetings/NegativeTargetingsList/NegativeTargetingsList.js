@@ -7,6 +7,7 @@ import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 
 const NegativeTargetingsList = ({location}) => {
@@ -76,6 +77,7 @@ const NegativeTargetingsList = ({location}) => {
                 columnSelect={false}
                 dateRange={false}
                 location={location}
+                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
             />
         </section>
     )

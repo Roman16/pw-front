@@ -1,5 +1,6 @@
 import React from "react"
 import NegativeTargetingsList from "./NegativeTargetingsList/NegativeTargetingsList"
+import CreateNegativeTargetingsWindow from "./CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
 const NegativeTargetings = () => {
     const location = 'negative-targetings'
@@ -9,6 +10,8 @@ const NegativeTargetings = () => {
             <NegativeTargetingsList
                 location={location}
             />
+
+            <CreateNegativeTargetingsWindow/>
         </div>
     )
 }
