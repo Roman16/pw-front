@@ -23,6 +23,7 @@ import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 const ProductAdsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
@@ -116,6 +117,7 @@ const ProductAdsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
+                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
             />
         </section>
     )

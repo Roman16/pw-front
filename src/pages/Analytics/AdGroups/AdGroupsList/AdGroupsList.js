@@ -130,7 +130,7 @@ const AdGroupsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
         </section>
     )

@@ -3,6 +3,7 @@ import MainChart from "../components/MainChart/MainChart"
 import ProductAdsList from "./ProductAdsList/ProductAdsList"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import CreateProductAdsWindow from "./CreateProductAdsWindow/CreateProductAdsWindow"
 
 const ProductAds = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
@@ -22,6 +23,8 @@ const ProductAds = () => {
             <ProductAdsList
                 location={location}
             />
+
+            <CreateProductAdsWindow/>
         </div>
     )
 }
