@@ -8,13 +8,15 @@ const OpenCreateWindowButton = ({title, window}) => {
 
     const openCreateWindowHandler = () => dispatch(analyticsActions.setVisibleCreateWindow({[window]: true}))
 
-    return (<button
-        className="btn default create-button"
-        onClick={openCreateWindowHandler}
-    >
-        <SVG id={'plus-white'}/>
-        {title}
-    </button>)
+    // return (<button
+    //     //     className="btn default create-button"
+    //     //     onClick={openCreateWindowHandler}
+    //     // >
+    //     //     <SVG id={'plus-white'}/>
+    //     //     {title}
+    //     // </button>)
+
+    return ''
 }
 
 export default OpenCreateWindowButton
