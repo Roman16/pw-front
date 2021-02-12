@@ -17,6 +17,7 @@ import preciseDiff from "moment-precise-range-plugin"
 import SwitchChartVisible from "./SwitchChartVisisble"
 import ExpandWorkplace from "./ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import FastUpdateBlock from "./FastUpdateBlock/FastUpdateBlock"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -334,6 +335,8 @@ const TableList = ({
 
                 <SwitchChartVisible/>
             </div>
+
+            {/*<FastUpdateBlock/>*/}
 
             <CustomTable
                 loading={fetchingStatus}

@@ -81,7 +81,7 @@ function fetchTableData(locationKey, paginationParams, sortingParams = {}, filte
 function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToken) {
     let key = ''
     if (locationKey === 'products-regular') key = 'products'
-    else if (locationKey === 'overview') key = _.find(filters, {filterBy: 'productView'}).value ? 'products-parents' : 'products'
+    else if (locationKey === 'overview') key = _.find(filters, {filterBy: 'productView'}).value === 'parent' ? 'products-parents' : 'products'
     else key = locationKey
 
     return api('get', `${analyticsUrls.metricsData(key)}${filtersHandler(filters)}`, null, null, cancelToken)
@@ -90,7 +90,7 @@ function fetchMetricsData({startDate, endDate, locationKey, filters}, cancelToke
 function fetchChartData(location, metrics, date, filters = [], cancelToken) {
     let key = ''
     if (location === 'products-regular') key = 'products'
-    else if (location === 'overview') key = _.find(filters, {filterBy: 'productView'}).value ? 'products-parents' : 'products'
+    else if (location === 'overview') key = _.find(filters, {filterBy: 'productView'}).value === 'parent' ? 'products-parents' : 'products'
     else key = location
 
     return api('get', `${analyticsUrls.chartData(key)}${filtersHandler(filters)}&${metrics.filter(item => !!item).map(item => `metric[]=${item}`).join('&')}`, null, null, cancelToken)
