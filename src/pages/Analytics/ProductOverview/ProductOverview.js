@@ -43,7 +43,7 @@ const ProductOverview = () => {
                 value: isParent
             }]))
         }
-    }, [])
+    }, [mainState])
 
     useEffect(() => {
         setParentStatus(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
