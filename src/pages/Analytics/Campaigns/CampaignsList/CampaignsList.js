@@ -26,6 +26,7 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import CustomTable from "../../../../components/Table/CustomTable"
 
 
 const CampaignsList = ({location}) => {
@@ -175,6 +176,7 @@ const CampaignsList = ({location}) => {
                 fixedColumns={[0]}
                 location={location}
                 moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
+                showRowSelection={true}
             />
         </section>
     )

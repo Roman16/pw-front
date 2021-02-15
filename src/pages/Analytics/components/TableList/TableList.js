@@ -54,7 +54,8 @@ const TableList = ({
                        dateRange = true,
                        responseFilter = false,
                        expandedRowRender,
-                       isParent
+                       isParent,
+                       showRowSelection = false
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -72,7 +73,9 @@ const TableList = ({
             page: 1,
             pageSize: pageSizeFromLocalStorage || 30,
             totalSize: 0,
-        })
+        }),
+        [selectedRows, setSelectedRows] = useState([]),
+        [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -301,42 +304,59 @@ const TableList = ({
         localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
     }, [tableOptions])
 
+
+    const rowSelection = {
+        onChange: (selectedRows, type) => {
+            setSelectedRows(selectedRows)
+            if (type === 'all') setSelectedAllRows(true)
+            else setSelectedAllRows(false)
+        }
+    }
+
     return (
         <div className={'table-section'}>
-            <div className="section-header">
-                {showFilters && <TableFilters
-                    columns={columns}
-                    filters={filters}
-                    locationKey={location}
-                    searchField={searchField}
-                />}
+            {selectedRows.length > 0 ? <FastUpdateBlock
+                    {...paginationParams}
+                    location={location}
+                    selectedRows={selectedRows}
+                    selectedAll={selectedAllRows}
 
-                {moreActions}
-
-                {columnSelect && <ColumnsSelect
-                    columns={columns}
-                    columnsBlackList={localColumnBlackList}
-                    onChangeBlackList={changeBlackListHandler}
-                />}
-
-                <ExpandWorkplace/>
-
-                <TableOptions
-                    options={localTableOptions}
-                    onChange={changeTableOptionsHandler}
-                    selectedRangeDate={selectedRangeDate}
+                    onClose={() => {setSelectedAllRows(false); setSelectedRows([])}}
                 />
+                :
+                <div className="section-header">
+                    {showFilters && <TableFilters
+                        columns={columns}
+                        filters={filters}
+                        locationKey={location}
+                        searchField={searchField}
+                    />}
 
-                {dateRange && <DateRange
-                    onChange={dateRangeHandler}
-                    selectedRangeDate={selectedRangeDate}
-                    tableOptions={localTableOptions}
-                />}
+                    {moreActions}
 
-                <SwitchChartVisible/>
-            </div>
+                    {columnSelect && <ColumnsSelect
+                        columns={columns}
+                        columnsBlackList={localColumnBlackList}
+                        onChangeBlackList={changeBlackListHandler}
+                    />}
 
-            {/*<FastUpdateBlock/>*/}
+                    <ExpandWorkplace/>
+
+                    <TableOptions
+                        options={localTableOptions}
+                        onChange={changeTableOptionsHandler}
+                        selectedRangeDate={selectedRangeDate}
+                    />
+
+                    {dateRange && <DateRange
+                        onChange={dateRangeHandler}
+                        selectedRangeDate={selectedRangeDate}
+                        tableOptions={localTableOptions}
+                    />}
+
+                    <SwitchChartVisible/>
+                </div>}
+
 
             <CustomTable
                 loading={fetchingStatus}
@@ -347,6 +367,11 @@ const TableList = ({
                         ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
+
+                rowKey="campaignId"
+                {...showRowSelection && {rowSelection: rowSelection}}
+                selectedAll={selectedAllRows}
+
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}

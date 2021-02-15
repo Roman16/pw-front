@@ -22,7 +22,8 @@ const CustomTable = ({
                          emptyText,
                          fixedColumns = [],
                          onScroll,
-                         showExpandRow
+                         showExpandRow,
+                         rowKey
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -71,7 +72,10 @@ const CustomTable = ({
 
     useEffect(() => {
         if (rowSelection) {
-            rowSelection.onChange(checkedRows)
+            if(dataSource.length > 0) {
+                if (checkedRows.length === dataSource.length) rowSelection.onChange(checkedRows, 'all')
+                else rowSelection.onChange(checkedRows)
+            }
         }
     }, [checkedRows])
 
@@ -116,7 +120,8 @@ const CustomTable = ({
                     })}
                 </div>
 
-                {totalDataSource && dataSource.length > 0 && <div className="total-data">
+                {totalDataSource && dataSource.length > 0 &&
+                <div className={`total-data ${rowSelection ? 'with-checkbox' : ''}`}>
                     {columns.map((item, columnIndex) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                             leftStickyPosition = columnIndex === 0 ? {left: 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
@@ -150,8 +155,8 @@ const CustomTable = ({
                             >
                                 {rowSelection && <div className={'table-body__field checkbox-column'}>
                                     <Checkbox
-                                        checked={(checkedRows.length > 0 && checkedRows.find(item => item === report.id)) || selectedAll}
-                                        onChange={(e) => checkRowHandler(report.id, e.target.checked)}
+                                        checked={(checkedRows.length > 0 && checkedRows.find(item => item === report[rowKey])) || selectedAll}
+                                        onChange={(e) => checkRowHandler(report[rowKey], e.target.checked)}
                                     />
                                 </div>}
 
