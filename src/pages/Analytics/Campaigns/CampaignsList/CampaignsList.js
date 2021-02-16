@@ -27,6 +27,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 import CustomTable from "../../../../components/Table/CustomTable"
+import {Switch} from "antd"
 
 
 const CampaignsList = ({location}) => {
@@ -45,6 +46,14 @@ const CampaignsList = ({location}) => {
     }
 
     const columns = [
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            render: () => <div className="switch-block"><Switch/></div>
+        },
         {
             title: 'Campaign',
             dataIndex: 'name',
@@ -175,10 +184,11 @@ const CampaignsList = ({location}) => {
         <section className={'campaigns-list list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0]}
+                fixedColumns={[0,1]}
                 location={location}
                 moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
                 showRowSelection={true}
+                rowKey={'campaignId'}
             />
         </section>
     )

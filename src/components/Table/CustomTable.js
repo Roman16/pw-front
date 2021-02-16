@@ -24,7 +24,7 @@ const CustomTable = ({
                          onScroll,
                          showExpandRow,
                          rowKey,
-                         selectedRows=[]
+                         selectedRows = []
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -63,7 +63,7 @@ const CustomTable = ({
             scrollingNow = false
         }
     }
-    
+
     return (
         <div className={`custom-table ${rowSelection ? 'with-checkbox' : ''}`}>
             <div className="table-overflow" onScroll={scrollHandler}>
@@ -78,7 +78,7 @@ const CustomTable = ({
 
                     {columns.map((item, index) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = index === 0 ? {left: rowSelection ? 59 : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em)`} : {left: columns[index - 1].width}
+                            leftStickyPosition = index === 0 ? {left: rowSelection ? 59 : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + 59px)` : columns[index - 1].width}
 
                         return (
                             <div
@@ -112,7 +112,7 @@ const CustomTable = ({
 
                     {columns.map((item, columnIndex) => {
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
+                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
 
                         return (
                             <div
@@ -122,7 +122,7 @@ const CustomTable = ({
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                 }}
                             >
-                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
+                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(totalDataSource[item.key], item, columnIndex) : item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
                             </div>
                         )
                     })}
@@ -151,7 +151,7 @@ const CustomTable = ({
 
                                 {columns.map((item, columnIndex) => {
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em)`} : {left: columns[columnIndex - 1].width}
+                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
 
                                     return (
                                         <div

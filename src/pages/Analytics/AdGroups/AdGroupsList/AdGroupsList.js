@@ -24,6 +24,7 @@ import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import {Switch} from "antd"
 
 const AdGroupsList = ({location}) => {
     const {selectedCampaign} = useSelector(state => ({
@@ -38,6 +39,14 @@ const AdGroupsList = ({location}) => {
     }
 
     const columns = [
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            render: () => <div className="switch-block"><Switch/></div>
+        },
         {
             title: 'Ad Group',
             dataIndex: 'name',
@@ -87,6 +96,7 @@ const AdGroupsList = ({location}) => {
             locked: true,
             noTotal: true,
             filter: true,
+            fastUpdating: true,
             align: 'right',
             render: (bid) => bid ? `$${bid}` : ''
         },
@@ -131,9 +141,11 @@ const AdGroupsList = ({location}) => {
         <section className={'ad-group-list list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0]}
+                fixedColumns={[0, 1]}
                 location={location}
                 moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                showRowSelection={true}
+                rowKey={'adGroupId'}
             />
         </section>
     )

@@ -56,7 +56,8 @@ const TableList = ({
                        responseFilter = false,
                        expandedRowRender,
                        isParent,
-                       showRowSelection = false
+                       showRowSelection = false,
+                       rowKey
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -386,11 +387,11 @@ const TableList = ({
                 {...showTotal && {
                     totalDataSource: {
                         ..._.mapValues(metricsData, (value) => (+value.value)),
-                        ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
+                        ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
 
-                rowKey="campaignId"
+                rowKey={rowKey}
                 {...showRowSelection && {rowSelection: rowSelection}}
                 selectedAll={selectedAllRows}
                 selectedRows={selectedRows}
