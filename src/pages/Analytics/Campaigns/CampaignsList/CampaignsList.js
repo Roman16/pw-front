@@ -13,7 +13,7 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn,
+    ctrColumn, EditableField,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
@@ -102,8 +102,10 @@ const CampaignsList = ({location}) => {
             noTotal: true,
             filter: true,
             fastUpdating: true,
-            align: 'right',
-            render: (budget) => budget ? `$${budget}` : ''
+            render: (budget) => <EditableField
+                type={'currency'}
+                value={budget}
+            />
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
@@ -184,7 +186,7 @@ const CampaignsList = ({location}) => {
         <section className={'campaigns-list list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0,1]}
+                fixedColumns={[0, 1]}
                 location={location}
                 moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
                 showRowSelection={true}

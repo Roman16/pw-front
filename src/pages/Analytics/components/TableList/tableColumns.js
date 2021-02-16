@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import moment from "moment"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
@@ -16,20 +16,21 @@ import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
         case 'number':
-            return ((number !== null && number !== undefined  ? numberMask(number, 0) : '-'))
+            return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
         case 'percent':
-            return ((number !== null && number !== undefined  ? `${round(+number * 100, 2)}%` : '-'))
+            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
 
         case 'roas':
-            return `${(number !== null  ? `${round(+number, 2)}x` : '-')}`
+            return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined  ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
     }
 }
 
@@ -216,6 +217,23 @@ export const skuAsinColumn = {
             </a>
         </div>
     </div>
+}
+
+export const EditableField = ({type, value}) => {
+    const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
+
+    return (<div className={'editable-field'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+        {value ? `$${value}` : ''}
+
+        <i><SVG id={'edit-pen-icon'}/></i>
+
+        {visibleEditableWindow && <div className="editable-window">
+            <InputCurrency/>
+
+            <button className={'btn default'}>Save</button>
+            <button className={'btn transparent'}>Cancel</button>
+        </div>}
+    </div>)
 }
 
 export const clicksColumn = {
