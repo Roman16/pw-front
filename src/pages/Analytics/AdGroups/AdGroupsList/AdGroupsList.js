@@ -87,7 +87,8 @@ const AdGroupsList = ({location}) => {
             locked: true,
             noTotal: true,
             filter: true,
-            render: (bid) => <InputCurrency value={bid} disabled/>
+            align: 'right',
+            render: (bid) => bid ? `$${bid}` : ''
         },
         {
             title: 'Total Targets',
@@ -96,6 +97,7 @@ const AdGroupsList = ({location}) => {
             width: '200px',
             sorter: true,
             noTotal: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -105,6 +107,7 @@ const AdGroupsList = ({location}) => {
             width: '200px',
             sorter: true,
             noTotal: true,
+            align: 'right',
             ...renderNumberField()
         },
         impressionsColumn,

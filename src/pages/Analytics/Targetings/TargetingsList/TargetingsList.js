@@ -115,7 +115,7 @@ const TargetingsList = ({location}) => {
             sorter: true,
             noTotal: true,
             filter: true,
-            render: (bid) => <InputCurrency disabled value={bid}/>
+            render: (bid) => bid ? `$${bid}` : ''
         },
         impressionsColumn,
         clicksColumn,

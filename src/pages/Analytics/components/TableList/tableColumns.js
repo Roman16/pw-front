@@ -67,6 +67,7 @@ export const statusColumn = {
     sorter: true,
     filter: true,
     noTotal: true,
+    fastUpdating: true
 }
 
 export const dateColumn = {

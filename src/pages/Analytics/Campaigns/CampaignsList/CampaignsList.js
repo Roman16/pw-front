@@ -92,7 +92,9 @@ const CampaignsList = ({location}) => {
             locked: true,
             noTotal: true,
             filter: true,
-            render: (budget) => <InputCurrency disabled value={budget}/>
+            fastUpdating: true,
+            align: 'right',
+            render: (budget) => budget ? `$${budget}` : ''
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
@@ -124,8 +126,8 @@ const CampaignsList = ({location}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'}
-                                          defaultValue={date && moment(date)} disabled/>
+            fastUpdating: true,
+            render: (date) => moment(date).format('DD.MM.YYYY')
         },
         {
             title: 'End date',
@@ -134,8 +136,8 @@ const CampaignsList = ({location}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No end date'}
-                                          defaultValue={date && moment(date)} disabled/>
+            fastUpdating: true,
+            render: (date) => date ? moment(date).format('DD.MM.YYYY') : 'No end date'
         },
         {
             title: 'Campaign bidding strategy',

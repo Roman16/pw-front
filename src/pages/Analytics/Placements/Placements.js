@@ -276,7 +276,6 @@ const Placements = () => {
         getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
     }, [selectedRangeDate, filters])
 
-    console.log(pageData.table)
     return (
         <div className={'placements-workplace'}>
             <MainMetrics

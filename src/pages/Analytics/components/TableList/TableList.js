@@ -18,6 +18,7 @@ import SwitchChartVisible from "./SwitchChartVisisble"
 import ExpandWorkplace from "./ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import FastUpdateBlock from "./FastUpdateBlock/FastUpdateBlock"
+import {notification} from "../../../../components/Notification"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -280,6 +281,20 @@ const TableList = ({
         }
     }
 
+    const setChangesHandler = async (key, value) => {
+        await setTableData([...tableData.map(item => {
+            if (selectedRows.includes(item.campaignId)) {
+                item[key] = value
+            }
+
+            return item
+        })])
+
+        notification.success({title: 'Success'})
+        setSelectedAllRows(false)
+        setSelectedRows([])
+    }
+
     useEffect(() => {
         getData()
     }, [location, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
@@ -306,9 +321,10 @@ const TableList = ({
 
 
     const rowSelection = {
-        onChange: (selectedRows, type) => {
-            setSelectedRows(selectedRows)
-            if (type === 'all') setSelectedAllRows(true)
+        onChange: (rowsList) => {
+            setSelectedRows(rowsList)
+
+            if (selectedRows.length === rowsList.length) setSelectedAllRows(true)
             else setSelectedAllRows(false)
         }
     }
@@ -319,9 +335,15 @@ const TableList = ({
                     {...paginationParams}
                     location={location}
                     selectedRows={selectedRows}
-                    selectedAll={selectedAllRows}
+                    selectedAllOnPage={selectedAllRows}
+                    columns={columns}
 
-                    onClose={() => {setSelectedAllRows(false); setSelectedRows([])}}
+                    onClose={() => {
+                        setSelectedAllRows(false)
+                        setSelectedRows([])
+                    }}
+                    onSelectAll={() => setSelectedAllRows(true)}
+                    onSetChanges={setChangesHandler}
                 />
                 :
                 <div className="section-header">
@@ -371,6 +393,7 @@ const TableList = ({
                 rowKey="campaignId"
                 {...showRowSelection && {rowSelection: rowSelection}}
                 selectedAll={selectedAllRows}
+                selectedRows={selectedRows}
 
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
