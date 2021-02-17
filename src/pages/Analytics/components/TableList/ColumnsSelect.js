@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import {Checkbox, Input, Popover} from "antd"
 import {SVG} from "../../../../utils/icons"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import {useDispatch} from "react-redux"
 
 const {Search} = Input
 

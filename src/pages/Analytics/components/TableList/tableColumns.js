@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import moment from "moment"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
@@ -17,6 +17,7 @@ import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import DatePicker from "../../../../components/DatePicker/DatePicker"
 
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
@@ -221,23 +222,75 @@ export const skuAsinColumn = {
 
 export const EditableField = ({type, value}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
+    const wrapperRef = useRef(null)
 
-    return (<>
-            <div className={'editable-field'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                {value ? `$${value}` : ''}
+    useEffect(() => {
+        function handleClickOutside({target}) {
+            if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
 
-                <i><SVG id={'edit-pen-icon'}/></i>
+            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                setVisibleEditableWindow(false)
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside, true)
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
+    }, [wrapperRef])
+
+    if (type === 'date') {
+        return (<div className={'editable-field'} ref={wrapperRef}>
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                </div>
+
+                {visibleEditableWindow && <div className="editable-window date">
+                    <DatePicker
+                        value={value ? moment(value) : moment()}
+                        format={'DD MMM YYYY'}
+                        open={true}
+                        showToday={false}
+                        className={'editable-date-picker'}
+                        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
+                        renderExtraFooter={() => <>
+                            <p>America/Los_Angeles</p>
+                            <div className="actions">
+                                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>
+                                    Save
+                                </button>
+
+                                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                                    Cancel
+                                </button>
+                            </div>
+                        </>}
+                    />
+                </div>}
             </div>
-            {visibleEditableWindow && <div className="editable-window">
-                <InputCurrency
-                    value={value}
-                />
+        )
+    } else {
+        return (<div className={'editable-field'} ref={wrapperRef}>
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    {value ? `$${value}` : ''}
 
-                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>
-                <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel</button>
-            </div>}
-        </>
-    )
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                </div>
+                {visibleEditableWindow && <div className="editable-window">
+                    <InputCurrency
+                        value={value}
+                        autoFocus={true}
+                    />
+
+                    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>
+                    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
+                    </button>
+                </div>}
+            </div>
+        )
+    }
 }
 
 export const clicksColumn = {

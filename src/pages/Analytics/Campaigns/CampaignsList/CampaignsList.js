@@ -52,7 +52,12 @@ const CampaignsList = ({location}) => {
             key: 'state',
             width: '65px',
             noTotal: true,
-            render: () => <div className="switch-block"><Switch/></div>
+            render: (state) => <div className="switch-block">
+                <Switch
+                    disabled={state === 'archived'}
+                    checked={state === 'enabled'}
+                />
+            </div>
         },
         {
             title: 'Campaign',
@@ -138,7 +143,10 @@ const CampaignsList = ({location}) => {
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            render: (date) => moment(date).format('DD.MM.YYYY')
+            render: (date) => <EditableField
+                type={'date'}
+                value={date}
+            />
         },
         {
             title: 'End date',
@@ -148,7 +156,10 @@ const CampaignsList = ({location}) => {
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            render: (date) => date ? moment(date).format('DD.MM.YYYY') : 'No end date'
+            render: (date) => <EditableField
+                type={'date'}
+                value={date}
+            />
         },
         {
             title: 'Campaign bidding strategy',

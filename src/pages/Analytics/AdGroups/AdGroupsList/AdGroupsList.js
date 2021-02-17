@@ -45,7 +45,12 @@ const AdGroupsList = ({location}) => {
             key: 'state',
             width: '65px',
             noTotal: true,
-            render: () => <div className="switch-block"><Switch/></div>
+            render: (state) => <div className="switch-block">
+                <Switch
+                    disabled={state === 'archived'}
+                    checked={state === 'enabled'}
+                />
+            </div>
         },
         {
             title: 'Ad Group',
