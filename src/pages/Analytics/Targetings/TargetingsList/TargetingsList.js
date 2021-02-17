@@ -12,7 +12,7 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn,
+    ctrColumn, EditableField,
     impressionsColumn, keywordPTColumn, matchTypeColumn,
     roasColumn,
     salesShareColumn,
@@ -125,7 +125,10 @@ const TargetingsList = ({location}) => {
             noTotal: true,
             filter: true,
             fastUpdating: true,
-            render: (bid) => bid ? `$${bid}` : ''
+            render: (bid) => <EditableField
+                type={'currency'}
+                value={bid}
+            />
         },
         impressionsColumn,
         clicksColumn,

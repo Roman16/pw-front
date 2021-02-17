@@ -17,7 +17,7 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn, statusColumn, renderNumberField,
+    campaignColumn, statusColumn, renderNumberField, EditableField,
 } from "../../components/TableList/tableColumns"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
@@ -97,8 +97,10 @@ const AdGroupsList = ({location}) => {
             noTotal: true,
             filter: true,
             fastUpdating: true,
-            align: 'right',
-            render: (bid) => bid ? `$${bid}` : ''
+            render: (bid) => <EditableField
+                type={'currency'}
+                value={bid}
+            />
         },
         {
             title: 'Total Targets',

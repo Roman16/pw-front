@@ -222,18 +222,22 @@ export const skuAsinColumn = {
 export const EditableField = ({type, value}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
 
-    return (<div className={'editable-field'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-        {value ? `$${value}` : ''}
+    return (<>
+            <div className={'editable-field'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                {value ? `$${value}` : ''}
 
-        <i><SVG id={'edit-pen-icon'}/></i>
+                <i><SVG id={'edit-pen-icon'}/></i>
+            </div>
+            {visibleEditableWindow && <div className="editable-window">
+                <InputCurrency
+                    value={value}
+                />
 
-        {visibleEditableWindow && <div className="editable-window">
-            <InputCurrency/>
-
-            <button className={'btn default'}>Save</button>
-            <button className={'btn transparent'}>Cancel</button>
-        </div>}
-    </div>)
+                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>
+                <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel</button>
+            </div>}
+        </>
+    )
 }
 
 export const clicksColumn = {
