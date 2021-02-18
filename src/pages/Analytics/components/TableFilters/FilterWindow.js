@@ -250,7 +250,9 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 :
                 [
                     {title: 'Negative Exact', key: 'negativeExact', value: 'negativeExact'},
-                    {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'}
+                    {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'},
+                    {title: 'Campaign Negative Exact', key: 'campaign_negativeExact', value: 'campaign_negativeExact'},
+                    {title: 'Campaign Negative Phrase', key: 'campaign_negativePhrase', value: 'campaign_negativePhrase'},
                 ]
         ],
         'bidding_strategy': [

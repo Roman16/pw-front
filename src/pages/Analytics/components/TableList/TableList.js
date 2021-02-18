@@ -395,6 +395,7 @@ const TableList = ({
                 {...showRowSelection && {rowSelection: rowSelection}}
                 selectedAll={selectedAllRows}
                 selectedRows={selectedRows}
+                disabledRows={tableData.filter(item => item.state === 'archived').map(item => item[rowKey])}
 
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}

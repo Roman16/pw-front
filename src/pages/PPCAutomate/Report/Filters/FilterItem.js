@@ -24,6 +24,8 @@ export const valueTile = {
     'views': 'Views',
     'negativeExact': 'Negative Exact',
     'negativePhrase': 'Negative Phrase',
+    'campaign_negativeExact': 'Campaign Negative Exact',
+    'campaign_negativePhrase': 'Campaign Negative Phrase',
     //---------------------------
     //reason
     'adjusted_bid': 'Adjusted bid',

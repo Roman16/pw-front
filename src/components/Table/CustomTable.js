@@ -24,7 +24,8 @@ const CustomTable = ({
                          onScroll,
                          showExpandRow,
                          rowKey,
-                         selectedRows = []
+                         selectedRows = [],
+                         disabledRows = []
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -138,11 +139,12 @@ const CustomTable = ({
                     dataSource.map((report, index) => (
                         <>
                             <div
-                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''}`}
+                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''} ${disabledRows.includes(report[rowKey]) ? 'disabled-row' : ''}`}
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {rowSelection && <div className={'table-body__field checkbox-column'}>
                                     <Checkbox
+                                        disabled={disabledRows.includes(report[rowKey])}
                                         checked={(selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) || selectedAll}
                                         onChange={(e) => checkRowHandler(report[rowKey], e.target.checked)}
                                     />

@@ -479,7 +479,7 @@ export const matchTypeColumn = {
     title: 'Match type',
     dataIndex: 'calculatedTargetingMatchType',
     key: 'calculatedTargetingMatchType',
-    width: '150px',
+    width: '200px',
     sorter: true,
     locked: true,
     noTotal: true,
