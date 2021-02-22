@@ -46,46 +46,20 @@ const Chart = ({
 
                     event[metric] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
                     event[`${metric}_7d`] = metricType === 'percent' ? +item[`${metric}_7d`] * 100 : +item[`${metric}_7d`]
+
+                    if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+                        event[metric] = null
+                        event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
+                    } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+                        event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
+                    }
                 }
             })
 
             return event
         })])
-
-        // if (selectedRangeDate.startDate === 'lifetime') {
-        //     setChartData([...data])
-        // } else {
-        //     const start = moment(selectedRangeDate.startDate),
-        //         end = moment(selectedRangeDate.endDate)
-        //
-        //     let next = start,
-        //         dateArr = []
-        //
-        //     while (!next.isAfter(end)) {
-        //
-        //         let event = {
-        //             eventDate: next.format('YYYY-MM-DD'),
-        //         }
-        //
-        //         activeMetrics.forEach(metric => {
-        //             event[metric.key] = null
-        //             event[`${metric.key}_7d`] = null
-        //         })
-        //
-        //         dateArr.push(event)
-        //
-        //         next = start.add(1, 'days')
-        //     }
-        //
-        //     setChartData(dateArr.map(item => {
-        //         return {
-        //             ...item,
-        //             ..._.find(data, {eventDate: item.eventDate}),
-        //             eventDate: `${moment(item.eventDate)}`,
-        //         }
-        //     }))
-        // }
     }, [data])
+
 
     return (
         <div className='main-chart-container'>
@@ -222,6 +196,25 @@ const Chart = ({
                             dataKey={`${metric}`}
                             stroke={chartColors[index]}
                             strokeWidth={2}
+                            activeDot={{r: 5}}
+                            dot={{r: 3}}
+                            animationEasing={animationEasing}
+                            animationDuration={animationDuration}
+                            isAnimationActive={isAnimationActive}
+                        />
+                    ))}
+                    {/*--------------------------------------------------------------*/}
+
+                    {/*---------------------------daily dashed line-----------------------*/}
+                    {activeMetrics && activeMetrics.map((metric, index) => (
+                        showDailyChart && <Line
+                            yAxisId={`YAxis-${index}`}
+                            type="linear"
+                            strokeOpacity={0.5}
+                            dataKey={`dashed_${metric}`}
+                            stroke={chartColors[index]}
+                            strokeWidth={2}
+                            strokeDasharray="7 5"
                             activeDot={{r: 5}}
                             dot={{r: 3}}
                             animationEasing={animationEasing}

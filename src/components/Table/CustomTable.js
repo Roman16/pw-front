@@ -32,7 +32,11 @@ const CustomTable = ({
 
     const checkAllRowsHandler = ({target: {checked}}) => {
         if (checked) {
-            rowSelection.onChange(dataSource.map(item => item[rowKey]))
+            rowSelection.onChange(dataSource
+                    .filter(item => !disabledRows.includes(item[rowKey]))
+                    .map(item => item[rowKey]),
+                true
+            )
         } else {
             rowSelection.onChange([])
         }
@@ -40,13 +44,13 @@ const CustomTable = ({
 
     const checkRowHandler = (id, value) => {
         if (value) {
-            rowSelection.onChange([...selectedRows, id])
-        } else {
-            if (selectedAll) {
-                rowSelection.onChange(dataSource.map(item => item[rowKey]).filter(item => item !== id))
+            if([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
+                rowSelection.onChange([...selectedRows, id], true)
             } else {
-                rowSelection.onChange(selectedRows.filter(item => item !== id))
+                rowSelection.onChange([...selectedRows, id])
             }
+        } else {
+            rowSelection.onChange(selectedRows.filter(item => item !== id))
         }
     }
 
@@ -136,16 +140,17 @@ const CustomTable = ({
 
                     {dataSource &&
                     dataSource.length > 0 &&
-                    dataSource.map((report, index) => (
-                        <>
+                    dataSource.map((report, index) => {
+                        const isDisabledRow = disabledRows.includes(report[rowKey])
+                        return (<>
                             <div
-                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) || selectedAll ? 'checked-row' : ''} ${disabledRows.includes(report[rowKey]) ? 'disabled-row' : ''}`}
+                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {rowSelection && <div className={'table-body__field checkbox-column'}>
                                     <Checkbox
-                                        disabled={disabledRows.includes(report[rowKey])}
-                                        checked={(selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) || selectedAll}
+                                        disabled={isDisabledRow}
+                                        checked={isDisabledRow ? false : (selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) || selectedAll}
                                         onChange={(e) => checkRowHandler(report[rowKey], e.target.checked)}
                                     />
                                 </div>}
@@ -176,8 +181,8 @@ const CustomTable = ({
                                 className={`table-body__row expand-row ${selectedRows.length > 0 && selectedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
                                 {expandedRowRender(report)}
                             </div>}
-                        </>
-                    ))}
+                        </>)
+                    })}
                 </div>
             </div>
 

@@ -52,6 +52,7 @@ const TableList = ({
                        showFilters = true,
                        searchField = true,
                        showTotal = true,
+                       showOptions = true,
                        dateRange = true,
                        responseFilter = false,
                        expandedRowRender,
@@ -210,7 +211,7 @@ const TableList = ({
             if (res.response) {
                 setTableData(res.response)
 
-                if (localTableOptions.comparePreviousPeriod) {
+                if (localTableOptions.comparePreviousPeriod && showOptions) {
                     getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
                 }
             }
@@ -322,10 +323,10 @@ const TableList = ({
 
 
     const rowSelection = {
-        onChange: (rowsList) => {
+        onChange: (rowsList, selectAll = false) => {
             setSelectedRows(rowsList)
 
-            if (selectedRows.length === rowsList.length) setSelectedAllRows(true)
+            if (selectedRows.length === rowsList.length || selectAll) setSelectedAllRows(true)
             else setSelectedAllRows(false)
         }
     }
@@ -365,11 +366,11 @@ const TableList = ({
 
                     <ExpandWorkplace/>
 
-                    <TableOptions
+                    {showOptions && <TableOptions
                         options={localTableOptions}
                         onChange={changeTableOptionsHandler}
                         selectedRangeDate={selectedRangeDate}
-                    />
+                    />}
 
                     {dateRange && <DateRange
                         onChange={dateRangeHandler}
