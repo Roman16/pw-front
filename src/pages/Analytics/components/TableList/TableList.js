@@ -252,7 +252,7 @@ const TableList = ({
                 }
 
 
-                const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
+                const res = await analyticsServices.fetchTableData(location, {...paginationParams, page: 1}, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
                 if (res.response) {
                     if (responseFilter) {

@@ -226,6 +226,7 @@ const SearchTerms = () => {
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
+                    page: 1
                 }, `&queryCRC64:in=${idList.join(',')}`)
 
                 setPageData(prevState => {

@@ -201,7 +201,7 @@ const Placements = () => {
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
-                    areaChartMetric
+                    areaChartMetric,
                 })
 
                 setPageData(prevState => {

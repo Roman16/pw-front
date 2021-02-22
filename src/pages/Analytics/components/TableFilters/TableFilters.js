@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {SVG} from "../../../../utils/icons"
 import {Input, Popover} from "antd"
 import './TableFilters.less'
@@ -66,7 +66,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
 
         if (filterIndex === -1 && !value) {
             return false
-        } else if(filters[filterIndex] && filters[filterIndex].value === value) {
+        } else if (filters[filterIndex] && filters[filterIndex].value === value) {
             return false
         } else if (filterIndex !== -1) {
             updateFilterListHandler([...filters.map((item, index) => {
@@ -81,6 +81,10 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
     }
 
     const removeFilterHandler = (index) => updateFilterListHandler(filters.filter((item, itemIndex) => itemIndex !== index))
+
+    useEffect(() => {
+        if (filters.length === 0 && searchValue) setSearchValue('')
+    }, [filters])
 
 
     return (
