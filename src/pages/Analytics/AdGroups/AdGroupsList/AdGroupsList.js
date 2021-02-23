@@ -39,19 +39,19 @@ const AdGroupsList = ({location}) => {
     }
 
     const columns = [
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'state',
-        //     key: 'state',
-        //     width: '65px',
-        //     noTotal: true,
-        //     render: (state) => <div className="switch-block">
-        //         <Switch
-        //             disabled={state === 'archived'}
-        //             checked={state === 'enabled'}
-        //         />
-        //     </div>
-        // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            render: (state) => <div className="switch-block">
+                <Switch
+                    disabled={state === 'archived'}
+                    checked={state === 'enabled'}
+                />
+            </div>
+        },
         {
             title: 'Ad Group',
             dataIndex: 'name',
@@ -148,10 +148,10 @@ const AdGroupsList = ({location}) => {
         <section className={'ad-group-list list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0]}
+                fixedColumns={[0, 1]}
                 location={location}
-                // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
-                // showRowSelection={true}
+                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                showRowSelection={true}
                 rowKey={'adGroupId'}
             />
         </section>

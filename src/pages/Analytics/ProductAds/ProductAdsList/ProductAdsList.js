@@ -40,19 +40,19 @@ const ProductAdsList = ({location}) => {
     }
 
     const columns = [
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'state',
-        //     key: 'state',
-        //     width: '65px',
-        //     noTotal: true,
-        //     render: (state) => <div className="switch-block">
-        //         <Switch
-        //             disabled={state === 'archived'}
-        //             checked={state === 'enabled'}
-        //         />
-        //     </div>
-        // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            render: (state) => <div className="switch-block">
+                <Switch
+                    disabled={state === 'archived'}
+                    checked={state === 'enabled'}
+                />
+            </div>
+        },
         {
             title: 'Product',
             dataIndex: 'product_name_sku_asin',
@@ -130,10 +130,10 @@ const ProductAdsList = ({location}) => {
         <section className={'list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0]}
+                fixedColumns={[0, 1]}
                 location={location}
-                // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
-                // showRowSelection={true}
+                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                showRowSelection={true}
                 rowKey={'adId'}
             />
         </section>
