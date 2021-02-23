@@ -29,7 +29,7 @@ const CampaignDetails = ({createData, onChange}) => {
                             onChange={(value) => onChange({portfolio_name: value})}
                         >
                             <Option
-                                value={'item.id'}
+                                value={'Portfolio'}
                             >
                                 Portfolio
                             </Option>

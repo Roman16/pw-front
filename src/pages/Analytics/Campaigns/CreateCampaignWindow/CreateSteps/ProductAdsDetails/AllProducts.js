@@ -7,7 +7,7 @@ import Pagination from "../../../../../../components/Pagination/Pagination"
 import ProductItem from "./ProductItem"
 import _ from 'lodash'
 
-const {Search} = Input;
+const {Search} = Input
 
 
 const AllProducts = ({onChange, createData, disabledBlock}) => {
@@ -18,42 +18,46 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
-        });
+        })
 
     const changePaginationHandler = (options) => {
-        setPaginationOptions(options);
-    };
+        setPaginationOptions(options)
+    }
 
     const changeSearchHandler = debounce(500, false, str => {
-        setSearchStr(str);
+        setSearchStr(str)
         setPaginationOptions({
             ...paginationOptions,
             page: 1
         })
-    });
+    })
+
+    const addAllProductAdsHandler = () => {
+        onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts.filter(item => !_.find(createData.selectedProductAds, {id: item.id}))]})
+    }
 
 
     const getProductsList = async () => {
-        setProcessing(true);
+        setProcessing(true)
 
         try {
             const res = await zthServices.getAllProducts({
                 ...paginationOptions,
                 searchStr: searchStr,
-            });
+            })
 
-            setAllProducts(res.result || []);
-            setTotalSize(res.totalSize);
+            setAllProducts(res.result || [])
+            setTotalSize(res.totalSize)
         } catch (e) {
             setAllProducts([])
         }
 
-        setProcessing(false);
-    };
+        setProcessing(false)
+    }
 
     useEffect(() => {
-        getProductsList();
-    }, [paginationOptions]);
+        getProductsList()
+    }, [paginationOptions])
 
     return (
         <div className="col all-products">
@@ -76,9 +80,9 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
 
                     <div className="products-actions">
                         <button
-                            disabled={allProducts.length === 0 || disabledBlock}
+                            disabled={allProducts.length === 0 || disabledBlock || allProducts.length === createData.selectedProductAds.length}
                             className={'btn default p15'}
-                            onClick={() => onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts]})}
+                            onClick={addAllProductAdsHandler}
                         >
                             Add all on this page
                         </button>
@@ -115,7 +119,7 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
             />
         </div>
     )
-};
+}
 
 
 export default AllProducts
