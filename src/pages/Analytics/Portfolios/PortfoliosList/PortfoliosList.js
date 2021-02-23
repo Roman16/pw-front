@@ -87,7 +87,7 @@ const PortfoliosList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
         </section>
     )

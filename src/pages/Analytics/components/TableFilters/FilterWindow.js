@@ -237,20 +237,25 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Archived', key: 'archived', value: 'archived'},
         ],
         'calculatedTargetingMatchType': [
-            {title: 'ASIN', key: 'asin', value: 'asin'},
-            {title: 'Brand', key: 'brand', value: 'brand'},
-            {title: 'Category', key: 'category', value: 'category'},
-
             ...locationKey === 'targetings' ? [
                     {title: 'Exact', key: 'exact', value: 'exact'},
                     {title: 'Phrase', key: 'phrase', value: 'phrase'},
                     {title: 'Broad', key: 'broad', value: 'broad'},
+                    {title: 'ASIN', key: 'asin', value: 'asin'},
+                    {title: 'Category', key: 'category', value: 'category'},
+                    {title: 'Brand', key: 'brand', value: 'brand'},
                     {title: 'Views', key: 'views', value: 'views'},
+                    {title: 'Auto', key: 'auto', value: 'auto'},
                 ]
                 :
                 [
                     {title: 'Negative Exact', key: 'negativeExact', value: 'negativeExact'},
-                    {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'}
+                    {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'},
+                    {title: 'Campaign Negative Exact', key: 'campaign_negativeExact', value: 'campaign_negativeExact'},
+                    {title: 'Campaign Negative Phrase', key: 'campaign_negativePhrase', value: 'campaign_negativePhrase'},
+                    {title: 'ASIN', key: 'asin', value: 'asin'},
+                    {title: 'Brand', key: 'brand', value: 'brand'},
+
                 ]
         ],
         'bidding_strategy': [

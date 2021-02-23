@@ -77,7 +77,8 @@ const NegativeTargetingsList = ({location}) => {
                 columnSelect={false}
                 dateRange={false}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
+                showOptions={false}
             />
         </section>
     )

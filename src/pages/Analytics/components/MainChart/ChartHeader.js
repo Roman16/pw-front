@@ -68,18 +68,6 @@ const ChartHeader = ({chartState, activeMetrics}) => {
 
                     Gathering data
                 </div>
-
-                <Fragment>
-                    <div className="optimization-line started">
-                        <SVG id='optimization-started'/>
-                        Optimization started
-                    </div>
-
-                    <div className="optimization-line paused">
-                        <SVG id='optimization-paused'/>
-                        Optimization paused
-                    </div>
-                </Fragment>
             </div>
         )
     }

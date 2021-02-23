@@ -17,6 +17,8 @@ import preciseDiff from "moment-precise-range-plugin"
 import SwitchChartVisible from "./SwitchChartVisisble"
 import ExpandWorkplace from "./ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import FastUpdateBlock from "./FastUpdateBlock/FastUpdateBlock"
+import {notification} from "../../../../components/Notification"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -50,10 +52,13 @@ const TableList = ({
                        showFilters = true,
                        searchField = true,
                        showTotal = true,
+                       showOptions = true,
                        dateRange = true,
                        responseFilter = false,
                        expandedRowRender,
-                       isParent
+                       isParent,
+                       showRowSelection = false,
+                       rowKey
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
@@ -71,7 +76,9 @@ const TableList = ({
             page: 1,
             pageSize: pageSizeFromLocalStorage || 30,
             totalSize: 0,
-        })
+        }),
+        [selectedRows, setSelectedRows] = useState([]),
+        [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -204,7 +211,7 @@ const TableList = ({
             if (res.response) {
                 setTableData(res.response)
 
-                if (localTableOptions.comparePreviousPeriod) {
+                if (localTableOptions.comparePreviousPeriod && showOptions) {
                     getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
                 }
             }
@@ -245,7 +252,7 @@ const TableList = ({
                 }
 
 
-                const res = await analyticsServices.fetchTableData(location, paginationParams, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
+                const res = await analyticsServices.fetchTableData(location, {...paginationParams, page: 1}, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
                 if (res.response) {
                     if (responseFilter) {
@@ -276,6 +283,20 @@ const TableList = ({
         }
     }
 
+    const setChangesHandler = async (key, value) => {
+        await setTableData([...tableData.map(item => {
+            if (selectedRows.includes(item.campaignId)) {
+                item[key] = value
+            }
+
+            return item
+        })])
+
+        notification.success({title: 'Success'})
+        setSelectedAllRows(false)
+        setSelectedRows([])
+    }
+
     useEffect(() => {
         getData()
     }, [location, paginationParams.page, paginationParams.pageSize, sorterColumn, mainState, selectedRangeDate, tableOptions])
@@ -300,40 +321,66 @@ const TableList = ({
         localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
     }, [tableOptions])
 
+
+    const rowSelection = {
+        onChange: (rowsList, selectAll = false) => {
+            setSelectedRows(rowsList)
+
+            if (selectedRows.length === rowsList.length || selectAll) setSelectedAllRows(true)
+            else setSelectedAllRows(false)
+        }
+    }
+
     return (
         <div className={'table-section'}>
-            <div className="section-header">
-                {showFilters && <TableFilters
+            {selectedRows.length > 0 ? <FastUpdateBlock
+                    {...paginationParams}
+                    location={location}
+                    selectedRows={selectedRows}
+                    selectedAllOnPage={selectedAllRows}
                     columns={columns}
-                    filters={filters}
-                    locationKey={location}
-                    searchField={searchField}
-                />}
 
-                {moreActions}
-
-                {columnSelect && <ColumnsSelect
-                    columns={columns}
-                    columnsBlackList={localColumnBlackList}
-                    onChangeBlackList={changeBlackListHandler}
-                />}
-
-                <ExpandWorkplace/>
-
-                <TableOptions
-                    options={localTableOptions}
-                    onChange={changeTableOptionsHandler}
-                    selectedRangeDate={selectedRangeDate}
+                    onClose={() => {
+                        setSelectedAllRows(false)
+                        setSelectedRows([])
+                    }}
+                    onSelectAll={() => setSelectedAllRows(true)}
+                    onSetChanges={setChangesHandler}
                 />
+                :
+                <div className="section-header">
+                    {showFilters && <TableFilters
+                        columns={columns}
+                        filters={filters}
+                        locationKey={location}
+                        searchField={searchField}
+                    />}
 
-                {dateRange && <DateRange
-                    onChange={dateRangeHandler}
-                    selectedRangeDate={selectedRangeDate}
-                    tableOptions={localTableOptions}
-                />}
+                    {moreActions}
 
-                <SwitchChartVisible/>
-            </div>
+                    {columnSelect && <ColumnsSelect
+                        columns={columns}
+                        columnsBlackList={localColumnBlackList}
+                        onChangeBlackList={changeBlackListHandler}
+                    />}
+
+                    <ExpandWorkplace/>
+
+                    {showOptions && <TableOptions
+                        options={localTableOptions}
+                        onChange={changeTableOptionsHandler}
+                        selectedRangeDate={selectedRangeDate}
+                    />}
+
+                    {dateRange && <DateRange
+                        onChange={dateRangeHandler}
+                        selectedRangeDate={selectedRangeDate}
+                        tableOptions={localTableOptions}
+                    />}
+
+                    <SwitchChartVisible/>
+                </div>}
+
 
             <CustomTable
                 loading={fetchingStatus}
@@ -341,9 +388,16 @@ const TableList = ({
                 {...showTotal && {
                     totalDataSource: {
                         ..._.mapValues(metricsData, (value) => (+value.value)),
-                        ...{[columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
+                        ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${paginationParams.totalSize}`}
                     }
                 }}
+
+                rowKey={rowKey}
+                {...showRowSelection && {rowSelection: rowSelection}}
+                selectedAll={selectedAllRows}
+                selectedRows={selectedRows}
+                disabledRows={tableData.filter(item => item.state === 'archived').map(item => item[rowKey])}
+
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
                 fixedColumns={fixedColumns}

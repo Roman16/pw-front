@@ -17,13 +17,14 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn, statusColumn, renderNumberField,
+    campaignColumn, statusColumn, renderNumberField, EditableField,
 } from "../../components/TableList/tableColumns"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import {Switch} from "antd"
 
 const AdGroupsList = ({location}) => {
     const {selectedCampaign} = useSelector(state => ({
@@ -38,6 +39,19 @@ const AdGroupsList = ({location}) => {
     }
 
     const columns = [
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Ad Group',
             dataIndex: 'name',
@@ -87,7 +101,11 @@ const AdGroupsList = ({location}) => {
             locked: true,
             noTotal: true,
             filter: true,
-            render: (bid) => <InputCurrency value={bid} disabled/>
+            fastUpdating: true,
+            render: (bid) => <EditableField
+                type={'currency'}
+                value={bid}
+            />
         },
         {
             title: 'Total Targets',
@@ -96,6 +114,7 @@ const AdGroupsList = ({location}) => {
             width: '200px',
             sorter: true,
             noTotal: true,
+            align: 'right',
             ...renderNumberField()
         },
         {
@@ -105,6 +124,7 @@ const AdGroupsList = ({location}) => {
             width: '200px',
             sorter: true,
             noTotal: true,
+            align: 'right',
             ...renderNumberField()
         },
         impressionsColumn,
@@ -130,7 +150,9 @@ const AdGroupsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                // showRowSelection={true}
+                rowKey={'adGroupId'}
             />
         </section>
     )

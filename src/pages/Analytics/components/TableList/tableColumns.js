@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useRef, useState} from "react"
 import moment from "moment"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
@@ -16,20 +16,22 @@ import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import DatePicker from "../../../../components/DatePicker/DatePicker"
 
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
         case 'number':
-            return ((number !== null && number !== undefined  ? numberMask(number, 0) : '-'))
+            return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
         case 'percent':
-            return ((number !== null && number !== undefined  ? `${round(+number * 100, 2)}%` : '-'))
+            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
 
         case 'roas':
-            return `${(number !== null  ? `${round(+number, 2)}x` : '-')}`
+            return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined  ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
     }
 }
 
@@ -67,6 +69,7 @@ export const statusColumn = {
     sorter: true,
     filter: true,
     noTotal: true,
+    fastUpdating: true
 }
 
 export const dateColumn = {
@@ -217,11 +220,88 @@ export const skuAsinColumn = {
     </div>
 }
 
+export const EditableField = ({type, value}) => {
+    const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
+    const wrapperRef = useRef(null)
+
+    useEffect(() => {
+        function handleClickOutside({target}) {
+            if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
+
+            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                setVisibleEditableWindow(false)
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside, true)
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
+    }, [wrapperRef])
+
+    if (type === 'date') {
+        return (<div className={'editable-field'} ref={wrapperRef}>
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>
+
+                    {/*{value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}*/}
+                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
+                </div>
+
+                {/*{visibleEditableWindow && <div className="editable-window date">*/}
+                {/*    <DatePicker*/}
+                {/*        value={value ? moment(value) : moment()}*/}
+                {/*        format={'DD MMM YYYY'}*/}
+                {/*        open={true}*/}
+                {/*        showToday={false}*/}
+                {/*        className={'editable-date-picker'}*/}
+                {/*        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}*/}
+                {/*        renderExtraFooter={() => <>*/}
+                {/*            <p>America/Los_Angeles</p>*/}
+                {/*            <div className="actions">*/}
+                {/*                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>*/}
+                {/*                    Save*/}
+                {/*                </button>*/}
+
+                {/*                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>*/}
+                {/*                    Cancel*/}
+                {/*                </button>*/}
+                {/*            </div>*/}
+                {/*        </>}*/}
+                {/*    />*/}
+                {/*</div>}*/}
+            </div>
+        )
+    } else {
+        return (<div className={'editable-field'} ref={wrapperRef}>
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    <InputCurrency disabled value={value}/>
+
+                    {/*{value ? `$${value}` : ''}*/}
+
+                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
+                </div>
+
+                {/*{visibleEditableWindow && <div className="editable-window">*/}
+                {/*    <InputCurrency*/}
+                {/*        value={value}*/}
+                {/*        autoFocus={true}*/}
+                {/*    />*/}
+
+                {/*    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>*/}
+                {/*    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel*/}
+                {/*    </button>*/}
+                {/*</div>}*/}
+            </div>
+        )
+    }
+}
+
 export const clicksColumn = {
     title: 'Clicks',
     dataIndex: 'clicks',
     key: 'clicks',
-    minWidth: '90px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     align: 'right',
@@ -232,7 +312,7 @@ export const ctrColumn = {
     title: 'CTR',
     dataIndex: 'ctr',
     key: 'ctr',
-    minWidth: '90px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     align: 'right',
@@ -403,7 +483,7 @@ export const matchTypeColumn = {
     title: 'Match type',
     dataIndex: 'calculatedTargetingMatchType',
     key: 'calculatedTargetingMatchType',
-    width: '150px',
+    width: '200px',
     sorter: true,
     locked: true,
     noTotal: true,

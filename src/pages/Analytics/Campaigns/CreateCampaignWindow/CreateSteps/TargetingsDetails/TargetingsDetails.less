@@ -191,8 +191,10 @@
       }
 
       .added-keywords {
+        height: 258px;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
 
         & > .row {
           min-height: 1.5714285714285714rem;
@@ -216,6 +218,10 @@
           flex: 1;
           border: 0.5px solid #C9CBD4;
           border-radius: 4px;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          overflow: hidden;
 
           .header {
             display: flex;

@@ -12,7 +12,7 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn,
+    ctrColumn, EditableField,
     impressionsColumn, keywordPTColumn, matchTypeColumn,
     roasColumn,
     salesShareColumn,
@@ -25,6 +25,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import {Switch} from "antd"
 
 export const automatePatDescription = {
     'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
@@ -50,6 +51,19 @@ const TargetingsList = ({location}) => {
     }
 
     const columns = [
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
@@ -115,7 +129,11 @@ const TargetingsList = ({location}) => {
             sorter: true,
             noTotal: true,
             filter: true,
-            render: (bid) => <InputCurrency disabled value={bid}/>
+            fastUpdating: true,
+            render: (bid) => <EditableField
+                type={'currency'}
+                value={bid}
+            />
         },
         impressionsColumn,
         clicksColumn,
@@ -139,7 +157,9 @@ const TargetingsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // showRowSelection={true}
+                rowKey={'targetingId'}
             />
         </section>
     )

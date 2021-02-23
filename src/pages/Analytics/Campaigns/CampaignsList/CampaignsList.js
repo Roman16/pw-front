@@ -13,7 +13,7 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn,
+    ctrColumn, EditableField,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
@@ -26,6 +26,8 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import CustomTable from "../../../../components/Table/CustomTable"
+import {Switch} from "antd"
 
 
 const CampaignsList = ({location}) => {
@@ -44,6 +46,19 @@ const CampaignsList = ({location}) => {
     }
 
     const columns = [
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Campaign',
             dataIndex: 'name',
@@ -91,7 +106,11 @@ const CampaignsList = ({location}) => {
             locked: true,
             noTotal: true,
             filter: true,
-            render: (budget) => <InputCurrency disabled value={budget}/>
+            fastUpdating: true,
+            render: (budget) => <EditableField
+                type={'currency'}
+                value={budget}
+            />
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
@@ -123,8 +142,11 @@ const CampaignsList = ({location}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'}
-                                          defaultValue={date && moment(date)} disabled/>
+            fastUpdating: true,
+            render: (date) => <EditableField
+                type={'date'}
+                value={date}
+            />
         },
         {
             title: 'End date',
@@ -133,8 +155,11 @@ const CampaignsList = ({location}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            render: (date) => <DatePicker format={'DD.MM.YYYY'} placeholder={'No end date'}
-                                          defaultValue={date && moment(date)} disabled/>
+            fastUpdating: true,
+            render: (date) => <EditableField
+                type={'date'}
+                value={date}
+            />
         },
         {
             title: 'Campaign bidding strategy',
@@ -174,7 +199,9 @@ const CampaignsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
+                // showRowSelection={true}
+                rowKey={'campaignId'}
             />
         </section>
     )

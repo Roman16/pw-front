@@ -24,6 +24,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import {Switch} from "antd"
 
 const ProductAdsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
@@ -39,14 +40,28 @@ const ProductAdsList = ({location}) => {
     }
 
     const columns = [
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Product',
-            dataIndex: 'product_name',
-            key: 'product_name',
+            dataIndex: 'product_name_sku_asin',
+            key: 'product_name_sku_asin',
             width: '300px',
             sorter: true,
             locked: true,
             search: true,
+            totalRender: value => value,
             render: (name, item) => <RenderProduct
                 product={item}
                 setState={setStateHandler}
@@ -117,7 +132,9 @@ const ProductAdsList = ({location}) => {
                 columns={columns}
                 fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                // showRowSelection={true}
+                rowKey={'adId'}
             />
         </section>
     )

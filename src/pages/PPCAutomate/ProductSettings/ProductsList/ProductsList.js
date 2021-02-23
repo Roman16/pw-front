@@ -682,6 +682,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     rowSelection={rowSelection}
                     openedRow={(product) => product.id === openedProduct}
                     selectedAll={selectedAll}
+                    selectedRows={selectedRows}
 
                     expandedRowRender={expandedRowRender}
                 />
