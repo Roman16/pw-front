@@ -243,7 +243,6 @@ export const EditableField = ({type, value}) => {
         return (<div className={'editable-field'} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
                     {/*<DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>*/}
-
                     {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>
