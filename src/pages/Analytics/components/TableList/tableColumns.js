@@ -242,52 +242,56 @@ export const EditableField = ({type, value}) => {
     if (type === 'date') {
         return (<div className={'editable-field'} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+                    <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>
 
-                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                    {/*{value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}*/}
+                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
                 </div>
 
-                {visibleEditableWindow && <div className="editable-window date">
-                    <DatePicker
-                        value={value ? moment(value) : moment()}
-                        format={'DD MMM YYYY'}
-                        open={true}
-                        showToday={false}
-                        className={'editable-date-picker'}
-                        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
-                        renderExtraFooter={() => <>
-                            <p>America/Los_Angeles</p>
-                            <div className="actions">
-                                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>
-                                    Save
-                                </button>
+                {/*{visibleEditableWindow && <div className="editable-window date">*/}
+                {/*    <DatePicker*/}
+                {/*        value={value ? moment(value) : moment()}*/}
+                {/*        format={'DD MMM YYYY'}*/}
+                {/*        open={true}*/}
+                {/*        showToday={false}*/}
+                {/*        className={'editable-date-picker'}*/}
+                {/*        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}*/}
+                {/*        renderExtraFooter={() => <>*/}
+                {/*            <p>America/Los_Angeles</p>*/}
+                {/*            <div className="actions">*/}
+                {/*                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>*/}
+                {/*                    Save*/}
+                {/*                </button>*/}
 
-                                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
-                                    Cancel
-                                </button>
-                            </div>
-                        </>}
-                    />
-                </div>}
+                {/*                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>*/}
+                {/*                    Cancel*/}
+                {/*                </button>*/}
+                {/*            </div>*/}
+                {/*        </>}*/}
+                {/*    />*/}
+                {/*</div>}*/}
             </div>
         )
     } else {
         return (<div className={'editable-field'} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    {value ? `$${value}` : ''}
+                    <InputCurrency disabled value={value}/>
 
-                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                    {/*{value ? `$${value}` : ''}*/}
+
+                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
                 </div>
-                {visibleEditableWindow && <div className="editable-window">
-                    <InputCurrency
-                        value={value}
-                        autoFocus={true}
-                    />
 
-                    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>
-                    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
-                    </button>
-                </div>}
+                {/*{visibleEditableWindow && <div className="editable-window">*/}
+                {/*    <InputCurrency*/}
+                {/*        value={value}*/}
+                {/*        autoFocus={true}*/}
+                {/*    />*/}
+
+                {/*    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>*/}
+                {/*    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel*/}
+                {/*    </button>*/}
+                {/*</div>}*/}
             </div>
         )
     }

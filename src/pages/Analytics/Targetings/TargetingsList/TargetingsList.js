@@ -51,19 +51,19 @@ const TargetingsList = ({location}) => {
     }
 
     const columns = [
-        {
-            title: 'Active',
-            dataIndex: 'state',
-            key: 'state',
-            width: '65px',
-            noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
-        },
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
@@ -155,10 +155,10 @@ const TargetingsList = ({location}) => {
         <section className={'list-section'}>
             <TableList
                 columns={columns}
-                fixedColumns={[0, 1]}
+                fixedColumns={[0]}
                 location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
-                showRowSelection={true}
+                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // showRowSelection={true}
                 rowKey={'targetingId'}
             />
         </section>
