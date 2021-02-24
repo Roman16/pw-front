@@ -44,8 +44,8 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}
-                    prevValue={item[`${dataIndex}_prev`]}
-                    diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
+                    prevValue={item[`${dataIndex}_prev`] || undefined}
+                    diff={item[`${dataIndex}_prev`] ? +item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`] : null}
                     type={type}
                     name={dataIndex}
                     getPopupContainer={true}

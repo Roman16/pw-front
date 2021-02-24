@@ -71,15 +71,26 @@
 
   .ant-select-dropdown {
     ul.ant-select-tree {
-      padding: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 0.42857142857142855rem 0;
     }
 
     li {
-      padding: 5px 10px 5px 12px;
+      padding: 0 1.0714285714285714rem;
       margin: 0;
+      cursor: pointer;
+      box-sizing: content-box;
+
+      * {
+        cursor: pointer !important;
+      }
 
       .ant-select-tree-checkbox-inner {
-        border-radius: 3px;
+        border-radius: 2px;
+        width: 1.2857142857142858rem;
+        height: 1.2857142857142858rem;
+        border-color: #6d6df6;
       }
 
       .ant-select-tree-checkbox-checked {
@@ -90,7 +101,7 @@
           -o-background-size: cover;
           background-size: cover;
           border-color: #6d6df6;
-          border-radius: 3px;
+          border-radius: 2px;
 
           &::after {
             display: none;
@@ -98,15 +109,10 @@
         }
       }
 
+
       .ant-select-tree-checkbox-checked::after {
         border-color: #6d6df6;
-        border-radius: 3px;
-      }
-
-      .ant-select-tree-checkbox:hover {
-        .ant-select-tree-checkbox-inner {
-          border-color: #6d6df6;
-        }
+        border-radius: 2px;
       }
 
       .ant-select-tree-switcher {
@@ -115,10 +121,35 @@
 
       .ant-select-tree-node-content-wrapper-normal {
         width: calc(100% - 20px) !important;
-        padding: 0 0 0 5px;
+        height: 18px;
+        padding: 0.7857142857142857rem 0 0.7857142857142857rem 5px;
+        box-sizing: content-box;
 
         &:hover {
-          background: #F5F5FF;
+          background: #fff;
+        }
+
+        .ant-select-tree-title {
+          color: #343C5A;
+          font-size: 0.8571428571428571rem;
+          line-height: 10px;
+        }
+      }
+
+      &:hover {
+        .ant-select-tree-checkbox-inner {
+          &:not(.ant-checkbox-disabled) {
+            &::before {
+              content: '';
+              width: 200%;
+              height: 200%;
+              left: -50%;
+              top: -50%;
+              border-radius: 50%;
+              position: absolute;
+              background: rgba(109, 109, 246, 0.05);
+            }
+          }
         }
       }
     }

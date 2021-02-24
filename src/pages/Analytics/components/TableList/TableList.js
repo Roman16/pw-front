@@ -209,7 +209,14 @@ const TableList = ({
             })
 
             if (res.response) {
-                setTableData(res.response)
+                if (localTableOptions.comparePreviousPeriod) {
+                    setTableData(res.response.map(item => ({
+                        ...item,
+                        compareWithPrevious: true
+                    })))
+                } else {
+                    setTableData(res.response)
+                }
 
                 if (localTableOptions.comparePreviousPeriod && showOptions) {
                     getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
@@ -252,14 +259,16 @@ const TableList = ({
                 }
 
 
-                const res = await analyticsServices.fetchTableData(location, {...paginationParams, page: 1}, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
+                const res = await analyticsServices.fetchTableData(location, {
+                    ...paginationParams,
+                    page: 1
+                }, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
                 if (res.response) {
                     if (responseFilter) {
                         setTableData(prevState => {
                             return prevState.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
                                     return `${key}_prev`
                                 })
@@ -269,7 +278,6 @@ const TableList = ({
                         setTableData(prevState => {
                             return prevState.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
                                     return `${key}_prev`
                                 })

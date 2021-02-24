@@ -27,7 +27,7 @@ const SearchTerms = () => {
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
         segmentValueFromLocalStorage = localStorage.getItem('analyticsSTSegmentValue') ? localStorage.getItem('analyticsSTSegmentValue') : 'none',
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
-    pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
+        pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
 
     const [pageData, setPageData] = useState({
             metrics: {},
@@ -167,17 +167,35 @@ const SearchTerms = () => {
                                     return targetObj
                                 })
 
+                                if (localTableOptions.comparePreviousPeriod) {
+                                    item.compareWithPrevious = true
+                                }
+
                                 return item
                             })
                         } : prevState.table
                 }))
-
             } else {
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table
-                }))
+                if (localTableOptions.comparePreviousPeriod && res.table) {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        table: {
+                            ...res.table,
+                            response: res.table.response.map(item => {
+                                item.compareWithPrevious = true
+
+                                return item
+                            })
+                        }
+                    }))
+                } else {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        table: res.table || prevState.table
+                    }))
+                }
             }
 
 
@@ -236,7 +254,6 @@ const SearchTerms = () => {
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['queryCRC64']}), (value, key) => {
                                     return `${key}_prev`
                                 })

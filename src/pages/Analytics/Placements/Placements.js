@@ -116,10 +116,6 @@ const Placements = () => {
                 areaChartMetric
             })
 
-            if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData()
-            }
-
             if (localSegmentValue === 'advertisingType') {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
@@ -140,20 +136,43 @@ const Placements = () => {
                                         return targetObj
                                     })
 
+                                    if (localTableOptions.comparePreviousPeriod) {
+                                        item.compareWithPrevious = true
+                                    }
+
                                     return item
                                 })
                         } : prevState.table
                 }))
 
             } else {
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table,
-                    stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
-                }))
+                if (localTableOptions.comparePreviousPeriod && res.table) {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
+                        table: {
+                            ...res.table,
+                            response: res.table.response.map(item => {
+                                item.compareWithPrevious = true
+
+                                return item
+                            })
+                        }
+                    }))
+                } else {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
+                        table: res.table || prevState.table,
+                    }))
+                }
             }
 
+            if (localTableOptions.comparePreviousPeriod) {
+                getPreviousPeriodData()
+            }
 
             setChartFetchingStatus(false)
             setTableFetchingStatus(false)
@@ -211,21 +230,9 @@ const Placements = () => {
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.table.response, {placementName: item['placementName']}), (value, key) => {
                                     return `${key}_prev`
-                                }),
-                                // ...localSegmentValue === 'advertisingType' ? {
-                                //     segmentData: item.advertisingType_segmented.map((key, index) => {
-                                //         const targetObj = {..._.find(item.segmentData, {advertisingType: key}), compareWithPrevious: true}
-                                //
-                                //         columns.forEach(column => {
-                                //             targetObj[`${column.dataIndex}_prev`] = _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`] ? _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`][index] : null
-                                //         })
-                                //
-                                //         return targetObj
-                                //     })
-                                // } : {}
+                                })
                             }))]
                         }
                     }

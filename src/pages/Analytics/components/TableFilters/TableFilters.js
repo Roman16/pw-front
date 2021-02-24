@@ -93,7 +93,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 {searchField && <div className="form-group search-block">
                     <Search
                         className="search-field"
-                        placeholder={`Search by ${columns.find(column => column.search).title}`}
+                        placeholder={`Search by ${columns.find(column => column.search).dataIndex === 'product_name_sku_asin' ? 'Product, SKU or ASIN' : columns.find(column => column.search).title}`}
                         onChange={e => setSearchValue(e.target.value)}
                         onPressEnter={searchHandler}
                         onBlur={searchHandler}

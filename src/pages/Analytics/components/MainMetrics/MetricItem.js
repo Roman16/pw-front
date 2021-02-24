@@ -126,9 +126,6 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                 </InformationTooltip>
             )
         } else {
-            if (name === 'budget_allocation') {
-                console.log()
-            }
             return (
                 <InformationTooltip
                     type='custom'
