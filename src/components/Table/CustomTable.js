@@ -146,7 +146,7 @@ const CustomTable = ({
                         const isDisabledRow = disabledRows.includes(report[rowKey])
                         return (<>
                             <div
-                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
+                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {rowSelection && <div className={'table-body__field checkbox-column'}>

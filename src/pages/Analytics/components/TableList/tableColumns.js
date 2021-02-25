@@ -5,7 +5,7 @@ import {round} from "../../../../utils/round"
 import {Link} from "react-router-dom"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {Popover} from "antd"
+import {Popover, Tooltip} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from "lodash"
@@ -18,6 +18,8 @@ import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValue
 import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
+
+import {createPopper} from '@popperjs/core'
 
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
@@ -226,10 +228,12 @@ export const EditableField = ({type, value}) => {
 
     useEffect(() => {
         function handleClickOutside({target}) {
-            if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
+            if (target && target.className) {
+                if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
 
-            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
-                setVisibleEditableWindow(false)
+                } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                    setVisibleEditableWindow(false)
+                }
             }
         }
 
@@ -239,41 +243,45 @@ export const EditableField = ({type, value}) => {
         }
     }, [wrapperRef])
 
+    useEffect(() => {
+        if (type === 'date' && visibleEditableWindow) {
+            document.querySelector('section.list-section .table-overflow').addEventListener('scroll', () => {
+                setVisibleEditableWindow(false)
+            })
+        }
+    }, [visibleEditableWindow])
 
     if (type === 'date') {
         return (<div ref={wrapperRef}>
+
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    {/*<DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>*/}
                     {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>
 
-                {visibleEditableWindow && <div className="editable-window date">
-                    <div className="date-value" style={{height: wrapperRef.current.offsetHeight + 1 || '43px'}}>
-                        {value ? moment(value).format('DD MMM YYYY') : moment().format('DD MMM YYYY')}
-                    </div>
 
-                    <DatePicker
-                        value={value ? moment(value) : moment()}
-                        format={'DD MMM YYYY'}
-                        open={true}
-                        showToday={false}
-                        className={'editable-date-picker'}
-                        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
-                        renderExtraFooter={() => <>
-                            <p>America/Los_Angeles</p>
-                            <div className="actions">
-                                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>
-                                    Save
-                                </button>
+                {visibleEditableWindow && <DatePicker
+                    value={value ? moment(value) : moment()}
+                    format={'DD MMM YYYY'}
+                    open={visibleEditableWindow}
+                    showToday={false}
+                    className={'editable-date-picker'}
+                    dropdownClassName={'edit-field-picker'}
+                    // getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
+                    panelRender={<div>ttttt</div>}
+                    renderExtraFooter={() => <>
+                        <p>America/Los_Angeles</p>
+                        <div className="actions">
+                            <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>
+                                Save
+                            </button>
 
-                                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
-                                    Cancel
-                                </button>
-                            </div>
-                        </>}
-                    />
-                </div>}
+                            <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </>}
+                />}
             </div>
         )
     } else {
