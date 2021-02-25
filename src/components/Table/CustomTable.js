@@ -32,7 +32,8 @@ const CustomTable = ({
 
     const checkAllRowsHandler = ({target: {checked}}) => {
         if (checked) {
-            rowSelection.onChange(dataSource
+            rowSelection.onChange(
+                dataSource
                     .filter(item => !disabledRows.includes(item[rowKey]))
                     .map(item => item[rowKey]),
                 true
@@ -44,8 +45,8 @@ const CustomTable = ({
 
     const checkRowHandler = (id, value) => {
         if (value) {
-            if([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
-                rowSelection.onChange([...selectedRows, id], true)
+            if ([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
+                rowSelection.onChange([...selectedRows, id])
             } else {
                 rowSelection.onChange([...selectedRows, id])
             }
@@ -75,6 +76,7 @@ const CustomTable = ({
                 <div className="table-head" key={'table-head'}>
                     {rowSelection && <div className={'th checkbox-column'}>
                         <Checkbox
+                            disabled={dataSource.length === 0 || loading}
                             indeterminate={selectedRows.length > 0 && selectedRows.length !== dataSource.length}
                             checked={(selectedRows.length > 0 && selectedRows.length === dataSource.length) || selectedAll}
                             onChange={checkAllRowsHandler}
@@ -162,7 +164,7 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.edit ? 'editable-field' : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition

@@ -107,6 +107,7 @@ const CampaignsList = ({location}) => {
             noTotal: true,
             filter: true,
             fastUpdating: true,
+            edit: true,
             render: (budget) => <EditableField
                 type={'currency'}
                 value={budget}
@@ -143,6 +144,7 @@ const CampaignsList = ({location}) => {
             sorter: true,
             noTotal: true,
             fastUpdating: true,
+            edit: true,
             render: (date) => <EditableField
                 type={'date'}
                 value={date}
@@ -156,6 +158,7 @@ const CampaignsList = ({location}) => {
             sorter: true,
             noTotal: true,
             fastUpdating: true,
+            edit: true,
             render: (date) => <EditableField
                 type={'date'}
                 value={date}

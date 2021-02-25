@@ -130,6 +130,7 @@ const TargetingsList = ({location}) => {
             noTotal: true,
             filter: true,
             fastUpdating: true,
+            edit: true,
             render: (bid) => <EditableField
                 type={'currency'}
                 value={bid}

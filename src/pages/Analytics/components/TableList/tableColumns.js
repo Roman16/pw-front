@@ -239,8 +239,9 @@ export const EditableField = ({type, value}) => {
         }
     }, [wrapperRef])
 
+
     if (type === 'date') {
-        return (<div className={'editable-field'} ref={wrapperRef}>
+        return (<div ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
                     {/*<DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>*/}
                     {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
@@ -248,6 +249,10 @@ export const EditableField = ({type, value}) => {
                 </div>
 
                 {visibleEditableWindow && <div className="editable-window date">
+                    <div className="date-value" style={{height: wrapperRef.current.offsetHeight + 1 || '43px'}}>
+                        {value ? moment(value).format('DD MMM YYYY') : moment().format('DD MMM YYYY')}
+                    </div>
+
                     <DatePicker
                         value={value ? moment(value) : moment()}
                         format={'DD MMM YYYY'}
@@ -272,7 +277,7 @@ export const EditableField = ({type, value}) => {
             </div>
         )
     } else {
-        return (<div className={'editable-field'} ref={wrapperRef}>
+        return (<div className={''} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
                     {/*<InputCurrency disabled value={value}/>*/}
 

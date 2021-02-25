@@ -135,7 +135,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 </Popover>
             </div>
 
-            <div className="current-filters filters-list">
+            {filters.filter(item => item.type !== 'search').length > 0 && <div className="current-filters filters-list">
                 {filters.map((filter, index) => (
                     filter.type !== 'search' && filter.filterBy !== 'productView' && <Popover
                         content={<FilterWindow
@@ -174,7 +174,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 <button className={'reset-filters'} onClick={resetHandler}>Reset</button>
                 }
             </div>
-        </>
+            }        </>
 
     )
 }

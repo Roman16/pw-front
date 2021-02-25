@@ -30,12 +30,12 @@
     }
 
     .section-header {
-      min-height: 75px;
+      min-height: 5.142857142857143rem;
       display: grid;
       grid-template-areas: 'filters segmentFilter createButton columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters  currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
-      padding: 20px 0 0 20px;
+      padding: 20px 0 0 0;
 
       .search-block {
         width: 300px;
@@ -474,7 +474,7 @@
             position: sticky;
             left: 0;
             background: #fff;
-            z-index: 1;
+            z-index: 11;
           }
 
           &:last-child {
@@ -525,7 +525,7 @@
               position: sticky;
               left: 0;
               background: #fff;
-              z-index: 1;
+              z-index: 11;
             }
 
             &:last-child {
@@ -648,18 +648,24 @@
               justify-content: center;
             }
 
-            .editable-field {
-              height: 100%;
-              width: 100%;
+            &.editable-field {
               position: relative;
+              padding: 0;
+              display: flex;
+              align-items: stretch;
+
+              & > div {
+                width: 100%;
+              }
 
               .field-value {
                 width: 100%;
                 height: 100%;
                 display: flex;
                 align-items: center;
-                //cursor: pointer;
+                cursor: pointer;
                 position: relative;
+                padding: 5px 8px 5px 12px;
 
                 i {
                   width: 30px;
@@ -687,6 +693,7 @@
                 }
               }
             }
+
 
             .sku-asin {
               width: 100%;
@@ -942,8 +949,9 @@
 
 .editable-window {
   position: absolute;
-  left: -12px;
-  top: -5px;
+  height: 100%;
+  left: 0;
+  top: 0;
   display: flex;
   align-items: center;
   background: #fff;
@@ -980,7 +988,20 @@
     height: max-content;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     padding: 0;
+    top: 0;
+
+    .date-value {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      border-left: 4px solid #6D6DF6;
+      border-bottom: 0.5px solid #C9CBD4;
+      border-radius: 0;
+      padding-left: 8px;
+
+    }
 
 
     & > div {
@@ -994,8 +1015,8 @@
     }
 
     .pw-date-picker {
-      height: 43px;
-      display: flex;
+      display: none;
+      height: 100%;
       align-items: center;
       border-left: 4px solid #6D6DF6;
       border-bottom: 0.5px solid #C9CBD4;
