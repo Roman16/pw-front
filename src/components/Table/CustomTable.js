@@ -84,8 +84,10 @@ const CustomTable = ({
                     </div>}
 
                     {columns.map((item, index) => {
+                        const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = index === 0 ? {left: rowSelection ? 59 : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + 59px)` : columns[index - 1].width}
+                            leftStickyPosition = index === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + ${checkboxWith}px)` : columns[index - 1].width}
 
                         return (
                             <div
@@ -118,8 +120,10 @@ const CustomTable = ({
                     </div>}
 
                     {columns.map((item, columnIndex) => {
+                        const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
+                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                         return (
                             <div
@@ -159,8 +163,10 @@ const CustomTable = ({
 
 
                                 {columns.map((item, columnIndex) => {
+                                    const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
+                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                                     return (
                                         <div
