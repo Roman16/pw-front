@@ -19,8 +19,6 @@ import {automatePatDescription} from "../../Targetings/TargetingsList/Targetings
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 
-import {createPopper} from '@popperjs/core'
-
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
         case 'number':
