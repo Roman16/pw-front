@@ -1,17 +1,10 @@
 import React from "react"
 
-const SmartBar = () => {
-    const email = 'info@profitwhales.agency',
-        phone = '+18143519477'
-
+const SmartBar = ({email, phone}) => {
     return (
         <div className="smart-bar">
             <div className="container">
                 <div className="contacts">
-                    <span className="phone">
-                        {phone}
-                    </span>
-
                     <a href={`tel:${phone}`} className="phone">
                         {phone}
                     </a>

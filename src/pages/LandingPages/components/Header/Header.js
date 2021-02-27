@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
 import SmartBar from "./SmartBar"
@@ -61,7 +61,14 @@ const menu = [
     }
 ]
 
+export const email = 'info@profitwhales.agency',
+    phone = '+18143519477'
+
 const Header = ({type = 'light', page}) => {
+    const [visibleMenu, setVisibleMenu] = useState(false),
+        [selectedMenuIndex, setSelectedMenuItem] = useState()
+
+
     useEffect(() => {
         const s = document.createElement('script')
         s.type = 'text/javascript'
@@ -96,18 +103,24 @@ d.head.appendChild(j);
     return (
         <>
             <div className={'header-block'}>
-                <SmartBar/>
+                <SmartBar
+                    email={email}
+                    phone={phone}
+                />
 
                 <header className={`landing-page__header desc ${type}`} id={'header'}>
                     <div className="container">
                         <LogoLink/>
 
-                        <ul className={'header-menu'}>
-                            {menu.map(item => (<>
-                                <li>
-                                    <Link to={item.link || '#'}>{item.title}</Link>
+                        <ul className={`header-menu ${visibleMenu ? 'open' : ''}`}>
+                            {menu.map((item, index) => (<>
+                                <li className={selectedMenuIndex === index && 'selected'}>
+                                    <Link to={item.link || '#'}
+                                          onClick={() => setSelectedMenuItem(index)}>{item.title} {item.subMenu &&
+                                    <span className="arrow"><span/><span/></span>}</Link>
 
-                                    {item.subMenu && <div className="sub-menu">
+                                    {item.subMenu &&
+                                    <div className={`sub-menu ${selectedMenuIndex === index ? 'open' : ''}`}>
                                         {item.subMenu.map(subItem => <Link
                                             to={subItem.link || subItem.outsideLink}
                                         >
@@ -119,6 +132,22 @@ d.head.appendChild(j);
 
                             <LoginLink/>
                         </ul>
+
+                        <a href={`mailto:${email}`} className={'email-link'}>
+                            <svg width="21" height="18" viewBox="0 0 21 18" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                      d="M1 0C0.447715 0 0 0.447716 0 1V2.13502C0 2.53156 0.234305 2.89064 0.597261 3.05034L9.69438 7.05307C10.2076 7.2789 10.7921 7.2789 11.3053 7.05307L20.4027 3.05021C20.7657 2.89051 21 2.53144 21 2.1349V1C21 0.447715 20.5523 0 20 0H1ZM21 6.50498C21 5.78292 20.2582 5.29886 19.5973 5.58966L12.1108 8.8837C11.0843 9.33535 9.91539 9.33535 8.88891 8.8837L1.40274 5.58979C0.741832 5.29899 0 5.78305 0 6.5051V17C0 17.5523 0.447715 18 1 18H20C20.5523 18 21 17.5523 21 17V6.50498Z"
+                                      fill="#6D6DF6"/>
+                            </svg>
+                        </a>
+
+                        <button
+                            className={`burger ${visibleMenu ? 'open' : ''}`}
+                            onClick={() => setVisibleMenu(prevState => !prevState)}
+                        >
+                            <div/>
+                        </button>
                     </div>
                 </header>
             </div>
@@ -126,7 +155,7 @@ d.head.appendChild(j);
     )
 }
 
-const LoginLink = () => <Link to={'/login'} className={'login-link'}>
+export const LoginLink = () => <Link to={'/login'} className={'login-link'}>
     <i>
         <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="18" height="20">
@@ -141,7 +170,7 @@ const LoginLink = () => <Link to={'/login'} className={'login-link'}>
     Login
 </Link>
 
-const LogoLink = () =>
+export const LogoLink = () =>
     <NavLink to='/' className={'logo-link'}>
         <svg width="160" height="64" viewBox="0 0 160 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0)">
