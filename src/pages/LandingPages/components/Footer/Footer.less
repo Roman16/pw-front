@@ -57,6 +57,7 @@
   .menu {
     display: flex;
     flex-wrap: wrap;
+    grid-row-gap: 48px;
     padding: 24px 0 66px;
     border-top: 1px solid #C9CBD4;
     border-bottom: 1px solid #C9CBD4;
@@ -65,6 +66,7 @@
     .col {
       flex: 1;
       min-width: 180px;
+      padding: 0 20px 0 0;
     }
 
     h4 {
@@ -76,6 +78,10 @@
 
       a {
         color: #2D2E55;
+        -webkit-transition: all .3s ease-in-out;
+        -moz-transition: all .3s ease-in-out;
+        -o-transition: all .3s ease-in-out;
+        transition: all .3s ease-in-out;
 
         &:hover {
           color: #6D6DF6;
@@ -134,6 +140,20 @@
       flex-direction: row;
       margin: 36px 0 0 0;
       grid-column-gap: 32px;
+
+      a {
+        svg {
+          fill: #6D6DF6;
+        }
+
+        &:hover {
+          svg {
+            fill: #5454be;
+          }
+        }
+      }
+
+
     }
   }
 
@@ -174,6 +194,10 @@
     }
   }
 
+  .logo {
+    display: flex;
+  }
+
   .amazon-advertising-logo {
     width: 174px;
     height: 27px;
@@ -188,24 +212,100 @@
 
   @media (max-width: 600px) {
     .container {
-      label {
+      .row:first-of-type {
+        justify-content: center;
+
+        .login-link {
+          display: none;
+        }
+      }
+
+      .description {
+        margin: 18px 0;
+      }
+
+      .col {
         width: 100%;
-        text-align: center;
+        padding: 0;
+      }
+
+      .login-link.mob {
+        display: flex !important;
+        color: #fff;
+        margin: 0 auto;
+        height: 40px;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 0 20px;
       }
 
       .description {
         text-align: center;
       }
 
+      .menu {
+        flex-direction: column;
+        align-items: center;
+
+        h4 {
+          text-align: center;
+        }
+
+        ul {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          grid-row-gap: 12px;
+          grid-column-gap: 18px;
+
+          li {
+            text-align: center;
+
+          a {
+            min-width: max-content;
+            word-break: inherit;
+          }
+          }
+        }
+      }
+
+      .group {
+        label {
+          display: none;
+        }
+
+        a {
+          text-align: center;
+        }
+
+        &:nth-child(5) {
+          display: none;
+        }
+      }
+
       .social-icons {
         width: 100%;
         justify-content: center;
+        grid-column-gap: 43px !important;
       }
 
       .row:last-child {
-        img {
-          margin: 10px auto;
+        display: flex;
+        flex-direction: column-reverse;
+
+        .logo {
+          margin: 0 0 48px 0;
         }
+
+        .terms {
+          text-align: center;
+
+          a {
+            margin: 0 15px;
+          }
+        }
+
+
       }
     }
   }
@@ -225,6 +325,7 @@
       margin: 20px 0;
       flex-direction: column;
       align-items: center;
+
 
       h4 {
         text-align: center;

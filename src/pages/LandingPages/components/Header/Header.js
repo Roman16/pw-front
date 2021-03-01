@@ -61,7 +61,7 @@ const menu = [
     }
 ]
 
-export const email = 'info@profitwhales.agency',
+export const email = 'official@profitwhales.com',
     phone = '+18143519477'
 
 const Header = ({type = 'light', page}) => {
