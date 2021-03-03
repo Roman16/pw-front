@@ -2,6 +2,7 @@
   padding: 32px 0 48px;
   background: #fff;
   font-family: Eina;
+  border-top: 1px solid #C9CBD4;
 
   .container {
     display: flex;
@@ -12,6 +13,10 @@
     margin: 0 auto;
     padding: 0 20px;
     box-sizing: border-box;
+  }
+
+  .login-link.mob {
+    display: none;
   }
 
   .row {
@@ -187,6 +192,8 @@
       }
 
       &:hover {
+        color: #5252b8;
+
         &::after {
           max-width: 0;
         }

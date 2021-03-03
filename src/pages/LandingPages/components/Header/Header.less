@@ -4,18 +4,25 @@
   }
 }
 
+@media (max-width: 600px) {
+  .landing-page {
+    zoom: 100%;
+  }
+}
+
 .landing-page {
-  height: 100vh;
-  overflow: auto;
+  font-family: Eina;
+  padding-top: 131px;
 }
 
 .header-block {
   display: flex;
   flex-direction: column;
   font-family: Eina;
-  position: sticky;
-  position: -webkit-sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   background: #fff;
   z-index: 10000;
 
@@ -278,7 +285,7 @@
         align-items: flex-start;
 
         &.selected {
-         & >  a {
+          & > a {
             color: #6D6DF6;
           }
 

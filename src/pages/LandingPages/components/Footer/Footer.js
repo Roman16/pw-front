@@ -119,8 +119,8 @@ const Footer = () => (
                 <div className="terms">
                     <p>Profit Whales © 2021 All Right Reserved</p>
 
-                    <Link to={'/'}>Terms & Conditions</Link>
-                    <Link to={'/'}>Privacy Policy</Link>
+                    <Link to={'/terms-and-conditions'}>Terms & Conditions</Link>
+                    <Link to={'/policy'}>Privacy Policy</Link>
                 </div>
 
 

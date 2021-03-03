@@ -23,6 +23,8 @@ const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPoli
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'))
 const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
+const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeDo'))
+const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -60,11 +62,13 @@ const routers = () => {
                     <Route exact path="/videos/:block?" component={Video}/>
                     <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     <Route exact path="/zero-to-hero-info" component={LandingZTH}/>
+                    <Route exact path="/care-we-do" component={CareWeDo}/>
+                    <Route exact path="/our-whale" component={OurWhale}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
                     <Route exact path="/registration/:tag?" render={(props) => {
-                        if(props.match.params.tag && props.match.params.tag === 'from-agency') {
+                        if (props.match.params.tag && props.match.params.tag === 'from-agency') {
                             return (<RegistrationPage {...props}/>)
                         } else {
                             return (<AuditRegistration/>)

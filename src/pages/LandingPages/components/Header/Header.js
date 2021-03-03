@@ -9,15 +9,15 @@ const menu = [
         subMenu: [
             {
                 title: 'Our Whale',
-                link: '/',
+                link: '/our-whale',
             },
             {
                 title: 'Care we do',
-                link: '/',
+                link: '/care-we-do',
             },
             {
                 title: 'Recognition',
-                link: '/',
+                link: '/recognition',
             }
         ]
     },
