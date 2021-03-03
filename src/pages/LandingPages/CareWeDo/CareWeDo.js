@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Footer from "../components/Footer/Footer"
 import Header from "../components/Header/Header"
 import './CareWeDo.less'
@@ -56,18 +56,24 @@ const data = [
 
 const CareWeDo = () => {
 
+    useEffect(() => {
+        document.querySelector('.block-video-container').play()
+    }, [])
+
     return (
         <div className="care-we-do-page  landing-page">
             <Header/>
 
             <section className={'pre-header'}>
-                <video className="block-video-container"
-                       src={videoBg}
-                       autoPlay="true"
-                       loop="true"
-                       muted=""
-                       preload="auto"
-                       data-src={videoBg}/>
+                <video
+                    className="block-video-container"
+                       autoPlay = {true}
+                       controls = {false}
+                       loop = {true}
+                       muted = {true}
+                >
+                    <source src={videoBg} type="video/mp4"/>
+                </video>
 
                 <diw className="container">
                     <h1><span>care</span> <br/> we do</h1>
