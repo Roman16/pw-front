@@ -64,6 +64,52 @@ const OurWhale = () => {
                 </div>
             </section>
 
+            <section className={'ad-investment'}>
+                <div className="container">
+                    <h2>
+                        Turn Ad Spend into Ad Investment <span>to Accelerate your <br/>
+                        Amazon Business Growth</span> powered by the synergy of <br/>
+                        machine and human decisions.
+                    </h2>
+
+                    <p>
+                        Our passion is to help e-commerce brands grow, not only in their performance, but also in their
+                        knowledge of PPC and innovative advertising approach. Our desire is to achieve sustainable
+                        development of the entire sphere, encouraging growth of society.
+                    </p>
+                </div>
+            </section>
+
+            <section className={'statistic'}>
+                <div className="container">
+                    <h2>
+                       <span>The numbers</span> speak for themselves
+                    </h2>
+
+                    <ul>
+                        <li>
+                            <div>150M+</div>
+                            <label>REVENUE MANAGED</label>
+                        </li>
+
+                        <li>
+                            <div>10M+</div>
+                            <label>MONTHLY BID CHANGES</label>
+                        </li>
+
+                        <li>
+                            <div>5M+</div>
+                            <label>UNITS ORDERED </label>
+                        </li>
+
+                        <li>
+                            <div>1000+</div>
+                            <label>UNIQUE SKU MANAGED</label>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
 
             <Footer/>
         </div>
