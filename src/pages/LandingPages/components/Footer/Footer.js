@@ -136,7 +136,7 @@ const Footer = () => (
 )
 
 
-const SocialLinks = () => <ul className="social-icons">
+export const SocialLinks = () => <ul className="social-icons">
     <li>
         <a href="https://www.facebook.com/profitwhales" className="i-fb" target="_blank"
            title="Facebook">

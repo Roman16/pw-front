@@ -25,6 +25,8 @@ const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
 const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeDo'))
 const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
+const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/Recognition'))
+const Contact = React.lazy(() => import('../pages/LandingPages/Contact/Contact'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -52,7 +54,7 @@ const routers = () => {
                     <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                     <Route exact path="/thank-you" component={ThankYou}/>
                     <Route exact path="/demo-call" component={DemoCall}/>
-                    <Route exact path="/contact-us/:status?" component={ContactUs}/>
+                    <Route exact path="/contact-us/:status?" component={Contact}/>
                     <Route exact path="/help-support" component={HelpSupport}/>
                     <Route exact path="/partners" component={Partners}/>
                     <Route exact path="/audit" component={Audit}/>
@@ -64,6 +66,7 @@ const routers = () => {
                     <Route exact path="/zero-to-hero-info" component={LandingZTH}/>
                     <Route exact path="/care-we-do" component={CareWeDo}/>
                     <Route exact path="/our-whale" component={OurWhale}/>
+                    <Route exact path="/recognition" component={Recognition}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
