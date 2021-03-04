@@ -4,6 +4,8 @@ import {Checkbox, Input} from "antd"
 import {Link} from "react-router-dom"
 import Header, {email, phone} from "../components/Header/Header"
 import Footer, {SocialLinks} from "../components/Footer/Footer"
+import {userActions} from "../../../actions/user.actions"
+import {userService} from "../../../services/user.services"
 
 const TextArea = Input.TextArea
 
@@ -21,13 +23,39 @@ const Contact = () => {
 
 export const ContactForm = () => {
     const [successSend, setSuccessSend] = useState(false),
-        [agreeWithTerms, setAgreeWithTerms] = useState(false)
+        [agreeWithTerms, setAgreeWithTerms] = useState(false),
+        [requestData, setRequestData] = useState({
+            name: '',
+            email: '',
+            comment: ''
+        })
 
-    const submitFormHandler = (e) => {
+    const changeInputHandler = (key, value) => {
+        setRequestData({
+            ...requestData,
+            [key]: value
+        })
+    }
+
+    const submitFormHandler = async (e) => {
         e.preventDefault()
 
         if (agreeWithTerms) {
-            setSuccessSend(true)
+            try {
+                await userService.sendShortContactForm(requestData)
+                setSuccessSend(true)
+
+                setTimeout(() => {
+                    setRequestData({
+                        name: '',
+                        email: '',
+                        comment: ''
+                    })
+                }, 5000)
+
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -40,14 +68,20 @@ export const ContactForm = () => {
                     <div className="form-group">
                         <label htmlFor="">Your Name</label>
                         <Input
+                            required={true}
                             placeholder={'Your Name'}
+                            value={requestData.name}
+                            onChange={({target: {value}}) => changeInputHandler('name', value)}
                         />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">E-mail</label>
                         <Input
+                            required={true}
                             placeholder={'E-mail'}
+                            value={requestData.email}
+                            onChange={({target: {value}}) => changeInputHandler('email', value)}
                         />
                     </div>
 
@@ -55,6 +89,8 @@ export const ContactForm = () => {
                         <label htmlFor="">Message</label>
                         <TextArea
                             placeholder={'Message'}
+                            value={requestData.comment}
+                            onChange={({target: {value}}) => changeInputHandler('comment', value)}
                         />
                     </div>
 

@@ -121,11 +121,12 @@ d.head.appendChild(j);
 
                                     {item.subMenu &&
                                     <div className={`sub-menu ${selectedMenuIndex === index ? 'open' : ''}`}>
-                                        {item.subMenu.map(subItem => <Link
-                                            to={subItem.link || subItem.outsideLink}
-                                        >
-                                            {subItem.title}
-                                        </Link>)}
+                                        {item.subMenu.map(subItem => subItem.outsideLink ?
+                                            <a target={'_blank'} href={subItem.outsideLink}>{subItem.title}</a>
+                                            :
+                                            <Link to={subItem.outsideLink}>
+                                                {subItem.title}
+                                            </Link>)}
                                     </div>}
                                 </li>
                             </>))}

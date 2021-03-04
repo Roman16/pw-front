@@ -47,7 +47,9 @@ export const userService = {
 
     getBlogPosts,
     sendContactForm,
-    sendFormToPartnerSupport
+    sendShortContactForm,
+    sendFormToPartnerSupport,
+
 }
 
 function login(user) {
@@ -219,6 +221,10 @@ function sendContacts(data) {
 
 function sendContactForm(data) {
     return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href})
+}
+
+function sendShortContactForm(data) {
+    return api('post', `${userUrls.shortContactForm}`, {...data, page_url: window.location.href})
 }
 
 function sendFormToPartnerSupport(data) {

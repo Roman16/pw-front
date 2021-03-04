@@ -38,6 +38,7 @@ export const userUrls = {
     contacts: 'landings/contact-us',
     freeTrial: 'user/account/subscription/start-free-trial',
     contactForm: 'landings/request-talk-to-experts',
+    shortContactForm: 'landings/contact-us-email',
     partnerContactForm: 'landings/request-partnership',
 }
 
