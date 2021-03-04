@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import Footer from "../components/Footer/Footer"
 import Header from "../components/Header/Header"
 import './CareWeDo.less'
@@ -17,7 +17,8 @@ import organizationalImageMob from '../../../assets/img/landing-careWeDo/organiz
 import laborImage from '../../../assets/img/landing-careWeDo/labor-image.png'
 import laborImageMob from '../../../assets/img/landing-careWeDo/labor-image-mob.png'
 
-import videoBg from '../../../assets/img/landing-careWeDo/77.mp4'
+import videoBg from '../../../assets/img/landing-careWeDo/video-bg.mp4'
+import PageTitle from "./PageTitle"
 
 
 const data = [
@@ -55,6 +56,7 @@ const data = [
 ]
 
 const CareWeDo = () => {
+    const [openedSection, setOpenedSection] = useState()
 
     useEffect(() => {
         document.querySelector('.block-video-container').play()
@@ -64,33 +66,32 @@ const CareWeDo = () => {
         <div className="care-we-do-page  landing-page">
             <Header/>
 
-            <section className={'pre-header'}>
-                <video
-                    className="block-video-container"
-                       autoPlay = {true}
-                       controls = {false}
-                       loop = {true}
-                       muted = {true}
-                >
-                    <source src={videoBg} type="video/mp4"/>
-                </video>
+            <PageTitle
+                title={`<span>care</span> <br/> we do`}
+            />
 
-                <diw className="container">
-                    <h1><span>care</span> <br/> we do</h1>
-                </diw>
-            </section>
+            {data.map((item, index) => {
+                const isOpen = openedSection === index
 
-            {data.map(item => (
-                <section className={'content'}>
-                    <div className="container">
-                        <h2 dangerouslySetInnerHTML={{__html: item.title}}/>
-                        <p dangerouslySetInnerHTML={{__html: item.text}}/>
-                    </div>
+                return (
+                    <section className={`content ${isOpen ? 'opened' : ''}`}>
+                        <div className="container">
+                            <h2 dangerouslySetInnerHTML={{__html: item.title}}/>
+                            <p dangerouslySetInnerHTML={{__html: item.text}}/>
 
-                    <img className={'deck'} src={item.img} alt=""/>
-                    <img className={'mob'} src={item.imgMob} alt=""/>
-                </section>
-            ))}
+                            <div className="button-block">
+                                <button className="btn white"
+                                        onClick={() => setOpenedSection(isOpen ? undefined : index)}>
+                                    {isOpen ? 'show less' : 'show more'}
+                                </button>
+                            </div>
+                        </div>
+
+                        <img className={'deck'} src={item.img} alt=""/>
+                        <img className={'mob'} src={item.imgMob} alt=""/>
+                    </section>
+                )
+            })}
 
 
             <Footer/>
