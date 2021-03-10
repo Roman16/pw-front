@@ -1,28 +1,37 @@
 import React from "react"
-import AdGroupsList from "./AdGroupsList/AdGroupsList"
-import MainChart from "../components/MainChart/MainChart"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import CreateAdGroupWindow from "./CreateAdGroupWindow/CreateAdGroupWindow"
+import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
+import {useDispatch, useSelector} from "react-redux"
+import {analyticsActions} from "../../../actions/analytics.actions"
+import {columnList} from "./tableComponents/columnList"
+import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 const AdGroups = () => {
     const availableMetrics = [...metricsKeysWithoutOrganic]
     const location = 'ad-groups'
 
+    const {selectedCampaign} = useSelector(state => ({
+        selectedCampaign: state.analytics.mainState.campaignId
+    }))
+
+    const dispatch = useDispatch()
+
+    const setStateHandler = (location, state) => {
+        dispatch(analyticsActions.setLocation(location))
+        dispatch(analyticsActions.setMainState(state))
+    }
+
     return (
         <div className={'ad-groups-workplace'}>
-            <MainMetrics
-                allMetrics={availableMetrics}
+            <RenderPageParts
                 location={location}
-            />
+                availableMetrics={availableMetrics}
+                availableParts={['metrics', 'chart', 'table']}
+                fixedColumns={[0, 1]}
 
-            <MainChart
-                location={location}
-                allMetrics={availableMetrics}
-            />
-
-            <AdGroupsList
-                location={location}
+                columns={columnList(setStateHandler, selectedCampaign)}
+                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
 
             <CreateAdGroupWindow/>

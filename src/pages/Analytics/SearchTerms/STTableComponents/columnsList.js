@@ -2,7 +2,6 @@ import React from "react"
 import {
     acosColumn,
     adCvrColumn,
-    adGroupColumn,
     adOrdersColumn,
     adSalesColumn,
     adSpendColumn,
@@ -13,16 +12,12 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, keywordPTColumn, matchTypeColumn,
+    impressionsColumn
+    , matchTypeColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
-import {useDispatch, useSelector} from "react-redux"
-import {Link} from "react-router-dom"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import TableList from "../../componentsV2/TableList/TableList"
 import {SVG} from "../../../../utils/icons"
 import {Spin} from "antd"
 

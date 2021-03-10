@@ -37,10 +37,10 @@ const Footer = () => (
                     <h4>OUR DNA</h4>
 
                     <ul>
-                        <li><Link to={'/'}>Our Whale</Link></li>
+                        <li><Link to={'/our-whale'}>Our Whale</Link></li>
                         <li><Link to={'/'}>Culture</Link></li>
-                        <li><Link to={'/'}>Care we do</Link></li>
-                        <li><Link to={'/'}>Recognition</Link></li>
+                        <li><Link to={'/care-we-do'}>Care we do</Link></li>
+                        <li><Link to={'/recognition'}>Recognition</Link></li>
                     </ul>
                 </div>
 
@@ -72,7 +72,7 @@ const Footer = () => (
                     <ul>
                         <li><Link to={'/'}>Insights</Link></li>
                         <li><Link to={'/'}>News</Link></li>
-                        <li><Link to={'/'}>Blog</Link></li>
+                        <li><a href={'https://blog.profitwhales.com/'} target={'_blank'}>Blog</a></li>
                         <li><Link to={'/'}>Podcast</Link></li>
                         <li><Link to={'/'}>Encourage your knowledge</Link></li>
                         <li><Link to={'/'}>We on social media</Link></li>

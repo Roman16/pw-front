@@ -124,7 +124,7 @@ d.head.appendChild(j);
                                         {item.subMenu.map(subItem => subItem.outsideLink ?
                                             <a target={'_blank'} href={subItem.outsideLink}>{subItem.title}</a>
                                             :
-                                            <Link to={subItem.outsideLink}>
+                                            <Link to={subItem.link}>
                                                 {subItem.title}
                                             </Link>)}
                                     </div>}

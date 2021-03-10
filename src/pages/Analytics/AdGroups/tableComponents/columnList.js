@@ -1,6 +1,4 @@
 import React from "react"
-import './AdGroupsList.less'
-import TableList from "../../components/TableList/TableList"
 import {
     budgetAllocationColumn,
     impressionsColumn,
@@ -19,26 +17,10 @@ import {
     ctrColumn,
     campaignColumn, statusColumn, renderNumberField, EditableField,
 } from "../../components/TableList/tableColumns"
-import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 import {Switch} from "antd"
 
-const AdGroupsList = ({location}) => {
-    const {selectedCampaign} = useSelector(state => ({
-        selectedCampaign: state.analytics.mainState.campaignId
-    }))
-
-    const dispatch = useDispatch()
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
-    const columns = [
+export const columnList = ({setStateHandler, selectedCampaign}) => ([
         {
             title: 'Active',
             dataIndex: 'state',
@@ -144,19 +126,4 @@ const AdGroupsList = ({location}) => {
         budgetAllocationColumn,
         adProfitColumn,
     ]
-
-    return (
-        <section className={'ad-group-list list-section'}>
-            <TableList
-                columns={columns}
-                fixedColumns={[0, 1]}
-                location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
-                showRowSelection={true}
-                rowKey={'adGroupId'}
-            />
-        </section>
-    )
-}
-
-export default AdGroupsList
+)
