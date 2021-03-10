@@ -29,6 +29,8 @@ const AdGroups = () => {
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
                 fixedColumns={[0, 1]}
+                showRowSelection={true}
+                rowKey={'adGroupId'}
 
                 columns={columnList(setStateHandler, selectedCampaign)}
                 moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}

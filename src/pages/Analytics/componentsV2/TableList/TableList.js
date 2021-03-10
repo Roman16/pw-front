@@ -57,8 +57,13 @@ const TableList = ({
                        localSorterColumn,
                        onChangeSorterColumn,
                        onChangeTableOptions,
-                       openedRow
+                       openedRow,
+                       showRowSelection,
+                       rowKey
                    }) => {
+
+    const [selectedRows, setSelectedRows] = useState([]),
+        [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
 
@@ -126,6 +131,14 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
+
+    const rowSelection = {
+        onChange: (rowsList) => {
+            setSelectedRows(rowsList)
+            setSelectedAllRows(false)
+        }
+    }
+
     return (
         <section className={'list-section'}>
             <div className={'table-section'}>
@@ -177,6 +190,11 @@ const TableList = ({
                     expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
+
+                    rowKey={rowKey}
+                    {...showRowSelection && {rowSelection: rowSelection}}
+                    selectedAll={selectedAllRows}
+                    selectedRows={selectedRows}
                 />
 
                 {tableData.total_count !== 0 && showPagination && <Pagination

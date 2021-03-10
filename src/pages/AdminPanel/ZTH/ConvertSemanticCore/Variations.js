@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Input} from 'antd'
+import {Checkbox, Input} from 'antd'
 import Themes from "./Themes"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
@@ -48,12 +48,23 @@ const Variations = ({semanticData, onChange}) => {
                 onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
             />
         },
+        {
+            title: 'Use for Product Ads',
+            dataIndex: 'useForProductAds',
+            key: 'useForProductAds',
+            width: '300px',
+            render: (checked, item) => <Checkbox
+                checked={!!checked}
+                onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked)}
+            />
+        },
     ]
 
     const add = () => {
         setVariations([...variations, {
             sku: '',
             listingUrlsSKUs: [],
+            useForProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
     }

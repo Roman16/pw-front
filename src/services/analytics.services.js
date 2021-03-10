@@ -11,7 +11,8 @@ export const analyticsServices = {
     fetchSettingsDetails,
     getSearchTermsData,
     getPlacementData,
-    fetchTargetingsDetails
+    fetchTargetingsDetails,
+    fetchPageData
 }
 
 const stateIdValues = {
@@ -118,3 +119,9 @@ function getPlacementData(params, idList) {
 function fetchTargetingsDetails(id, date, sorterColumn, filters) {
     return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeToIso(date)}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
 }
+
+function fetchPageData(location, params, idList) {
+    const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
+
+    return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
+};

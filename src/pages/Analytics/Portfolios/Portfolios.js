@@ -1,29 +1,35 @@
 import React from "react"
-import MainChart from "../components/MainChart/MainChart"
-import PortfoliosList from './PortfoliosList/PortfoliosList'
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 import CreatePortfolioWindow from "./CreatePortfolioWindow/CreatePortfolioWindow"
+import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
+import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import {columnList} from "./tableComponents/columnList"
+import {analyticsActions} from "../../../actions/analytics.actions"
+import {useDispatch} from "react-redux"
 
 const Portfolios = () => {
-    const availableMetrics = [...metricsKeysWithoutOrganic]
-    const location = 'portfolios'
+    const availableMetrics = [...metricsKeysWithoutOrganic],
+        location = 'portfolios',
+        dispatch = useDispatch()
+
+    const setStateHandler = (location, state) => {
+        dispatch(analyticsActions.setLocation(location))
+        dispatch(analyticsActions.setMainState(state))
+    }
 
     return (
         <div className={'portfolios-workplace'}>
-            <MainMetrics
-                allMetrics={availableMetrics}
+            <RenderPageParts
                 location={location}
+                availableMetrics={availableMetrics}
+                availableParts={['metrics', 'chart', 'table']}
+                fixedColumns={[0]}
+                showRowSelection={false}
+
+                columns={columnList(setStateHandler)}
+                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
 
-            <MainChart
-                location={location}
-                allMetrics={availableMetrics}
-            />
-
-            <PortfoliosList
-                location={location}
-            />
 
             <CreatePortfolioWindow/>
         </div>

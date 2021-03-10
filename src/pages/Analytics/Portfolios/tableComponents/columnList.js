@@ -18,22 +18,9 @@ import {
     salesShareColumn,
     renderNumberField,
 } from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
-import {useDispatch} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
 
-const PortfoliosList = ({location}) => {
-    const dispatch = useDispatch()
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
-
-    const columns = [
+export const columnList = (setStateHandler) => ([
         {
             title: 'Portfolio',
             dataIndex: 'portfolioName',
@@ -81,16 +68,4 @@ const PortfoliosList = ({location}) => {
         adProfitColumn
     ]
 
-    return (
-        <section className={'list-section'}>
-            <TableList
-                columns={columns}
-                fixedColumns={[0]}
-                location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
-            />
-        </section>
-    )
-}
-
-export default PortfoliosList
+)

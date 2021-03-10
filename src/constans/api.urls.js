@@ -143,4 +143,5 @@ export const analyticsUrls = {
     searchTermsData: 'analytics/v2/search-terms',
     placementData: 'analytics/v2/placements',
     targetingsDetails: 'analytics/v2/search-terms/targetings-data',
+    pageData: (location) => `analytics/v2/${location}`
 }
