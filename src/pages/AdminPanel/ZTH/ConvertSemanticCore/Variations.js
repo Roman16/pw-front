@@ -53,10 +53,12 @@ const Variations = ({semanticData, onChange}) => {
             dataIndex: 'useForProductAds',
             key: 'useForProductAds',
             width: '300px',
-            render: (checked, item) => <Checkbox
-                checked={!!checked}
-                onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked)}
-            />
+            render: (checked, item, index) => {
+                return (<Checkbox
+                    checked={checked}
+                    onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
+                />)
+            }
         },
     ]
 
@@ -81,6 +83,7 @@ const Variations = ({semanticData, onChange}) => {
             if (index === activeVariationIndex) {
                 variation.listingUrlsSKUs[indexChangedRow] = {
                     ...variation.listingUrlsSKUs[indexChangedRow],
+                    useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
                     [name]: value
                 }
             }
@@ -114,7 +117,8 @@ const Variations = ({semanticData, onChange}) => {
             ...item,
             listingUrlsSKUs: [{
                 listingUrl: item.listingUrl,
-                sku: item.sku
+                sku: item.sku,
+                useForProductAds: item.useForProductAds
             }]
         })))
     }, [])
@@ -130,6 +134,7 @@ const Variations = ({semanticData, onChange}) => {
                         .reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
                             listingUrl: item.listingUrl,
                             sku: item.sku,
+                            useForProductAds: item.useForProductAds,
                             themeValues: variation.themeValues
                         }))), [])
                         .filter(variation => variation.sku || variation.listingUrl)
@@ -180,7 +185,7 @@ const Variations = ({semanticData, onChange}) => {
 
             <CustomTable
                 columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {}]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true}]}
             />
 
             <br/>
