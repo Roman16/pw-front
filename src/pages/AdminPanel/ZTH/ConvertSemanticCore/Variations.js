@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Input} from 'antd'
+import {Checkbox, Input} from 'antd'
 import Themes from "./Themes"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
@@ -48,12 +48,25 @@ const Variations = ({semanticData, onChange}) => {
                 onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
             />
         },
+        {
+            title: 'Use for Product Ads',
+            dataIndex: 'useForProductAds',
+            key: 'useForProductAds',
+            width: '300px',
+            render: (checked, item, index) => {
+                return (<Checkbox
+                    checked={checked}
+                    onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
+                />)
+            }
+        },
     ]
 
     const add = () => {
         setVariations([...variations, {
             sku: '',
             listingUrlsSKUs: [],
+            useForProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
     }
@@ -70,6 +83,7 @@ const Variations = ({semanticData, onChange}) => {
             if (index === activeVariationIndex) {
                 variation.listingUrlsSKUs[indexChangedRow] = {
                     ...variation.listingUrlsSKUs[indexChangedRow],
+                    useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
                     [name]: value
                 }
             }
@@ -103,7 +117,8 @@ const Variations = ({semanticData, onChange}) => {
             ...item,
             listingUrlsSKUs: [{
                 listingUrl: item.listingUrl,
-                sku: item.sku
+                sku: item.sku,
+                useForProductAds: item.useForProductAds
             }]
         })))
     }, [])
@@ -119,6 +134,7 @@ const Variations = ({semanticData, onChange}) => {
                         .reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
                             listingUrl: item.listingUrl,
                             sku: item.sku,
+                            useForProductAds: item.useForProductAds,
                             themeValues: variation.themeValues
                         }))), [])
                         .filter(variation => variation.sku || variation.listingUrl)
@@ -169,7 +185,7 @@ const Variations = ({semanticData, onChange}) => {
 
             <CustomTable
                 columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {}]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true}]}
             />
 
             <br/>
