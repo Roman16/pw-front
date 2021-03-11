@@ -1,29 +1,8 @@
 import React from "react"
-import TableFilters from '../../components/TableFilters/TableFilters'
-import TableList from "../../components/TableList/TableList"
-import {useDispatch, useSelector} from "react-redux"
 import {adGroupColumn, campaignColumn, keywordPTColumn, matchTypeColumn} from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 
-
-const NegativeTargetingsList = ({location}) => {
-    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
-        selectedCampaign: state.analytics.mainState.campaignId,
-        selectedAdGroup: state.analytics.mainState.adGroupId,
-    }))
-
-    const dispatch = useDispatch()
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
-    const columns = [
+export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
@@ -69,19 +48,5 @@ const NegativeTargetingsList = ({location}) => {
         }] : [],
         matchTypeColumn
     ]
+)
 
-    return (
-        <section className={'list-section'}>
-            <TableList
-                columns={columns}
-                columnSelect={false}
-                dateRange={false}
-                location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
-                showOptions={false}
-            />
-        </section>
-    )
-}
-
-export default NegativeTargetingsList

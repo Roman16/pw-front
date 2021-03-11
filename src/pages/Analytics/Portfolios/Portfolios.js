@@ -30,7 +30,6 @@ const Portfolios = () => {
                 moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
 
-
             <CreatePortfolioWindow/>
         </div>
     )

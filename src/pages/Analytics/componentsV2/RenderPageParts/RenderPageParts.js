@@ -15,7 +15,7 @@ let prevActiveMetrics = []
 
 const RenderPageParts = ({
                              location,
-                             availableMetrics,
+                             availableMetrics = [],
                              availableParts,
                              moreActions,
                              columns,
@@ -250,7 +250,7 @@ const RenderPageParts = ({
     }, [tableRequestParams, localSegmentValue, localTableOptions])
 
     useEffect(() => {
-        getPageData(['metrics', 'table', 'chart'])
+        getPageData(availableParts)
     }, [selectedRangeDate, filters])
 
     return (

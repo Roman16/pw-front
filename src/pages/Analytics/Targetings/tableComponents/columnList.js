@@ -4,7 +4,6 @@ import {
     adCvrColumn,
     adGroupColumn,
     adOrdersColumn,
-    adProfitColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
@@ -13,33 +12,32 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn,
-    impressionsColumn, RenderProduct,
+    ctrColumn, EditableField,
+    impressionsColumn, keywordPTColumn, matchTypeColumn,
     roasColumn,
-    salesShareColumn, skuAsinColumn,
+    salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
 import TableList from "../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 import {Switch} from "antd"
 
-const ProductAdsList = ({location}) => {
-    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
-        selectedCampaign: state.analytics.mainState.campaignId,
-        selectedAdGroup: state.analytics.mainState.adGroupId,
-    }))
+export const automatePatDescription = {
+    'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
+    'Loose match': 'Sponsored Products target that shows your ad to shoppers who use search terms loosely related to your products.',
+    'Substitutes': 'Sponsored Products target that shows your ad to shoppers who view the detail pages of products similar to yours.',
+    'Complements': 'Sponsored Products target that shows your ad to shoppers who view the detail pages of products that complement your product.',
+    'Product views': 'Sponsored Display target that shows your ad to shoppers who viewed the detail pages of your advertised products.',
+    'Similar product views': 'Sponsored Display target that shows your ad to shoppers who viewed the detail pages of products similar to yours.',
+}
 
-    const dispatch = useDispatch()
 
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
-    const columns = [
+export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         {
             title: 'Active',
             dataIndex: 'state',
@@ -54,23 +52,19 @@ const ProductAdsList = ({location}) => {
             </div>
         },
         {
-            title: 'Product',
-            dataIndex: 'product_name_sku_asin',
-            key: 'product_name_sku_asin',
-            width: '300px',
+            title: 'Keyword / PT',
+            dataIndex: 'calculatedTargetingText',
+            key: 'calculatedTargetingText',
+            width: '400px',
             sorter: true,
             locked: true,
             search: true,
-            totalRender: value => value,
-            render: (name, item) => <RenderProduct
-                product={item}
-                setState={setStateHandler}
-            />
+            ...keywordPTColumn
         },
-        skuAsinColumn,
         ...!selectedCampaign ? [{
             ...campaignColumn,
             locked: true,
+            noTotal: true,
             width: '250px',
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
@@ -85,9 +79,14 @@ const ProductAdsList = ({location}) => {
             </Link>)
         }] : [],
         ...!selectedAdGroup ? [{
-            ...adGroupColumn,
-            locked: true,
+            title: 'Ad Group',
+            dataIndex: 'adGroupName',
+            key: 'adGroupName',
             width: '250px',
+            sorter: true,
+            filter: true,
+            locked: true,
+            noTotal: true,
             render: (adGroup, item) => (
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
@@ -103,11 +102,26 @@ const ProductAdsList = ({location}) => {
                     {item.adGroupName}
                 </Link>
             )
-
         }] : [],
+        matchTypeColumn,
         {
             ...statusColumn,
             locked: true,
+        },
+        {
+            title: 'Bid',
+            dataIndex: 'calculatedBid',
+            key: 'calculatedBid',
+            width: '150px',
+            sorter: true,
+            noTotal: true,
+            filter: true,
+            fastUpdating: true,
+            edit: true,
+            render: (bid) => <EditableField
+                type={'currency'}
+                value={bid}
+            />
         },
         impressionsColumn,
         clicksColumn,
@@ -122,22 +136,7 @@ const ProductAdsList = ({location}) => {
         adUnitsColumn,
         roasColumn,
         salesShareColumn,
-        budgetAllocationColumn,
-        adProfitColumn
+        budgetAllocationColumn
     ]
+)
 
-    return (
-        <section className={'list-section'}>
-            <TableList
-                columns={columns}
-                fixedColumns={[0, 1]}
-                location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
-                showRowSelection={true}
-                rowKey={'adId'}
-            />
-        </section>
-    )
-}
-
-export default ProductAdsList

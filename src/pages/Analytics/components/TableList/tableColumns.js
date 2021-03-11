@@ -15,7 +15,7 @@ import {amazonDefaultImageUrls} from "../../../../components/ProductList/Product
 import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
-import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+import {automatePatDescription} from "../../Targetings/tableComponents/columnList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 

@@ -181,7 +181,8 @@ const TableList = ({
                     {...showTotal && {
                         totalDataSource: {
                             ..._.mapValues(metricsData, (value) => (+value.value)),
-                            ...{[columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+                            ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+
                         }
                     }}
                     sorterColumn={localSorterColumn}

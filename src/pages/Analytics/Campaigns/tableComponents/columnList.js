@@ -1,5 +1,4 @@
 import React from "react"
-import './CampaignsList.less'
 import {Link} from "react-router-dom"
 import {
     acosColumn,
@@ -13,39 +12,17 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn, EditableField,
+    ctrColumn,
+    EditableField,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
-import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import DatePicker from "../../../../components/DatePicker/DatePicker"
-import moment from "moment"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
-import CustomTable from "../../../../components/Table/CustomTable"
 import {Switch} from "antd"
 
 
-const CampaignsList = ({location}) => {
-    const dispatch = useDispatch()
-    const {selectedPortfolio} = useSelector(state => ({
-        selectedPortfolio: state.analytics.mainState.portfolioId,
-    }))
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
-    const setStateDetails = (data) => {
-        dispatch(analyticsActions.setStateDetails(data))
-    }
-
-    const columns = [
+export const columnList = (setStateHandler, setStateDetails, selectedPortfolio) => ([
         {
             title: 'Active',
             dataIndex: 'state',
@@ -195,19 +172,5 @@ const CampaignsList = ({location}) => {
         budgetAllocationColumn,
         adProfitColumn,
     ]
+)
 
-    return (
-        <section className={'campaigns-list list-section'}>
-            <TableList
-                columns={columns}
-                fixedColumns={[0, 1]}
-                location={location}
-                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
-                showRowSelection={true}
-                rowKey={'campaignId'}
-            />
-        </section>
-    )
-}
-
-export default CampaignsList
