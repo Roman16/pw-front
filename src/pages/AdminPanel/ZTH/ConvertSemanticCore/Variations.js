@@ -3,6 +3,8 @@ import {Checkbox, Input} from 'antd'
 import Themes from "./Themes"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
+import _ from 'lodash'
+
 
 let copiedThemes
 
@@ -113,14 +115,29 @@ const Variations = ({semanticData, onChange}) => {
     }
 
     useEffect(() => {
-        setVariations(semanticData.conversionOptions.productInformation.variations.map(item => ({
-            ...item,
-            listingUrlsSKUs: [{
-                listingUrl: item.listingUrl,
-                sku: item.sku,
-                useForProductAds: item.useForProductAds
-            }]
-        })))
+        const variations = [...semanticData.conversionOptions.productInformation.variations]
+        const map = []
+
+        variations.forEach(x => {
+            let elem = map.find(y => _.isEqual(x.themeValues, y.themeValues))
+
+            if (!elem) {
+                elem = {
+                    themeValues: x.themeValues,
+                    listingUrlsSKUs: []
+                }
+
+                map.push(elem)
+            }
+
+            elem.listingUrlsSKUs.push({
+                listingUrl: x.listingUrl,
+                sku: x.sku,
+                useForProductAds: x.useForProductAds
+            })
+        })
+
+        setVariations(map)
     }, [])
 
     useEffect(() => {
