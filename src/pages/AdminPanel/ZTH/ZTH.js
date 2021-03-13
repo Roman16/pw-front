@@ -25,7 +25,7 @@ const ZTH = () => {
                     ZTH Upload Jobs
                 </NavLink>
 
-                <Link to={'/word-sorter'} target={'_blank'}>
+                <Link to={'/admin/word-sorter'} target={'_blank'}>
                     WordSorter <SVG id={'outside-link'}/>
                 </Link>
             </div>
