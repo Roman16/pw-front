@@ -138,9 +138,8 @@ export const ContactForm = () => {
                     </h2>
 
                     <p>
-                        Contact us with any questions or inquiries. We would be happy to get in touch and set up a
-                        meeting
-                        with you.
+                        Contact us with any questions or inquiries. We would be happy to get in <br/>
+                        touch and set up a meeting with you. <br/>
                         Look forward to hearing from you!
                     </p>
 
@@ -180,7 +179,7 @@ export const ContactForm = () => {
                         15805 Biscayne blvd. 201 Aventure, FL 33160
                     </a>
 
-                    <p>
+                    <p className={'time'}>
                         <i>
                             <svg width="24" height="30" viewBox="0 0 24 30" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
