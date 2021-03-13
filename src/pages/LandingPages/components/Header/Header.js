@@ -2,6 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
 import SmartBar from "./SmartBar"
+import {history} from "../../../../utils/history";
+import _ from 'lodash'
+
 
 const menu = [
     {
@@ -100,6 +103,8 @@ d.head.appendChild(j);
 
     }, [])
 
+    console.log(history.location.pathname);
+
     return (
         <>
             <div className={'header-block'}>
@@ -115,18 +120,30 @@ d.head.appendChild(j);
                         <ul className={`header-menu ${visibleMenu ? 'open' : ''}`}>
                             {menu.map((item, index) => (<>
                                 <li className={selectedMenuIndex === index && 'selected'}>
-                                    <Link to={item.link || '#'}
-                                          onClick={() => setSelectedMenuItem(index)}>{item.title} {item.subMenu &&
-                                    <span className="arrow"><span/><span/></span>}</Link>
+                                    {item.subMenu ? <Link
+                                            to={item.link || '#'}
+                                            onClick={() => setSelectedMenuItem(index)}
+                                            className={(item.subMenu && _.find(item.subMenu, {link: history.location.pathname})) ? 'active' : ''}
+                                        >
+                                            {item.title} <span className="arrow"><span/><span/></span>
+                                        </Link>
+                                        :
+                                        <NavLink
+                                            to={item.link || '#'}
+                                            onClick={() => setSelectedMenuItem(index)}
+                                        >
+                                            {item.title}
+                                        </NavLink>
+                                    }
 
                                     {item.subMenu &&
                                     <div className={`sub-menu ${selectedMenuIndex === index ? 'open' : ''}`}>
                                         {item.subMenu.map(subItem => subItem.outsideLink ?
                                             <a target={'_blank'} href={subItem.outsideLink}>{subItem.title}</a>
                                             :
-                                            <Link to={subItem.link}>
+                                            <NavLink exact to={subItem.link}>
                                                 {subItem.title}
-                                            </Link>)}
+                                            </NavLink>)}
                                     </div>}
                                 </li>
                             </>))}

@@ -48,8 +48,8 @@
 
       &::after {
         content: "";
-        max-width: 100%;
-        width: 100%;
+        max-width: 0;
+        width: 0;
         height: 1px;
         background-color: #6D6DF6;
         position: absolute;
@@ -62,7 +62,8 @@
         color: #5252b8;
 
         &::after {
-          max-width: 0;
+          max-width: 100%;
+          width: 100%;
         }
       }
     }

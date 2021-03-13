@@ -3,12 +3,16 @@ import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import './OurWhale.less'
 import PageTitle from "../CareWeDo/PageTitle"
-import {Timeline} from 'antd'
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 const OurWhale = () => {
-    const [openedValue, setOpenedValue] = useState()
+    const [openedValue, setOpenedValue] = useState([])
+
+    const openValueBlock = (index) => {
+        if(openedValue.includes(index)) setOpenedValue(prevState => prevState.filter(item => item !== index))
+        else setOpenedValue(prevState => [...prevState, index])
+    }
 
     return (
         <div className="our-whale-page  landing-page">
@@ -120,7 +124,7 @@ const OurWhale = () => {
                     </h2>
 
                     <ul>
-                        <li onClick={() => setOpenedValue(0)} className={openedValue === 0 && 'opened'}>
+                        <li onClick={() => openValueBlock(0)} className={openedValue.includes(0) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -142,7 +146,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(1)} className={openedValue === 1 && 'opened'}>
+                        <li onClick={() => openValueBlock(1)} className={openedValue.includes(1) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -162,7 +166,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(2)} className={openedValue === 2 && 'opened'}>
+                        <li onClick={() => openValueBlock(2)} className={openedValue.includes(2) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -191,7 +195,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(3)} className={openedValue === 3 && 'opened'}>
+                        <li onClick={() => openValueBlock(3)} className={openedValue.includes(3) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -215,7 +219,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(4)} className={openedValue === 4 && 'opened'}>
+                        <li onClick={() => openValueBlock(4)} className={openedValue.includes(4) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -281,7 +285,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(5)} className={openedValue === 5 && 'opened'}>
+                        <li onClick={() => openValueBlock(5)} className={openedValue.includes(5)  && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -306,7 +310,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(6)} className={openedValue === 6 && 'opened'}>
+                        <li onClick={() => openValueBlock(6)} className={openedValue.includes(6)  && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -336,7 +340,7 @@ const OurWhale = () => {
                             </p>
                         </li>
 
-                        <li onClick={() => setOpenedValue(7)} className={openedValue === 7 && 'opened'}>
+                        <li onClick={() => openValueBlock(7)} className={openedValue.includes(7) && 'opened'}>
                             <i>
                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">

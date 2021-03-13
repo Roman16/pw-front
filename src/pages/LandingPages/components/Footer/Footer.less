@@ -181,8 +181,8 @@
 
       &::after {
         content: "";
-        max-width: 100%;
-        width: 100%;
+        max-width: 0;
+        width: 0;
         height: 1px;
         background-color: #6D6DF6;
         position: absolute;
@@ -195,7 +195,8 @@
         color: #5252b8;
 
         &::after {
-          max-width: 0;
+          max-width: 100%;
+          width: 100%;
         }
       }
     }
@@ -253,6 +254,8 @@
       .menu {
         flex-direction: column;
         align-items: center;
+        grid-row-gap: 0;
+        padding-bottom: 48px;
 
         h4 {
           text-align: center;
@@ -262,11 +265,14 @@
           flex-direction: row;
           flex-wrap: wrap;
           justify-content: center;
-          grid-row-gap: 12px;
-          grid-column-gap: 18px;
+          grid-row-gap: 0;
+          grid-column-gap: 0;
+          margin-bottom: 36px;
 
           li {
             text-align: center;
+            margin-bottom: 12px;
+            padding: 0 9px;
 
           a {
             min-width: max-content;
@@ -283,6 +289,7 @@
 
         a {
           text-align: center;
+          font-size: 16px;
         }
 
         &:nth-child(5) {
@@ -292,8 +299,10 @@
 
       .social-icons {
         width: 100%;
-        justify-content: center;
-        grid-column-gap: 43px !important;
+        display: flex;
+        justify-content: space-around !important;
+        padding: 0 10vw;
+        margin-bottom: 0 !important;
       }
 
       .row:last-child {
@@ -311,44 +320,7 @@
             margin: 0 15px;
           }
         }
-
-
       }
-    }
-  }
-
-
-  @media (max-width: 500px) {
-    .row {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .actions {
-      margin: 20px 0 0 0;
-    }
-
-    .menu {
-      margin: 20px 0;
-      flex-direction: column;
-      align-items: center;
-
-
-      h4 {
-        text-align: center;
-      }
-
-      li {
-        text-align: center;
-      }
-    }
-
-    label {
-      padding: 0;
-    }
-
-    .amazon-appstore-logo {
-      margin: 20px auto;
     }
   }
 }

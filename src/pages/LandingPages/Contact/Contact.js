@@ -102,7 +102,7 @@ export const ContactForm = () => {
                         Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                     </Checkbox>
 
-                    <button className={'btn default'}>let’s talk</button>
+                    <button className={'btn default'} disabled={requestData.name === '' || requestData.email === '' || requestData.comment === '' || !agreeWithTerms}>let’s talk</button>
 
                     <div className={`success ${successSend ? 'show' : ''}`}>
                         <i>
@@ -180,7 +180,7 @@ export const ContactForm = () => {
                         15805 Biscayne blvd. 201 Aventure, FL 33160
                     </a>
 
-                    <a>
+                    <p>
                         <i>
                             <svg width="24" height="30" viewBox="0 0 24 30" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -197,7 +197,7 @@ export const ContactForm = () => {
 
                         </i>
                         10:00 - 10:00 EST
-                    </a>
+                    </p>
 
                     <div className="media">
                         <p>We’re in social media:</p>
