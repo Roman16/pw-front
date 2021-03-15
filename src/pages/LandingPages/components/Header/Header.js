@@ -25,6 +25,15 @@ const menu = [
         ]
     },
     {
+        title: 'Services',
+        subMenu: [
+            {
+                title: 'Identify Your Option',
+                link: '/identify-option',
+            },
+        ]
+    },
+    {
         title: 'Why Profit Whales?',
         subMenu: [
             {

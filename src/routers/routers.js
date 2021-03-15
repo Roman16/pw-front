@@ -27,6 +27,8 @@ const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeD
 const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
 const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/Recognition'))
 const Contact = React.lazy(() => import('../pages/LandingPages/Contact/Contact'))
+const GetAudit = React.lazy(() => import('../pages/LandingPages/GetAudit/GetAudit'))
+const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOption/IdentifyOption'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -67,6 +69,8 @@ const routers = () => {
                     <Route exact path="/care-we-do" component={CareWeDo}/>
                     <Route exact path="/our-whale" component={OurWhale}/>
                     <Route exact path="/recognition" component={Recognition}/>
+                    <Route exact path="/get-audit" component={GetAudit}/>
+                    <Route exact path="/identify-option" component={IdentifyOption}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
