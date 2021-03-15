@@ -59,8 +59,7 @@ const strategies = [
         fill: '4DBEE1',
         sales: 4,
         acos: 2,
-        description: 'This strategy designed for sellers who know what ACoS they are targeting. Make sure you\'ve correctly calculated your Target ACoS.\n' +
-            'Press start and see how the algorithm is making changes to get the results you want.',
+        description: 'This strategy designed for sellers who want to increase their PPC profit. The Software will optimize all the bleeding and unprofitable keywords with proper bid management to get the best converting ad position possible.',
         spendRevenue: 7,
         profitRevenue: 22,
         averageAcos: 24,
