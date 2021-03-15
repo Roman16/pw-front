@@ -1,12 +1,13 @@
 import React, {useEffect} from "react"
 import {Input} from "antd"
-import {NavLink, Route} from "react-router-dom"
+import {Link, NavLink, Route} from "react-router-dom"
 import {history} from "../../../utils/history"
 import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
 import Jobs from "./Jobs/Jobs"
 import {adminServices} from "../../../services/admin.services"
 import TokenBlock from "./TokenBlock/TokenBlock"
+import {SVG} from "../../../utils/icons"
 
 const ZTH = () => {
     if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
@@ -25,6 +26,10 @@ const ZTH = () => {
                 <NavLink to={'/admin-panel/zth/jobs'}>
                     ZTH Upload Jobs
                 </NavLink>
+
+                <Link to={'/admin/word-sorter'} target={'_blank'}>
+                    WordSorter <SVG id={'outside-link'}/>
+                </Link>
             </div>
 
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
