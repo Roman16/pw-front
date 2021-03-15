@@ -112,8 +112,6 @@ d.head.appendChild(j);
 
     }, [])
 
-    console.log(history.location.pathname);
-
     return (
         <>
             <div className={'header-block'}>
