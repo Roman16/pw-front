@@ -29,6 +29,7 @@ const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/R
 const Contact = React.lazy(() => import('../pages/LandingPages/Contact/Contact'))
 const GetAudit = React.lazy(() => import('../pages/LandingPages/GetAudit/GetAudit'))
 const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOption/IdentifyOption'))
+const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/EnlightenFuture/EnlightenFuture'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -71,6 +72,7 @@ const routers = () => {
                     <Route exact path="/recognition" component={Recognition}/>
                     <Route exact path="/get-audit" component={GetAudit}/>
                     <Route exact path="/identify-option" component={IdentifyOption}/>
+                    <Route exact path="/enlighten-future" component={EnlightenFuture}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}

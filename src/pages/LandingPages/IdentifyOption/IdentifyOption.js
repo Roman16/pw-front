@@ -185,7 +185,8 @@ const list = [
 ]
 
 const IdentifyOption = () => {
-    const [selectedOption, setSelectedOption] = useState(5)
+    const [selectedOption, setSelectedOption] = useState(0),
+        [visibleContactForm, setVisibleContactForm] = useState(false)
 
     return (
         <div className="identify-option  landing-page">
@@ -288,7 +289,7 @@ const IdentifyOption = () => {
                                             {item.values.map(value => <li>{value}</li>)}
                                         </ul>
 
-                                        <button className="btn green">
+                                        <button className="btn green" onClick={() => setSelectedOption(5)}>
                                             let’s get started
 
                                             <svg width="17" height="12" viewBox="0 0 17 12" fill="none"

@@ -9,7 +9,7 @@
   }
 
   .pre-header {
-    height: 600px;
+    height: 31vw;
 
     background: url(../../../assets/img/landing-identifyOption/bg.png) no-repeat center center;
     -webkit-background-size: cover;
@@ -373,9 +373,13 @@
           }
 
           .contact-form {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            background: inherit;
+            padding: 0;
+            position: relative;
 
             h4 {
               font-size: 21px;
@@ -409,13 +413,20 @@
               width: 100%;
               display: flex;
               grid-column-gap: 20px;
+
+              .form-group {
+                width: initial;
+                min-width: initial;
+                flex: 1;
+              }
             }
 
             .form-group {
+              min-width: 100%;
               width: 100%;
               display: flex;
               flex-direction: column;
-              margin-bottom: 20px;
+              margin: 0 0 20px;
 
               &:last-of-type {
                 margin: 0;
@@ -437,11 +448,16 @@
                 height: 64px;
                 resize: none;
                 font-size: 14px;
+
+                &::placeholder {
+                  font-size: 14px;
+                }
               }
             }
 
             .actions {
               display: flex;
+              margin: 0;
 
               .btn {
                 height: 56px;
@@ -462,6 +478,56 @@
 
               a {
                 color: #83FED0;
+              }
+            }
+          }
+
+          .success-send {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            z-index: -1;
+
+            h2 {
+              font-size: 32px;
+              line-height: 38px;
+              font-weight: 400;
+              text-align: center;
+              color: #fff;
+              margin: 48px 0 18px;
+
+              span {
+                color: #83FED0;
+              }
+            }
+
+            p {
+              font-size: 16px;
+              line-height: 19px;
+              font-weight: 100;
+              text-align: center;
+              color: #FFFFFF;
+              margin: 0;
+            }
+
+            .btn {
+              height: 56px;
+              padding: 0 70px;
+              font-size: 16px;
+              font-weight: 500;
+              color: #6D6DF6;
+              margin: 65px 0 0 0;
+              background: #83FED0;
+
+              &:hover {
+                background: #7aedc2;
               }
             }
           }

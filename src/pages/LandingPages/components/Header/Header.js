@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {Link, NavLink} from "react-router-dom"
 import './Header.less'
 import SmartBar from "./SmartBar"
-import {history} from "../../../../utils/history";
+import {history} from "../../../../utils/history"
 import _ from 'lodash'
 
 
@@ -27,6 +27,10 @@ const menu = [
     {
         title: 'Services',
         subMenu: [
+            {
+                title: 'Enlighten your future',
+                link: '/enlighten-future',
+            },
             {
                 title: 'Identify Your Option',
                 link: '/identify-option',
