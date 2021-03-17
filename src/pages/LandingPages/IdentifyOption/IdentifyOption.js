@@ -1,9 +1,11 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import './IdentifyOption.less'
 import {Radio} from 'antd'
 import ContactForm from "./ContactForm"
+import {Link} from "react-router-dom"
+import {SVG} from "../../../utils/icons"
 
 const AccelerateProfitsIcon = () => <svg width="80" height="64" viewBox="0 0 80 64" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
@@ -186,7 +188,31 @@ const list = [
 
 const IdentifyOption = () => {
     const [selectedOption, setSelectedOption] = useState(0),
+        [openedOption, setOpenedOption] = useState(),
         [visibleContactForm, setVisibleContactForm] = useState(false)
+
+    const selectOptionHandler = (index) => {
+        const optionList = document.querySelectorAll('.option-details > li')
+
+
+        if (index > selectedOption) {
+            optionList.forEach(item => {
+                item.style.transform = 'translateX(-150px)'
+            })
+
+            optionList[index].style.transform = 'translateX(150px)'
+        } else {
+            optionList.forEach(item => {
+                item.style.transform = 'translateX(150px)'
+            })
+            optionList[index].style.transform = 'translateX(-150px)'
+        }
+
+        setTimeout(() => {
+            setSelectedOption(index)
+        }, 100)
+    }
+
 
     return (
         <div className="identify-option  landing-page">
@@ -215,7 +241,7 @@ const IdentifyOption = () => {
                             long-term value for all our stakeholders.
                         </p>
 
-                        <button className={'btn default'}>
+                        <Link to={'/get-audit'} className={'btn default desc'}>
                             <p><span>Get Your</span> Amazon Advertising <br/> Campaigns <span>Review</span></p>
 
                             <svg width="84" height="84" viewBox="0 0 84 84" fill="none"
@@ -226,7 +252,20 @@ const IdentifyOption = () => {
                                 <path d="M45.7207 35.0232L53.6277 43.3953L45.7207 51.7674" stroke="#83FED0"
                                       stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
                             </svg>
-                        </button>
+                        </Link>
+
+                        <Link to={'/get-audit'} className={'btn default mob'}>
+                            get an audit
+
+                            <svg width="84" height="84" viewBox="0 0 84 84" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="42" cy="42" r="40" stroke="#83FED0" stroke-width="4"/>
+                                <path d="M30.8379 35.0232L38.7449 43.3953L30.8379 51.7674" stroke="#83FED0"
+                                      stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M45.7207 35.0232L53.6277 43.3953L45.7207 51.7674" stroke="#83FED0"
+                                      stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -251,22 +290,59 @@ const IdentifyOption = () => {
                         <div className="col">
                             <h4>choose What do you want to accelerate?</h4>
                             <Radio.Group
-                                onChange={({target: {value}}) => setSelectedOption(value)}
+                                onChange={({target: {value}}) => selectOptionHandler(value)}
                                 value={selectedOption}
                             >
                                 <ul className={'main-list'}>
                                     {list.map((item, index) => (
                                         <li
                                             className={index === selectedOption ? 'active' : ''}
-                                            onClick={() => setSelectedOption(index)}
+                                            onClick={() => selectOptionHandler(index)}
                                         >
                                             <Radio value={index}>
                                                 <h4 dangerouslySetInnerHTML={{__html: item.title}}></h4>
                                             </Radio>
 
+                                            <h4 className={'title'} dangerouslySetInnerHTML={{__html: item.title}}/>
+
                                             <ul>
                                                 {item.options.map(text => <li>{text}</li>)}
                                             </ul>
+
+                                            <div className="buttons">
+                                                <button className={'btn transparent'}
+                                                        onClick={() => {
+                                                            setSelectedOption(index)
+                                                            setOpenedOption(index)
+                                                        }}>
+                                                    learn more
+                                                </button>
+
+                                                <button className={'btn default'} onClick={() => {
+                                                    setSelectedOption(index)
+                                                    setOpenedOption(index)
+                                                    setVisibleContactForm(true)
+                                                }}>
+                                                    let’s get started
+
+                                                    <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
+                                                         xmlns="http://www.w3.org/2000/svg">
+                                                        <mask id="mask09991" mask-type="alpha"
+                                                              maskUnits="userSpaceOnUse" x="0"
+                                                              y="0" width="17" height="12">
+                                                            <rect width="16.8" height="12"
+                                                                  transform="matrix(-1 0 0 1 16.7998 0)"
+                                                                  fill="#C4C4C4"/>
+                                                        </mask>
+                                                        <g mask="url(#mask09991)">
+                                                            <path
+                                                                d="M5.69961 1.20001L1.19961 6.00001M1.19961 6.00001L5.69961 10.8M1.19961 6.00001L15.5996 6.00001"
+                                                                stroke="#ffffff" stroke-width="2" stroke-linecap="round"
+                                                                stroke-linejoin="round"/>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
@@ -276,9 +352,28 @@ const IdentifyOption = () => {
                         <div className="col">
                             <h4>try it</h4>
 
-                            <ul className="option-details">
+                            <ul className={`option-details ${openedOption >= 0 ? 'visible' : ''}`}>
+                                <button className={'btn close'} onClick={() => {
+                                    setVisibleContactForm(false)
+                                    setOpenedOption(undefined)
+                                }}>
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0"
+                                              width="20" height="20">
+                                            <rect width="20" height="20" fill="#C4C4C4"/>
+                                        </mask>
+                                        <g mask="url(#mask0)">
+                                            <path
+                                                d="M1 1L9.96875 9.96875M9.96875 9.96875L18.9375 1M9.96875 9.96875L1 18.9375M9.96875 9.96875L18.9375 18.9375"
+                                                stroke="white" stroke-width="2" stroke-linecap="round"
+                                                stroke-linejoin="round"/>
+                                        </g>
+                                    </svg>
+                                </button>
+
                                 {list.map((item, index) => (
-                                    <li className={index === selectedOption ? 'active' : ''}>
+                                    <li className={(index === selectedOption && !visibleContactForm) ? 'active' : ''}>
                                         <i>
                                             {item.icon}
                                         </i>
@@ -289,7 +384,9 @@ const IdentifyOption = () => {
                                             {item.values.map(value => <li>{value}</li>)}
                                         </ul>
 
-                                        <button className="btn green" onClick={() => setSelectedOption(5)}>
+                                        <button className="btn green" onClick={() => {
+                                            setVisibleContactForm(true)
+                                        }}>
                                             let’s get started
 
                                             <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
@@ -310,8 +407,10 @@ const IdentifyOption = () => {
                                     </li>
                                 ))}
 
-                                <li className={5 === selectedOption ? 'active' : ''}>
-                                    <ContactForm/>
+                                <li className={visibleContactForm ? 'active' : ''}>
+                                    <ContactForm
+                                        onCancel={() => setVisibleContactForm(false)}
+                                    />
                                 </li>
                             </ul>
                         </div>
