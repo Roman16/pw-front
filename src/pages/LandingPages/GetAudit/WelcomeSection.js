@@ -1,8 +1,8 @@
 import React from "react"
 import {SVG} from "../../../utils/icons"
 
-const WelcomeSection = () => {
-    return (<section className={'lets-start'}>
+const WelcomeSection = ({active, onStart}) => {
+    return (<section className={`lets-start ${active ? 'active' : ''}`}>
         <h2><span>Get Your</span> Amazon Advertising Campaigns <span>Review</span></h2>
 
         <p>
@@ -11,7 +11,7 @@ const WelcomeSection = () => {
             best identify potential concerns and opportunities. In synergy, we reach success.
         </p>
 
-        <button className={'btn default'}>
+        <button className={'btn default'} onClick={onStart}>
             let’s get started
 
             <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +19,9 @@ const WelcomeSection = () => {
                     <rect width="16.8" height="12" fill="#C4C4C4"/>
                 </mask>
                 <g mask="url(#mask0)">
-                    <path d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path
+                        d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
             </svg>
         </button>

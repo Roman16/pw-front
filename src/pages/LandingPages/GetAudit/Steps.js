@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect} from "react"
 
 const steps = [
     'Contact information',
@@ -10,13 +10,26 @@ const steps = [
     'Your goal'
 ]
 
-const Steps = () => {
+let lastAvailableStep = 0
 
-    return (<section className="steps">
+const Steps = ({activeStep, goToStep}) => {
+    const setStepHandler = (index) => {
+        if (index < activeStep) goToStep(index)
+    }
+
+    useEffect(() => {
+        if (activeStep > lastAvailableStep) lastAvailableStep = activeStep
+    }, [activeStep])
+
+    return (<div className="steps">
         <ul>
-            {steps.map(step => <li>{step}</li>)}
+            {steps.map((step, index) => <li
+                onClick={() => setStepHandler(index)}
+                className={activeStep === index ? 'active' : index <= lastAvailableStep ? 'finished' : ''}>
+                {step}
+            </li>)}
         </ul>
-    </section>)
+    </div>)
 }
 
 export default Steps
