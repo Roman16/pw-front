@@ -1,10 +1,9 @@
 import React, {useState} from "react"
-import {casesImages} from "../../../assets/img/landing-automation/cases"
+import {caseImages} from '../../../assets/img/landing-redefineApproach/cases/caseImages'
 
 const casesList = [
     {
         title: `<span>8 days</span> with Zero to Hero`,
-        img: casesImages.zthCase1,
         beforeColumn: [
             {
                 metric: 'Clicks',
@@ -36,7 +35,6 @@ const casesList = [
     },
     {
         title: `<span>40 days</span> with Zero to Hero`,
-        img: casesImages.zthCase2,
         beforeColumn: [
             {
                 metric: 'Total Sales',
@@ -68,7 +66,6 @@ const casesList = [
     },
     {
         title: `<span>20 days</span> with Zero to Hero`,
-        img: casesImages.zthCase3,
         beforeColumn: [
             {
                 metric: 'Organic Sales',
@@ -100,7 +97,6 @@ const casesList = [
     },
     {
         title: `<span>16 days</span> with Zero to Hero`,
-        img: casesImages.zthCase4,
         beforeColumn: [
             {
                 metric: 'Organic Sales',
@@ -132,7 +128,6 @@ const casesList = [
     },
     {
         title: `<span>30  days</span> with Zero to Hero`,
-        img: casesImages.zthCase5,
         beforeColumn: [
             {
                 metric: 'PPC Sales',
@@ -169,18 +164,45 @@ const CasesSlider = () => {
     const [activeSlide, setActiveSlide] = useState(0)
 
     const goToSlide = (index) => {
+        const slides = document.querySelectorAll('.slider > ul > li')
+
+        if (index > casesList.length - 1) index = 0
+        else if (index < 0) index = casesList.length - 1
+
+        slides.forEach((item, i) => {
+            if (i < index) item.style.transform = 'translateX(-150px)'
+            else slides[index].style.transform = 'translateX(150px)'
+        })
+
+
+        setTimeout(() => {
+            setActiveSlide(index)
+        }, 100)
+
         setActiveSlide(index)
     }
 
     return (
         <div className="slider">
+            <button className="btn icon prev" onClick={() => goToSlide(activeSlide - 1)}>
+                <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="12">
+                        <rect width="16.8" height="12" transform="matrix(-1 0 0 1 17 0)" fill="#C4C4C4"/>
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <path
+                            d="M5.90078 1.19995L1.40078 5.99995M1.40078 5.99995L5.90078 10.8M1.40078 5.99995L15.8008 5.99995"
+                            stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                </svg>
+            </button>
 
             <ul>
-                {casesList.map(slide => <li>
-                    <img src="" alt=""/>
+                {casesList.map((slide, index) => <li className={index === activeSlide ? 'active' : ''}>
+                    <img src={caseImages[`caseImg${index}`]} alt=""/>
 
                     <div className="content">
-                        <h3>{slide.title}</h3>
+                        <h3 dangerouslySetInnerHTML={{__html: slide.title}}/>
 
                         <div className="row">
                             <div className="col">
@@ -213,8 +235,25 @@ const CasesSlider = () => {
                 </li>)}
             </ul>
 
+            <button className="btn icon next" onClick={() => goToSlide(activeSlide + 1)}>
+                <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="12">
+                        <rect width="16.8" height="12" fill="#C4C4C4"/>
+                    </mask>
+                    <g mask="url(#mask0)">
+                        <path
+                            d="M11.0992 1.19995L15.5992 5.99995M15.5992 5.99995L11.0992 10.8M15.5992 5.99995L1.19922 5.99995"
+                            stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+                </svg>
+            </button>
+
+
             <div className="dots">
-                {casesList.map((i, index) => <div onClick={() => goToSlide(index)}/>)}
+                {casesList.map((i, index) => <div
+                    className={index === activeSlide ? 'active' : ''}
+                    onClick={() => goToSlide(index)}
+                />)}
             </div>
         </div>
     )
