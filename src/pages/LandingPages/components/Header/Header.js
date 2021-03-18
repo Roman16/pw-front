@@ -32,8 +32,12 @@ const menu = [
                 link: '/enlighten-future',
             },
             {
-                title: 'Identify Your Option',
+                title: 'Identify your Option',
                 link: '/identify-option',
+            },
+            {
+                title: 'Redefine your approach',
+                link: '/redefine-approach',
             },
         ]
     },
