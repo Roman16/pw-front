@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import {caseImages} from '../../../assets/img/landing-redefineApproach/cases/caseImages'
+import {useSwipeEffect} from "../../../utils/hooks/useSwipeEffect"
 
 const casesList = [
     {
@@ -182,6 +183,9 @@ const CasesSlider = () => {
         setActiveSlide(index)
     }
 
+    const [touchStart, swipeHandler] = useSwipeEffect(() => goToSlide(activeSlide - 1), () => goToSlide(activeSlide + 1))
+
+
     return (
         <div className="slider">
             <button className="btn icon prev" onClick={() => goToSlide(activeSlide - 1)}>
@@ -197,14 +201,14 @@ const CasesSlider = () => {
                 </svg>
             </button>
 
-            <ul>
+            <ul onTouchMove={swipeHandler} onTouchStart={touchStart}>
                 {casesList.map((slide, index) => <li className={index === activeSlide ? 'active' : ''}>
                     <img src={caseImages[`caseImg${index}`]} alt=""/>
 
                     <div className="content">
                         <h3 dangerouslySetInnerHTML={{__html: slide.title}}/>
 
-                        <div className="row">
+                        <div className="row desc">
                             <div className="col">
                                 <h4>Before</h4>
 
@@ -229,6 +233,19 @@ const CasesSlider = () => {
                                     </div>
                                 ))}
                             </div>
+                        </div>
+
+                        <div className="mob">
+                            {slide.beforeColumn.map((metric, index) => (
+                                <div>
+                                    <h3>{metric.metric}</h3>
+
+                                    <div className="row">
+                                        <p>Before: <span>{metric.value}</span></p>
+                                        <p>After: <span>{slide.afterColumn[index].value}</span></p>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
 

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import './RedefineApproach.less'
@@ -10,6 +10,7 @@ import {Link} from "react-router-dom"
 
 
 const RedefineApproach = () => {
+    const [activeSolutionBlock, setActiveSolutionBlock] = useState(0)
 
     return (
         <div className={'redefine-approach landing-page'}>
@@ -123,8 +124,8 @@ const RedefineApproach = () => {
                     </h2>
 
                     <div className={'row'}>
-                        <div className={'col'}>
-                            <h3>Traditional Approach</h3>
+                        <div className={`col ${activeSolutionBlock === 0 ? 'selected' : ''}`}>
+                            <h3 onClick={() => setActiveSolutionBlock(0)}>Traditional Approach</h3>
 
                             <ul>
                                 <li>
@@ -266,8 +267,8 @@ const RedefineApproach = () => {
                             </ul>
                         </div>
 
-                        <div className="col active">
-                            <h3><span>Profit Whales</span> Solution</h3>
+                        <div className={`col active ${activeSolutionBlock === 1 ? 'selected' : ''}`}>
+                            <h3 onClick={() => setActiveSolutionBlock(1)}><span>Profit Whales</span> Solution</h3>
 
                             <ul>
                                 <li>
@@ -520,6 +521,16 @@ const RedefineApproach = () => {
 
                         <Link to={'/get-audit'} className={'btn green'}>
                             <p><span>Get Your</span> Amazon Advertising <br/> Campaigns <span>Review</span></p>
+
+                            <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="42" cy="42" r="40" stroke="#6D6DF6" stroke-width="4"/>
+                                <path d="M30.8379 35.0234L38.7449 43.3955L30.8379 51.7676" stroke="#6D6DF6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M45.7207 35.0234L53.6277 43.3955L45.7207 51.7676" stroke="#6D6DF6" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </Link>
+
+                        <Link to={'/get-audit'} className={'btn green mob'}>
+                            get an audit
 
                             <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="42" cy="42" r="40" stroke="#6D6DF6" stroke-width="4"/>
