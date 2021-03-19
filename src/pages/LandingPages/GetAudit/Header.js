@@ -1,11 +1,14 @@
 import React from "react"
-import {Link} from "react-router-dom"
 import {LogoLink} from "../components/Header/Header"
 
 const Header = () => {
+    const backToPrevPage = () => {
+        window.history.back();
+    }
+
     return (<header>
         <div className="container">
-            <Link to={'/'} className={'back-to-site'}>
+            <button onClick={backToPrevPage} className={'btn back-to-site'}>
                 <i>
                     <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
@@ -21,7 +24,7 @@ const Header = () => {
                 </i>
 
                 back to site
-            </Link>
+            </button>
 
             <LogoLink/>
         </div>

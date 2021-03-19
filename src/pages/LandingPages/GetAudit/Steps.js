@@ -14,7 +14,7 @@ let lastAvailableStep = 0
 
 const Steps = ({activeStep, goToStep}) => {
     const setStepHandler = (index) => {
-        if (index < activeStep) goToStep(index)
+        if (index <= lastAvailableStep) goToStep(index)
     }
 
     useEffect(() => {
@@ -27,6 +27,10 @@ const Steps = ({activeStep, goToStep}) => {
                 onClick={() => setStepHandler(index)}
                 className={activeStep === index ? 'active' : index <= lastAvailableStep ? 'finished' : ''}>
                 {step}
+
+                <div className="bg">
+                    <span>{step}</span>
+                </div>
             </li>)}
         </ul>
     </div>)

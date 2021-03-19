@@ -1,7 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 
-const SuccessSend = ({active}) => {
+const SuccessSend = ({active, userName}) => {
     return (
         <section className={`success ${active ? 'active' : ''}`}>
             <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +12,7 @@ const SuccessSend = ({active}) => {
             </svg>
 
             <h2>
-                <span> Name,</span> we will contact you in 2 business days!
+                <span> {userName},</span> we will contact you in 2 business days!
             </h2>
 
             <p>
@@ -24,8 +24,23 @@ const SuccessSend = ({active}) => {
                     back to home
                 </Link>
 
-                <a className="btn default">
+                <a className="btn default desc">
                     see profit whales in action
+
+                    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
+                              height="12">
+                            <rect width="16.8" height="12" fill="#C4C4C4"/>
+                        </mask>
+                        <g mask="url(#mask0)">
+                            <path
+                                d="M11.1002 1.2002L15.6002 6.0002M15.6002 6.0002L11.1002 10.8002M15.6002 6.0002L1.20019 6.0002"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+                    </svg>
+                </a>
+                <a className="btn default mob">
+                    read insignts
 
                     <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
