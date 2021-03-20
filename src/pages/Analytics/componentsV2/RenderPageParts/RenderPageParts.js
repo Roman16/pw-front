@@ -44,7 +44,6 @@ const RenderPageParts = ({
         [chartFetchingStatus, setChartFetchingStatus] = useState(false),
         [tableFetchingStatus, setTableFetchingStatus] = useState(false),
         [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location]),
-        [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
         [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false})
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
@@ -113,7 +112,6 @@ const RenderPageParts = ({
                 {
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
-                    segment: localSegmentValue,
                     pageParts,
                     filtersWithState,
                     activeMetrics,
@@ -124,57 +122,25 @@ const RenderPageParts = ({
                 getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
             }
 
-            if (localSegmentValue === 'targetings') {
+            if (localTableOptions.comparePreviousPeriod && res.table) {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
                     chart: res.chart || prevState.chart,
-                    table: res.table
-                        ? {
-                            ...res.table,
-                            response: res.table.response.map(item => {
-                                item.targetingsData = item.targetingId.map((target, index) => {
-                                    const targetObj = {targetingId: target}
+                    table: {
+                        ...res.table,
+                        response: res.table.response.map(item => {
+                            item.compareWithPrevious = true
 
-                                    columns.forEach(column => {
-                                        targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
-                                    })
-
-                                    targetObj.campaignId = item.campaignId[index]
-                                    targetObj.adGroupId = item.adGroupId[index]
-                                    targetObj.calculatedTargetingText = item.calculatedTargetingText_segmented[index]
-
-                                    return targetObj
-                                })
-
-                                if (localTableOptions.comparePreviousPeriod) {
-                                    item.compareWithPrevious = true
-                                }
-
-                                return item
-                            })
-                        } : prevState.table
+                            return item
+                        })
+                    }
                 }))
             } else {
-                if (localTableOptions.comparePreviousPeriod && res.table) {
-                    setPageData(prevState => ({
-                        metrics: res.metrics || prevState.metrics,
-                        chart: res.chart || prevState.chart,
-                        table: {
-                            ...res.table,
-                            response: res.table.response.map(item => {
-                                item.compareWithPrevious = true
-
-                                return item
-                            })
-                        }
-                    }))
-                } else {
-                    setPageData(prevState => ({
-                        metrics: res.metrics || prevState.metrics,
-                        chart: res.chart || prevState.chart,
-                        table: res.table || prevState.table
-                    }))
-                }
+                setPageData(prevState => ({
+                    metrics: res.metrics || prevState.metrics,
+                    chart: res.chart || prevState.chart,
+                    table: res.table || prevState.table
+                }))
             }
 
 
@@ -210,7 +176,6 @@ const RenderPageParts = ({
                 const res = await analyticsServices.fetchPageData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
-                    segment: localSegmentValue,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
@@ -247,7 +212,7 @@ const RenderPageParts = ({
     useEffect(() => {
         localStorage.setItem('analyticsPageSize', tableRequestParams.pageSize)
         getPageData(['table'])
-    }, [tableRequestParams, localSegmentValue, localTableOptions])
+    }, [tableRequestParams, localTableOptions])
 
     useEffect(() => {
         getPageData(availableParts)
