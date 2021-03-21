@@ -21,11 +21,12 @@ const RenderPageParts = ({
                              columns,
                              fixedColumns,
                              rowKey,
-                             showRowSelection
+                             showRowSelection,
+                             productType,
+                             showFilters = true
                          }) => {
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
-        segmentValueFromLocalStorage = localStorage.getItem('analyticsSTSegmentValue') ? localStorage.getItem('analyticsSTSegmentValue') : 'none',
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
         pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
 
@@ -72,6 +73,14 @@ const RenderPageParts = ({
     }
 
     const getPageData = debounce(50, false, async (pageParts) => {
+        if (location === 'overview') {
+            if (productType === 'parent') {
+                location = 'products-parents'
+            } else {
+                location = 'products'
+            }
+        }
+
         try {
             if (pageParts.includes('table')) setTableFetchingStatus(true)
             if (pageParts.includes('chart')) setChartFetchingStatus(true)
@@ -94,7 +103,6 @@ const RenderPageParts = ({
                         value: selectedRangeDate
                     },
                 ]
-
             } else {
                 filtersWithState = [
                     ...filters,
@@ -104,6 +112,16 @@ const RenderPageParts = ({
                         value: selectedRangeDate
                     },
                 ]
+            }
+
+            if (productType === 'parent') {
+                filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+
+                filtersWithState.push({
+                    filterBy: 'parent_productId',
+                    type: 'eq',
+                    value: mainState.productId
+                })
             }
 
 
@@ -152,11 +170,19 @@ const RenderPageParts = ({
     })
 
     const getPreviousPeriodData = async (idList) => {
+        if (location === 'overview') {
+            if (productType === 'parent') {
+                location = 'products-parents'
+            } else {
+                location = 'products'
+            }
+        }
+
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
                 const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
-                const filtersWithState = [
+                let filtersWithState = [
                     ...filters,
                     ...Object.keys(mainState).map(key => ({
                         filterBy: key,
@@ -172,6 +198,16 @@ const RenderPageParts = ({
                         }
                     },
                 ]
+
+                if (productType === 'parent') {
+                    filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+
+                    filtersWithState.push({
+                        filterBy: 'parent_productId',
+                        type: 'eq',
+                        value: mainState.productId
+                    })
+                }
 
                 const res = await analyticsServices.fetchPageData({
                     ...tableRequestParams,
@@ -242,6 +278,7 @@ const RenderPageParts = ({
                 tableData={pageData.table}
                 fetching={tableFetchingStatus}
                 tableRequestParams={tableRequestParams}
+                showFilters={showFilters}
 
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
@@ -255,6 +292,8 @@ const RenderPageParts = ({
 
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}
+
+                productType={productType}
             />}
         </>
     )

@@ -59,7 +59,8 @@ const TableList = ({
                        onChangeTableOptions,
                        openedRow,
                        showRowSelection,
-                       rowKey
+                       rowKey,
+                       productType
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),

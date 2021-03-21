@@ -12,33 +12,31 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
+    grossProfitColumn,
     impressionsColumn,
+    netProfitColumn,
     renderNumberField,
     RenderProduct,
     roasColumn,
     salesShareColumn,
     skuAsinColumn,
 } from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
-import './ProductMetrics.less'
 
-const ProductMetrics = ({location, isParent}) => {
-    const columns = [
-        ...isParent ? [
-            {
-                title: 'Product',
-                dataIndex: 'product_name',
-                key: 'product_name',
-                width: '300px',
-                sorter: true,
-                locked: true,
-                search: true,
-                render: (name, item) => <RenderProduct
-                    product={item}
-                />
-            },
-            skuAsinColumn,
-        ] : [],
+export const columnList = (location) =>  [
+        {
+            title: 'Product',
+            dataIndex: 'product_name_sku_asin',
+            key: 'product_name_sku_asin',
+            width: '300px',
+            locked: true,
+            sorter: true,
+            search: true,
+            render: (name, item) => <RenderProduct
+                product={item}
+                isParent={location === 'products-parents'}
+            />
+        },
+        skuAsinColumn,
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',
@@ -46,7 +44,7 @@ const ProductMetrics = ({location, isParent}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            filter: true,
+            align: 'right',
             ...renderNumberField('number', false)
         },
         impressionsColumn,
@@ -154,40 +152,18 @@ const ProductMetrics = ({location, isParent}) => {
             ...renderNumberField()
         },
         {
-            title: 'Profit',
-            dataIndex: 'organic_profit',
-            key: 'organic_profit',
+            title: 'Avg. Sale Price',
+            dataIndex: 'total_sales_avg_price',
+            key: 'total_sales_avg_price',
             width: '150px',
             sorter: true,
             filter: true,
             align: 'right',
             ...renderNumberField('currency')
         },
-        {
-            title: 'Gross Profit',
-            dataIndex: 'organic_profit_gross',
-            key: 'organic_profit_gross',
-            width: '150px',
-            sorter: true,
-            filter: true,
-            align: 'right',
-            ...renderNumberField('currency')
-        },
+        netProfitColumn,
+        grossProfitColumn,
         adProfitColumn
     ]
 
-    return (
-        <section className={'list-section'}>
-            <TableList
-                columns={columns}
-                showFilters={false}
-                showPagination={isParent}
-                showTotal={isParent}
-                location={location}
-                isParent={isParent}
-            />
-        </section>
-    )
-}
 
-export default ProductMetrics

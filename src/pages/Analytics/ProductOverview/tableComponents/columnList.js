@@ -9,35 +9,34 @@ import {
     adUnitsColumn,
     budgetAllocationColumn,
     clicksColumn,
-    cpaColumn, cpcColumn,
-    ctrColumn, grossProfitColumn,
-    impressionsColumn, netProfitColumn,
-    renderNumberField, RenderProduct,
+    cpaColumn,
+    cpcColumn,
+    ctrColumn,
+    impressionsColumn,
+    renderNumberField,
+    RenderProduct,
     roasColumn,
-    salesShareColumn, skuAsinColumn,
+    salesShareColumn,
+    skuAsinColumn,
 } from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
-import {useSelector} from "react-redux"
-import _ from 'lodash'
+import './ProductMetrics.less'
 
-const ProductsList = ({location}) => {
-    const filters = useSelector(state => state.analytics.filters['products'])
-
-    const columns = [
-        {
-            title: 'Product',
-            dataIndex: 'product_name_sku_asin',
-            key: 'product_name_sku_asin',
-            width: '300px',
-            locked: true,
-            sorter: true,
-            search: true,
-            render: (name, item) => <RenderProduct
-                product={item}
-                isParent={location === 'products-parents'}
-            />
-        },
-        skuAsinColumn,
+export const columnList = (location, isParent) => [
+        ...isParent ? [
+            {
+                title: 'Product',
+                dataIndex: 'product_name',
+                key: 'product_name',
+                width: '300px',
+                sorter: true,
+                locked: true,
+                search: true,
+                render: (name, item) => <RenderProduct
+                    product={item}
+                />
+            },
+            skuAsinColumn,
+        ] : [],
         {
             title: 'Campaigns',
             dataIndex: 'campaigns_count',
@@ -45,7 +44,7 @@ const ProductsList = ({location}) => {
             width: '150px',
             sorter: true,
             noTotal: true,
-            align: 'right',
+            filter: true,
             ...renderNumberField('number', false)
         },
         impressionsColumn,
@@ -153,30 +152,24 @@ const ProductsList = ({location}) => {
             ...renderNumberField()
         },
         {
-            title: 'Avg. Sale Price',
-            dataIndex: 'total_sales_avg_price',
-            key: 'total_sales_avg_price',
+            title: 'Profit',
+            dataIndex: 'organic_profit',
+            key: 'organic_profit',
             width: '150px',
             sorter: true,
             filter: true,
             align: 'right',
             ...renderNumberField('currency')
         },
-        netProfitColumn,
-        grossProfitColumn,
+        {
+            title: 'Gross Profit',
+            dataIndex: 'organic_profit_gross',
+            key: 'organic_profit_gross',
+            width: '150px',
+            sorter: true,
+            filter: true,
+            align: 'right',
+            ...renderNumberField('currency')
+        },
         adProfitColumn
     ]
-
-
-    return (
-        <section className={'list-section'}>
-            <TableList
-                columns={columns}
-                fixedColumns={[0, 1]}
-                location={location}
-            />
-        </section>
-    )
-}
-
-export default ProductsList

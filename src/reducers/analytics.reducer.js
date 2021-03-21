@@ -2,7 +2,7 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
 
-const localStorageVersion = '21_1'
+const localStorageVersion = '21_2'
 
 if (!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
     localStorage.removeItem('analyticsMetricsState')
@@ -19,7 +19,7 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
 
 const workplacesList = {
     'overview': [],
-    'products-regular': [],
+    'products': [],
     'products-parents': [],
     'portfolios': [],
     'campaigns': [],

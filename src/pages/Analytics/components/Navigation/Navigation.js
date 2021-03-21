@@ -18,7 +18,7 @@ const menuVariables = {
                 title: 'Regular View',
                 headerTitle: 'Products Regular View',
                 url: '/analytics/products/regular',
-                key: 'products-regular',
+                key: 'products',
                 description: {
                     title: 'Regular View',
                     text: 'Regular View is showing statistics on SKU level.'

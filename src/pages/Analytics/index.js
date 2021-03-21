@@ -75,7 +75,7 @@ const Analytics = (props) => {
 
                 <Route exact path="/analytics/products" render={() => <Redirect to={'/analytics/products/regular'}/>}/>
                 <Route exact path="/analytics/products/regular"
-                       render={() => <Products location={'products-regular'}/>}/>
+                       render={() => <Products location={'products'}/>}/>
                 <Route exact path="/analytics/products/parents"
                        render={() => <Products location={'products-parents'}/>}/>
 
