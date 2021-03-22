@@ -17,7 +17,8 @@ import SegmentFilter from "./PTableComponents/SegmentFilter"
 import {expandedRowRender} from "./PTableComponents/expandRowRender"
 import {chartAreaKeys} from "./PlacementsStatistics/Chart"
 
-let prevActiveMetrics = []
+let prevActiveMetrics = [],
+    sorterTimeoutId = null
 
 
 const Placements = () => {
@@ -50,7 +51,6 @@ const Placements = () => {
         [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
         [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false}),
         [openedSearchTerms, setOpenedSearchTerms] = useState([]),
-        [processingRows, setProcessingRows] = useState([]),
         [areaChartMetric, setAreaChartMetric] = useState(localStorage.getItem('placementActiveMetric') || 'impressions')
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
@@ -58,13 +58,6 @@ const Placements = () => {
         mainState = useSelector(state => state.analytics.mainState),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
-
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
 
     const columns = PColumnsList(!!mainState.campaignId)
 
@@ -255,7 +248,12 @@ const Placements = () => {
         }))
 
         setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
+        setTableFetchingStatus(true)
+
+        clearTimeout(sorterTimeoutId)
+        sorterTimeoutId = setTimeout(() => {
+            setTableRequestParams(prevState => ({...prevState, page: 1}))
+        }, 300)
     }
 
 

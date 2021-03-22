@@ -11,7 +11,8 @@ import moment from "moment"
 import _ from "lodash"
 
 
-let prevActiveMetrics = []
+let prevActiveMetrics = [],
+    sorterTimeoutId = null
 
 const RenderPageParts = ({
                              location,
@@ -60,7 +61,12 @@ const RenderPageParts = ({
         }))
 
         setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
+        setTableFetchingStatus(true)
+
+        clearTimeout(sorterTimeoutId)
+        sorterTimeoutId = setTimeout(() => {
+            setTableRequestParams(prevState => ({...prevState, page: 1}))
+        }, 300)
     }
 
     const changeTableOptionsHandler = (data) => {

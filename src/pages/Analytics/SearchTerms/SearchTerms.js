@@ -16,7 +16,9 @@ import _ from 'lodash'
 import queryString from "query-string"
 import {history} from "../../../utils/history"
 
-let prevActiveMetrics = []
+let prevActiveMetrics = [],
+    sorterTimeoutId = null
+
 
 const SearchTerms = () => {
     const location = 'searchTerms',
@@ -279,7 +281,12 @@ const SearchTerms = () => {
         }))
 
         setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
+        setTableFetchingStatus(true)
+
+        clearTimeout(sorterTimeoutId)
+        sorterTimeoutId = setTimeout(() => {
+            setTableRequestParams(prevState => ({...prevState, page: 1}))
+        }, 300)
     }
 
 
