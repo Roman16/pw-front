@@ -9,8 +9,8 @@ export const analyticsServices = {
     fetchChartData,
     fetchStateInformation,
     fetchSettingsDetails,
-    getSearchTermsData,
-    getPlacementData,
+    fetchSearchTermsData,
+    fetchPlacementData,
     fetchTargetingsDetails,
     fetchPageData
 }
@@ -106,12 +106,12 @@ function fetchSettingsDetails(page, id) {
 }
 
 //----------------------------------------------------------------------------------------------------------------------
-function getSearchTermsData(params, idList) {
+function fetchSearchTermsData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
     return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
 }
 
-function getPlacementData(params, idList) {
+function fetchPlacementData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment, areaChartMetric} = params
     return api('get', `${analyticsUrls.placementData}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}${idList || ''}&stacked_area_chart_metric[]=${areaChartMetric}`)
 }

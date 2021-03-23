@@ -78,6 +78,11 @@ const RenderPageParts = ({
         setLocalTableOptions(data)
     }
 
+    const changePaginationHandler = (data) => {
+        localStorage.setItem('analyticsPageSize', data.pageSize)
+        setTableRequestParams(data)
+    }
+
     const getPageData = debounce(50, false, async (pageParts) => {
         if (location === 'overview') {
             if (productType === 'parent') {
@@ -252,11 +257,15 @@ const RenderPageParts = ({
     }, [activeMetrics])
 
     useEffect(() => {
-        localStorage.setItem('analyticsPageSize', tableRequestParams.pageSize)
         getPageData(['table'])
     }, [tableRequestParams, localTableOptions])
 
     useEffect(() => {
+        setTableRequestParams(prevState => ({
+            ...prevState,
+            page: 1
+        }))
+
         getPageData(availableParts)
     }, [selectedRangeDate, filters])
 
@@ -292,7 +301,7 @@ const RenderPageParts = ({
 
                 moreActions={moreActions}
 
-                onChange={(data) => setTableRequestParams(data)}
+                onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
 

@@ -134,7 +134,7 @@ const SearchTerms = () => {
             }
 
 
-            const res = await analyticsServices.getSearchTermsData({
+            const res = await analyticsServices.fetchSearchTermsData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
                 segment: localSegmentValue,
@@ -239,7 +239,7 @@ const SearchTerms = () => {
                     },
                 ]
 
-                const res = await analyticsServices.getSearchTermsData({
+                const res = await analyticsServices.fetchSearchTermsData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,

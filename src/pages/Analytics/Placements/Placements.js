@@ -99,7 +99,7 @@ const Placements = () => {
                 ]
             }
 
-            const res = await analyticsServices.getPlacementData({
+            const res = await analyticsServices.fetchPlacementData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
                 segment: localSegmentValue,
@@ -206,7 +206,7 @@ const Placements = () => {
                     },
                 ]
 
-                const res = await analyticsServices.getPlacementData({
+                const res = await analyticsServices.fetchPlacementData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,

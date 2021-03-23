@@ -20,7 +20,7 @@ import {
 import {Link} from "react-router-dom"
 import {Switch} from "antd"
 
-export const columnList = ({setStateHandler, selectedCampaign}) => ([
+export const columnList = (setStateHandler, selectedCampaign) => ([
         {
             title: 'Active',
             dataIndex: 'state',
