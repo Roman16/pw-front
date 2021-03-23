@@ -2,7 +2,6 @@ import React from "react"
 import {
     acosColumn,
     adCvrColumn,
-    adGroupColumn,
     adOrdersColumn,
     adSalesColumn,
     adSpendColumn,
@@ -12,19 +11,16 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn,
-    ctrColumn, EditableField,
-    impressionsColumn, keywordPTColumn, matchTypeColumn,
+    ctrColumn,
+    EditableField,
+    impressionsColumn,
+    keywordPTColumn,
+    matchTypeColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
-import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
 import {Switch} from "antd"
 
 export const automatePatDescription = {

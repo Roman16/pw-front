@@ -19,6 +19,45 @@ import {automatePatDescription} from "../../Targetings/tableComponents/columnLis
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 
+export const numberColumns = [
+    'clicks',
+    'impressions',
+    'ctr',
+    'cost',
+    'cpc',
+    'attributedSales30d',
+    'acos',
+    'conversion_rate',
+    'cpa',
+    'attributedConversions30d',
+    'attributedUnitsOrdered30d',
+    'roas',
+    'sales_share',
+    'budget_allocation',
+    'total_profit',
+    'total_profit_gross',
+    'ad_profit',
+    'startDate',
+    'endDate',
+    'dailyBudget',
+    'campaigns_count',
+    'macos',
+    'organic_sales',
+    'total_ordered_quantity',
+    'total_ordered_quantity_cleared',
+    'total_orders_count',
+    'total_orders_count_cleared',
+    'organic_orders_count',
+    'total_sales',
+    'total_returns_quantity',
+    'total_sales_avg_price',
+    'defaultBid',
+    'targetings_count',
+    'product_ads_count',
+    'calculatedBid',
+    'organic_profit'
+]
+
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
         case 'number':
@@ -34,7 +73,6 @@ export const RenderMetricValue = ({number, type}) => {
             return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
     }
 }
-
 
 export const renderNumberField = (type = 'number', showDiff = true) => {
     return ({
@@ -54,7 +92,6 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
         }
     })
 }
-
 
 export const statusColumn = {
     title: 'Status',
@@ -206,7 +243,7 @@ export const skuAsinColumn = {
     key: 'sku_asin',
     width: '180px',
     locked: true,
-    sorter: true,
+    sorter: false,
     noTotal: true,
     render: (text, item) => <div className={'sku-asin'}>
         <div title={item.sku}><b>SKU:</b> {item.sku}</div>

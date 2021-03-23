@@ -4,37 +4,18 @@ import Pagination from "../../../../components/Pagination/Pagination"
 import {useDispatch, useSelector} from "react-redux"
 import _ from 'lodash'
 import '../../components/TableList/TableList.less'
-import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../../components/TableFilters/TableFilters"
 import DateRange from "../../components/DateRange/DateRange"
 import ColumnsSelect from "../../components/TableList/ColumnsSelect"
-import axios from "axios"
-import {Popover, Switch} from "antd"
-import {SVG} from "../../../../utils/icons"
 import TableOptions from "../../components/TableList/TableOptions"
-import moment from "moment"
-import preciseDiff from "moment-precise-range-plugin"
 import SwitchChartVisible from "../../components/TableList/SwitchChartVisisble"
 import ExpandWorkplace from "../../components/TableList/ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {numberColumns} from '../../components/TableList/tableColumns'
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
-
-const idKey = {
-    'products': 'product',
-    'products-regular': 'product',
-    'products-parents': 'product',
-    'portfolios': 'portfolio',
-    'campaigns': 'campaign',
-    'placements': 'placement',
-    'ad-groups': 'adGroup',
-    'targetings': 'targeting',
-    'negative-targetings': 'targeting',
-    'product-ads': 'ad',
-}
-
 
 const TableList = ({
                        columns,
@@ -60,7 +41,6 @@ const TableList = ({
                        openedRow,
                        showRowSelection,
                        rowKey,
-                       productType
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -84,34 +64,52 @@ const TableList = ({
             onChangeSorterColumn(data)
         }
 
-        if (localSorterColumn && localSorterColumn.column === column) {
-            if (localSorterColumn.type === 'asc') {
+        if (numberColumns.includes(column)) {
+            if (localSorterColumn && localSorterColumn.column === column) {
+                if (localSorterColumn.type === 'desc') {
+                    setColumn({
+                        column: column,
+                        type: 'asc'
+
+                    })
+                } else if (localSorterColumn.type === 'asc') {
+                    setColumn({
+                        column: null,
+                        type: 'desc'
+                    })
+                }
+            } else {
                 setColumn({
                     column: column,
                     type: 'desc'
-
-                })
-            } else if (localSorterColumn.type === 'desc') {
-                setColumn({
-                    column: null,
-                    type: 'asc'
                 })
             }
         } else {
-            setColumn({
-                column: column,
-                type: 'asc'
-            })
+            if (localSorterColumn && localSorterColumn.column === column) {
+                if (localSorterColumn.type === 'asc') {
+                    setColumn({
+                        column: column,
+                        type: 'desc'
+
+                    })
+                } else if (localSorterColumn.type === 'desc') {
+                    setColumn({
+                        column: null,
+                        type: 'asc'
+                    })
+                }
+            } else {
+                setColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            }
         }
     }
 
 
     const dateRangeHandler = (startDate, endDate) => {
         dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
-
-        // if (startDate === null) {
-        //     setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))
-        // }
     }
 
     const changeBlackListHandler = (list) => {
@@ -192,6 +190,7 @@ const TableList = ({
                     expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
+                    revertSortingColumns={numberColumns}
 
                     rowKey={rowKey}
                     {...showRowSelection && {rowSelection: rowSelection}}

@@ -25,7 +25,8 @@ const CustomTable = ({
                          showExpandRow,
                          rowKey,
                          selectedRows = [],
-                         disabledRows = []
+                         disabledRows = [],
+                         revertSortingColumns = []
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -105,6 +106,7 @@ const CustomTable = ({
 
                                     {item.sorter && <div
                                         className={`sorter-buttons
+                                        ${revertSortingColumns.includes(item.dataIndex) ? 'revert' : ''}
                                          ${sorterColumn && sorterColumn.column === item.key ? sorterColumn.type === 'desc' ? 'is-sorter desc' : 'is-sorter asc' : ''}`}>
                                         <SVG id={'sorter-arrow'}/>
                                     </div>}
