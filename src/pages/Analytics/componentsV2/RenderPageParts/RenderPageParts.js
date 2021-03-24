@@ -80,10 +80,13 @@ const RenderPageParts = ({
 
     const changePaginationHandler = (data) => {
         localStorage.setItem('analyticsPageSize', data.pageSize)
-        setTableRequestParams(data)
+
+        getPageData(['table'], data)
     }
 
-    const getPageData = debounce(50, false, async (pageParts) => {
+    const getPageData = debounce(50, false, async (pageParts, paginationParams) => {
+        if (paginationParams) setTableRequestParams(paginationParams)
+
         if (location === 'overview') {
             if (productType === 'parent') {
                 location = 'products-parents'
@@ -139,7 +142,7 @@ const RenderPageParts = ({
             const res = await analyticsServices.fetchPageData(
                 location,
                 {
-                    ...tableRequestParams,
+                    ...paginationParams ? paginationParams : tableRequestParams,
                     sorterColumn: localSorterColumn,
                     pageParts,
                     filtersWithState,
@@ -221,12 +224,12 @@ const RenderPageParts = ({
                 }
 
                 const res = await analyticsServices.fetchPageData({
-                    ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
-                    page: 1
+                    page: 1,
+                    pageSize: 200
                 }, `&id:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
@@ -258,15 +261,10 @@ const RenderPageParts = ({
 
     useEffect(() => {
         getPageData(['table'])
-    }, [tableRequestParams, localTableOptions])
+    }, [localTableOptions])
 
     useEffect(() => {
-        setTableRequestParams(prevState => ({
-            ...prevState,
-            page: 1
-        }))
-
-        getPageData(availableParts)
+        getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
     }, [selectedRangeDate, filters])
 
     return (

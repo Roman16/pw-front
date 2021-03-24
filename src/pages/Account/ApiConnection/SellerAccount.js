@@ -49,6 +49,8 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
             return <span style={{color: '#7DD4A1'}}>Success</span>
         } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED')) {
             return <span style={{color: '#EC7F5C'}}>Failed</span>
+        } else {
+            return ''
         }
     }
     const PPCStatus = () => {
@@ -60,6 +62,8 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
             return <span style={{color: '#7DD4A1'}}>Success</span>
         } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED')) {
             return <span style={{color: '#EC7F5C'}}>Failed</span>
+        } else {
+            return ''
         }
     }
 
