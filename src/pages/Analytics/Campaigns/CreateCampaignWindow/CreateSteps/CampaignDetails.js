@@ -16,8 +16,8 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">Campaign Name</label>
                         <Input
                             placeholder={'Campaign Name'}
-                            value={createData.campaign_name}
-                            onChange={({target: {value}}) => onChange({campaign_name: value})}
+                            value={createData.name}
+                            onChange={({target: {value}}) => onChange({name: value})}
                         />
                     </div>
 
@@ -52,7 +52,7 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({start_date: date})}
+                            onChange={(date) => onChange({startDate: date})}
                             showToday={false}
                         />
                     </div>
@@ -61,7 +61,7 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">End</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({end_date: date})}
+                            onChange={(date) => onChange({endDate: date})}
                             showToday={false}
                         />
                     </div>
@@ -82,8 +82,8 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">Daily budget</label>
                         <InputCurrency
                             step={0.01}
-                            value={createData.daily_budget}
-                            onChange={(value) => onChange({daily_budget: value})}
+                            value={createData.dailyBudget}
+                            onChange={(value) => onChange({dailyBudget: value})}
                         />
                     </div>
                 </div>
@@ -99,12 +99,12 @@ const CampaignDetails = ({createData, onChange}) => {
         <div className="row">
             <div className="col">
                 <Radio.Group
-                    value={createData.targetings_type}
-                    onChange={({target: {value}}) => onChange({targetings_type: value})}
+                    value={createData.calculatedTargetingType}
+                    onChange={({target: {value}}) => onChange({calculatedTargetingType: value})}
                 >
                     <h4>Choose Targeting</h4>
 
-                    <Radio value={'automatic_targeting'}>
+                    <Radio value={'auto'}>
                         Automatic Targeting
                     </Radio>
                     <div className="radio-description">
@@ -112,7 +112,7 @@ const CampaignDetails = ({createData, onChange}) => {
                         likelihood a sale. <a href="">Learn more</a>
                     </div>
 
-                    <Radio value={'manual_targeting'}>
+                    <Radio value={'manual'}>
                         Manual Targeting
                     </Radio>
 
@@ -138,7 +138,7 @@ const CampaignDetails = ({createData, onChange}) => {
                 >
                     <h4>Campaign bidding strategy:</h4>
 
-                    <Radio value={'down'}>
+                    <Radio value={'legacyForSales'}>
                         Dynamic bids - down only
                     </Radio>
                     <div className="radio-description">
@@ -146,7 +146,7 @@ const CampaignDetails = ({createData, onChange}) => {
                         Any campaigns created before January 2019 used this setting.
                     </div>
 
-                    <Radio value={'dynamic'}>
+                    <Radio value={'autoForSales'}>
                         Dynamic bids - up and down
                     </Radio>
 
@@ -155,7 +155,7 @@ const CampaignDetails = ({createData, onChange}) => {
                         to convert to a sale, and lower your bids when less likely to convert to a sale.
                     </div>
 
-                    <Radio value={'fixed'}>
+                    <Radio value={'manual'}>
                         Fixed bids
                     </Radio>
 

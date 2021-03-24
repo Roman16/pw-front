@@ -12,6 +12,8 @@ import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import CreateCampaignOverview from "./CreateSteps/CreateCampaignOverview"
 import TargetingsDetails from "./CreateSteps/TargetingsDetails/TargetingsDetails"
+import {analyticsServices} from "../../../../services/analytics.services"
+import {notification} from "../../../../components/Notification"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
@@ -20,16 +22,16 @@ const CreateCampaignWindow = () => {
         [finishedSteps, setFinishedSteps] = useState([]),
         [createCampaignData, setCreateCampaignData] = useState({
             //campaign
-            campaign_name: '',
+            name: '',
             portfolio_name: '',
-            start_date: undefined,
-            end_date: undefined,
-            daily_budget: 0,
+            startDate: undefined,
+            endDate: undefined,
+            dailyBudget: 0,
             top_search_bid: 0,
             product_pages_bid: 0,
-            campaign_type: 'sponsored_products',
-            targetings_type: 'automatic_targeting',
-            bidding_strategy: 'down',
+            advertisingType: 'SponsoredProducts',
+            calculatedTargetingType: 'auto',
+            bidding_strategy: 'legacyForSales',
             //ad group
             create_ad_group: true,
             ad_group_name: '',
@@ -111,7 +113,13 @@ const CreateCampaignWindow = () => {
     }
 
     const createCampaignHandler = async () => {
-
+        try {
+            await analyticsServices.createCampaign(createCampaignData)
+            closeWindowHandler()
+            notification.success({title: 'Campaign created'})
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {

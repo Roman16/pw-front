@@ -10,7 +10,7 @@ const TargetingsDetails = ({createData, onChange}) => {
 
     const disabledBlock = !createData.create_targetings
 
-    if (createData.targetings_type === 'automatic_targeting') {
+    if (createData.calculatedTargetingType === 'auto') {
         return (<div className={'step step-4 targetings-details-step'}>
             <div className="row">
                 <div className="col">
@@ -139,7 +139,7 @@ const TargetingsDetails = ({createData, onChange}) => {
                 onUpdate={onChange}
             />
         </div>)
-    } else if (createData.targetings_type === 'manual_targeting') {
+    } else if (createData.calculatedTargetingType === 'manual') {
         return (<div className={'step step-4 targetings-details-step'}>
             <div className="row">
                 <div className="col">

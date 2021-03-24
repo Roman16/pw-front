@@ -21,12 +21,12 @@ const CreateCampaignOverview = ({createData}) => {
     const fields = {
         campaignType: {
             title: 'Campaign Type',
-            fieldKey: 'campaign_type',
-            render: (value) => value === 'sponsored_products' && 'Sponsored Products'
+            fieldKey: 'advertisingType',
+            render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
         },
         campaignName: {
             title: 'Campaign Name',
-            fieldKey: 'campaign_name'
+            fieldKey: 'name'
         },
         portfolioName: {
             title: 'Portfolio',
@@ -34,22 +34,22 @@ const CreateCampaignOverview = ({createData}) => {
         },
         startDate: {
             title: 'Start',
-            fieldKey: 'start_date',
+            fieldKey: 'startDate',
             render: value => value && moment(value).format('MM.DD.YYYY')
         },
         endDate: {
             title: 'End',
-            fieldKey: 'end_date',
+            fieldKey: 'endDate',
             render: value => value && moment(value).format('MM.DD.YYYY')
         },
         dailyBudget: {
             title: 'Daily Budget',
-            fieldKey: 'daily_budget',
+            fieldKey: 'dailyBudget',
             render: value => `${numberMask(value, 2)}$`
         },
         targeting: {
             title: 'Targeting',
-            fieldKey: 'targetings_type',
+            fieldKey: 'calculatedTargetingType',
             render: value => targetingsTypeEnum[value]
         },
         biddingStrategy: {

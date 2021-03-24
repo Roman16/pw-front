@@ -12,7 +12,9 @@ export const analyticsServices = {
     fetchSearchTermsData,
     fetchPlacementData,
     fetchTargetingsDetails,
-    fetchPageData
+    fetchPageData,
+
+    createCampaign
 }
 
 const stateIdValues = {
@@ -124,4 +126,8 @@ function fetchPageData(location, params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
 
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`)
+}
+
+function createCampaign(campaign) {
+    return api('post', analyticsUrls.createUrl('campaigns'), campaign)
 }
