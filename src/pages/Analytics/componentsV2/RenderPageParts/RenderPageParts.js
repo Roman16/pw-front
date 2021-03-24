@@ -138,8 +138,9 @@ const RenderPageParts = ({
                 })
             }
 
+            let parentResponse
 
-            const res = await analyticsServices.fetchPageData(
+            let res = await analyticsServices.fetchPageData(
                 location,
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
@@ -149,6 +150,22 @@ const RenderPageParts = ({
                     activeMetrics,
                 }
             )
+
+            if(productType === 'parent') {
+                parentResponse = await analyticsServices.fetchPageData(
+                    'products',
+                    {
+                        ...paginationParams ? paginationParams : tableRequestParams,
+                        sorterColumn: localSorterColumn,
+                        pageParts: ['table'],
+                        filtersWithState,
+                        activeMetrics,
+                    }
+                )
+
+               res.table = parentResponse.table
+            }
+
 
             if (localTableOptions.comparePreviousPeriod) {
                 getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))

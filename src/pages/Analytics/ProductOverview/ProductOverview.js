@@ -53,7 +53,6 @@ const ProductOverview = () => {
 
                 columns={columnList(location, productType === 'parent')}
             />
-
         </div>
 
     )
