@@ -181,8 +181,8 @@ const CampaignDetails = ({createData, onChange}) => {
                     <label htmlFor="">Top of Search (first page)</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.top_search_bid}
-                        onChange={value => onChange({top_search_bid: value})}
+                        value={createData.bidding_adjustments[0]}
+                        onChange={value => onChange({bidding_adjustments: [value, createData.bidding_adjustments[1]]})}
                         typeIcon={'percent'}
                     />
                 </div>
@@ -191,8 +191,8 @@ const CampaignDetails = ({createData, onChange}) => {
                     <label htmlFor="">Product pages (competitors pages)</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.product_pages_bid}
-                        onChange={value => onChange({product_pages_bid: value})}
+                        value={createData.bidding_adjustments[1]}
+                        onChange={value => onChange({bidding_adjustments: [createData.bidding_adjustments[0], value]})}
                         typeIcon={'percent'}
                     />
                 </div>

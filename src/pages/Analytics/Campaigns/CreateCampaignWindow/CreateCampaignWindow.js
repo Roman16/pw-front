@@ -27,12 +27,11 @@ const CreateCampaignWindow = () => {
             startDate: undefined,
             endDate: undefined,
             dailyBudget: 0,
-            top_search_bid: 0,
-            product_pages_bid: 0,
             advertisingType: 'SponsoredProducts',
             calculatedTargetingType: 'auto',
             bidding_strategy: 'legacyForSales',
             state: 'enabled',
+            bidding_adjustments: [0,0],
             //ad group
             create_ad_group: true,
             ad_group_name: '',
