@@ -28,7 +28,7 @@ export function getBidsTemplate(exactBid, templates, CampaignEnums, AdGroupEnums
 
         newTemplate.campaigns[x] = {
             shouldBeApplied,
-            bid: shouldBeApplied ? _sashiphizeBid(_roundTo(exactBid * bidMultiplier, 2)) : null,
+            bid: shouldBeApplied ? _sashiphizeBid(_roundTo(exactBid * bidMultiplier, 2)) : undefined,
         }
     })
 
@@ -37,7 +37,7 @@ export function getBidsTemplate(exactBid, templates, CampaignEnums, AdGroupEnums
 
         newTemplate.adGroups[x] = {
             shouldBeApplied,
-            bid: shouldBeApplied ? _sashiphizeBid(_roundTo(exactBid * bidMultiplier, 2)) : null,
+            bid: shouldBeApplied ? _sashiphizeBid(_roundTo(exactBid * bidMultiplier, 2)) : undefined,
         }
     })
 

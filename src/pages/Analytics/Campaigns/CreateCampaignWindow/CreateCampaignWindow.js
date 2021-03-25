@@ -14,6 +14,8 @@ import CreateCampaignOverview from "./CreateSteps/CreateCampaignOverview"
 import TargetingsDetails from "./CreateSteps/TargetingsDetails/TargetingsDetails"
 import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
+import _ from "lodash"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
@@ -31,7 +33,15 @@ const CreateCampaignWindow = () => {
             calculatedTargetingType: 'auto',
             bidding_strategy: 'legacyForSales',
             state: 'enabled',
-            bidding_adjustments: [0,0],
+            bidding_adjustments: [
+                {
+                    predicate: 'placementTop',
+                    percentage: 0
+                },
+                {
+                    predicate: 'placementProductPage',
+                    percentage: 0
+                }],
             //ad group
             create_ad_group: true,
             ad_group_name: '',

@@ -181,8 +181,13 @@ const CampaignDetails = ({createData, onChange}) => {
                     <label htmlFor="">Top of Search (first page)</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.bidding_adjustments[0]}
-                        onChange={value => onChange({bidding_adjustments: [value, createData.bidding_adjustments[1]]})}
+                        value={createData.bidding_adjustments[0].percentage}
+                        onChange={value => onChange({
+                            bidding_adjustments: [{
+                                predicate: 'placementTop',
+                                percentage: value
+                            }, createData.bidding_adjustments[1]]
+                        })}
                         typeIcon={'percent'}
                     />
                 </div>
@@ -191,8 +196,13 @@ const CampaignDetails = ({createData, onChange}) => {
                     <label htmlFor="">Product pages (competitors pages)</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.bidding_adjustments[1]}
-                        onChange={value => onChange({bidding_adjustments: [createData.bidding_adjustments[0], value]})}
+                        value={createData.bidding_adjustments[1].percentage}
+                        onChange={value => onChange({
+                            bidding_adjustments: [createData.bidding_adjustments[0], {
+                                predicate: 'placementProductPage',
+                                percentage: value
+                            }]
+                        })}
                         typeIcon={'percent'}
                     />
                 </div>

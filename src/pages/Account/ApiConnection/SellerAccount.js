@@ -47,7 +47,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
             return <span style={{color: '#f0b849'}}>Verifying</span>
         } else if (account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS') {
             return <span style={{color: '#7DD4A1'}}>Success</span>
-        } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED')) {
+        } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED'|| account.amazon_mws.status === 'REFRESH_INVALID')) {
             return <span style={{color: '#EC7F5C'}}>Failed</span>
         } else {
             return ''
@@ -60,7 +60,7 @@ const SellerAccount = ({account, sellerName, opened, onOpenAccount, onDisconnect
             return <span style={{color: '#f0b849'}}>Verifying</span>
         } else if (account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS') {
             return <span style={{color: '#7DD4A1'}}>Success</span>
-        } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED')) {
+        } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED'|| account.amazon_ppc.status === 'REFRESH_INVALID')) {
             return <span style={{color: '#EC7F5C'}}>Failed</span>
         } else {
             return ''
