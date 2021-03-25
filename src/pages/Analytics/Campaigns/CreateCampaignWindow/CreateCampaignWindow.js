@@ -114,7 +114,18 @@ const CreateCampaignWindow = () => {
 
     const createCampaignHandler = async () => {
         try {
-            await analyticsServices.createCampaign(createCampaignData)
+            await analyticsServices.createCampaign({
+                name: createCampaignData.name,
+                portfolio_name: createCampaignData.portfolio_name,
+                startDate: createCampaignData.startDate,
+                endDate: createCampaignData.endDate,
+                dailyBudget: createCampaignData.dailyBudget,
+                advertisingType: createCampaignData.advertisingType,
+                calculatedTargetingType: createCampaignData.calculatedTargetingType,
+                bidding_strategy: createCampaignData.bidding_strategy,
+                state: createCampaignData.state,
+                bidding_adjustments: createCampaignData.bidding_adjustments,
+            })
             closeWindowHandler()
             notification.success({title: 'Campaign created'})
         } catch (e) {
