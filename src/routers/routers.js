@@ -31,6 +31,7 @@ const GetAudit = React.lazy(() => import('../pages/LandingPages/GetAudit/GetAudi
 const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOption/IdentifyOption'))
 const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/EnlightenFuture/EnlightenFuture'))
 const RedefineApproach = React.lazy(() => import('../pages/LandingPages/RedefineApproach/RedefineApproach'))
+const CustomerSatisfactionSurvey = React.lazy(() => import('../pages/LandingPages/CustomerSatisfactionSurvey/CustomerSatisfactionSurvey'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -75,6 +76,7 @@ const routers = () => {
                     <Route exact path="/identify-option" component={IdentifyOption}/>
                     <Route exact path="/enlighten-future" component={EnlightenFuture}/>
                     <Route exact path="/redefine-approach" component={RedefineApproach}/>
+                    <Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
