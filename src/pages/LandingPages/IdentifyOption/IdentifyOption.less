@@ -178,6 +178,7 @@
 
       .col:first-child {
         width: 60%;
+        min-width: 60%;
         display: flex;
         flex-direction: column;
 
@@ -230,12 +231,18 @@
               .ant-radio {
                 width: 20px;
                 min-width: 20px;
+                max-width: 20px;
                 height: 20px;
                 margin: 3px 0 0 0;
+                display: flex;
 
                 .ant-radio-inner {
-                  width: 100%;
-                  height: 100%;
+                  display: block;
+                  width: 20px;
+                  max-width: 20px;
+                  min-width: 20px;
+                  height: 20px;
+                  padding: 0;
 
                   &::after {
                     left: 0;
@@ -319,6 +326,7 @@
           overflow: hidden;
           transition: height .3s ease-in-out;
           max-height: max-content;
+          transition-delay: .3s;
 
           .btn.close {
             display: none;
@@ -328,34 +336,40 @@
             width: 100%;
             flex-direction: column;
             align-items: center;
-            display: flex;
 
             opacity: 0;
             position: absolute;
             transform: translateX(-150px);
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
+            display: grid;
+            grid-template-areas: 'icon title' 'list list' 'btn btn';
+            grid-template-columns: max-content 1fr;
+
             &.active {
               opacity: 1;
               transform: translateX(0) scale(1) !important;
-              transition-delay: 0.4s;
+              transition-delay: 0.2s;
               position: initial;
               z-index: 100;
             }
 
             i {
+              grid-area: icon;
               width: 80px;
               height: 64px;
-              margin-bottom: 28px;
             }
 
             h3 {
+              grid-area: title;
+
               font-size: 32px;
               line-height: 38px;
               font-weight: 400;
-              text-align: center;
+              text-align: left;
               color: #83FED0;
-              margin-bottom: 28px;
+              padding: 0 0 0 15px;
+              margin: 0;
 
               span {
                 color: #FFFFFF;
@@ -363,10 +377,12 @@
             }
 
             ul {
+              grid-area: list;
+
               display: flex;
               flex-direction: column;
               list-style: none;
-              margin: 0;
+              margin: 28px 0 0 0;
 
               li {
                 font-size: 16px;
@@ -394,6 +410,8 @@
             }
 
             .btn {
+              grid-area: btn;
+
               height: 56px;
               background: #83FED0;
               margin: 48px 0 0 0;
@@ -505,6 +523,21 @@
                 height: 56px;
                 margin: 8px 0 0 0;
 
+                svg {
+                  stroke: #6D6DF6;
+                }
+
+                &:disabled {
+                  cursor: not-allowed;
+                  pointer-events: none;
+                  background: #C9CBD4;
+                  color: #fff;
+
+                  svg {
+                    stroke: #fff;
+                  }
+                }
+
                 &.transparent {
                   background: transparent;
                   color: #fff;
@@ -544,6 +577,7 @@
           }
 
           .success-send {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -733,6 +767,8 @@
             padding: 0;
             border: 2px solid #F3F7FD;
             margin-bottom: 18px;
+            box-shadow: none !important;
+            background: #fff !important;
 
             h4.title {
               width: 100%;
@@ -764,7 +800,7 @@
             .buttons {
               width: 100%;
               display: flex;
-              flex-direction: column;
+              flex-direction: column-reverse;
               align-items: center;
               margin: 10px 0 48px;
 
@@ -773,6 +809,7 @@
                 font-size: 16px;
                 font-weight: 500;
                 text-transform: uppercase;
+                margin: 48px 0 0;
 
                 svg {
                   margin: 0 0 0 12px;
@@ -782,7 +819,7 @@
                 &.transparent {
                   color: #6D6DF6;
                   background: none;
-                  margin: 0 0 10px;
+                  margin: 0;
                 }
               }
             }
@@ -794,21 +831,31 @@
             display: none;
           }
 
+          .contact-li {
+            display: flex !important;
+          }
+
+          .contact-form {
+            width: 100%;
+            max-width: 100%;
+          }
+
           .option-details {
-            display: none;
-            padding: 40px 20px;
+            padding: 74px 20px 40px 20px;
+            position: fixed;
+            transition: .2s;
+            top: -100vh;
+            left: 0;
+            right: 0;
+            height: 100vh;
+            display: flex;
+
+            overflow-y: auto;
+            z-index: 100000;
+            border-radius: 0;
 
             &.visible {
-              display: block;
-              position: fixed;
               top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              height: 100vh;
-              overflow-y: auto;
-              z-index: 100000;
-              border-radius: 0;
             }
 
             .btn.close {
@@ -827,11 +874,27 @@
             li {
               display: none;
               transition: 0s !important;
+              grid-template-areas: 'icon title' 'list list' 'btn btn';
+              grid-template-columns: max-content 1fr;
+              grid-template-rows: max-content max-content max-content;
+
+              i {
+                width: 60px;
+                grid-area: icon;
+                margin: 0;
+
+                svg {
+                  width: 100%;
+                }
+              }
 
               h3 {
-                font-size: 32px;
-                line-height: 38px;
-                margin-bottom: 18px;
+                grid-area: title;
+                text-align: left;
+                font-size: 24px;
+                line-height: 29px;
+                padding: 0 0 0 12px;
+                margin: 0;
 
                 br {
                   display: none;
@@ -839,18 +902,25 @@
               }
 
               ul {
+                grid-area: list;
+                margin: 24px 0 0 0;
+
                 li {
                   font-size: 12px;
                   line-height: 17px;
                 }
               }
 
+              .btn {
+                grid-area: btn;
+              }
+
               &.active {
-                display: flex;
+                display: grid;
               }
 
               &:first-child {
-                display: flex;
+                display: grid;
               }
 
               .contact-form {

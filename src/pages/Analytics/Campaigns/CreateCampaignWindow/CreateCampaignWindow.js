@@ -32,6 +32,7 @@ const CreateCampaignWindow = () => {
             advertisingType: 'SponsoredProducts',
             calculatedTargetingType: 'auto',
             bidding_strategy: 'legacyForSales',
+            state: 'enabled',
             //ad group
             create_ad_group: true,
             ad_group_name: '',

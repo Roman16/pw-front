@@ -281,6 +281,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
     const NavigationButtons = () => {
         return (
             <div className="navigation">
+                {activeStep > 0 &&
                 <button type={'button'} className="btn transparent" onClick={() => setActiveStep(activeStep - 1)}>
                     <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
@@ -296,7 +297,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
 
                     back
                 </button>
-
+                }
                 <button className="btn default">
                     {activeStep === 6 ? 'Get an audit' : <>
                         next

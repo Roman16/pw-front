@@ -257,9 +257,19 @@ export const skuAsinColumn = {
     </div>
 }
 
-export const EditableField = ({type, value}) => {
+export const EditableField = ({type, value, onUpdateField, id}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
     const wrapperRef = useRef(null)
+
+    const submitFieldHandler = () => {
+        onUpdateField({
+            id,
+            column: '',
+            value: ''
+        })
+
+        // setVisibleEditableWindow(false)
+    }
 
     useEffect(() => {
         function handleClickOutside({target}) {
@@ -277,6 +287,7 @@ export const EditableField = ({type, value}) => {
             document.removeEventListener("click", handleClickOutside)
         }
     }, [wrapperRef])
+
 
     useEffect(() => {
         if (type === 'date' && visibleEditableWindow) {
@@ -307,7 +318,7 @@ export const EditableField = ({type, value}) => {
                     renderExtraFooter={() => <>
                         <p>America/Los_Angeles</p>
                         <div className="actions">
-                            <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>
+                            <button className={'btn default'} onClick={submitFieldHandler}>
                                 Save
                             </button>
 
@@ -335,7 +346,7 @@ export const EditableField = ({type, value}) => {
                         autoFocus={true}
                     />
 
-                    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>
+                    <button className={'btn default'} onClick={submitFieldHandler}>Save</button>
                     <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
                     </button>
                 </div>}

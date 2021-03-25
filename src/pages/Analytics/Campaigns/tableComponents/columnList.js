@@ -22,7 +22,7 @@ import {
 import {Switch} from "antd"
 
 
-export const columnList = (setStateHandler, setStateDetails, selectedPortfolio) => ([
+export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
         {
             title: 'Active',
             dataIndex: 'state',
@@ -85,9 +85,11 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio) 
             filter: true,
             fastUpdating: true,
             edit: true,
-            render: (budget) => <EditableField
+            render: (budget, item) => <EditableField
                 type={'currency'}
                 value={budget}
+                onUpdate={onUpdateField}
+                id={item.campaignId}
             />
         },
         ...!selectedPortfolio ? [{

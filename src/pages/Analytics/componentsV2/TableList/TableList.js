@@ -12,6 +12,8 @@ import SwitchChartVisible from "../../components/TableList/SwitchChartVisisble"
 import ExpandWorkplace from "../../components/TableList/ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {numberColumns} from '../../components/TableList/tableColumns'
+import FastUpdateBlock from "../../components/TableList/FastUpdateBlock/FastUpdateBlock"
+import {notification} from "../../../../components/Notification"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -130,6 +132,11 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
+    const selectAllRows = () => {
+        setSelectedAllRows(true)
+        setSelectedRows(tableData.map(item => item[rowKey]))
+    }
+
 
     const rowSelection = {
         onChange: (rowsList) => {
@@ -138,10 +145,39 @@ const TableList = ({
         }
     }
 
+    const setChangesHandler = async (key, value) => {
+        // await setTableData([...tableData.map(item => {
+        //     if (selectedRows.includes(item.campaignId)) {
+        //         item[key] = value
+        //     }
+        //
+        //     return item
+        // })])
+
+        notification.success({title: 'Success'})
+        setSelectedAllRows(false)
+        setSelectedRows([])
+    }
+
     return (
         <section className={'list-section'}>
             <div className={'table-section'}>
                 <div className="section-header">
+                    {selectedRows.length > 0 && <FastUpdateBlock
+                        totalSize={tableData.total_count}
+                        location={location}
+                        selectedRows={selectedRows}
+                        selectedAll={selectedAllRows}
+                        columns={columns}
+
+                        onClose={() => {
+                            setSelectedAllRows(false)
+                            setSelectedRows([])
+                        }}
+                        onSelectAll={selectAllRows}
+                        onSetChanges={setChangesHandler}
+                    />}
+
                     {showFilters && <TableFilters
                         columns={columns}
                         filters={filters}

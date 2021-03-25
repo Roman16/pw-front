@@ -95,23 +95,23 @@ const OurWhale = () => {
 
                     <ul>
                         <li>
-                            <div>150M+</div>
-                            <label>Revenue Managed</label>
+                            <div>30+</div>
+                            <label>amount of employees</label>
                         </li>
 
                         <li>
-                            <div>10M+</div>
-                            <label>Monthly Bid Changes</label>
+                            <div>28</div>
+                            <label>average age of employees</label>
                         </li>
 
                         <li>
-                            <div>5M+</div>
-                            <label>Units Ordered</label>
+                            <div>320</div>
+                            <label>Articles we wrote</label>
                         </li>
 
                         <li>
-                            <div>1000+</div>
-                            <label>Unique SKU Managed</label>
+                            <div>100k+</div>
+                            <label>cups of coffee consumed</label>
                         </li>
                     </ul>
                 </div>

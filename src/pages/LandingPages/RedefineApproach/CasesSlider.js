@@ -172,23 +172,61 @@ const CasesSlider = () => {
 
         slides.forEach((item, i) => {
             if (i < index) item.style.transform = 'translateX(-150px)'
-            else slides[index].style.transform = 'translateX(150px)'
+            else item.style.transform = 'translateX(150px)'
         })
-
 
         setTimeout(() => {
             setActiveSlide(index)
         }, 100)
-
-        setActiveSlide(index)
     }
 
-    const [touchStart, swipeHandler] = useSwipeEffect(() => goToSlide(activeSlide - 1), () => goToSlide(activeSlide + 1))
+    const goToNextSlide = () => {
+        const slides = document.querySelectorAll('.slider > ul > li')
+
+        let index = activeSlide + 1
+
+        if (activeSlide === slides.length - 1) {
+            slides[slides.length - 1].style.transform = 'translateX(-150px)'
+            slides[0].style.transform = 'translateX(150px)'
+        } else {
+            slides.forEach((item, i) => {
+                if (i < index) item.style.transform = 'translateX(-150px)'
+                else item.style.transform = 'translateX(150px)'
+            })
+        }
+
+        setTimeout(() => {
+            setActiveSlide(prevState => prevState === slides.length - 1 ? 0 : prevState + 1)
+        }, 100)
+    }
+
+    const goToPrevSlide = () => {
+        const slides = document.querySelectorAll('.slider > ul > li')
+
+        let index = activeSlide - 1
+
+        if (activeSlide === 0) {
+            slides[slides.length - 1].style.transform = 'translateX(-150px)'
+            slides[0].style.transform = 'translateX(150px)'
+
+        } else {
+            slides.forEach((item, i) => {
+                if (i <= index) item.style.transform = 'translateX(-150px)'
+                else item.style.transform = 'translateX(150px)'
+            })
+        }
+
+        setTimeout(() => {
+            setActiveSlide(prevState => prevState === 0 ? slides.length - 1 : prevState - 1)
+        }, 100)
+    }
+
+    const [touchStart, swipeHandler] = useSwipeEffect(goToPrevSlide, goToNextSlide)
 
 
     return (
         <div className="slider">
-            <button className="btn icon prev" onClick={() => goToSlide(activeSlide - 1)}>
+            <button className="btn icon prev" onClick={goToPrevSlide}>
                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="12">
                         <rect width="16.8" height="12" transform="matrix(-1 0 0 1 17 0)" fill="#C4C4C4"/>
@@ -252,7 +290,7 @@ const CasesSlider = () => {
                 </li>)}
             </ul>
 
-            <button className="btn icon next" onClick={() => goToSlide(activeSlide + 1)}>
+            <button className="btn icon next" onClick={goToNextSlide}>
                 <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17" height="12">
                         <rect width="16.8" height="12" fill="#C4C4C4"/>

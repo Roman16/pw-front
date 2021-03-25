@@ -3,12 +3,24 @@ import {Input} from "antd"
 import {Link} from "react-router-dom"
 
 const ContactForm = ({onCancel}) => {
-    const [sendSuccess, setSendSuccess] = useState(false)
+    const [sendSuccess, setSendSuccess] = useState(false),
+        [formData, setFormData] = useState({
+            name: undefined,
+            email: undefined,
+            comment: undefined
+        })
 
     const submitFormHandler = (e) => {
         e.preventDefault()
 
         setSendSuccess(true)
+    }
+
+    const changeFormHandler = (key, value) => {
+        setFormData({
+            ...formData,
+            [key]: value
+        })
     }
 
 
@@ -21,12 +33,20 @@ const ContactForm = ({onCancel}) => {
 
                 <div className="form-group">
                     <label htmlFor="">Your Name</label>
-                    <Input placeholder={'Your Name'}/>
+                    <Input
+                        placeholder={'Your Name'}
+                        value={formData.name}
+                        onChange={({target: {value}}) => changeFormHandler('name', value)}
+                    />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="">E-mail</label>
-                    <Input placeholder={'E-mail'}/>
+                    <Input
+                        placeholder={'E-mail'}
+                        value={formData.email}
+                        onChange={({target: {value}}) => changeFormHandler('email', value)}
+                    />
                 </div>
 
                 <div className="row">
@@ -43,7 +63,11 @@ const ContactForm = ({onCancel}) => {
 
                 <div className="form-group">
                     <label htmlFor="">Comment</label>
-                    <Input.TextArea placeholder={'Comment'}/>
+                    <Input.TextArea
+                        placeholder={'Comment'}
+                        value={formData.comment}
+                        onChange={({target: {value}}) => changeFormHandler('comment', value)}
+                    />
                 </div>
 
                 <div className="actions">
@@ -51,7 +75,7 @@ const ContactForm = ({onCancel}) => {
                         cancel
                     </button>
 
-                    <button className={'btn green'}>
+                    <button className={'btn green'} disabled={!formData.name || !formData.email || !formData.comment}>
                         send
 
                         <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
@@ -64,7 +88,7 @@ const ContactForm = ({onCancel}) => {
                             <g mask="url(#mask0999)">
                                 <path
                                     d="M5.69961 1.20001L1.19961 6.00001M1.19961 6.00001L5.69961 10.8M1.19961 6.00001L15.5996 6.00001"
-                                    stroke="#6D6DF6" stroke-width="2" stroke-linecap="round"
+                                    stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round"/>
                             </g>
                         </svg>
@@ -93,7 +117,7 @@ const ContactForm = ({onCancel}) => {
                 </i>
 
                 <h2>
-                    <span>Name,</span> your acceleration is at the track.
+                    <span>{formData.name},</span> your acceleration is at the track.
                 </h2>
 
                 <p>

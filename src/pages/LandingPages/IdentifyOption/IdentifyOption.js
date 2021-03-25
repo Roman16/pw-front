@@ -407,7 +407,7 @@ const IdentifyOption = () => {
                                     </li>
                                 ))}
 
-                                <li className={visibleContactForm ? 'active' : ''}>
+                                <li className={visibleContactForm ? 'active contact-li' : 'contact-li'}>
                                     <ContactForm
                                         onCancel={() => setVisibleContactForm(false)}
                                     />
