@@ -89,6 +89,14 @@
     svg {
       width: 100%;
       height: 100%;
+
+      path {
+        fill: #6d6df6;
+
+        &:nth-child(3) {
+          fill: #fff;
+        }
+      }
     }
   }
 
@@ -140,11 +148,16 @@
         display: flex;
         align-items: center;
         margin: 0 8px 0 0;
+
+        svg {
+          fill: #6d6df6;
+        }
       }
 
       &:hover {
         color: #6D6DF6;
       }
+
     }
 
     .sub-menu {

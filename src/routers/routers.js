@@ -32,6 +32,7 @@ const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOp
 const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/EnlightenFuture/EnlightenFuture'))
 const RedefineApproach = React.lazy(() => import('../pages/LandingPages/RedefineApproach/RedefineApproach'))
 const CustomerSatisfactionSurvey = React.lazy(() => import('../pages/LandingPages/CustomerSatisfactionSurvey/CustomerSatisfactionSurvey'))
+const MainPage = React.lazy(() => import('../pages/LandingPages/MainPage/MainPage'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -51,7 +52,7 @@ const routers = () => {
         <Suspense fallback={<RouteLoader/>}>
             <Router history={history}>
                 <Switch>
-                    <Route exact path="/" component={LandingAutomation}/>
+                    <Route exact path="/" component={MainPage}/>
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
                     <Route exact path="/about-us" component={AboutUs}/>
                     {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
