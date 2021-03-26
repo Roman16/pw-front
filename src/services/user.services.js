@@ -49,8 +49,8 @@ export const userService = {
     sendContactForm,
     sendShortContactForm,
     sendFormToPartnerSupport,
-    sendCustomerSatisfactionSurveyForm
-
+    sendCustomerSatisfactionSurveyForm,
+    sendGrowthAccelerationForm
 }
 
 function login(user) {
@@ -234,6 +234,10 @@ function sendFormToPartnerSupport(data) {
 
 function sendCustomerSatisfactionSurveyForm(data) {
     return api('post', `${userUrls.customerSatisfactionSurveyForm}`, data)
+}
+
+function sendGrowthAccelerationForm(data) {
+    return api('post', `${userUrls.growthAccelerationForm}`, data)
 }
 
 //-------------------------------------

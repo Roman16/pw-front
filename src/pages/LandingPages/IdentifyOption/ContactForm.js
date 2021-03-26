@@ -1,19 +1,31 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Input} from "antd"
 import {Link} from "react-router-dom"
+import {userService} from "../../../services/user.services"
 
-const ContactForm = ({onCancel}) => {
+const ContactForm = ({onCancel, accelerateValue}) => {
     const [sendSuccess, setSendSuccess] = useState(false),
         [formData, setFormData] = useState({
             name: undefined,
             email: undefined,
+            company_name: undefined,
+            avg_monthly_ad_sales: undefined,
             comment: undefined
         })
 
-    const submitFormHandler = (e) => {
+    const submitFormHandler = async (e) => {
         e.preventDefault()
 
-        setSendSuccess(true)
+        try {
+            await userService.sendGrowthAccelerationForm({
+                ...formData,
+                what_do_you_want_to_accelerate: accelerateValue
+            })
+
+            setSendSuccess(true)
+        } catch (e) {
+
+        }
     }
 
     const changeFormHandler = (key, value) => {
@@ -22,7 +34,6 @@ const ContactForm = ({onCancel}) => {
             [key]: value
         })
     }
-
 
     return (
         <div className="contact-form">
@@ -52,12 +63,20 @@ const ContactForm = ({onCancel}) => {
                 <div className="row">
                     <div className="form-group">
                         <label htmlFor="">Company name</label>
-                        <Input placeholder={'Company name'}/>
+                        <Input
+                            placeholder={'Company name'}
+                            value={formData.company_name}
+                            onChange={({target: {value}}) => changeFormHandler('company_name', value)}
+                        />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">Average Monthly Sales</label>
-                        <Input placeholder={'Average Monthly Sales'}/>
+                        <Input
+                            placeholder={'Average Monthly Sales'}
+                            value={formData.avg_monthly_ad_sales}
+                            onChange={({target: {value}}) => changeFormHandler('avg_monthly_ad_sales', value)}
+                        />
                     </div>
                 </div>
 

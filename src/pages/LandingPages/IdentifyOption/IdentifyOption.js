@@ -191,6 +191,8 @@ const IdentifyOption = () => {
         [openedOption, setOpenedOption] = useState(),
         [visibleContactForm, setVisibleContactForm] = useState(false)
 
+    const accelerateVariations = ['profits', 'marketplace_potential', 'total_sales_growth', 'brand_awareness']
+
     const selectOptionHandler = (index) => {
         const optionList = document.querySelectorAll('.option-details > li')
 
@@ -409,6 +411,7 @@ const IdentifyOption = () => {
 
                                 <li className={visibleContactForm ? 'active contact-li' : 'contact-li'}>
                                     <ContactForm
+                                        accelerateValue={accelerateVariations[selectedOption]}
                                         onCancel={() => setVisibleContactForm(false)}
                                     />
                                 </li>

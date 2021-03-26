@@ -408,7 +408,7 @@ const CustomerSatisfactionSurvey = () => {
                             </div>
                         </div>
 
-                        <button className="btn default">
+                        <button className="btn default" disabled={Object.values(formData).some(item => item === undefined)}>
                             send
                             <Arrow/>
                         </button>

@@ -41,6 +41,7 @@ export const userUrls = {
     shortContactForm: 'landings/contact-us-email',
     partnerContactForm: 'landings/request-partnership',
     customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
+    growthAccelerationForm: 'landings/get-started-growth-acceleration',
 }
 
 export const productsUrls = {
