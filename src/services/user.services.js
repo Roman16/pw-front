@@ -49,6 +49,7 @@ export const userService = {
     sendContactForm,
     sendShortContactForm,
     sendFormToPartnerSupport,
+    sendCustomerSatisfactionSurveyForm
 
 }
 
@@ -229,6 +230,10 @@ function sendShortContactForm(data) {
 
 function sendFormToPartnerSupport(data) {
     return api('post', `${userUrls.partnerContactForm}`, {...data, page_url: window.location.href})
+}
+
+function sendCustomerSatisfactionSurveyForm(data) {
+    return api('post', `${userUrls.customerSatisfactionSurveyForm}`, data)
 }
 
 //-------------------------------------

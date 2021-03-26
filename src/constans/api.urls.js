@@ -40,6 +40,7 @@ export const userUrls = {
     contactForm: 'landings/request-talk-to-experts',
     shortContactForm: 'landings/contact-us-email',
     partnerContactForm: 'landings/request-partnership',
+    customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
 }
 
 export const productsUrls = {

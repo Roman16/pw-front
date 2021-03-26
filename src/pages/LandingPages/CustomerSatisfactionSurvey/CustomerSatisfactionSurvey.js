@@ -3,15 +3,26 @@ import './CustomerSatisfactionSurvey.less'
 import Header from "../GetAudit/Header"
 import Footer from "../GetAudit/Footer"
 import "../GetAudit/GetAudit.less"
-import {Radio, Input, Rate} from "antd"
+import {Radio, Input, Rate, Form, Button} from "antd"
 import {Link} from "react-router-dom"
-
+import {notification} from "../../../components/Notification"
+import {userService} from "../../../services/user.services"
 
 const TextArea = Input.TextArea
 
 const CustomerSatisfactionSurvey = () => {
     const [formData, setFormData] = useState({
-            timeWithPW: '1_month'
+            working_with_pw_mark: undefined,
+            ppc_performance_mark: undefined,
+            careteam_performance_mark: undefined,
+            achieving_your_goals_mark: undefined,
+            marks_comment: undefined,
+            how_long_you_with_pw: undefined,
+            how_do_you_feel_about_pw: undefined,
+            how_we_can_improve: undefined,
+            what_we_can_do_better: undefined,
+            additional_comments: undefined,
+            your_contacts: undefined,
         }),
         [successSend, setSuccessSend] = useState(false)
 
@@ -22,8 +33,59 @@ const CustomerSatisfactionSurvey = () => {
         })
     }
 
-    const sendFormHandler = () => {
-        setSuccessSend(true)
+    const sendFormHandler = async (e) => {
+        e.preventDefault()
+        const desc = ['very_unsatisfied', 'unsatisfied', 'neutral', 'satisfied', 'very_satisfied']
+
+        if (Object.values(formData).some(item => item === undefined)) {
+            notification.error({title: 'Please enter all fields!'})
+        } else {
+            try {
+                await userService.sendCustomerSatisfactionSurveyForm({
+                    ...formData,
+                    working_with_pw_mark: desc[formData.working_with_pw_mark],
+                    ppc_performance_mark: desc[formData.ppc_performance_mark],
+                    careteam_performance_mark: desc[formData.careteam_performance_mark],
+                    achieving_your_goals_mark: desc[formData.achieving_your_goals_mark],
+                })
+                setSuccessSend(true)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
+    const RateBlock = ({title, id}) => {
+        return (<div className="rate-block">
+            <h4>{title}</h4>
+
+            <Rate
+                value={formData[id]}
+                onChange={value => changeFormHandler({[id]: value})}
+            />
+
+
+            <Radio.Group
+                value={formData[id]}
+                onChange={({target: {value}}) => changeFormHandler({[id]: value})}
+            >
+                <Radio value={1}>
+                    very unsatisfied
+                </Radio>
+                <Radio value={2}>
+                    unsatisfied
+                </Radio>
+                <Radio value={3}>
+                    neutral
+                </Radio>
+                <Radio value={4}>
+                    satisfied
+                </Radio>
+                <Radio value={5}>
+                    very satisfied
+                </Radio>
+            </Radio.Group>
+        </div>)
     }
 
 
@@ -82,7 +144,7 @@ const CustomerSatisfactionSurvey = () => {
                 </section>
 
                 <section className={'satisfaction-form'}>
-                    <div className="container">
+                    <form onSubmit={sendFormHandler} className="container">
                         <h2>
                             Your opinion is <span>very important</span> to us
                         </h2>
@@ -102,15 +164,29 @@ const CustomerSatisfactionSurvey = () => {
                             </h3>
 
                             <div className="rate-list">
-                                <RateBlock title={'Working with Profit Whales'}/>
-                                <RateBlock title={'PPC specialists\' performance'}/>
-                                <RateBlock title={'Care Team specialists\' performance'}/>
-                                <RateBlock title={'Achieving your goals with the company '}/>
+                                <RateBlock
+                                    title={'Working with Profit Whales'}
+                                    id={'working_with_pw_mark'}
+                                />
+                                <RateBlock
+                                    title={'PPC specialists\' performance'}
+                                    id={'ppc_performance_mark'}
+                                />
+                                <RateBlock
+                                    title={'Care Team specialists\' performance'}
+                                    id={'careteam_performance_mark'}
+                                />
+                                <RateBlock
+                                    title={'Achieving your goals with the company '}
+                                    id={'achieving_your_goals_mark'}
+                                />
                             </div>
 
                             <div className="form-group">
                                 <label htmlFor="">Please comment your marks here</label>
                                 <TextArea
+                                    value={formData.marks_comment}
+                                    onChange={({target: {value}}) => changeFormHandler({marks_comment: value})}
                                     placeholder={'Write your answer here'}
                                 />
                             </div>
@@ -126,36 +202,36 @@ const CustomerSatisfactionSurvey = () => {
                             </h3>
 
                             <Radio.Group
-                                value={formData.timeWithPW}
-                                onChange={({target: {value}}) => changeFormHandler({timeWithPW: value})}
+                                value={formData.how_long_you_with_pw}
+                                onChange={({target: {value}}) => changeFormHandler({how_long_you_with_pw: value})}
                             >
                                 <ul>
                                     <li
-                                        className={formData.timeWithPW === '1_month' && 'active'}
-                                        onClick={() => changeFormHandler({timeWithPW: '1_month'})}
+                                        className={formData.how_long_you_with_pw === 'less_1_month' && 'active'}
+                                        onClick={() => changeFormHandler({how_long_you_with_pw: 'less_1_month'})}
                                     >
                                         <i>
                                             <div/>
                                         </i>
                                         <p>{'<1 month'}</p>
-                                        <Radio value={'1_month'}/>
+                                        <Radio value={'less_1_month'}/>
                                     </li>
 
                                     <li
-                                        className={formData.timeWithPW === '1_3_months' && 'active'}
-                                        onClick={() => changeFormHandler({timeWithPW: '1_3_months'})}
+                                        className={formData.how_long_you_with_pw === '1_3_month' && 'active'}
+                                        onClick={() => changeFormHandler({how_long_you_with_pw: '1_3_month'})}
                                     >
                                         <i>
                                             <div/>
                                             <div/>
                                         </i>
                                         <p>1-3 months</p>
-                                        <Radio value={'1_3_months'}/>
+                                        <Radio value={'1_3_month'}/>
                                     </li>
 
                                     <li
-                                        className={formData.timeWithPW === '3_6_months' && 'active'}
-                                        onClick={() => changeFormHandler({timeWithPW: '3_6_months'})}
+                                        className={formData.how_long_you_with_pw === '3_6_month' && 'active'}
+                                        onClick={() => changeFormHandler({how_long_you_with_pw: '3_6_month'})}
                                     >
                                         <i>
                                             <div/>
@@ -163,12 +239,12 @@ const CustomerSatisfactionSurvey = () => {
                                             <div/>
                                         </i>
                                         <p>3-6 months</p>
-                                        <Radio value={'3_6_months'}/>
+                                        <Radio value={'3_6_month'}/>
                                     </li>
 
                                     <li
-                                        className={formData.timeWithPW === '6_12_months' && 'active'}
-                                        onClick={() => changeFormHandler({timeWithPW: '6_12_months'})}
+                                        className={formData.how_long_you_with_pw === '6_12_month' && 'active'}
+                                        onClick={() => changeFormHandler({how_long_you_with_pw: '6_12_month'})}
                                     >
                                         <i>
                                             <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
@@ -188,12 +264,12 @@ const CustomerSatisfactionSurvey = () => {
                                             </svg>
                                         </i>
                                         <p>6-12 months</p>
-                                        <Radio value={'6_12_months'}/>
+                                        <Radio value={'6_12_month'}/>
                                     </li>
 
                                     <li
-                                        className={formData.timeWithPW === '1_year' && 'active'}
-                                        onClick={() => changeFormHandler({timeWithPW: '1_year'})}
+                                        className={formData.how_long_you_with_pw === 'more_1_year' && 'active'}
+                                        onClick={() => changeFormHandler({how_long_you_with_pw: 'more_1_year'})}
                                     >
                                         <i>
                                             <svg width="33" height="32" viewBox="0 0 33 32" fill="none"
@@ -231,7 +307,7 @@ const CustomerSatisfactionSurvey = () => {
                                             </svg>
                                         </i>
                                         <p>{'>1 year'}</p>
-                                        <Radio value={'1_year'}/>
+                                        <Radio value={'more_1_year'}/>
                                     </li>
                                 </ul>
                             </Radio.Group>
@@ -249,6 +325,8 @@ const CustomerSatisfactionSurvey = () => {
                             <div className="form-group">
                                 <label htmlFor="">Your comment</label>
                                 <TextArea
+                                    value={formData.how_do_you_feel_about_pw}
+                                    onChange={({target: {value}}) => changeFormHandler({how_do_you_feel_about_pw: value})}
                                     placeholder={'Your comment'}
                                 />
                             </div>
@@ -266,6 +344,8 @@ const CustomerSatisfactionSurvey = () => {
                             <div className="form-group">
                                 <label htmlFor="">Your comment</label>
                                 <TextArea
+                                    value={formData.how_we_can_improve}
+                                    onChange={({target: {value}}) => changeFormHandler({how_we_can_improve: value})}
                                     placeholder={'Your comment'}
                                 />
                             </div>
@@ -283,6 +363,8 @@ const CustomerSatisfactionSurvey = () => {
                             <div className="form-group">
                                 <label htmlFor="">Your comment</label>
                                 <TextArea
+                                    value={formData.what_we_can_do_better}
+                                    onChange={({target: {value}}) => changeFormHandler({what_we_can_do_better: value})}
                                     placeholder={'Your comment'}
                                 />
                             </div>
@@ -300,6 +382,8 @@ const CustomerSatisfactionSurvey = () => {
                             <div className="form-group">
                                 <label htmlFor="">Your comment</label>
                                 <TextArea
+                                    value={formData.additional_comments}
+                                    onChange={({target: {value}}) => changeFormHandler({additional_comments: value})}
                                     placeholder={'Your comment'}
                                 />
                             </div>
@@ -317,47 +401,22 @@ const CustomerSatisfactionSurvey = () => {
                             <div className="form-group">
                                 <label htmlFor="">Your comment</label>
                                 <TextArea
+                                    value={formData.your_contacts}
+                                    onChange={({target: {value}}) => changeFormHandler({your_contacts: value})}
                                     placeholder={'Your comment'}
                                 />
                             </div>
                         </div>
 
-                        <button className="btn default" onClick={sendFormHandler}>
+                        <button className="btn default">
                             send
-
                             <Arrow/>
                         </button>
-                    </div>
+                    </form>
                 </section>
             </>}
         <Footer/>
     </div>
-}
-
-const RateBlock = ({title, onChange}) => {
-    return (<div className="rate-block">
-        <h4>{title}</h4>
-
-        <Rate defaultValue={3}/>
-
-        <Radio.Group defaultValue={'very_satisfied'}>
-            <Radio value={'very_unsatisfied'}>
-                very unsatisfied
-            </Radio>
-            <Radio value={'unsatisfied'}>
-                unsatisfied
-            </Radio>
-            <Radio value={'neutral'}>
-                neutral
-            </Radio>
-            <Radio value={'satisfied'}>
-                satisfied
-            </Radio>
-            <Radio value={'very_satisfied'}>
-                very satisfied
-            </Radio>
-        </Radio.Group>
-    </div>)
 }
 
 const Arrow = () => <svg width="17" height="12" viewBox="0 0 17 12" fill="none"
