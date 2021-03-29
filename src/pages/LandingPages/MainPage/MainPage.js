@@ -135,7 +135,16 @@ const MainPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', onScroll)
+        const $header = document.querySelector('.header-block')
 
+
+        $header.addEventListener("mouseenter", function (event) {
+            $header.classList.remove("transparent")
+        }, false)
+
+        $header.addEventListener("mouseleave", function (event) {
+            $header.classList.add("transparent")
+        }, false)
     }, [])
 
     return (<div className="landing-page main-page">
