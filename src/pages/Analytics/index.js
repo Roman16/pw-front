@@ -23,6 +23,7 @@ import ProductOverview from "./ProductOverview/ProductOverview"
 import {debounce} from "throttle-debounce"
 import SearchTerms from "./SearchTerms/SearchTerms"
 
+import ProductsV1 from "./v1/Products/Products"
 import CampaignsV1 from "./v1/Campaigns/Campaigns"
 import AdGroupsV1 from "./v1/AdGroups/AdGroups"
 import ProductAdsV1 from "./v1/ProductAds/ProductAds"
@@ -98,13 +99,16 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/search-terms" component={SearchTerms}/>
 
                 {/*V1*/}
+                <Route exact path="/analytics/v1/products/regular"
+                       render={() => <ProductsV1 location={'products-regular'}/>}/>
+                <Route exact path="/analytics/v1/products/parents"
+                       render={() => <ProductsV1 location={'products-parents'}/>}/>
                 <Route exact path="/analytics/v1/campaigns" component={CampaignsV1}/>
                 <Route exact path="/analytics/v1/ad-groups" component={AdGroupsV1}/>
                 <Route exact path="/analytics/v1/product-ads" component={ProductAdsV1}/>
                 <Route exact path="/analytics/v1/portfolios" component={PortfoliosV1}/>
                 <Route exact path="/analytics/v1/targetings" component={TargetingsV1}/>
                 <Route exact path="/analytics/v1/negative-targetings" component={NegativeTargetingsV1}/>
-
             </section>
         </div>
     )
