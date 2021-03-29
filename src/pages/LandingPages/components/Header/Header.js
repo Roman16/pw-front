@@ -84,7 +84,7 @@ const menu = [
 export const email = 'official@profitwhales.com',
     phone = '+18143519477'
 
-const Header = ({type = 'light', page}) => {
+const Header = ({type = 'light', page, className}) => {
     const [visibleMenu, setVisibleMenu] = useState(false),
         [selectedMenuIndex, setSelectedMenuItem] = useState()
 
@@ -122,7 +122,7 @@ d.head.appendChild(j);
 
     return (
         <>
-            <div className={'header-block'}>
+            <div className={`header-block ${className}`}>
                 <SmartBar
                     email={email}
                     phone={phone}
