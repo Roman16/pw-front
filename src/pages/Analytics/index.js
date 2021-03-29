@@ -23,6 +23,14 @@ import ProductOverview from "./ProductOverview/ProductOverview"
 import {debounce} from "throttle-debounce"
 import SearchTerms from "./SearchTerms/SearchTerms"
 
+import CampaignsV1 from "./v1/Campaigns/Campaigns"
+import AdGroupsV1 from "./v1/AdGroups/AdGroups"
+import ProductAdsV1 from "./v1/ProductAds/ProductAds"
+import PortfoliosV1 from "./v1/Portfolios/Portfolios"
+import TargetingsV1 from "./v1/Targetings/Targetings"
+import NegativeTargetingsV1 from "./v1/NegativeTargetings/NegativeTargetings"
+
+
 const Analytics = (props) => {
     const dispatch = useDispatch()
 
@@ -88,6 +96,15 @@ const Analytics = (props) => {
                 <Route exact path="/analytics/negative-targetings" component={NegativeTargetings}/>
                 <Route exact path="/analytics/placements" component={Placements}/>
                 <Route exact path="/analytics/search-terms" component={SearchTerms}/>
+
+                {/*V1*/}
+                <Route exact path="/analytics/v1/campaigns" component={CampaignsV1}/>
+                <Route exact path="/analytics/v1/ad-groups" component={AdGroupsV1}/>
+                <Route exact path="/analytics/v1/product-ads" component={ProductAdsV1}/>
+                <Route exact path="/analytics/v1/portfolios" component={PortfoliosV1}/>
+                <Route exact path="/analytics/v1/targetings" component={TargetingsV1}/>
+                <Route exact path="/analytics/v1/negative-targetings" component={NegativeTargetingsV1}/>
+
             </section>
         </div>
     )
