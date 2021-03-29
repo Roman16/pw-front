@@ -121,9 +121,26 @@ const MainPage = () => {
     }
 
 
+    const onScroll = () => {
+        const scroll = document.documentElement.scrollTop,
+            $header = document.querySelector('.header-block')
+
+        // If scroll value is more than 0 - add class
+        if (scroll > 200) {
+            $header.classList.remove("transparent")
+        } else {
+            $header.classList.add("transparent")
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('scroll', onScroll)
+
+    }, [])
+
     return (<div className="landing-page main-page">
         <Header
-            // className={'transparent'}
+            className={'transparent'}
         />
 
         <section className="pre-header">

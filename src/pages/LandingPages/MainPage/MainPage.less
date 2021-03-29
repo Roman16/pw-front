@@ -13,6 +13,7 @@
   .header-block {
     position: fixed;
     top: 0;
+    transition: all 0.5s ease;
 
     &.transparent {
       background: transparent;
@@ -52,7 +53,11 @@
     height: 56.1vw;
     position: relative;
 
-    .block-video-container {
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+      height: 70.1vw;
+    }
+
+      .block-video-container {
       width: 100%;
       height: 100%;
 
