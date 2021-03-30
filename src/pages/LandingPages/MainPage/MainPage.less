@@ -1,6 +1,7 @@
 .main-page.landing-page {
   overflow: auto;
   padding-top: 0;
+  font-family: Eina;
 
   .container {
     width: 100%;
@@ -54,10 +55,10 @@
     position: relative;
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-      height: 70.1vw;
+      height: 70.05vw;
     }
 
-      .block-video-container {
+    .block-video-container {
       width: 100%;
       height: 100%;
 
@@ -152,6 +153,10 @@
         border: 0;
         margin-bottom: 47px;
 
+        &:last-of-type {
+          margin: 0;
+        }
+
         .ant-collapse-header {
           font-size: 32px;
           line-height: 38px;
@@ -183,10 +188,37 @@
             margin: 18px 0 0 0;
 
             li {
-              font-size: 16px;
-              line-height: 19px;
-              text-transform: uppercase;
-              color: #6D6DF6;
+              a {
+                font-size: 16px;
+                line-height: 19px;
+                text-transform: uppercase;
+                color: #6D6DF6;
+                position: relative;
+                overflow: hidden;
+                width: max-content;
+
+                &::after {
+                  content: "";
+                  max-width: 0;
+                  width: 0;
+                  height: 1px;
+                  background-color: #6D6DF6;
+                  position: absolute;
+                  left: 0;
+                  bottom: 0;
+                  transition: .2s ease-in;
+                }
+
+                &:hover {
+                  color: #5252b8;
+
+                  &::after {
+                    max-width: 100%;
+                    width: 100%;
+                  }
+                }
+              }
+
               margin-bottom: 12px;
               display: flex;
               align-items: center;
@@ -210,6 +242,7 @@
           .btn {
             height: 40px;
             margin: 28px 0 0 0;
+            padding: 0 35px;
             font-size: 14px;
             font-weight: 500;
             text-transform: uppercase;
@@ -306,6 +339,10 @@
       img {
         width: 100%;
         max-width: 1180px;
+      }
+
+      .btn {
+        display: none;
       }
 
       .row {
@@ -507,6 +544,7 @@
           p {
             font-size: 24px;
             line-height: 29px;
+            font-weight: 100;
             color: #7C8A95;
             margin: 0;
           }
@@ -557,8 +595,20 @@
         align-items: center;
         justify-content: flex-end;
 
+        .mob {
+          display: none;
+        }
+
+        &:hover {
+          svg {
+            margin: 0 -10px 0 22px;
+          }
+        }
+
         svg {
+          transition: .2s;
           margin: 0 0 0 12px;
+          stroke: #6D6DF6;
         }
       }
 
@@ -587,6 +637,12 @@
               text-transform: uppercase;
               color: #7C8A95;
               margin-bottom: 8px;
+              cursor: pointer;
+              transition: .3s;
+
+              &:hover {
+                color: #6d6df6;
+              }
             }
 
             h4 {
@@ -595,6 +651,12 @@
               font-weight: 500;
               margin-bottom: 18px;
               color: #2D2E55;
+              cursor: pointer;
+              transition: .3s;
+
+              &:hover {
+                color: #6d6df6;
+              }
             }
 
             p {
@@ -603,6 +665,315 @@
               font-weight: 100;
               color: #7C8A95;
               margin: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 800px) {
+    .services {
+      .container {
+        flex-direction: column;
+      }
+
+      .services-list {
+        margin: 28px 0 0 0;
+      }
+    }
+
+    .clients {
+      padding: 0 0 220px;
+    }
+
+    .insights {
+      .container {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+      }
+
+      .col {
+        width: 100%;
+
+        &:last-of-type {
+          width: 100%;
+
+          margin-top: 28px;
+        }
+      }
+    }
+
+    .blog-posts {
+      .row {
+        flex-direction: column;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .pre-header {
+      height: 160vw;
+
+      .block-video-container {
+        &.desk {
+          display: none;
+        }
+
+        &.mob {
+          display: block;
+        }
+      }
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 12px;
+        margin-top: auto;
+      }
+
+      p {
+        font-size: 21px;
+        line-height: 25px;
+        margin-bottom: 28px;
+      }
+
+      .btn {
+        margin-bottom: 95px;
+      }
+    }
+
+    .services {
+      padding: 64px 0;
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 18px;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 19px;
+      }
+
+      .services-list {
+        width: 100%;
+
+        .ant-collapse-item {
+          .ant-collapse-header {
+            font-size: 24px;
+            line-height: 29px;
+          }
+
+          .ant-collapse-content-box ul li {
+            align-items: flex-start;
+
+            &::before {
+              margin-top: 6px;
+            }
+          }
+        }
+      }
+    }
+
+    .statistic {
+      padding: 64px 0;
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 24px;
+      }
+
+      ul {
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        li {
+          flex: initial;
+          width: 43%;
+
+          .value {
+            font-size: 42px;
+            line-height: 58px;
+          }
+
+          p {
+            font-size: 16px;
+            line-height: 19px;
+          }
+        }
+      }
+    }
+
+    .clients {
+      padding: 0 0 64px;
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 12px;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 19px;
+        margin-bottom: 24px;
+      }
+
+      .map {
+        .btn {
+          display: flex;
+          height: 40px;
+          padding: 0 20px;
+          font-size: 14px;
+          font-weight: 500;
+          text-transform: uppercase;
+        }
+
+        .col:last-of-type {
+          ul:last-of-type {
+            margin: 0;
+          }
+        }
+
+        .row {
+          margin: 28px 0 0 0;
+          position: initial;
+          overflow: hidden;
+          max-height: 0;
+          transition: .3s;
+
+          &.visible {
+            border-top: 1px solid #EEEEEE;
+            max-height: 1000px;
+            padding: 28px 0 32px 0;
+          }
+        }
+      }
+    }
+
+    .insights {
+      padding: 64px 0;
+      background-position: 100%;
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 12px;
+      }
+
+      p {
+        font-size: 21px;
+        line-height: 25px;
+      }
+
+      .col:last-of-type {
+        p {
+          font-size: 16px;
+          line-height: 19px;
+        }
+
+        ul {
+          justify-content: space-between;
+
+          li {
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .comments {
+      min-height: 570px;
+      padding: 64px 0;
+      background-position: 20%;
+
+      h2 {
+        width: 100%;
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 28px;
+      }
+
+      .slider {
+        width: 100%;
+
+        ul {
+          li {
+            h4 {
+              font-size: 24px;
+              line-height: 29px;
+              margin-bottom: 12px;
+            }
+
+            p {
+              font-size: 16px;
+              line-height: 19px;
+            }
+          }
+        }
+      }
+    }
+
+    .blog-posts {
+      padding: 64px 0;
+
+      h2 {
+        font-size: 32px;
+        line-height: 38px;
+        margin-bottom: 12px;
+      }
+
+      p {
+        font-size: 16px;
+        line-height: 19px;
+        margin-bottom: 48px;
+      }
+
+      .last-posts {
+        a {
+          margin: -32px auto 0 0;
+          height: 56px;
+          background: #6d6df6;
+          display: flex;
+          align-items: center;
+          padding: 0 35px;
+          color: #fff;
+          font-size: 16px;
+          font-weight: 500;
+          text-transform: uppercase;
+          border-radius: 4px;
+
+          .mob {
+            display: block;
+          }
+
+          .desk {
+            display: none;
+          }
+
+
+          svg {
+            stroke: #fff;
+          }
+        }
+
+        .row {
+          .post {
+            flex-direction: column;
+            background: #fff;
+            margin-bottom: 64px;
+
+            img {
+              width: 100%;
+              height: 57.6vw;
+            }
+
+            .col {
+              padding: 18px 0 0 0;
             }
           }
         }

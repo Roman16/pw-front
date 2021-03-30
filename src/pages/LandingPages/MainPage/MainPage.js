@@ -12,7 +12,7 @@ import blogImage1 from '../../../assets/img/landing-mainPage/blog-1.png'
 import blogImage2 from '../../../assets/img/landing-mainPage/blog-2.png'
 import blogImage3 from '../../../assets/img/landing-mainPage/blog-3.png'
 import blogImage4 from '../../../assets/img/landing-mainPage/blog-4.png'
-
+import $ from 'jquery'
 
 const {Panel} = Collapse
 
@@ -77,7 +77,8 @@ const sliderData = [
 ]
 
 const MainPage = () => {
-    const [activeSlide, setActiveSlide] = useState(0)
+    const [activeSlide, setActiveSlide] = useState(0),
+        [visibleMapDetails, setVisibleMapDetails] = useState(false)
 
     const goToNextSlide = () => {
         const slides = document.querySelectorAll('.slider > ul > li')
@@ -125,7 +126,6 @@ const MainPage = () => {
         const scroll = document.documentElement.scrollTop,
             $header = document.querySelector('.header-block')
 
-        // If scroll value is more than 0 - add class
         if (scroll > 200) {
             $header.classList.remove("transparent")
         } else {
@@ -133,19 +133,44 @@ const MainPage = () => {
         }
     }
 
-    useEffect(() => {
-        window.addEventListener('scroll', onScroll)
+    const mouseenterListener = () => {
         const $header = document.querySelector('.header-block')
 
+        $header.classList.remove("transparent")
+    }
 
-        $header.addEventListener("mouseenter", function (event) {
-            $header.classList.remove("transparent")
-        }, false)
+    const mouseleaveListener = () => {
+        const $header = document.querySelector('.header-block')
 
-        $header.addEventListener("mouseleave", function (event) {
+        const scroll = window.pageYOffset
+
+        if (scroll < 200) {
             $header.classList.add("transparent")
-        }, false)
+        }
+    }
+
+    useEffect(() => {
+        const $header = document.querySelector('.header-block')
+
+        if($(window).width() < 800) {
+            $header.classList.remove("transparent")
+        } else {
+            window.addEventListener('scroll', onScroll)
+            $header.addEventListener("mouseenter", mouseenterListener, false)
+            $header.addEventListener("mouseleave", mouseleaveListener, false)
+        }
+
+
+        return (() => {
+            window.removeEventListener('scroll', onScroll)
+            $header.removeEventListener("mouseenter", mouseenterListener, false)
+            $header.removeEventListener("mouseleave", mouseleaveListener, false)
+        })
     }, [])
+
+    $(window).on('resize', function () {
+        $('.header-block').removeClass('transparent', $(window).width() < 800);
+    });
 
     return (<div className="landing-page main-page">
         <Header
@@ -214,15 +239,36 @@ const MainPage = () => {
                         </p>
 
                         <ul>
-                            <li>Accelerate Profits</li>
-                            <li>Accelerate your Marketplace Potential</li>
-                            <li>Accelerate Total Sales Growth</li>
-                            <li>Accelerate Brand Awareness</li>
+                            <li><Link
+                                target={'_blank'}
+                                to={'/identify-option/profits'}
+                            >
+                                Accelerate Profits
+                            </Link></li>
+                            <li><Link
+                                target={'_blank'}
+                                to={'/identify-option/marketplace_potential'}
+                            >
+                                Accelerate your Marketplace Potential
+                            </Link></li>
+                            <li><Link
+                                target={'_blank'}
+                                to={'/identify-option/total_sales_growth'}
+                            >
+                                Accelerate Total Sales Growth
+                            </Link>
+                            </li>
+                            <li><Link
+                                target={'_blank'}
+                                to={'/identify-option/brand_awareness'}
+                            >
+                                Accelerate Brand Awareness
+                            </Link></li>
                         </ul>
 
-                        <button className="btn default">
+                        <Link to={'/identify-option'} className="btn default">
                             read more
-                        </button>
+                        </Link>
                     </Panel>
                     <Panel header="Enlighten your future" key="2">
                         <p>
@@ -230,9 +276,9 @@ const MainPage = () => {
                             sphere
                         </p>
 
-                        <button className="btn default">
+                        <Link to={'/enlighten-future'} className="btn default">
                             read more
-                        </button>
+                        </Link>
                     </Panel>
                     <Panel header="Redefine your approach" key="3">
                         <p>
@@ -240,9 +286,9 @@ const MainPage = () => {
                             and advertisement focus
                         </p>
 
-                        <button className="btn default">
+                        <Link to={'/redefine-approach'} className="btn default">
                             read more
-                        </button>
+                        </Link>
                     </Panel>
                 </Collapse>
             </div>
@@ -293,7 +339,7 @@ const MainPage = () => {
                 <div className="map">
                     <img src={mapImage} alt=""/>
 
-                    <div className="row">
+                    <div className={`row ${visibleMapDetails ? 'visible' : ''}`}>
                         <div className="col">
                             <ul>
                                 <li className={'title'}>North America</li>
@@ -352,6 +398,10 @@ const MainPage = () => {
                             </ul>
                         </div>
                     </div>
+
+                    <button className="btn default mob" onClick={() => setVisibleMapDetails(prevState => !prevState)}>
+                       {!visibleMapDetails ?  'show more' : 'show less'}
+                    </button>
                 </div>
             </div>
         </section>
@@ -484,7 +534,8 @@ const MainPage = () => {
                     </div>
 
                     <a href="">
-                        See more articles
+                      <span className={'desk'}>See more articles</span>
+                      <span className={'mob'}> more articles</span>
 
                         <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
@@ -494,7 +545,7 @@ const MainPage = () => {
                             <g mask="url(#mask0)">
                                 <path
                                     d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"
-                                    stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </g>
                         </svg>
                     </a>
@@ -532,7 +583,8 @@ const MainPage = () => {
                     </div>
 
                     <a href="">
-                        See more case studies
+                        <span className={'desk'}>See more case studies</span>
+                        <span className={'mob'}> more case studies</span>
 
                         <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
@@ -542,7 +594,7 @@ const MainPage = () => {
                             <g mask="url(#mask0)">
                                 <path
                                     d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"
-                                    stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </g>
                         </svg>
                     </a>

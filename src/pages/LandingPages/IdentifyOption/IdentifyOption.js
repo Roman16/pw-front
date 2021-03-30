@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import './IdentifyOption.less'
@@ -186,10 +186,13 @@ const list = [
     }
 ]
 
-const IdentifyOption = () => {
+const IdentifyOption = ({match}) => {
     const [selectedOption, setSelectedOption] = useState(0),
         [openedOption, setOpenedOption] = useState(),
         [visibleContactForm, setVisibleContactForm] = useState(false)
+
+    const myRef = useRef(null)
+
 
     const accelerateVariations = ['profits', 'marketplace_potential', 'total_sales_growth', 'brand_awareness']
 
@@ -214,6 +217,13 @@ const IdentifyOption = () => {
             setSelectedOption(index)
         }, 100)
     }
+
+    useEffect(() => {
+        if (match.params.filter) {
+            setSelectedOption(accelerateVariations.findIndex(i => i === match.params.filter))
+            myRef.current.scrollIntoView()
+        }
+    }, [match.params])
 
 
     return (
@@ -288,7 +298,7 @@ const IdentifyOption = () => {
                         you would reach your goals and become a Whale in Your Ocean
                     </p>
 
-                    <div className="row">
+                    <div className="row" ref={myRef}>
                         <div className="col">
                             <h4>choose What do you want to accelerate?</h4>
                             <Radio.Group
