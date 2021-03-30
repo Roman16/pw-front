@@ -307,7 +307,12 @@ const SearchTerms = () => {
     }, [tableRequestParams, localSegmentValue, localTableOptions])
 
     useEffect(() => {
-        getPageData(['metrics', 'table', 'chart'])
+        setTableRequestParams(prevState => ({
+            ...prevState,
+            page: 1
+        }))
+        setTimeout(getPageData(['metrics', 'table', 'chart']), 100)
+
     }, [selectedRangeDate, filters])
 
     return (
