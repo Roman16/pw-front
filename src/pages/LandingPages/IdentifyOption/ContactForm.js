@@ -90,7 +90,7 @@ const ContactForm = ({onCancel, accelerateValue}) => {
                 </div>
 
                 <div className="actions">
-                    <button className={'btn transparent'} onClick={onCancel}>
+                    <button type={'button'} className={'btn transparent'} onClick={onCancel}>
                         cancel
                     </button>
 
@@ -136,7 +136,7 @@ const ContactForm = ({onCancel, accelerateValue}) => {
                 </i>
 
                 <h2>
-                    <span>{formData.name},</span> your acceleration is at the track.
+                    <span>{formData.name},</span> your acceleration is <br/> at the track.
                 </h2>
 
                 <p>

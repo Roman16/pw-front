@@ -12,15 +12,15 @@ const defaultForm = {
     first_name: undefined,
     last_name: undefined,
     email: undefined,
-    active_marketplaces: 'ATVPDKIKX0DER',
-    avg_monthly_ad_sales: 'below_50k',
-    avg_monthly_ad_spend: 'below_10k',
+    active_marketplaces: undefined,
+    avg_monthly_ad_sales: undefined,
+    avg_monthly_ad_spend: undefined,
     is_has_brand_registry: true,
-    main_goal: 'acos_targeting',
+    main_goal: undefined,
     storefront_name: undefined,
     main_category: undefined,
     communication_channel: undefined,
-    amazon_number_of_active_products: '1_5',
+    amazon_number_of_active_products: undefined,
 }
 
 const GetAudit = () => {
@@ -33,7 +33,8 @@ const GetAudit = () => {
         try {
             await userService.sendContactForm({
                 ...formData,
-                active_marketplaces: [formData.active_marketplaces]
+                active_marketplaces: [formData.active_marketplaces],
+                main_goal: formData.main_goal === 'other' ? `Other: ${formData.main_goal_other || ''}` : formData.main_goal
             })
             setActiveSection(2)
         } catch (e) {

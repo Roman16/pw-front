@@ -3,6 +3,7 @@ import Steps from "./Steps"
 import {Input, Radio} from "antd"
 import {SVG} from "../../../utils/icons"
 import {Link} from "react-router-dom"
+import {notification} from "../../../components/Notification"
 
 
 const countDots4 = () => <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,12 +182,12 @@ const marketplaceVariations = [
     },
     {
         label: 'UAE',
-        value: 'A13V1IB3VIYZZ',
+        value: 'A2VIGQ35RCS4UG',
         icon: 'uae'
     },
     {
         label: 'Other',
-        value: 'other',
+        value: 'OTHER',
         icon: 'other'
     },
 ]
@@ -278,7 +279,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
         })
     }
 
-    const NavigationButtons = () => {
+    const NavigationButtons = ({disabled = false}) => {
         return (
             <div className="navigation">
                 {activeStep > 0 &&
@@ -298,7 +299,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     back
                 </button>
                 }
-                <button className="btn default">
+                <button className="btn default" disabled={disabled}>
                     {activeStep === 6 ? 'Get an audit' : <>
                         next
                         <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -344,6 +345,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                         <div className="form-group">
                             <label htmlFor="">Last Name</label>
                             <Input
+                                required={true}
                                 placeholder={'Last Name'}
                                 value={formData.last_name}
                                 onChange={({target: {value}}) => changeFormHandler('last_name', value)}
@@ -359,7 +361,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             />
                         </div>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.first_name || !formData.last_name || !formData.email}/>
                     </form>
                 </div>
 
@@ -396,7 +398,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             </Radio.Group>
                         </div>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.storefront_name}/>
                     </form>
                 </div>
 
@@ -423,7 +425,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             </ul>
                         </Radio.Group>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.avg_monthly_ad_spend}/>
                     </form>
 
                 </div>
@@ -452,7 +454,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             </ul>
                         </Radio.Group>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.avg_monthly_ad_sales}/>
                     </form>
                 </div>
                 <div className={`step step-4 ${activeStep === 4 ? 'active' : ''}`}>
@@ -478,13 +480,14 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                                         </i>
 
                                         <label>{item.label}</label>
+
                                         <Radio value={item.value}/>
                                     </li>
                                 ))}
                             </ul>
                         </Radio.Group>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.active_marketplaces}/>
                     </form>
                 </div>
                 <div className={`step step-5 ${activeStep === 5 ? 'active' : ''}`}>
@@ -514,7 +517,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             </ul>
                         </Radio.Group>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.amazon_number_of_active_products}/>
                     </form>
                 </div>
 
@@ -540,12 +543,16 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                                             <Input
                                                 disabled={formData.main_goal !== 'other'}
                                                 placeholder={'Your option'}
+                                                value={formData.main_goal_other}
+                                                onChange={({target: {value}}) => changeFormHandler('main_goal_other', value)}
                                             />
                                         </label> <label className={'mob'}>
                                             Other:</label> <Input
                                             disabled={formData.main_goal !== 'other'}
                                             placeholder={'Your option'}
                                             className={'mob'}
+                                            value={formData.main_goal_other}
+                                            onChange={({target: {value}}) => changeFormHandler('main_goal_other', value)}
                                         /></> : <label>{item.label}</label>}
 
                                         <Radio value={item.value}/>
@@ -554,7 +561,7 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             </ul>
                         </Radio.Group>
 
-                        <NavigationButtons/>
+                        <NavigationButtons disabled={!formData.main_goal}/>
 
                         <p className="terms">
                             By proceeding you agree to our

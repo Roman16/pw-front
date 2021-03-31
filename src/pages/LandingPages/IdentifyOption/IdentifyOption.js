@@ -422,7 +422,10 @@ const IdentifyOption = ({match}) => {
                                 <li className={visibleContactForm ? 'active contact-li' : 'contact-li'}>
                                     <ContactForm
                                         accelerateValue={accelerateVariations[selectedOption]}
-                                        onCancel={() => setVisibleContactForm(false)}
+                                        onCancel={() => {
+                                            setOpenedOption(undefined)
+                                            setVisibleContactForm(false)
+                                        }}
                                     />
                                 </li>
                             </ul>

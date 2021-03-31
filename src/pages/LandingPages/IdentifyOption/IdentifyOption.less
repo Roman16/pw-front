@@ -158,6 +158,7 @@
     .container > p {
       font-size: 21px;
       line-height: 25px;
+      font-weight: 100;
       text-align: center;
       color: #7C8A95;
       margin-bottom: 64px;
@@ -177,8 +178,8 @@
       }
 
       .col:first-child {
-        width: 60%;
-        min-width: 60%;
+        width: 61.5%;
+        min-width: 61.5%;
         display: flex;
         flex-direction: column;
 
@@ -345,6 +346,16 @@
             display: grid;
             grid-template-areas: 'icon title' 'list list' 'btn btn';
             grid-template-columns: max-content 1fr;
+
+            &.contact-li {
+              grid-template-areas: 'form';
+              grid-template-columns: 100%;
+
+            }
+
+            .contact-form {
+              grid-area: form;
+            }
 
             &.active {
               opacity: 1;
@@ -587,6 +598,16 @@
             top: 0;
             width: 100%;
             height: 100%;
+
+            i {
+              width: 110px;
+              height: 110px;
+
+              svg {
+                width: 100%;
+                height: 100%;
+              }
+            }
 
 
             h2 {
@@ -924,6 +945,12 @@
               }
 
               .contact-form {
+                h2 {
+                  br {
+                    display: none;
+                  }
+                }
+
                 .row {
                   .form-group {
                     margin-bottom: 20px;
