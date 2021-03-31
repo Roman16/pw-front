@@ -5,7 +5,7 @@ import {round} from "../../../../utils/round"
 import {Link} from "react-router-dom"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {Popover} from "antd"
+import {Popover, Tooltip} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from "lodash"
@@ -15,9 +15,48 @@ import {amazonDefaultImageUrls} from "../../../../components/ProductList/Product
 import noImage from "../../../../assets/img/no-image-available.svg"
 import {RenderMetricChanges} from "../MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
-import {automatePatDescription} from "../../Targetings/TargetingsList/TargetingsList"
+import {automatePatDescription} from "../../Targetings/tableComponents/columnList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
+
+export const numberColumns = [
+    'clicks',
+    'impressions',
+    'ctr',
+    'cost',
+    'cpc',
+    'attributedSales30d',
+    'acos',
+    'conversion_rate',
+    'cpa',
+    'attributedConversions30d',
+    'attributedUnitsOrdered30d',
+    'roas',
+    'sales_share',
+    'budget_allocation',
+    'total_profit',
+    'total_profit_gross',
+    'ad_profit',
+    'startDate',
+    'endDate',
+    'dailyBudget',
+    'campaigns_count',
+    'macos',
+    'organic_sales',
+    'total_ordered_quantity',
+    'total_ordered_quantity_cleared',
+    'total_orders_count',
+    'total_orders_count_cleared',
+    'organic_orders_count',
+    'total_sales',
+    'total_returns_quantity',
+    'total_sales_avg_price',
+    'defaultBid',
+    'targetings_count',
+    'product_ads_count',
+    'calculatedBid',
+    'organic_profit'
+]
 
 export const RenderMetricValue = ({number, type}) => {
     switch (type) {
@@ -35,7 +74,6 @@ export const RenderMetricValue = ({number, type}) => {
     }
 }
 
-
 export const renderNumberField = (type = 'number', showDiff = true) => {
     return ({
         render: (number, item, array, dataIndex) => {
@@ -44,8 +82,8 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}
-                    prevValue={item[`${dataIndex}_prev`]}
-                    diff={+item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`]}
+                    prevValue={item[`${dataIndex}_prev`] || undefined}
+                    diff={item[`${dataIndex}_prev`] ? +item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`] : null}
                     type={type}
                     name={dataIndex}
                     getPopupContainer={true}
@@ -54,7 +92,6 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
         }
     })
 }
-
 
 export const statusColumn = {
     title: 'Status',
@@ -206,7 +243,7 @@ export const skuAsinColumn = {
     key: 'sku_asin',
     width: '180px',
     locked: true,
-    sorter: true,
+    sorter: false,
     noTotal: true,
     render: (text, item) => <div className={'sku-asin'}>
         <div title={item.sku}><b>SKU:</b> {item.sku}</div>
@@ -220,16 +257,28 @@ export const skuAsinColumn = {
     </div>
 }
 
-export const EditableField = ({type, value}) => {
+export const EditableField = ({type, value, onUpdateField, id}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
     const wrapperRef = useRef(null)
 
+    const submitFieldHandler = () => {
+        onUpdateField({
+            id,
+            column: '',
+            value: ''
+        })
+
+        // setVisibleEditableWindow(false)
+    }
+
     useEffect(() => {
         function handleClickOutside({target}) {
-            if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
+            if (target && target.className) {
+                if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
 
-            } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
-                setVisibleEditableWindow(false)
+                } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                    setVisibleEditableWindow(false)
+                }
             }
         }
 
@@ -239,59 +288,68 @@ export const EditableField = ({type, value}) => {
         }
     }, [wrapperRef])
 
-    if (type === 'date') {
-        return (<div className={'editable-field'} ref={wrapperRef}>
-                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    <DatePicker format={'DD.MM.YYYY'} placeholder={'No start date'} defaultValue={value && moment(value)} disabled/>
 
-                    {/*{value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}*/}
-                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
+    useEffect(() => {
+        if (type === 'date' && visibleEditableWindow) {
+            document.querySelector('section.list-section .table-overflow').addEventListener('scroll', () => {
+                setVisibleEditableWindow(false)
+            })
+        }
+    }, [visibleEditableWindow])
+
+    if (type === 'date') {
+        return (<div ref={wrapperRef}>
+
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>
 
-                {/*{visibleEditableWindow && <div className="editable-window date">*/}
-                {/*    <DatePicker*/}
-                {/*        value={value ? moment(value) : moment()}*/}
-                {/*        format={'DD MMM YYYY'}*/}
-                {/*        open={true}*/}
-                {/*        showToday={false}*/}
-                {/*        className={'editable-date-picker'}*/}
-                {/*        getCalendarContainer={(trigger) => trigger.parentNode.parentNode}*/}
-                {/*        renderExtraFooter={() => <>*/}
-                {/*            <p>America/Los_Angeles</p>*/}
-                {/*            <div className="actions">*/}
-                {/*                <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>*/}
-                {/*                    Save*/}
-                {/*                </button>*/}
 
-                {/*                <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>*/}
-                {/*                    Cancel*/}
-                {/*                </button>*/}
-                {/*            </div>*/}
-                {/*        </>}*/}
-                {/*    />*/}
-                {/*</div>}*/}
+                {visibleEditableWindow && <DatePicker
+                    value={value ? moment(value) : moment()}
+                    format={'DD MMM YYYY'}
+                    open={visibleEditableWindow}
+                    showToday={false}
+                    className={'editable-date-picker'}
+                    dropdownClassName={'edit-field-picker'}
+                    // getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
+                    panelRender={<div>ttttt</div>}
+                    renderExtraFooter={() => <>
+                        <p>America/Los_Angeles</p>
+                        <div className="actions">
+                            <button className={'btn default'} onClick={submitFieldHandler}>
+                                Save
+                            </button>
+
+                            <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </>}
+                />}
             </div>
         )
     } else {
-        return (<div className={'editable-field'} ref={wrapperRef}>
+        return (<div className={''} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    <InputCurrency disabled value={value}/>
+                    {/*<InputCurrency disabled value={value}/>*/}
 
-                    {/*{value ? `$${value}` : ''}*/}
+                    {value ? `$${value}` : ''}
 
-                    {/*<i className={'edit'}><SVG id={'edit-pen-icon'}/></i>*/}
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>
 
-                {/*{visibleEditableWindow && <div className="editable-window">*/}
-                {/*    <InputCurrency*/}
-                {/*        value={value}*/}
-                {/*        autoFocus={true}*/}
-                {/*    />*/}
+                {visibleEditableWindow && <div className="editable-window">
+                    <InputCurrency
+                        value={value}
+                        autoFocus={true}
+                    />
 
-                {/*    <button className={'btn default'} onClick={() => setVisibleEditableWindow(false)}>Save</button>*/}
-                {/*    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel*/}
-                {/*    </button>*/}
-                {/*</div>}*/}
+                    <button className={'btn default'} onClick={submitFieldHandler}>Save</button>
+                    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
+                    </button>
+                </div>}
             </div>
         )
     }

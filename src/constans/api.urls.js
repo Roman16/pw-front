@@ -38,7 +38,10 @@ export const userUrls = {
     contacts: 'landings/contact-us',
     freeTrial: 'user/account/subscription/start-free-trial',
     contactForm: 'landings/request-talk-to-experts',
+    shortContactForm: 'landings/contact-us-email',
     partnerContactForm: 'landings/request-partnership',
+    customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
+    growthAccelerationForm: 'landings/get-started-growth-acceleration',
 }
 
 export const productsUrls = {
@@ -136,10 +139,12 @@ export const analyticsUrls = {
     placementStatistic: 'analytics/placements/percent-stacked-area-charts',
     metricsData: location => `analytics/${location}/metrics`,
     chartData: location => `analytics/${location}/charts`,
-    stateInformation: (state, id) => `analytics/${state}/${id}/details`,
-    settingsDetails: (page, id) => `analytics/${page}/${id}/settings`,
+    stateInformation: (state, id) => `analytics/v2/${state}/${id}/details`,
+    settingsDetails: (page, id) => `analytics/v2/${page}/${id}/settings`,
 
     searchTermsData: 'analytics/v2/search-terms',
     placementData: 'analytics/v2/placements',
     targetingsDetails: 'analytics/v2/search-terms/targetings-data',
+    pageData: (location) => `analytics/v2/${location}`,
+    createUrl: location => `dynamic-analytics/${location}/exact-create`
 }

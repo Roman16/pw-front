@@ -47,7 +47,10 @@ export const userService = {
 
     getBlogPosts,
     sendContactForm,
-    sendFormToPartnerSupport
+    sendShortContactForm,
+    sendFormToPartnerSupport,
+    sendCustomerSatisfactionSurveyForm,
+    sendGrowthAccelerationForm
 }
 
 function login(user) {
@@ -221,8 +224,20 @@ function sendContactForm(data) {
     return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href})
 }
 
+function sendShortContactForm(data) {
+    return api('post', `${userUrls.shortContactForm}`, {...data, page_url: window.location.href})
+}
+
 function sendFormToPartnerSupport(data) {
     return api('post', `${userUrls.partnerContactForm}`, {...data, page_url: window.location.href})
+}
+
+function sendCustomerSatisfactionSurveyForm(data) {
+    return api('post', `${userUrls.customerSatisfactionSurveyForm}`, data)
+}
+
+function sendGrowthAccelerationForm(data) {
+    return api('post', `${userUrls.growthAccelerationForm}`, data)
 }
 
 //-------------------------------------

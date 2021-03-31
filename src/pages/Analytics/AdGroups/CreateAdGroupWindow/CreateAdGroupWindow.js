@@ -137,7 +137,7 @@ const CreateAdGroupWindow = () => {
 
                 {currentStep === 3 &&
                 <CreateCampaignOverview
-                    createData={changeCreateDataHandler}
+                    createData={createAdGroupData}
                 />}
             </div>
 

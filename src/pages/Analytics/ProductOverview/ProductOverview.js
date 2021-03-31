@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from "react"
-import MainMetrics from "../components/MainMetrics/MainMetrics"
-import MainChart from "../components/MainChart/MainChart"
-import ProductAds from "./ProductAds/ProductAds"
+import React, {useEffect} from "react"
 import _ from "lodash"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import queryString from 'query-string'
-import ProductMetrics from "./ProductMetrics/ProductMetrics"
+import {columnList} from "./tableComponents/columnList"
 import {metricKeys} from "../components/MainMetrics/metricsList"
-import {history} from "../../../utils/history"
+import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 
 const ProductOverview = () => {
-    const [isParent, setParentStatus] = useState(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
     const filters = useSelector(state => state.analytics.filters.overview || [])
     const mainState = useSelector(state => state.analytics.mainState)
     const dispatch = useDispatch()
@@ -20,18 +16,17 @@ const ProductOverview = () => {
 
     const location = 'overview'
 
+    const productType = queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent'
+
 
     useEffect(() => {
-        const isParent = queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent'
-        setParentStatus(isParent)
-
         if (_.find(filters, {filterBy: 'productView'})) {
             dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {
                 if (filter.filterBy === 'productView') {
                     filter = {
                         filterBy: 'productView',
                         type: 'type',
-                        value: isParent
+                        value: productType
                     }
                 }
                 return filter
@@ -40,32 +35,23 @@ const ProductOverview = () => {
             dispatch(analyticsActions.updateFiltersList([...filters, {
                 filterBy: 'productView',
                 type: 'type',
-                value: isParent
+                value: productType
             }]))
         }
     }, [mainState])
 
-    useEffect(() => {
-        setParentStatus(queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent')
-    }, [window.location])
-
     return (
         <div className={'product-overview-workplace'}>
-            <MainMetrics
+            <RenderPageParts
                 location={location}
-                allMetrics={availableMetrics}
-            />
+                availableMetrics={availableMetrics}
+                availableParts={['metrics', 'chart', 'table']}
+                fixedColumns={[0, 1]}
+                showRowSelection={false}
+                productType={productType}
+                showFilters={false}
 
-            <MainChart
-                location={location}
-                allMetrics={availableMetrics}
-            />
-
-            {/*<ProductSettings/>*/}
-
-            <ProductMetrics
-                isParent={queryString.parse(window.location.search).isParent === 'true'}
-                location={location}
+                columns={columnList(location, productType === 'parent')}
             />
         </div>
 

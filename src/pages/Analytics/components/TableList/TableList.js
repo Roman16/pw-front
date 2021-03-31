@@ -163,6 +163,9 @@ const TableList = ({
     const getData = async () => {
         document.querySelector('.table-overflow').scrollTop = 0
 
+        setSelectedRows([])
+        setSelectedAllRows(false)
+
         setFetchingStatus(true)
 
         source && source.cancel()
@@ -209,7 +212,14 @@ const TableList = ({
             })
 
             if (res.response) {
-                setTableData(res.response)
+                if (localTableOptions.comparePreviousPeriod) {
+                    setTableData(res.response.map(item => ({
+                        ...item,
+                        compareWithPrevious: true
+                    })))
+                } else {
+                    setTableData(res.response)
+                }
 
                 if (localTableOptions.comparePreviousPeriod && showOptions) {
                     getPreviousPeriodData(res.response.map(item => item[`${idKey[location]}Id`]))
@@ -252,14 +262,16 @@ const TableList = ({
                 }
 
 
-                const res = await analyticsServices.fetchTableData(location, {...paginationParams, page: 1}, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
+                const res = await analyticsServices.fetchTableData(location, {
+                    ...paginationParams,
+                    page: 1
+                }, localSorterColumn, filtersWithState, source.token, `&${idKey[location]}Id:in=${idList.join(',')}`)
 
                 if (res.response) {
                     if (responseFilter) {
                         setTableData(prevState => {
                             return prevState.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.response, {placementName: item.placementName}), (value, key) => {
                                     return `${key}_prev`
                                 })
@@ -269,7 +281,6 @@ const TableList = ({
                         setTableData(prevState => {
                             return prevState.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.response, {[`${idKey[location]}Id`]: item[`${idKey[location]}Id`]}), (value, key) => {
                                     return `${key}_prev`
                                 })
@@ -321,65 +332,68 @@ const TableList = ({
         localStorage.setItem('analyticsTableOptions', JSON.stringify(tableOptions))
     }, [tableOptions])
 
+    const selectAllRows = () => {
+        setSelectedAllRows(true)
+        setSelectedRows(tableData.map(item => item[rowKey]))
+    }
+
 
     const rowSelection = {
-        onChange: (rowsList, selectAll = false) => {
+        onChange: (rowsList) => {
             setSelectedRows(rowsList)
-
-            if (selectedRows.length === rowsList.length || selectAll) setSelectedAllRows(true)
-            else setSelectedAllRows(false)
+            setSelectedAllRows(false)
         }
     }
 
     return (
         <div className={'table-section'}>
-            {selectedRows.length > 0 ? <FastUpdateBlock
-                    {...paginationParams}
-                    location={location}
-                    selectedRows={selectedRows}
-                    selectedAllOnPage={selectedAllRows}
+            {selectedRows.length > 0 && <FastUpdateBlock
+                {...paginationParams}
+                location={location}
+                selectedRows={selectedRows}
+                selectedAll={selectedAllRows}
+                columns={columns}
+
+                onClose={() => {
+                    setSelectedAllRows(false)
+                    setSelectedRows([])
+                }}
+                onSelectAll={selectAllRows}
+                onSetChanges={setChangesHandler}
+            />}
+
+            <div className="section-header">
+                {showFilters && <TableFilters
                     columns={columns}
+                    filters={filters}
+                    locationKey={location}
+                    searchField={searchField}
+                />}
 
-                    onClose={() => {
-                        setSelectedAllRows(false)
-                        setSelectedRows([])
-                    }}
-                    onSelectAll={() => setSelectedAllRows(true)}
-                    onSetChanges={setChangesHandler}
-                />
-                :
-                <div className="section-header">
-                    {showFilters && <TableFilters
-                        columns={columns}
-                        filters={filters}
-                        locationKey={location}
-                        searchField={searchField}
-                    />}
+                {moreActions}
 
-                    {moreActions}
+                {columnSelect && <ColumnsSelect
+                    columns={columns}
+                    columnsBlackList={localColumnBlackList}
+                    onChangeBlackList={changeBlackListHandler}
+                />}
 
-                    {columnSelect && <ColumnsSelect
-                        columns={columns}
-                        columnsBlackList={localColumnBlackList}
-                        onChangeBlackList={changeBlackListHandler}
-                    />}
+                <ExpandWorkplace/>
 
-                    <ExpandWorkplace/>
+                {showOptions && <TableOptions
+                    options={localTableOptions}
+                    onChange={changeTableOptionsHandler}
+                    selectedRangeDate={selectedRangeDate}
+                />}
 
-                    {showOptions && <TableOptions
-                        options={localTableOptions}
-                        onChange={changeTableOptionsHandler}
-                        selectedRangeDate={selectedRangeDate}
-                    />}
+                {dateRange && <DateRange
+                    onChange={dateRangeHandler}
+                    selectedRangeDate={selectedRangeDate}
+                    tableOptions={localTableOptions}
+                />}
 
-                    {dateRange && <DateRange
-                        onChange={dateRangeHandler}
-                        selectedRangeDate={selectedRangeDate}
-                        tableOptions={localTableOptions}
-                    />}
-
-                    <SwitchChartVisible/>
-                </div>}
+                <SwitchChartVisible/>
+            </div>
 
 
             <CustomTable
@@ -396,7 +410,6 @@ const TableList = ({
                 {...showRowSelection && {rowSelection: rowSelection}}
                 selectedAll={selectedAllRows}
                 selectedRows={selectedRows}
-                disabledRows={tableData.filter(item => item.state === 'archived').map(item => item[rowKey])}
 
                 sorterColumn={localSorterColumn}
                 columns={columns.filter(column => !localColumnBlackList.includes(column.key))}

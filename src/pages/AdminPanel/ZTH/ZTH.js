@@ -1,13 +1,11 @@
-import React, {useEffect} from "react"
-import {Input} from "antd"
+import React from "react"
 import {Link, NavLink, Route} from "react-router-dom"
 import {history} from "../../../utils/history"
 import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
 import Jobs from "./Jobs/Jobs"
-import {adminServices} from "../../../services/admin.services"
 import TokenBlock from "./TokenBlock/TokenBlock"
-import {SVG} from "../../../utils/icons"
+import {SVG} from "../../../utils/icons";
 
 const ZTH = () => {
     if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {

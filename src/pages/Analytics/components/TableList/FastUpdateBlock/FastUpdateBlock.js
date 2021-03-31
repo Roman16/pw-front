@@ -36,17 +36,16 @@ const FastUpdateBlock = ({
                              columns,
                              onClose,
                              onSelectAll,
-                             onSetChanges
+                             onSetChanges,
+                             selectedAll
                          }) => {
 
     const [selectedColumn, setSelectedColumn] = useState(),
         [actionType, setActionType] = useState(),
         [availableActions, setAvailableActions] = useState([]),
-        [changingValue, setChangingValue] = useState(),
-        [selectedAll, setSelectedAll] = useState(false)
+        [changingValue, setChangingValue] = useState()
 
     const selectAllItemsHandler = () => {
-        setSelectedAll(true)
         onSelectAll()
     }
 
@@ -75,18 +74,18 @@ const FastUpdateBlock = ({
 
     return (
         <div className="fast-update-block">
-            {selectedAll ? <p><b>All {totalSize}</b> products are selected.</p> : selectedAllOnPage ?
-                <p><b>All {selectedRows.length}</b> products on this <b>page</b> are selected.</p>
+            {selectedAll || selectedRows.length == totalSize ?
+                <p><b>All {totalSize}</b> selected</p>
                 :
-                <p><b>{selectedRows.length}</b> products on this <b>page</b> are selected.</p>
+                <p><b>{selectedRows.length}</b> selected {totalSize > 1 && <>(
+                    <button className={'select-all-btn'} onClick={selectAllItemsHandler}>or select
+                        all {totalSize}</button>
+                    )</>}
+                </p>
             }
 
-            {!selectedAll && <button className={'select-all-btn'} onClick={selectAllItemsHandler}>
-                Select all {totalSize} {location}.
-            </button>}
-
             <form action="" onSubmit={submitHandler}>
-                <label htmlFor="">Apply to all:</label>
+                <label htmlFor="">Change:</label>
 
                 <div className="form-group">
                     <CustomSelect

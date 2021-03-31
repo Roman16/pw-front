@@ -93,7 +93,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 {searchField && <div className="form-group search-block">
                     <Search
                         className="search-field"
-                        placeholder={`Search by ${columns.find(column => column.search).title}`}
+                        placeholder={`Search by ${columns.find(column => column.search).dataIndex === 'product_name_sku_asin' ? 'Product, SKU or ASIN' : columns.find(column => column.search).title}`}
                         onChange={e => setSearchValue(e.target.value)}
                         onPressEnter={searchHandler}
                         onBlur={searchHandler}
@@ -135,7 +135,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 </Popover>
             </div>
 
-            <div className="current-filters filters-list">
+            {filters.filter(item => item.type !== 'search').length > 0 && <div className="current-filters filters-list">
                 {filters.map((filter, index) => (
                     filter.type !== 'search' && filter.filterBy !== 'productView' && <Popover
                         content={<FilterWindow
@@ -174,7 +174,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
                 <button className={'reset-filters'} onClick={resetHandler}>Reset</button>
                 }
             </div>
-        </>
+            }        </>
 
     )
 }

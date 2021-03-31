@@ -12,6 +12,10 @@ import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import CreateCampaignOverview from "./CreateSteps/CreateCampaignOverview"
 import TargetingsDetails from "./CreateSteps/TargetingsDetails/TargetingsDetails"
+import {analyticsServices} from "../../../../services/analytics.services"
+import {notification} from "../../../../components/Notification"
+import _ from "lodash"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
@@ -20,16 +24,24 @@ const CreateCampaignWindow = () => {
         [finishedSteps, setFinishedSteps] = useState([]),
         [createCampaignData, setCreateCampaignData] = useState({
             //campaign
-            campaign_name: '',
+            name: '',
             portfolio_name: '',
-            start_date: undefined,
-            end_date: undefined,
-            daily_budget: 0,
-            top_search_bid: 0,
-            product_pages_bid: 0,
-            campaign_type: 'sponsored_products',
-            targetings_type: 'automatic_targeting',
-            bidding_strategy: 'down',
+            startDate: undefined,
+            endDate: undefined,
+            dailyBudget: 0,
+            advertisingType: 'SponsoredProducts',
+            calculatedTargetingType: 'auto',
+            bidding_strategy: 'legacyForSales',
+            state: 'enabled',
+            bidding_adjustments: [
+                {
+                    predicate: 'placementTop',
+                    percentage: 0
+                },
+                {
+                    predicate: 'placementProductPage',
+                    percentage: 0
+                }],
             //ad group
             create_ad_group: true,
             ad_group_name: '',
@@ -111,7 +123,24 @@ const CreateCampaignWindow = () => {
     }
 
     const createCampaignHandler = async () => {
-
+        try {
+            await analyticsServices.createCampaign({
+                name: createCampaignData.name,
+                portfolio_name: createCampaignData.portfolio_name,
+                startDate: createCampaignData.startDate,
+                endDate: createCampaignData.endDate,
+                dailyBudget: createCampaignData.dailyBudget,
+                advertisingType: createCampaignData.advertisingType,
+                calculatedTargetingType: createCampaignData.calculatedTargetingType,
+                bidding_strategy: createCampaignData.bidding_strategy,
+                state: createCampaignData.state,
+                bidding_adjustments: createCampaignData.bidding_adjustments,
+            })
+            closeWindowHandler()
+            notification.success({title: 'Campaign created'})
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {

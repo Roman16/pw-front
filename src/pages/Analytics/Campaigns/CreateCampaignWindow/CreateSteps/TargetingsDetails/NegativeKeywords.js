@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {SVG} from "../../../../../../utils/icons"
-import {Radio} from "antd"
+import {Popconfirm, Radio} from "antd"
 import {unique, uniqueArrOfObj} from "../../../../../../utils/unique"
 
 const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) => {
@@ -16,6 +16,7 @@ const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) 
         const validKeywords = [...newKeyword.split('\n')
             .filter(item => item !== '')
             .filter(item => item.length < 80)
+            .filter(item => !keywords.find(el => el.text.replace(/\s/g, '') === item.replace(/\s/g, '')))
             .map(item => unique(item).join(' '))
             .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
             .map(item => ({
@@ -110,9 +111,20 @@ const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) 
                                         {keyword.type === 'exact' ? 'Negative Exact' : 'Negative Phrase'}
                                     </div>}
 
-                                    <button className={'btn icon'} onClick={() => removeKeywordHandler(index)}>
-                                        <SVG id={'remove-filter-icon'}/>
-                                    </button>
+                                    <Popconfirm
+                                        title="Are you sure to delete this keyword?"
+                                        onConfirm={() => removeKeywordHandler(index)}
+                                        getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
+                                        okButtonProps={{className: 'default'}}
+                                        cancelButtonProps={{className: 'white'}}
+                                        placement="topRight"
+                                        okText="Yes"
+                                        cancelText="No"
+                                    >
+                                        <button className={'btn icon'}>
+                                            <SVG id={'remove-filter-icon'}/>
+                                        </button>
+                                    </Popconfirm>
                                 </li>
                             ))}
                         </ul>

@@ -16,7 +16,9 @@ import _ from 'lodash'
 import queryString from "query-string"
 import {history} from "../../../utils/history"
 
-let prevActiveMetrics = []
+let prevActiveMetrics = [],
+    sorterTimeoutId = null
+
 
 const SearchTerms = () => {
     const location = 'searchTerms',
@@ -27,7 +29,7 @@ const SearchTerms = () => {
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
         segmentValueFromLocalStorage = localStorage.getItem('analyticsSTSegmentValue') ? localStorage.getItem('analyticsSTSegmentValue') : 'none',
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
-    pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
+        pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
 
     const [pageData, setPageData] = useState({
             metrics: {},
@@ -132,7 +134,7 @@ const SearchTerms = () => {
             }
 
 
-            const res = await analyticsServices.getSearchTermsData({
+            const res = await analyticsServices.fetchSearchTermsData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
                 segment: localSegmentValue,
@@ -167,17 +169,35 @@ const SearchTerms = () => {
                                     return targetObj
                                 })
 
+                                if (localTableOptions.comparePreviousPeriod) {
+                                    item.compareWithPrevious = true
+                                }
+
                                 return item
                             })
                         } : prevState.table
                 }))
-
             } else {
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table
-                }))
+                if (localTableOptions.comparePreviousPeriod && res.table) {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        table: {
+                            ...res.table,
+                            response: res.table.response.map(item => {
+                                item.compareWithPrevious = true
+
+                                return item
+                            })
+                        }
+                    }))
+                } else {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        table: res.table || prevState.table
+                    }))
+                }
             }
 
 
@@ -219,7 +239,7 @@ const SearchTerms = () => {
                     },
                 ]
 
-                const res = await analyticsServices.getSearchTermsData({
+                const res = await analyticsServices.fetchSearchTermsData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
@@ -236,7 +256,6 @@ const SearchTerms = () => {
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['queryCRC64']}), (value, key) => {
                                     return `${key}_prev`
                                 })
@@ -262,7 +281,12 @@ const SearchTerms = () => {
         }))
 
         setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
+        setTableFetchingStatus(true)
+
+        clearTimeout(sorterTimeoutId)
+        sorterTimeoutId = setTimeout(() => {
+            setTableRequestParams(prevState => ({...prevState, page: 1}))
+        }, 300)
     }
 
 
@@ -283,7 +307,12 @@ const SearchTerms = () => {
     }, [tableRequestParams, localSegmentValue, localTableOptions])
 
     useEffect(() => {
-        getPageData(['metrics', 'table', 'chart'])
+        setTableRequestParams(prevState => ({
+            ...prevState,
+            page: 1
+        }))
+        setTimeout(getPageData(['metrics', 'table', 'chart']), 100)
+
     }, [selectedRangeDate, filters])
 
     return (

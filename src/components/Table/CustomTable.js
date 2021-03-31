@@ -25,14 +25,16 @@ const CustomTable = ({
                          showExpandRow,
                          rowKey,
                          selectedRows = [],
-                         disabledRows = []
+                         disabledRows = [],
+                         revertSortingColumns = []
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
 
     const checkAllRowsHandler = ({target: {checked}}) => {
         if (checked) {
-            rowSelection.onChange(dataSource
+            rowSelection.onChange(
+                dataSource
                     .filter(item => !disabledRows.includes(item[rowKey]))
                     .map(item => item[rowKey]),
                 true
@@ -44,8 +46,8 @@ const CustomTable = ({
 
     const checkRowHandler = (id, value) => {
         if (value) {
-            if([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
-                rowSelection.onChange([...selectedRows, id], true)
+            if ([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
+                rowSelection.onChange([...selectedRows, id])
             } else {
                 rowSelection.onChange([...selectedRows, id])
             }
@@ -75,6 +77,7 @@ const CustomTable = ({
                 <div className="table-head" key={'table-head'}>
                     {rowSelection && <div className={'th checkbox-column'}>
                         <Checkbox
+                            disabled={dataSource.length === 0 || loading}
                             indeterminate={selectedRows.length > 0 && selectedRows.length !== dataSource.length}
                             checked={(selectedRows.length > 0 && selectedRows.length === dataSource.length) || selectedAll}
                             onChange={checkAllRowsHandler}
@@ -82,8 +85,10 @@ const CustomTable = ({
                     </div>}
 
                     {columns.map((item, index) => {
+                        const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = index === 0 ? {left: rowSelection ? 59 : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + 59px)` : columns[index - 1].width}
+                            leftStickyPosition = index === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + ${checkboxWith}px)` : columns[index - 1].width}
 
                         return (
                             <div
@@ -101,6 +106,7 @@ const CustomTable = ({
 
                                     {item.sorter && <div
                                         className={`sorter-buttons
+                                        ${revertSortingColumns.includes(item.dataIndex) ? 'revert' : ''}
                                          ${sorterColumn && sorterColumn.column === item.key ? sorterColumn.type === 'desc' ? 'is-sorter desc' : 'is-sorter asc' : ''}`}>
                                         <SVG id={'sorter-arrow'}/>
                                     </div>}
@@ -116,8 +122,10 @@ const CustomTable = ({
                     </div>}
 
                     {columns.map((item, columnIndex) => {
+                        const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
+                            leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                         return (
                             <div
@@ -144,7 +152,7 @@ const CustomTable = ({
                         const isDisabledRow = disabledRows.includes(report[rowKey])
                         return (<>
                             <div
-                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report.id)) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
+                                className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
                                 onClick={() => rowClick && rowClick(report, index)}
                             >
                                 {rowSelection && <div className={'table-body__field checkbox-column'}>
@@ -157,12 +165,14 @@ const CustomTable = ({
 
 
                                 {columns.map((item, columnIndex) => {
+                                    const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
+
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
-                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? 59 : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? '+ 59px' : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + 59px)` : columns[columnIndex - 1].width}
+                                        leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                                     return (
                                         <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.edit ? 'editable-field' : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition

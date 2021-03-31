@@ -29,6 +29,36 @@
     grid-area: window-footer;
   }
 
+  .ant-popover-placement-topRight {
+    padding-left: 10px;
+    z-index: 10000;
+
+    .ant-popover-arrow {
+      right: 6px;
+    }
+
+    .ant-popover-buttons {
+      button {
+        outline: none !important;
+        box-shadow: none !important;
+        border: 0 !important;
+
+        &::after {
+          display: none;
+        }
+
+        &.white {
+          background: #F5F5FF;
+          color: #343C5A;
+
+          &:hover {
+            background: #F5F5FF;
+          }
+        }
+      }
+    }
+  }
+
   .window-header {
     height: 4.285714285714286rem;
     display: flex;
@@ -278,7 +308,8 @@
         }
 
         .InputCurrency {
-          width: 120px;
+          width: 100%;
+          max-width: 120px;
         }
 
         .pw-date-picker {
@@ -360,6 +391,11 @@
             line-height: 1rem;
             color: #656A84;
             padding: 0 5px 0 0;
+          }
+
+          &:nth-child(2),
+          &:nth-child(3) {
+            opacity: .3;
           }
         }
       }

@@ -23,7 +23,7 @@ export const userActions = {
     resetChangesCount,
     setPpcStatus,
     setBootstrap,
-    getImpersonationUserInformation
+    getImpersonationUserInformation,
 }
 
 function login(user) {

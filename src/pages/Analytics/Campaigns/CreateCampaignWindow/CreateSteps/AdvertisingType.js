@@ -10,11 +10,11 @@ const AdvertisingType = ({createData, onChange}) => {
         <h4>Choose your campaign type</h4>
 
         <ul>
-            <Radio.Group value={createData.campaign_type} onChange={({target: {value}}) => onChange({campaign_type: value})}>
+            <Radio.Group value={createData.advertisingType} onChange={({target: {value}}) => onChange({advertisingType: value})}>
                 <li>
                     <img src={sponsoredProductsImage} alt=""/>
 
-                    <Radio value={'sponsored_products'}>
+                    <Radio value={'SponsoredProducts'}>
                         Sponsored Products
                     </Radio>
 
@@ -27,7 +27,7 @@ const AdvertisingType = ({createData, onChange}) => {
                 <li>
                     <img src={sponsoredBrandsImage} alt=""/>
 
-                    <Radio disabled value={'sponsored_brands'}>
+                    <Radio disabled value={'SponsoredBrands'}>
                         Sponsored Brands
                     </Radio>
                     <div className="description">
@@ -39,7 +39,7 @@ const AdvertisingType = ({createData, onChange}) => {
                 <li>
                     <img src={sponsoredDisplayImage} alt=""/>
 
-                    <Radio disabled value={'sponsored_display'}>
+                    <Radio disabled value={'SponsoredDisplay'}>
                         Sponsored Display
                     </Radio>
 

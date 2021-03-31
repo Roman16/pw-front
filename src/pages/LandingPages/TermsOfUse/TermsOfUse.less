@@ -1,135 +1,139 @@
-.terms-page {
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(rgba(255, 255, 255, 0))), #f3f7fd;
-  background: -o-linear-gradient(top, #fff 0, rgba(255, 255, 255, 0) 100%), #f3f7fd;
-  background: linear-gradient(180deg, #fff 0, rgba(255, 255, 255, 0) 100%), #f3f7fd;
+.terms-page, .privacy-page {
+  background: #fff;
+  font-family: Eina;
 
-  .box {
+  & > .container {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    max-width: 1360px;
+    max-width: 1460px;
     margin: 0 auto;
-    padding: 125px 10px 100px 10px;
+    padding: 128px 20px;
+    box-sizing: border-box;
+    grid-row-gap: 96px;
   }
 
-  .h1-wrap {
-    margin-bottom: 105px;
-    text-align: center
-  }
+  .part {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    grid-row-gap: 24px;
 
-  .h1-wrap h1 {
-    font-weight: 700;
-    font-size: 48px;
-    line-height: 1.3333;
-    letter-spacing: .95px;
-    color: #363694;
-    margin-bottom: 15px
-  }
+    h2 {
+      font-size: 48px;
+      line-height: 58px;
+      font-weight: 400;
+      color: #6D6DF6;
+      margin-bottom: 4px;
 
-  .h1-wrap p {
-    font-size: 11px;
-    line-height: 1.45;
-    color: #7c8a95
-  }
-
-  .page-content {
-    font-size: 16px;
-    line-height: 1.75;
-    letter-spacing: .4px;
-    color: #38454f;
-    padding-left: 25px;
-    padding-right: 25px
-  }
-
-  .page-content blockquote {
-    font-weight: 700;
-    color: #38454f;
-    margin-bottom: 45px
-  }
-
-  .page-content blockquote p {
-    margin-bottom: 0
-  }
-
-  .page-content blockquote a {
-    text-decoration: none
-  }
-
-  .page-content blockquote a:hover {
-    text-decoration: underline
-  }
-
-  .page-content h4 {
-    color: #17175a;
-    font-weight: 700;
-    margin-bottom: 5px;
-    font-size: 18px
-  }
-
-  .page-content h3 {
-    color: #363694;
-    font-weight: 700;
-    margin-bottom: 5px;
-    font-size: 30px
-  }
-
-  .page-content a {
-    color: #6d6df6;
-    font-weight: 700;
-    text-decoration: underline
-  }
-
-  .page-content a:hover {
-    text-decoration: none
-  }
-
-  .page-content p {
-    margin-bottom: 30px
-  }
-
-  .page-content p:last-child {
-    margin-bottom: 0
-  }
-
-  @media screen and (max-width: 1023px) {
-    & {
-      padding: 50px 0
+      span {
+        color: #2d2045;
+      }
     }
 
-    .h1-wrap {
-      margin-bottom: 25px
+    p {
+      font-size: 21px;
+      line-height: 25px;
+      color: #7C8A95;
+      margin: 0;
     }
 
-    .page-content {
-      padding: 0
+    a {
+      color: #6D6DF6;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      margin: 0 4px;
+
+      &::after {
+        content: "";
+        max-width: 0;
+        width: 0;
+        height: 1px;
+        background-color: #6D6DF6;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        transition: .2s ease-in;
+      }
+
+      &:hover {
+        color: #5252b8;
+
+        &::after {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
     }
 
-    .page-content blockquote {
-      margin-bottom: 15px
-    }
+    ul {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      list-style: none;
+      grid-row-gap: 5px;
 
-    .page-content p {
-      margin-bottom: 15px
+      li {
+        display: flex;
+        align-items: flex-start;
+        font-size: 21px;
+        line-height: 25px;
+        color: #7C8A95;
+
+        &::before {
+          content: '';
+          min-width: 8px;
+          width: 8px;
+          height: 8px;
+          min-height: 8px;
+          transform: rotate(45deg);
+          background: #6D6DF6;
+          margin: 9px 8px 0 0;
+        }
+      }
     }
   }
 
-  @media screen and (max-width: 480px) {
-    .h1-wrap h1 {
-      margin-bottom: 10px
+  @media (max-width: 600px) {
+    & > .container {
+      grid-row-gap: 48px;
+      padding-top: 64px;
+      padding-bottom: 64px;
     }
 
-    .h1-wrap h1 {
-      font-size: 35px
-    }
+    .part {
+      grid-row-gap: 18px;
 
-    .page-content {
-      font-size: 14px
-    }
+      h2 {
+        font-size: 24px;
+        line-height: 29px;
+        margin: 0;
+      }
 
-    .page-content h4 {
-      font-size: 16px
-    }
+      p {
+        font-size: 12px;
+        line-height: 17px;
+      }
 
-    .page-content h3 {
-      font-size: 21px
+      ul {
+        li {
+          font-size: 12px;
+          line-height: 17px;
+
+          &::before {
+            content: '';
+            min-width: 4px;
+            width: 4px;
+            height: 4px;
+            min-height: 4px;
+            transform: rotate(45deg);
+            background: #6D6DF6;
+            margin: 7px 8px 0 0;
+          }
+        }
+      }
     }
   }
 }

@@ -4,37 +4,20 @@ import Pagination from "../../../../components/Pagination/Pagination"
 import {useDispatch, useSelector} from "react-redux"
 import _ from 'lodash'
 import '../../components/TableList/TableList.less'
-import {analyticsServices} from "../../../../services/analytics.services"
 import TableFilters from "../../components/TableFilters/TableFilters"
 import DateRange from "../../components/DateRange/DateRange"
 import ColumnsSelect from "../../components/TableList/ColumnsSelect"
-import axios from "axios"
-import {Popover, Switch} from "antd"
-import {SVG} from "../../../../utils/icons"
 import TableOptions from "../../components/TableList/TableOptions"
-import moment from "moment"
-import preciseDiff from "moment-precise-range-plugin"
 import SwitchChartVisible from "../../components/TableList/SwitchChartVisisble"
 import ExpandWorkplace from "../../components/TableList/ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
+import {numberColumns} from '../../components/TableList/tableColumns'
+import FastUpdateBlock from "../../components/TableList/FastUpdateBlock/FastUpdateBlock"
+import {notification} from "../../../../components/Notification"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
-
-const idKey = {
-    'products': 'product',
-    'products-regular': 'product',
-    'products-parents': 'product',
-    'portfolios': 'portfolio',
-    'campaigns': 'campaign',
-    'placements': 'placement',
-    'ad-groups': 'adGroup',
-    'targetings': 'targeting',
-    'negative-targetings': 'targeting',
-    'product-ads': 'ad',
-}
-
 
 const TableList = ({
                        columns,
@@ -57,8 +40,13 @@ const TableList = ({
                        localSorterColumn,
                        onChangeSorterColumn,
                        onChangeTableOptions,
-                       openedRow
+                       openedRow,
+                       showRowSelection,
+                       rowKey,
                    }) => {
+
+    const [selectedRows, setSelectedRows] = useState([]),
+        [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
 
@@ -78,34 +66,52 @@ const TableList = ({
             onChangeSorterColumn(data)
         }
 
-        if (localSorterColumn && localSorterColumn.column === column) {
-            if (localSorterColumn.type === 'asc') {
+        if (numberColumns.includes(column)) {
+            if (localSorterColumn && localSorterColumn.column === column) {
+                if (localSorterColumn.type === 'desc') {
+                    setColumn({
+                        column: column,
+                        type: 'asc'
+
+                    })
+                } else if (localSorterColumn.type === 'asc') {
+                    setColumn({
+                        column: null,
+                        type: 'desc'
+                    })
+                }
+            } else {
                 setColumn({
                     column: column,
                     type: 'desc'
-
-                })
-            } else if (localSorterColumn.type === 'desc') {
-                setColumn({
-                    column: null,
-                    type: 'asc'
                 })
             }
         } else {
-            setColumn({
-                column: column,
-                type: 'asc'
-            })
+            if (localSorterColumn && localSorterColumn.column === column) {
+                if (localSorterColumn.type === 'asc') {
+                    setColumn({
+                        column: column,
+                        type: 'desc'
+
+                    })
+                } else if (localSorterColumn.type === 'desc') {
+                    setColumn({
+                        column: null,
+                        type: 'asc'
+                    })
+                }
+            } else {
+                setColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            }
         }
     }
 
 
     const dateRangeHandler = (startDate, endDate) => {
         dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
-
-        // if (startDate === null) {
-        //     setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))
-        // }
     }
 
     const changeBlackListHandler = (list) => {
@@ -126,10 +132,52 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
+    const selectAllRows = () => {
+        setSelectedAllRows(true)
+        setSelectedRows(tableData.map(item => item[rowKey]))
+    }
+
+
+    const rowSelection = {
+        onChange: (rowsList) => {
+            setSelectedRows(rowsList)
+            setSelectedAllRows(false)
+        }
+    }
+
+    const setChangesHandler = async (key, value) => {
+        // await setTableData([...tableData.map(item => {
+        //     if (selectedRows.includes(item.campaignId)) {
+        //         item[key] = value
+        //     }
+        //
+        //     return item
+        // })])
+
+        notification.success({title: 'Success'})
+        setSelectedAllRows(false)
+        setSelectedRows([])
+    }
+
     return (
         <section className={'list-section'}>
             <div className={'table-section'}>
                 <div className="section-header">
+                    {selectedRows.length > 0 && <FastUpdateBlock
+                        totalSize={tableData.total_count}
+                        location={location}
+                        selectedRows={selectedRows}
+                        selectedAll={selectedAllRows}
+                        columns={columns}
+
+                        onClose={() => {
+                            setSelectedAllRows(false)
+                            setSelectedRows([])
+                        }}
+                        onSelectAll={selectAllRows}
+                        onSetChanges={setChangesHandler}
+                    />}
+
                     {showFilters && <TableFilters
                         columns={columns}
                         filters={filters}
@@ -168,7 +216,8 @@ const TableList = ({
                     {...showTotal && {
                         totalDataSource: {
                             ..._.mapValues(metricsData, (value) => (+value.value)),
-                            ...{[columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+                            ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+
                         }
                     }}
                     sorterColumn={localSorterColumn}
@@ -177,6 +226,12 @@ const TableList = ({
                     expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
+                    revertSortingColumns={numberColumns}
+
+                    rowKey={rowKey}
+                    {...showRowSelection && {rowSelection: rowSelection}}
+                    selectedAll={selectedAllRows}
+                    selectedRows={selectedRows}
                 />
 
                 {tableData.total_count !== 0 && showPagination && <Pagination

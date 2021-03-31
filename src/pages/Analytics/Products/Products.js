@@ -1,29 +1,24 @@
 import React from "react"
-import MainChart from "../components/MainChart/MainChart"
-import ProductList from './ProductsList/ProductsList'
-import MainMetrics from "../components/MainMetrics/MainMetrics"
 import {metricKeys} from "../components/MainMetrics/metricsList"
+import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
+import {columnList} from "./tableComponents/columnList"
 
 const Products = ({location}) => {
     const availableMetrics = Object.values(metricKeys)
 
     return (
         <div className={'products-workplace'}>
-            <MainMetrics
+            <RenderPageParts
                 location={location}
-                allMetrics={availableMetrics}
+                availableMetrics={availableMetrics}
+                availableParts={['metrics', 'chart', 'table']}
+                fixedColumns={[0, 1]}
+                showRowSelection={false}
+
+                columns={columnList(location)}
             />
 
-            <MainChart
-                location={location}
-                allMetrics={availableMetrics}
-            />
-
-            <ProductList
-                location={location}
-            />
         </div>
-
     )
 }
 

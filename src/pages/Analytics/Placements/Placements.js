@@ -17,7 +17,8 @@ import SegmentFilter from "./PTableComponents/SegmentFilter"
 import {expandedRowRender} from "./PTableComponents/expandRowRender"
 import {chartAreaKeys} from "./PlacementsStatistics/Chart"
 
-let prevActiveMetrics = []
+let prevActiveMetrics = [],
+    sorterTimeoutId = null
 
 
 const Placements = () => {
@@ -50,7 +51,6 @@ const Placements = () => {
         [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
         [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false}),
         [openedSearchTerms, setOpenedSearchTerms] = useState([]),
-        [processingRows, setProcessingRows] = useState([]),
         [areaChartMetric, setAreaChartMetric] = useState(localStorage.getItem('placementActiveMetric') || 'impressions')
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
@@ -58,13 +58,6 @@ const Placements = () => {
         mainState = useSelector(state => state.analytics.mainState),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
-
-
-    const setStateHandler = (location, state) => {
-        dispatch(analyticsActions.setLocation(location))
-        dispatch(analyticsActions.setMainState(state))
-    }
-
 
     const columns = PColumnsList(!!mainState.campaignId)
 
@@ -106,7 +99,7 @@ const Placements = () => {
                 ]
             }
 
-            const res = await analyticsServices.getPlacementData({
+            const res = await analyticsServices.fetchPlacementData({
                 ...tableRequestParams,
                 sorterColumn: localSorterColumn,
                 segment: localSegmentValue,
@@ -115,10 +108,6 @@ const Placements = () => {
                 activeMetrics,
                 areaChartMetric
             })
-
-            if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData()
-            }
 
             if (localSegmentValue === 'advertisingType') {
                 setPageData(prevState => ({
@@ -140,20 +129,43 @@ const Placements = () => {
                                         return targetObj
                                     })
 
+                                    if (localTableOptions.comparePreviousPeriod) {
+                                        item.compareWithPrevious = true
+                                    }
+
                                     return item
                                 })
                         } : prevState.table
                 }))
 
             } else {
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table,
-                    stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
-                }))
+                if (localTableOptions.comparePreviousPeriod && res.table) {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
+                        table: {
+                            ...res.table,
+                            response: res.table.response.map(item => {
+                                item.compareWithPrevious = true
+
+                                return item
+                            })
+                        }
+                    }))
+                } else {
+                    setPageData(prevState => ({
+                        metrics: res.metrics || prevState.metrics,
+                        chart: res.chart || prevState.chart,
+                        stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
+                        table: res.table || prevState.table,
+                    }))
+                }
             }
 
+            if (localTableOptions.comparePreviousPeriod) {
+                getPreviousPeriodData()
+            }
 
             setChartFetchingStatus(false)
             setTableFetchingStatus(false)
@@ -194,7 +206,7 @@ const Placements = () => {
                     },
                 ]
 
-                const res = await analyticsServices.getPlacementData({
+                const res = await analyticsServices.fetchPlacementData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
@@ -211,21 +223,9 @@ const Placements = () => {
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                compareWithPrevious: true,
                                 ..._.mapKeys(_.find(res.table.response, {placementName: item['placementName']}), (value, key) => {
                                     return `${key}_prev`
-                                }),
-                                // ...localSegmentValue === 'advertisingType' ? {
-                                //     segmentData: item.advertisingType_segmented.map((key, index) => {
-                                //         const targetObj = {..._.find(item.segmentData, {advertisingType: key}), compareWithPrevious: true}
-                                //
-                                //         columns.forEach(column => {
-                                //             targetObj[`${column.dataIndex}_prev`] = _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`] ? _.find(res.table.response, {placementName: item['placementName']})[`${column.dataIndex}_segmented`][index] : null
-                                //         })
-                                //
-                                //         return targetObj
-                                //     })
-                                // } : {}
+                                })
                             }))]
                         }
                     }
@@ -248,7 +248,12 @@ const Placements = () => {
         }))
 
         setLocalSorterColumn(data)
-        setTableRequestParams(prevState => ({...prevState, page: 1}))
+        setTableFetchingStatus(true)
+
+        clearTimeout(sorterTimeoutId)
+        sorterTimeoutId = setTimeout(() => {
+            setTableRequestParams(prevState => ({...prevState, page: 1}))
+        }, 300)
     }
 
 
