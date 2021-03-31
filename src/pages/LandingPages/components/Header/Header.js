@@ -25,7 +25,7 @@ const menu = [
         ]
     },
     {
-        title: 'Services',
+        title: 'Our Services',
         subMenu: [
             {
                 title: 'Enlighten your future',
@@ -41,40 +41,40 @@ const menu = [
             },
         ]
     },
-    {
-        title: 'Why Profit Whales?',
-        subMenu: [
-            {
-                title: 'PPC Automate',
-                link: '/',
-            },
-            {
-                title: 'Zero To Hero',
-                link: 'zero-to-hero-info',
-            }
-        ]
-    },
-    {
-        title: 'Our Insights',
-        subMenu: [
-            {
-                title: 'Blog',
-                outsideLink: 'https://blog.profitwhales.com/',
-            },
-            {
-                title: 'Case Studies',
-                outsideLink: 'https://blog.profitwhales.com/case-studies/',
-            },
-            {
-                title: 'Podcast',
-                outsideLink: 'https://blog.profitwhales.com/podcasts/',
-            },
-            {
-                title: 'Help Center',
-                outsideLink: 'https://intercom.help/profitwhales/en',
-            }
-        ]
-    },
+    // {
+    //     title: 'Why Profit Whales?',
+    //     subMenu: [
+    //         {
+    //             title: 'PPC Automate',
+    //             link: '/',
+    //         },
+    //         {
+    //             title: 'Zero To Hero',
+    //             link: 'zero-to-hero-info',
+    //         }
+    //     ]
+    // },
+    // {
+    //     title: 'Our Insights',
+    //     subMenu: [
+    //         {
+    //             title: 'Blog',
+    //             outsideLink: 'https://blog.profitwhales.com/',
+    //         },
+    //         {
+    //             title: 'Case Studies',
+    //             outsideLink: 'https://blog.profitwhales.com/case-studies/',
+    //         },
+    //         {
+    //             title: 'Podcast',
+    //             outsideLink: 'https://blog.profitwhales.com/podcasts/',
+    //         },
+    //         {
+    //             title: 'Help Center',
+    //             outsideLink: 'https://intercom.help/profitwhales/en',
+    //         }
+    //     ]
+    // },
     {
         title: 'Contact Us',
         link: 'contact-us'

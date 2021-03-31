@@ -15,6 +15,46 @@
     box-sizing: border-box;
   }
 
+  .btn.white.scroll-to-top {
+    width: 64px;
+    height: 64px;
+    position: fixed;
+    bottom: -64px;
+    right: 50px;
+    background: rgba(227, 236, 249, 0.54);
+    padding: 0;
+    transition: .3s;
+
+    &.visible {
+      bottom: 30px;
+    }
+
+    &.active-btn {
+      background: #E5ECF8;
+
+      svg {
+        fill: #6d6df6;
+      }
+    }
+
+    svg {
+      fill: #fff;
+      transition: .2s;
+    }
+
+    &:hover {
+      background: #E5ECF8;
+
+      svg {
+        fill: #6d6df6;
+      }
+    }
+
+    &:active {
+      background: rgba(109, 109, 246, 0.15);
+    }
+  }
+
   .login-link.mob {
     display: none;
   }
@@ -78,7 +118,8 @@
     margin: 48px 0 18px;
 
     .col {
-      flex: 1;
+      width: 20%;
+      //flex: 1;
       min-width: 180px;
       padding: 0 20px 0 0;
     }
@@ -228,6 +269,16 @@
   }
 
   @media (max-width: 600px) {
+    .btn.white.scroll-to-top {
+      width: 40px;
+      height: 40px;
+      right: 20px;
+
+      svg {
+        width: 60%;
+      }
+    }
+
     .container {
       .row:first-of-type {
         justify-content: center;
@@ -283,10 +334,10 @@
             margin-bottom: 12px;
             padding: 0 9px;
 
-          a {
-            min-width: max-content;
-            word-break: inherit;
-          }
+            a {
+              min-width: max-content;
+              word-break: inherit;
+            }
           }
         }
       }

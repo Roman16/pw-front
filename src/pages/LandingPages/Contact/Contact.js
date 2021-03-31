@@ -62,49 +62,58 @@ export const ContactForm = () => {
     return (
         <section className={'new-contact-form'}>
             <div className="container">
-                <form onSubmit={submitFormHandler}>
-                    <h3><span>Contact</span> Us</h3>
+                <ul className={'form-list'}>
+                    <li className={!successSend && 'active'}>
+                        <form onSubmit={submitFormHandler}>
+                            <h3><span>Contact</span> Us</h3>
 
-                    <div className="form-group">
-                        <label htmlFor="">Your Name</label>
-                        <Input
-                            required={true}
-                            placeholder={'Your Name'}
-                            value={requestData.name}
-                            onChange={({target: {value}}) => changeInputHandler('name', value)}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label htmlFor="">Your Name</label>
+                                <Input
+                                    required={true}
+                                    placeholder={'Your Name'}
+                                    value={requestData.name}
+                                    onChange={({target: {value}}) => changeInputHandler('name', value)}
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label htmlFor="">E-mail</label>
-                        <Input
-                            required={true}
-                            placeholder={'E-mail'}
-                            value={requestData.email}
-                            onChange={({target: {value}}) => changeInputHandler('email', value)}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label htmlFor="">E-mail</label>
+                                <Input
+                                    required={true}
+                                    placeholder={'E-mail'}
+                                    value={requestData.email}
+                                    onChange={({target: {value}}) => changeInputHandler('email', value)}
+                                />
+                            </div>
 
-                    <div className="form-group">
-                        <label htmlFor="">Message</label>
-                        <TextArea
-                            placeholder={'Message'}
-                            value={requestData.comment}
-                            onChange={({target: {value}}) => changeInputHandler('comment', value)}
-                        />
-                    </div>
+                            <div className="form-group">
+                                <label htmlFor="">Message</label>
+                                <TextArea
+                                    placeholder={'Message'}
+                                    value={requestData.comment}
+                                    onChange={({target: {value}}) => changeInputHandler('comment', value)}
+                                />
+                            </div>
 
-                    <Checkbox
-                        onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
-                    >
-                        Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
-                        and
-                        Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
-                    </Checkbox>
+                            <Checkbox
+                                onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
+                            >
+                                Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
+                                and
+                                Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
+                            </Checkbox>
 
-                    <button className={'btn default'} disabled={requestData.name === '' || requestData.email === '' || requestData.comment === '' || !agreeWithTerms}>let’s talk</button>
+                            <button
+                                className={'btn default'}
+                                disabled={requestData.name === '' || requestData.email === '' || requestData.comment === '' || !agreeWithTerms}
+                            >
+                                let’s talk
+                            </button>
+                        </form>
+                    </li>
 
-                    <div className={`success ${successSend ? 'show' : ''}`}>
+                    <li className={`success ${successSend ? 'active' : ''}`}>
                         <i>
                             <svg width="110" height="110" viewBox="0 0 110 110" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
@@ -129,8 +138,8 @@ export const ContactForm = () => {
                             onClick={() => setSuccessSend(false)}>
                             OK
                         </button>
-                    </div>
-                </form>
+                    </li>
+                </ul>
 
                 <div className="col">
                     <h2>

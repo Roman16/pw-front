@@ -160,7 +160,6 @@ const MainPage = () => {
             $header.addEventListener("mouseleave", mouseleaveListener, false)
         }
 
-
         return (() => {
             window.removeEventListener('scroll', onScroll)
             $header.removeEventListener("mouseenter", mouseenterListener, false)
@@ -194,6 +193,7 @@ const MainPage = () => {
                 controls={false}
                 loop={true}
                 muted={true}
+                playsinline
             >
                 <source src={videoBgMob} type="video/mp4"/>
             </video>
@@ -399,8 +399,16 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <button className="btn default mob" onClick={() => setVisibleMapDetails(prevState => !prevState)}>
+                    <button className={`btn white mob ${visibleMapDetails ? 'open' : ''}`} onClick={() => setVisibleMapDetails(prevState => !prevState)}>
                        {!visibleMapDetails ?  'show more' : 'show less'}
+                        <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="10" height="14">
+                                <rect width="14" height="10" transform="matrix(0 1 1 0 0 0)" fill="#C4C4C4"/>
+                            </mask>
+                            <g mask="url(#mask0)">
+                                <path d="M1 9.25012L5 13.0001M5 13.0001L9 9.25012M5 13.0001L5 1.00012" stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </g>
+                        </svg>
                     </button>
                 </div>
             </div>
@@ -504,7 +512,9 @@ const MainPage = () => {
                 <div className="last-posts last-blog">
                     <div className="row">
                         <div className="post">
-                            <img src={blogImage1} alt=""/>
+                            <div className="image">
+                                <img src={blogImage1} alt=""/>
+                            </div>
 
                             <div className="col">
                                 <label htmlFor="">blog</label>
@@ -519,7 +529,9 @@ const MainPage = () => {
                         </div>
 
                         <div className="post">
-                            <img src={blogImage2} alt=""/>
+                            <div className="image">
+                                <img src={blogImage2} alt=""/>
+                            </div>
 
                             <div className="col">
                                 <label htmlFor="">blog</label>
@@ -554,7 +566,9 @@ const MainPage = () => {
                 <div className="last-posts last-studies">
                     <div className="row">
                         <div className="post">
-                            <img src={blogImage3} alt=""/>
+                            <div className="image">
+                                <img src={blogImage3} alt=""/>
+                            </div>
 
                             <div className="col">
                                 <label htmlFor="">CASE STUDY</label>
@@ -568,7 +582,9 @@ const MainPage = () => {
                         </div>
 
                         <div className="post">
-                            <img src={blogImage4} alt=""/>
+                            <div className="image">
+                                <img src={blogImage4} alt=""/>
+                            </div>
 
                             <div className="col">
                                 <label htmlFor="">CASE STUDY</label>
