@@ -23,19 +23,19 @@ import {Switch} from "antd"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
-        {
-            title: 'Active',
-            dataIndex: 'state',
-            key: 'state',
-            width: '65px',
-            noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
-        },
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Campaign',
             dataIndex: 'name',

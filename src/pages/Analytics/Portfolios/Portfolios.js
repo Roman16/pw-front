@@ -27,10 +27,10 @@ const Portfolios = () => {
                 showRowSelection={false}
 
                 columns={columnList(setStateHandler)}
-                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
 
-            <CreatePortfolioWindow/>
+            {/*<CreatePortfolioWindow/>*/}
         </div>
     )
 }

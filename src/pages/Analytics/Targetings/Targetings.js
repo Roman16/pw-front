@@ -30,12 +30,13 @@ const Targetings = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={[0, 1]}
+                // fixedColumns={[0, 1]}
+                fixedColumns={[0]}
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
-                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
-                showRowSelection={true}
-                rowKey={'targetingId'}
+                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // showRowSelection={true}
+                // rowKey={'targetingId'}
             />
 
             <CreateTargetingsWindow/>

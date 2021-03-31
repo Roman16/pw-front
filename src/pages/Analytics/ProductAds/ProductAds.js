@@ -29,12 +29,13 @@ const ProductAds = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={[0, 1]}
+                fixedColumns={[0]}
+                // fixedColumns={[0, 1]}
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
-                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
-                showRowSelection={true}
-                rowKey={'adId'}
+                // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                // showRowSelection={true}
+                // rowKey={'adId'}
             />
 
             <CreateProductAdsWindow/>

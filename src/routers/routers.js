@@ -23,16 +23,6 @@ const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPoli
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'))
 const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
-const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeDo'))
-const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
-const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/Recognition'))
-const Contact = React.lazy(() => import('../pages/LandingPages/Contact/Contact'))
-const GetAudit = React.lazy(() => import('../pages/LandingPages/GetAudit/GetAudit'))
-const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOption/IdentifyOption'))
-const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/EnlightenFuture/EnlightenFuture'))
-const RedefineApproach = React.lazy(() => import('../pages/LandingPages/RedefineApproach/RedefineApproach'))
-const CustomerSatisfactionSurvey = React.lazy(() => import('../pages/LandingPages/CustomerSatisfactionSurvey/CustomerSatisfactionSurvey'))
-const MainPage = React.lazy(() => import('../pages/LandingPages/MainPage/MainPage'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -52,7 +42,7 @@ const routers = () => {
         <Suspense fallback={<RouteLoader/>}>
             <Router history={history}>
                 <Switch>
-                    <Route exact path="/" component={MainPage}/>
+                    <Route exact path="/" component={LandingAutomation}/>
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
                     <Route exact path="/about-us" component={AboutUs}/>
                     {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
@@ -60,7 +50,7 @@ const routers = () => {
                     <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                     <Route exact path="/thank-you" component={ThankYou}/>
                     <Route exact path="/demo-call" component={DemoCall}/>
-                    <Route exact path="/contact-us/:status?" component={Contact}/>
+                    <Route exact path="/contact-us/:status?" component={ContactUs}/>
                     <Route exact path="/help-support" component={HelpSupport}/>
                     <Route exact path="/partners" component={Partners}/>
                     <Route exact path="/audit" component={Audit}/>
@@ -70,19 +60,11 @@ const routers = () => {
                     <Route exact path="/videos/:block?" component={Video}/>
                     <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     <Route exact path="/zero-to-hero-info" component={LandingZTH}/>
-                    <Route exact path="/care-we-do" component={CareWeDo}/>
-                    <Route exact path="/our-whale" component={OurWhale}/>
-                    <Route exact path="/recognition" component={Recognition}/>
-                    <Route exact path="/get-audit" component={GetAudit}/>
-                    <Route exact path="/identify-option/:filter?" component={IdentifyOption}/>
-                    <Route exact path="/enlighten-future" component={EnlightenFuture}/>
-                    <Route exact path="/redefine-approach" component={RedefineApproach}/>
-                    <Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
                     <Route exact path="/registration/:tag?" render={(props) => {
-                        if (props.match.params.tag && props.match.params.tag === 'from-agency') {
+                        if(props.match.params.tag && props.match.params.tag === 'from-agency') {
                             return (<RegistrationPage {...props}/>)
                         } else {
                             return (<AuditRegistration/>)

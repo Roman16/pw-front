@@ -34,19 +34,19 @@ export const automatePatDescription = {
 
 
 export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
-        {
-            title: 'Active',
-            dataIndex: 'state',
-            key: 'state',
-            width: '65px',
-            noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
-        },
+        // {
+        //     title: 'Active',
+        //     dataIndex: 'state',
+        //     key: 'state',
+        //     width: '65px',
+        //     noTotal: true,
+        //     render: (state) => <div className="switch-block">
+        //         <Switch
+        //             disabled={state === 'archived'}
+        //             checked={state === 'enabled'}
+        //         />
+        //     </div>
+        // },
         {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
