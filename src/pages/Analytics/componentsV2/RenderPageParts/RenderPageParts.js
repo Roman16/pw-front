@@ -65,7 +65,7 @@ const RenderPageParts = ({
 
         clearTimeout(sorterTimeoutId)
         sorterTimeoutId = setTimeout(() => {
-            setTableRequestParams(prevState => ({...prevState, page: 1}))
+            getPageData(['table'], {...tableRequestParams, page: 1}, data)
         }, 300)
     }
 
@@ -84,7 +84,7 @@ const RenderPageParts = ({
         getPageData(['table'], data)
     }
 
-    const getPageData = debounce(50, false, async (pageParts, paginationParams) => {
+    const getPageData = debounce(50, false, async (pageParts, paginationParams, sorterParams) => {
         if (paginationParams) setTableRequestParams(paginationParams)
 
         if (location === 'overview') {
@@ -144,7 +144,7 @@ const RenderPageParts = ({
                 location,
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
-                    sorterColumn: localSorterColumn,
+                    sorterColumn: sorterParams ? sorterParams :localSorterColumn,
                     pageParts,
                     filtersWithState,
                     activeMetrics,
@@ -156,7 +156,7 @@ const RenderPageParts = ({
                     'products',
                     {
                         ...paginationParams ? paginationParams : tableRequestParams,
-                        sorterColumn: localSorterColumn,
+                        sorterColumn: sorterParams ? sorterParams :localSorterColumn,
                         pageParts: ['table'],
                         filtersWithState,
                         activeMetrics,
