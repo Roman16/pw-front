@@ -545,22 +545,22 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <a href="">
-                      <span className={'desk'}>See more articles</span>
-                      <span className={'mob'}> more articles</span>
+                    {/*<a href="">*/}
+                    {/*  <span className={'desk'}>See more articles</span>*/}
+                    {/*  <span className={'mob'}> more articles</span>*/}
 
-                        <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
-                                  height="12">
-                                <rect width="16.8" height="12" fill="#C4C4C4"/>
-                            </mask>
-                            <g mask="url(#mask0)">
-                                <path
-                                    d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"
-                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                        </svg>
-                    </a>
+                    {/*    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                    {/*        <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"*/}
+                    {/*              height="12">*/}
+                    {/*            <rect width="16.8" height="12" fill="#C4C4C4"/>*/}
+                    {/*        </mask>*/}
+                    {/*        <g mask="url(#mask0)">*/}
+                    {/*            <path*/}
+                    {/*                d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"*/}
+                    {/*                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>*/}
+                    {/*        </g>*/}
+                    {/*    </svg>*/}
+                    {/*</a>*/}
                 </div>
 
                 <div className="last-posts last-studies">
@@ -598,22 +598,22 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <a href="">
-                        <span className={'desk'}>See more case studies</span>
-                        <span className={'mob'}> more case studies</span>
+                    {/*<a href="">*/}
+                    {/*    <span className={'desk'}>See more case studies</span>*/}
+                    {/*    <span className={'mob'}> more case studies</span>*/}
 
-                        <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"
-                                  height="12">
-                                <rect width="16.8" height="12" fill="#C4C4C4"/>
-                            </mask>
-                            <g mask="url(#mask0)">
-                                <path
-                                    d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"
-                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </g>
-                        </svg>
-                    </a>
+                    {/*    <svg width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
+                    {/*        <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="17"*/}
+                    {/*              height="12">*/}
+                    {/*            <rect width="16.8" height="12" fill="#C4C4C4"/>*/}
+                    {/*        </mask>*/}
+                    {/*        <g mask="url(#mask0)">*/}
+                    {/*            <path*/}
+                    {/*                d="M11.1002 1.19995L15.6002 5.99995M15.6002 5.99995L11.1002 10.8M15.6002 5.99995L1.20019 5.99995"*/}
+                    {/*                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>*/}
+                    {/*        </g>*/}
+                    {/*    </svg>*/}
+                    {/*</a>*/}
                 </div>
             </div>
         </section>

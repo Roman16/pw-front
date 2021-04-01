@@ -18,7 +18,7 @@ import PreFooter from "./PreFooter"
 
 const ContactUs = (props) => {
     const showIntercom = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     }
 
     useEffect(() => {

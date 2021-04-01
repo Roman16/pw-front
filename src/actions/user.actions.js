@@ -36,12 +36,12 @@ function login(user) {
                     .then(userFullInformation => {
                         dispatch(setInformation(userFullInformation))
 
-                        window.Intercom("boot", {
-                            app_id: "hkyfju3m",
-                            name: userFullInformation.user.name, // Full name
-                            email: userFullInformation.user.email, // Email address
-                            created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
-                        })
+                        // window.Intercom("boot", {
+                        //     app_id: "hkyfju3m",
+                        //     name: userFullInformation.user.name, // Full name
+                        //     email: userFullInformation.user.email, // Email address
+                        //     created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
+                        // })
 
                         const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
                             ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected

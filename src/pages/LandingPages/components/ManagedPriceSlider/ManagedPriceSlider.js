@@ -21,7 +21,7 @@ const ManagedPriceSlider = () => {
 
 
     const onOpenChat = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     };
 
     return (

@@ -56,12 +56,12 @@ const routers = () => {
                     <Route exact path="/affiliates" component={LandingAffiliates}/>
                     <Route exact path="/about-us" component={AboutUs}/>
                     {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
-                    <Route exact path="/pricing" component={Pricing}/>
+                    {/*<Route exact path="/pricing" component={Pricing}/>*/}
                     <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
                     <Route exact path="/thank-you" component={ThankYou}/>
-                    <Route exact path="/demo-call" component={DemoCall}/>
+                    {/*<Route exact path="/demo-call" component={DemoCall}/>*/}
                     <Route exact path="/contact-us/:status?" component={Contact}/>
-                    <Route exact path="/help-support" component={HelpSupport}/>
+                    {/*<Route exact path="/help-support" component={HelpSupport}/>*/}
                     <Route exact path="/partners" component={Partners}/>
                     <Route exact path="/audit" component={Audit}/>
                     <Route exact path="/book-a-demo" component={BookDemo}/>

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom"
 
 const PreFooter = () => {
     const showIntercom = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     }
 
     return (

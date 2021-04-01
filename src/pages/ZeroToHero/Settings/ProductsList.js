@@ -130,7 +130,7 @@ const jobIssues = ({job, batch}) => {
         } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
             return (
                 <div className="issues-field">
-                    <button className={'btn green-btn'} onClick={() => window.Intercom('show')}>
+                    <button className={'btn green-btn'}>
                         Help Center
                     </button>
                 </div>
