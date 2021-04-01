@@ -41,7 +41,7 @@ const Footer = () => (
 
                     <ul>
                         <li><Link to={'/our-whale'}>Our Whale</Link></li>
-                        <li><Link to={'/'}>Culture</Link></li>
+                        {/*<li><Link to={'/'}>Culture</Link></li>*/}
                         <li><Link to={'/care-we-do'}>Care we do</Link></li>
                         <li><Link to={'/recognition'}>Recognition</Link></li>
                     </ul>

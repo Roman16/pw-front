@@ -6,6 +6,7 @@ import PageTitle from "../CareWeDo/PageTitle"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import {useSwipeEffect} from "../../../utils/hooks/useSwipeEffect"
 
 let intervalId = null
 
@@ -21,18 +22,51 @@ const OurWhale = () => {
     const changeActiveFocusHandler = (index) => {
         clearInterval(intervalId)
         setActiveFocus(index)
-        startInterval()
     }
 
-    const startInterval = () => {
-        intervalId = setInterval(() => {
-            setActiveFocus(prevState => prevState === 2 ? 0 : prevState + 1)
-        }, 2000)
+    const goToNextSlide = () => {
+        const slides = document.querySelectorAll('.focus ul > li')
+
+        let index = activeFocus + 1
+
+        if (activeFocus === slides.length - 1) {
+            slides[slides.length - 1].style.transform = 'translateX(-150px)'
+            slides[0].style.transform = 'translateX(150px)'
+        } else {
+            slides.forEach((item, i) => {
+                if (i < index) item.style.transform = 'translateX(-150px)'
+                else item.style.transform = 'translateX(150px)'
+            })
+        }
+
+        setTimeout(() => {
+            setActiveFocus(prevState => prevState === slides.length - 1 ? 0 : prevState + 1)
+        }, 100)
     }
 
-    useEffect(() => {
-        startInterval()
-    }, [])
+    const goToPrevSlide = () => {
+        const slides = document.querySelectorAll('.focus ul > li')
+
+        let index = activeFocus - 1
+
+        if (activeFocus === 0) {
+            slides[slides.length - 1].style.transform = 'translateX(-150px)'
+            slides[0].style.transform = 'translateX(150px)'
+
+        } else {
+            slides.forEach((item, i) => {
+                if (i <= index) item.style.transform = 'translateX(-150px)'
+                else item.style.transform = 'translateX(150px)'
+            })
+        }
+
+        setTimeout(() => {
+            setActiveFocus(prevState => prevState === 0 ? slides.length - 1 : prevState - 1)
+        }, 100)
+    }
+
+    const [touchStart, swipeHandler] = useSwipeEffect(goToPrevSlide, goToNextSlide)
+
 
     return (
         <div className="our-whale-page  landing-page">
@@ -392,7 +426,7 @@ const OurWhale = () => {
                         We are not just another PPC focused advertising company, <span>we are driven by our unique approach:</span>
                     </h2>
 
-                    <ul>
+                    <ul onTouchMove={swipeHandler} onTouchStart={touchStart}>
                         <li className={activeFocus === 0 && 'active'}>
                             <i>
                                 <svg width="45" height="38" viewBox="0 0 45 38" fill="none"
