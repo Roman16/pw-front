@@ -11,7 +11,7 @@ import bestSellerIcon from "../../../../assets/img/landing-zth/best-seller-icon.
 
 const ZTHPricingGuide = () => {
     const onOpenChat = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     };
 
     return (

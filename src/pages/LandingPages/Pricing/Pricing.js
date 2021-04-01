@@ -153,7 +153,7 @@ const Pricing = () => {
                             your questions and provide actionable steps that you can implement in your business.
                         </p>
 
-                        <button className={'btn default'} onClick={() => window.Intercom('show')}>
+                        <button className={'btn default'} >
                             Contact Us
                         </button>
                     </div>

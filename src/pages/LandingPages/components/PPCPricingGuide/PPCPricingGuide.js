@@ -8,7 +8,7 @@ import Slider from "react-slick";
 
 const PPCPricingGuide = () => {
     const onOpenChat = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     };
 
     return (

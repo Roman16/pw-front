@@ -56,7 +56,7 @@ const HelpSupport = () => {
     const [currentTime, setCurrentTime] = useState(moment.tz(new Date(), 'Europe/Kiev').format('hh:mm:ss A'))
 
     const showIntercom = () => {
-        window.Intercom('show')
+        // window.Intercom('show')
     }
 
     useEffect(() => {
