@@ -1,9 +1,9 @@
 import React, {useState} from "react"
 import Steps from "./Steps"
-import {Input, Radio} from "antd"
+import {Input} from "antd"
 import {SVG} from "../../../utils/icons"
 import {Link} from "react-router-dom"
-import {notification} from "../../../components/Notification"
+import {Radio} from "../../../components/RadioButton/RadioButton"
 
 
 const countDots4 = () => <svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -384,18 +384,19 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                         <div className="form-group radio">
                             <label htmlFor="">Do you have brand registry?</label>
 
-                            <Radio.Group
-                                value={formData.is_has_brand_registry}
-                                onChange={({target: {value}}) => changeFormHandler('is_has_brand_registry', value)}
-                            >
-                                <Radio value={true}>
-                                    Yes
-                                </Radio>
+                            <div className={'radio-group'}>
+                                <Radio
+                                    checked={formData.is_has_brand_registry === true}
+                                    onChange={() => changeFormHandler('is_has_brand_registry', true)}
+                                    label={'Yes'}
+                                />
 
-                                <Radio value={false}>
-                                    No
-                                </Radio>
-                            </Radio.Group>
+                                <Radio
+                                    checked={formData.is_has_brand_registry === false}
+                                    onChange={() => changeFormHandler('is_has_brand_registry', false)}
+                                    label={'No'}
+                                />
+                            </div>
                         </div>
 
                         <NavigationButtons disabled={!formData.storefront_name}/>
@@ -408,22 +409,20 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     </h3>
 
                     <form onSubmit={goNextStepHandler}>
-                        <Radio.Group
-                            value={formData.avg_monthly_ad_spend}
-                            onChange={({target: {value}}) => changeFormHandler('avg_monthly_ad_spend', value)}
-                        >
-                            <ul>
-                                {monthlyAdSpendVariations.map(item => (
-                                    <li
-                                        className={formData.avg_monthly_ad_spend === item.value ? 'active' : ''}
-                                        onClick={() => changeFormHandler('avg_monthly_ad_spend', item.value)}
-                                    >
-                                        <label>{item.label}</label>
-                                        <Radio value={item.value}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Radio.Group>
+                        <ul>
+                            {monthlyAdSpendVariations.map(item => (
+                                <li
+                                    className={formData.avg_monthly_ad_spend === item.value ? 'active' : ''}
+                                    onClick={() => changeFormHandler('avg_monthly_ad_spend', item.value)}
+                                >
+                                    <label>{item.label}</label>
+                                    <Radio
+                                        checked={formData.avg_monthly_ad_spend === item.value}
+                                        onChange={() => changeFormHandler('avg_monthly_ad_spend', item.value)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
 
                         <NavigationButtons disabled={!formData.avg_monthly_ad_spend}/>
                     </form>
@@ -436,23 +435,20 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     </h3>
 
                     <form onSubmit={goNextStepHandler}>
-                        <Radio.Group
-                            defaultValue={true}
-                            value={formData.avg_monthly_ad_sales}
-                            onChange={({target: {value}}) => changeFormHandler('avg_monthly_ad_sales', value)}
-                        >
-                            <ul>
-                                {monthlySalesVariations.map(item => (
-                                    <li
-                                        className={formData.avg_monthly_ad_sales === item.value ? 'active' : ''}
-                                        onClick={() => changeFormHandler('avg_monthly_ad_sales', item.value)}
-                                    >
-                                        <label>{item.label}</label>
-                                        <Radio value={item.value}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Radio.Group>
+                        <ul>
+                            {monthlySalesVariations.map(item => (
+                                <li
+                                    className={formData.avg_monthly_ad_sales === item.value ? 'active' : ''}
+                                    onClick={() => changeFormHandler('avg_monthly_ad_sales', item.value)}
+                                >
+                                    <label>{item.label}</label>
+                                    <Radio
+                                        checked={formData.avg_monthly_ad_sales === item.value}
+                                        onChange={() => changeFormHandler('avg_monthly_ad_sales', item.value)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
 
                         <NavigationButtons disabled={!formData.avg_monthly_ad_sales}/>
                     </form>
@@ -463,29 +459,26 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     </h3>
 
                     <form onSubmit={goNextStepHandler}>
-                        <Radio.Group
-                            defaultValue={true}
-                            value={formData.active_marketplaces}
-                            onChange={({target: {value}}) => changeFormHandler('active_marketplaces', value)}
-                        >
-                            <ul>
-                                {marketplaceVariations.map(item => (
-                                    <li
-                                        className={formData.active_marketplaces === item.value ? 'active' : ''}
-                                        onClick={() => changeFormHandler('active_marketplaces', item.value)}
-                                    >
-                                        <i>
-                                            {item.icon === 'other' ? <div className={'dots'}/> :
-                                                <SVG id={`${item.icon}-icon`}/>}
-                                        </i>
+                        <ul>
+                            {marketplaceVariations.map(item => (
+                                <li
+                                    className={formData.active_marketplaces === item.value ? 'active' : ''}
+                                    onClick={() => changeFormHandler('active_marketplaces', item.value)}
+                                >
+                                    <i>
+                                        {item.icon === 'other' ? <div className={'dots'}/> :
+                                            <SVG id={`${item.icon}-icon`}/>}
+                                    </i>
 
-                                        <label>{item.label}</label>
+                                    <label>{item.label}</label>
 
-                                        <Radio value={item.value}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Radio.Group>
+                                    <Radio
+                                        checked={formData.active_marketplaces === item.value}
+                                        onChange={() => changeFormHandler('active_marketplaces', item.value)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
 
                         <NavigationButtons disabled={!formData.active_marketplaces}/>
                     </form>
@@ -496,26 +489,23 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     </h3>
 
                     <form onSubmit={goNextStepHandler}>
-                        <Radio.Group
-                            defaultValue={true}
-                            value={formData.amazon_number_of_active_products}
-                            onChange={({target: {value}}) => changeFormHandler('amazon_number_of_active_products', value)}
-                        >
-                            <ul>
-                                {amountProductsVariations.map((item, index) => (
-                                    <li
-                                        className={formData.amazon_number_of_active_products === item.value ? 'active' : ''}
-                                        onClick={() => changeFormHandler('amazon_number_of_active_products', item.value)}
-                                    >
-                                        <i>
-                                            {item.icon ? item.icon() : Array(index + 1).fill(0).map(() => <div/>)}
-                                        </i>
-                                        <label>{item.label}</label>
-                                        <Radio value={item.value}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Radio.Group>
+                        <ul>
+                            {amountProductsVariations.map((item, index) => (
+                                <li
+                                    className={formData.amazon_number_of_active_products === item.value ? 'active' : ''}
+                                    onClick={() => changeFormHandler('amazon_number_of_active_products', item.value)}
+                                >
+                                    <i>
+                                        {item.icon ? item.icon() : Array(index + 1).fill(0).map(() => <div/>)}
+                                    </i>
+                                    <label>{item.label}</label>
+                                    <Radio
+                                        checked={formData.amazon_number_of_active_products === item.value}
+                                        onChange={() => changeFormHandler('amazon_number_of_active_products', item.value)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
 
                         <NavigationButtons disabled={!formData.amazon_number_of_active_products}/>
                     </form>
@@ -527,39 +517,36 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                     </h3>
 
                     <form onSubmit={goNextStepHandler}>
-                        <Radio.Group
-                            defaultValue={true}
-                            value={formData.main_goal}
-                            onChange={({target: {value}}) => changeFormHandler('main_goal', value)}
-                        >
-                            <ul>
-                                {advertisingStrategyVariations.map((item, index) => (
-                                    <li
-                                        className={formData.main_goal === item.value ? 'active' : ''}
-                                        onClick={() => changeFormHandler('main_goal', item.value)}
-                                    >
-                                        {item.value === 'other' ? <><label className={'desc'}>
-                                            Other:
-                                            <Input
-                                                disabled={formData.main_goal !== 'other'}
-                                                placeholder={'Your option'}
-                                                value={formData.main_goal_other}
-                                                onChange={({target: {value}}) => changeFormHandler('main_goal_other', value)}
-                                            />
-                                        </label> <label className={'mob'}>
-                                            Other:</label> <Input
+                        <ul>
+                            {advertisingStrategyVariations.map((item, index) => (
+                                <li
+                                    className={formData.main_goal === item.value ? 'active' : ''}
+                                    onClick={() => changeFormHandler('main_goal', item.value)}
+                                >
+                                    {item.value === 'other' ? <><label className={'desc'}>
+                                        Other:
+                                        <Input
                                             disabled={formData.main_goal !== 'other'}
                                             placeholder={'Your option'}
-                                            className={'mob'}
                                             value={formData.main_goal_other}
                                             onChange={({target: {value}}) => changeFormHandler('main_goal_other', value)}
-                                        /></> : <label>{item.label}</label>}
+                                        />
+                                    </label> <label className={'mob'}>
+                                        Other:</label> <Input
+                                        disabled={formData.main_goal !== 'other'}
+                                        placeholder={'Your option'}
+                                        className={'mob'}
+                                        value={formData.main_goal_other}
+                                        onChange={({target: {value}}) => changeFormHandler('main_goal_other', value)}
+                                    /></> : <label>{item.label}</label>}
 
-                                        <Radio value={item.value}/>
-                                    </li>
-                                ))}
-                            </ul>
-                        </Radio.Group>
+                                    <Radio
+                                        checked={formData.main_goal === item.value}
+                                        onChange={() => changeFormHandler('main_goal', item.value)}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
 
                         <NavigationButtons disabled={!formData.main_goal}/>
 
@@ -570,8 +557,6 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                             <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                         </p>
                     </form>
-
-
                 </div>
             </div>
 
