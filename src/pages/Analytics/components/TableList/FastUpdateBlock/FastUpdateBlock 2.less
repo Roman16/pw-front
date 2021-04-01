@@ -1,0 +1,81 @@
+.table-section .fast-update-block {
+  width: 100%;
+  min-height: 5.142857142857143rem;
+  display: flex;
+  align-items: center;
+  background: #6D6DF6;
+  padding: 20px;
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  //border-bottom: 0.5px solid #6D6DF6;
+
+  p {
+    margin: 0;
+    font-size: 1.1428571428571428rem;
+  }
+
+  .select-all-btn {
+    font-weight: 500;
+    font-size: 1.1428571428571428rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    grid-column-gap: 12px;
+    margin: 0 20px 0 auto;
+
+    label {
+      font-size: 1.1428571428571428rem;
+      margin: 0 8px 0 0;
+    }
+
+    .form-group {
+      width: 180px;
+      height: 2.2857142857142856rem;
+
+      margin: 0;
+
+      .custom-select, .InputCurrency {
+        width: 100%;
+        height: 100%;
+
+        .ant-select-selection-selected-value {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .btn {
+      height: 2.2857142857142856rem;
+      background: #7DD4A1;
+      padding: 0 1.4285714285714286rem;
+      font-weight: 500;
+      font-size: 0.8571428571428571rem;
+    }
+  }
+
+  .btn.close {
+    width: 20px;
+    height: 20px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    &:hover {
+      svg {
+        fill: #7DD4A1;
+      }
+    }
+  }
+}

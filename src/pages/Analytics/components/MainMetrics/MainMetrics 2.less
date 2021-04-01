@@ -1,0 +1,32 @@
+.analytics-page .main-metrics {
+  grid-template-columns: repeat(6, minmax(13.571428571428571rem, 1fr));
+
+  .horizontal-line-icon {
+    margin: 0 3px 0 0 !important;
+  }
+}
+
+.metrics-modal {
+  .ant-modal-body .hidden-list .metric-item {
+    .value {
+      background: initial;
+    }
+
+    &.disabled {
+      background: rgba(228, 228, 228, 0.45);
+      cursor: auto;
+
+      .add-item {
+        display: none;
+      }
+
+      .value {
+        background: transparent !important;
+      }
+
+      &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+}
