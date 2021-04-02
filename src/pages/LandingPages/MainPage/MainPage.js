@@ -4,7 +4,7 @@ import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 
 import videoBg from '../../../assets/img/landing-mainPage/video-bg.mp4'
-import videoBgMob from '../../../assets/img/landing-mainPage/video-bg_mob.mp4'
+import videoBgMob from '../../../assets/img/landing-mainPage/video-bg_mob.gif'
 import {Link} from "react-router-dom"
 import {Collapse} from 'antd'
 import mapImage from '../../../assets/img/landing-mainPage/map.png'
@@ -187,16 +187,9 @@ const MainPage = () => {
                 <source src={videoBg} type="video/mp4"/>
             </video>
 
-            <video
+            <img
                 className="block-video-container mob"
-                autoPlay={true}
-                controls={false}
-                loop={true}
-                muted={true}
-                playsinline
-            >
-                <source src={videoBgMob} type="video/mp4"/>
-            </video>
+                src={videoBgMob} alt=""/>
 
             <div className="container">
                 <h2>

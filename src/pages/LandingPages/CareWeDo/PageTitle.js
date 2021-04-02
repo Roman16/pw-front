@@ -1,6 +1,6 @@
 import React from "react"
 import videoBg from "../../../assets/img/landing-careWeDo/video-bg.mp4"
-import videoBgMob from "../../../assets/img/landing-careWeDo/video-bg-mob.mp4"
+import videoBgMob from "../../../assets/img/landing-careWeDo/video-bg-mob.gif"
 import './CareWeDo.less'
 
 const PageTitle = ({title}) => {
@@ -16,15 +16,10 @@ const PageTitle = ({title}) => {
                 <source src={videoBg} type="video/mp4"/>
             </video>
 
-            <video
+            <img
                 className="block-video-container mob"
-                autoPlay={true}
-                controls={false}
-                loop={true}
-                muted={true}
-            >
-                <source src={videoBgMob} type="video/mp4"/>
-            </video>
+                src={videoBgMob} alt=""
+            />
 
             <diw className="container">
                 <h1 dangerouslySetInnerHTML={{__html: title}}/>

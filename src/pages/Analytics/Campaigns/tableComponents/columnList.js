@@ -84,13 +84,8 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             noTotal: true,
             filter: true,
             fastUpdating: true,
-            edit: true,
-            render: (budget, item) => <EditableField
-                type={'currency'}
-                value={budget}
-                onUpdate={onUpdateField}
-                id={item.campaignId}
-            />
+            editType: 'currency',
+            render: (budget, item) => budget ? `$${budget}` : ''
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
