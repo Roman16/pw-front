@@ -56,7 +56,10 @@
           border-right: 0;
         }
 
-        &:last-of-type {
+        &:nth-child(12),
+        &:nth-child(10),
+        &:nth-child(9),
+        &:nth-child(11) {
           border-bottom: 0;
         }
 
@@ -81,10 +84,15 @@
 
         li {
           border: 0;
-          border-bottom: 2px solid #EEEEEE;
+          border-bottom: 2px solid #EEEEEE !important;
 
           &:nth-child(2n + 1) {
             border-right: 2px solid #EEEEEE;
+          }
+
+          &:nth-child(12),
+          &:nth-child(11) {
+            border-bottom: 0 !important;
           }
         }
       }

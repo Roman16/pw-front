@@ -50,9 +50,9 @@ const Footer = () => (
                 <div className="col">
                     <h4>Services</h4>
                     <ul>
-                        <li><Link to={'/'}>Identify your option</Link></li>
-                        <li><Link to={'/'}>Enlighten your future</Link></li>
-                        <li><Link to={'/'}>Redefine your approach</Link></li>
+                        <li><Link to={'/enlighten-future'}>Identify your option</Link></li>
+                        <li><Link to={'/identify-option'}>Enlighten your future</Link></li>
+                        <li><Link to={'/redefine-approach'}>Redefine your approach</Link></li>
                     </ul>
 
                 </div>
