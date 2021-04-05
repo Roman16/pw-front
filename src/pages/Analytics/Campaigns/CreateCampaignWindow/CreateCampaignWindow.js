@@ -124,7 +124,7 @@ const CreateCampaignWindow = () => {
 
     const createCampaignHandler = async () => {
         try {
-            await analyticsServices.createCampaign({
+            await analyticsServices.createEntity('campaigns', {
                 name: createCampaignData.name,
                 portfolio_name: createCampaignData.portfolio_name,
                 startDate: createCampaignData.startDate,

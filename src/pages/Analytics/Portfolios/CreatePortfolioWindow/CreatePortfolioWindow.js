@@ -8,14 +8,17 @@ import CustomSelect from "../../../../components/Select/Select"
 import './CreatePortfolioWindow.less'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
+import {analyticsServices} from "../../../../services/analytics.services"
+import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
 const CreatePortfolioWindow = () => {
     const [createPortfolioData, setCreatePortfolioData] = useState({
-        portfolio_name: '',
-        budget_cap: 'no-budget',
-        monthly_budget_cap: 0,
+        name: '',
+        state: 'enabled',
+        budgetCap: 'no-budget',
+        budget_amount: 0,
         create_ends_date: 'never'
     })
 
@@ -31,8 +34,39 @@ const CreatePortfolioWindow = () => {
         setCreatePortfolioData(prevState => ({...prevState, ...value}))
     }
 
-    const onCreate = () => {
+    const onCreate = async () => {
+        try {
+            let requestData
 
+            if (createPortfolioData.budgetCap === 'no-budget') {
+                requestData = {
+                    name: createPortfolioData.name,
+                    state: createPortfolioData.state,
+                    budget_amount: null,
+                }
+            } else if (createPortfolioData.budgetCap === 'recurring-monthly') {
+                requestData = {
+                    name: createPortfolioData.name,
+                    state: createPortfolioData.state,
+                    budget_amount: createPortfolioData.budget_amount,
+                    budget_startDate: null,
+                    budget_endDate: createPortfolioData.create_ends_date === 'never' ? null : createPortfolioData.budget_endDate,
+                }
+            } else if (createPortfolioData.budgetCap === 'date-range') {
+                requestData = {
+                    name: createPortfolioData.name,
+                    state: createPortfolioData.state,
+                    budget_amount: createPortfolioData.budget_amount,
+                    budget_startDate: createPortfolioData.budget_startDate,
+                    budget_endDate: createPortfolioData.budget_endDate,
+                }
+            }
+            await analyticsServices.createEntity('portfolios', requestData)
+            closeWindowHandler()
+            notification.success({title: 'Portfolio created'})
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (<ModalWindow
@@ -53,8 +87,8 @@ const CreatePortfolioWindow = () => {
                             <label htmlFor="">Portfolio Name</label>
                             <Input
                                 placeholder={'Portfolio Name'}
-                                value={createPortfolioData.portfolio_name}
-                                onChange={({target: {value}}) => changeCreateDataHandler({portfolio_name: value})}
+                                value={createPortfolioData.name}
+                                onChange={({target: {value}}) => changeCreateDataHandler({name: value})}
                             />
                         </div>
                     </div>
@@ -74,8 +108,8 @@ const CreatePortfolioWindow = () => {
                             <label htmlFor="">Budget Cap</label>
                             <CustomSelect
                                 getPopupContainer={trigger => trigger.parentNode}
-                                value={createPortfolioData.budget_cap}
-                                onChange={(value) => changeCreateDataHandler({budget_cap: value})}
+                                value={createPortfolioData.budgetCap}
+                                onChange={(value) => changeCreateDataHandler({budgetCap: value})}
                             >
                                 <Option value={'no-budget'}>
                                     No budget Cap
@@ -99,15 +133,15 @@ const CreatePortfolioWindow = () => {
                     </div>
                 </div>
 
-                {createPortfolioData.budget_cap === 'recurring-monthly' && <>
+                {createPortfolioData.budgetCap === 'recurring-monthly' && <>
                     <div className="row">
                         <div className="col">
                             <div className="form-group">
                                 <label htmlFor="">Monthly Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
-                                    value={createPortfolioData.monthly_budget_cap}
-                                    onChange={(value) => changeCreateDataHandler({monthly_budget_cap: value})}
+                                    value={createPortfolioData.budget_amount}
+                                    onChange={(value) => changeCreateDataHandler({budget_amount: value})}
                                 />
                             </div>
                         </div>
@@ -138,7 +172,7 @@ const CreatePortfolioWindow = () => {
 
                                     <DatePicker
                                         getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                                        onChange={(date) => changeCreateDataHandler({ends_date: date})}
+                                        onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
                                         showToday={false}
                                         disabled={createPortfolioData.create_ends_date === 'never'}
                                     />
@@ -156,15 +190,15 @@ const CreatePortfolioWindow = () => {
                     </div>
                 </>}
 
-                {createPortfolioData.budget_cap === 'date-range' && <>
+                {createPortfolioData.budgetCap === 'date-range' && <>
                     <div className="row">
                         <div className="col">
                             <div className="form-group">
                                 <label htmlFor="">Monthly Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
-                                    value={createPortfolioData.monthly_budget_cap}
-                                    onChange={(value) => changeCreateDataHandler({monthly_budget_cap: value})}
+                                    value={createPortfolioData.budget_amount}
+                                    onChange={(value) => changeCreateDataHandler({budget_amount: value})}
                                 />
                             </div>
                         </div>
@@ -184,7 +218,7 @@ const CreatePortfolioWindow = () => {
                                 <label htmlFor="">Budget Start</label>
                                 <DatePicker
                                     getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                                    onChange={(date) => changeCreateDataHandler({start_date: date})}
+                                    onChange={(date) => changeCreateDataHandler({budget_startDate: date})}
                                     showToday={false}
                                 />
                             </div>
@@ -205,7 +239,7 @@ const CreatePortfolioWindow = () => {
                                 <label htmlFor="">Budget End</label>
                                 <DatePicker
                                     getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                                    onChange={(date) => changeCreateDataHandler({end_date: date})}
+                                    onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
                                     showToday={false}
                                 />
                             </div>

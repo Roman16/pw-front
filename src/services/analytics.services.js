@@ -14,7 +14,7 @@ export const analyticsServices = {
     fetchTargetingsDetails,
     fetchPageData,
 
-    createCampaign
+    createEntity
 }
 
 const stateIdValues = {
@@ -128,6 +128,6 @@ function fetchPageData(location, params, idList) {
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`)
 }
 
-function createCampaign(campaign) {
-    return api('post', analyticsUrls.createUrl('campaigns'), campaign)
+function createEntity(entity, data) {
+    return api('post', analyticsUrls.createUrl(entity), data)
 }
