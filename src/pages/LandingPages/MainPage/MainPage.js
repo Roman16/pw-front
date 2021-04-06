@@ -3,7 +3,7 @@ import './MainPage.less'
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 
-import videoBg from '../../../assets/img/landing-mainPage/video-bg.mp4'
+import videoBg from '../../../assets/img/landing-mainPage/video-bg.webm'
 import videoBgMob from '../../../assets/img/landing-mainPage/video-bg_mob.gif'
 import {Link} from "react-router-dom"
 import {Collapse} from 'antd'
@@ -178,7 +178,7 @@ const MainPage = () => {
 
         <section className="pre-header">
             <video
-                className="block-video-container desk"
+                className="video-container desk"
                 autoPlay={true}
                 controls={false}
                 loop={true}
@@ -188,7 +188,7 @@ const MainPage = () => {
             </video>
 
             <img
-                className="block-video-container mob"
+                className="video-container mob"
                 src={videoBgMob} alt=""/>
 
             <div className="container">
