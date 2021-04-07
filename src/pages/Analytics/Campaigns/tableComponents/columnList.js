@@ -20,6 +20,7 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import {Switch} from "antd"
+import moment from "moment"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -85,7 +86,6 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             filter: true,
             fastUpdating: true,
             editType: 'currency',
-            render: (budget, item) => budget ? `$${budget}` : ''
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
@@ -118,11 +118,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            edit: true,
-            render: (date) => <EditableField
-                type={'date'}
-                value={date}
-            />
+            editType: 'date',
         },
         {
             title: 'End date',
@@ -132,11 +128,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            edit: true,
-            render: (date) => <EditableField
-                type={'date'}
-                value={date}
-            />
+            editType: 'date',
         },
         {
             title: 'Campaign bidding strategy',

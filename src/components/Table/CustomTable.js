@@ -6,6 +6,7 @@ import $ from "jquery"
 import moment from "moment"
 import DatePicker from "../DatePicker/DatePicker"
 import InputCurrency from "../Inputs/InputCurrency"
+import {dateFormatting} from "../../utils/dateFormatting"
 
 const CustomTable = ({
                          columns,
@@ -29,7 +30,8 @@ const CustomTable = ({
                          rowKey,
                          selectedRows = [],
                          disabledRows = [],
-                         revertSortingColumns = []
+                         revertSortingColumns = [],
+                         onUpdateField
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -181,13 +183,14 @@ const CustomTable = ({
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                             }}
                                         >
-                                            {item.render
-                                                ? item.render(report[item.key], report, index, item.dataIndex)
-                                                : report[item.key]}
-
-                                            {item.editType && <EditableField
-
-                                            />}
+                                            {item.editType ?
+                                                <EditableField
+                                                    item={report}
+                                                    type={item.editType}
+                                                    value={report[item.key]}
+                                                    column={item.dataIndex}
+                                                    onUpdateField={onUpdateField}
+                                                /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
                                         </div>
                                     )
                                 })}
@@ -210,24 +213,27 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({type, value, onUpdateField, id}) => {
-    const [visibleEditableWindow, setVisibleEditableWindow] = useState(false)
+export const EditableField = ({item, type, column, value, onUpdateField}) => {
+    const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
+        [newValue, setNewValue] = useState(value)
     const wrapperRef = useRef(null)
 
     const submitFieldHandler = () => {
-        onUpdateField({
-            id,
-            column: '',
-            value: ''
-        })
-
-        // setVisibleEditableWindow(false)
+        onUpdateField(item, column, type === 'date' ? dateFormatting(newValue) : newValue)
     }
+
 
     useEffect(() => {
         function handleClickOutside({target}) {
             if (target && target.className) {
-                if (target.className === 'icon' || target.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.className === 'ant-popover-open' || target.parentNode.parentNode.parentNode.className === 'ant-popover-open') {
+                if (target.className === 'icon' ||
+                    target.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel'
+                ) {
 
                 } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
                     setVisibleEditableWindow(false)
@@ -260,12 +266,13 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
 
 
                 {visibleEditableWindow && <DatePicker
-                    value={value ? moment(value) : moment()}
+                    value={newValue ? moment(newValue) : moment()}
                     format={'DD MMM YYYY'}
                     open={visibleEditableWindow}
                     showToday={false}
                     className={'editable-date-picker'}
                     dropdownClassName={'edit-field-picker'}
+                    onChange={value => setNewValue(value)}
                     renderExtraFooter={() => <>
                         <p>America/Los_Angeles</p>
                         <div className="actions">
@@ -284,8 +291,6 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    {/*<InputCurrency disabled value={value}/>*/}
-
                     {value ? `$${value}` : ''}
 
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
@@ -293,7 +298,8 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
 
                 {visibleEditableWindow && <div className="editable-window">
                     <InputCurrency
-                        value={value}
+                        value={newValue}
+                        onChange={value => setNewValue(value)}
                         autoFocus={true}
                     />
 

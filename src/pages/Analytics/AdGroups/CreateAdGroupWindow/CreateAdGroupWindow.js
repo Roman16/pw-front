@@ -94,7 +94,7 @@ const CreateAdGroupWindow = () => {
 
     const createAdGroupHandler = async () => {
         try {
-            await analyticsServices.createEntity('ad-groups', {
+            await analyticsServices.exactCreate('ad-groups', {
                 advertisingType: createAdGroupData.advertisingType,
                 name: createAdGroupData.name,
                 defaultBid: createAdGroupData.defaultBid,

@@ -14,7 +14,8 @@ export const analyticsServices = {
     fetchTargetingsDetails,
     fetchPageData,
 
-    createEntity
+    exactCreate,
+    exactUpdateField
 }
 
 const stateIdValues = {
@@ -128,6 +129,9 @@ function fetchPageData(location, params, idList) {
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`)
 }
 
-function createEntity(entity, data) {
+function exactCreate(entity, data) {
     return api('post', analyticsUrls.createUrl(entity), data)
+}
+function exactUpdateField(entity, data) {
+    return api('post', analyticsUrls.updateUrl(entity), data)
 }

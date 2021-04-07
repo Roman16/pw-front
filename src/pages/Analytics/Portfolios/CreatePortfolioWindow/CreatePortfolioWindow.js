@@ -61,7 +61,7 @@ const CreatePortfolioWindow = () => {
                     budget_endDate: createPortfolioData.budget_endDate,
                 }
             }
-            await analyticsServices.createEntity('portfolios', requestData)
+            await analyticsServices.exactCreate('portfolios', requestData)
             closeWindowHandler()
             notification.success({title: 'Portfolio created'})
         } catch (e) {

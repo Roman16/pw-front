@@ -43,6 +43,7 @@ const TableList = ({
                        openedRow,
                        showRowSelection,
                        rowKey,
+                       onUpdateField
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -232,6 +233,8 @@ const TableList = ({
                     {...showRowSelection && {rowSelection: rowSelection}}
                     selectedAll={selectedAllRows}
                     selectedRows={selectedRows}
+
+                    onUpdateField={onUpdateField}
                 />
 
                 {tableData.total_count !== 0 && showPagination && <Pagination

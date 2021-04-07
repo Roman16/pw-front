@@ -14,6 +14,11 @@ import _ from "lodash"
 let prevActiveMetrics = [],
     sorterTimeoutId = null
 
+const idSelectors = {
+    'campaigns': 'campaignId',
+    'ad-groups': 'adGroupId'
+}
+
 const RenderPageParts = ({
                              location,
                              availableMetrics = [],
@@ -84,6 +89,29 @@ const RenderPageParts = ({
         getPageData(['table'], data)
     }
 
+    const updateFieldHandler = async (item, column, value) => {
+        try {
+            await analyticsServices.exactUpdateField(location, {
+                [idSelectors[location]]: item[idSelectors[location]],
+                [column]: value
+            })
+
+            setPageData({
+                ...pageData,
+                table: {
+                    ...pageData.table,
+                    response: [...pageData.table.response.map(i => {
+                        if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value
+
+                        return i
+                    })]
+                }
+            })
+        } catch (e) {
+
+        }
+    }
+
     const getPageData = debounce(50, false, async (pageParts, paginationParams, sorterParams) => {
         if (paginationParams) setTableRequestParams(paginationParams)
 
@@ -144,26 +172,26 @@ const RenderPageParts = ({
                 location,
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
-                    sorterColumn: sorterParams ? sorterParams :localSorterColumn,
+                    sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                     pageParts,
                     filtersWithState,
                     activeMetrics,
                 }
             )
 
-            if(productType === 'parent') {
+            if (productType === 'parent') {
                 parentResponse = await analyticsServices.fetchPageData(
                     'products',
                     {
                         ...paginationParams ? paginationParams : tableRequestParams,
-                        sorterColumn: sorterParams ? sorterParams :localSorterColumn,
+                        sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                         pageParts: ['table'],
                         filtersWithState,
                         activeMetrics,
                     }
                 )
 
-               res.table = parentResponse.table
+                res.table = parentResponse.table
             }
 
 
@@ -319,6 +347,7 @@ const RenderPageParts = ({
                 onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
+                onUpdateField={updateFieldHandler}
 
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}
