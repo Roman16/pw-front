@@ -258,7 +258,7 @@ const RenderPageParts = ({
                     activeMetrics,
                     page: 1,
                     pageSize: idList.length
-                }, `&id:in=${idList.join(',')}`)
+                }, `&${idSelectors[location]}:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
                     return {
