@@ -55,9 +55,9 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
             if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com') {
                 try {
-                    if (windowLocation.href.search && windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'FAILED') {
+                    if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
                         setPageStatus('error')
-                    } else if (windowLocation.href.search && ((windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'SUCCESS') || (windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'IN_PROGRESS'))) {
+                    } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
                         dispatch(userActions.setPpcStatus({status: windowLocation.href.search.split('?status=')[1]}))
                         dispatch(userActions.setBootstrap(true))
                         console.log('ttt')
@@ -65,7 +65,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
                         win.close()
                         clearInterval(timer)
-                    } else if (windowLocation.href.search && windowLocation.href.search.indexOf('?error_message=') !== -1) {
+                    } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
                         notification.error({title: decodeURIComponent(windowLocation.href.search.split('?error_message=')[1].split('+').join(' '))})
                         setPageStatus('error')
                     }
