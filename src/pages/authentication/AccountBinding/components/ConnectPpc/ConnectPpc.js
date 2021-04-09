@@ -28,6 +28,8 @@ const popupCenter = ({url, title, w, h}) => {
      `)
 }
 
+let intervalId
+
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const [pageStatus, setPageStatus] = useState('connect')
     const dispatch = useDispatch()
@@ -48,40 +50,36 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             }
         }, 2000)
 
-        window.addEventListener('message', event => {
-            // https://front1.profitwhales.com/ppc-redirect?status=IN_PROGRESS
+        const checkWindowLocation = () => {
+            const windowLocation = win.location
 
-            if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
-                console.log(event.origin)
-                console.log(event.data)
-                console.log(win.location)
-
+            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com') {
                 try {
-                    if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
-                        const windowLocation = win.location.href
-                        if (windowLocation.search && windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'FAILED') {
-                            setPageStatus('error')
-                        } else if (windowLocation.search && ((windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'SUCCESS') || (windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'IN_PROGRESS'))) {
-                            dispatch(userActions.setPpcStatus({status: windowLocation.search.split('?status=')[1]}))
-                            dispatch(userActions.setBootstrap(true))
-                            console.log('ttt')
-                            setPageStatus('syncing-data')
-
-                            win.close()
-                            clearInterval(timer)
-                        } else if (windowLocation.search && windowLocation.search.indexOf('?error_message=') !== -1) {
-                            notification.error({title: decodeURIComponent(windowLocation.search.split('?error_message=')[1].split('+').join(' '))})
-                            setPageStatus('error')
-                        }
+                    if (windowLocation.href.search && windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'FAILED') {
+                        setPageStatus('error')
+                    } else if (windowLocation.href.search && ((windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'SUCCESS') || (windowLocation.href.search.indexOf('?status=') !== -1 && windowLocation.href.search.split('?status=')[1] === 'IN_PROGRESS'))) {
+                        dispatch(userActions.setPpcStatus({status: windowLocation.href.search.split('?status=')[1]}))
+                        dispatch(userActions.setBootstrap(true))
+                        console.log('ttt')
+                        setPageStatus('syncing-data')
 
                         win.close()
                         clearInterval(timer)
+                    } else if (windowLocation.href.search && windowLocation.href.search.indexOf('?error_message=') !== -1) {
+                        notification.error({title: decodeURIComponent(windowLocation.href.search.split('?error_message=')[1].split('+').join(' '))})
+                        setPageStatus('error')
                     }
+
+                    win.close()
+                    clearInterval(timer)
                 } catch (e) {
                     console.log(e)
                 }
             }
-        })
+
+        }
+
+        intervalId = setInterval(checkWindowLocation, 2000)
     }
 
     const tryAgain = () => setPageStatus('connect')
