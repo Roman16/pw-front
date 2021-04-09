@@ -69,6 +69,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
                     win.close()
                     clearInterval(timer)
+                    clearInterval(intervalId)
                 } catch (e) {
                     console.log(e)
                 }
