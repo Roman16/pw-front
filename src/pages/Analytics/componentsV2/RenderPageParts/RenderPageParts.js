@@ -14,6 +14,16 @@ import _ from "lodash"
 let prevActiveMetrics = [],
     sorterTimeoutId = null
 
+const idSelectors = {
+    'campaigns': 'campaignId',
+    'ad-groups': 'adGroupId',
+    'portfolios': 'portfolioId',
+    'targetings': 'targetingId',
+    'product-ads': 'adId',
+    'products-parents': 'productId',
+    'products': 'productId',
+}
+
 const RenderPageParts = ({
                              location,
                              availableMetrics = [],
@@ -144,19 +154,19 @@ const RenderPageParts = ({
                 location,
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
-                    sorterColumn: sorterParams ? sorterParams :localSorterColumn,
-                    pageParts,
+                    sorterColumn: sorterParams ? sorterParams : localSorterColumn,
+                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                     filtersWithState,
                     activeMetrics,
                 }
             )
 
-            if(productType === 'parent') {
+            if (productType === 'parent') {
                 parentResponse = await analyticsServices.fetchPageData(
                     'products',
                     {
                         ...paginationParams ? paginationParams : tableRequestParams,
-                        sorterColumn: sorterParams ? sorterParams :localSorterColumn,
+                        sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                         pageParts: ['table'],
                         filtersWithState,
                         activeMetrics,
@@ -167,8 +177,8 @@ const RenderPageParts = ({
             }
 
 
-            if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
+            if (localTableOptions.comparePreviousPeriod && res.table) {
+                getPreviousPeriodData(res.table.response.map(item => item[idSelectors[location]]))
             }
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
@@ -201,6 +211,7 @@ const RenderPageParts = ({
     })
 
     const getPreviousPeriodData = async (idList) => {
+
         if (location === 'overview') {
             if (productType === 'parent') {
                 location = 'products-parents'
@@ -240,13 +251,13 @@ const RenderPageParts = ({
                     })
                 }
 
-                const res = await analyticsServices.fetchPageData({
+                const res = await analyticsServices.fetchPageData(location, {
                     sorterColumn: localSorterColumn,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
                     page: 1,
-                    pageSize: 200
+                    pageSize: idList.length
                 }, `&id:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
@@ -256,7 +267,7 @@ const RenderPageParts = ({
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['id']}), (value, key) => {
+                                ..._.mapKeys(_.find(res.table.response, {[idSelectors[location]]: item[idSelectors[location]]}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
@@ -271,7 +282,11 @@ const RenderPageParts = ({
 
     useEffect(() => {
         if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            getPageData(['chart'])
+            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                ...prevState,
+                chart: []
+            }))
+            else getPageData(['chart'])
             prevActiveMetrics = [...activeMetrics]
         }
     }, [activeMetrics])
