@@ -1,21 +1,21 @@
-import React, {Fragment, useEffect, useState} from "react";
-import './ConnectPpc.less';
-import {Link} from "react-router-dom";
-import {SVG} from "../../../../../utils/icons";
-import {useDispatch, useSelector} from "react-redux";
-import loader from '../../../../../assets/img/loader.svg';
-import {userActions} from "../../../../../actions/user.actions";
-import {notification} from "../../../../../components/Notification";
+import React, {Fragment, useEffect, useState} from "react"
+import './ConnectPpc.less'
+import {Link} from "react-router-dom"
+import {SVG} from "../../../../../utils/icons"
+import {useDispatch, useSelector} from "react-redux"
+import loader from '../../../../../assets/img/loader.svg'
+import {userActions} from "../../../../../actions/user.actions"
+import {notification} from "../../../../../components/Notification"
 
 
 const popupCenter = ({url, title, w, h}) => {
-    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX
+    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY
 
-    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : window.screen.width;
-    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height;
+    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : window.screen.width
+    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height
 
-    const systemZoom = width / window.screen.availWidth;
+    const systemZoom = width / window.screen.availWidth
     const left = (width - w) / 2 / systemZoom + dualScreenLeft
     const top = (height - h) / 2 / systemZoom + dualScreenTop
     return window.open(url, title,
@@ -29,24 +29,24 @@ const popupCenter = ({url, title, w, h}) => {
 }
 
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
-    const [pageStatus, setPageStatus] = useState('connect');
-    const dispatch = useDispatch();
+    const [pageStatus, setPageStatus] = useState('connect')
+    const dispatch = useDispatch()
 
     const {ppcLink} = useSelector(state => ({
         ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
-    }));
+    }))
 
     const openConnectLink = () => {
-        setPageStatus('getting-token');
+        setPageStatus('getting-token')
 
-        const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570});
+        const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570})
 
         let timer = setInterval(() => {
             if (win.closed) {
-                clearInterval(timer);
-                setPageStatus('error');
+                clearInterval(timer)
+                setPageStatus('error')
             }
-        }, 2000);
+        }, 2000)
 
         window.addEventListener('message', event => {
             // https://front1.profitwhales.com/ppc-redirect?status=IN_PROGRESS
@@ -55,26 +55,27 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 console.log(event.origin)
                 console.log(event.data)
                 console.log(win.location)
+
                 try {
                     if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
-                        if (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'FAILED') {
-                            setPageStatus('error');
-                        } else if (win.location.search && ((win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS'))) {
-                            dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
-                            dispatch(userActions.setBootstrap(true));
+                        const windowLocation = win.location.href
+                        if (windowLocation.search && windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'FAILED') {
+                            setPageStatus('error')
+                        } else if (windowLocation.search && ((windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'SUCCESS') || (windowLocation.search.indexOf('?status=') !== -1 && windowLocation.search.split('?status=')[1] === 'IN_PROGRESS'))) {
+                            dispatch(userActions.setPpcStatus({status: windowLocation.search.split('?status=')[1]}))
+                            dispatch(userActions.setBootstrap(true))
+                            console.log('ttt')
+                            setPageStatus('syncing-data')
 
-
-                            setPageStatus('syncing-data');
-
-                            win.close();
-                            clearInterval(timer);
-                        } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
-                            notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
-                            setPageStatus('error');
+                            win.close()
+                            clearInterval(timer)
+                        } else if (windowLocation.search && windowLocation.search.indexOf('?error_message=') !== -1) {
+                            notification.error({title: decodeURIComponent(windowLocation.search.split('?error_message=')[1].split('+').join(' '))})
+                            setPageStatus('error')
                         }
 
-                        win.close();
-                        clearInterval(timer);
+                        win.close()
+                        clearInterval(timer)
                     }
                 } catch (e) {
                     console.log(e)
@@ -83,7 +84,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         })
     }
 
-    const tryAgain = () => setPageStatus('connect');
+    const tryAgain = () => setPageStatus('connect')
 
     useEffect(() => {
         return (() => {
@@ -114,7 +115,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 </div>
             </Fragment>
         )
-    } else if(pageStatus === 'getting-token') {
+    } else if (pageStatus === 'getting-token') {
         return (
             <section className='connect-mws-section'>
                 <div className="progress">
@@ -186,6 +187,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             </Fragment>
         )
     }
-};
+}
 
-export default ConnectPpc;
+export default ConnectPpc
