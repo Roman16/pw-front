@@ -58,8 +58,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
                         setPageStatus('error')
                     } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
-                        dispatch(userActions.setPpcStatus({status: windowLocation.href.split('?status=')[1]}))
-                        dispatch(userActions.setBootstrap(true))
                         setPageStatus('syncing-data')
 
                         win.close()
