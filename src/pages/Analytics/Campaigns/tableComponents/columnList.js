@@ -163,3 +163,4 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
     ]
 )
 
+export const requiredColumnsForUpdate = ['advertisingType']

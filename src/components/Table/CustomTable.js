@@ -215,11 +215,19 @@ const CustomTable = ({
 
 export const EditableField = ({item, type, column, value, onUpdateField}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
-        [newValue, setNewValue] = useState(value)
+        [newValue, setNewValue] = useState(value),
+        [processing, setProcessing] = useState(false)
+
     const wrapperRef = useRef(null)
 
+    const onClose = () => {
+        setProcessing(false)
+        setVisibleEditableWindow(false)
+    }
+
     const submitFieldHandler = () => {
-        onUpdateField(item, column, type === 'date' ? dateFormatting(newValue) : newValue)
+        setProcessing(true)
+        onUpdateField(item, column, type === 'date' ? dateFormatting(newValue) : newValue, onClose)
     }
 
 
@@ -303,7 +311,7 @@ export const EditableField = ({item, type, column, value, onUpdateField}) => {
                         autoFocus={true}
                     />
 
-                    <button className={'btn default'} onClick={submitFieldHandler}>Save</button>
+                    <button className={'btn default'} onClick={submitFieldHandler} disabled={processing}>Save</button>
                     <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
                     </button>
                 </div>}

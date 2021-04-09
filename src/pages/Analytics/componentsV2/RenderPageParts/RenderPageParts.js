@@ -89,10 +89,11 @@ const RenderPageParts = ({
         getPageData(['table'], data)
     }
 
-    const updateFieldHandler = async (item, column, value) => {
+    const updateFieldHandler = async (item, column, value, cb) => {
         try {
             await analyticsServices.exactUpdateField(location, {
                 [idSelectors[location]]: item[idSelectors[location]],
+                advertisingType: item.advertisingType,
                 [column]: value
             })
 
@@ -108,8 +109,10 @@ const RenderPageParts = ({
                 }
             })
         } catch (e) {
-
+            console.log(e)
         }
+
+        cb()
     }
 
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
