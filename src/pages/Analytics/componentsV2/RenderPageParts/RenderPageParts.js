@@ -16,7 +16,12 @@ let prevActiveMetrics = [],
 
 const idSelectors = {
     'campaigns': 'campaignId',
-    'ad-groups': 'adGroupId'
+    'ad-groups': 'adGroupId',
+    'portfolios': 'portfolioId',
+    'targetings': 'targetingId',
+    'product-ads': 'adId',
+    'products-parents': 'productId',
+    'products': 'productId',
 }
 
 const RenderPageParts = ({
@@ -199,7 +204,7 @@ const RenderPageParts = ({
 
 
             if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
+                getPreviousPeriodData(res.table.response.map(item => item[idSelectors[location]]))
             }
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
@@ -232,6 +237,7 @@ const RenderPageParts = ({
     })
 
     const getPreviousPeriodData = async (idList) => {
+
         if (location === 'overview') {
             if (productType === 'parent') {
                 location = 'products-parents'
@@ -271,13 +277,13 @@ const RenderPageParts = ({
                     })
                 }
 
-                const res = await analyticsServices.fetchPageData({
+                const res = await analyticsServices.fetchPageData(location, {
                     sorterColumn: localSorterColumn,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
                     page: 1,
-                    pageSize: 200
+                    pageSize: idList.length
                 }, `&id:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
@@ -287,7 +293,7 @@ const RenderPageParts = ({
                             ...prevState.table,
                             response: [...prevState.table.response.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['id']}), (value, key) => {
+                                ..._.mapKeys(_.find(res.table.response, {[idSelectors[location]]: item[idSelectors[location]]}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
