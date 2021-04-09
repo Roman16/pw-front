@@ -112,7 +112,7 @@ const RenderPageParts = ({
         }
     }
 
-    const getPageData = debounce(50, false, async (pageParts, paginationParams, sorterParams) => {
+    const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
         if (paginationParams) setTableRequestParams(paginationParams)
 
         if (location === 'overview') {
@@ -173,7 +173,7 @@ const RenderPageParts = ({
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
                     sorterColumn: sorterParams ? sorterParams : localSorterColumn,
-                    pageParts,
+                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                     filtersWithState,
                     activeMetrics,
                 }
@@ -299,7 +299,11 @@ const RenderPageParts = ({
 
     useEffect(() => {
         if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            getPageData(['chart'])
+            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                ...prevState,
+                chart: []
+            }))
+            else getPageData(['chart'])
             prevActiveMetrics = [...activeMetrics]
         }
     }, [activeMetrics])

@@ -49,28 +49,35 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         }, 2000);
 
         window.addEventListener('message', event => {
-            if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
-                if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
-                    if (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'FAILED') {
-                        setPageStatus('error');
-                    } else if ((win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS')) {
-                        dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
-                        dispatch(userActions.setBootstrap(true));
-                        console.log(event.origin)
-                        console.log(event.data)
-                        console.log(win.location)
+            // https://front1.profitwhales.com/ppc-redirect?status=IN_PROGRESS
 
-                        setPageStatus('syncing-data');
+            if (event.origin === 'https://front1.profitwhales.com' || event.origin === 'https://profitwhales.com') {
+                console.log(event.origin)
+                console.log(event.data)
+                console.log(win.location)
+                try {
+                    if (event.data && event.data.type && event.data.type === 'intercom-snippet__ready') {
+                        if (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'FAILED') {
+                            setPageStatus('error');
+                        } else if (win.location.search && ((win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS'))) {
+                            dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
+                            dispatch(userActions.setBootstrap(true));
+
+
+                            setPageStatus('syncing-data');
+
+                            win.close();
+                            clearInterval(timer);
+                        } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
+                            notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
+                            setPageStatus('error');
+                        }
 
                         win.close();
                         clearInterval(timer);
-                    } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
-                        notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
-                        setPageStatus('error');
                     }
-
-                    win.close();
-                    clearInterval(timer);
+                } catch (e) {
+                    console.log(e)
                 }
             }
         })
