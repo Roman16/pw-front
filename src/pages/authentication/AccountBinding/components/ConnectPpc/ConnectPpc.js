@@ -37,7 +37,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     }));
 
     const openConnectLink = () => {
-        setPageStatus('processing');
+        setPageStatus('getting-token');
 
         const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570});
 
@@ -56,12 +56,19 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     } else if ((win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'SUCCESS') || (win.location.search && win.location.search.indexOf('?status=') !== -1 && win.location.search.split('?status=')[1] === 'IN_PROGRESS')) {
                         dispatch(userActions.setPpcStatus({status: win.location.search.split('?status=')[1]}));
                         dispatch(userActions.setBootstrap(true));
-                        // setPageStatus('success');
-                        onGoNextStep();
+                        console.log(event.origin)
+                        console.log(event.data)
+                        console.log(win.location)
+
+                        setPageStatus('syncing-data');
+
+                        win.close();
+                        clearInterval(timer);
                     } else if (win.location.search && win.location.search.indexOf('?error_message=') !== -1) {
                         notification.error({title: decodeURIComponent(win.location.search.split('?error_message=')[1].split('+').join(' '))})
                         setPageStatus('error');
                     }
+
                     win.close();
                     clearInterval(timer);
                 }
@@ -100,13 +107,24 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 </div>
             </Fragment>
         )
-    } else if (pageStatus === 'processing') {
+    } else if(pageStatus === 'getting-token') {
         return (
             <section className='connect-mws-section'>
                 <div className="progress">
-                    <h2>Account Sync.</h2>
-                    <p>We are syncing your data from Amazon Advertising API. <br/>It could take up to a few
-                        minutes.</p>
+                    <h2>Advertising Account Connect</h2>
+                    <p>We are waiting for access to your Advertising Account</p>
+
+                    <img src={loader} alt=""/>
+                </div>
+            </section>
+        )
+    } else if (pageStatus === 'syncing-data') {
+        return (
+            <section className='connect-mws-section'>
+                <div className="progress">
+                    <h2>Advertising Account Sync </h2>
+                    <p>We are syncing your data from Amazon Advertising API. <br/>
+                        It could take up to a few minutes.</p>
 
                     <img src={loader} alt=""/>
                 </div>

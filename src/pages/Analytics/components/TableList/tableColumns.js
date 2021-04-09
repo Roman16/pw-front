@@ -403,7 +403,7 @@ export const adSalesColumn = {
     title: 'Ad Sales',
     dataIndex: 'attributedSales30d',
     key: 'attributedSales30d',
-    minWidth: '130px',
+    minWidth: '150px',
     sorter: true,
     filter: true,
     align: 'right',
