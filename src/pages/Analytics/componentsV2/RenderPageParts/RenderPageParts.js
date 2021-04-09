@@ -203,7 +203,7 @@ const RenderPageParts = ({
             }
 
 
-            if (localTableOptions.comparePreviousPeriod) {
+            if (localTableOptions.comparePreviousPeriod && res.table) {
                 getPreviousPeriodData(res.table.response.map(item => item[idSelectors[location]]))
             }
 
