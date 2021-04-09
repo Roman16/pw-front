@@ -58,15 +58,14 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
                         setPageStatus('error')
                     } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
-                        dispatch(userActions.setPpcStatus({status: windowLocation.href.search.split('?status=')[1]}))
+                        dispatch(userActions.setPpcStatus({status: windowLocation.href.split('?status=')[1]}))
                         dispatch(userActions.setBootstrap(true))
-                        console.log('ttt')
                         setPageStatus('syncing-data')
 
                         win.close()
                         clearInterval(timer)
                     } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
-                        notification.error({title: decodeURIComponent(windowLocation.href.search.split('?error_message=')[1].split('+').join(' '))})
+                        notification.error({title: decodeURIComponent(windowLocation.href.split('?error_message=')[1].split('+').join(' '))})
                         setPageStatus('error')
                     }
 
