@@ -65,27 +65,53 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             locked: true,
         },
         {
-            title: 'Type',
-            dataIndex: 'targetingType',
-            key: 'targetingType',
+            title: 'Advertising Type',
+            dataIndex: 'advertisingType',
+            key: 'advertisingType',
+            width: '170px',
+            sorter: true,
+            locked: false,
+            filter: false,
+            noTotal: true,
+            render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
+        },
+        {
+            title: 'Targeting Type',
+            dataIndex: 'calculatedTargetingType',
+            key: 'calculatedTargetingType',
             width: '150px',
             sorter: true,
-            locked: true,
-            filter: true,
+            locked: false,
+            filter: false,
             noTotal: true,
-            render: (type) => <span className={'type'}>{type}</span>
+            render: (type) => type && <span className={'camelcase-string'}>{type} Targeting</span>
+        },
+        {
+            title: 'Sub Type',
+            dataIndex: 'calculatedCampaignSubType',
+            key: 'calculatedCampaignSubType',
+            width: '150px',
+            sorter: true,
+            locked: false,
+            filter: false,
+            noTotal: true,
+            render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
         },
         {
             title: 'Budget',
-            dataIndex: 'dailyBudget',
-            key: 'dailyBudget',
-            width: '120px',
+            dataIndex: 'calculatedBudget',
+            key: 'calculatedBudget',
+            width: '140px',
             sorter: true,
             locked: true,
             noTotal: true,
             filter: true,
             fastUpdating: true,
             editType: 'currency',
+            render: (budget, item) => {
+                const text = budget ? `$${budget}${item.calculatedBudgetType ? `/${item.calculatedBudgetType}` : ''}` : ''
+                return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
+            }
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',

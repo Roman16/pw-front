@@ -190,6 +190,7 @@ const CustomTable = ({
                                                     value={report[item.key]}
                                                     column={item.dataIndex}
                                                     onUpdateField={onUpdateField}
+                                                    render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
                                                 /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
                                         </div>
                                     )
@@ -213,7 +214,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -264,6 +265,8 @@ export const EditableField = ({item, type, column, value, onUpdateField}) => {
         }
     }, [visibleEditableWindow])
 
+    console.log(newValue)
+
     if (type === 'date') {
         return (<div ref={wrapperRef}>
 
@@ -299,7 +302,7 @@ export const EditableField = ({item, type, column, value, onUpdateField}) => {
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
-                    {value ? `$${value}` : ''}
+                    {render ? render() : value ? `$${value}` : ''}
 
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>
