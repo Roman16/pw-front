@@ -178,7 +178,7 @@ const RenderPageParts = ({
 
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
-                getPreviousPeriodData(res.table.response.map(item => item[idSelectors[location]]))
+                getPreviousPeriodData(res.table.response.map(item => item[idSelectors[location]]), paginationParams ? paginationParams : tableRequestParams)
             }
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
@@ -210,7 +210,7 @@ const RenderPageParts = ({
         }
     })
 
-    const getPreviousPeriodData = async (idList) => {
+    const getPreviousPeriodData = async (idList, paginationParams) => {
 
         if (location === 'overview') {
             if (productType === 'parent') {
@@ -257,7 +257,7 @@ const RenderPageParts = ({
                     filtersWithState,
                     activeMetrics,
                     page: 1,
-                    pageSize: idList.length
+                    pageSize: paginationParams.pageSize
                 }, `&${idSelectors[location]}:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
