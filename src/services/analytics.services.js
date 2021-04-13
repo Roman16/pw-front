@@ -15,7 +15,8 @@ export const analyticsServices = {
     fetchPageData,
 
     exactCreate,
-    exactUpdateField
+    exactUpdateField,
+    bulkUpdate
 }
 
 const stateIdValues = {
@@ -133,5 +134,10 @@ function exactCreate(entity, data) {
     return api('post', analyticsUrls.createUrl(entity), data)
 }
 function exactUpdateField(entity, data) {
-    return api('post', analyticsUrls.updateUrl(entity), data)
+    return api('post', analyticsUrls.exactUpdate(entity), data)
+}
+
+function bulkUpdate(entity, data,idList, filters) {
+
+    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
 }

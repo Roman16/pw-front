@@ -30,12 +30,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             key: 'state',
             width: '65px',
             noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
+            editType: 'switch',
         },
         {
             title: 'Campaign',

@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Spin} from 'antd'
+import {Checkbox, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import $ from "jquery"
@@ -177,7 +177,7 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType ? 'editable-field' : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? 'editable-field' : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
@@ -226,9 +226,9 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
         setVisibleEditableWindow(false)
     }
 
-    const submitFieldHandler = () => {
+    const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, type === 'date' ? dateFormatting(newValue) : newValue, onClose)
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose)
     }
 
 
@@ -265,8 +265,6 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
         }
     }, [visibleEditableWindow])
 
-    console.log(newValue)
-
     if (type === 'date') {
         return (<div ref={wrapperRef}>
 
@@ -287,7 +285,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                     renderExtraFooter={() => <>
                         <p>America/Los_Angeles</p>
                         <div className="actions">
-                            <button className={'btn default'} onClick={submitFieldHandler}>
+                            <button className={'btn default'} onClick={() => submitFieldHandler()}>
                                 Save
                             </button>
 
@@ -299,6 +297,15 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                 />}
             </div>
         )
+    } else if (type === 'switch') {
+        return (<div className="switch-block">
+            <Switch
+                disabled={item.state === 'archived' || processing}
+                checked={item.state === 'enabled'}
+                loading={processing}
+                onChange={checked => submitFieldHandler(checked ? 'enabled' : 'paused')}
+            />
+        </div>)
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
@@ -310,11 +317,11 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                 {visibleEditableWindow && <div className="editable-window">
                     <InputCurrency
                         value={newValue}
-                        onChange={value => setNewValue(value)}
+                        onChange={(value) => setNewValue(value)}
                         autoFocus={true}
                     />
 
-                    <button className={'btn default'} onClick={submitFieldHandler} disabled={processing}>Save</button>
+                    <button className={'btn default'} onClick={() => submitFieldHandler()} disabled={processing}>Save</button>
                     <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
                     </button>
                 </div>}

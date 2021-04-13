@@ -9,6 +9,7 @@ import {history} from "../../../../utils/history"
 import {analyticsServices} from "../../../../services/analytics.services"
 import moment from "moment"
 import _ from "lodash"
+import {notification} from "../../../../components/Notification"
 
 
 let prevActiveMetrics = [],
@@ -113,11 +114,59 @@ const RenderPageParts = ({
                     })]
                 }
             })
+
+            notification.success({title: 'Success!'})
         } catch (e) {
             console.log(e)
         }
 
         cb()
+    }
+
+    const updateColumnHandler = async (changeData, idList, selectedAllRows, cb) => {
+        let filtersWithState = []
+        const queryParams = queryString.parse(history.location.search)
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+
+        try {
+            await analyticsServices.bulkUpdate(
+                location,
+                changeData,
+                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.join(',')}`,
+                filtersWithState
+            )
+
+            getPageData(['table'])
+
+            notification.success({title: 'Success!'})
+            cb()
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
@@ -361,6 +410,7 @@ const RenderPageParts = ({
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
                 onUpdateField={updateFieldHandler}
+                onUpdateColumn={updateColumnHandler}
 
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}

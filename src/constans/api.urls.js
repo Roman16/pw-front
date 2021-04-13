@@ -148,5 +148,6 @@ export const analyticsUrls = {
     pageData: (location) => `analytics/v2/${location}`,
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
-    updateUrl: location => `dynamic-analytics/${location}/exact-update`
+    exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
+    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`
 }

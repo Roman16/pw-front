@@ -43,7 +43,8 @@ const TableList = ({
                        openedRow,
                        showRowSelection,
                        rowKey,
-                       onUpdateField
+                       onUpdateField,
+                       onUpdateColumn
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -135,7 +136,7 @@ const TableList = ({
 
     const selectAllRows = () => {
         setSelectedAllRows(true)
-        setSelectedRows(tableData.map(item => item[rowKey]))
+        setSelectedRows(tableData.response.map(item => item[rowKey]))
     }
 
 
@@ -146,18 +147,11 @@ const TableList = ({
         }
     }
 
-    const setChangesHandler = async (key, value) => {
-        // await setTableData([...tableData.map(item => {
-        //     if (selectedRows.includes(item.campaignId)) {
-        //         item[key] = value
-        //     }
-        //
-        //     return item
-        // })])
-
-        notification.success({title: 'Success'})
-        setSelectedAllRows(false)
-        setSelectedRows([])
+    const setChangesHandler = async (data) => {
+        onUpdateColumn(data, selectedRows,selectedAllRows, () => {
+            setSelectedAllRows(false)
+            setSelectedRows([])
+        })
     }
 
     return (
