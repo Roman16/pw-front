@@ -170,6 +170,7 @@ const containsVariations = {
     'targetings_count': numberVariations,
     'product_ads_count': numberVariations,
     'calculatedBid': numberVariations,
+    'calculatedBudget': numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'state': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -470,6 +471,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'total_profit_gross' ||
                     filterBy === 'attributedSales30d' ||
                     filterBy === 'dailyBudget' ||
+                    filterBy === 'calculatedBudget' ||
                     filterBy === 'calculatedBid' ||
                     filterBy === 'sales'
                 ) &&
