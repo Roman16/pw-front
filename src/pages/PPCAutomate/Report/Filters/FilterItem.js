@@ -131,6 +131,7 @@ const columnTitle = {
     'advertisingType': 'Advertising Type',
     'calculatedTargetingType': 'Targeting Type',
     'calculatedCampaignSubType': 'Sub Type',
+    'calculatedBudget': 'Budget',
 }
 
 
@@ -184,6 +185,7 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'total_profit_gross' ||
         filter.filterBy === 'targetings_count' ||
         filter.filterBy === 'calculatedBid' ||
+        filter.filterBy === 'calculatedBudget' ||
         filter.filterBy === 'product_ads_count' ||
         filter.filterBy === 'profit') {
         return (
