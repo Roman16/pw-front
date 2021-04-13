@@ -179,6 +179,9 @@ const containsVariations = {
     'targetingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'calculatedTargetingMatchType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'placementName': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'advertisingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'calculatedTargetingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'calculatedCampaignSubType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
 
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
@@ -268,6 +271,24 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Detail Page on-Amazon', key: 'Detail Page on-Amazon', value: 'Detail Page on-Amazon'},
             {title: 'Other on-Amazon', key: 'Other on-Amazon', value: 'Other on-Amazon'},
             {title: 'Remarketing off-Amazon', key: 'Remarketing off-Amazon', value: 'Remarketing off-Amazon'},
+        ],
+        'advertisingType': [
+            {title: 'Sponsored Products', key: 'SponsoredProducts', value: 'SponsoredProducts'},
+            {title: 'Sponsored Brands', key: 'SponsoredBrands', value: 'SponsoredBrands'},
+            {title: 'Sponsored Display', key: 'SponsoredDisplay', value: 'SponsoredDisplay'},
+        ],
+        'calculatedTargetingType': [
+            {title: 'Auto Targeting', key: 'autoTargeting', value: 'autoTargeting'},
+            {title: 'Manual Targeting', key: 'manualTargeting', value: 'manualTargeting'},
+        ],
+        'calculatedCampaignSubType': [
+            {title: 'Auto', key: 'Auto', value: 'Auto'},
+            {title: 'Manual', key: 'Manual', value: 'Manual'},
+            {title: 'Views Remarketing', key: 'Views Remarketing', value: 'Views Remarketing'},
+            {title: 'Audiences', key: 'Audiences', value: 'Audiences'},
+            {title: 'Product Targeting', key: 'Product Targeting', value: 'Product Targeting'},
+            {title: 'Product Collection', key: 'Product Collection', value: 'Product Collection'},
+            {title: 'Video', key: 'Video', value: 'Video'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [

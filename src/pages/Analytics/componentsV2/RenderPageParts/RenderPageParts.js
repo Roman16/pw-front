@@ -9,6 +9,7 @@ import {history} from "../../../../utils/history"
 import {analyticsServices} from "../../../../services/analytics.services"
 import moment from "moment"
 import _ from "lodash"
+import {notification} from "../../../../components/Notification"
 
 
 let prevActiveMetrics = [],

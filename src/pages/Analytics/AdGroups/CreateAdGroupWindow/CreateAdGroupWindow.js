@@ -9,13 +9,18 @@ import ProductAdsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/
 import TargetingsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails"
 import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
 import AdGroupDetails from "./AdGroupDetails"
+import {analyticsServices} from "../../../../services/analytics.services"
+import {notification} from "../../../../components/Notification"
 
 
 const CreateAdGroupWindow = () => {
     const [createAdGroupData, setCreateAdGroupData] = useState({
-            targetings_type: 'automatic_targeting',
-            ad_group_name: '',
-            ad_group_default_bid: 0,
+            advertisingType: undefined,
+            name: '',
+            defaultBid: 0,
+            campaignId: undefined,
+            state: 'enabled',
+            calculatedTargetingType: 'auto',
             //product ads
             create_product_ads: true,
             selectedProductAds: [],
@@ -87,12 +92,24 @@ const CreateAdGroupWindow = () => {
         setCreateAdGroupData(prevState => ({...prevState, ...value}))
     }
 
-    const createAdGroupHandler = () => {
-
+    const createAdGroupHandler = async () => {
+        try {
+            await analyticsServices.exactCreate('ad-groups', {
+                advertisingType: createAdGroupData.advertisingType,
+                name: createAdGroupData.name,
+                defaultBid: createAdGroupData.defaultBid,
+                campaignId: createAdGroupData.campaignId,
+                state: createAdGroupData.state,
+            })
+            closeWindowHandler()
+            notification.success({title: 'Ad Group created'})
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     useEffect(() => {
-        if (mainState.campaignId) setCreateAdGroupData(prevState => ({...prevState, selected_campaign: '444'}))
+        if (mainState.campaignId) setCreateAdGroupData(prevState => ({...prevState, campaignId: '444'}))
     }, [mainState])
 
     return (<ModalWindow

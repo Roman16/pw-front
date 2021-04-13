@@ -1,8 +1,12 @@
-import React, {memo, useEffect, useState} from 'react'
-import {Checkbox, Spin} from 'antd'
+import React, {memo, useEffect, useRef, useState} from 'react'
+import {Checkbox, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import $ from "jquery"
+import moment from "moment"
+import DatePicker from "../DatePicker/DatePicker"
+import InputCurrency from "../Inputs/InputCurrency"
+import {dateFormatting} from "../../utils/dateFormatting"
 
 const CustomTable = ({
                          columns,
@@ -26,7 +30,8 @@ const CustomTable = ({
                          rowKey,
                          selectedRows = [],
                          disabledRows = [],
-                         revertSortingColumns = []
+                         revertSortingColumns = [],
+                         onUpdateField
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -172,15 +177,21 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.edit ? 'editable-field' : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? 'editable-field' : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                             }}
                                         >
-                                            {item.render
-                                                ? item.render(report[item.key], report, index, item.dataIndex)
-                                                : report[item.key]}
+                                            {item.editType ?
+                                                <EditableField
+                                                    item={report}
+                                                    type={item.editType}
+                                                    value={report[item.key]}
+                                                    column={item.dataIndex}
+                                                    onUpdateField={onUpdateField}
+                                                    render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
+                                                /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
                                         </div>
                                     )
                                 })}
@@ -202,5 +213,122 @@ const CustomTable = ({
         </div>
     )
 }
+
+export const EditableField = ({item, type, column, value, onUpdateField, render}) => {
+    const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
+        [newValue, setNewValue] = useState(value),
+        [processing, setProcessing] = useState(false)
+
+    const wrapperRef = useRef(null)
+
+    const onClose = () => {
+        setProcessing(false)
+        setVisibleEditableWindow(false)
+    }
+
+    const submitFieldHandler = (stateValue) => {
+        setProcessing(true)
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose)
+    }
+
+
+    useEffect(() => {
+        function handleClickOutside({target}) {
+            if (target && target.className) {
+                if (target.className === 'icon' ||
+                    target.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                    target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel'
+                ) {
+
+                } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                    setVisibleEditableWindow(false)
+                }
+            }
+        }
+
+        document.addEventListener("click", handleClickOutside, true)
+        return () => {
+            document.removeEventListener("click", handleClickOutside)
+        }
+    }, [wrapperRef])
+
+
+    useEffect(() => {
+        if (type === 'date' && visibleEditableWindow) {
+            document.querySelector('section.list-section .table-overflow').addEventListener('scroll', () => {
+                setVisibleEditableWindow(false)
+            })
+        }
+    }, [visibleEditableWindow])
+
+    if (type === 'date') {
+        return (<div ref={wrapperRef}>
+
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                </div>
+
+
+                {visibleEditableWindow && <DatePicker
+                    value={newValue ? moment(newValue) : moment()}
+                    format={'DD MMM YYYY'}
+                    open={visibleEditableWindow}
+                    showToday={false}
+                    className={'editable-date-picker'}
+                    dropdownClassName={'edit-field-picker'}
+                    onChange={value => setNewValue(value)}
+                    renderExtraFooter={() => <>
+                        <p>America/Los_Angeles</p>
+                        <div className="actions">
+                            <button className={'btn default'} onClick={() => submitFieldHandler()}>
+                                Save
+                            </button>
+
+                            <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                                Cancel
+                            </button>
+                        </div>
+                    </>}
+                />}
+            </div>
+        )
+    } else if (type === 'switch') {
+        return (<div className="switch-block">
+            <Switch
+                disabled={item.state === 'archived' || processing}
+                checked={item.state === 'enabled'}
+                loading={processing}
+                onChange={checked => submitFieldHandler(checked ? 'enabled' : 'paused')}
+            />
+        </div>)
+    } else {
+        return (<div className={''} ref={wrapperRef}>
+                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                    {render ? render() : value ? `$${value}` : ''}
+
+                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                </div>
+
+                {visibleEditableWindow && <div className="editable-window">
+                    <InputCurrency
+                        value={newValue}
+                        onChange={(value) => setNewValue(value)}
+                        autoFocus={true}
+                    />
+
+                    <button className={'btn default'} onClick={() => submitFieldHandler()} disabled={processing}>Save</button>
+                    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
+                    </button>
+                </div>}
+            </div>
+        )
+    }
+}
+
 
 export default memo(CustomTable)

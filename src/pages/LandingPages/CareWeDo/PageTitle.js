@@ -1,5 +1,5 @@
 import React from "react"
-import videoBg from "../../../assets/img/landing-careWeDo/video-bg.mp4"
+import videoBg from "../../../assets/img/landing-careWeDo/video-bg.webm"
 import videoBgMob from "../../../assets/img/landing-careWeDo/video-bg-mob.gif"
 import './CareWeDo.less'
 

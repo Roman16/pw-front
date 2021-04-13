@@ -82,9 +82,9 @@ const ConnectMws = ({onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus
         return (
             <section className='connect-mws-section'>
                 <div className="progress">
-                    <h2>Account Sync.</h2>
-                    <p>We are syncing your data from Amazon Advertising API and MWS API. <br/>It could take up to a few
-                        minutes.</p>
+                    <h2>MWS Account Sync</h2>
+                    <p>We are syncing your data from MWS API. <br/>
+                        It could take up to a few minutes.</p>
 
                     <img src={loader} alt=""/>
                 </div>

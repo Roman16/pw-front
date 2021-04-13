@@ -46,6 +46,21 @@ export const valueTile = {
     'Detail Page on-Amazon': 'Detail Page on-Amazon',
     'Other on-Amazon': 'Other on-Amazon',
     'Remarketing off-Amazon': 'Remarketing off-Amazon',
+//
+    'SponsoredProducts': 'Sponsored Products',
+    'SponsoredBrands': 'Sponsored Brands',
+    'SponsoredDisplay': 'Sponsored Display',
+//
+    'autoTargeting': 'Auto Targeting',
+    'manualTargeting': 'Manual Targeting',
+//
+    'Auto': 'Auto',
+    'Manual': 'Manual',
+    'Views Remarketing': 'Views Remarketing',
+    'Audiences': 'Audiences',
+    'Product Targeting': 'Product Targeting',
+    'Product Collection': 'Product Collection',
+    'Video': 'Video'
 }
 
 const numberMark = {
@@ -113,6 +128,9 @@ const columnTitle = {
     'product_ads_count': 'Products',
     'calculatedBid': 'Bid',
     'placementName': 'Placement',
+    'advertisingType': 'Advertising Type',
+    'calculatedTargetingType': 'Targeting Type',
+    'calculatedCampaignSubType': 'Sub Type',
 }
 
 

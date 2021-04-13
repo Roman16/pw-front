@@ -20,6 +20,7 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import {Switch} from "antd"
+import moment from "moment"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -36,6 +37,14 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
         //         />
         //     </div>
         // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            editType: 'switch',
+        },
         {
             title: 'Campaign',
             dataIndex: 'name',
@@ -64,33 +73,53 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             locked: true,
         },
         {
-            title: 'Type',
-            dataIndex: 'targetingType',
-            key: 'targetingType',
-            width: '150px',
+            title: 'Advertising Type',
+            dataIndex: 'advertisingType',
+            key: 'advertisingType',
+            width: '170px',
             sorter: true,
-            locked: true,
+            locked: false,
             filter: true,
             noTotal: true,
-            render: (type) => <span className={'type'}>{type}</span>
+            render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
+        },
+        {
+            title: 'Targeting Type',
+            dataIndex: 'calculatedTargetingType',
+            key: 'calculatedTargetingType',
+            width: '150px',
+            sorter: true,
+            locked: false,
+            filter: true,
+            noTotal: true,
+            render: (type) => type && <span className={'camelcase-string'}>{type} Targeting</span>
+        },
+        {
+            title: 'Sub Type',
+            dataIndex: 'calculatedCampaignSubType',
+            key: 'calculatedCampaignSubType',
+            width: '150px',
+            sorter: true,
+            locked: false,
+            filter: true,
+            noTotal: true,
+            render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
         },
         {
             title: 'Budget',
-            dataIndex: 'dailyBudget',
-            key: 'dailyBudget',
-            width: '120px',
+            dataIndex: 'calculatedBudget',
+            key: 'calculatedBudget',
+            width: '140px',
             sorter: true,
             locked: true,
             noTotal: true,
             filter: true,
             fastUpdating: true,
-            edit: true,
-            render: (budget, item) => <EditableField
-                type={'currency'}
-                value={budget}
-                onUpdate={onUpdateField}
-                id={item.campaignId}
-            />
+            editType: 'currency',
+            render: (budget, item) => {
+                const text = budget ? `$${budget}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
+                return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
+            }
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
@@ -123,11 +152,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            edit: true,
-            render: (date) => <EditableField
-                type={'date'}
-                value={date}
-            />
+            editType: 'date',
         },
         {
             title: 'End date',
@@ -137,11 +162,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             sorter: true,
             noTotal: true,
             fastUpdating: true,
-            edit: true,
-            render: (date) => <EditableField
-                type={'date'}
-                value={date}
-            />
+            editType: 'date',
         },
         {
             title: 'Campaign bidding strategy',
@@ -176,3 +197,4 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
     ]
 )
 
+export const requiredColumnsForUpdate = ['advertisingType']

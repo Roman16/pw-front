@@ -2,11 +2,10 @@ import React, {Component} from 'react'
 import {DatePicker as AntDatePicker} from 'antd'
 import moment from 'moment'
 import tz from 'moment-timezone'
+import locale from 'antd/lib/locale/en_US.js.map';
 
-import DateIcon from './DateIcon/DateIcon'
 import './DatePicker.less'
 import {SVG} from "../../utils/icons"
-import CustomSelect from "../Select/Select"
 
 const {RangePicker} = AntDatePicker
 
@@ -21,7 +20,7 @@ class DatePicker extends Component {
     }
 
     disabledDate = current => {
-        return current && current > moment().tz('America/Los_Angeles').endOf('day')
+        return current && current > moment().tz('America/Los_Angeles').endOf('day').add(-1, 'days')
     }
 
     render() {
@@ -33,20 +32,20 @@ class DatePicker extends Component {
                     ranges={{
                         Today: [moment(), moment()],
                         Yesterday: [
-                            moment(new Date()).add(-1, 'days'),
-                            moment(new Date()).add(-1, 'days'),
+                            moment().tz('America/Los_Angeles').add(-1, 'days'),
+                            moment().tz('America/Los_Angeles').add(-1, 'days'),
                         ],
                         'Last 7 Days': [
-                            moment(new Date()).add(-6, 'days'),
-                            moment()
+                            moment().tz('America/Los_Angeles').add(-6, 'days'),
+                            moment().tz('America/Los_Angeles')
                         ],
                         'Last 14 Days': [
-                            moment(new Date()).add(-13, 'days'),
-                            moment()
+                            moment().tz('America/Los_Angeles').add(-13, 'days'),
+                            moment().tz('America/Los_Angeles')
                         ],
                         'Last 30 Days': [
-                            moment(new Date()).add(-29, 'days'),
-                            moment()
+                            moment().tz('America/Los_Angeles').add(-29, 'days'),
+                            moment().tz('America/Los_Angeles')
                         ],
                         'Year to date': [
                             moment(new Date(new Date().getFullYear(), 0, 1)),
@@ -61,6 +60,7 @@ class DatePicker extends Component {
                     dropdownClassName={'pw-date-picker-dropdown'}
                     separator="-"
                     format="DD/MM/YY"
+                    locale={locale}
                     suffixIcon={<SVG id={'select-icon'}/>}
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}

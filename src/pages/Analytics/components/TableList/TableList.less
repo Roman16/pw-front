@@ -383,6 +383,15 @@
             width: 1.2857142857142858rem;
             height: 1.2857142857142858rem;
             margin-top: 3px;
+
+            &.ant-checkbox-disabled {
+              .ant-checkbox-inner {
+                background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAH2SURBVHgBzZhbTsJAFEDvDFSNRlPDQwQ16IeGP/lkFboT3YFxB7oEl+Aq+IQPoxiDNCYQH5g0IeAD2nFuI6bUtvRBy5yEAE2bns6ctOkQ4FSrtSJNSifAyDEQJvNN+IkDlQAoQKCuDYfnlUpZIb8ytRglHOX00bBMiSSdCSCDyCQhnVLC4BAEgVByRPl3EUSBMRmFRJiuMYaQUCQhRnIbKchvZkHTNHhoPsFg8Plvn9hGCGV2tnOQTFJYXJRgK5+x3S8WoQUugCNjJpFIwFyEUKa0v2uMzJiRpsNjqw1zEdorFowpMtPpvMLX9xBiFyrks7C2ujKxrc1lnl/eHY+JTAgjLljC7fX6XOjN9bhIhOwixily6iZSIaeIG42WYzeRCvmN2LMQxrgur4IfgkRsxfbRkU7LxpUieHu/u1eM270bQSO2YjtCmdT63+/l5SUoHRQd76xImIg9CfUHHxP/3aTCRuxJCIfZ+iR2kgobsSch7AW7mSY1i4g9CXmRwoBnEbFnoWlSODpmgkbsS8gs5dZEmIh9C42l3E4YJuJAQgie0E4qbMSBhcxS46a6XTV0xFZ8v3Wg1M1tE6JCuPcyFFJBHFTKGBFJSOEjpF+DIBC+cEWZNroAMaZNxVU0istouHKlM/2Kb6xDvHIqX0ZUGGOX6IAuP1yqGNwKqqRwAAAAAElFTkSuQmCC') no-repeat center center;
+                background-size: cover;
+                border: 0 !important;
+                border-radius: 2px;
+              }
+            }
           }
 
           span {
@@ -619,6 +628,14 @@
               text-overflow: ellipsis;
               overflow: hidden;
               white-space: nowrap;
+            }
+
+            .campaign-budget {
+              text-transform: capitalize;
+            }
+
+            .camelcase-string {
+              text-transform: capitalize;
             }
 
             .query-field {
@@ -1167,10 +1184,13 @@
     }
 
     .ant-calendar-my-select {
+      pointer-events: none;
+
       a {
         font-weight: 500;
         font-size: 1rem;
         color: #343C5A;
+        pointer-events: none;
       }
     }
   }

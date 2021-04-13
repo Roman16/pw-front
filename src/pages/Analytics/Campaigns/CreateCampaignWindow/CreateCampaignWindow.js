@@ -28,7 +28,7 @@ const CreateCampaignWindow = () => {
             portfolio_name: '',
             startDate: undefined,
             endDate: undefined,
-            dailyBudget: 0,
+            calculatedBudget: 0,
             advertisingType: 'SponsoredProducts',
             calculatedTargetingType: 'auto',
             bidding_strategy: 'legacyForSales',
@@ -124,12 +124,12 @@ const CreateCampaignWindow = () => {
 
     const createCampaignHandler = async () => {
         try {
-            await analyticsServices.createCampaign({
+            await analyticsServices.exactCreate('campaigns', {
                 name: createCampaignData.name,
                 portfolio_name: createCampaignData.portfolio_name,
                 startDate: createCampaignData.startDate,
                 endDate: createCampaignData.endDate,
-                dailyBudget: createCampaignData.dailyBudget,
+                calculatedBudget: createCampaignData.calculatedBudget,
                 advertisingType: createCampaignData.advertisingType,
                 calculatedTargetingType: createCampaignData.calculatedTargetingType,
                 bidding_strategy: createCampaignData.bidding_strategy,

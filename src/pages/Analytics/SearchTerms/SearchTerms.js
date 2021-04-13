@@ -62,6 +62,12 @@ const SearchTerms = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
+    const changePaginationHandler = (data) => {
+        localStorage.setItem('analyticsPageSize', data.pageSize)
+
+        getPageData(['table'], data)
+    }
+
     const getTargetingsDetails = async (id) => {
         if (openedSearchTerms.includes(id)) setOpenedSearchTerms(prevState => [...prevState.filter(i => i !== id)])
         else try {
@@ -96,8 +102,9 @@ const SearchTerms = () => {
 
     const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms, processingRows)
 
-    const getPageData = debounce(50, false, async (pageParts) => {
+    const getPageData = debounce(50, false, async (pageParts,paginationParams, sorterParams) => {
         setOpenedSearchTerms([])
+        if (paginationParams) setTableRequestParams(paginationParams)
 
         try {
             if (pageParts.includes('table')) setTableFetchingStatus(true)
@@ -135,8 +142,8 @@ const SearchTerms = () => {
 
 
             const res = await analyticsServices.fetchSearchTermsData({
-                ...tableRequestParams,
-                sorterColumn: localSorterColumn,
+                ...paginationParams ? paginationParams : tableRequestParams,
+                sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                 segment: localSegmentValue,
                 pageParts,
                 filtersWithState,
@@ -240,13 +247,13 @@ const SearchTerms = () => {
                 ]
 
                 const res = await analyticsServices.fetchSearchTermsData({
-                    ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
-                    page: 1
+                    page: 1,
+                    pageSize: 200
                 }, `&queryCRC64:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
@@ -285,7 +292,7 @@ const SearchTerms = () => {
 
         clearTimeout(sorterTimeoutId)
         sorterTimeoutId = setTimeout(() => {
-            setTableRequestParams(prevState => ({...prevState, page: 1}))
+            getPageData(['table'], {...tableRequestParams, page: 1}, data)
         }, 300)
     }
 
@@ -304,15 +311,10 @@ const SearchTerms = () => {
 
         if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.response.map(i => i.queryCRC64))
         else setOpenedSearchTerms([])
-    }, [tableRequestParams, localSegmentValue, localTableOptions])
+    }, [localSegmentValue, localTableOptions])
 
     useEffect(() => {
-        setTableRequestParams(prevState => ({
-            ...prevState,
-            page: 1
-        }))
-        setTimeout(getPageData(['metrics', 'table', 'chart']), 100)
-
+        setTimeout(getPageData(['metrics', 'table', 'chart'], {...tableRequestParams, page: 1}), 100)
     }, [selectedRangeDate, filters])
 
     return (
@@ -349,7 +351,7 @@ const SearchTerms = () => {
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue === 'targetings'}
                 expandedRowRender={(props, columnsBlackList) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList)}
 
-                onChange={(data) => setTableRequestParams(data)}
+                onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
             />

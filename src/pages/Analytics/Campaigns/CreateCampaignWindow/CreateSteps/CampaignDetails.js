@@ -82,8 +82,8 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">Daily budget</label>
                         <InputCurrency
                             step={0.01}
-                            value={createData.dailyBudget}
-                            onChange={(value) => onChange({dailyBudget: value})}
+                            value={createData.calculatedBudget}
+                            onChange={(value) => onChange({calculatedBudget: value})}
                         />
                     </div>
                 </div>

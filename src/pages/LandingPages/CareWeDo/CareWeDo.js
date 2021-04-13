@@ -17,7 +17,6 @@ import organizationalImageMob from '../../../assets/img/landing-careWeDo/organiz
 import laborImage from '../../../assets/img/landing-careWeDo/labor-image.png'
 import laborImageMob from '../../../assets/img/landing-careWeDo/labor-image-mob.png'
 
-import videoBg from '../../../assets/img/landing-careWeDo/video-bg.mp4'
 import PageTitle from "./PageTitle"
 
 

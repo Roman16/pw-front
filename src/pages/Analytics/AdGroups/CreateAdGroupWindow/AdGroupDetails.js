@@ -15,14 +15,14 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
                         <CustomSelect
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({advertising_type: value})}
-                            value={createData.advertising_type}
+                            onChange={(value) => onChange({advertisingType: value})}
+                            value={createData.advertisingType}
                         >
-                            <Option value={'sponsored_products'}>
+                            <Option value={'SponsoredProducts'}>
                                 Sponsored Products
                             </Option>
 
-                            <Option value={'sponsored_display'}>
+                            <Option value={'SponsoredDisplay'}>
                                 Sponsored Display
                             </Option>
                         </CustomSelect>
@@ -45,11 +45,11 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
                         <CustomSelect
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({selected_campaign: value})}
-                            value={createData.selected_campaign}
-                            disabled={!createData.advertising_type}
+                            onChange={(value) => onChange({campaignId: value})}
+                            value={createData.campaignId}
+                            disabled={!createData.advertisingType}
                         >
-                            <Option value={'445'}>
+                            <Option value={77}>
                                 Campaign
                             </Option>
                         </CustomSelect>
@@ -71,9 +71,9 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
                     <label htmlFor="">Ad Group Name</label>
                     <Input
                         placeholder={'Ad Group Name'}
-                        value={createData.ad_group_name}
-                        onChange={({target: {value}}) => onChange({ad_group_name: value})}
-                        disabled={!createData.selected_campaign}/>
+                        value={createData.name}
+                        onChange={({target: {value}}) => onChange({name: value})}
+                        disabled={!createData.campaignId}/>
                 </div>
             </div>
 
@@ -91,9 +91,9 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
                     <label htmlFor="">Default bid</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.ad_group_default_bid}
-                        onChange={(value) => onChange({ad_group_default_bid: value})}
-                        disabled={!createData.selected_campaign}
+                        value={createData.defaultBid}
+                        onChange={(value) => onChange({defaultBid: value})}
+                        disabled={!createData.campaignId}
                     />
                 </div>
 

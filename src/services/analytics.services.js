@@ -14,7 +14,9 @@ export const analyticsServices = {
     fetchTargetingsDetails,
     fetchPageData,
 
-    createCampaign
+    exactCreate,
+    exactUpdateField,
+    bulkUpdate
 }
 
 const stateIdValues = {
@@ -38,7 +40,7 @@ const filtersHandler = (f) => {
         if (filterBy === 'datetime') {
             parameters.unshift(`?datetime:range=${dateRangeToIso(value)}`)
         } else if (type.key === 'except') {
-            parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
+            parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'productView') {
 
         } else if (filterBy === 'segment') {
@@ -48,7 +50,7 @@ const filtersHandler = (f) => {
         } else if (type === 'search' && value) {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
-            parameters.push(`&${filterBy}:in=${value}`)
+            parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'ctr' || filterBy === 'ctr') {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
@@ -128,6 +130,15 @@ function fetchPageData(location, params, idList) {
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`)
 }
 
-function createCampaign(campaign) {
-    return api('post', analyticsUrls.createUrl('campaigns'), campaign)
+function exactCreate(entity, data) {
+    return api('post', analyticsUrls.createUrl(entity), data)
+}
+
+function exactUpdateField(entity, data) {
+    return api('post', analyticsUrls.exactUpdate(entity), data)
+}
+
+function bulkUpdate(entity, data, idList, filters) {
+
+    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
 }
