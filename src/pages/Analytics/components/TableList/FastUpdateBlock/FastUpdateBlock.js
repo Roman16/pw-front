@@ -70,7 +70,7 @@ const FastUpdateBlock = ({
         onSetChanges({bulkOperation: {
             entity: selectedColumn,
             action: actionType,
-            value: changingValue
+            value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
         }})
     }
 

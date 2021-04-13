@@ -12,7 +12,6 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    EditableField,
     impressionsColumn,
     keywordPTColumn,
     matchTypeColumn,
@@ -21,7 +20,6 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
-import {Switch} from "antd"
 
 export const automatePatDescription = {
     'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
@@ -40,12 +38,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
             key: 'state',
             width: '65px',
             noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
+            editType: 'switch',
         },
         {
             title: 'Keyword / PT',
