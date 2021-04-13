@@ -66,7 +66,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             width: '170px',
             sorter: true,
             locked: false,
-            filter: false,
+            filter: true,
             noTotal: true,
             render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
         },
@@ -77,7 +77,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             width: '150px',
             sorter: true,
             locked: false,
-            filter: false,
+            filter: true,
             noTotal: true,
             render: (type) => type && <span className={'camelcase-string'}>{type} Targeting</span>
         },
@@ -88,7 +88,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             width: '150px',
             sorter: true,
             locked: false,
-            filter: false,
+            filter: true,
             noTotal: true,
             render: (type) => type && type.replace(/([a-z])([A-Z])/g, '$1 $2')
         },
@@ -104,7 +104,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             fastUpdating: true,
             editType: 'currency',
             render: (budget, item) => {
-                const text = budget ? `$${budget}${item.calculatedBudgetType ? `/${item.calculatedBudgetType}` : ''}` : ''
+                const text = budget ? `$${budget}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
                 return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
             }
         },
