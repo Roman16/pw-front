@@ -556,6 +556,16 @@ img {
   }
 
   &.ant-radio-wrapper-disabled {
+    &.ant-radio-wrapper-checked {
+      .ant-radio-inner {
+        border-color: #C9CBD4 !important;
+
+        &::after {
+          background: #C9CBD4;
+        }
+      }
+    }
+
     .ant-radio:hover {
       cursor: auto;
 

@@ -16,19 +16,21 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import _ from "lodash"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import moment from "moment"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
         [finishedSteps, setFinishedSteps] = useState([]),
+        [disableNextStep, setDisableNextStep] = useState(true),
         [createCampaignData, setCreateCampaignData] = useState({
             //campaign
-            name: '',
-            portfolio_name: '',
-            startDate: undefined,
+            name: undefined,
+            portfolio_name: null,
+            startDate: moment(),
             endDate: undefined,
-            calculatedBudget: 0,
+            calculatedBudget: undefined,
             advertisingType: 'SponsoredProducts',
             calculatedTargetingType: 'auto',
             bidding_strategy: 'legacyForSales',
@@ -43,7 +45,7 @@ const CreateCampaignWindow = () => {
                     percentage: 0
                 }],
             //ad group
-            create_ad_group: true,
+            create_ad_group: false,
             ad_group_name: '',
             ad_group_default_bid: 0,
             //product ads
@@ -189,7 +191,11 @@ const CreateCampaignWindow = () => {
                 <AdvertisingType createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 1 &&
-                <CampaignDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <CampaignDetails
+                    createData={createCampaignData}
+                    onChange={changeCampaignDataHandler}
+                    confirmValidation={(value) => setDisableNextStep(!value)}
+                />}
 
                 {currentStep === 2 &&
                 <AdGroupDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
@@ -207,6 +213,7 @@ const CreateCampaignWindow = () => {
                 steps={steps}
                 currentStep={currentStep}
                 goNext={goToNextStepHandler}
+                disableNextStep={currentStep === 1 && disableNextStep}
                 goPrevious={goToPreviousStepHandler}
                 onCreate={createCampaignHandler}
                 createButtonTitle={'Create Campaign'}

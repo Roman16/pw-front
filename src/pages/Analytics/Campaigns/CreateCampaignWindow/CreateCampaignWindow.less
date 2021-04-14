@@ -3,6 +3,10 @@
   height: 70vh;
   max-width: 1250px;
 
+  @media (max-width: 1200px) {
+    width: 85vw !important;
+  }
+
   .ant-modal-body {
     height: 100%;
     padding: 0;
@@ -278,10 +282,12 @@
 
   .create-steps {
     width: 100%;
-    overflow-y: auto;
+    overflow: auto;
     padding: 1.4285714285714286rem 2.857142857142857rem;
 
     .step {
+      min-width: 700px;
+
       .form-group {
         display: flex;
         flex-direction: column;
@@ -289,6 +295,7 @@
         &.w-50 {
           width: 50%;
         }
+
 
         label {
           font-size: 1rem;
@@ -315,6 +322,33 @@
         .pw-date-picker {
           width: 180px;
         }
+
+        .error-message {
+          margin: 0;
+          opacity: 0;
+          height: 0;
+        }
+
+        &.error-field {
+          position: relative;
+
+          .error-message {
+            color: #EC7F5C;
+            bottom: -20px;
+            opacity: 1;
+            height: max-content;
+          }
+
+          & > {
+            .InputCurrency .ant-input-number,
+            .multi-text-area,
+            .custom-select .ant-select-selection,
+            .ant-input {
+              border-color: #EC7F5C;
+            }
+
+          }
+        }
       }
 
       .ant-radio-wrapper {
@@ -333,7 +367,11 @@
         font-size: 0.8571428571428571rem;
         line-height: 1rem;
         color: #656A84;
-        margin: 10px 0 10px 33px;
+        margin: -4px 0 12px 33px;
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
 
         a {
           color: #6D6DF6;
@@ -449,6 +487,20 @@
 
         .row {
           display: flex;
+        }
+
+        .campaign-budget {
+          .InputCurrency {
+            width: 180px;
+            max-width: 180px;
+          }
+        }
+
+        .bids-description {
+          font-size: 0.85714286rem;
+          line-height: 1rem;
+          color: #656A84;
+          margin-bottom: 20px;
         }
 
         .form-group.row {

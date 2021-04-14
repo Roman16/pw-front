@@ -11,33 +11,33 @@ const Option = Select.Option
 const updateActions = {
     'number': [
         {
-            title: 'Set Exact',
+            title: 'Set to',
             value: 'setExact'
         },
         {
-            title: 'Add Exact',
+            title: 'Increase by amount',
             value: 'addExact'
         },
         {
-            title: 'Sub Exact',
-            value: 'subExact'
-        },
-        {
-            title: 'Add Percent',
+            title: 'Increase by percentage',
             value: 'addPercent'
         },
         {
-            title: 'Sub Percent',
+            title: 'Decrease by amount',
+            value: 'subExact'
+        },
+        {
+            title: 'Decrease by percentage',
             value: 'subPercent'
         },
 
     ],
     'date': [{
-        title: 'Set Exact',
+        title: 'Set to',
         value: 'setExact'
     },],
     'status': [{
-        title: 'Set Exact',
+        title: 'Set to',
         value: 'setExact'
     }]
 }
@@ -154,7 +154,14 @@ const FastUpdateBlock = ({
 
 const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) => {
     if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
-        return (<DatePicker showToday={false}/>)
+        return (<DatePicker
+            format={'MMM DD, YYYY'}
+            showToday={false}
+            dropdownClassName={'dropdown-with-timezone'}
+            renderExtraFooter={() => <>
+                <p>America/Los_Angeles</p>
+            </>}
+        />)
     } else if (selectedColumn === 'calculatedBudget') {
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}

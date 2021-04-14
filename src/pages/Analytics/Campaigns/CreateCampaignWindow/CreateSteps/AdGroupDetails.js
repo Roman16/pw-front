@@ -9,7 +9,8 @@ const AdGroupDetails = ({createData, onChange}) => {
             <div className="col">
                 <Radio.Group
                     value={createData.create_ad_group}
-                    onChange={({target: {value}}) => onChange({create_ad_group: value})}
+                    disabled={true}
+                    // onChange={({target: {value}}) => onChange({create_ad_group: value})}
                 >
                     <h4>Ad Group</h4>
 
@@ -24,9 +25,7 @@ const AdGroupDetails = ({createData, onChange}) => {
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -44,10 +43,7 @@ const AdGroupDetails = ({createData, onChange}) => {
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -66,10 +62,7 @@ const AdGroupDetails = ({createData, onChange}) => {
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
     </div>)

@@ -5,13 +5,13 @@ import {round} from "../../../../../utils/round"
 
 const CreateCampaignOverview = ({createData}) => {
     const targetingsTypeEnum = {
-            'automatic_targeting': 'Automatic Targeting',
-            'manual_targeting': 'Manual Targeting',
+            'auto': 'Automatic Targeting',
+            'manual': 'Manual Targeting',
         },
         biddingStrategyEnum = {
-            'down': 'Dynamic bids - down only',
-            'dynamic': 'Dynamic bids - up and down',
-            'fixed': 'Fixed bids'
+            'legacyForSales': 'Dynamic bids - down only',
+            'autoForSales': 'Dynamic bids - up and down',
+            'manual': 'Fixed bids'
         },
         TTargetingTypeEnum = {
             'keyword': 'Keyword Targeting',
@@ -30,21 +30,22 @@ const CreateCampaignOverview = ({createData}) => {
         },
         portfolioName: {
             title: 'Portfolio',
-            fieldKey: 'portfolio_name'
+            fieldKey: 'portfolio_name',
+            render: value => value == null ? 'No Portfolio' : value
         },
         startDate: {
             title: 'Start',
             fieldKey: 'startDate',
-            render: value => value && moment(value).format('MM.DD.YYYY')
+            render: value => value && moment(value).format('MMM DD, YYYY')
         },
         endDate: {
             title: 'End',
             fieldKey: 'endDate',
-            render: value => value && moment(value).format('MM.DD.YYYY')
+            render: value => value ? moment(value).format('MMM DD, YYYY') : 'No end date'
         },
         dailyBudget: {
             title: 'Daily Budget',
-            fieldKey: 'dailyBudget',
+            fieldKey: 'calculatedBudget',
             render: value => `${numberMask(value, 2)}$`
         },
         targeting: {
@@ -59,78 +60,78 @@ const CreateCampaignOverview = ({createData}) => {
         },
         bidsTopOfSearch: {
             title: 'Bids by placement: Top of Search (first page)',
-            fieldKey: 'top_search_bid',
-            render: value => `${round(value, 2)}%`
+            fieldKey: 'bidding_adjustments',
+            render: value => `${round(value[0].percentage, 2)}%`
         },
         bidsProductPage: {
             title: 'Bids by placement: Product pages (competitors pages)',
-            fieldKey: 'product_pages_bid',
-            render: value => `${round(value, 2)}%`
+            fieldKey: 'bidding_adjustments',
+            render: value => `${round(value[1].percentage, 2)}%`
         },
-        adGroupName: {
-            title: 'Ad Group Name',
-            fieldKey: 'ad_group_name'
-        },
-        adGroupBid: {
-            title: 'Default Bid',
-            fieldKey: 'ad_group_default_bid',
-            render: value => `${numberMask(value, 2)}$`
-        },
-        productAds: {
-            title: 'Product Ads',
-            fieldKey: 'selectedProductAds',
-            render: value => value.length > 0 && <div
-                className={'overflow-text'}
-                title={value.map(item => item.asin).join(', ')}
-            >
-                {value.length} products: {value.map(item => item.asin).join(', ')}
-            </div>
-        },
-        targetCloseMatch: {
-            title: 'Targeting Groups: Close match',
-            fieldKey: 'target_close_match',
-            render: value => `${numberMask(value, 2)}$`
-        },
-        targetLooseMatch: {
-            title: 'Targeting Groups: Loose match',
-            fieldKey: 'target_loose_match',
-            render: value => `${numberMask(value, 2)}$`
-        },
-        targetSubstitutes: {
-            title: 'Targeting Groups: Substitutes',
-            fieldKey: 'target_substitutes',
-            render: value => `${numberMask(value, 2)}$`
-        },
-        targetComplements: {
-            title: 'Targeting Groups: Complements',
-            fieldKey: 'target_complements',
-            render: value => `${numberMask(value, 2)}$`
-        },
-        negativeKeywords: {
-            title: 'Negative Keywords',
-            fieldKey: 'negative_keywords',
-            render: value => value.length > 0 && `${value.length} keywords`
-        },
-        negativePATs: {
-            title: 'Negative PATs',
-            fieldKey: 'negative_pats',
-            render: value => value.length > 0 && `${value.length} ASINs`
-        },
-        targetingType: {
-            title: 'Targeting Type',
-            fieldKey: 't_targeting_type',
-            render: value => TTargetingTypeEnum[value]
-        },
-        keywordTargeting: {
-            title: 'Keyword targeting',
-            fieldKey: 'keyword_targetings',
-            render: value => value.length > 0 && `${value.length} keywords`
-        },
-        negativeKeywordTargeting: {
-            title: 'Negative Keyword Targeting',
-            fieldKey: 'keyword_targetings',
-            render: value => value.length > 0 && `${value.length} keywords`
-        },
+        // adGroupName: {
+        //     title: 'Ad Group Name',
+        //     fieldKey: 'ad_group_name'
+        // },
+        // adGroupBid: {
+        //     title: 'Default Bid',
+        //     fieldKey: 'ad_group_default_bid',
+        //     render: value => `${numberMask(value, 2)}$`
+        // },
+        // productAds: {
+        //     title: 'Product Ads',
+        //     fieldKey: 'selectedProductAds',
+        //     render: value => value.length > 0 && <div
+        //         className={'overflow-text'}
+        //         title={value.map(item => item.asin).join(', ')}
+        //     >
+        //         {value.length} products: {value.map(item => item.asin).join(', ')}
+        //     </div>
+        // },
+        // targetCloseMatch: {
+        //     title: 'Targeting Groups: Close match',
+        //     fieldKey: 'target_close_match',
+        //     render: value => `${numberMask(value, 2)}$`
+        // },
+        // targetLooseMatch: {
+        //     title: 'Targeting Groups: Loose match',
+        //     fieldKey: 'target_loose_match',
+        //     render: value => `${numberMask(value, 2)}$`
+        // },
+        // targetSubstitutes: {
+        //     title: 'Targeting Groups: Substitutes',
+        //     fieldKey: 'target_substitutes',
+        //     render: value => `${numberMask(value, 2)}$`
+        // },
+        // targetComplements: {
+        //     title: 'Targeting Groups: Complements',
+        //     fieldKey: 'target_complements',
+        //     render: value => `${numberMask(value, 2)}$`
+        // },
+        // negativeKeywords: {
+        //     title: 'Negative Keywords',
+        //     fieldKey: 'negative_keywords',
+        //     render: value => value.length > 0 && `${value.length} keywords`
+        // },
+        // negativePATs: {
+        //     title: 'Negative PATs',
+        //     fieldKey: 'negative_pats',
+        //     render: value => value.length > 0 && `${value.length} ASINs`
+        // },
+        // targetingType: {
+        //     title: 'Targeting Type',
+        //     fieldKey: 't_targeting_type',
+        //     render: value => TTargetingTypeEnum[value]
+        // },
+        // keywordTargeting: {
+        //     title: 'Keyword targeting',
+        //     fieldKey: 'keyword_targetings',
+        //     render: value => value.length > 0 && `${value.length} keywords`
+        // },
+        // negativeKeywordTargeting: {
+        //     title: 'Negative Keyword Targeting',
+        //     fieldKey: 'keyword_targetings',
+        //     render: value => value.length > 0 && `${value.length} keywords`
+        // },
     }
 
     const allFields = Object.keys(fields),
