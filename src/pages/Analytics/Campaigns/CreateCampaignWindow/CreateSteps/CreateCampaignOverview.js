@@ -2,8 +2,12 @@ import React from "react"
 import moment from "moment"
 import {numberMask} from "../../../../../utils/numberMask"
 import {round} from "../../../../../utils/round"
+import {useSelector} from "react-redux"
+import _ from 'lodash'
 
 const CreateCampaignOverview = ({createData}) => {
+    const portfolioList = useSelector(state => state.analytics.portfolioList)
+
     const targetingsTypeEnum = {
             'auto': 'Automatic Targeting',
             'manual': 'Manual Targeting',
@@ -30,8 +34,8 @@ const CreateCampaignOverview = ({createData}) => {
         },
         portfolioName: {
             title: 'Portfolio',
-            fieldKey: 'portfolio_name',
-            render: value => value == null ? 'No Portfolio' : value
+            fieldKey: 'portfolioId',
+            render: value => value == null ? 'No Portfolio' : _.find(portfolioList, {portfolioId: value}).name
         },
         startDate: {
             title: 'Start',

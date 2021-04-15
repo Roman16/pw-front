@@ -156,7 +156,7 @@ const RenderPageParts = ({
             await analyticsServices.bulkUpdate(
                 location,
                 changeData,
-                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.join(',')}`,
+                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
                 filtersWithState
             )
 

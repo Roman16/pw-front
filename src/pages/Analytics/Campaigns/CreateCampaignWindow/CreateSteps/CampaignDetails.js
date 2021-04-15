@@ -6,11 +6,32 @@ import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import _ from 'lodash'
 import moment from 'moment'
 import {round} from "../../../../../utils/round"
+import {useSelector} from "react-redux"
+import {dateFormatting} from "../../../../../utils/dateFormatting"
 
 const Option = Select.Option
 
+export const disabledStartDate = (current, endDate) => {
+    if (current) {
+        if (endDate) {
+            return current <= moment().add(-1, 'days').endOf('day') || current >= moment(endDate).endOf('day')
+        } else {
+            return current <= moment().add(-1, 'days').endOf('day')
+        }
+    }
+}
+export const disabledEndDate = (current, startDate) => {
+    if (moment() > moment(startDate)) return current && current <= moment().add(-1, 'days').endOf('day')
+    else return current && current <= moment(startDate).add(-1, 'days').endOf('day')
+}
+
+
 const CampaignDetails = ({createData, onChange, confirmValidation}) => {
-    const [failedFields, setFailedFields] = useState([])
+    const portfolioList = useSelector(state => state.analytics.portfolioList)
+
+    const [failedFields, setFailedFields] = useState([]),
+        [availablePortfolios, setAvailablePortfolios] = useState([])
+
 
     const campaignBudgetValidation = () => {
         setFailedFields([...failedFields.filter(i => i !== 'calculatedBudget')])
@@ -46,19 +67,9 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
         }
     }
 
-    function disabledStartDate(current) {
-        if (current) {
-            if (createData.endDate) {
-                return current <= moment().add(-1, 'days').endOf('day') || current >= moment(createData.endDate).endOf('day')
-            } else {
-                return current <= moment().add(-1, 'days').endOf('day')
-            }
-        }
-    }
-
-    function disabledEndDate(current) {
-        return current && current <= moment(createData.startDate).add(-1, 'days').endOf('day')
-    }
+    useEffect(() => {
+        setAvailablePortfolios([...portfolioList])
+    }, [portfolioList])
 
     return (<div className={'step step-1 campaign-details-step'}>
         <div className="row">
@@ -85,21 +96,27 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <div className="form-group">
                         <label htmlFor="">Portfolio</label>
                         <CustomSelect
+                            showSearch
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            value={createData.portfolio_name}
-                            onChange={(value) => onChange({portfolio_name: value})}
+                            value={createData.portfolioId}
+                            onChange={(value) => onChange({portfolioId: value})}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => {
+                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
+                            }}
                         >
                             <Option
                                 value={null}
                             >
                                 No Portfolio
                             </Option>
-                            <Option
-                                value={'Portfolio'}
+
+                            {availablePortfolios.map(portfolio => <Option
+                                value={portfolio.portfolioId}
                             >
-                                Portfolio
-                            </Option>
+                                {portfolio.name}
+                            </Option>)}
                         </CustomSelect>
                     </div>
                 </div>
@@ -117,12 +134,12 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({startDate: date})}
-                            value={createData.startDate}
+                            onChange={(date) => onChange({startDate: dateFormatting(date)})}
+                            value={moment(createData.startDate)}
                             showToday={false}
                             allowClear={false}
                             format={'MMM DD, YYYY'}
-                            disabledDate={disabledStartDate}
+                            disabledDate={(data) => disabledStartDate(data, createData.endDate)}
                             dropdownClassName={'dropdown-with-timezone'}
                             renderExtraFooter={() => <>
                                 <p>America/Los_Angeles</p>
@@ -135,10 +152,10 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <DatePicker
                             placeholder={'No end date'}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({endDate: date})}
+                            onChange={(date) => onChange({endDate: dateFormatting(date)})}
                             showToday={false}
                             format={'MMM DD, YYYY'}
-                            disabledDate={disabledEndDate}
+                            disabledDate={data => disabledEndDate(data, createData.startDate)}
                             dropdownClassName={'dropdown-with-timezone'}
                             renderExtraFooter={() => <>
                                 <p>America/Los_Angeles</p>
@@ -264,6 +281,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <InputCurrency
                         step={1}
                         max={900}
+                        parser={value => Math.trunc(value)}
                         value={createData.bidding_adjustments[0].percentage}
                         onChange={value => onChange({
                             bidding_adjustments: [{

@@ -13,6 +13,7 @@ export const analyticsServices = {
     fetchPlacementData,
     fetchTargetingsDetails,
     fetchPageData,
+    fetchPortfoliosForCampaign,
 
     exactCreate,
     exactUpdateField,
@@ -128,6 +129,10 @@ function fetchPageData(location, params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
 
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`)
+}
+
+function fetchPortfoliosForCampaign() {
+    return api('get', `${analyticsUrls.portfolios}`)
 }
 
 function exactCreate(entity, data) {

@@ -110,24 +110,25 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
         },
         ...!selectedPortfolio ? [{
             title: 'Portfolio',
-            dataIndex: 'portfolioName',
-            key: 'portfolioName',
+            dataIndex: 'portfolioId',
+            key: 'portfolioId',
             width: '150px',
             sorter: true,
             locked: true,
             filter: true,
             noTotal: true,
+            fastUpdating: true,
             render: (portfolio, item) => (
                 <Link
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
-                    title={portfolio}
+                    title={item.portfolioName}
                     className={'state-link'}
                     onClick={() => setStateHandler('campaigns', {
                         name: item.portfolioName,
                         portfolioId: item.portfolioId
                     })}
                 >
-                    {portfolio}
+                    {item.portfolioName}
                 </Link>
             )
         }] : [],
@@ -184,4 +185,3 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
     ]
 )
 
-export const requiredColumnsForUpdate = ['advertisingType']

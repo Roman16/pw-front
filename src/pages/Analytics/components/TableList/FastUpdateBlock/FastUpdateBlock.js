@@ -5,6 +5,11 @@ import {Input, Select} from "antd"
 import './FastUpdateBlock.less'
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
+import {useSelector} from "react-redux"
+import moment from "moment"
+import {dateFormatting} from "../../../../../utils/dateFormatting"
+import ConfirmWindow from "./ConfirmWindow"
+import {round} from "../../../../../utils/round"
 
 const Option = Select.Option
 
@@ -36,10 +41,16 @@ const updateActions = {
         title: 'Set to',
         value: 'setExact'
     },],
-    'status': [{
+    'state': [{
         title: 'Set to',
         value: 'setExact'
     }]
+}
+
+const disabledStartDate = (current) => {
+    if (current) {
+        return current <= moment().add(-1, 'days').endOf('day')
+    }
 }
 
 const FastUpdateBlock = ({
@@ -56,6 +67,7 @@ const FastUpdateBlock = ({
 
     const
         [availableActions, setAvailableActions] = useState([]),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [selectedColumn, setSelectedColumn] = useState(),
         [actionType, setActionType] = useState(),
         [changingValue, setChangingValue] = useState()
@@ -64,14 +76,20 @@ const FastUpdateBlock = ({
         onSelectAll()
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = (e, confirmAction = false) => {
         e.preventDefault()
 
-        onSetChanges({bulkOperation: {
-            entity: selectedColumn,
-            action: actionType,
-            value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
-        }})
+        if (selectedColumn === 'state' && changingValue === 'archived' && !confirmAction) {
+            setVisibleConfirmWindow(true)
+        } else {
+            onSetChanges({
+                bulkOperation: {
+                    entity: selectedColumn,
+                    action: actionType,
+                    value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
+                }
+            })
+        }
     }
 
     useEffect(() => {
@@ -79,18 +97,27 @@ const FastUpdateBlock = ({
     }, [columns])
 
     useEffect(() => {
-        if (selectedColumn === 'startDate' || selectedColumn === 'endDate') setAvailableActions(updateActions.date)
-        else if (selectedColumn === 'state') setAvailableActions(updateActions.status)
-        else setAvailableActions(updateActions.number)
+        if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
+            setAvailableActions(updateActions.date)
+            setChangingValue(dateFormatting(moment()))
+        } else if (selectedColumn === 'calculatedBudget') {
+            setAvailableActions(updateActions.number)
+            setChangingValue(undefined)
+        } else if (selectedColumn === 'portfolioId') {
+            setAvailableActions(updateActions.state)
+            setChangingValue(null)
+        } else if (selectedColumn === 'state') {
+            setAvailableActions(updateActions.state)
+            setChangingValue('enabled')
+        } else {
+            setAvailableActions(updateActions.state)
+            setChangingValue(undefined)
+        }
     }, [selectedColumn])
 
     useEffect(() => {
         if (availableActions.length > 0) setActionType(availableActions[0].value)
     }, [availableActions])
-
-    useEffect(() => {
-        setChangingValue(undefined)
-    }, [selectedColumn])
 
     return (
         <div className="fast-update-block">
@@ -126,7 +153,6 @@ const FastUpdateBlock = ({
                         required
                         getPopupContainer={trigger => trigger.parentNode}
                         onChange={value => setActionType(value)}
-                        disabled={selectedColumn === 'state' || selectedColumn === 'startDate' || selectedColumn === 'endDate'}
                         value={actionType}
                     >
                         {availableActions.map(item => <Option value={item.value}>{item.title}</Option>)}
@@ -142,21 +168,43 @@ const FastUpdateBlock = ({
                     />
                 </div>
 
-                <button className={'btn green'}>Apply</button>
+                <button className={'btn green'}
+                        disabled={changingValue === undefined && selectedColumn !== 'endDate'}>Apply
+                </button>
             </form>
 
             <button className={'btn icon close'} onClick={onClose}>
                 <SVG id={'close-window-icon'}/>
             </button>
+
+            <ConfirmWindow
+                visible={visibleConfirmWindow}
+                count={selectedAll ? totalSize : selectedRows.length}
+
+                onCancel={() => setVisibleConfirmWindow(false)}
+                onSubmit={(e) => submitHandler(e, true)}
+            />
         </div>
     )
 }
 
 const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) => {
+    const portfolioList = useSelector(state => state.analytics.portfolioList)
+
+    const [availablePortfolios, setAvailablePortfolios] = useState([])
+
+    useEffect(() => {
+        setAvailablePortfolios([...portfolioList])
+    }, [portfolioList])
+
     if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
         return (<DatePicker
             format={'MMM DD, YYYY'}
             showToday={false}
+            disabledDate={disabledStartDate}
+            value={value ? moment(value) : undefined}
+            allowClear={selectedColumn === 'endDate'}
+            onChange={(date) => onChangeValue(dateFormatting(date))}
             dropdownClassName={'dropdown-with-timezone'}
             renderExtraFooter={() => <>
                 <p>America/Los_Angeles</p>
@@ -166,8 +214,11 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}
+            max={1000000}
+            parser={value => Math.abs(value)}
             value={value}
             onChange={value => onChangeValue(value)}
+            onBlur={({target: {value}}) => onChangeValue(value ? round(value, 2) : undefined)}
         />)
     } else if (selectedColumn === 'state') {
         return (<CustomSelect
@@ -178,6 +229,31 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 <Option value={'enabled'}>Enabled</Option>
                 <Option value={'paused'}>Paused</Option>
                 <Option value={'archived'}>Archived</Option>
+            </CustomSelect>
+        )
+    } else if (selectedColumn === 'portfolioId') {
+        return (<CustomSelect
+                showSearch
+                placeholder={'Select by'}
+                getPopupContainer={trigger => trigger.parentNode}
+                onChange={(value) => onChangeValue(value)}
+                optionFilterProp="children"
+                value={value}
+                filterOption={(input, option) => {
+                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
+                }}
+            >
+                <Option
+                    value={null}
+                >
+                    No Portfolio
+                </Option>
+
+                {availablePortfolios.map(portfolio => <Option
+                    value={portfolio.portfolioId}
+                >
+                    {portfolio.name}
+                </Option>)}
             </CustomSelect>
         )
     } else {

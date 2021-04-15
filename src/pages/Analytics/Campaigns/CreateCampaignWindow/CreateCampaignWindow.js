@@ -15,8 +15,8 @@ import TargetingsDetails from "./CreateSteps/TargetingsDetails/TargetingsDetails
 import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import _ from "lodash"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import moment from "moment"
+import {dateFormatting} from "../../../../utils/dateFormatting"
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
@@ -27,8 +27,8 @@ const CreateCampaignWindow = () => {
         [createCampaignData, setCreateCampaignData] = useState({
             //campaign
             name: undefined,
-            portfolio_name: null,
-            startDate: moment(),
+            portfolioId: null,
+            startDate: dateFormatting(moment()),
             endDate: undefined,
             calculatedBudget: undefined,
             advertisingType: 'SponsoredProducts',
@@ -128,7 +128,7 @@ const CreateCampaignWindow = () => {
         try {
             await analyticsServices.exactCreate('campaigns', {
                 name: createCampaignData.name,
-                portfolio_name: createCampaignData.portfolio_name,
+                portfolioId: createCampaignData.portfolioId,
                 startDate: createCampaignData.startDate,
                 endDate: createCampaignData.endDate,
                 calculatedBudget: createCampaignData.calculatedBudget,
@@ -165,6 +165,10 @@ const CreateCampaignWindow = () => {
         setProcessSteps([])
         setSkippedSteps([])
     }, [createCampaignData.targetings_type])
+
+    useEffect(() => {
+        dispatch(analyticsActions.setPortfolioList())
+    }, [])
 
     return (<ModalWindow
             className={'create-campaign-window'}

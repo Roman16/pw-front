@@ -1,3 +1,6 @@
 import moment from "moment"
+import tz from 'moment-timezone'
 
-export const dateFormatting = (date) => moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
+export const dateFormatting = (date) => {
+    return date ? moment(date).tz('America/Los_Angeles').toISOString() : undefined
+}

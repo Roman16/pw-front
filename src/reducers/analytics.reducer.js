@@ -70,7 +70,8 @@ const initialState = {
     selectedRangeDate: rangeDateFromLocalStorage ? rangeDateFromLocalStorage : {
         startDate: moment().add(-29, 'days').toISOString(),
         endDate: moment().toISOString()
-    }
+    },
+    portfolioList: []
 }
 
 
@@ -191,6 +192,12 @@ export function analytics(state = initialState, action) {
                     ...state.visibleCreationWindows,
                     ...action.payload
                 }
+            }
+
+        case analyticsConstants.SET_PORTFOLIOS:
+            return {
+                ...state,
+                portfolioList: action.payload
             }
 
 

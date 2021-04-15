@@ -146,6 +146,7 @@ export const analyticsUrls = {
     placementData: 'analytics/v2/placements',
     targetingsDetails: 'analytics/v2/search-terms/targetings-data',
     pageData: (location) => `analytics/v2/${location}`,
+    portfolios: 'dynamic-analytics/entities/portfolios',
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,

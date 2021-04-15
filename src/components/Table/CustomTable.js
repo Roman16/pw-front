@@ -7,6 +7,11 @@ import moment from "moment"
 import DatePicker from "../DatePicker/DatePicker"
 import InputCurrency from "../Inputs/InputCurrency"
 import {dateFormatting} from "../../utils/dateFormatting"
+import {round} from "../../utils/round"
+import {
+    disabledEndDate,
+    disabledStartDate
+} from "../../pages/Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 
 const CustomTable = ({
                          columns,
@@ -231,6 +236,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
         onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose)
     }
 
+    const disabled = item.state === 'archived'
 
     useEffect(() => {
         function handleClickOutside({target}) {
@@ -263,14 +269,24 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                 setVisibleEditableWindow(false)
             })
         }
+
+        if (visibleEditableWindow) {
+            setNewValue(value)
+        }
     }, [visibleEditableWindow])
+
+    const openEditWindow = () => {
+        if (!disabled) {
+            setVisibleEditableWindow(prevState => !prevState)
+        }
+    }
 
     if (type === 'date') {
         return (<div ref={wrapperRef}>
 
-                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                <div className={'field-value'} onClick={openEditWindow}>
                     {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
-                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                    {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
 
@@ -282,6 +298,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                     className={'editable-date-picker'}
                     dropdownClassName={'edit-field-picker'}
                     onChange={value => setNewValue(value)}
+                    disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
                     renderExtraFooter={() => <>
                         <p>America/Los_Angeles</p>
                         <div className="actions">
@@ -308,20 +325,25 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
         </div>)
     } else {
         return (<div className={''} ref={wrapperRef}>
-                <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
+                <div className={'field-value'} onClick={openEditWindow}>
                     {render ? render() : value ? `$${value}` : ''}
 
-                    <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
+                    {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
                 {visibleEditableWindow && <div className="editable-window">
                     <InputCurrency
                         value={newValue}
+                        // step={0.01}
+                        max={1000000}
+                        parser={value => Math.abs(value)}
                         onChange={(value) => setNewValue(value)}
+                        onBlur={({target: {value}}) => setNewValue(value ? round(value, 2) : undefined)}
                         autoFocus={true}
                     />
 
-                    <button className={'btn default'} onClick={() => submitFieldHandler()} disabled={processing}>Save</button>
+                    <button className={'btn default'} onClick={() => submitFieldHandler()} disabled={processing}>Save
+                    </button>
                     <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
                     </button>
                 </div>}

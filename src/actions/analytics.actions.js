@@ -1,4 +1,5 @@
 import {analyticsConstants} from '../constans/actions.type'
+import {analyticsServices} from "../services/analytics.services"
 
 export const analyticsActions = {
     setMainState,
@@ -13,7 +14,8 @@ export const analyticsActions = {
     setSegmentValue,
     setStateDetails,
     setSortingColumn,
-    setVisibleCreateWindow
+    setVisibleCreateWindow,
+    setPortfolioList
 }
 
 function setMainState(state) {
@@ -114,6 +116,7 @@ function setStateDetails(data) {
         })
     }
 }
+
 function setSortingColumn(data) {
     return dispatch => {
         dispatch({
@@ -122,6 +125,7 @@ function setSortingColumn(data) {
         })
     }
 }
+
 function setVisibleCreateWindow(window) {
     return dispatch => {
         dispatch({
@@ -129,4 +133,14 @@ function setVisibleCreateWindow(window) {
             payload: window
         })
     }
+}
+
+function setPortfolioList() {
+    return dispatch => analyticsServices.fetchPortfoliosForCampaign()
+        .then(res => {
+            dispatch({
+                type: analyticsConstants.SET_PORTFOLIOS,
+                payload: res.result
+            })
+        })
 }
