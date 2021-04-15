@@ -50,6 +50,16 @@
   }
 }
 
+td.ant-calendar-cell {
+  cursor: pointer;
+
+  &:hover {
+    .ant-calendar-date {
+      background-color: rgba(143, 211, 157, 0.2);
+    }
+  }
+}
+
 td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-date {
   &:before {
     display: none !important;
@@ -394,7 +404,6 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
       border-radius: 4px;
     }
   }
-
 
 
   &.dropdown-with-timezone {
