@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Input, Radio, Select} from "antd"
+import {Checkbox, Input, Radio, Select} from "antd"
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import CustomSelect from "../../../../../components/Select/Select"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
@@ -200,20 +200,39 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
 
         <div className="row">
             <div className="col">
+                <div className="form-row">
+                    <div className={`form-group checkbox`}>
+                        <Checkbox
+                            checked={createData.state === 'enabled'}
+                            onChange={({target: {checked}}) => onChange({state: checked ? 'enabled' : 'paused'})}
+                        >
+                            Create campaign with enabled status
+                        </Checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col description">
+
+            </div>
+        </div>
+
+        <div className="row">
+            <div className="col">
                 <Radio.Group
-                    value={createData.calculatedTargetingType}
-                    onChange={({target: {value}}) => onChange({calculatedTargetingType: value})}
+                    value={createData.calculatedCampaignSubType}
+                    onChange={({target: {value}}) => onChange({calculatedCampaignSubType: value})}
                 >
                     <h4>Targeting:</h4>
 
-                    <Radio value={'auto'}>
+                    <Radio value={'Auto'}>
                         Automatic Targeting
                     </Radio>
                     <div className="radio-description">
                         Amazon will target keywords and products that are similar to the product in your ad.
                     </div>
 
-                    <Radio value={'manual'}>
+                    <Radio value={'Manual'}>
                         Manual Targeting
                     </Radio>
 
@@ -281,7 +300,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <InputCurrency
                         step={1}
                         max={900}
-                        parser={value => Math.trunc(value)}
+                        parser={value => Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[0].percentage}
                         onChange={value => onChange({
                             bidding_adjustments: [{
@@ -299,7 +318,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <InputCurrency
                         step={1}
                         max={900}
-                        parser={value => Math.trunc(value)}
+                        parser={value => Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[1].percentage}
                         onChange={value => onChange({
                             bidding_adjustments: [

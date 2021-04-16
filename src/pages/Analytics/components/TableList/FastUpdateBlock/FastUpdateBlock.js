@@ -100,7 +100,7 @@ const FastUpdateBlock = ({
         if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
             setAvailableActions(updateActions.date)
             setChangingValue(dateFormatting(moment()))
-        } else if (selectedColumn === 'calculatedBudget') {
+        } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
             setAvailableActions(updateActions.number)
             setChangingValue(undefined)
         } else if (selectedColumn === 'portfolioId') {
@@ -210,11 +210,12 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 <p>America/Los_Angeles</p>
             </>}
         />)
-    } else if (selectedColumn === 'calculatedBudget') {
+    } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}
-            max={1000000}
+            min={selectedColumn === 'calculatedBudget' ? 1 : 0.02}
+            max={selectedColumn === 'calculatedBudget' ? 1000000 : 1000}
             parser={value => Math.abs(value)}
             value={value}
             onChange={value => onChangeValue(value)}

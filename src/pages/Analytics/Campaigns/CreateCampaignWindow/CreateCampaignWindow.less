@@ -296,12 +296,28 @@
           width: 50%;
         }
 
+        &.checkbox {
+          .ant-checkbox-wrapper {
+            display: flex;
+            align-items: center;
+
+            span {
+              font-weight: 400;
+            }
+          }
+          .ant-checkbox {
+            width: 18px;
+            height: 18px;
+          }
+        }
+
         label {
           font-size: 1rem;
           font-weight: 500;
           color: #343C5A;
           margin-bottom: 8px;
         }
+
 
         input, .InputCurrency, .custom-select {
           height: 2.2857142857142856rem;

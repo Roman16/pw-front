@@ -284,7 +284,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
     if (type === 'date') {
         return (<div ref={wrapperRef}>
 
-                <div className={'field-value'} onClick={openEditWindow}>
+                <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
                     {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
@@ -325,7 +325,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
         </div>)
     } else {
         return (<div className={''} ref={wrapperRef}>
-                <div className={'field-value'} onClick={openEditWindow}>
+                <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
                     {render ? render() : value ? `$${value}` : ''}
 
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
@@ -335,7 +335,8 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                     <InputCurrency
                         value={newValue}
                         // step={0.01}
-                        max={1000000}
+                        max={column === 'calculatedBudget' ? 1000000 : 1000}
+                        min={column === 'calculatedBudget' ? 1 : 0.02}
                         parser={value => Math.abs(value)}
                         onChange={(value) => setNewValue(value)}
                         onBlur={({target: {value}}) => setNewValue(value ? round(value, 2) : undefined)}
