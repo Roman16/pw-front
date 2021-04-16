@@ -10,6 +10,7 @@ import moment from "moment"
 import {dateFormatting} from "../../../../../utils/dateFormatting"
 import ConfirmWindow from "./ConfirmWindow"
 import {round} from "../../../../../utils/round"
+import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 
 const Option = Select.Option
 
@@ -45,12 +46,6 @@ const updateActions = {
         title: 'Set to',
         value: 'setExact'
     }]
-}
-
-const disabledStartDate = (current) => {
-    if (current) {
-        return current <= moment().add(-1, 'days').endOf('day')
-    }
 }
 
 const FastUpdateBlock = ({
@@ -201,7 +196,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
         return (<DatePicker
             format={'MMM DD, YYYY'}
             showToday={false}
-            disabledDate={disabledStartDate}
+            disabledDate={(date) => disabledStartDate(date, undefined)}
             value={value ? moment(value) : undefined}
             allowClear={selectedColumn === 'endDate'}
             onChange={(date) => onChangeValue(dateFormatting(date))}

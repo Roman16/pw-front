@@ -14,15 +14,18 @@ const Option = Select.Option
 export const disabledStartDate = (current, endDate) => {
     if (current) {
         if (endDate) {
-            return current <= moment().add(-1, 'days').endOf('day') || current >= moment(endDate).endOf('day')
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles')) || moment(current).endOf('day') > moment(endDate)
         } else {
-            return current <= moment().add(-1, 'days').endOf('day')
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles'))
         }
     }
 }
 export const disabledEndDate = (current, startDate) => {
-    if (moment() > moment(startDate)) return current && current <= moment().add(-1, 'days').endOf('day')
-    else return current && current <= moment(startDate).add(-1, 'days').endOf('day')
+    if(current) {
+        if (moment() > moment(startDate)) return disabledStartDate(current, null)
+        else return  moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles'))
+    }
+
 }
 
 
