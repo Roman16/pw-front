@@ -54,7 +54,7 @@ const CreateCampaignOverview = ({createData}) => {
         },
         targeting: {
             title: 'Targeting',
-            fieldKey: 'calculatedTargetingType',
+            fieldKey: 'calculatedCampaignSubType',
             render: value => targetingsTypeEnum[value]
         },
         biddingStrategy: {
