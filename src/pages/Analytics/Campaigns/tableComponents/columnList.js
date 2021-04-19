@@ -21,6 +21,7 @@ import {
 } from "../../components/TableList/tableColumns"
 import {Switch} from "antd"
 import moment from "moment"
+import tz from 'moment-timezone'
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -141,6 +142,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             noTotal: true,
             fastUpdating: true,
             editType: 'date',
+            disableField: (date, item) => moment(date).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')
         },
         {
             title: 'End date',

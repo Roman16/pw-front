@@ -95,32 +95,44 @@ const RenderPageParts = ({
         getPageData(['table'], data)
     }
 
-    const updateFieldHandler = async (item, column, value, cb) => {
-        try {
-            await analyticsServices.exactUpdateField(location, {
-                [idSelectors[location]]: item[idSelectors[location]],
-                advertisingType: item.advertisingType,
-                [column]: value
-            })
-
-            setPageData({
-                ...pageData,
-                table: {
-                    ...pageData.table,
-                    response: [...pageData.table.response.map(i => {
-                        if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value
-
-                        return i
-                    })]
-                }
-            })
-
-            notification.success({title: 'Success!'})
-        } catch (e) {
-            console.log(e)
+    const fieldsValidation = (field, value) => {
+        if (field === 'calculatedBudget' && value < 1) {
+            notification.error({title: 'Campaign budget should be at least $1.00'})
+            return false
         }
 
-        cb()
+        return true
+    }
+
+    const updateFieldHandler = async (item, column, value, success, error) => {
+        if (fieldsValidation(column, value)) {
+            try {
+                await analyticsServices.exactUpdateField(location, {
+                    [idSelectors[location]]: item[idSelectors[location]],
+                    advertisingType: item.advertisingType,
+                    [column]: value
+                })
+
+                setPageData({
+                    ...pageData,
+                    table: {
+                        ...pageData.table,
+                        response: [...pageData.table.response.map(i => {
+                            if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value
+
+                            return i
+                        })]
+                    }
+                })
+                success()
+                notification.success({title: 'Success!'})
+            } catch (e) {
+                console.log(e)
+                error()
+            }
+
+
+        } else error()
     }
 
     const updateColumnHandler = async (changeData, idList, selectedAllRows, cb) => {
@@ -153,16 +165,18 @@ const RenderPageParts = ({
         }
 
         try {
-            await analyticsServices.bulkUpdate(
+            const res = await analyticsServices.bulkUpdate(
                 location,
                 changeData,
                 selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
                 filtersWithState
             )
 
-            getPageData(['table'])
+            if (res.result.success > 0) {
+                getPageData(['table'])
+                notification.success({title: `${res.result.success} ${res.result.success === 1 ? 'entity' : 'entities'} success updated!`})
+            }
 
-            notification.success({title: 'Success!'})
             cb()
         } catch (e) {
             console.log(e)

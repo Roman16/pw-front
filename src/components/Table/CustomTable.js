@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Spin, Switch} from 'antd'
+import {Checkbox, Spin, Switch, Tooltip} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import $ from "jquery"
@@ -182,7 +182,7 @@ const CustomTable = ({
 
                                     return (
                                         <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? 'editable-field' : ''}`}
+                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? item.disableField && item.disableField(report[item.key], report) ? 'editable-field disabled' : 'editable-field' : ''}`}
                                             style={{
                                                 ...fieldWidth,
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
@@ -196,6 +196,7 @@ const CustomTable = ({
                                                     column={item.dataIndex}
                                                     onUpdateField={onUpdateField}
                                                     render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
+                                                    disabled={(report.state && report.state === 'archived') || (item.disableField && (item.disableField(report[item.key], report) || false))}
                                                 /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
                                         </div>
                                     )
@@ -219,7 +220,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField, render}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render, disabled}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -233,10 +234,9 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose)
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose, () => setProcessing(false))
     }
 
-    const disabled = item.state === 'archived'
 
     useEffect(() => {
         function handleClickOutside({target}) {
@@ -334,18 +334,28 @@ export const EditableField = ({item, type, column, value, onUpdateField, render}
                 {visibleEditableWindow && <div className="editable-window">
                     <InputCurrency
                         value={newValue}
-                        // step={0.01}
-                        max={column === 'calculatedBudget' ? 1000000 : 1000}
-                        min={column === 'calculatedBudget' ? 1 : 0.02}
-                        parser={value => Math.abs(value)}
-                        onChange={(value) => setNewValue(value)}
+                        step={0.01}
+                        // max={column === 'calculatedBudget' ? 1000000 : 1000}
+                        // min={column === 'calculatedBudget' ? 1 : 0.02}
+                        parser={value => value && Math.abs(value)}
+                        onChange={(value) => setNewValue(value || undefined)}
                         onBlur={({target: {value}}) => setNewValue(value ? round(value, 2) : undefined)}
                         autoFocus={true}
                     />
 
-                    <button className={'btn default'} onClick={() => submitFieldHandler()} disabled={processing}>Save
+                    <button
+                        className={'btn default'}
+                        onClick={() => submitFieldHandler()}
+                        disabled={processing || !newValue}
+                    >
+                        Save
                     </button>
-                    <button className={'btn transparent'} onClick={() => setVisibleEditableWindow(false)}>Cancel
+
+                    <button
+                        className={'btn transparent'}
+                        onClick={() => setVisibleEditableWindow(false)}
+                    >
+                        Cancel
                     </button>
                 </div>}
             </div>

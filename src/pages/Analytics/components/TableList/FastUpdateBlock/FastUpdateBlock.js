@@ -211,9 +211,9 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
             step={0.01}
             min={selectedColumn === 'calculatedBudget' ? 1 : 0.02}
             max={selectedColumn === 'calculatedBudget' ? 1000000 : 1000}
-            parser={value => Math.abs(value)}
+            parser={value =>value && Math.abs(value)}
             value={value}
-            onChange={value => onChangeValue(value)}
+            onChange={value => onChangeValue(value || undefined)}
             onBlur={({target: {value}}) => onChangeValue(value ? round(value, 2) : undefined)}
         />)
     } else if (selectedColumn === 'state') {

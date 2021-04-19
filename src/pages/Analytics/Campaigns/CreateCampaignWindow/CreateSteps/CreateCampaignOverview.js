@@ -9,8 +9,8 @@ const CreateCampaignOverview = ({createData}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
 
     const targetingsTypeEnum = {
-            'auto': 'Automatic Targeting',
-            'manual': 'Manual Targeting',
+            'Auto': 'Automatic Targeting',
+            'Manual': 'Manual Targeting',
         },
         biddingStrategyEnum = {
             'legacyForSales': 'Dynamic bids - down only',
@@ -51,6 +51,11 @@ const CreateCampaignOverview = ({createData}) => {
             title: 'Daily Budget',
             fieldKey: 'calculatedBudget',
             render: value => `${numberMask(value, 2)}$`
+        },
+        status: {
+            title: 'Status',
+            fieldKey: 'state',
+            render: value => value === 'enabled' ? 'Enabled' : 'Paused'
         },
         targeting: {
             title: 'Targeting',

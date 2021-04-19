@@ -21,9 +21,9 @@ export const disabledStartDate = (current, endDate) => {
     }
 }
 export const disabledEndDate = (current, startDate) => {
-    if(current) {
+    if (current) {
         if (moment() > moment(startDate)) return disabledStartDate(current, null)
-        else return  moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles'))
+        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles'))
     }
 
 }
@@ -303,9 +303,16 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <InputCurrency
                         step={1}
                         max={900}
-                        parser={value => Math.abs(Math.trunc(value))}
+                        parser={value => value && Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[0].percentage}
                         onChange={value => onChange({
+                            bidding_adjustments: [{
+                                predicate: 'placementTop',
+                                percentage: value
+                            },
+                                createData.bidding_adjustments[1]]
+                        })}
+                        onBlur={({target: {value}}) => onChange({
                             bidding_adjustments: [{
                                 predicate: 'placementTop',
                                 percentage: value ? value : 0
@@ -321,9 +328,16 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <InputCurrency
                         step={1}
                         max={900}
-                        parser={value => Math.abs(Math.trunc(value))}
+                        parser={value => value && Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[1].percentage}
                         onChange={value => onChange({
+                            bidding_adjustments: [
+                                createData.bidding_adjustments[0], {
+                                    predicate: 'placementProductPage',
+                                    percentage: value
+                                }]
+                        })}
+                        onBlur={({target: {value}}) => onChange({
                             bidding_adjustments: [
                                 createData.bidding_adjustments[0], {
                                     predicate: 'placementProductPage',
