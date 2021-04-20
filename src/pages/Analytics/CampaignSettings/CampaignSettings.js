@@ -30,11 +30,14 @@ const CampaignSettings = () => {
 
     const [settingParams, setSettingsParams] = useState({
             servingStatus: '',
-            bidding_adjustments_predicate: [],
-            bidding_adjustments_percentage: []
+            bidding_adjustments: {
+                placementProductPage: undefined,
+                placementTop: undefined
+            }
         }),
         [availablePortfolios, setAvailablePortfolios] = useState([]),
-        [failedFields, setFailedFields] = useState([])
+        [failedFields, setFailedFields] = useState([]),
+        [editFields, setEditFields] = useState([])
 
 
     const changeSettingsHandler = (data) => {
@@ -42,6 +45,7 @@ const CampaignSettings = () => {
         if (data.dailyBudget) setFailedFields(prevState => [...prevState.filter(i => i !== 'budget')])
 
         setSettingsParams({...settingParams, ...data})
+        setEditFields(prevState => [...prevState, ...Object.keys(data)])
     }
 
     const getSettingsDetails = async () => {
@@ -82,17 +86,23 @@ const CampaignSettings = () => {
     const submitHandler = async () => {
         if (failedFields.length === 0) {
             try {
-                await analyticsServices.exactUpdateField('campaigns', {
-                    name: settingParams.name,
+                let requestDate = {
                     advertisingType: settingParams.advertisingType,
-                    portfolioId: settingParams.portfolioId,
-                    startDate: settingParams.startDate,
-                    endDate: settingParams.endDate,
-                    dailyBudget: settingParams.dailyBudget,
-                    bidding_strategy: settingParams.bidding_strategy,
-                })
+                    campaignId: settingParams.id,
+                }
 
+                if (editFields.includes('bidding_adjustments') || editFields.includes('bidding_strategy')) {
+                    requestDate.bidding_adjustments = settingParams.bidding_adjustments
+                    requestDate.bidding_strategy = settingParams.bidding_strategy
+                }
+
+                editFields.forEach(key => requestDate[key] = settingParams[key])
+
+                await analyticsServices.exactUpdateField('campaigns', requestDate)
+                dataFromResponse = {...dataFromResponse, ...settingParams}
                 notification.success({title: 'Success!'})
+
+                setEditFields([])
             } catch (e) {
                 console.log(e)
             }
@@ -365,20 +375,18 @@ const CampaignSettings = () => {
                                 step={1}
                                 max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments_predicate.includes('placementTop') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementTop')] : undefined}
+                                value={settingParams.bidding_adjustments.placementTop}
                                 onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: [{
-                                        predicate: 'placementTop',
-                                        percentage: value
-                                    },
-                                        settingParams.bidding_adjustments[1]]
+                                    bidding_adjustments: {
+                                        ...settingParams.bidding_adjustments,
+                                        placementTop: value
+                                    }
                                 })}
                                 onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: [{
-                                        predicate: 'placementTop',
-                                        percentage: value ? value : 0
-                                    },
-                                        settingParams.bidding_adjustments[1]]
+                                    bidding_adjustments: {
+                                        ...settingParams.bidding_adjustments,
+                                        placementTop: value ? value : 0
+                                    }
                                 })}
                                 typeIcon={'percent'}
                             />
@@ -394,20 +402,18 @@ const CampaignSettings = () => {
                                 step={1}
                                 max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments_predicate.includes('placementProductPage') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementProductPage')] : undefined}
+                                value={settingParams.bidding_adjustments.placementProductPage}
                                 onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: [
-                                        settingParams.bidding_adjustments[0], {
-                                            predicate: 'placementProductPage',
-                                            percentage: value
-                                        }]
+                                    bidding_adjustments: {
+                                        ...settingParams.bidding_adjustments,
+                                        placementProductPage: +value
+                                    }
                                 })}
                                 onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: [
-                                        settingParams.bidding_adjustments[0], {
-                                            predicate: 'placementProductPage',
-                                            percentage: value ? value : 0
-                                        }]
+                                    bidding_adjustments: {
+                                        ...settingParams.bidding_adjustments,
+                                        placementProductPage: value ? +value : 0
+                                    }
                                 })}
                                 typeIcon={'percent'}
                             />

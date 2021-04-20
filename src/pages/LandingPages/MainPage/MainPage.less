@@ -51,12 +51,14 @@
   }
 
   .pre-header {
-    height: 56.1vw;
+    height: 54.5vw;
     position: relative;
-
-    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-      height: 70.05vw;
-    }
+    background: #F3F7FD url(../../../assets/img/landing-mainPage/bg.png) no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    margin: 40px 0 0 0;
 
     .video-container {
       width: 100%;
@@ -80,11 +82,11 @@
     }
 
     h2 {
-      font-size: 60px;
+      font-size: 80px;
       line-height: 72px;
       font-weight: 400;
       color: #fff;
-      margin-bottom: 18px;
+      margin-bottom: 48px;
 
       span {
         color: #83FED0;
@@ -99,6 +101,10 @@
       margin-bottom: 64px;
     }
 
+    .buttons {
+      display: flex;
+    }
+
     .btn {
       height: 56px;
       background: #83FED0;
@@ -107,8 +113,20 @@
       text-transform: uppercase;
       color: #6D6DF6;
 
+      &.border {
+        background: inherit;
+        border: 2px solid #83FED0;
+        color: #83FED0;
+        margin: 0 0 0 20px;
+
+        &:hover {
+          border-color: #77e7bd;
+        }
+      }
+
       &:hover {
         background: #77e7bd;
+        color: #6D6DF6;
       }
     }
   }

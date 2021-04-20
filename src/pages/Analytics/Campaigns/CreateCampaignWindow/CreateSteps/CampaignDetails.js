@@ -40,7 +40,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
         setFailedFields([...failedFields.filter(i => i !== 'calculatedBudget')])
 
         if (!createData.calculatedBudget || createData.calculatedBudget < 1 || createData.calculatedBudget > 1000000) {
-            setFailedFields([...failedFields, 'calculatedBudget'])
+            setFailedFields(prevState => [...prevState, 'calculatedBudget'])
         }
 
         stepValidation()
@@ -49,7 +49,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
     const campaignNameValidation = () => {
         setFailedFields([...failedFields.filter(i => i !== 'name')])
         if (!createData.name || createData.name.trim().length > 128) {
-            setFailedFields([...failedFields, 'name'])
+            setFailedFields(prevState => [...prevState, 'name'])
         }
 
         stepValidation()
@@ -58,9 +58,14 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
     useEffect(() => {
         if (failedFields.length !== 0) {
             campaignNameValidation()
+        }
+    }, [createData.name])
+
+    useEffect(() => {
+        if (failedFields.length !== 0) {
             campaignBudgetValidation()
         }
-    }, [createData])
+    }, [createData.calculatedBudget])
 
     const stepValidation = () => {
         if (createData.name && createData.calculatedBudget && failedFields.length === 0) {
@@ -86,7 +91,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                             onChange={({target: {value}}) => onChange({name: value})}
                             onBlur={({target: {value}}) => {
                                 campaignNameValidation()
-                                onChange({name: value.trim()})
+                                onChange({name: value && value.trim()})
                             }}
                         />
 

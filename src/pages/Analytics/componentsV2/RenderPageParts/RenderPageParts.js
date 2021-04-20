@@ -131,7 +131,6 @@ const RenderPageParts = ({
                 error()
             }
 
-
         } else error()
     }
 
@@ -164,22 +163,41 @@ const RenderPageParts = ({
             ]
         }
 
-        try {
-            const res = await analyticsServices.bulkUpdate(
-                location,
-                changeData,
-                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
-                filtersWithState
-            )
+        const totalCount = idList.length
 
-            if (res.result.success > 0) {
-                getPageData(['table'])
-                notification.success({title: `${res.result.success} ${res.result.success === 1 ? 'entity' : 'entities'} success updated!`})
+        const availableItemsId = idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived')
+
+        if (availableItemsId.length === 0) {
+            notification.warning({title: 'No entities found for update using provided filters.'})
+        } else {
+            try {
+                const res = await analyticsServices.bulkUpdate(
+                    location,
+                    changeData,
+                    selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
+                    filtersWithState
+                )
+
+                const success = res.result.groupedByStatus.SUCCESS,
+                    failed = res.result.failed,
+                    notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
+
+                if (failed === 0 && success === 0 && notApplicable > 0) {
+                    notification.warning({title: 'Your change was not applicable to any selected entities.'})
+                } else {
+                    notification[success > 0 && failed > 0 ? 'warning' : success === 0 && failed > 0 ? 'error' : success === 0 && failed === 0 && notApplicable > 0 ? 'warning' : 'success']({
+                        title: `${success > 0 ? `${success} ${success > 1 ? 'entities' : 'entity'} updated <br/>` : ''}  
+                        ${failed > 0 ? `${failed} ${failed > 1 ? 'entities' : 'entity'} failed to update <br/>` : ''} 
+                        ${notApplicable > 0 ? `Change was not applicable for ${notApplicable} ${notApplicable > 1 ? 'entities' : 'entity'}` : ''}`
+                    })
+
+                    if (success > 0) getPageData(['table'])
+                }
+
+                cb()
+            } catch (e) {
+                console.log(e)
             }
-
-            cb()
-        } catch (e) {
-            console.log(e)
         }
     }
 
