@@ -178,7 +178,7 @@ const RenderPageParts = ({
                     filtersWithState
                 )
 
-                const success = res.result.groupedByStatus.SUCCESS,
+                const success = res.result.success,
                     failed = res.result.failed,
                     notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
 

@@ -139,16 +139,7 @@ const CreateCampaignWindow = () => {
                 calculatedCampaignSubType: createCampaignData.calculatedCampaignSubType,
                 bidding_strategy: createCampaignData.bidding_strategy,
                 state: createCampaignData.state,
-                bidding_adjustments: [
-                    {
-                        predicate: 'placementTop',
-                        percentage: createCampaignData.bidding_adjustments[0].percentage > 0 ? createCampaignData.bidding_adjustments[0].percentage / 100 : 0
-                    },
-                    {
-                        predicate: 'placementProductPage',
-                        percentage: createCampaignData.bidding_adjustments[1].percentage > 0 ? createCampaignData.bidding_adjustments[1].percentage / 100 : 0
-                    },
-                ],
+                bidding_adjustments: createCampaignData.bidding_adjustments,
                 calculatedBudgetType: createCampaignData.calculatedBudgetType,
             })
             closeWindowHandler()
