@@ -30,10 +30,15 @@ const CampaignSettings = () => {
 
     const [settingParams, setSettingsParams] = useState({
             servingStatus: '',
-            bidding_adjustments: {
-                placementProductPage: undefined,
-                placementTop: undefined
-            }
+            bidding_adjustments: [
+                {
+                    predicate: 'placementTop',
+                    percentage: 0
+                },
+                {
+                    predicate: 'placementProductPage',
+                    percentage: 0
+                }],
         }),
         [availablePortfolios, setAvailablePortfolios] = useState([]),
         [failedFields, setFailedFields] = useState([]),
@@ -55,7 +60,17 @@ const CampaignSettings = () => {
             const response = {
                 ...res.response,
                 portfolioId: res.response.portfolioId === '0' ? null : res.response.portfolioId,
-                id: mainState.campaignId
+                id: mainState.campaignId,
+                bidding_adjustments: [
+                    res.response.bidding_adjustments[0] ? res.response.bidding_adjustments[0] : {
+                        predicate: 'placementTop',
+                        percentage: 0
+                    },
+                    res.response.bidding_adjustments[1] ? res.response.bidding_adjustments[1] : {
+                        predicate: 'placementProductPage',
+                        percentage: 0
+                    },
+                ]
             }
 
             dataFromResponse = {...response}
@@ -74,11 +89,13 @@ const CampaignSettings = () => {
         }
     }
 
-    const campaignBudgetValidation = () => {
+    const refreshData = () => setSettingsParams({...dataFromResponse})
+
+    const campaignBudgetValidation = (value) => {
         setFailedFields([...failedFields.filter(i => i !== 'budget')])
 
-        if (!settingParams.dailyBudget || settingParams.dailyBudget < 1 || settingParams.dailyBudget > 1000000) {
-            notification.error({title: !settingParams.dailyBudget || settingParams.dailyBudget < 1 ? 'Campaign budget should be at least $1.00' : 'Campaign budget should not be more than $1,000,000.00'})
+        if (!value || value < 1 || value > 1000000) {
+            notification.error({title: !value || value < 1 ? 'Campaign budget should be at least $1.00' : 'Campaign budget should not be more than $1,000,000.00'})
             setFailedFields([...failedFields, 'budget'])
         }
     }
@@ -123,7 +140,6 @@ const CampaignSettings = () => {
     useEffect(() => {
         setAvailablePortfolios([...portfolioList])
     }, [portfolioList])
-
 
     return (
         <div className={'campaign-settings-workplace'}>
@@ -245,7 +261,7 @@ const CampaignSettings = () => {
                     <DatePicker
                         disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')}
                         showToday={false}
-                        value={settingParams.startDate && moment(settingParams.startDate)}
+                        value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
                         onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
                         format={'MMM DD, YYYY'}
                     />
@@ -255,7 +271,7 @@ const CampaignSettings = () => {
                         disabled={settingParams.state === 'archived'}
                         disabledDate={data => disabledEndDate(data, settingParams.startDate)}
                         showToday={false}
-                        value={settingParams.endDate && moment(settingParams.endDate)}
+                        value={settingParams.endDate && moment(settingParams.endDate).tz('America/Los_Angeles')}
                         onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
                         format={'MMM DD, YYYY'}
                     />
@@ -271,12 +287,13 @@ const CampaignSettings = () => {
                     <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
                         <InputCurrency
                             disabled={settingParams.state === 'archived'}
-                            value={settingParams.advertisingType === SP ? settingParams.dailyBudget : settingParams.budget}
+                            value={settingParams.calculatedBudget}
                             step={0.01}
-                            onChange={(value) => changeSettingsHandler({dailyBudget: value})}
+                            onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
                             onBlur={({target: {value}}) => {
-                                campaignBudgetValidation()
-                                changeSettingsHandler({dailyBudget: value ? round(value, 2) : undefined})
+                                value = value ? round(value, 2) : undefined
+                                campaignBudgetValidation(value)
+                                changeSettingsHandler({calculatedBudget: value})
                             }}
                         />
                     </div>
@@ -375,18 +392,20 @@ const CampaignSettings = () => {
                                 step={1}
                                 max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments.placementTop}
+                                value={settingParams.bidding_adjustments[0].percentage}
                                 onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: {
-                                        ...settingParams.bidding_adjustments,
-                                        placementTop: value
-                                    }
+                                    bidding_adjustments: [{
+                                        predicate: 'placementTop',
+                                        percentage: value
+                                    },
+                                        settingParams.bidding_adjustments[1]]
                                 })}
                                 onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: {
-                                        ...settingParams.bidding_adjustments,
-                                        placementTop: value ? value : 0
-                                    }
+                                    bidding_adjustments: [{
+                                        predicate: 'placementTop',
+                                        percentage: value ? value : 0
+                                    },
+                                        settingParams.bidding_adjustments[1]]
                                 })}
                                 typeIcon={'percent'}
                             />
@@ -402,18 +421,20 @@ const CampaignSettings = () => {
                                 step={1}
                                 max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments.placementProductPage}
+                                value={settingParams.bidding_adjustments[1].percentage}
                                 onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: {
-                                        ...settingParams.bidding_adjustments,
-                                        placementProductPage: +value
-                                    }
+                                    bidding_adjustments: [
+                                        settingParams.bidding_adjustments[0], {
+                                            predicate: 'placementProductPage',
+                                            percentage: value
+                                        }]
                                 })}
                                 onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: {
-                                        ...settingParams.bidding_adjustments,
-                                        placementProductPage: value ? +value : 0
-                                    }
+                                    bidding_adjustments: [
+                                        settingParams.bidding_adjustments[0], {
+                                            predicate: 'placementProductPage',
+                                            percentage: value ? value : 0
+                                        }]
                                 })}
                                 typeIcon={'percent'}
                             />
@@ -424,7 +445,12 @@ const CampaignSettings = () => {
 
 
             {settingParams.state !== 'archived' && <div className="actions">
-                <button className="btn white">Cancel</button>
+                <button
+                    className="btn white"
+                    onClick={refreshData}
+                >Cancel
+                </button>
+
                 <button
                     className="btn default"
                     disabled={JSON.stringify(dataFromResponse) === JSON.stringify(settingParams) || failedFields.length > 0}

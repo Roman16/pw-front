@@ -242,6 +242,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         function handleClickOutside({target}) {
             if (target && target.className) {
                 if (target.className === 'icon' ||
+                    target.className === 'ant-modal-wrap over-modal-wrap' ||
                     target.parentNode.className === 'ant-calendar-date-panel' ||
                     target.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
                     target.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
