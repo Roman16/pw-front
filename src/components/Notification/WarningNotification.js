@@ -7,7 +7,7 @@ const WarningNotification = ({title, description}) => (
         <div>
             <div className='notification__title'>
                 <SVG id='info'/>
-                {title}
+                <p dangerouslySetInnerHTML={{__html: title}}/>
             </div>
 
             {description && <span className='notification__description'>{description}</span>}

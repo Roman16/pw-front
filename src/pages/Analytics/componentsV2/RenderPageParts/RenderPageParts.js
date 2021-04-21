@@ -95,7 +95,113 @@ const RenderPageParts = ({
         getPageData(['table'], data)
     }
 
-    const getPageData = debounce(50, false, async (pageParts, paginationParams, sorterParams) => {
+    const fieldsValidation = (field, value) => {
+        if (field === 'calculatedBudget' && value < 1) {
+            notification.error({title: 'Campaign budget should be at least $1.00'})
+            return false
+        }
+
+        return true
+    }
+
+    const updateFieldHandler = async (item, column, value, success, error) => {
+        if (fieldsValidation(column, value)) {
+            try {
+                await analyticsServices.exactUpdateField(location, {
+                    [idSelectors[location]]: item[idSelectors[location]],
+                    advertisingType: item.advertisingType,
+                    [column]: value
+                })
+
+                setPageData({
+                    ...pageData,
+                    table: {
+                        ...pageData.table,
+                        response: [...pageData.table.response.map(i => {
+                            if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value
+
+                            return i
+                        })]
+                    }
+                })
+                success()
+                notification.success({title: 'Success!'})
+            } catch (e) {
+                console.log(e)
+                error()
+            }
+
+        } else error()
+    }
+
+    const updateColumnHandler = async (changeData, idList, selectedAllRows, cb) => {
+        let filtersWithState = []
+        const queryParams = queryString.parse(history.location.search)
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+
+        const totalCount = idList.length
+
+        const availableItemsId = idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived')
+
+        if (availableItemsId.length === 0) {
+            notification.warning({title: 'No entities found for update using provided filters.'})
+        } else {
+            try {
+                const res = await analyticsServices.bulkUpdate(
+                    location,
+                    changeData,
+                    selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
+                    filtersWithState
+                )
+
+                const success = res.result.success,
+                    failed = res.result.failed,
+                    notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
+
+                if (failed === 0 && success === 0 && notApplicable > 0) {
+                    notification.warning({title: 'Your change was not applicable to any selected entities.'})
+                } else {
+                    notification[success > 0 && failed > 0 ? 'warning' : success === 0 && failed > 0 ? 'error' : success === 0 && failed === 0 && notApplicable > 0 ? 'warning' : 'success']({
+                        title: `${success > 0 ? `${success} ${success > 1 ? 'entities' : 'entity'} updated <br/>` : ''}  
+                        ${failed > 0 ? `${failed} ${failed > 1 ? 'entities' : 'entity'} failed to update <br/>` : ''} 
+                        ${notApplicable > 0 ? `Change was not applicable for ${notApplicable} ${notApplicable > 1 ? 'entities' : 'entity'}` : ''}`
+                    })
+
+                    if (success > 0) getPageData(['table'])
+                }
+
+                cb()
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
+    const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
         if (paginationParams) setTableRequestParams(paginationParams)
 
         if (location === 'overview') {
@@ -335,6 +441,8 @@ const RenderPageParts = ({
                 onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
+                onUpdateField={updateFieldHandler}
+                onUpdateColumn={updateColumnHandler}
 
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}

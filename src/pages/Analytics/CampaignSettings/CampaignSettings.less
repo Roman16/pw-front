@@ -116,6 +116,10 @@
     .pw-date-picker {
       max-width: 155px;
       margin: 0 20px 0 0;
+
+      * {
+        box-shadow: none;
+      }
     }
   }
 
@@ -223,6 +227,28 @@
       }
     }
   }
+
+  .error-field {
+    position: relative;
+
+    .error-message {
+      color: #EC7F5C;
+      bottom: -20px;
+      opacity: 1;
+      height: max-content;
+    }
+
+    & > {
+      .InputCurrency .ant-input-number,
+      .multi-text-area,
+      .custom-select .ant-select-selection,
+      .ant-input {
+        border-color: #EC7F5C;
+      }
+
+    }
+  }
+
 
   .actions {
     display: flex;

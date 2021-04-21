@@ -683,6 +683,15 @@
                 animation-duration: 0s !important;
               }
 
+              &.disabled {
+                .field-value {
+                  cursor: text !important;
+                }
+                .edit {
+                  display: none !important;
+                }
+              }
+
               & > div {
                 width: 100%;
               }
@@ -695,6 +704,10 @@
                 cursor: initial;
                 position: relative;
                 padding: 5px 8px 5px 12px;
+
+                &.disabled {
+                  cursor: initial;
+                }
 
                 i {
                   min-width: 2rem;

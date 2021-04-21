@@ -113,6 +113,8 @@ const TableList = ({
 
 
     const dateRangeHandler = (startDate, endDate) => {
+        deselectAllRows()
+
         dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
     }
 
@@ -139,6 +141,10 @@ const TableList = ({
         setSelectedRows(tableData.response.map(item => item[rowKey]))
     }
 
+    const deselectAllRows = () => {
+        setSelectedAllRows(false)
+        setSelectedRows([])
+    }
 
     const rowSelection = {
         onChange: (rowsList) => {
@@ -148,11 +154,15 @@ const TableList = ({
     }
 
     const setChangesHandler = async (data) => {
-        onUpdateColumn(data, selectedRows,selectedAllRows, () => {
+        onUpdateColumn(data, selectedRows, selectedAllRows, () => {
             setSelectedAllRows(false)
             setSelectedRows([])
         })
     }
+
+    useEffect(() => {
+        deselectAllRows()
+    }, [filters, tableRequestParams,localSorterColumn])
 
     return (
         <section className={'list-section'}>

@@ -10,7 +10,6 @@
   left: 0;
   top: 0;
   z-index: 10000;
-  //border-bottom: 0.5px solid #6D6DF6;
 
   p {
     margin: 0;
@@ -38,10 +37,14 @@
     }
 
     .form-group {
-      width: 180px;
+      width: 215px;
       height: 2.2857142857142856rem;
 
       margin: 0;
+
+      .ant-select-search__field {
+        padding: 0 0 0 11px;
+      }
 
       .custom-select, .InputCurrency {
         width: 100%;
@@ -59,6 +62,11 @@
       padding: 0 1.4285714285714286rem;
       font-weight: 500;
       font-size: 0.8571428571428571rem;
+
+      &:disabled {
+        cursor: not-allowed;
+        background: #C9CBD4;
+      }
     }
   }
 
@@ -75,6 +83,52 @@
     &:hover {
       svg {
         fill: #7DD4A1;
+      }
+    }
+  }
+}
+
+.confirm-window {
+  .ant-modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h1 {
+      text-align: center;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 0;
+      text-align: center;
+    }
+
+    b {
+      font-size: 20px;
+    }
+
+    .actions {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      margin: 40px 0 25px 0;
+
+      .btn {
+        height: 32px;
+        font-size: 1rem;
+        font-weight: 500;
+
+        .ant-spin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
   }

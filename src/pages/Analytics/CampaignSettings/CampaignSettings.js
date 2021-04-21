@@ -1,34 +1,135 @@
 import React, {useEffect, useState} from "react"
 import './CampaignSettings.less'
-import {Input, Radio, Switch} from "antd"
+import {Input, Radio, Select, Switch} from "antd"
 import DatePicker from "../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {analyticsServices} from "../../../services/analytics.services"
 import moment from "moment"
 import _ from 'lodash'
+import CustomSelect from "../../../components/Select/Select"
+import {analyticsActions} from "../../../actions/analytics.actions"
+import {round} from "../../../utils/round"
+import {notification} from "../../../components/Notification"
+import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import {dateFormatting} from "../../../utils/dateFormatting"
+
+const Option = Select.Option
 
 const SP = 'SponsoredProducts',
     SB = 'SponsoredBrands',
     SD = 'SponsoredDisplay'
 
+let dataFromResponse = {}
+
 const CampaignSettings = () => {
     const mainState = useSelector(state => state.analytics.mainState)
+    const portfolioList = useSelector(state => state.analytics.portfolioList)
+
+    const dispatch = useDispatch()
 
     const [settingParams, setSettingsParams] = useState({
-        servingStatus: '',
-        bidding_adjustments_predicate: [],
-        bidding_adjustments_percentage: []
-    })
+            servingStatus: '',
+            bidding_adjustments: [
+                {
+                    predicate: 'placementTop',
+                    percentage: 0
+                },
+                {
+                    predicate: 'placementProductPage',
+                    percentage: 0
+                }],
+        }),
+        [availablePortfolios, setAvailablePortfolios] = useState([]),
+        [failedFields, setFailedFields] = useState([]),
+        [editFields, setEditFields] = useState([])
+
+
+    const changeSettingsHandler = (data) => {
+        if (data.name) setFailedFields(prevState => [...prevState.filter(i => i !== 'name')])
+        if (data.dailyBudget) setFailedFields(prevState => [...prevState.filter(i => i !== 'budget')])
+
+        setSettingsParams({...settingParams, ...data})
+        setEditFields(prevState => [...prevState, ...Object.keys(data)])
+    }
 
     const getSettingsDetails = async () => {
         try {
             const res = await analyticsServices.fetchSettingsDetails('campaigns', mainState.campaignId)
-            setSettingsParams({...res.response, id: mainState.campaignId})
+
+            const response = {
+                ...res.response,
+                portfolioId: res.response.portfolioId === '0' ? null : res.response.portfolioId,
+                id: mainState.campaignId,
+                bidding_adjustments: [
+                    _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) : {
+                        predicate: 'placementTop',
+                        percentage: 0
+                    },
+                    _.find(res.response.bidding_adjustments, {predicate: 'placementProductPage'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementProductPage'}) : {
+                        predicate: 'placementProductPage',
+                        percentage: 0
+                    },
+                ]
+            }
+
+            dataFromResponse = {...response}
+
+            setSettingsParams({...response})
         } catch (e) {
             console.log(e)
         }
     }
+
+    const campaignNameValidation = () => {
+        setFailedFields([...failedFields.filter(i => i !== 'name')])
+        if (!settingParams.name || settingParams.name.trim().length > 128) {
+            notification.error({title: 'Campaign name field is required!'})
+            setFailedFields([...failedFields, 'name'])
+        }
+    }
+
+    const refreshData = () => setSettingsParams({...dataFromResponse})
+
+    const campaignBudgetValidation = (value) => {
+        setFailedFields([...failedFields.filter(i => i !== 'budget')])
+
+        if (!value || value < 1 || value > 1000000) {
+            notification.error({title: !value || value < 1 ? 'Campaign budget should be at least $1.00' : 'Campaign budget should not be more than $1,000,000.00'})
+            setFailedFields([...failedFields, 'budget'])
+        }
+    }
+
+    const submitHandler = async () => {
+        if (failedFields.length === 0) {
+            try {
+                let requestDate = {
+                    advertisingType: settingParams.advertisingType,
+                    campaignId: settingParams.id,
+                }
+
+                if (editFields.includes('bidding_adjustments') || editFields.includes('bidding_strategy')) {
+                    requestDate.bidding_adjustments = settingParams.bidding_adjustments
+                    requestDate.bidding_strategy = settingParams.bidding_strategy
+                }
+
+                editFields.forEach(key => requestDate[key] = settingParams[key])
+
+                await analyticsServices.exactUpdateField('campaigns', requestDate)
+                dataFromResponse = {...dataFromResponse, ...settingParams}
+                notification.success({title: 'Success!'})
+
+                setEditFields([])
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
+    useEffect(() => {
+        dispatch(analyticsActions.setPortfolioList())
+    }, [])
+
 
     useEffect(() => {
         if (mainState.campaignId) {
@@ -36,6 +137,9 @@ const CampaignSettings = () => {
         }
     }, [mainState])
 
+    useEffect(() => {
+        setAvailablePortfolios([...portfolioList])
+    }, [portfolioList])
 
     return (
         <div className={'campaign-settings-workplace'}>
@@ -45,11 +149,16 @@ const CampaignSettings = () => {
                 </div>
 
                 <div className="value name">
-                    <div className="form-group">
+                    <div className={`form-group ${failedFields.includes('name') ? 'error-field' : ''}`}>
                         <Input
-                            disabled
                             placeholder={'Campaign Name'}
+                            disabled={settingParams.state === 'archived'}
                             value={settingParams.name}
+                            onChange={({target: {value}}) => changeSettingsHandler({name: value})}
+                            onBlur={({target: {value}}) => {
+                                campaignNameValidation()
+                                changeSettingsHandler({name: value.trim()})
+                            }}
                         />
                     </div>
                 </div>
@@ -72,14 +181,31 @@ const CampaignSettings = () => {
 
                 <div className="value portfolio">
                     <div className="form-group">
-                        {/*<CustomSelect*/}
-                        {/*    disabled*/}
-                        {/*    placeholder={'Select existing portfolio'}*/}
-                        {/*>*/}
-                        {/*    <Option value={'1'}>1</Option>*/}
-                        {/*</CustomSelect>*/}
+                        <CustomSelect
+                            showSearch
+                            disabled={settingParams.state === 'archived'}
+                            placeholder={'Select by'}
+                            getPopupContainer={trigger => trigger.parentNode}
+                            value={settingParams.portfolioId}
+                            onChange={(value) => changeSettingsHandler({portfolioId: value})}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => {
+                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
+                            }}
+                        >
+                            <Option
+                                value={null}
+                            >
+                                No Portfolio
+                            </Option>
 
-                        <Input disabled value={settingParams.portfolioName}/>
+                            {availablePortfolios.map(portfolio => <Option
+                                value={portfolio.portfolioId}
+                            >
+                                {portfolio.name}
+                            </Option>)}
+                        </CustomSelect>
+
                     </div>
 
                 </div>
@@ -104,13 +230,14 @@ const CampaignSettings = () => {
                     {settingParams.state === 'archived' ? <span className={'archived'}>Archived</span> :
                         <div className='switch-block'>
                             <Switch
-                                checked={settingParams.state !== 'paused'}
-                                disabled
-                                // onChange={e => onChangeSwitch('week', e)}
+                                checked={settingParams.state === 'enabled'}
+                                disabled={settingParams.state === 'archived'}
+                                onChange={checked => changeSettingsHandler({'state': checked ? 'enabled' : 'paused'})}
                             />
 
-                            {settingParams.state !== 'paused' ? <span className={'active'}>Active</span> :
-                                <span className={'paused'}>Paused</span>}
+                            {settingParams.state === 'paused' && <span className={'paused'}>Paused</span>}
+                            {settingParams.state === 'enabled' && <span className={'active'}>Active</span>}
+                            {settingParams.state === 'archived' && <span>Archived</span>}
                         </div>}
                 </div>
             </div>
@@ -132,15 +259,21 @@ const CampaignSettings = () => {
 
                 <div className="value date">
                     <DatePicker
+                        disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')}
                         showToday={false}
-                        disabled
-                        value={settingParams.startDate && moment(settingParams.startDate, 'YYYYMMDD')}
+                        value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
+                        onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
+                        format={'MMM DD, YYYY'}
                     />
 
                     <DatePicker
+                        placeholder={'No end date'}
+                        disabled={settingParams.state === 'archived'}
+                        disabledDate={data => disabledEndDate(data, settingParams.startDate)}
                         showToday={false}
-                        disabled
-                        value={settingParams.endDate && moment(settingParams.endDate, 'YYYYMMDD')}
+                        value={settingParams.endDate && moment(settingParams.endDate).tz('America/Los_Angeles')}
+                        onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
+                        format={'MMM DD, YYYY'}
                     />
                 </div>
             </div>
@@ -151,10 +284,17 @@ const CampaignSettings = () => {
                 </div>
 
                 <div className="value budget">
-                    <div className="form-group">
+                    <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
                         <InputCurrency
-                            disabled
-                            value={settingParams.advertisingType === SP ? settingParams.dailyBudget : settingParams.budget}
+                            disabled={settingParams.state === 'archived'}
+                            value={settingParams.calculatedBudget}
+                            step={0.01}
+                            onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
+                            onBlur={({target: {value}}) => {
+                                value = value ? round(value, 2) : undefined
+                                campaignBudgetValidation(value)
+                                changeSettingsHandler({calculatedBudget: value})
+                            }}
                         />
                     </div>
                     <span>{settingParams.advertisingType === SP ? 'Daily' : settingParams.budgetType}</span>
@@ -186,8 +326,9 @@ const CampaignSettings = () => {
 
                     <div className="value strategy">
                         <Radio.Group
-                            disabled
                             value={settingParams.bidding_strategy}
+                            disabled={settingParams.state === 'archived'}
+                            onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
                         >
                             <div className="col">
                                 <Radio value={'legacyForSales'}>
@@ -238,7 +379,7 @@ const CampaignSettings = () => {
                     <div className="value bids">
                         <div className="description">
                             In addition to your bidding strategy, you can increase bids by up to 900%.
-                            <a href="#">Learn more</a>
+                            {/*<a href="#">Learn more</a>*/}
                         </div>
 
                         <div className="form-group">
@@ -247,9 +388,26 @@ const CampaignSettings = () => {
                             </label>
 
                             <InputCurrency
-                                disabled
+                                disabled={settingParams.state === 'archived'}
+                                step={1}
+                                max={900}
+                                parser={value => value && Math.abs(Math.trunc(value))}
+                                value={settingParams.bidding_adjustments[0].percentage}
+                                onChange={value => changeSettingsHandler({
+                                    bidding_adjustments: [{
+                                        predicate: 'placementTop',
+                                        percentage: value
+                                    },
+                                        settingParams.bidding_adjustments[1]]
+                                })}
+                                onBlur={({target: {value}}) => changeSettingsHandler({
+                                    bidding_adjustments: [{
+                                        predicate: 'placementTop',
+                                        percentage: value ? value : 0
+                                    },
+                                        settingParams.bidding_adjustments[1]]
+                                })}
                                 typeIcon={'percent'}
-                                value={settingParams.bidding_adjustments_predicate.includes('placementTop') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementTop')] : undefined}
                             />
                         </div>
 
@@ -259,9 +417,26 @@ const CampaignSettings = () => {
                             </label>
 
                             <InputCurrency
-                                disabled
+                                disabled={settingParams.state === 'archived'}
+                                step={1}
+                                max={900}
+                                parser={value => value && Math.abs(Math.trunc(value))}
+                                value={settingParams.bidding_adjustments[1].percentage}
+                                onChange={value => changeSettingsHandler({
+                                    bidding_adjustments: [
+                                        settingParams.bidding_adjustments[0], {
+                                            predicate: 'placementProductPage',
+                                            percentage: value
+                                        }]
+                                })}
+                                onBlur={({target: {value}}) => changeSettingsHandler({
+                                    bidding_adjustments: [
+                                        settingParams.bidding_adjustments[0], {
+                                            predicate: 'placementProductPage',
+                                            percentage: value ? value : 0
+                                        }]
+                                })}
                                 typeIcon={'percent'}
-                                value={settingParams.bidding_adjustments_predicate.includes('placementProductPage') ? settingParams.bidding_adjustments_percentage[_.findIndex(settingParams.bidding_adjustments_predicate, 'placementProductPage')] : undefined}
                             />
                         </div>
                     </div>
@@ -269,10 +444,21 @@ const CampaignSettings = () => {
             </>}
 
 
-            {/*<div className="actions">*/}
-            {/*    <button className="btn white">Cancel</button>*/}
-            {/*    <button className="btn default">Save Changes</button>*/}
-            {/*</div>*/}
+            {settingParams.state !== 'archived' && <div className="actions">
+                <button
+                    className="btn white"
+                    onClick={refreshData}
+                >Cancel
+                </button>
+
+                <button
+                    className="btn default"
+                    disabled={JSON.stringify(dataFromResponse) === JSON.stringify(settingParams) || failedFields.length > 0}
+                    onClick={submitHandler}
+                >
+                    Save Changes
+                </button>
+            </div>}
         </div>
     )
 }

@@ -3,8 +3,6 @@ import './MainPage.less'
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 
-import videoBg from '../../../assets/img/landing-mainPage/video-bg.webm'
-import videoBgMob from '../../../assets/img/landing-mainPage/video-bg_mob.gif'
 import {Link} from "react-router-dom"
 import {Collapse} from 'antd'
 import mapImage from '../../../assets/img/landing-mainPage/map.png'
@@ -152,7 +150,7 @@ const MainPage = () => {
     useEffect(() => {
         const $header = document.querySelector('.header-block')
 
-        if($(window).width() < 800) {
+        if ($(window).width() < 800) {
             $header.classList.remove("transparent")
         } else {
             window.addEventListener('scroll', onScroll)
@@ -168,8 +166,8 @@ const MainPage = () => {
     }, [])
 
     $(window).on('resize', function () {
-        $('.header-block').removeClass('transparent', $(window).width() < 800);
-    });
+        $('.header-block').removeClass('transparent', $(window).width() < 800)
+    })
 
     return (<div className="landing-page main-page">
         <Header
@@ -177,20 +175,6 @@ const MainPage = () => {
         />
 
         <section className="pre-header">
-            <video
-                className="video-container desk"
-                autoPlay={true}
-                controls={false}
-                loop={true}
-                muted={true}
-            >
-                <source src={videoBg} type="video/mp4"/>
-            </video>
-
-            <img
-                className="video-container mob"
-                src={videoBgMob} alt=""/>
-
             <div className="container">
                 <h2>
                     <span>Turn Ad Spend</span> into Ad Investment
@@ -200,9 +184,15 @@ const MainPage = () => {
                     to Accelerate your Amazon Business Growth
                 </p>
 
-                <Link to={'/contact-us'} className={'btn green'}>
-                    contact us
-                </Link>
+                <div className="buttons">
+                    <Link to={'/get-audit'} className={'btn green'}>
+                        get an audit
+                    </Link>
+
+                    <Link to={'/contact-us'} className={'btn green border'}>
+                        contact us
+                    </Link>
+                </div>
             </div>
         </section>
 
@@ -338,7 +328,7 @@ const MainPage = () => {
                                 <li className={'title'}>North America</li>
                                 <li>Canada</li>
                                 <li>Mexico</li>
-                                <li>Mexico</li>
+                                <li>USA</li>
                             </ul>
 
                             <ul>
@@ -392,14 +382,17 @@ const MainPage = () => {
                         </div>
                     </div>
 
-                    <button className={`btn white mob ${visibleMapDetails ? 'open' : ''}`} onClick={() => setVisibleMapDetails(prevState => !prevState)}>
-                       {!visibleMapDetails ?  'show more' : 'show less'}
+                    <button className={`btn white mob ${visibleMapDetails ? 'open' : ''}`}
+                            onClick={() => setVisibleMapDetails(prevState => !prevState)}>
+                        {!visibleMapDetails ? 'show more' : 'show less'}
                         <svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="10" height="14">
+                            <mask id="mask0" mask-type="alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="10"
+                                  height="14">
                                 <rect width="14" height="10" transform="matrix(0 1 1 0 0 0)" fill="#C4C4C4"/>
                             </mask>
                             <g mask="url(#mask0)">
-                                <path d="M1 9.25012L5 13.0001M5 13.0001L9 9.25012M5 13.0001L5 1.00012" stroke="#6D6DF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M1 9.25012L5 13.0001M5 13.0001L9 9.25012M5 13.0001L5 1.00012" stroke="#6D6DF6"
+                                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             </g>
                         </svg>
                     </button>

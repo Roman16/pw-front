@@ -1,47 +1,137 @@
-import React from "react"
-import {Input, Radio, Select} from "antd"
+import React, {useEffect, useState} from "react"
+import {Checkbox, Input, Radio, Select} from "antd"
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import CustomSelect from "../../../../../components/Select/Select"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
+import _ from 'lodash'
+import moment from 'moment'
+import {round} from "../../../../../utils/round"
+import {useSelector} from "react-redux"
+import {dateFormatting} from "../../../../../utils/dateFormatting"
 
 const Option = Select.Option
 
-const CampaignDetails = ({createData, onChange}) => {
+export const disabledStartDate = (current, endDate) => {
+    if (current) {
+        if (endDate) {
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles')) || moment(current).endOf('day') > moment(endDate)
+        } else {
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles'))
+        }
+    }
+}
+export const disabledEndDate = (current, startDate) => {
+    if (current) {
+        if (moment() > moment(startDate)) return disabledStartDate(current, null)
+        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles'))
+    }
+
+}
+
+
+const CampaignDetails = ({createData, onChange, confirmValidation}) => {
+    const portfolioList = useSelector(state => state.analytics.portfolioList)
+
+    const [failedFields, setFailedFields] = useState([]),
+        [availablePortfolios, setAvailablePortfolios] = useState([])
+
+
+    const campaignBudgetValidation = () => {
+        setFailedFields([...failedFields.filter(i => i !== 'calculatedBudget')])
+
+        if (!createData.calculatedBudget || createData.calculatedBudget < 1 || createData.calculatedBudget > 1000000) {
+            setFailedFields(prevState => [...prevState, 'calculatedBudget'])
+        }
+
+        stepValidation()
+    }
+
+    const campaignNameValidation = () => {
+        setFailedFields([...failedFields.filter(i => i !== 'name')])
+        if (!createData.name || createData.name.trim().length > 128) {
+            setFailedFields(prevState => [...prevState, 'name'])
+        }
+
+        stepValidation()
+    }
+
+    useEffect(() => {
+        if (failedFields.length !== 0) {
+            campaignNameValidation()
+        }
+    }, [createData.name])
+
+    useEffect(() => {
+        if (failedFields.length !== 0) {
+            campaignBudgetValidation()
+        }
+    }, [createData.calculatedBudget])
+
+    const stepValidation = () => {
+        if (createData.name && createData.calculatedBudget && failedFields.length === 0) {
+            confirmValidation(true)
+        } else {
+            confirmValidation(false)
+        }
+    }
+
+    useEffect(() => {
+        setAvailablePortfolios([...portfolioList])
+    }, [portfolioList])
 
     return (<div className={'step step-1 campaign-details-step'}>
         <div className="row">
             <div className="col">
                 <div className="form-row">
-                    <div className="form-group">
+                    <div className={`form-group ${failedFields.includes('name') ? 'error-field' : ''}`}>
                         <label htmlFor="">Campaign Name</label>
                         <Input
                             placeholder={'Campaign Name'}
                             value={createData.name}
                             onChange={({target: {value}}) => onChange({name: value})}
+                            onBlur={({target: {value}}) => {
+                                campaignNameValidation()
+                                onChange({name: value && value.trim()})
+                            }}
                         />
+
+                        <p className={'error-message'}>
+                            {!createData.name && 'Campaign name is required'}
+                            {createData.name && createData.name.length > 128 && 'Campaign name should not be longer than 128 characters'}
+                        </p>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">Portfolio</label>
                         <CustomSelect
+                            showSearch
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({portfolio_name: value})}
+                            value={createData.portfolioId}
+                            onChange={(value) => onChange({portfolioId: value})}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => {
+                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
+                            }}
                         >
                             <Option
-                                value={'Portfolio'}
+                                value={null}
                             >
-                                Portfolio
+                                No Portfolio
                             </Option>
+
+                            {availablePortfolios.map(portfolio => <Option
+                                value={portfolio.portfolioId}
+                            >
+                                {portfolio.name}
+                            </Option>)}
                         </CustomSelect>
                     </div>
                 </div>
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -52,81 +142,116 @@ const CampaignDetails = ({createData, onChange}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({startDate: date})}
+                            onChange={(date) => onChange({startDate: dateFormatting(date)})}
+                            value={moment(createData.startDate)}
                             showToday={false}
+                            allowClear={false}
+                            format={'MMM DD, YYYY'}
+                            disabledDate={(data) => disabledStartDate(data, createData.endDate)}
+                            dropdownClassName={'dropdown-with-timezone'}
+                            renderExtraFooter={() => <>
+                                <p>America/Los_Angeles</p>
+                            </>}
                         />
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="">End</label>
                         <DatePicker
+                            placeholder={'No end date'}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({endDate: date})}
+                            onChange={(date) => onChange({endDate: dateFormatting(date)})}
                             showToday={false}
+                            format={'MMM DD, YYYY'}
+                            disabledDate={data => disabledEndDate(data, createData.startDate)}
+                            dropdownClassName={'dropdown-with-timezone'}
+                            renderExtraFooter={() => <>
+                                <p>America/Los_Angeles</p>
+                            </>}
                         />
                     </div>
                 </div>
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
         <div className="row">
             <div className="col">
                 <div className="form-row">
-                    <div className="form-group">
+                    <div
+                        className={`form-group campaign-budget ${failedFields.includes('calculatedBudget') ? 'error-field' : ''}`}>
                         <label htmlFor="">Daily budget</label>
                         <InputCurrency
                             step={0.01}
                             value={createData.calculatedBudget}
                             onChange={(value) => onChange({calculatedBudget: value})}
+                            onBlur={({target: {value}}) => {
+                                campaignBudgetValidation()
+                                onChange({calculatedBudget: value ? round(value, 2) : undefined})
+                            }}
                         />
+                        <p className={'error-message'}>
+                            {(createData.calculatedBudget === 0 || createData.calculatedBudget < 1) ? 'Campaign budget should be at least $1.00' : !createData.calculatedBudget && 'Campaign budget is required'}
+                            {createData.calculatedBudget !== 0 && createData.calculatedBudget > 1000000 && 'Campaign budget should not be more than $1,000,000.00'}
+                        </p>
                     </div>
                 </div>
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
+            </div>
+        </div>
+
+        <div className="row">
+            <div className="col">
+                <div className="form-row">
+                    <div className={`form-group checkbox`}>
+                        <Checkbox
+                            checked={createData.state === 'enabled'}
+                            onChange={({target: {checked}}) => onChange({state: checked ? 'enabled' : 'paused'})}
+                        >
+                            Create campaign with enabled status
+                        </Checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <div className="col description">
+
             </div>
         </div>
 
         <div className="row">
             <div className="col">
                 <Radio.Group
-                    value={createData.calculatedTargetingType}
-                    onChange={({target: {value}}) => onChange({calculatedTargetingType: value})}
+                    value={createData.calculatedCampaignSubType}
+                    onChange={({target: {value}}) => onChange({calculatedCampaignSubType: value})}
                 >
-                    <h4>Choose Targeting</h4>
+                    <h4>Targeting:</h4>
 
-                    <Radio value={'auto'}>
+                    <Radio value={'Auto'}>
                         Automatic Targeting
                     </Radio>
                     <div className="radio-description">
-                        We'll use your exact bid any manual adjustments you set, and won’'t change your bids based on
-                        likelihood a sale. <a href="">Learn more</a>
+                        Amazon will target keywords and products that are similar to the product in your ad.
                     </div>
 
-                    <Radio value={'manual'}>
+                    <Radio value={'Manual'}>
                         Manual Targeting
                     </Radio>
 
                     <div className="radio-description">
-                        We'll use your exact bid any manual adjustments you set, and won’'t change your bids based on
-                        likelihood a sale. <a href="">Learn more</a>
+                        Choose keywords or products to target shopper searches and set custom bids.
                     </div>
                 </Radio.Group>
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -143,7 +268,6 @@ const CampaignDetails = ({createData, onChange}) => {
                     </Radio>
                     <div className="radio-description">
                         Amazon will lower your bids in real time when your ad may be less likely to convert to a sale.
-                        Any campaigns created before January 2019 used this setting.
                     </div>
 
                     <Radio value={'autoForSales'}>
@@ -161,15 +285,13 @@ const CampaignDetails = ({createData, onChange}) => {
 
                     <div className="radio-description">
                         Amazon will use your exact bid and any manual adjustments you set, and won’t change your bids
-                        based on likelihood of sale.
+                        based on likelihood of a sale.
                     </div>
                 </Radio.Group>
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -177,31 +299,55 @@ const CampaignDetails = ({createData, onChange}) => {
             <div className="col">
                 <h4>Adjust bids by placement:</h4>
 
+                <p className={'bids-description'}>
+                    In addition to your bidding strategy, you can increase bids by up to 900%.
+                </p>
+
                 <div className="form-group row">
                     <label htmlFor="">Top of Search (first page)</label>
                     <InputCurrency
-                        step={0.01}
+                        step={1}
+                        max={900}
+                        parser={value => value && Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[0].percentage}
                         onChange={value => onChange({
                             bidding_adjustments: [{
                                 predicate: 'placementTop',
                                 percentage: value
-                            }, createData.bidding_adjustments[1]]
+                            },
+                                createData.bidding_adjustments[1]]
+                        })}
+                        onBlur={({target: {value}}) => onChange({
+                            bidding_adjustments: [{
+                                predicate: 'placementTop',
+                                percentage: value ? value : 0
+                            },
+                                createData.bidding_adjustments[1]]
                         })}
                         typeIcon={'percent'}
                     />
                 </div>
 
                 <div className="form-group row">
-                    <label htmlFor="">Product pages (competitors pages)</label>
+                    <label htmlFor="">Product pages (competitors' pages)</label>
                     <InputCurrency
-                        step={0.01}
+                        step={1}
+                        max={900}
+                        parser={value => value && Math.abs(Math.trunc(value))}
                         value={createData.bidding_adjustments[1].percentage}
                         onChange={value => onChange({
-                            bidding_adjustments: [createData.bidding_adjustments[0], {
-                                predicate: 'placementProductPage',
-                                percentage: value
-                            }]
+                            bidding_adjustments: [
+                                createData.bidding_adjustments[0], {
+                                    predicate: 'placementProductPage',
+                                    percentage: value
+                                }]
+                        })}
+                        onBlur={({target: {value}}) => onChange({
+                            bidding_adjustments: [
+                                createData.bidding_adjustments[0], {
+                                    predicate: 'placementProductPage',
+                                    percentage: value ? value : 0
+                                }]
                         })}
                         typeIcon={'percent'}
                     />
@@ -209,9 +355,7 @@ const CampaignDetails = ({createData, onChange}) => {
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
     </div>)

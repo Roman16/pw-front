@@ -7,7 +7,7 @@ const StartOptimizationNotification = ({title, description}) => (
         <div>
             <div className='notification__title'>
                 <SVG id='start'/>
-                {title}
+                <p dangerouslySetInnerHTML={{__html: title}}/>
             </div>
 
             {description && <span className='notification__description'>{description}</span>}

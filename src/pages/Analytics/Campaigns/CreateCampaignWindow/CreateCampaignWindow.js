@@ -15,56 +15,61 @@ import TargetingsDetails from "./CreateSteps/TargetingsDetails/TargetingsDetails
 import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import _ from "lodash"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import moment from "moment"
+import {dateFormatting} from "../../../../utils/dateFormatting"
+
+const defaultState = {
+    //campaign
+    name: undefined,
+    portfolioId: null,
+    startDate: dateFormatting(moment()),
+    endDate: undefined,
+    calculatedBudget: undefined,
+    advertisingType: 'SponsoredProducts',
+    calculatedCampaignSubType: 'Auto',
+    bidding_strategy: 'legacyForSales',
+    state: 'enabled',
+    calculatedBudgetType: 'daily',
+    bidding_adjustments: [
+        {
+            predicate: 'placementTop',
+            percentage: 0
+        },
+        {
+            predicate: 'placementProductPage',
+            percentage: 0
+        }],
+    //ad group
+    create_ad_group: false,
+    ad_group_name: '',
+    ad_group_default_bid: 0,
+    //product ads
+    create_product_ads: true,
+    selectedProductAds: [],
+    //targetings
+    create_targetings: true,
+    negative_keywords: [],
+    negative_pats: [],
+    keyword_targetings: [],
+    t_targeting_type: 'keyword',
+    targeting_bid: 0,
+    enabled_target_close_match: true,
+    target_close_match: 0,
+    enabled_target_loose_match: true,
+    target_loose_match: 0,
+    enabled_target_substitutes: true,
+    target_substitutes: 0,
+    enabled_target_complements: true,
+    target_complements: 0,
+}
 
 const CreateCampaignWindow = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
         [finishedSteps, setFinishedSteps] = useState([]),
-        [createCampaignData, setCreateCampaignData] = useState({
-            //campaign
-            name: '',
-            portfolio_name: '',
-            startDate: undefined,
-            endDate: undefined,
-            calculatedBudget: 0,
-            advertisingType: 'SponsoredProducts',
-            calculatedTargetingType: 'auto',
-            bidding_strategy: 'legacyForSales',
-            state: 'enabled',
-            bidding_adjustments: [
-                {
-                    predicate: 'placementTop',
-                    percentage: 0
-                },
-                {
-                    predicate: 'placementProductPage',
-                    percentage: 0
-                }],
-            //ad group
-            create_ad_group: true,
-            ad_group_name: '',
-            ad_group_default_bid: 0,
-            //product ads
-            create_product_ads: true,
-            selectedProductAds: [],
-            //targetings
-            create_targetings: true,
-            negative_keywords: [],
-            negative_pats: [],
-            keyword_targetings: [],
-            t_targeting_type: 'keyword',
-            targeting_bid: 0,
-            enabled_target_close_match: true,
-            target_close_match: 0,
-            enabled_target_loose_match: true,
-            target_loose_match: 0,
-            enabled_target_substitutes: true,
-            target_substitutes: 0,
-            enabled_target_complements: true,
-            target_complements: 0,
-        })
+        [disableNextStep, setDisableNextStep] = useState(true),
+        [createCampaignData, setCreateCampaignData] = useState({...defaultState})
 
 
     const steps = [
@@ -126,18 +131,20 @@ const CreateCampaignWindow = () => {
         try {
             await analyticsServices.exactCreate('campaigns', {
                 name: createCampaignData.name,
-                portfolio_name: createCampaignData.portfolio_name,
+                portfolioId: createCampaignData.portfolioId,
                 startDate: createCampaignData.startDate,
                 endDate: createCampaignData.endDate,
                 calculatedBudget: createCampaignData.calculatedBudget,
                 advertisingType: createCampaignData.advertisingType,
-                calculatedTargetingType: createCampaignData.calculatedTargetingType,
+                calculatedCampaignSubType: createCampaignData.calculatedCampaignSubType,
                 bidding_strategy: createCampaignData.bidding_strategy,
                 state: createCampaignData.state,
                 bidding_adjustments: createCampaignData.bidding_adjustments,
+                calculatedBudgetType: createCampaignData.calculatedBudgetType,
             })
             closeWindowHandler()
             notification.success({title: 'Campaign created'})
+            setCreateCampaignData({...defaultState})
         } catch (e) {
             console.log(e)
         }
@@ -164,6 +171,10 @@ const CreateCampaignWindow = () => {
         setSkippedSteps([])
     }, [createCampaignData.targetings_type])
 
+    useEffect(() => {
+        dispatch(analyticsActions.setPortfolioList())
+    }, [])
+
     return (<ModalWindow
             className={'create-campaign-window'}
             visible={visibleWindow}
@@ -189,7 +200,11 @@ const CreateCampaignWindow = () => {
                 <AdvertisingType createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
 
                 {currentStep === 1 &&
-                <CampaignDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
+                <CampaignDetails
+                    createData={createCampaignData}
+                    onChange={changeCampaignDataHandler}
+                    confirmValidation={(value) => setDisableNextStep(!value)}
+                />}
 
                 {currentStep === 2 &&
                 <AdGroupDetails createData={createCampaignData} onChange={changeCampaignDataHandler}/>}
@@ -207,6 +222,7 @@ const CreateCampaignWindow = () => {
                 steps={steps}
                 currentStep={currentStep}
                 goNext={goToNextStepHandler}
+                disableNextStep={currentStep === 1 && disableNextStep}
                 goPrevious={goToPreviousStepHandler}
                 onCreate={createCampaignHandler}
                 createButtonTitle={'Create Campaign'}
