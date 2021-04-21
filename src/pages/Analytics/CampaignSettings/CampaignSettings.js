@@ -62,11 +62,11 @@ const CampaignSettings = () => {
                 portfolioId: res.response.portfolioId === '0' ? null : res.response.portfolioId,
                 id: mainState.campaignId,
                 bidding_adjustments: [
-                    res.response.bidding_adjustments[0] ? res.response.bidding_adjustments[0] : {
+                    _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) : {
                         predicate: 'placementTop',
                         percentage: 0
                     },
-                    res.response.bidding_adjustments[1] ? res.response.bidding_adjustments[1] : {
+                    _.find(res.response.bidding_adjustments, {predicate: 'placementProductPage'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementProductPage'}) : {
                         predicate: 'placementProductPage',
                         percentage: 0
                     },
