@@ -13,6 +13,7 @@ import {round} from "../../../utils/round"
 import {notification} from "../../../components/Notification"
 import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {dateFormatting} from "../../../utils/dateFormatting"
+import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageParts"
 
 const Option = Select.Option
 
@@ -115,10 +116,10 @@ const CampaignSettings = () => {
 
                 editFields.forEach(key => requestDate[key] = settingParams[key])
 
-                await analyticsServices.exactUpdateField('campaigns', requestDate)
+                const res = await analyticsServices.exactUpdateField('campaigns', requestDate)
                 dataFromResponse = {...dataFromResponse, ...settingParams}
-                notification.success({title: 'Success!'})
 
+                updateResponseHandler(res)
                 setEditFields([])
             } catch (e) {
                 console.log(e)
@@ -174,7 +175,7 @@ const CampaignSettings = () => {
                 </div>
             </div>
 
-            <div className="row">
+            {settingParams.advertisingType !== SD && <div className="row">
                 <div className="label">
                     Portfolio
                 </div>
@@ -210,7 +211,7 @@ const CampaignSettings = () => {
 
                 </div>
             </div>
-
+            }
             <div className="row advertising-type">
                 <div className="label">
                     Type

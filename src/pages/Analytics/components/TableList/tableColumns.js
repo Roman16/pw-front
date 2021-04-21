@@ -436,7 +436,7 @@ export const cpaColumn = {
     title: 'CPA',
     dataIndex: 'cpa',
     key: 'cpa',
-    minWidth: '90px',
+    minWidth: '100px',
     sorter: true,
     filter: true,
     align: 'right',

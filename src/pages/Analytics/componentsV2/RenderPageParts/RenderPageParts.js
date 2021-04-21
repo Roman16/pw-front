@@ -25,6 +25,22 @@ const idSelectors = {
     'products': 'productId',
 }
 
+export const updateResponseHandler = (res, totalCount = 1, availableItemsId = 1) => {
+    const success = res.result.success,
+        failed = res.result.failed,
+        notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
+
+    if (failed === 0 && success === 0 && notApplicable > 0) {
+        notification.warning({title: 'Your change was not applicable to any selected entities.'})
+    } else {
+        notification[success > 0 && failed > 0 ? 'warning' : success === 0 && failed > 0 ? 'error' : success === 0 && failed === 0 && notApplicable > 0 ? 'warning' : 'success']({
+            title: `${success > 0 ? `${success} ${success > 1 ? 'entities' : 'entity'} updated <br/>` : ''}  
+                        ${failed > 0 ? `${failed} ${failed > 1 ? 'entities' : 'entity'} failed to update <br/>` : ''} 
+                        ${notApplicable > 0 ? `Change was not applicable for ${notApplicable} ${notApplicable > 1 ? 'entities' : 'entity'}` : ''}`
+        })
+    }
+}
+
 const RenderPageParts = ({
                              location,
                              availableMetrics = [],
@@ -107,7 +123,7 @@ const RenderPageParts = ({
     const updateFieldHandler = async (item, column, value, success, error) => {
         if (fieldsValidation(column, value)) {
             try {
-                await analyticsServices.exactUpdateField(location, {
+                const res = await analyticsServices.exactUpdateField(location, {
                     [idSelectors[location]]: item[idSelectors[location]],
                     advertisingType: item.advertisingType,
                     [column]: value
@@ -124,8 +140,9 @@ const RenderPageParts = ({
                         })]
                     }
                 })
+
+                updateResponseHandler(res)
                 success()
-                notification.success({title: 'Success!'})
             } catch (e) {
                 console.log(e)
                 error()
@@ -178,21 +195,9 @@ const RenderPageParts = ({
                     filtersWithState
                 )
 
-                const success = res.result.success,
-                    failed = res.result.failed,
-                    notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
+                updateResponseHandler(res, totalCount, availableItemsId)
 
-                if (failed === 0 && success === 0 && notApplicable > 0) {
-                    notification.warning({title: 'Your change was not applicable to any selected entities.'})
-                } else {
-                    notification[success > 0 && failed > 0 ? 'warning' : success === 0 && failed > 0 ? 'error' : success === 0 && failed === 0 && notApplicable > 0 ? 'warning' : 'success']({
-                        title: `${success > 0 ? `${success} ${success > 1 ? 'entities' : 'entity'} updated <br/>` : ''}  
-                        ${failed > 0 ? `${failed} ${failed > 1 ? 'entities' : 'entity'} failed to update <br/>` : ''} 
-                        ${notApplicable > 0 ? `Change was not applicable for ${notApplicable} ${notApplicable > 1 ? 'entities' : 'entity'}` : ''}`
-                    })
-
-                    if (success > 0) getPageData(['table'])
-                }
+                if ( res.result.success > 0) getPageData(['table'])
 
                 cb()
             } catch (e) {
