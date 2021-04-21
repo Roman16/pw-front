@@ -161,7 +161,7 @@ export const marketplaceVariations = [
         icon: 'us'
     },
     {
-        label: 'Ca',
+        label: 'CA',
         value: 'A2EUQ1WTGCTBG2',
         icon: 'ca'
     },
