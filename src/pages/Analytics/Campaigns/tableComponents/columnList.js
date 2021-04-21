@@ -25,14 +25,14 @@ import tz from 'moment-timezone'
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'state',
-        //     key: 'state',
-        //     width: '65px',
-        //     noTotal: true,
-        //     editType: 'switch',
-        // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            editType: 'switch',
+        },
         {
             title: 'Campaign',
             dataIndex: 'name',

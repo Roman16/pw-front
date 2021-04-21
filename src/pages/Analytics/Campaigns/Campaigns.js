@@ -31,16 +31,15 @@ const Campaigns = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                // fixedColumns={[0, 1]}
-                fixedColumns={[0]}
+                fixedColumns={[0, 1]}
 
                 columns={columnList(setStateHandler, setStateDetails, selectedPortfolio)}
-                // moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
-                // showRowSelection={true}
-                // rowKey={'campaignId'}
+                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
+                showRowSelection={true}
+                rowKey={'campaignId'}
             />
 
-            {/*<CreateCampaignWindow/>*/}
+            <CreateCampaignWindow/>
         </div>
     )
 }
