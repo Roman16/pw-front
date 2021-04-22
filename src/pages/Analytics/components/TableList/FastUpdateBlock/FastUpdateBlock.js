@@ -100,7 +100,7 @@ const FastUpdateBlock = ({
             setChangingValue(undefined)
         } else if (selectedColumn === 'portfolioId') {
             setAvailableActions(updateActions.state)
-            setChangingValue(null)
+            setChangingValue('null')
         } else if (selectedColumn === 'state') {
             setAvailableActions(updateActions.state)
             setChangingValue('enabled')
@@ -240,7 +240,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 }}
             >
                 <Option
-                    value={null}
+                    value={'null'}
                 >
                     No Portfolio
                 </Option>
