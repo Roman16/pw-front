@@ -60,7 +60,7 @@ const CampaignSettings = () => {
 
             const response = {
                 ...res.response,
-                portfolioId: res.response.portfolioId === '0' ? null : res.response.portfolioId,
+                portfolioId: res.response.portfolioId === '0' ? 'null' : res.response.portfolioId,
                 id: mainState.campaignId,
                 bidding_adjustments: [
                     _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) : {
@@ -195,7 +195,7 @@ const CampaignSettings = () => {
                             }}
                         >
                             <Option
-                                value={null}
+                                value={'null'}
                             >
                                 No Portfolio
                             </Option>
