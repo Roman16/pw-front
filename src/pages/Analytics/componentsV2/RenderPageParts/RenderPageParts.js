@@ -25,10 +25,10 @@ const idSelectors = {
     'products': 'productId',
 }
 
-export const updateResponseHandler = (res, totalCount = 1, availableItemsId = 1) => {
+export const updateResponseHandler = (res) => {
     const success = res.result.success,
         failed = res.result.failed,
-        notApplicable = res.result.notApplicable + totalCount - availableItemsId.length
+        notApplicable = res.result.notApplicable
 
     if (failed === 0 && success === 0 && notApplicable > 0) {
         notification.warning({title: 'Your change was not applicable to any selected entities.'})
@@ -180,29 +180,25 @@ const RenderPageParts = ({
             ]
         }
 
-        const totalCount = idList.length
+        // if (availableItemsId.length === 0) {
+        //     notification.warning({title: 'No entities found for update using provided filters.'})
+        // }
 
-        const availableItemsId = idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived')
+        try {
+            const res = await analyticsServices.bulkUpdate(
+                location,
+                changeData,
+                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.join(',')}`,
+                filtersWithState
+            )
 
-        if (availableItemsId.length === 0) {
-            notification.warning({title: 'No entities found for update using provided filters.'})
-        } else {
-            try {
-                const res = await analyticsServices.bulkUpdate(
-                    location,
-                    changeData,
-                    selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.filter(id => _.find(pageData.table.response, {campaignId: id}).state !== 'archived').join(',')}`,
-                    filtersWithState
-                )
+            updateResponseHandler(res)
 
-                updateResponseHandler(res, totalCount, availableItemsId)
+            if (res.result.success > 0) getPageData(['table'])
 
-                if ( res.result.success > 0) getPageData(['table'])
-
-                cb()
-            } catch (e) {
-                console.log(e)
-            }
+            cb()
+        } catch (e) {
+            console.log(e)
         }
     }
 
