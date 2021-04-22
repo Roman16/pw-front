@@ -500,7 +500,7 @@ export const netProfitColumn = {
     title: 'Net Profit',
     dataIndex: 'total_profit',
     key: 'total_profit',
-    minWidth: '120px',
+    minWidth: '130px',
     sorter: true,
     filter: true,
     align: 'right',

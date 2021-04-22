@@ -288,7 +288,7 @@ const CampaignSettings = () => {
                     <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
                         <InputCurrency
                             disabled={settingParams.state === 'archived'}
-                            value={settingParams.calculatedBudget}
+                            value={settingParams.calculatedBudget ? round(settingParams.calculatedBudget, 2) : undefined}
                             step={0.01}
                             onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
                             onBlur={({target: {value}}) => {
