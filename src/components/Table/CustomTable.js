@@ -334,7 +334,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
                 {visibleEditableWindow && <div className="editable-window">
                     <InputCurrency
-                        value={newValue}
+                        value={newValue ? round(newValue, 2) : undefined}
                         step={0.01}
                         // max={column === 'calculatedBudget' ? 1000000 : 1000}
                         // min={column === 'calculatedBudget' ? 1 : 0.02}

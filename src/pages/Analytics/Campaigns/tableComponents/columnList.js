@@ -22,6 +22,7 @@ import {
 import {Switch} from "antd"
 import moment from "moment"
 import tz from 'moment-timezone'
+import {round} from "../../../../utils/round"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -105,7 +106,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             fastUpdating: true,
             editType: 'currency',
             render: (budget, item) => {
-                const text = budget ? `$${budget}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
+                const text = budget ? `$${ round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
                 return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
             }
         },
