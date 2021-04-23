@@ -397,7 +397,6 @@ const CampaignSettings = () => {
                             <InputCurrency
                                 disabled={settingParams.state === 'archived'}
                                 step={1}
-                                max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
                                 value={settingParams.bidding_adjustments[0].percentage}
                                 onChange={value => changeSettingsHandler({
@@ -426,7 +425,6 @@ const CampaignSettings = () => {
                             <InputCurrency
                                 disabled={settingParams.state === 'archived'}
                                 step={1}
-                                max={900}
                                 parser={value => value && Math.abs(Math.trunc(value))}
                                 value={settingParams.bidding_adjustments[1].percentage}
                                 onChange={value => changeSettingsHandler({
