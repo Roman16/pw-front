@@ -63,7 +63,7 @@ const defaultState = {
     target_complements: 0,
 }
 
-const CreateCampaignWindow = () => {
+const CreateCampaignWindow = ({onReloadList}) => {
     const [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
@@ -144,6 +144,7 @@ const CreateCampaignWindow = () => {
             })
             closeWindowHandler()
             notification.success({title: 'Campaign created'})
+            onReloadList()
             setCreateCampaignData({...defaultState})
         } catch (e) {
             console.log(e)

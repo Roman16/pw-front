@@ -74,7 +74,7 @@ const api = (method, url, data, type, abortToken) => {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
                         if(window.location.pathname !== '/login') {
-                            history.push(`/login?redirect=${window.location.pathname}`)
+                            history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
                         }
                     }
                 } else if (error.response && error.response.status === 412) {

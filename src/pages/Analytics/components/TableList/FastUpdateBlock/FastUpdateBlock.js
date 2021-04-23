@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {SVG} from "../../../../../utils/icons"
 import CustomSelect from "../../../../../components/Select/Select"
-import {Input, Select} from "antd"
+import {Input, Select, Spin} from "antd"
 import './FastUpdateBlock.less'
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
@@ -11,6 +11,7 @@ import {dateFormatting} from "../../../../../utils/dateFormatting"
 import ConfirmWindow from "./ConfirmWindow"
 import {round} from "../../../../../utils/round"
 import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import {notification} from "../../../../../components/Notification"
 
 const Option = Select.Option
 
@@ -65,7 +66,8 @@ const FastUpdateBlock = ({
         [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [selectedColumn, setSelectedColumn] = useState(),
         [actionType, setActionType] = useState(),
-        [changingValue, setChangingValue] = useState()
+        [changingValue, setChangingValue] = useState(),
+        [submitProcessing, setSubmitProcessing] = useState(false)
 
     const selectAllItemsHandler = () => {
         onSelectAll()
@@ -76,7 +78,13 @@ const FastUpdateBlock = ({
 
         if (selectedColumn === 'state' && changingValue === 'archived' && !confirmAction) {
             setVisibleConfirmWindow(true)
+        } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue < 1) {
+            notification.error({title: 'Campaign budget should be at least $1.00'})
+        } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue > 1000000) {
+            notification.error({title: 'Campaign budget should not be more than $1,000,000.00'})
         } else {
+            setSubmitProcessing(true)
+
             onSetChanges({
                 bulkOperation: {
                     entity: selectedColumn,
@@ -86,6 +94,10 @@ const FastUpdateBlock = ({
             })
         }
     }
+
+    useEffect(() => {
+        if (selectedRows.length === 0) setSubmitProcessing(false)
+    }, [selectedRows])
 
     useEffect(() => {
         setSelectedColumn(columns.filter(column => column.fastUpdating)[0].dataIndex)
@@ -164,7 +176,11 @@ const FastUpdateBlock = ({
                 </div>
 
                 <button className={'btn green'}
-                        disabled={changingValue === undefined && selectedColumn !== 'endDate'}>Apply
+                        disabled={(changingValue === undefined && selectedColumn !== 'endDate') || submitProcessing}
+                >
+                    Apply
+
+                    {submitProcessing && <Spin size={'small'}/>}
                 </button>
             </form>
 
@@ -209,9 +225,9 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}
-            min={selectedColumn === 'calculatedBudget' ? 1 : 0.02}
-            max={selectedColumn === 'calculatedBudget' ? 1000000 : 1000}
-            parser={value =>value && Math.abs(value)}
+            // min={selectedColumn === 'calculatedBudget' ? 1 : 0.02}
+            // max={selectedColumn === 'calculatedBudget' ? 1000000 : 1000}
+            parser={value => value && Math.abs(value)}
             value={value}
             onChange={value => onChangeValue(value || undefined)}
             onBlur={({target: {value}}) => onChangeValue(value ? round(value, 2) : undefined)}

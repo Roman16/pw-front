@@ -6,6 +6,9 @@ import authorPhoto from '../../../assets/img/landing-course/author-photo.png'
 import amazonAdvertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark-2.png'
 import amazonSpnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
 import marketplacePulseLogo from '../../../assets/img/logo/marketplace-pulse.png'
+import secretsImg from '../../../assets/img/landing-course/secrets-img.png'
+import courseValueImg from '../../../assets/img/landing-course/course-value.png'
+import OurCases from "../components/OurCases/OurCases"
 
 
 const coursePlan = [
@@ -45,6 +48,16 @@ const coursePlan = [
         title: 'Экономить сотни часов на рекламе',
         description: 'Изучим, как быстро и максимально эффективно автоматизировать процесс оптимизации рекламы'
     },
+]
+
+const secrets = [
+    'Почему структура рекламных кампаний важнее оптимизации?',
+    'Как грамотно запускать продукт с помощью рекламы и как определить бид?',
+    '2 Кампании для поиска новых Search Terms и зачем нужен «black box».',
+    'Почему exact/phrase/broad это самое ужасное, что может быть в рекламе? Где допустимы дубликаты?',
+    'Когда стоит делать рекламу в видео 1 ключ = 1 кампания?',
+    'Самые популярные стратегии в рекламе.',
+    'Как работать со ставками и плейсментом, чтобы направлять трафик куда необходимо?'
 ]
 
 const Course = () => {
@@ -318,9 +331,11 @@ const Course = () => {
                             </div>
 
                             <div className="col description">
-                                <svg width="41" height="37" viewBox="0 0 41 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg width="41" height="37" viewBox="0 0 41 37" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
                                     <path d="M5.55 0L0 18.5V37H15.725V18.5H9.31607L14.8661 0H5.55Z" fill="#6D6DF6"/>
-                                    <path d="M30.5246 0L24.9746 18.5V37H40.6996V18.5H34.4228L39.9728 0H30.5246Z" fill="#6D6DF6"/>
+                                    <path d="M30.5246 0L24.9746 18.5V37H40.6996V18.5H34.4228L39.9728 0H30.5246Z"
+                                          fill="#6D6DF6"/>
                                 </svg>
 
                                 Amazon устроен так, что рекламу почти невозможно контролировать. Но я разработал систему
@@ -329,6 +344,150 @@ const Course = () => {
                             </div>
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section className={'advertising-secrets'}>
+                <div className="container">
+                    <h4>СМОТРИ <span>БЕСПЛАТНЫЙ ВЕБИНАР</span>, ГДЕ Я РАССКАЖУ И ПОКАЖУ</h4>
+                    <h2><span>7 Секретов</span> Успешной Рекламы <br/><span>на Амазоне</span></h2>
+
+                    <div className="row">
+                        <div className="image">
+                            <img src={secretsImg} alt=""/>
+                        </div>
+
+                        <div className="col">
+                            <h3>Что ты узнаешь на вебинаре?</h3>
+                            <ul>{secrets.map(i => <li>{i}</li>)}</ul>
+
+                            <button className={'btn default'}>
+                                СМОТРЕТЬ ВЕБИНАР
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className={'course-steps'}>
+                <div className="container">
+                    <h2>Программа <span>курса</span></h2>
+
+                    <ul className="statistic">
+                        <li>
+                            <h3>30+</h3>
+                            <p>Уроков</p>
+                        </li>
+                        <li>
+                            <h3>50+</h3>
+                            <p>Часов</p>
+                        </li>
+                        <li>
+                            <h3>10+</h3>
+                            <p>Чеклистов и <br/> шаблонов</p>
+                        </li>
+                        <li>
+                            <h3>10+</h3>
+                            <p>Модулей</p>
+                        </li>
+                        <li>
+                            <h3>50+</h3>
+                            <p>Статей</p>
+                        </li>
+                    </ul>
+
+                    <div className="row header">
+                        <div className="col">
+                            <p>Часть 1</p>
+                            <h4>Философия рекламы на Амазон</h4>
+                        </div>
+                        <div className="col">
+                            <p>Часть 2</p>
+                            <h4>Создание рекламы</h4>
+                        </div>
+                        <div className="col">
+                            <p>Часть 3</p>
+                            <h4>Оптимизация рекламы и работа с ней</h4>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col">
+                        </div>
+                        <div className="col">
+                        </div>
+                        <div className="col">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className={'price'}>
+                <div className="container">
+                    <h2>
+                        <span>Научись</span> грамотно <span>продвигать продукты с <br/> помощью</span> Amazon PPC
+                    </h2>
+
+                    <div className="price-block">
+                        <h4>МГНОВЕННЫЙ ДОСТУП</h4>
+
+                        <div className="row">
+                            <h4>$2500</h4>
+                            <h3>$1250</h3>
+                        </div>
+
+                        <p>Пожизненный доступ <span>к видеозаписям курса</span></p>
+                        <p>Доступ к вебинарам Profit Whales </p>
+                        <p>Групповая Q&A сессия <span>раз в месяц</span></p>
+                        <p>Более 10 чек-листов и шаблонов </p>
+                        <p>Закрытая группа в Telegram</p>
+
+                        <button className="btn default">
+                            ЗАРЕГИСТРИРОВАТЬСЯ
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <OurCases
+                product={'zth'}
+            />
+
+            <section className="course-value">
+                <div className="container">
+                    <h2>
+                        <span>Ценность курса</span> - измерима. <span>Ценность <br/> комьюнити</span> - бесконечна
+                    </h2>
+
+                    <p>
+                        Настоящие лидеры не двигаются вперед одни! Мы окружаем себя такими же как и мы. В <br/>
+                        Telegram-канале курса, можно общаться с другими предпринимателями.
+                    </p>
+
+                    <div className="row">
+                        <div className="image">
+                            <img src={courseValueImg} alt=""/>
+                        </div>
+
+                        <div className="col">
+                            <h3>
+                                Мы:
+                            </h3>
+
+                            <ul>
+                                <li>Тестируем новые технологии и подходы к рекламе</li>
+                                <li>Формируем доверенный список проверенных подрядчиков и фрилансеров</li>
+                                <li>Делимся стратегиями чтобы быть в тренде всех новинок Амазон рекламы</li>
+                                <li>Автоматизируем множество процессов оптимизации рекламы</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="faq">
+                <div className="container">
+
                 </div>
             </section>
 

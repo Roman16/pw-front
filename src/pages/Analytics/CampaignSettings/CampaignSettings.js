@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import './CampaignSettings.less'
-import {Input, Radio, Select, Switch} from "antd"
+import {Input, Radio, Select, Spin, Switch} from "antd"
 import DatePicker from "../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
 import {useDispatch, useSelector} from "react-redux"
@@ -14,6 +14,7 @@ import {notification} from "../../../components/Notification"
 import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {dateFormatting} from "../../../utils/dateFormatting"
 import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageParts"
+import {Prompt} from "react-router-dom"
 
 const Option = Select.Option
 
@@ -43,7 +44,8 @@ const CampaignSettings = () => {
         }),
         [availablePortfolios, setAvailablePortfolios] = useState([]),
         [failedFields, setFailedFields] = useState([]),
-        [editFields, setEditFields] = useState([])
+        [editFields, setEditFields] = useState([]),
+        [saveProcessing, setSaveProcessing] = useState(false)
 
 
     const changeSettingsHandler = (data) => {
@@ -60,7 +62,7 @@ const CampaignSettings = () => {
 
             const response = {
                 ...res.response,
-                portfolioId: res.response.portfolioId === '0' ? 'null' : res.response.portfolioId,
+                portfolioId: res.response.portfolioId === '0' || res.response.portfolioId === null ? 'null' : res.response.portfolioId,
                 id: mainState.campaignId,
                 bidding_adjustments: [
                     _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) : {
@@ -102,6 +104,8 @@ const CampaignSettings = () => {
     }
 
     const submitHandler = async () => {
+        setSaveProcessing(true)
+
         if (failedFields.length === 0) {
             try {
                 let requestDate = {
@@ -125,6 +129,8 @@ const CampaignSettings = () => {
                 console.log(e)
             }
         }
+
+        setSaveProcessing(false)
     }
 
     useEffect(() => {
@@ -445,21 +451,32 @@ const CampaignSettings = () => {
             </>}
 
 
-            {settingParams.state !== 'archived' && <div className="actions">
+            {settingParams.state !== 'archived' && <div className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
+                <p>{saveProcessing ? 'Saving changes' : 'You have unsaved changes'}</p>
+
                 <button
-                    className="btn white"
+                    className="btn transparent"
                     onClick={refreshData}
-                >Cancel
+                    disabled={saveProcessing}
+                >
+                    Cancel
                 </button>
 
                 <button
-                    className="btn default"
-                    disabled={JSON.stringify(dataFromResponse) === JSON.stringify(settingParams) || failedFields.length > 0}
+                    className="btn white"
                     onClick={submitHandler}
+                    disabled={saveProcessing}
                 >
                     Save Changes
+
+                    {saveProcessing && <Spin size={'small'}/>}
                 </button>
             </div>}
+
+            <Prompt
+                when={JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams)}
+                message={'campaign-settings'}
+            />
         </div>
     )
 }

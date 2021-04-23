@@ -303,8 +303,10 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     renderExtraFooter={() => <>
                         <p>America/Los_Angeles</p>
                         <div className="actions">
-                            <button className={'btn default'} onClick={() => submitFieldHandler()}>
+                            <button disabled={processing} className={'btn default'} onClick={() => submitFieldHandler()}>
                                 Save
+
+                                {processing && <Spin size={'small'}/>}
                             </button>
 
                             <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
@@ -350,6 +352,8 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                         disabled={processing || !newValue}
                     >
                         Save
+
+                        {processing && <Spin size={'small'}/>}
                     </button>
 
                     <button
