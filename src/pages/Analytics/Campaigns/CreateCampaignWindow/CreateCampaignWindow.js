@@ -69,7 +69,8 @@ const CreateCampaignWindow = ({onReloadList}) => {
         [processSteps, setProcessSteps] = useState([]),
         [finishedSteps, setFinishedSteps] = useState([]),
         [disableNextStep, setDisableNextStep] = useState(true),
-        [createCampaignData, setCreateCampaignData] = useState({...defaultState})
+        [createCampaignData, setCreateCampaignData] = useState({...defaultState}),
+        [createProcessing, setCreateProcessing] = useState(false)
 
 
     const steps = [
@@ -128,6 +129,8 @@ const CreateCampaignWindow = ({onReloadList}) => {
     }
 
     const createCampaignHandler = async () => {
+        setCreateProcessing(true)
+
         try {
             await analyticsServices.exactCreate('campaigns', {
                 name: createCampaignData.name,
@@ -145,6 +148,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
             closeWindowHandler()
             notification.success({title: 'Campaign created'})
             onReloadList()
+            setCreateProcessing(false)
             setCreateCampaignData({...defaultState})
         } catch (e) {
             console.log(e)
@@ -227,6 +231,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
                 goPrevious={goToPreviousStepHandler}
                 onCreate={createCampaignHandler}
                 createButtonTitle={'Create Campaign'}
+                processing={createProcessing}
             />
         </ModalWindow>
     )

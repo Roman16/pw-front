@@ -662,6 +662,130 @@
         }
       }
     }
+
+    .row {
+      width: 100%;
+      display: flex;
+      align-items: stretch;
+
+      .col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        &:nth-child(1) {
+          background: rgba(255, 255, 255, 0.4);
+          border: 1px solid #E1E9F5;
+          border-right: 0;
+          border-radius: 4px 0 0 4px;
+        }
+
+        &:nth-child(2) {
+          background: rgba(255, 255, 255, 0.65);
+          border: 1px solid #E1E9F5;
+        }
+
+        &:nth-child(3) {
+          background: rgba(255, 255, 255, 0.9);
+          border: 1px solid #E1E9F5;
+          border-left: 0;
+          border-radius: 0 4px 4px 0;
+        }
+
+        .header {
+          min-height: 108px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          border-bottom: 3px solid #E1E9F5;
+          padding: 20px 10px 20px 28px;
+
+          p {
+            font-size: 16px;
+            line-height: 19px;
+            font-weight: 300;
+            text-transform: uppercase;
+            color: #7C8A95;
+            margin-bottom: 4px;
+          }
+
+          h4 {
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 29px;
+            color: #6D6DF6;
+            margin: 0;
+          }
+        }
+
+        ul {
+          display: flex;
+          flex-direction: column;
+          list-style: none;
+          margin: 0;
+          padding: 28px 15px 24px 28px;
+          border-bottom: 1px solid #E1E9F5;
+
+          &:last-of-type {
+            border: 0;
+          }
+
+          h4 {
+            font-weight: 300;
+            font-size: 21px;
+            line-height: 25px;
+            color: #2D2E55;
+            margin-bottom: 20px;
+          }
+
+          li {
+            display: flex;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 21px;
+            color: #7C8A95;
+            margin: 0 0 8px 20px;
+
+            &:last-of-type {
+              margin: 0 0 0 20px;
+            }
+
+            &::before {
+              content: '';
+              min-width: 6px;
+              height: 6px;
+              background: #6D6DF6;
+              transform: rotate(-45deg);
+              margin: 7px 8px 0 0;
+            }
+
+            p {
+              margin: 0;
+
+              svg {
+                margin: 0 0 0 3px;
+              }
+            }
+          }
+        }
+
+        .button-block {
+          padding: 28px;
+          border-top: 1px solid #E1E9F5;
+          display: flex;
+          justify-content: center;
+
+          .btn {
+            height: 56px;
+            font-weight: 500;
+            font-size: 21px;
+            line-height: 25px;
+            color: #F5F577;
+            padding: 0 35px;
+          }
+        }
+      }
+    }
   }
 
   .price {
@@ -755,6 +879,83 @@
     }
   }
 
+  .our-cases {
+    h2 {
+      font-weight: 300;
+      font-size: 60px;
+      line-height: 72px;
+      text-align: center;
+      color: #2D2E55;
+      margin-bottom: 24px;
+
+      span {
+        color: #6D6DF6;
+      }
+    }
+
+    .container > a,
+    .content > .btn {
+      display: none;
+    }
+
+    .container {
+      .content {
+        * {
+          font-family: Eina !important;
+        }
+
+        h3 {
+          font-size: 32px;
+          line-height: 38px;
+          font-weight: 100;
+          color: #2D2E55;
+
+          span {
+            color: #6D6DF6;
+          }
+        }
+
+        .row {
+          .line {
+            height: 115px;
+            margin: auto 0 0 0;
+            background: #EEEEEE;
+          }
+
+          .col {
+            h4 {
+              font-size: 24px;
+              line-height: 29px;
+              font-weight: 100;
+              text-transform: uppercase;
+              color: #2D2E55;
+            }
+
+            div {
+              &:last-of-type {
+                margin: 0;
+              }
+
+              .metric-name {
+                font-size: 21px;
+                line-height: 28px;
+                font-weight: 100;
+                color: #2D2E55;
+              }
+
+              .metric-value {
+                font-size: 21px;
+                line-height: 28px;
+                font-weight: 100;
+                color: #6D6DF6;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .course-value {
     padding: 128px 0;
     background: #F3F7FD;
@@ -829,5 +1030,97 @@
         }
       }
     }
+  }
+
+  .faq {
+    padding: 128px 0;
+
+    h2 {
+      font-size: 60px;
+      line-height: 72px;
+      font-weight: 300;
+      text-align: center;
+      color: #2D2E55;
+      margin-bottom: 48px;
+
+      span {
+        color: #6d6df6;
+      }
+    }
+
+    .ant-collapse-item {
+
+      &:last-of-type {
+        border-bottom: 0;
+      }
+
+      &.ant-collapse-item-active {
+        .ant-collapse-header {
+          svg {
+            transform: rotate(180deg);
+            stroke: #6d6df6;
+          }
+        }
+      }
+
+      .ant-collapse-header {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 25px 0;
+
+        font-size: 24px;
+        line-height: 29px;
+        font-weight: 300;
+        color: #6D6DF6;
+
+        svg {
+          margin: 0 0 0 auto;
+          transition: .2s;
+          stroke: #7C8A95;
+        }
+      }
+
+      .ant-collapse-content-box {
+        padding: 0 0 25px;
+        font-size: 16px;
+        line-height: 21px;
+        font-weight: 300;
+        color: #7C8A95;
+
+        a {
+          color: #6d6df6;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
+        h4 {
+          font-size: 16px;
+          line-height: 19px;
+          font-weight: normal;
+          color: #7C8A95;
+          margin-bottom: 15px;
+        }
+
+        ul {
+          li {
+            display: flex;
+
+            &::before {
+              content: '';
+              min-width: 6px;
+              height: 6px;
+              border: 1px solid #7C8A95;
+              transform: rotate(-45deg);
+              margin: 6px 8px 0 2px;
+            }
+          }
+        }
+      }
+    }
+
   }
 }

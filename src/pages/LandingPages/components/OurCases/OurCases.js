@@ -218,7 +218,7 @@ const casesList = {
 
     'zth': [
         {
-            title: '8 days with Zero to Hero',
+            title: `<span>8 days</span> with Zero to Hero`,
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase1,
@@ -252,7 +252,7 @@ const casesList = {
             ]
         },
         {
-            title: '40 days with Zero to Hero',
+            title: `<span>40 days</span> with Zero to Hero`,
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase2,
@@ -286,7 +286,7 @@ const casesList = {
             ]
         },
         {
-            title: '20 days with Zero to Hero',
+            title: `<span>20 days</span> with Zero to Hero`,
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase3,
@@ -320,7 +320,7 @@ const casesList = {
             ]
         },
         {
-            title: '16 days with Zero to Hero',
+            title: `<span>16 days</span> with Zero to Hero`,
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase4,
@@ -354,7 +354,7 @@ const casesList = {
             ]
         },
         {
-            title: '30  days with Zero to Hero',
+            title: `<span>30 days</span> with Zero to Hero`,
             firstColumnTitle: 'Before',
             secondColumnTitle: 'After',
             img: casesImages.zthCase5,
@@ -392,7 +392,7 @@ const casesList = {
 
 let swipeTimeoutId = null;
 
-const OurCases = ({product}) => {
+const OurCases = ({product, title='Our Cases'}) => {
     const [currentCaseSlide, setCaseSlide] = useState(0),
         [selectedImage, selectImage] = useState(null);
 
@@ -441,7 +441,7 @@ const OurCases = ({product}) => {
         <>
             <section className='our-cases'>
                 <div className="container">
-                    <h2>Our Cases</h2>
+                    <h2 dangerouslySetInnerHTML={{__html: title}}/>
 
                     <div className='slider' id='cases-slider' onTouchMove={swipeHandler} onTouchStart={touchStart}>
                         <div className="row">
@@ -491,7 +491,7 @@ const OurCases = ({product}) => {
                     </div>
 
                     <div className="content">
-                        <h3>{ourCases[currentCaseSlide].title}</h3>
+                        <h3 dangerouslySetInnerHTML={{__html: ourCases[currentCaseSlide].title}}/>
 
                         <div className="row">
                             <div className="col">

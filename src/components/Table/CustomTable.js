@@ -309,7 +309,11 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                                 {processing && <Spin size={'small'}/>}
                             </button>
 
-                            <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                            <button
+                                className={'btn white'}
+                                disabled={processing}
+                                onClick={() => setVisibleEditableWindow(false)}
+                            >
                                 Cancel
                             </button>
                         </div>
@@ -358,6 +362,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
                     <button
                         className={'btn transparent'}
+                        disabled={processing}
                         onClick={() => setVisibleEditableWindow(false)}
                     >
                         Cancel
