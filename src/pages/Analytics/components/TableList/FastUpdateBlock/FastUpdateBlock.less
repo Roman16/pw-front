@@ -46,6 +46,16 @@
         padding: 0 0 0 11px;
       }
 
+      .pw-date-picker {
+        &.no-date {
+          .ant-calendar-picker-input {
+            &::placeholder {
+              color: rgba(0, 0, 0, 0.65) !important;
+            }
+          }
+        }
+      }
+
       .custom-select, .InputCurrency {
         width: 100%;
         height: 100%;
@@ -140,6 +150,37 @@
           align-items: center;
           justify-content: center;
         }
+      }
+    }
+  }
+}
+
+.dropdown-with-timezone {
+
+  &.with-clear {
+    .ant-calendar-date-panel {
+      padding-top: 40px;
+    }
+  }
+
+
+  .ant-calendar-footer {
+    .clear-date {
+      width: 100%;
+      height: 40px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-bottom: 1px solid #e8e8e8;
+      padding: 0 0 0 12px;
+      justify-content: flex-start;
+      border-radius: 0;
+      color: #6d6df6;
+      font-size: 14px;
+      font-weight: 500;
+
+      &:hover {
+        text-decoration: underline;
       }
     }
   }

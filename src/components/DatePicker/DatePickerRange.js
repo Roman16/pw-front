@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {DatePicker as AntDatePicker} from 'antd'
 import moment from 'moment'
-import tz from 'moment-timezone'
+// import moment from 'moment-timezone'
 import locale from 'antd/lib/locale/en_US.js.map'
 
 import './DatePicker.less'
@@ -19,8 +19,11 @@ class DatePicker extends Component {
         )
     }
 
+
     disabledDate = current => {
-        return current && moment(current) > moment().tz('America/Los_Angeles').endOf('day')
+        console.log(moment.utc().tz( 'America/Los_Angeles').format('DD-MM-YYYY HH:mm'))
+        console.log(moment.utc().tz( 'America/Los_Angeles').toString())
+        return current && moment(current) > moment.tz(moment(), 'America/Los_Angeles').endOf('day')
     }
 
     render() {
