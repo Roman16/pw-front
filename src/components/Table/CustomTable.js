@@ -313,7 +313,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
                         <p>America/Los_Angeles</p>
                         <div className="actions">
-                            <button disabled={processing} className={'btn default'}
+                            <button disabled={processing || newValue === value} className={'btn default'}
                                     onClick={() => submitFieldHandler()}>
                                 Save
 
