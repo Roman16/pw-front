@@ -82,9 +82,7 @@ const MainPage = () => {
 
     const goToNextSlide = (identifier) => {
         const slides = document.querySelectorAll(`.${identifier} .slider > ul > li`)
-        console.log(identifier)
-        console.log(document.querySelectorAll(`.${identifier} .slider > ul > li`))
-        console.log(document.querySelectorAll(`.services .slider > ul > li`))
+
         let index = (identifier === 'services' ? activeServicesSlide : activeSlide) + 1
         const currentSlide = identifier === 'services' ? activeServicesSlide : activeSlide
 
