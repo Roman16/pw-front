@@ -75,8 +75,8 @@ const routers = () => {
                     <Route exact path="/care-we-do" component={CareWeDo}/>
                     <Route exact path="/our-whale" component={OurWhale}/>
                     <Route exact path="/recognition" component={Recognition}/>
-                    <Route exact path="/get-audit" component={GetAudit}/>
-                    <Route exact path="/get-audit-new" component={GetAuditNew}/>
+                    <Route exact path="/get-audit" component={GetAuditNew}/>
+                    <Route exact path="/get-audit-new" component={GetAudit}/>
                     <Route exact path="/identify-option/:filter?" component={IdentifyOption}/>
                     <Route exact path="/enlighten-future" component={EnlightenFuture}/>
                     <Route exact path="/redefine-approach" component={RedefineApproach}/>
