@@ -49,16 +49,14 @@
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: #17175A;
+          background: #C9CBD4;
           margin-right: 15px;
           cursor: pointer;
 
           &.active-dot {
-            width: 12px;
-            height: 12px;
-            background: #fff;
-            border: 1px solid #17175A;
-
+            width: 10px;
+            height: 10px;
+            background: #6d6df6;
           }
 
           &:last-child {
@@ -69,21 +67,29 @@
     }
     .prev,
     .next {
-      height: 25px;
+      height: 40px;
+      width: 40px;
       display: flex;
       align-items: center;
       cursor: pointer;
       top: 11.428571428571429rem;
       font-size: 20px;
-      color: #8A8AF8;
+
+      circle {
+        fill: #F3F7FD;
+      }
 
       &:hover {
-        color: #4d4d99;
+        circle {
+          fill: rgba(109, 109, 246, 0.05);
+        }
       }
-    }
 
-    .prev {
-      transform: rotate(180deg);
+      &:active {
+        circle {
+          fill: rgba(109, 109, 246, 0.15);
+        }
+      }
     }
 
     .content {

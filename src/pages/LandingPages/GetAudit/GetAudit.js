@@ -8,14 +8,15 @@ import SuccessSend from "./SuccessSend"
 import {userService} from "../../../services/user.services"
 import {Prompt} from "react-router-dom"
 
-const defaultForm = {
+export const defaultForm = {
     first_name: undefined,
     last_name: undefined,
     email: undefined,
     active_marketplaces: undefined,
     avg_monthly_ad_sales: undefined,
     avg_monthly_ad_spend: undefined,
-    is_has_brand_registry: true,
+    is_has_brand_registry: undefined,
+    considering_to_sell: undefined,
     main_goal: undefined,
     storefront_name: undefined,
     main_category: undefined,

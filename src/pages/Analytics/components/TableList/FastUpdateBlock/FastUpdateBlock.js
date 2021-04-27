@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {SVG} from "../../../../../utils/icons"
 import CustomSelect from "../../../../../components/Select/Select"
-import {Input, Select} from "antd"
+import {Input, Select, Spin} from "antd"
 import './FastUpdateBlock.less'
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
@@ -11,6 +11,7 @@ import {dateFormatting} from "../../../../../utils/dateFormatting"
 import ConfirmWindow from "./ConfirmWindow"
 import {round} from "../../../../../utils/round"
 import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import {notification} from "../../../../../components/Notification"
 
 const Option = Select.Option
 
@@ -65,7 +66,8 @@ const FastUpdateBlock = ({
         [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [selectedColumn, setSelectedColumn] = useState(),
         [actionType, setActionType] = useState(),
-        [changingValue, setChangingValue] = useState()
+        [changingValue, setChangingValue] = useState(),
+        [submitProcessing, setSubmitProcessing] = useState(false)
 
     const selectAllItemsHandler = () => {
         onSelectAll()
@@ -76,7 +78,13 @@ const FastUpdateBlock = ({
 
         if (selectedColumn === 'state' && changingValue === 'archived' && !confirmAction) {
             setVisibleConfirmWindow(true)
+        } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue < 1) {
+            notification.error({title: 'Campaign budget should be at least $1.00'})
+        } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue > 1000000) {
+            notification.error({title: 'Campaign budget should not be more than $1,000,000.00'})
         } else {
+            setSubmitProcessing(true)
+
             onSetChanges({
                 bulkOperation: {
                     entity: selectedColumn,
@@ -88,13 +96,17 @@ const FastUpdateBlock = ({
     }
 
     useEffect(() => {
+        if (selectedRows.length === 0) setSubmitProcessing(false)
+    }, [selectedRows])
+
+    useEffect(() => {
         setSelectedColumn(columns.filter(column => column.fastUpdating)[0].dataIndex)
     }, [columns])
 
     useEffect(() => {
         if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
             setAvailableActions(updateActions.date)
-            setChangingValue(dateFormatting(moment()))
+            setChangingValue(undefined)
         } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
             setAvailableActions(updateActions.number)
             setChangingValue(undefined)
@@ -164,7 +176,11 @@ const FastUpdateBlock = ({
                 </div>
 
                 <button className={'btn green'}
-                        disabled={changingValue === undefined && selectedColumn !== 'endDate'}>Apply
+                        disabled={(changingValue === undefined) || submitProcessing}
+                >
+                    Apply
+
+                    {submitProcessing && <Spin size={'small'}/>}
                 </button>
             </form>
 
@@ -186,32 +202,44 @@ const FastUpdateBlock = ({
 const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
 
-    const [availablePortfolios, setAvailablePortfolios] = useState([])
+    const [availablePortfolios, setAvailablePortfolios] = useState([]),
+        [visibleDatePopup, setVisibleDatePopup] = useState(false)
 
     useEffect(() => {
         setAvailablePortfolios([...portfolioList])
     }, [portfolioList])
 
+
     if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
         return (<DatePicker
-            format={'MMM DD, YYYY'}
+            format={'DD MMM YYYY'}
             showToday={false}
             disabledDate={(date) => disabledStartDate(date, undefined)}
-            value={value ? moment(value) : undefined}
-            allowClear={selectedColumn === 'endDate'}
+            value={value && value !== 'null' ? moment(value) : undefined}
+            allowClear={false}
+            placeholder={value === 'null' ? 'No end date' : 'Select date'}
             onChange={(date) => onChangeValue(dateFormatting(date))}
-            dropdownClassName={'dropdown-with-timezone'}
+            open={visibleDatePopup}
+            onOpenChange={(value) => setVisibleDatePopup(value)}
+            dropdownClassName={`dropdown-with-timezone ${selectedColumn === 'endDate' ? 'with-clear' : ''}`}
+            className={value === 'null' && 'no-date'}
             renderExtraFooter={() => <>
-                <p>America/Los_Angeles</p>
+                {selectedColumn === 'endDate' &&
+                <button className={'btn clear-date'} onClick={() => {
+                    setVisibleDatePopup(false)
+                    onChangeValue('null')
+                }}>
+                    No end date
+                </button>}
+
+                <p className={'time-zone'}>America/Los_Angeles</p>
             </>}
         />)
     } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}
-            min={selectedColumn === 'calculatedBudget' ? 1 : 0.02}
-            max={selectedColumn === 'calculatedBudget' ? 1000000 : 1000}
-            parser={value =>value && Math.abs(value)}
+            parser={value => value && Math.abs(value)}
             value={value}
             onChange={value => onChangeValue(value || undefined)}
             onBlur={({target: {value}}) => onChangeValue(value ? round(value, 2) : undefined)}

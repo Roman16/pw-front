@@ -234,26 +234,30 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? dateFormatting(newValue) : newValue, onClose, () => setProcessing(false))
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? dateFormatting(newValue) : 'null' : newValue, onClose, () => setProcessing(false))
     }
 
 
     useEffect(() => {
         function handleClickOutside({target}) {
-            if (target && target.className) {
-                if (target.className === 'icon' ||
-                    target.className === 'ant-modal-wrap over-modal-wrap' ||
-                    target.parentNode.className === 'ant-calendar-date-panel' ||
-                    target.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
-                    target.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
-                    target.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
-                    target.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
-                    target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel'
-                ) {
+            try {
+                if (target && target !== null && target.className) {
+                    if (target.className === 'icon' ||
+                        target.className === 'ant-modal-wrap over-modal-wrap' ||
+                        target.parentNode.className === 'ant-calendar-date-panel' ||
+                        target.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                        target.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                        target.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                        target.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel' ||
+                        target.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.className === 'ant-calendar-date-panel'
+                    ) {
 
-                } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
-                    setVisibleEditableWindow(false)
+                    } else if (wrapperRef.current && !wrapperRef.current.contains(target)) {
+                        setVisibleEditableWindow(false)
+                    }
                 }
+            } catch (e) {
+                console.log(e)
             }
         }
 
@@ -292,22 +296,35 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
 
                 {visibleEditableWindow && <DatePicker
-                    value={newValue ? moment(newValue) : moment()}
+                    value={newValue && newValue !== 'null' ? moment(newValue) : undefined}
                     format={'DD MMM YYYY'}
                     open={visibleEditableWindow}
                     showToday={false}
-                    className={'editable-date-picker'}
+                    className={`editable-date-picker ${newValue === 'null' ? 'no-date' : ''}`}
                     dropdownClassName={'edit-field-picker'}
                     onChange={value => setNewValue(value)}
+                    placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
                     disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
                     renderExtraFooter={() => <>
+                        {column === 'endDate' && (newValue && newValue !== 'null') &&
+                        <button className="btn clear" onClick={() => setNewValue('null')}>
+                            Remove
+                        </button>}
+
                         <p>America/Los_Angeles</p>
                         <div className="actions">
-                            <button className={'btn default'} onClick={() => submitFieldHandler()}>
+                            <button disabled={processing || newValue === value} className={'btn default'}
+                                    onClick={() => submitFieldHandler()}>
                                 Save
+
+                                {processing && <Spin size={'small'}/>}
                             </button>
 
-                            <button className={'btn white'} onClick={() => setVisibleEditableWindow(false)}>
+                            <button
+                                className={'btn white'}
+                                disabled={processing}
+                                onClick={() => setVisibleEditableWindow(false)}
+                            >
                                 Cancel
                             </button>
                         </div>
@@ -350,10 +367,13 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                         disabled={processing || !newValue}
                     >
                         Save
+
+                        {processing && <Spin size={'small'}/>}
                     </button>
 
                     <button
                         className={'btn transparent'}
+                        disabled={processing}
                         onClick={() => setVisibleEditableWindow(false)}
                     >
                         Cancel

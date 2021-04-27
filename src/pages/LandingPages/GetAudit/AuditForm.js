@@ -104,7 +104,7 @@ const countDots6 = () => <svg width="33" height="32" viewBox="0 0 33 32" fill="n
         fill="#6D6DF6"/>
 </svg>
 
-const monthlyAdSpendVariations = [
+export const monthlyAdSpendVariations = [
     {
         label: 'below $10k',
         value: 'below_10k'
@@ -127,7 +127,7 @@ const monthlyAdSpendVariations = [
     },
 ]
 
-const monthlySalesVariations = [
+export const monthlySalesVariations = [
     {
         label: 'below $50k',
         value: 'below_50k'
@@ -154,14 +154,14 @@ const monthlySalesVariations = [
     },
 ]
 
-const marketplaceVariations = [
+export const marketplaceVariations = [
     {
         label: 'US',
         value: 'ATVPDKIKX0DER',
         icon: 'us'
     },
     {
-        label: 'Ca',
+        label: 'CA',
         value: 'A2EUQ1WTGCTBG2',
         icon: 'ca'
     },
@@ -192,7 +192,7 @@ const marketplaceVariations = [
     },
 ]
 
-const amountProductsVariations = [
+export const amountProductsVariations = [
     {
         label: '1-5',
         value: '1_5'
@@ -254,6 +254,10 @@ export const advertisingStrategyVariations = [
     {
         label: 'New Keywords Ranking',
         value: 'new_keywords_ranking',
+    },
+    {
+        label: 'Increase business valuation for exit',
+        value: 'increase_business_valuation_for_exit',
     },
     {
         label: 'other',
@@ -394,6 +398,24 @@ const AuditForm = ({active, formData, onUpdate, onSubmit}) => {
                                 <Radio
                                     checked={formData.is_has_brand_registry === false}
                                     onChange={() => changeFormHandler('is_has_brand_registry', false)}
+                                    label={'No'}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="form-group radio">
+                            <label htmlFor="">Are you considering to sell your FBA business?</label>
+
+                            <div className={'radio-group'}>
+                                <Radio
+                                    checked={formData.considering_to_sell  === true}
+                                    onChange={() => changeFormHandler('considering_to_sell', true)}
+                                    label={'Yes'}
+                                />
+
+                                <Radio
+                                    checked={formData.considering_to_sell === false}
+                                    onChange={() => changeFormHandler('considering_to_sell', false)}
                                     label={'No'}
                                 />
                             </div>

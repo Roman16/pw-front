@@ -1,6 +1,7 @@
 import React from "react"
+import {Spin} from "antd"
 
-const WindowFooter = ({steps, currentStep, goNext, goPrevious, onCreate, createButtonTitle, disableNextStep}) => {
+const WindowFooter = ({steps, currentStep, goNext, goPrevious, onCreate, createButtonTitle, disableNextStep, processing}) => {
 
     return (
         <div className="window-footer">
@@ -8,6 +9,7 @@ const WindowFooter = ({steps, currentStep, goNext, goPrevious, onCreate, createB
             {currentStep !== 0 && <button
                 className="btn white"
                 onClick={goPrevious}
+                disabled={processing}
             >
                 Previous
             </button>}
@@ -23,8 +25,11 @@ const WindowFooter = ({steps, currentStep, goNext, goPrevious, onCreate, createB
             {currentStep === steps.length - 1 && <button
                 className="btn default"
                 onClick={onCreate}
+                disabled={processing}
             >
                 {createButtonTitle}
+
+                {processing && <Spin size={'small'}/>}
             </button>}
         </div>
     )

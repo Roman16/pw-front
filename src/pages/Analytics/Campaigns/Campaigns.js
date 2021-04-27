@@ -37,9 +37,11 @@ const Campaigns = () => {
                 moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
                 showRowSelection={true}
                 rowKey={'campaignId'}
-            />
+            >
+                {successCreate => <CreateCampaignWindow onReloadList={successCreate}/>}
 
-            <CreateCampaignWindow/>
+
+            </RenderPageParts>
         </div>
     )
 }

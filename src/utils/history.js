@@ -17,8 +17,8 @@ const getUserConfirmation = (message, callback) => {
         <ConfirmActionPopup
             className={'confirm-remove-product-window'}
             visible={true}
-            title={'Are you sure you want to leave this page?'}
-            description={'You have made changes. They will be lost if you continue'}
+            title={message === 'campaign-settings' ? 'Leave page?' : 'Are you sure you want to leave this page?'}
+            description={message === 'campaign-settings' ? 'Changes you made are not saved and will be lost.' : 'You have made changes. They will be lost if you continue'}
             handleOk={() => withCleanup(true)}
             handleCancel={() => withCleanup(false)}
         />,

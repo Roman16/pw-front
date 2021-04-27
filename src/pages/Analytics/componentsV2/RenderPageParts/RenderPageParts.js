@@ -41,18 +41,20 @@ export const updateResponseHandler = (res) => {
     }
 }
 
-const RenderPageParts = ({
-                             location,
-                             availableMetrics = [],
-                             availableParts,
-                             moreActions,
-                             columns,
-                             fixedColumns,
-                             rowKey,
-                             showRowSelection,
-                             productType,
-                             showFilters = true
-                         }) => {
+const RenderPageParts = (props) => {
+
+    const {
+        location,
+        availableMetrics = [],
+        availableParts,
+        moreActions,
+        columns,
+        fixedColumns,
+        rowKey,
+        showRowSelection,
+        productType,
+        showFilters = true
+    } = props
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
@@ -450,6 +452,8 @@ const RenderPageParts = ({
 
                 productType={productType}
             />}
+
+            {props.children && props.children(() => getPageData(['table']))}
         </>
     )
 }

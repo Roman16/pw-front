@@ -686,6 +686,7 @@
                 .field-value {
                   cursor: text !important;
                 }
+
                 .edit {
                   display: none !important;
                 }
@@ -1045,6 +1046,14 @@
   }
 }
 
+.main-pages .main-container .page > .analytics-page .workplace section.list-section .custom-table .table-body .table-body__row .table-body__field.editable-field {
+  .ant-spin {
+    .ant-spin-dot-spin {
+      animation-duration: 1s !important;
+    }
+  }
+}
+
 .editable-window {
   position: absolute;
   height: 100%;
@@ -1079,6 +1088,24 @@
       &:hover {
         color: #6D6DF6;
       }
+
+      &:disabled {
+        &:hover {
+          color: #656A84;
+        }
+      }
+    }
+
+    .ant-spin {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
     }
   }
 }
@@ -1170,12 +1197,26 @@
 
 }
 
+.editable-date-picker {
+  &.no-date {
+    .ant-calendar-picker-input {
+      &::placeholder {
+        color: #343C5A;
+      }
+    }
+  }
+}
+
 .edit-field-picker {
   &.ant-calendar-picker-container-placement-bottomLeft {
     padding-top: 41px !important;
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       padding-top: 33px !important;
+    }
+
+    .clear {
+      top: -37px;
     }
   }
 
@@ -1184,6 +1225,10 @@
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       padding-bottom: 33px !important;
+    }
+
+    .clear {
+      bottom: -39px;
     }
   }
 
@@ -1228,6 +1273,20 @@
     background: #fff;
     padding: 12px 20px 20px;
 
+    .clear {
+      position: absolute;
+      color: #6d6df6;
+      z-index: 10;
+      right: 20px;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 0;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
     .ant-calendar-footer-btn {
       width: 100%;
     }
@@ -1245,6 +1304,17 @@
 
       .btn {
         flex: 1;
+
+        .ant-spin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
 
     }
