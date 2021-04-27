@@ -1,15 +1,18 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 import './Course.less'
 import authorPhoto from '../../../assets/img/landing-course/author-photo.png'
+import authorPhoto_mob from '../../../assets/img/landing-course/author-photo_mob.png'
 import amazonAdvertisingLogo from '../../../assets/img/logo/amazon-advertising-logo-dark-2.png'
 import amazonSpnLogo from '../../../assets/img/logo/amazon-spn-logo-dark.png'
 import marketplacePulseLogo from '../../../assets/img/logo/marketplace-pulse.png'
 import secretsImg from '../../../assets/img/landing-course/secrets-img.png'
 import courseValueImg from '../../../assets/img/landing-course/course-value.png'
-import OurCases from "../components/OurCases/OurCases"
+import courseValueImg_mob from '../../../assets/img/landing-course/course-value_mob.png'
+import aboutAuthorImg from '../../../assets/img/landing-course/about-author-img.png'
 import {Collapse} from 'antd'
+import CasesSlider from "../RedefineApproach/CasesSlider"
 
 const {Panel} = Collapse
 
@@ -66,6 +69,13 @@ const Course = () => {
     const [activePreHeaderSlide, setActivePreHeaderSlide] = useState(0),
         [activePlanItem, setActivePlanItem] = useState(0)
 
+    useEffect(() => {
+        setInterval(() => {
+            setActivePreHeaderSlide(prevState => prevState === 1 ? 0 : 1)
+        }, 5000)
+    }, [])
+
+
     return (
         <div className="course-page landing-page">
             <Header/>
@@ -81,9 +91,10 @@ const Course = () => {
                             Самый детальный и продвинутый курс по рекламе на <br/> Амазон от Profit Whales
                         </p>
 
-                        <button className={'btn default'}>
+                        <a href={'https://profit-whales-course.thinkific.com/users/sign_up'} target={'_blank'}
+                           className={'btn default'}>
                             ЗАРЕГИСТРИРОВАТЬСЯ
-                        </button>
+                        </a>
 
                         <ul>
                             <li className={activePreHeaderSlide === 0 && 'active'}>
@@ -109,16 +120,15 @@ const Course = () => {
                             </li>
 
                             <div className="dots">
-                                {[0, 1].map(i => <div className={i === activePreHeaderSlide && 'active'}
-                                                      onClick={() => setActivePreHeaderSlide(i)}/>)}
+                                {[0, 1].map(i => <div className={i === activePreHeaderSlide && 'active'}/>)}
                             </div>
                         </ul>
                     </div>
                 </div>
 
                 <div className="author-avatar">
-                    <img src={authorPhoto}
-                         alt=""/>
+                    <img src={authorPhoto} alt="" className={'desk'}/>
+                    <img src={authorPhoto_mob} alt="" className={'mob'}/>
 
                     <SocialLinks/>
 
@@ -241,12 +251,17 @@ const Course = () => {
 
                     <div className="row">
                         <div className="description">
-                            <h4>{coursePlan[activePlanItem].title}</h4>
-                            <p>{coursePlan[activePlanItem].description}</p>
+                            <ul>
+                                {coursePlan.map((i, index) => <li className={activePlanItem === index && 'active'}>
+                                    <h4>{i.title}</h4>
+                                    <p>{i.description}</p>
 
-                            <button className="btn default">
-                                ЗАРЕГИСТРИРОВАТЬСЯ
-                            </button>
+                                    <a href={'https://profit-whales-course.thinkific.com/users/sign_up'}
+                                       target={'_blank'} className="btn default">
+                                        ЗАРЕГИСТРИРОВАТЬСЯ
+                                    </a>
+                                </li>)}
+                            </ul>
                         </div>
 
                         <ul>
@@ -254,10 +269,17 @@ const Course = () => {
                                                               onClick={() => setActivePlanItem(index)}>{i.title}</li>)}
                         </ul>
                     </div>
+
+                    <a href={'https://profit-whales-course.thinkific.com/users/sign_up'} target={'_blank'}
+                       className="btn default mob">
+                        ЗАРЕГИСТРИРОВАТЬСЯ
+                    </a>
                 </div>
             </section>
 
             <section className={'about-author'}>
+                <img src={aboutAuthorImg} alt="" className={'mob'}/>
+
                 <div className="container">
                     <div className="col">
                         <h2>
@@ -373,7 +395,8 @@ const Course = () => {
 
             <section className={'course-steps'}>
                 <div className="container">
-                    <h2>Программа <span>курса</span></h2>
+                    <h2 className={'desk'}>Программа <span>курса</span></h2>
+                    <h2 className={'mob'}>Почему нужно <span>принять участие</span> в курсе?</h2>
 
                     <ul className="statistic">
                         <li>
@@ -398,7 +421,7 @@ const Course = () => {
                         </li>
                     </ul>
 
-                    <div className="row">
+                    <div className="row desc">
                         <div className="col">
                             <div className="header">
                                 <p>Часть 1</p>
@@ -565,6 +588,171 @@ const Course = () => {
                             </ul>
                         </div>
                     </div>
+
+                    <Collapse
+                        accordion={true}
+                        bordered={false}
+                        expandIcon={({isActive}) => <i>
+                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.01855 10.46L20.9782 10.46" stroke="#6D6DF6" stroke-linecap="round"/>
+                                <path d="M11.04 20.7617L10.9592 0.802273" stroke="#6D6DF6" stroke-linecap="round"/>
+                            </svg>
+                        </i>}
+                        className="site-collapse-custom-collapse"
+                    >
+                        <Panel header={<CollapseHeader title={'Философия рекламы на Амазон'} part={1}/>} key="1">
+                            <ul>
+                                <h4>Модуль 1 - Амазон Реклама</h4>
+
+                                <li>Что такое Амазон реклама и почему она важна?</li>
+                                <li>Для каких типов бизнеса на Амазоне нужна реклама?</li>
+                                <li>Влияние рекламы на органические продажи</li>
+                                <li>Почему конверсия так важна и что такое юнит экономика (unit economics) на Амазоне?
+                                </li>
+                                <li>Какие параметры влияют на качество рекламы?</li>
+                                <li>
+                                    <p>Сколько нужно отзывов для запуска продукта с помощью рекламы?
+                                        <svg width="60" height="19" viewBox="0 0 60 19" fill="none"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path opacity="0.35"
+                                                  d="M56 0H4C1.79086 0 0 1.79086 0 4V15C0 17.2091 1.79086 19 4 19H56C58.2091 19 60 17.2091 60 15V4C60 1.79086 58.2091 0 56 0Z"
+                                                  fill="#6D6DF6"/>
+                                            <path
+                                                d="M8.75098 11.1445H5.77246L5.10352 13H4.13672L6.85156 5.89062H7.67188L10.3916 13H9.42969L8.75098 11.1445ZM6.05566 10.373H8.47266L7.26172 7.04785L6.05566 10.373ZM11.3486 13V5.89062H13.3555C13.974 5.89062 14.5208 6.02734 14.9961 6.30078C15.4714 6.57422 15.8376 6.96322 16.0947 7.46777C16.3551 7.97233 16.487 8.55176 16.4902 9.20605V9.66016C16.4902 10.3307 16.36 10.9183 16.0996 11.4229C15.8424 11.9274 15.473 12.3148 14.9912 12.585C14.5127 12.8551 13.9544 12.9935 13.3164 13H11.3486ZM12.2861 6.66211V12.2334H13.2725C13.9951 12.2334 14.5566 12.0088 14.957 11.5596C15.3607 11.1104 15.5625 10.4707 15.5625 9.64062V9.22559C15.5625 8.41829 15.3721 7.79167 14.9912 7.3457C14.6136 6.89648 14.0765 6.66862 13.3799 6.66211H12.2861ZM20.1572 11.7549L22.1885 5.89062H23.2139L20.5771 13H19.7471L17.1152 5.89062H18.1357L20.1572 11.7549ZM27.7256 11.1445H24.7471L24.0781 13H23.1113L25.8262 5.89062H26.6465L29.3662 13H28.4043L27.7256 11.1445ZM25.0303 10.373H27.4473L26.2363 7.04785L25.0303 10.373ZM35.7871 13H34.8447L31.2656 7.52148V13H30.3232V5.89062H31.2656L34.8545 11.3936V5.89062H35.7871V13ZM42.6816 10.7441C42.5938 11.4961 42.3154 12.0771 41.8467 12.4873C41.3812 12.8942 40.7611 13.0977 39.9863 13.0977C39.1465 13.0977 38.4727 12.7965 37.9648 12.1943C37.4603 11.5921 37.208 10.7865 37.208 9.77734V9.09375C37.208 8.43294 37.3252 7.85189 37.5596 7.35059C37.7972 6.84928 38.1325 6.46517 38.5654 6.19824C38.9984 5.92806 39.4997 5.79297 40.0693 5.79297C40.8245 5.79297 41.43 6.00456 41.8857 6.42773C42.3415 6.84766 42.6068 7.43034 42.6816 8.17578H41.7393C41.6579 7.60938 41.4805 7.19922 41.207 6.94531C40.9368 6.69141 40.5576 6.56445 40.0693 6.56445C39.4704 6.56445 39 6.78581 38.6582 7.22852C38.3197 7.67122 38.1504 8.30111 38.1504 9.11816V9.80664C38.1504 10.5781 38.3115 11.1917 38.6338 11.6475C38.9561 12.1032 39.4069 12.3311 39.9863 12.3311C40.5072 12.3311 40.9059 12.2139 41.1826 11.9795C41.4626 11.7419 41.6481 11.3301 41.7393 10.7441H42.6816ZM47.9844 9.71387H44.9033V12.2334H48.4824V13H43.9658V5.89062H48.4336V6.66211H44.9033V8.94727H47.9844V9.71387ZM49.6494 13V5.89062H51.6562C52.2747 5.89062 52.8216 6.02734 53.2969 6.30078C53.7721 6.57422 54.1383 6.96322 54.3955 7.46777C54.6559 7.97233 54.7878 8.55176 54.791 9.20605V9.66016C54.791 10.3307 54.6608 10.9183 54.4004 11.4229C54.1432 11.9274 53.7738 12.3148 53.292 12.585C52.8135 12.8551 52.2552 12.9935 51.6172 13H49.6494ZM50.5869 6.66211V12.2334H51.5732C52.2959 12.2334 52.8574 12.0088 53.2578 11.5596C53.6615 11.1104 53.8633 10.4707 53.8633 9.64062V9.22559C53.8633 8.41829 53.6729 7.79167 53.292 7.3457C52.9144 6.89648 52.3773 6.66862 51.6807 6.66211H50.5869Z"
+                                                fill="#6D6DF6"/>
+                                        </svg>
+                                    </p>
+                                </li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 2 - Подготовка к рекламе</h4>
+
+                                <li>Анализ рынка, лучшие практики. SERP (Search Engine Results Pages) on Amazon</li>
+                                <li>Как подготовить листинг к рекламе (Visual)?</li>
+                                <li>Как подготовить листинг к рекламе (Amazon SEO)?</li>
+                                <li>В каких категориях нельзя показывать рекламу?</li>
+                            </ul>
+
+                            <div className="button-block">
+                                <button className={'btn default'}>
+                                    ПРЕДПРОСМОТР
+                                </button>
+                            </div>
+                        </Panel>
+
+                        <Panel header={<CollapseHeader title={'Создание рекламы'} part={2}/>} key="2">
+                            <ul>
+                                <h4>Модуль 1 - Основы</h4>
+
+                                <li>Работа с рекламным кабинетом, лучшие практики для удобства и масштабирования</li>
+                                <li>Обзор Business Reports</li>
+                                <li>Какие форматы рекламы сейчас существуют?</li>
+                                <li>Разница между Auto и Manual Sponsored Products кампаниями</li>
+                                <li>Виды таргетинга на Амазоне</li>
+                                <li>Что такое семантическое ядро?</li>
+                                <li>Где находить ключевые слова и как их структурировать?</li>
+                                <li>Негативный таргетинг и почему это так важно?</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 2 - Структуры рекламных кампаний</h4>
+
+                                <li>Базовая Структура Amazon PPC</li>
+                                <li>Структура Zero to Hero от Profit Whales</li>
+                                <li>Создание и структура Sponsored Product кампаний</li>
+                                <li>Дубликаты в рекламе</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 3 - Структура Zero to Hero SB/SD + Defend Кампании</h4>
+
+                                <li>Создание и структура Sponsored Brands кампаний</li>
+                                <li>Создание и структура Sponsored Display кампаний</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 4 - Биды и Бюджеты</h4>
+
+                                <li>Какие бюджеты выставлять?</li>
+                                <li>Как правильно выставить стартовые биды?</li>
+                                <li>Шаблон Бюджетов и Бидов для каждой кампании</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 5 - Семантическое Ядро и Загрузка кампаний</h4>
+
+                                <li>Обзор и сбор Семантического Ядра</li>
+                                <li>8 Рекламных Стратегий от Profit Whales</li>
+                                <li>Как правильно рекламировать вариации?</li>
+                                <li>Загрузка рекламных кампаний на Амазон</li>
+                            </ul>
+                        </Panel>
+
+                        <Panel header={<CollapseHeader title={'Оптимизация рекламы и работа с ней'} part={3}/>} key="3">
+                            <ul>
+                                <h4>Модуль 1 - Теоретическая часть, возможные проблемы и решения</h4>
+
+                                <li>Оптимизация по структуре ZTH</li>
+                                <li>Какие метрики нужно знать при оптимизации рекламы?</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Какие метрики нужно знать при оптимизации рекламы?</h4>
+
+                                <li>Виды рекламных репортов</li>
+                                <li>Как оптимизировать через Bulk File?</li>
+                                <li>Добавление новых ключевых слов, PAT и негативов на основе Search-term репорта.</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 3 - Обзор рекламы</h4>
+
+                                <li>Почему реклама может не откручиваться?</li>
+                                <li>Как проверить качество вашей рекламы через front-end?</li>
+                                <li>Как анализировать рекламу конкурентов?</li>
+                                <li>Как работать с Lightning Deals и 7-Day Deals</li>
+                                <li>Что такое Stop Words?</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 4 - Плейсменты и Аналитика</h4>
+
+                                <li>Работа с Placements в Sponsored Products.</li>
+                                <li>Brand Analytics</li>
+                                <li>Как использовать Brand Analytics Business Reports для оптимизации рекламных
+                                    кампаний?
+                                </li>
+                                <li>Как атаковать конкурентов?</li>
+                            </ul>
+
+                            <ul>
+                                <h4>Модуль 5 - Advanced Tips</h4>
+
+                                <li>Как работает рекламный аукцион на Амазоне с разными типами соответствия?</li>
+                                <li>Окно атрибуции на Амазоне</li>
+                                <li>Что такое search term isolation and placement isolation?</li>
+                                <li>Как стать Best Seller с помощью рекламы?</li>
+                                <li>Что такое обратная аналитика и как это использовать?</li>
+                                <li>Бейдж Amazon Choice</li>
+                                <li>Органика и PPC</li>
+                                <li>Брендовый трафик</li>
+                                <li>Основные ошибки в оптимизации рекламных кампаний</li>
+                                <li>Как увеличить продажи с помощью рекламы?</li>
+                                <li>Exact, Broad, Phrase, как и когда их использовать и почему мы игнорируем Phrase
+                                    Match?
+                                </li>
+                            </ul>
+                            <ul>
+                                <h4>Модуль 6 - Автоматизация</h4>
+
+                                <li>Как автоматизировать процесс работы с рекламой?</li>
+                                <li>BIG DATA от Profit Whales</li>
+                            </ul>
+                        </Panel>
+                    </Collapse>
+
                 </div>
             </section>
 
@@ -588,17 +776,24 @@ const Course = () => {
                         <p>Более 10 чек-листов и шаблонов </p>
                         <p>Закрытая группа в Telegram</p>
 
-                        <button className="btn default">
+                        <a href={'https://profit-whales-course.thinkific.com/users/sign_up'} target={'_blank'}
+                           className="btn default">
                             ЗАРЕГИСТРИРОВАТЬСЯ
-                        </button>
+                        </a>
                     </div>
                 </div>
             </section>
 
-            <OurCases
-                product={'zth'}
-                title={`<span>Знания курса</span> в действии`}
-            />
+            <section className={'cases'}>
+                <div className="container">
+                    <h2><span>Знания курса</span> в действии</h2>
+
+                    <CasesSlider
+                        product={'zth'}
+                        title={`<span>Знания курса</span> в действии`}
+                    />
+                </div>
+            </section>
 
             <section className="course-value">
                 <div className="container">
@@ -613,7 +808,8 @@ const Course = () => {
 
                     <div className="row">
                         <div className="image">
-                            <img src={courseValueImg} alt=""/>
+                            <img src={courseValueImg} alt="" className={'desk'}/>
+                            <img src={courseValueImg_mob} alt="" className={'mob'}/>
                         </div>
 
                         <div className="col">
@@ -637,6 +833,7 @@ const Course = () => {
                     <h2><span>Часто задаваемые</span> вопросы</h2>
 
                     <Collapse
+                        accordion={true}
                         bordered={false}
                         expandIcon={({isActive}) => <CollapseIcon isActive={isActive}/>}
                         className="site-collapse-custom-collapse"
@@ -697,7 +894,7 @@ const Course = () => {
 
 const SocialLinks = () => (<ul className="social-links">
     <li>
-        <a href="https://www.linkedin.com/company/profitwhales/" className="i-in"
+        <a href="https://www.linkedin.com/in/nyezhnyk" className="i-in"
            target="_blank"
            title="LinkedIn">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -708,7 +905,7 @@ const SocialLinks = () => (<ul className="social-links">
         </a>
     </li>
     <li>
-        <a href="https://www.facebook.com/profitwhales" className="i-fb" target="_blank"
+        <a href="https://www.facebook.com/o.nyezhnyk" className="i-fb" target="_blank"
            title="Facebook">
             <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -718,7 +915,7 @@ const SocialLinks = () => (<ul className="social-links">
         </a>
     </li>
     <li>
-        <a href="https://www.instagram.com/profitwhales/?hl=ru" className="i-tw" target="_blank"
+        <a href="https://www.instagram.com/nyezhnyk/?hl=ru" className="i-tw" target="_blank"
            title="Instagram">
             <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -730,9 +927,14 @@ const SocialLinks = () => (<ul className="social-links">
 </ul>)
 
 const CollapseIcon = () => <svg width="22" height="13" viewBox="0 0 22 13" fill="none"
-                                      xmlns="http://www.w3.org/2000/svg">
-    <path d="M2 2L11 11L20 2"  stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 2L11 11L20 2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
+
+const CollapseHeader = ({title, part}) => <div className="header">
+    <p>Часть ${part}</p>
+    <h4>{title}</h4>
+</div>
 
 
 export default Course

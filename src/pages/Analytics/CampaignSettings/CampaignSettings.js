@@ -216,15 +216,35 @@ const CampaignSettings = () => {
                     </div>
 
                 </div>
-            </div>
-            }
+            </div>}
+
             <div className="row advertising-type">
                 <div className="label">
-                    Type
+                    Advertising Type
                 </div>
 
                 <div className="value">
                     {_.lowerCase(settingParams.advertisingType)}
+                </div>
+            </div>
+
+            <div className="row advertising-type">
+                <div className="label">
+                    Targeting Type
+                </div>
+
+                <div className="value">
+                    {settingParams.calculatedTargetingType && `${settingParams.calculatedTargetingType} Targeting`}
+                </div>
+            </div>
+
+            <div className="row advertising-type">
+                <div className="label">
+                    Sub Type
+                </div>
+
+                <div className="value">
+                    {settingParams.calculatedCampaignSubType && settingParams.calculatedCampaignSubType.replace(/([a-z])([A-Z])/g, '$1 $2')}
                 </div>
             </div>
 
@@ -305,23 +325,6 @@ const CampaignSettings = () => {
                         />
                     </div>
                     <span>{settingParams.advertisingType === SP ? 'Daily' : settingParams.budgetType}</span>
-                </div>
-            </div>
-
-            <div className="row targeting">
-                <div className="label">
-                    Campaign targeting
-                </div>
-
-                <div className="value">
-                    {settingParams.advertisingType === SP && <p>{settingParams.targetingType} Targeting</p>}
-                    {settingParams.advertisingType === SB && <p>Manual Targeting</p>}
-                    {settingParams.advertisingType === SD && <p>{
-                        settingParams.tactic === 'remarketing' ? 'Views remarketing (Auto Targeting)' :
-                            settingParams.tactic === 'T00020' ? 'Product Targeting (Manual Targeting)' :
-                                settingParams.tactic === 'T00030' ? 'Audiences (Manual targeting)' :
-                                    'Manual Targeting'
-                    }</p>}
                 </div>
             </div>
 

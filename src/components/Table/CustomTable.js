@@ -234,7 +234,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? dateFormatting(newValue) : null : newValue, onClose, () => setProcessing(false))
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? dateFormatting(newValue) : 'null' : newValue, onClose, () => setProcessing(false))
     }
 
 

@@ -12,6 +12,8 @@ const ZTH = () => {
         history.push('/admin-panel/zth/convert')
     }
 
+    const token = localStorage.getItem('token')
+
     return (
         <section className={'user-products-section zth'}>
             <TokenBlock/>
@@ -25,7 +27,7 @@ const ZTH = () => {
                     ZTH Upload Jobs
                 </NavLink>
 
-                <Link to={'/admin/word-sorter'} target={'_blank'}>
+                <Link to={`/admin/word-sorter?token=${token}`} target={'_blank'}>
                     WordSorter <SVG id={'outside-link'}/>
                 </Link>
             </div>

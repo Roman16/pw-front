@@ -1,12 +1,12 @@
-import React, {useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay} from "@fortawesome/free-solid-svg-icons";
-import {casesImages} from "../../../../assets/img/landing-automation/cases";
-import Slider from "react-slick";
-import {history} from "../../../../utils/history";
-import './OurCases.less';
-import {useSwipeEffect} from "../../../../utils/hooks/useSwipeEffect";
-import presentation from "../../../../assets/files/Presentation vol2 .pdf";
+import React, {useState} from "react"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faPlay} from "@fortawesome/free-solid-svg-icons"
+import {casesImages} from "../../../../assets/img/landing-automation/cases"
+import Slider from "react-slick"
+import {history} from "../../../../utils/history"
+import './OurCases.less'
+import {useSwipeEffect} from "../../../../utils/hooks/useSwipeEffect"
+import presentation from "../../../../assets/files/Presentation vol2 .pdf"
 
 const casesList = {
     'ppc': [
@@ -388,18 +388,18 @@ const casesList = {
             ]
         },
     ]
-};
+}
 
-let swipeTimeoutId = null;
+let swipeTimeoutId = null
 
-const OurCases = ({product, title='Our Cases'}) => {
+const OurCases = ({product, title = 'Our Cases'}) => {
     const [currentCaseSlide, setCaseSlide] = useState(0),
-        [selectedImage, selectImage] = useState(null);
+        [selectedImage, selectImage] = useState(null)
 
-    const ourCases = casesList[product];
+    const ourCases = casesList[product]
 
     const prevSlide = () => {
-        clearTimeout(swipeTimeoutId);
+        clearTimeout(swipeTimeoutId)
         swipeTimeoutId = setTimeout(() => {
             if (currentCaseSlide === 0) {
                 setCaseSlide(4)
@@ -409,10 +409,10 @@ const OurCases = ({product, title='Our Cases'}) => {
                 setCaseSlide(currentCaseSlide - 1)
             }
         }, 10)
-    };
+    }
 
     const nextSlide = () => {
-        clearTimeout(swipeTimeoutId);
+        clearTimeout(swipeTimeoutId)
         swipeTimeoutId = setTimeout(() => {
 
             if (currentCaseSlide === 4) {
@@ -423,14 +423,14 @@ const OurCases = ({product, title='Our Cases'}) => {
                 setCaseSlide(currentCaseSlide + 1)
             }
         }, 10)
-    };
+    }
 
-    const [touchStart, swipeHandler] = useSwipeEffect(prevSlide, nextSlide);
+    const [touchStart, swipeHandler] = useSwipeEffect(prevSlide, nextSlide)
 
 
     const goToSlide = (slide) => {
         setCaseSlide(slide)
-    };
+    }
 
     function goToRegistrationPage() {
         history.push('/registration')
@@ -445,7 +445,22 @@ const OurCases = ({product, title='Our Cases'}) => {
 
                     <div className='slider' id='cases-slider' onTouchMove={swipeHandler} onTouchStart={touchStart}>
                         <div className="row">
-                            <div className="prev" onClick={prevSlide}><FontAwesomeIcon icon={faPlay}/>
+                            <div className="prev" onClick={prevSlide}>
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <circle r="20" transform="matrix(-1 0 0 1 20 20)"/>
+                                    <mask id="mask046" mask-type="alpha" maskUnits="userSpaceOnUse" x="11" y="14"
+                                          width="17" height="12">
+                                        <rect width="16.8" height="12" transform="matrix(-1 0 0 1 28 14)"
+                                              fill="#C4C4C4"/>
+                                    </mask>
+                                    <g mask="url(#mask046)">
+                                        <path
+                                            d="M16.9008 15.2002L12.4008 20.0002M12.4008 20.0002L16.9008 24.8002M12.4008 20.0002L26.8008 20.0002"
+                                            stroke="#6D6DF6" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    </g>
+                                </svg>
                             </div>
 
                             <div className="image-block">
@@ -466,7 +481,22 @@ const OurCases = ({product, title='Our Cases'}) => {
                                 }
                             </div>
 
-                            <div className="next" onClick={nextSlide}><FontAwesomeIcon icon={faPlay}/>
+                            <div className="next" onClick={nextSlide}>
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="20" cy="20" r="20" />
+
+                                    <mask id="mask037" mask-type="alpha" maskUnits="userSpaceOnUse" x="12" y="14"
+                                          width="17" height="12">
+                                        <rect x="12" y="14" width="16.8" height="12" fill="#C4C4C4"/>
+                                    </mask>
+                                    <g mask="url(#mask037)">
+                                        <path
+                                            d="M23.0992 15.2002L27.5992 20.0002M27.5992 20.0002L23.0992 24.8002M27.5992 20.0002L13.1992 20.0002"
+                                            stroke="#6D6DF6" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round"/>
+                                    </g>
+                                </svg>
                             </div>
                         </div>
 
@@ -538,6 +568,6 @@ const OurCases = ({product, title='Our Cases'}) => {
             </div>}
         </>
     )
-};
+}
 
-export default OurCases;
+export default OurCases
