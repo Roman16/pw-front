@@ -15,6 +15,7 @@ import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/Cam
 import {dateFormatting} from "../../../utils/dateFormatting"
 import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageParts"
 import {Prompt} from "react-router-dom"
+import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 
 const Option = Select.Option
 
@@ -45,7 +46,8 @@ const CampaignSettings = () => {
         [availablePortfolios, setAvailablePortfolios] = useState([]),
         [failedFields, setFailedFields] = useState([]),
         [editFields, setEditFields] = useState([]),
-        [saveProcessing, setSaveProcessing] = useState(false)
+        [saveProcessing, setSaveProcessing] = useState(false),
+        [fetchProcessing, setFetchProcessing] = useState(true)
 
 
     const changeSettingsHandler = (data) => {
@@ -57,6 +59,8 @@ const CampaignSettings = () => {
     }
 
     const getSettingsDetails = async () => {
+        setFetchProcessing(true)
+
         try {
             const res = await analyticsServices.fetchSettingsDetails('campaigns', mainState.campaignId)
 
@@ -77,6 +81,7 @@ const CampaignSettings = () => {
             }
 
             dataFromResponse = {...response}
+            setFetchProcessing(false)
 
             setSettingsParams({...response})
         } catch (e) {
@@ -452,7 +457,8 @@ const CampaignSettings = () => {
             </>}
 
 
-            {settingParams.state !== 'archived' && <div className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
+            {settingParams.state !== 'archived' && <div
+                className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
                 <p>{saveProcessing ? 'Saving changes' : 'You have unsaved changes'}</p>
 
                 <button
@@ -473,6 +479,8 @@ const CampaignSettings = () => {
                     {saveProcessing && <Spin size={'small'}/>}
                 </button>
             </div>}
+
+            {fetchProcessing && <RouteLoader/>}
 
             <Prompt
                 when={JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams)}
