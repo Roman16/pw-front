@@ -136,7 +136,7 @@ const RenderPageParts = (props) => {
                     table: {
                         ...pageData.table,
                         response: [...pageData.table.response.map(i => {
-                            if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value
+                            if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value === 'null' ? undefined : value
 
                             return i
                         })]
