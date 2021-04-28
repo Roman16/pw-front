@@ -36,9 +36,10 @@ const Targetings = () => {
                 moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
                 showRowSelection={true}
                 rowKey={'targetingId'}
-            />
+            >
+                {successCreate => <CreateTargetingsWindow onReloadList={successCreate}/>}
+            </RenderPageParts>
 
-            <CreateTargetingsWindow/>
         </div>
     )
 }

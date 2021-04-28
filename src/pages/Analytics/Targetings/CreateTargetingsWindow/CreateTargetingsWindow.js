@@ -5,12 +5,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import {Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
-import AllProducts from "../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/AllProducts"
-import SelectedProduct from "../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/SelectedProduct"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
-import KeywordTargetingsList
-    from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/KeywordTargetingsList"
-import NegativePats from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativePats"
 import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
 import './CreateTargetingsWindow.less'
 
@@ -61,7 +56,7 @@ const CreateTargetingsWindow = () => {
             handleCancel={closeWindowHandler}
         >
             <WindowHeader
-                title={'Create Product Ads'}
+                title={'Create Targetings'}
                 onClose={closeWindowHandler}
             />
 
@@ -91,19 +86,14 @@ const CreateTargetingsWindow = () => {
                             </div>
 
                             <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
                             </div>
                         </div>
 
                         <div className={`row`}>
                             <div className="col">
                                 <div className="form-group">
-                                    <label htmlFor="">Select Campaign</label>
+                                    <label htmlFor="">Campaign</label>
                                     <CustomSelect
                                         placeholder={'Select by'}
                                         getPopupContainer={trigger => trigger.parentNode}
@@ -119,12 +109,7 @@ const CreateTargetingsWindow = () => {
                             </div>
 
                             <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
                             </div>
                         </div>
                     </>}
@@ -132,7 +117,7 @@ const CreateTargetingsWindow = () => {
                     <div className={`row`}>
                         <div className="col">
                             <div className="form-group">
-                                <label htmlFor="">Select Ad Group</label>
+                                <label htmlFor="">Ad Group</label>
                                 <CustomSelect
                                     placeholder={'Select by'}
                                     getPopupContainer={trigger => trigger.parentNode}
@@ -148,11 +133,7 @@ const CreateTargetingsWindow = () => {
                         </div>
 
                         <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                            consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna.
-                            Aliquam
-                            massa
-                            faucibus blandit justo. Sed et orci tortor pellentesque sed
+
                         </div>
                     </div>
                 </>}
@@ -169,6 +150,7 @@ const CreateTargetingsWindow = () => {
                         disabled={!createData.selected_ad_group}
                         keywords={createData.negative_keywords}
                         onUpdate={changeCreateDataHandler}
+                        confirmRemove={false}
                         title={'Keywords'}
                     />
 

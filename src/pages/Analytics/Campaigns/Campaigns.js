@@ -39,8 +39,6 @@ const Campaigns = () => {
                 rowKey={'campaignId'}
             >
                 {successCreate => <CreateCampaignWindow onReloadList={successCreate}/>}
-
-
             </RenderPageParts>
         </div>
     )

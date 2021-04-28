@@ -43,7 +43,7 @@ export const updateResponseHandler = (res) => {
 
 const RenderPageParts = (props) => {
 
-    const {
+    let {
         location,
         availableMetrics = [],
         availableParts,
@@ -407,7 +407,7 @@ const RenderPageParts = (props) => {
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
-    }, [selectedRangeDate, filters])
+    }, [selectedRangeDate, filters, mainState.campaignId, mainState.productId, mainState.adGroupId, mainState.portfolioId])
 
     return (
         <>
