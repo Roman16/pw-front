@@ -12,7 +12,7 @@ const ZTH = () => {
         history.push('/admin-panel/zth/convert')
     }
 
-    const token = localStorage.getItem('token')
+    const token = localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : localStorage.getItem('token')
 
     return (
         <section className={'user-products-section zth'}>
