@@ -10,10 +10,14 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import moment from "moment"
 import _ from "lodash"
 import {notification} from "../../../../components/Notification"
+import axios from "axios"
 
 
 let prevActiveMetrics = [],
     sorterTimeoutId = null
+
+const CancelToken = axios.CancelToken
+let source = null
 
 const idSelectors = {
     'campaigns': 'campaignId',
@@ -117,6 +121,12 @@ const RenderPageParts = (props) => {
         if (field === 'calculatedBudget' && value < 1) {
             notification.error({title: 'Campaign budget should be at least $1.00'})
             return false
+        } else if (field === 'calculatedBid' && value < 0.02) {
+            notification.error({title: 'Targeting bid should be at least $0.02'})
+            return false
+        } else if (field === 'calculatedBid' && value > 1000) {
+            notification.error({title: 'Targeting bid should not be more than $1,000'})
+            return false
         }
 
         return true
@@ -128,7 +138,8 @@ const RenderPageParts = (props) => {
                 const res = await analyticsServices.exactUpdateField(location, {
                     [idSelectors[location]]: item[idSelectors[location]],
                     advertisingType: item.advertisingType,
-                    [column]: value
+                    [column]: value,
+                    ...location === 'targetings' && {entityType: item.entityType}
                 })
 
                 setPageData({
@@ -153,7 +164,7 @@ const RenderPageParts = (props) => {
         } else error()
     }
 
-    const updateColumnHandler = async (changeData, idList, selectedAllRows, cb) => {
+    const updateColumnHandler = async (changeData, idList, selectedAllRows, cb, failedCb) => {
         let filtersWithState = []
         const queryParams = queryString.parse(history.location.search)
 
@@ -201,6 +212,7 @@ const RenderPageParts = (props) => {
             cb()
         } catch (e) {
             console.log(e)
+            failedCb()
         }
     }
 
@@ -218,6 +230,9 @@ const RenderPageParts = (props) => {
         try {
             if (pageParts.includes('table')) setTableFetchingStatus(true)
             if (pageParts.includes('chart')) setChartFetchingStatus(true)
+
+            source && source.cancel()
+            source = CancelToken.source()
 
             const queryParams = queryString.parse(history.location.search)
 
@@ -268,7 +283,9 @@ const RenderPageParts = (props) => {
                     pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                     filtersWithState,
                     activeMetrics,
-                }
+                },
+                undefined,
+                source.token
             )
 
             if (productType === 'parent') {
@@ -280,7 +297,9 @@ const RenderPageParts = (props) => {
                         pageParts: ['table'],
                         filtersWithState,
                         activeMetrics,
-                    }
+                    },
+                    undefined,
+                    source.token
                 )
 
                 res.table = parentResponse.table

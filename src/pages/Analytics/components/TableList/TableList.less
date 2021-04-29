@@ -505,17 +505,8 @@
         .table-body__row {
           position: relative;
 
-          &.disabled-row {
-            //.editable-field {
-            //  .field-value {
-            //    cursor: text !important;
-            //    pointer-events: none;
-            //  }
-            //
-            //  .edit {
-            //    display: none !important;
-            //  }
-            //}
+          .edit {
+            cursor: pointer;
           }
 
           .table-body__field {
@@ -715,7 +706,6 @@
                   height: 2rem;
                   border-radius: 50%;
                   margin: 0 0 0 auto;
-                  cursor: initial;
                   display: none;
                   align-items: center;
                   justify-content: center;
@@ -1090,9 +1080,8 @@
       }
 
       &:disabled {
-        &:hover {
-          color: #656A84;
-        }
+        color: transparent;
+        cursor: default;
       }
     }
 

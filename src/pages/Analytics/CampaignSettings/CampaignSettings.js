@@ -47,7 +47,8 @@ const CampaignSettings = () => {
         [failedFields, setFailedFields] = useState([]),
         [editFields, setEditFields] = useState([]),
         [saveProcessing, setSaveProcessing] = useState(false),
-        [fetchProcessing, setFetchProcessing] = useState(true)
+        [fetchProcessing, setFetchProcessing] = useState(true),
+        [visibleDatePopup, setVisibleDatePopup] = useState(false)
 
 
     const changeSettingsHandler = (data) => {
@@ -155,319 +156,348 @@ const CampaignSettings = () => {
 
     return (
         <div className={'campaign-settings-workplace'}>
-            <div className="row">
-                <div className="label">
-                    Campaign Name
-                </div>
-
-                <div className="value name">
-                    <div className={`form-group ${failedFields.includes('name') ? 'error-field' : ''}`}>
-                        <Input
-                            placeholder={'Campaign Name'}
-                            disabled={settingParams.state === 'archived'}
-                            value={settingParams.name}
-                            onChange={({target: {value}}) => changeSettingsHandler({name: value})}
-                            onBlur={({target: {value}}) => {
-                                campaignNameValidation()
-                                changeSettingsHandler({name: value.trim()})
-                            }}
-                        />
-                    </div>
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="label">
-                    Campaign ID
-                </div>
-
-                <div className="value">
-                    {settingParams.id || '-'}
-                </div>
-            </div>
-
-            {settingParams.advertisingType !== SD && <div className="row">
-                <div className="label">
-                    Portfolio
-                </div>
-
-                <div className="value portfolio">
-                    <div className="form-group">
-                        <CustomSelect
-                            showSearch
-                            disabled={settingParams.state === 'archived'}
-                            placeholder={'Select by'}
-                            getPopupContainer={trigger => trigger.parentNode}
-                            value={settingParams.portfolioId}
-                            onChange={(value) => changeSettingsHandler({portfolioId: value})}
-                            optionFilterProp="children"
-                            filterOption={(input, option) => {
-                                return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
-                            }}
-                        >
-                            <Option
-                                value={'null'}
-                            >
-                                No Portfolio
-                            </Option>
-
-                            {availablePortfolios.map(portfolio => <Option
-                                value={portfolio.portfolioId}
-                            >
-                                {portfolio.name}
-                            </Option>)}
-                        </CustomSelect>
-
-                    </div>
-
-                </div>
-            </div>}
-
-            <div className="row advertising-type">
-                <div className="label">
-                    Advertising Type
-                </div>
-
-                <div className="value">
-                    {_.lowerCase(settingParams.advertisingType)}
-                </div>
-            </div>
-
-            <div className="row advertising-type">
-                <div className="label">
-                    Targeting Type
-                </div>
-
-                <div className="value">
-                    {settingParams.calculatedTargetingType && `${settingParams.calculatedTargetingType} Targeting`}
-                </div>
-            </div>
-
-            <div className="row advertising-type">
-                <div className="label">
-                    Sub Type
-                </div>
-
-                <div className="value">
-                    {settingParams.calculatedCampaignSubType && settingParams.calculatedCampaignSubType.replace(/([a-z])([A-Z])/g, '$1 $2')}
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="label">
-                    Status
-                </div>
-
-                <div className="value state">
-                    {settingParams.state === 'archived' ? <span className={'archived'}>Archived</span> :
-                        <div className='switch-block'>
-                            <Switch
-                                checked={settingParams.state === 'enabled'}
-                                disabled={settingParams.state === 'archived'}
-                                onChange={checked => changeSettingsHandler({'state': checked ? 'enabled' : 'paused'})}
-                            />
-
-                            {settingParams.state === 'paused' && <span className={'paused'}>Paused</span>}
-                            {settingParams.state === 'enabled' && <span className={'active'}>Active</span>}
-                            {settingParams.state === 'archived' && <span>Archived</span>}
-                        </div>}
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="label">
-                    Serving Status
-                </div>
-
-                <div className="value status">
-                    {_.lowerCase(settingParams.servingStatus)}
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="label">
-                    Schedule
-                </div>
-
-                <div className="value date">
-                    <DatePicker
-                        disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')}
-                        showToday={false}
-                        value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
-                        onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
-                        format={'MMM DD, YYYY'}
-                    />
-
-                    <DatePicker
-                        placeholder={'No end date'}
-                        disabled={settingParams.state === 'archived'}
-                        disabledDate={data => disabledEndDate(data, settingParams.startDate)}
-                        showToday={false}
-                        value={settingParams.endDate && moment(settingParams.endDate).tz('America/Los_Angeles')}
-                        onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
-                        format={'MMM DD, YYYY'}
-                    />
-                </div>
-            </div>
-
-            <div className="row">
-                <div className="label">
-                    Budget
-                </div>
-
-                <div className="value budget">
-                    <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
-                        <InputCurrency
-                            disabled={settingParams.state === 'archived'}
-                            value={settingParams.calculatedBudget ? round(settingParams.calculatedBudget, 2) : undefined}
-                            step={0.01}
-                            onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
-                            onBlur={({target: {value}}) => {
-                                value = value ? round(value, 2) : undefined
-                                campaignBudgetValidation(value)
-                                changeSettingsHandler({calculatedBudget: value})
-                            }}
-                        />
-                    </div>
-                    <span>{settingParams.advertisingType === SP ? 'Daily' : settingParams.budgetType}</span>
-                </div>
-            </div>
-
-            {settingParams.advertisingType === SP && <>
+            <div className={'settings-form'}>
                 <div className="row">
                     <div className="label">
-                        Campaign Bidding Strategy
+                        Campaign Name
                     </div>
 
-                    <div className="value strategy">
-                        <Radio.Group
-                            value={settingParams.bidding_strategy}
-                            disabled={settingParams.state === 'archived'}
-                            onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
-                        >
-                            <div className="col">
-                                <Radio value={'legacyForSales'}>
-                                    Dynamic bids - down only
-                                </Radio>
-
-                                <div className="radio-description down-only">
-                                    Amazon will lower your bids in real time when your ad may be less likely to convert
-                                    to a
-                                    sale. Any campaigns created before January 2019 used this setting.
-                                </div>
-                            </div>
-
-                            <div className="col">
-                                <Radio value={'autoForSales'}>
-                                    Dynamic bids - up and down
-                                </Radio>
-
-                                <div className="radio-description up-down">
-                                    Amazon will raise your bids (by a maximum of 100%) in real time when your ad may be
-                                    more
-                                    likely to convert to a sale, and lower your bids when less likely to convert to a
-                                    sale.
-                                </div>
-                            </div>
-
-                            <div className="col">
-                                <Radio value={'manual'}>
-                                    Fixed bids
-                                </Radio>
-
-                                <div className="radio-description">
-                                    Amazon will use your exact bid and any manual adjustments you set, and won’t change
-                                    your
-                                    bids based on likelihood of sale.
-                                </div>
-                            </div>
-                        </Radio.Group>
-
+                    <div className="value name">
+                        <div className={`form-group ${failedFields.includes('name') ? 'error-field' : ''}`}>
+                            <Input
+                                placeholder={'Campaign Name'}
+                                disabled={settingParams.state === 'archived'}
+                                value={settingParams.name}
+                                onChange={({target: {value}}) => changeSettingsHandler({name: value})}
+                                onBlur={({target: {value}}) => {
+                                    campaignNameValidation()
+                                    changeSettingsHandler({name: value.trim()})
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
 
                 <div className="row">
                     <div className="label">
-                        Adjust bids by placements <br/> (replaces Bid+)
+                        Campaign ID
                     </div>
 
-                    <div className="value bids">
-                        <div className="description">
-                            In addition to your bidding strategy, you can increase bids by up to 900%.
-                            {/*<a href="#">Learn more</a>*/}
+                    <div className="value">
+                        {settingParams.id || '-'}
+                    </div>
+                </div>
+
+                {settingParams.advertisingType !== SD && <div className="row">
+                    <div className="label">
+                        Portfolio
+                    </div>
+
+                    <div className="value portfolio">
+                        <div className="form-group">
+                            <CustomSelect
+                                showSearch
+                                disabled={settingParams.state === 'archived'}
+                                placeholder={'Select by'}
+                                getPopupContainer={trigger => trigger.parentNode}
+                                value={settingParams.portfolioId}
+                                onChange={(value) => changeSettingsHandler({portfolioId: value})}
+                                optionFilterProp="children"
+                                filterOption={(input, option) => {
+                                    return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
+                                }}
+                            >
+                                <Option
+                                    value={'null'}
+                                >
+                                    No Portfolio
+                                </Option>
+
+                                {availablePortfolios.map(portfolio => <Option
+                                    value={portfolio.portfolioId}
+                                >
+                                    {portfolio.name}
+                                </Option>)}
+                            </CustomSelect>
+
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="">
-                                Top of Search (first page)
-                            </label>
+                    </div>
+                </div>}
 
+                <div className="row advertising-type">
+                    <div className="label">
+                        Advertising Type
+                    </div>
+
+                    <div className="value">
+                        {_.lowerCase(settingParams.advertisingType)}
+                    </div>
+                </div>
+
+                <div className="row advertising-type">
+                    <div className="label">
+                        Targeting Type
+                    </div>
+
+                    <div className="value">
+                        {settingParams.calculatedTargetingType && `${settingParams.calculatedTargetingType} Targeting`}
+                    </div>
+                </div>
+
+                <div className="row advertising-type">
+                    <div className="label">
+                        Sub Type
+                    </div>
+
+                    <div className="value">
+                        {settingParams.calculatedCampaignSubType && settingParams.calculatedCampaignSubType.replace(/([a-z])([A-Z])/g, '$1 $2')}
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="label">
+                        Status
+                    </div>
+
+                    <div className="value state">
+                        {settingParams.state === 'archived' ? <span className={'archived'}>Archived</span> :
+                            <div className='switch-block'>
+                                <Switch
+                                    checked={settingParams.state === 'enabled'}
+                                    disabled={settingParams.state === 'archived'}
+                                    onChange={checked => changeSettingsHandler({'state': checked ? 'enabled' : 'paused'})}
+                                />
+
+                                {settingParams.state === 'paused' && <span className={'paused'}>Paused</span>}
+                                {settingParams.state === 'enabled' && <span className={'active'}>Active</span>}
+                                {settingParams.state === 'archived' && <span>Archived</span>}
+                            </div>}
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="label">
+                        Serving Status
+                    </div>
+
+                    <div className="value status">
+                        {_.lowerCase(settingParams.servingStatus)}
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="label">
+                        Schedule
+                    </div>
+
+                    <div className="value date">
+                        <DatePicker
+                            disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')}
+                            showToday={false}
+                            allowClear={false}
+                            value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
+                            onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
+                            format={'MMM DD, YYYY'}
+                            dropdownClassName={`dropdown-with-timezone`}
+                            renderExtraFooter={() => <>
+                                <p className={'time-zone'}>America/Los_Angeles</p>
+                            </>}
+                        />
+
+                        <DatePicker
+                            placeholder={'No end date'}
+                            disabled={settingParams.state === 'archived'}
+                            disabledDate={data => disabledEndDate(data, settingParams.startDate)}
+                            showToday={false}
+                            allowClear={false}
+                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
+                            onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
+                            format={'MMM DD, YYYY'}
+                            open={visibleDatePopup}
+                            onOpenChange={(value) => setVisibleDatePopup(value)}
+                            dropdownClassName={`dropdown-with-timezone with-clear`}
+                            className={settingParams.endDate === 'null' && 'no-date'}
+                            defaultPickerValue={(settingParams.endDate === null || !settingParams.endDate) && moment.max([moment(settingParams.startDate), moment()]).add(1, 'month').startOf('month')}
+                            renderExtraFooter={() => <>
+                                <button className={'btn clear-date'} onClick={() => {
+                                    setVisibleDatePopup(false)
+                                    changeSettingsHandler({endDate: 'null'})
+                                }}>
+                                    No end date
+                                </button>
+
+                                <p className={'time-zone'}>America/Los_Angeles</p>
+                            </>}
+
+                        />
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="label">
+                        Budget
+                    </div>
+
+                    <div className="value budget">
+                        <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
                             <InputCurrency
                                 disabled={settingParams.state === 'archived'}
-                                step={1}
-                                parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments[0].percentage}
-                                onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: [{
-                                        predicate: 'placementTop',
-                                        percentage: value
-                                    },
-                                        settingParams.bidding_adjustments[1]]
-                                })}
-                                onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: [{
-                                        predicate: 'placementTop',
-                                        percentage: value ? value : 0
-                                    },
-                                        settingParams.bidding_adjustments[1]]
-                                })}
-                                typeIcon={'percent'}
+                                value={settingParams.calculatedBudget ? round(settingParams.calculatedBudget, 2) : undefined}
+                                step={0.01}
+                                onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
+                                onBlur={({target: {value}}) => {
+                                    value = value ? round(value, 2) : undefined
+                                    campaignBudgetValidation(value)
+                                    changeSettingsHandler({calculatedBudget: value})
+                                }}
                             />
                         </div>
+                        <span>{settingParams.advertisingType === SP ? 'Daily' : settingParams.budgetType}</span>
+                    </div>
+                </div>
 
-                        <div className="form-group">
-                            <label htmlFor="">
-                                Product pages (competitors pages)
-                            </label>
+                {settingParams.advertisingType === SP && <>
+                    <div className="row">
+                        <div className="label">
+                            Campaign Bidding Strategy
+                        </div>
 
-                            <InputCurrency
+                        <div className="value strategy">
+                            <Radio.Group
+                                value={settingParams.bidding_strategy}
                                 disabled={settingParams.state === 'archived'}
-                                step={1}
-                                parser={value => value && Math.abs(Math.trunc(value))}
-                                value={settingParams.bidding_adjustments[1].percentage}
-                                onChange={value => changeSettingsHandler({
-                                    bidding_adjustments: [
-                                        settingParams.bidding_adjustments[0], {
-                                            predicate: 'placementProductPage',
+                                onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
+                            >
+                                <div className="col">
+                                    <Radio value={'legacyForSales'}>
+                                        Dynamic bids - down only
+                                    </Radio>
+
+                                    <div className="radio-description down-only">
+                                        Amazon will lower your bids in real time when your ad may be less likely to
+                                        convert
+                                        to a
+                                        sale. Any campaigns created before January 2019 used this setting.
+                                    </div>
+                                </div>
+
+                                <div className="col">
+                                    <Radio value={'autoForSales'}>
+                                        Dynamic bids - up and down
+                                    </Radio>
+
+                                    <div className="radio-description up-down">
+                                        Amazon will raise your bids (by a maximum of 100%) in real time when your ad may
+                                        be
+                                        more
+                                        likely to convert to a sale, and lower your bids when less likely to convert to
+                                        a
+                                        sale.
+                                    </div>
+                                </div>
+
+                                <div className="col">
+                                    <Radio value={'manual'}>
+                                        Fixed bids
+                                    </Radio>
+
+                                    <div className="radio-description">
+                                        Amazon will use your exact bid and any manual adjustments you set, and won’t
+                                        change
+                                        your
+                                        bids based on likelihood of sale.
+                                    </div>
+                                </div>
+                            </Radio.Group>
+
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="label">
+                            Adjust bids by placements <br/> (replaces Bid+)
+                        </div>
+
+                        <div className="value bids">
+                            <div className="description">
+                                In addition to your bidding strategy, you can increase bids by up to 900%.
+                                {/*<a href="#">Learn more</a>*/}
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">
+                                    Top of Search (first page)
+                                </label>
+
+                                <InputCurrency
+                                    disabled={settingParams.state === 'archived'}
+                                    step={1}
+                                    parser={value => value && Math.abs(Math.trunc(value))}
+                                    value={settingParams.bidding_adjustments[0].percentage}
+                                    onChange={value => changeSettingsHandler({
+                                        bidding_adjustments: [{
+                                            predicate: 'placementTop',
                                             percentage: value
-                                        }]
-                                })}
-                                onBlur={({target: {value}}) => changeSettingsHandler({
-                                    bidding_adjustments: [
-                                        settingParams.bidding_adjustments[0], {
-                                            predicate: 'placementProductPage',
+                                        },
+                                            settingParams.bidding_adjustments[1]]
+                                    })}
+                                    onBlur={({target: {value}}) => changeSettingsHandler({
+                                        bidding_adjustments: [{
+                                            predicate: 'placementTop',
                                             percentage: value ? value : 0
-                                        }]
-                                })}
-                                typeIcon={'percent'}
-                            />
+                                        },
+                                            settingParams.bidding_adjustments[1]]
+                                    })}
+                                    typeIcon={'percent'}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label htmlFor="">
+                                    Product pages (competitors pages)
+                                </label>
+
+                                <InputCurrency
+                                    disabled={settingParams.state === 'archived'}
+                                    step={1}
+                                    parser={value => value && Math.abs(Math.trunc(value))}
+                                    value={settingParams.bidding_adjustments[1].percentage}
+                                    onChange={value => changeSettingsHandler({
+                                        bidding_adjustments: [
+                                            settingParams.bidding_adjustments[0], {
+                                                predicate: 'placementProductPage',
+                                                percentage: value
+                                            }]
+                                    })}
+                                    onBlur={({target: {value}}) => changeSettingsHandler({
+                                        bidding_adjustments: [
+                                            settingParams.bidding_adjustments[0], {
+                                                predicate: 'placementProductPage',
+                                                percentage: value ? value : 0
+                                            }]
+                                    })}
+                                    typeIcon={'percent'}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </>}
+                </>}
 
+                {fetchProcessing && <RouteLoader/>}
+            </div>
 
             {settingParams.state !== 'archived' && <div
                 className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
                 <p>{saveProcessing ? 'Saving changes' : 'You have unsaved changes'}</p>
 
-                <button
+                {!saveProcessing && <button
                     className="btn transparent"
                     onClick={refreshData}
                     disabled={saveProcessing}
                 >
                     Cancel
-                </button>
+                </button>}
 
                 <button
                     className="btn white"
@@ -480,7 +510,6 @@ const CampaignSettings = () => {
                 </button>
             </div>}
 
-            {fetchProcessing && <RouteLoader/>}
 
             <Prompt
                 when={JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams)}

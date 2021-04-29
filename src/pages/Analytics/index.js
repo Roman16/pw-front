@@ -35,8 +35,6 @@ import NegativeTargetingsV1 from "./v1/NegativeTargetings/NegativeTargetings"
 const Analytics = (props) => {
     const dispatch = useDispatch()
 
-    const location = useSelector(state => state.analytics.location)
-
     const setState = debounce(100, false, state => {
         dispatch(analyticsActions.setMainState(state))
     })
@@ -48,6 +46,10 @@ const Analytics = (props) => {
         if (Object.keys(queryParams).length !== 0) {
             setState(queryParams)
         }
+
+        history.listen((location, action) => {
+            console.log(location)
+        })
 
         window.addEventListener('popstate', function (event) {
             const queryParams = queryString.parse(event.target.location.search)

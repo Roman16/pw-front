@@ -181,7 +181,7 @@ const Navigation = ({location}) => {
         if (mainState.adGroupId && mainState.campaignId) {
             setCurrentMenu(analyticsNavigation.adGroups)
         } else if (mainState.campaignId) {
-            if(stateDetails.advertisingType && stateDetails.advertisingType === 'SponsoredDisplay') {
+            if (stateDetails.advertisingType && stateDetails.advertisingType === 'SponsoredDisplay') {
                 setCurrentMenu([...analyticsNavigation.campaign.filter(item => item.key !== 'placements')])
             } else {
                 setCurrentMenu(analyticsNavigation.campaign)
@@ -227,8 +227,11 @@ const Navigation = ({location}) => {
                     {item.subMenu && <ul className={`sub-menu ${item.key === openedSubMenu ? 'opened' : ''}`}>
                         {item.subMenu.map(subItem => (
                             <li>
-                                <NavLink activeClassName={'active'} to={subItem.url + location.search}
-                                         onClick={() => setLocation(subItem.key)}>
+                                <NavLink
+                                    activeClassName={'active'}
+                                    to={subItem.url + location.search}
+                                    onClick={() => setLocation(subItem.key)}
+                                >
                                     {subItem.title}
 
                                     {/*{subItem.description && <InformationTooltip*/}

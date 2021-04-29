@@ -153,11 +153,11 @@ const TableList = ({
         }
     }
 
-    const setChangesHandler = async (data) => {
+    const setChangesHandler = async (data, failed) => {
         onUpdateColumn(data, selectedRows, selectedAllRows, () => {
             setSelectedAllRows(false)
             setSelectedRows([])
-        })
+        }, failed)
     }
 
     useEffect(() => {

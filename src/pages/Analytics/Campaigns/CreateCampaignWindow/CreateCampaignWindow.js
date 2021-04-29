@@ -132,7 +132,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
         setCreateProcessing(true)
 
         try {
-            await analyticsServices.exactCreate('campaigns', {
+            const res = await analyticsServices.exactCreate('campaigns', {
                 name: createCampaignData.name,
                 portfolioId: createCampaignData.portfolioId,
                 startDate: createCampaignData.startDate,
@@ -145,14 +145,27 @@ const CreateCampaignWindow = ({onReloadList}) => {
                 bidding_adjustments: createCampaignData.bidding_adjustments,
                 calculatedBudgetType: createCampaignData.calculatedBudgetType,
             })
-            closeWindowHandler()
-            notification.success({title: 'Campaign created'})
-            onReloadList()
-            setCreateProcessing(false)
-            setCreateCampaignData({...defaultState})
+
+            const failed = res.result.failed,
+                success = res.result.success,
+                notApplicable = res.result.notApplicable
+
+            if (success > 0) {
+                notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
+                closeWindowHandler()
+                onReloadList()
+                setCreateCampaignData({...defaultState})
+                setDisableNextStep(true)
+            }
+
+            if(failed > 0 || notApplicable > 0) {
+                notification.error({title: `${failed + notApplicable} ${failed + notApplicable === 1 ? 'entity' : 'entities'} failed to create`})
+            }
         } catch (e) {
             console.log(e)
         }
+
+        setCreateProcessing(false)
     }
 
     useEffect(() => {

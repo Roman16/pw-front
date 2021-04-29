@@ -305,6 +305,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     onChange={value => setNewValue(value)}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
                     disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
+                    defaultPickerValue={column === 'endDate' && (newValue === null || !newValue) && moment.max([moment(item.startDate), moment()]).add(1, 'month').startOf('month')}
                     renderExtraFooter={() => <>
                         {column === 'endDate' && (newValue && newValue !== 'null') &&
                         <button className="btn clear" onClick={() => setNewValue('null')}>

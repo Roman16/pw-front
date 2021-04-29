@@ -161,6 +161,7 @@ const CreateTargetingsWindow = () => {
                 <button
                     className="btn default"
                     onClick={onCreate}
+                    disabled={createData.negative_keywords.length === 0}
                 >
                     Create Targetings
                 </button>
