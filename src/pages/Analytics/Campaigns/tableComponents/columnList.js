@@ -42,6 +42,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             sorter: true,
             locked: true,
             search: true,
+            editType: 'text',
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 className={'state-link'}

@@ -700,6 +700,20 @@
                   cursor: initial;
                 }
 
+                &.text {
+                  a {
+                    max-width: 85%;
+                    width: max-content;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                  }
+
+                  i {
+                    margin: 0 0 0 10px;
+                  }
+                }
+
                 i {
                   min-width: 2rem;
                   width: 2rem;
@@ -1056,6 +1070,17 @@
   padding: 5px 0 5px 10px;
   z-index: 10;
 
+  &.text {
+    width: 349px;
+    div.form-group {
+      margin: 0 12px 0 0;
+      input {
+        height: 2.2857142857142856rem;
+        font-size: 1rem;
+      }
+    }
+  }
+
   .InputCurrency {
     width: 120px;
     height: 2.2857142857142856rem;
@@ -1199,6 +1224,7 @@
 .edit-field-picker {
   &.ant-calendar-picker-container-placement-bottomLeft {
     padding-top: 41px !important;
+
     .clear {
       top: -37px;
     }
