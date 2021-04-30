@@ -8,15 +8,20 @@ import CustomSelect from "../../../../components/Select/Select"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
 import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
 import './CreateTargetingsWindow.less'
+import {analyticsServices} from "../../../../services/analytics.services"
 
 const Option = Select.Option
 
 const CreateTargetingsWindow = () => {
     const [createData, setCreateData] = useState({
-        keyword_targetings: [],
-        negative_pats: [],
-        negative_keywords: [],
-    })
+            keyword_targetings: [],
+            negative_pats: [],
+            negative_keywords: [],
+            advertisingType: undefined,
+            campaignId: undefined
+        }),
+        [campaigns, setCampaigns] = useState([]),
+        [adGroups, setAdGroups] = useState([])
 
     const dispatch = useDispatch()
 
@@ -38,16 +43,50 @@ const CreateTargetingsWindow = () => {
     useEffect(() => {
         if (mainState.adGroupId) setCreateData(prevState => ({
             ...prevState,
-            advertising_type: '444',
+            advertisingType: '444',
             selected_campaign: 'rrf',
             selected_ad_group: 'ttt'
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
-            advertising_type: '444',
+            advertisingType: '444',
             selected_campaign: 'rrf',
         }))
     }, [mainState])
+
+    const getCampaigns = async (type) => {
+        try {
+            const res = analyticsServices.fetchCampaignsForTargeting({
+                page: 1,
+                type
+            })
+
+            setCampaigns(res.result)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const getAdGroups = (id) => {
+        try {
+            const res = analyticsServices.fetchCampaignsForTargeting({
+                page: 1,
+                id
+            })
+
+            setAdGroups(res.result)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getCampaigns(createData.advertisingType)
+    }, [createData.advertisingType])
+
+    useEffect(() => {
+        getAdGroups(createData.campaignId)
+    }, [createData.campaignId])
 
     return (<ModalWindow
             className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window'}
@@ -68,17 +107,19 @@ const CreateTargetingsWindow = () => {
                                 <div className="form-group">
                                     <label htmlFor="">Advertising Type</label>
                                     <CustomSelect
-                                        placeholder={'Select by'}
+                                        placeholder={'Select type'}
                                         getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={(value) => changeCreateDataHandler({advertising_type: value})}
-                                        value={createData.advertising_type}
+                                        onChange={(value) => changeCreateDataHandler({advertisingType: value})}
+                                        value={createData.advertisingType}
                                     >
-                                        <Option value={'sponsored_products'}>
+                                        <Option value={'SponsoredProducts'}>
                                             Sponsored Products
                                         </Option>
-
-                                        <Option value={'sponsored_display'}>
+                                        <Option value={'SponsoredDisplay'}>
                                             Sponsored Display
+                                        </Option>
+                                        <Option value={'SponsoredBrands'}>
+                                            Sponsored Brands
                                         </Option>
                                     </CustomSelect>
                                 </div>
@@ -94,16 +135,19 @@ const CreateTargetingsWindow = () => {
                             <div className="col">
                                 <div className="form-group">
                                     <label htmlFor="">Campaign</label>
+
                                     <CustomSelect
-                                        placeholder={'Select by'}
+                                        showSearch
+                                        placeholder={'Select campaign'}
                                         getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={(value) => changeCreateDataHandler({selected_campaign: value})}
-                                        value={createData.selected_campaign}
-                                        disabled={!createData.advertising_type}
+                                        value={createData.campaignId}
+                                        onChange={(value) => changeCreateDataHandler({campaignId: value})}
+                                        optionFilterProp="children"
+                                        disabled={!createData.advertisingType}
                                     >
-                                        <Option value={'445'}>
-                                            Campaign
-                                        </Option>
+                                        {campaigns.map(i => <Option value={i.campaignId}>
+                                            {i.name}
+                                        </Option>)}
                                     </CustomSelect>
                                 </div>
                             </div>
@@ -119,15 +163,17 @@ const CreateTargetingsWindow = () => {
                             <div className="form-group">
                                 <label htmlFor="">Ad Group</label>
                                 <CustomSelect
-                                    placeholder={'Select by'}
+                                    showSearch
+                                    placeholder={'Select ad group'}
                                     getPopupContainer={trigger => trigger.parentNode}
-                                    onChange={(value) => changeCreateDataHandler({selected_ad_group: value})}
-                                    value={createData.selected_ad_group}
-                                    disabled={!createData.selected_campaign}
+                                    value={createData.adGroupId}
+                                    onChange={(value) => changeCreateDataHandler({adGroupId: value})}
+                                    optionFilterProp="children"
+                                    disabled={!createData.campaignId}
                                 >
-                                    <Option value={'445'}>
-                                        Ad Group
-                                    </Option>
+                                    {campaigns.map(i => <Option value={i.adGroupId}>
+                                        {i.name}
+                                    </Option>)}
                                 </CustomSelect>
                             </div>
                         </div>
@@ -147,7 +193,7 @@ const CreateTargetingsWindow = () => {
                     {/*/>*/}
 
                     <NegativeKeywords
-                        disabled={!createData.selected_ad_group}
+                        disabled={!createData.adGroupId}
                         keywords={createData.negative_keywords}
                         onUpdate={changeCreateDataHandler}
                         confirmRemove={false}

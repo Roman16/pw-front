@@ -702,11 +702,13 @@
 
                 &.text {
                   a {
-                    max-width: 85%;
                     width: max-content;
-                    height: 100%;
-                    display: flex;
+                    max-width: 85%;
                     align-items: center;
+
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
                   }
 
                   i {
@@ -728,6 +730,10 @@
                     width: 1rem;
                     height: 1rem;
                     fill: #C9CBD4;
+                  }
+
+                  &:hover {
+                    background: rgba(109, 109, 246, 0.05);
                   }
                 }
 
