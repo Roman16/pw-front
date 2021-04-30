@@ -86,7 +86,7 @@ const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType, c
                 <div className="col added-keywords">
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
-                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>
+                        <button disabled={disabled || keywords.length === 0} onClick={clearKeywordsListHandler}>Remove All</button>
                     </div>
 
                     <div className="keywords-list">

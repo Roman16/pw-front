@@ -18,7 +18,8 @@ const CreateTargetingsWindow = () => {
             negative_pats: [],
             negative_keywords: [],
             advertisingType: undefined,
-            campaignId: undefined
+            campaignId: undefined,
+            adGroupId: undefined
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([])
@@ -56,7 +57,7 @@ const CreateTargetingsWindow = () => {
 
     const getCampaigns = async (type) => {
         try {
-            const res = analyticsServices.fetchCampaignsForTargeting({
+            const res = await analyticsServices.fetchCampaignsForTargeting({
                 page: 1,
                 type
             })
@@ -67,9 +68,9 @@ const CreateTargetingsWindow = () => {
         }
     }
 
-    const getAdGroups = (id) => {
+    const getAdGroups = async (id) => {
         try {
-            const res = analyticsServices.fetchCampaignsForTargeting({
+            const res = await analyticsServices.fetchAdGroupsForTargeting({
                 page: 1,
                 id
             })
@@ -81,11 +82,11 @@ const CreateTargetingsWindow = () => {
     }
 
     useEffect(() => {
-        getCampaigns(createData.advertisingType)
+        if (createData.advertisingType) getCampaigns(createData.advertisingType)
     }, [createData.advertisingType])
 
     useEffect(() => {
-        getAdGroups(createData.campaignId)
+        if (createData.campaignId) getAdGroups(createData.campaignId)
     }, [createData.campaignId])
 
     return (<ModalWindow
@@ -171,7 +172,7 @@ const CreateTargetingsWindow = () => {
                                     optionFilterProp="children"
                                     disabled={!createData.campaignId}
                                 >
-                                    {campaigns.map(i => <Option value={i.adGroupId}>
+                                    {adGroups.map(i => <Option value={i.adGroupId}>
                                         {i.name}
                                     </Option>)}
                                 </CustomSelect>

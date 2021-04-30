@@ -139,8 +139,8 @@ function fetchPortfoliosForCampaign() {
 function fetchCampaignsForTargeting({page, type}) {
     return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType=${type}&state:in=enabled,paused`)
 }
-function fetchAdGroupsForTargeting({page, campaignId}) {
-    return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&campaignId=${campaignId}&state:in=enabled,paused`)
+function fetchAdGroupsForTargeting({page, id}) {
+    return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId=${id}&state:in=enabled,paused`)
 }
 
 function exactCreate(entity, data) {
