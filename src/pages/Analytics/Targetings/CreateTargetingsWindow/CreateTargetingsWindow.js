@@ -55,39 +55,52 @@ const CreateTargetingsWindow = () => {
         }))
     }, [mainState])
 
-    const getCampaigns = async (type) => {
+    const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         try {
             const res = await analyticsServices.fetchCampaignsForTargeting({
-                page: 1,
-                type
+                page,
+                type,
+                name: searchStr
             })
 
-            setCampaigns(res.result)
+            if (page === 1) setCampaigns([...res.result])
+            else setCampaigns(prevState => [...prevState, ...res.result])
+            cb && cb(res.result.length !== 0)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const getAdGroups = async (id) => {
+    const getAdGroups = async (id, page = 1, cb, searchStr = undefined) => {
         try {
             const res = await analyticsServices.fetchAdGroupsForTargeting({
-                page: 1,
-                id
+                page,
+                id,
+                name: searchStr
             })
 
             setAdGroups(res.result)
+
+            if (page === 1) setAdGroups([...res.result])
+            else setAdGroups(prevState => [...prevState, ...res.result])
+            cb && cb(res.result.length !== 0)
         } catch (e) {
             console.log(e)
         }
     }
 
     useEffect(() => {
+        setCampaigns([])
+        setAdGroups([])
+
         if (createData.advertisingType) getCampaigns(createData.advertisingType)
     }, [createData.advertisingType])
 
     useEffect(() => {
+        setAdGroups([])
         if (createData.campaignId) getAdGroups(createData.campaignId)
     }, [createData.campaignId])
+
 
     return (<ModalWindow
             className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window'}
@@ -134,23 +147,17 @@ const CreateTargetingsWindow = () => {
 
                         <div className={`row`}>
                             <div className="col">
-                                <div className="form-group">
-                                    <label htmlFor="">Campaign</label>
-
-                                    <CustomSelect
-                                        showSearch
-                                        placeholder={'Select campaign'}
-                                        getPopupContainer={trigger => trigger.parentNode}
-                                        value={createData.campaignId}
-                                        onChange={(value) => changeCreateDataHandler({campaignId: value})}
-                                        optionFilterProp="children"
-                                        disabled={!createData.advertisingType}
-                                    >
-                                        {campaigns.map(i => <Option value={i.campaignId}>
-                                            {i.name}
-                                        </Option>)}
-                                    </CustomSelect>
-                                </div>
+                                <InfinitySelect
+                                    label={'Campaign'}
+                                    placeholder={'Select campaign'}
+                                    value={createData.campaignId}
+                                    onChange={(value) => changeCreateDataHandler({campaignId: value})}
+                                    disabled={!createData.advertisingType}
+                                    children={campaigns}
+                                    onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
+                                    reloadPage={createData.advertisingType}
+                                    dataKey={'campaignId'}
+                                />
                             </div>
 
                             <div className="col description">
@@ -161,22 +168,17 @@ const CreateTargetingsWindow = () => {
 
                     <div className={`row`}>
                         <div className="col">
-                            <div className="form-group">
-                                <label htmlFor="">Ad Group</label>
-                                <CustomSelect
-                                    showSearch
-                                    placeholder={'Select ad group'}
-                                    getPopupContainer={trigger => trigger.parentNode}
-                                    value={createData.adGroupId}
-                                    onChange={(value) => changeCreateDataHandler({adGroupId: value})}
-                                    optionFilterProp="children"
-                                    disabled={!createData.campaignId}
-                                >
-                                    {adGroups.map(i => <Option value={i.adGroupId}>
-                                        {i.name}
-                                    </Option>)}
-                                </CustomSelect>
-                            </div>
+                            <InfinitySelect
+                                label={'Ad Group'}
+                                placeholder={'Select ad group'}
+                                value={createData.adGroupId}
+                                onChange={(value) => changeCreateDataHandler({adGroupId: value})}
+                                disabled={!createData.campaignId}
+                                reloadPage={createData.campaignId}
+                                children={adGroups}
+                                onLoadMore={(page, cb, searchStr) => getAdGroups(createData.campaignId, page, cb, searchStr)}
+                                dataKey={'adGroupId'}
+                            />
                         </div>
 
                         <div className="col description">
@@ -214,6 +216,83 @@ const CreateTargetingsWindow = () => {
                 </button>
             </div>
         </ModalWindow>
+    )
+}
+
+let timeoutId
+
+const InfinitySelect = (props) => {
+    const [loading, setLoading] = useState(false),
+        [loadingSearching, setLoadingSearching] = useState(false),
+        [page, setPage] = useState(1),
+        [hasMore, setHasMore] = useState(true)
+
+    const scrollPopupHandler = (event) => {
+        const target = event.target
+
+        if (!loading && hasMore && target.scrollTop + target.offsetHeight === target.scrollHeight) {
+            setLoading(true)
+
+            target.scrollTo(0, target.scrollHeight)
+            props.onLoadMore(page + 1, (res) => {
+                setLoading(false)
+                setHasMore(res)
+            })
+            setPage(page + 1)
+        }
+    }
+
+    const changeSearchHandler = (value) => {
+
+        if (value.length > 2) {
+
+            setLoadingSearching(true)
+
+            clearTimeout(timeoutId)
+
+            timeoutId = setTimeout(() => {
+                props.onLoadMore(1, (res) => {
+                    setLoading(false)
+                    setHasMore(res)
+                }, value)
+            }, 500)
+        } else if (value === '') {
+            props.onLoadMore(1, (res) => {
+                setLoading(false)
+                setHasMore(res)
+            }, undefined)
+        }
+
+        setLoadingSearching(false)
+    }
+
+    useEffect(() => {
+        setPage(1)
+        setHasMore(true)
+    }, [props.reloadPage])
+
+
+    return (<div className="form-group">
+            <label htmlFor="">{props.label}</label>
+            <CustomSelect
+                showSearch
+                optionFilterProp={false}
+                filterOption={false}
+
+                getPopupContainer={trigger => trigger.parentNode}
+                onPopupScroll={scrollPopupHandler}
+                loading={loadingSearching}
+                onSearch={changeSearchHandler}
+
+                {...props}
+            >
+                {props.children.map(i => <Option key={i[props.dataKey]} value={i[props.dataKey]}>
+                    {i.name}
+                </Option>)}
+
+                {loading && <Option key="loading">Loading...</Option>}
+            </CustomSelect>
+        </div>
     )
 }
 

@@ -136,11 +136,11 @@ function fetchPageData(location, params, idList, cancelToken) {
 function fetchPortfoliosForCampaign() {
     return api('get', `${analyticsUrls.portfolios}`)
 }
-function fetchCampaignsForTargeting({page, type}) {
-    return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType=${type}&state:in=enabled,paused`)
+function fetchCampaignsForTargeting({page, type, name}) {
+    return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType=${type}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
 }
-function fetchAdGroupsForTargeting({page, id}) {
-    return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId=${id}&state:in=enabled,paused`)
+function fetchAdGroupsForTargeting({page, id, name}) {
+    return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId=${id}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
 }
 
 function exactCreate(entity, data) {
