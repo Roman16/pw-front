@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react"
+import React, {memo, useEffect, useState} from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Select} from "antd"
+import {Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
 import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
@@ -21,6 +21,7 @@ const CreateTargetingsWindow = () => {
             campaignId: undefined,
             adGroupId: undefined
         }),
+        [createProcessing, setCreateProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([])
 
@@ -37,21 +38,35 @@ const CreateTargetingsWindow = () => {
         setCreateData(prevState => ({...prevState, ...value}))
     }
 
-    const onCreate = () => {
+    const onCreate = async () => {
+        setCreateProcessing(true)
 
+        try {
+            await analyticsServices.exactCreate('targetings', {
+                advertisingType: createData.advertisingType,
+                campaignId: createData.campaignId,
+                adGroupId: createData.adGroupId,
+                state: 'paused',
+                calculatedTargetingText: createData.negative_keywords.join(',')
+
+            })
+
+            setCreateProcessing(false)
+        } catch (e) {
+            console.log(e)
+            setCreateProcessing(false)
+        }
     }
 
     useEffect(() => {
         if (mainState.adGroupId) setCreateData(prevState => ({
             ...prevState,
-            advertisingType: '444',
-            selected_campaign: 'rrf',
-            selected_ad_group: 'ttt'
+            campaignId: mainState.campaignId,
+            adGroupId: mainState.adGroupId
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
-            advertisingType: '444',
-            selected_campaign: 'rrf',
+            campaignId: mainState.campaignId
         }))
     }, [mainState])
 
@@ -64,7 +79,7 @@ const CreateTargetingsWindow = () => {
             })
 
             if (page === 1) setCampaigns([...res.result])
-            else setCampaigns(prevState => [...prevState, ...res.result])
+            else setCampaigns([...campaigns, ...res.result])
             cb && cb(res.result.length !== 0)
         } catch (e) {
             console.log(e)
@@ -82,7 +97,7 @@ const CreateTargetingsWindow = () => {
             setAdGroups(res.result)
 
             if (page === 1) setAdGroups([...res.result])
-            else setAdGroups(prevState => [...prevState, ...res.result])
+            else setAdGroups([...adGroups, ...res.result])
             cb && cb(res.result.length !== 0)
         } catch (e) {
             console.log(e)
@@ -157,6 +172,7 @@ const CreateTargetingsWindow = () => {
                                     onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
                                     reloadPage={createData.advertisingType}
                                     dataKey={'campaignId'}
+                                    notFoundContent={'No campaigns'}
                                 />
                             </div>
 
@@ -178,6 +194,7 @@ const CreateTargetingsWindow = () => {
                                 children={adGroups}
                                 onLoadMore={(page, cb, searchStr) => getAdGroups(createData.campaignId, page, cb, searchStr)}
                                 dataKey={'adGroupId'}
+                                notFoundContent={'No ad groups'}
                             />
                         </div>
 
@@ -210,9 +227,10 @@ const CreateTargetingsWindow = () => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={createData.negative_keywords.length === 0}
+                    disabled={createData.negative_keywords.length === 0 || createProcessing}
                 >
                     Create Targetings
+                    {createProcessing && <Spin size={'small'}/>}
                 </button>
             </div>
         </ModalWindow>
@@ -221,11 +239,13 @@ const CreateTargetingsWindow = () => {
 
 let timeoutId
 
-const InfinitySelect = (props) => {
+
+export const InfinitySelect = React.memo((props) => {
     const [loading, setLoading] = useState(false),
         [loadingSearching, setLoadingSearching] = useState(false),
         [page, setPage] = useState(1),
-        [hasMore, setHasMore] = useState(true)
+        [hasMore, setHasMore] = useState(true),
+        [selectList, setSelectList] = useState([])
 
     const scrollPopupHandler = (event) => {
         const target = event.target
@@ -233,10 +253,11 @@ const InfinitySelect = (props) => {
         if (!loading && hasMore && target.scrollTop + target.offsetHeight === target.scrollHeight) {
             setLoading(true)
 
-            target.scrollTo(0, target.scrollHeight)
             props.onLoadMore(page + 1, (res) => {
                 setLoading(false)
                 setHasMore(res)
+                target.scrollTo(0, target.scrollHeight - 1200)
+
             })
             setPage(page + 1)
         }
@@ -271,6 +292,9 @@ const InfinitySelect = (props) => {
         setHasMore(true)
     }, [props.reloadPage])
 
+    useEffect(() => {
+        setSelectList([...props.children])
+    }, [props.children])
 
     return (<div className="form-group">
             <label htmlFor="">{props.label}</label>
@@ -283,17 +307,18 @@ const InfinitySelect = (props) => {
                 onPopupScroll={scrollPopupHandler}
                 loading={loadingSearching}
                 onSearch={changeSearchHandler}
+                dropdownClassName={'infinity-select-popup'}
 
                 {...props}
             >
-                {props.children.map(i => <Option key={i[props.dataKey]} value={i[props.dataKey]}>
+                {selectList.map(i => <Option value={i[props.dataKey]}>
                     {i.name}
                 </Option>)}
 
-                {loading && <Option key="loading">Loading...</Option>}
+                {loading && <Option key="loading"><Spin size={'small'}/></Option>}
             </CustomSelect>
         </div>
     )
-}
+})
 
 export default CreateTargetingsWindow
