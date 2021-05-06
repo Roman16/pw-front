@@ -3,16 +3,116 @@
     margin: 0 !important;
   }
 
- .targetings-details-step .negative-keywords > .row .added-keywords > .row button {
-   &:disabled {
-     color: #C9CBD4;
+  .targetings-details-step .negative-keywords > .row .added-keywords > .row button {
+    &:disabled {
+      color: #C9CBD4;
 
-     &:hover {
-       cursor: not-allowed;
-       text-decoration: none;
-     }
-   }
- }
+      &:hover {
+        cursor: not-allowed;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .targeting-type-loading {
+    display: flex;
+    justify-content: center;
+    font-size: 1.1428571428571428rem;
+    margin: 20px 0 0 0;
+
+    .ant-spin {
+      margin: 0 0 0 20px;
+    }
+  }
+
+  .block-description {
+    font-size: 0.85714286rem;
+    line-height: 1rem;
+    color: #656A84;
+    margin-bottom: 20px;
+  }
+
+  .ant-radio-group {
+    label.ant-radio-wrapper {
+      margin-bottom: 0 !important;
+
+      font-size: 1rem;
+      color: #343C5A;
+
+    }
+
+    .radio-description {
+      margin: 0 0 0 32px;
+      font-size: 0.8571428571428571rem;
+      line-height: 1rem;
+
+      color: #656A84;
+
+    }
+  }
+
+  .bid-block {
+    h3 {
+      font-weight: 600;
+      font-size: 1.4285714285714286rem;
+      color: #343C5A;
+    }
+
+    .form-group {
+      margin: 15px 0 0 0 !important;
+
+      .InputCurrency {
+        height: 2.2857142857142856rem;
+      }
+    }
+  }
+
+  .negative-keywords {
+    .ant-radio-group {
+      flex-direction: row;
+
+      .ant-radio-wrapper {
+        span:last-of-type {
+          padding: 0;
+        }
+      }
+    }
+
+    .keywords-list {
+      .header {
+        width: 100%;
+        grid-template-columns: 41% 28% 33% !important;
+      }
+
+      ul {
+        li {
+          display: flex;
+
+          .text {
+            width: 50% !important;
+          }
+
+          .type, .value {
+            width: 33% !important;
+          }
+        }
+      }
+
+      .InputCurrency {
+        width: 60%;
+        height: 1.7142857142857142rem;
+
+        .Dollar {
+          height: 75%;
+
+          svg {
+            width: auto;
+            height: 100%;
+          }
+        }
+      }
+    }
+  }
 }
 
 .infinity-select-popup {

@@ -3,12 +3,16 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Select, Spin} from "antd"
+import {Radio, Select, Spin, Switch} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
 import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
 import './CreateTargetingsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import NegativePats from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativePats"
+import KeywordTargetingsList
+    from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/KeywordTargetingsList"
 
 const Option = Select.Option
 
@@ -22,8 +26,10 @@ const CreateTargetingsWindow = () => {
             adGroupId: undefined
         }),
         [createProcessing, setCreateProcessing] = useState(false),
+        [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
-        [adGroups, setAdGroups] = useState([])
+        [adGroups, setAdGroups] = useState([]),
+        [targetingType, setTargetingType] = useState()
 
     const dispatch = useDispatch()
 
@@ -104,21 +110,49 @@ const CreateTargetingsWindow = () => {
         }
     }
 
+    const getAdGroupDetails = async (id) => {
+        setFetchAdGroupDetailsProcessing(true)
+
+        try {
+            const res = await analyticsServices.fetchAdGroupDetails(id)
+
+            setTargetingType(res.result.adGroupTargetingType)
+        } catch (e) {
+            console.log(e)
+        }
+
+        setFetchAdGroupDetailsProcessing(false)
+    }
+
     useEffect(() => {
         setCampaigns([])
         setAdGroups([])
+        setCreateData(prevState => ({
+            ...prevState,
+            campaignId: undefined,
+            adGroupId: undefined
+        }))
 
         if (createData.advertisingType) getCampaigns(createData.advertisingType)
     }, [createData.advertisingType])
 
     useEffect(() => {
         setAdGroups([])
+        setCreateData(prevState => ({
+            ...prevState,
+            adGroupId: undefined
+        }))
+
         if (createData.campaignId) getAdGroups(createData.campaignId)
     }, [createData.campaignId])
 
+    useEffect(() => {
+        if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
+    }, [createData.adGroupId])
+
 
     return (<ModalWindow
-            className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window'}
+            className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
             visible={visibleWindow}
             footer={false}
             handleCancel={closeWindowHandler}
@@ -204,23 +238,16 @@ const CreateTargetingsWindow = () => {
                     </div>
                 </>}
 
-                <div className="targetings-details-step">
-                    {/*<KeywordTargetingsList*/}
-                    {/*    disabled={!createData.selected_ad_group}*/}
-                    {/*    keywords={createData.keyword_targetings}*/}
-                    {/*    onUpdate={changeCreateDataHandler}*/}
-                    {/*    withMatchType={createData.t_targeting_type === 'keyword'}*/}
-                    {/*/>*/}
-
-                    <NegativeKeywords
-                        disabled={!createData.adGroupId}
-                        keywords={createData.negative_keywords}
+                {fetchAdGroupDetailsProcessing ? <div className="targeting-type-loading">
+                    Loading ad group information
+                    <Spin/>
+                </div> : targetingType ?
+                    <RenderTargetingsDetails
+                        createData={createData}
+                        targetingsType={targetingType}
                         onUpdate={changeCreateDataHandler}
-                        confirmRemove={false}
-                        title={'Keywords'}
                     />
-
-                </div>
+                    : ''}
             </div>
 
             <div className="window-footer">
@@ -238,7 +265,6 @@ const CreateTargetingsWindow = () => {
 }
 
 let timeoutId
-
 
 export const InfinitySelect = React.memo((props) => {
     const [loading, setLoading] = useState(false),
@@ -320,5 +346,145 @@ export const InfinitySelect = React.memo((props) => {
         </div>
     )
 })
+
+const RenderTargetingsDetails = ({createData, targetingsType, onUpdate}) => {
+
+    if (targetingsType === 'keywords') {
+        return (<div className="targetings-details-step">
+            <div className={`row `}>
+                <div className="col">
+                    <Radio.Group
+                        value={'keywords'}
+                        disabled={true}
+                    >
+                        <h4>Targeting type</h4>
+                        <p className={'block-description'}>Can't be changed since ad group already has keyword
+                            targetings</p>
+
+                        <Radio value={'keywords'}>
+                            Keyword Targeting
+                        </Radio>
+                        <div className="radio-description">
+                            Choose keywords to help your products appear in shopper searches.
+                        </div>
+
+                        <Radio value={'product'}>
+                            Product Targeting
+                        </Radio>
+
+                        <div className="radio-description">
+                            Choose specific products, categories, brands, or other product features to target your ads.
+                        </div>
+                    </Radio.Group>
+
+                    <div className="bid-block">
+                        <h3>Keywords</h3>
+
+                        <div className="form-group row">
+                            <label htmlFor="">Bid</label>
+                            <InputCurrency/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col description">
+
+                </div>
+            </div>
+
+            <KeywordTargetingsList
+                disabled={false}
+                keywords={createData.negative_keywords}
+                onUpdate={onUpdate}
+                withMatchType={true}
+            />
+
+            {/*<NegativeKeywords*/}
+            {/*    disabled={!createData.adGroupId}*/}
+            {/*    keywords={createData.negative_keywords}*/}
+            {/*    onUpdate={onUpdate}*/}
+            {/*    withMatchType={true}*/}
+            {/*    // title={'Negative Keyword Targeting'}*/}
+            {/*/>*/}
+        </div>)
+    } else if (targetingsType === 'targets') {
+        return (<div className="targetings-details-step">
+            <div className={`row `}>
+                <div className="col">
+                    <Radio.Group
+                        value={'product'}
+                        disabled={true}
+                    >
+                        <h4>Targeting type</h4>
+                        <p className={'block-description'}>Can't be changed since ad group already has keyword
+                            targetings</p>
+
+                        <Radio value={'keywords'}>
+                            Keyword Targeting
+                        </Radio>
+                        <div className="radio-description">
+                            Choose keywords to help your products appear in shopper searches.
+                        </div>
+
+                        <Radio value={'product'}>
+                            Product Targeting
+                        </Radio>
+
+                        <div className="radio-description">
+                            Choose specific products, categories, brands, or other product features to target your ads.
+                        </div>
+                    </Radio.Group>
+
+                    <div className="bid-block">
+                        <h3>Keywords</h3>
+
+                        <div className="form-group row">
+                            <label htmlFor="">Bid</label>
+                            <InputCurrency/>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col description">
+
+                </div>
+            </div>
+
+            <KeywordTargetingsList
+                disabled={false}
+                keywords={createData.negative_keywords}
+                onUpdate={onUpdate}
+                withMatchType={false}
+            />
+
+            {/*<NegativeKeywords*/}
+            {/*    disabled={!createData.adGroupId}*/}
+            {/*    keywords={createData.negative_keywords}*/}
+            {/*    onUpdate={onUpdate}*/}
+            {/*    withMatchType={true}*/}
+            {/*    // title={'Negative Keyword Targeting'}*/}
+            {/*/>*/}
+        </div>)
+    } else if (targetingsType === 'any') {
+        return (<div className="targetings-details-step">
+            {/*<KeywordTargetingsList*/}
+            {/*    disabled={!createData.selected_ad_group}*/}
+            {/*    keywords={createData.keyword_targetings}*/}
+            {/*    onUpdate={changeCreateDataHandler}*/}
+            {/*    withMatchType={createData.t_targeting_type === 'keyword'}*/}
+            {/*/>*/}
+
+            <NegativeKeywords
+                disabled={!createData.adGroupId}
+                keywords={createData.negative_keywords}
+                onUpdate={onUpdate}
+                confirmRemove={false}
+                title={'Keywords'}
+            />
+        </div>)
+    } else {
+        return ''
+    }
+}
 
 export default CreateTargetingsWindow

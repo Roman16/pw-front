@@ -16,6 +16,7 @@ export const analyticsServices = {
     fetchPortfoliosForCampaign,
     fetchCampaignsForTargeting,
     fetchAdGroupsForTargeting,
+    fetchAdGroupDetails,
 
     exactCreate,
     exactUpdateField,
@@ -137,10 +138,13 @@ function fetchPortfoliosForCampaign() {
     return api('get', `${analyticsUrls.portfolios}`)
 }
 function fetchCampaignsForTargeting({page, type, name}) {
-    return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType=${type}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
+    return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType:in=${type}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
 }
 function fetchAdGroupsForTargeting({page, id, name}) {
-    return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId=${id}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
+    return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId:eq=${id}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
+}
+function fetchAdGroupDetails(id) {
+    return api('get', `${analyticsUrls.adGroupDetails(id)}`)
 }
 
 function exactCreate(entity, data) {
