@@ -31,6 +31,7 @@ const CreateTargetingsWindow = () => {
         [adGroups, setAdGroups] = useState([]),
         [targetingType, setTargetingType] = useState()
 
+
     const dispatch = useDispatch()
 
     const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.targetings),
@@ -64,17 +65,6 @@ const CreateTargetingsWindow = () => {
         }
     }
 
-    useEffect(() => {
-        if (mainState.adGroupId) setCreateData(prevState => ({
-            ...prevState,
-            campaignId: mainState.campaignId,
-            adGroupId: mainState.adGroupId
-        }))
-        else if (mainState.campaignId) setCreateData(prevState => ({
-            ...prevState,
-            campaignId: mainState.campaignId
-        }))
-    }, [mainState])
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         try {
@@ -127,6 +117,7 @@ const CreateTargetingsWindow = () => {
     useEffect(() => {
         setCampaigns([])
         setAdGroups([])
+        setTargetingType(undefined)
         setCreateData(prevState => ({
             ...prevState,
             campaignId: undefined,
@@ -138,6 +129,7 @@ const CreateTargetingsWindow = () => {
 
     useEffect(() => {
         setAdGroups([])
+        setTargetingType(undefined)
         setCreateData(prevState => ({
             ...prevState,
             adGroupId: undefined
@@ -150,6 +142,22 @@ const CreateTargetingsWindow = () => {
         if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
     }, [createData.adGroupId])
 
+
+    useEffect(() => {
+        if (mainState.adGroupId) {
+            getAdGroupDetails(mainState.adGroupId)
+
+            setCreateData({
+                ...createData,
+                campaignId: mainState.campaignId,
+                adGroupId: mainState.adGroupId
+            })
+        }
+        if (mainState.campaignId) setCreateData({
+            ...createData,
+            campaignId: mainState.campaignId
+        })
+    }, [mainState])
 
     return (<ModalWindow
             className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
@@ -271,7 +279,8 @@ export const InfinitySelect = React.memo((props) => {
         [loadingSearching, setLoadingSearching] = useState(false),
         [page, setPage] = useState(1),
         [hasMore, setHasMore] = useState(true),
-        [selectList, setSelectList] = useState([])
+        [selectList, setSelectList] = useState([]),
+        [searchValue, setSearchValue] = useState()
 
     const scrollPopupHandler = (event) => {
         const target = event.target
@@ -283,13 +292,14 @@ export const InfinitySelect = React.memo((props) => {
                 setLoading(false)
                 setHasMore(res)
                 target.scrollTo(0, target.scrollHeight - 1200)
-
-            })
+            }, searchValue)
             setPage(page + 1)
         }
     }
 
     const changeSearchHandler = (value) => {
+        setSearchValue(value)
+        setPage(1)
 
         if (value.length > 2) {
 
@@ -328,7 +338,7 @@ export const InfinitySelect = React.memo((props) => {
                 showSearch
                 optionFilterProp={false}
                 filterOption={false}
-
+                // searchValue={searchValue}
                 getPopupContainer={trigger => trigger.parentNode}
                 onPopupScroll={scrollPopupHandler}
                 loading={loadingSearching}
