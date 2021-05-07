@@ -45,13 +45,12 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                 invalidKeywords = []
 
             if (res.result.invalidCount > 0) {
-                res.result.invalidDetails
-                    .forEach(i => {
-                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
-                    })
-                    .forEach(i => {
-                        keywordsList.splice(i.entityRequestIndex, 1)
-                    })
+                res.result.invalidDetails.forEach(i => {
+                    invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                })
+                res.result.invalidDetails.forEach(i => {
+                    keywordsList.splice(i.entityRequestIndex, 1)
+                })
             }
 
             validKeywords = keywordsList
