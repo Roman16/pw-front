@@ -1,9 +1,10 @@
 import React, {useState} from "react"
-import {unique, uniqueArrOfObj} from "../../../../utils/unique"
+import {uniqueArrOfObj} from "../../../../utils/unique"
 import {Radio, Spin} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {Popconfirm} from 'antd'
+
+let allKeywords = []
 
 const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate}) => {
     const [newKeyword, setNewKeyword] = useState(''),
@@ -13,7 +14,6 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         [validationProcessing, setValidationProcessing] = useState(false),
         [defaultBid, setDefaultBid] = useState(1),
         [invalidDetails, setInvalidDetails] = useState()
-
 
     const addKeywordsHandler = async (e) => {
         e.preventDefault()
@@ -31,6 +31,8 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                 }))
             ]
 
+            allKeywords = [...keywordsList.map(i => ({...i}))]
+
             const res = await onValidate({
                 entityType: 'keywords',
                 keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
@@ -43,12 +45,12 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
             if (res.result.invalidCount > 0) {
                 res.result.invalidDetails.forEach(i => {
-                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
-                    })
+                    invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                })
 
                 res.result.invalidDetails.forEach(i => {
-                        keywordsList.splice(i.entityRequestIndex, 1)
-                    })
+                    keywordsList.splice(i.entityRequestIndex, 1)
+                })
             }
 
             validKeywords = keywordsList
@@ -86,8 +88,12 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
         csv += "\n"
 
-        invalidDetails.invalidDetails.forEach(function (row) {
-            csv += row.details
+        invalidDetails.invalidDetails.forEach((row, index) => {
+            csv += `"${allKeywords[row.entityRequestIndex].keywordText}", `
+            csv += `"${keywords[index].matchType}", `
+            csv += `"${row.code}", `
+            csv += `"${row.details}"${row.correctedValue ? ', ' : ''}`
+            csv += row.correctedValue ? `"${row.correctedValue}"` : ''
             csv += "\n"
         })
 
@@ -147,8 +153,9 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
-                            {invalidDetails.invalidCount}/{invalidDetails.totalCount} {targetingType === '' ? 'keywords' : 'ASINs'} werent'
-                            added. <button type={'button'} onClick={downloadReport}>Download report</button>
+                            {invalidDetails.invalidCount}/{invalidDetails.totalCount} keywords werent'
+                            added. <br/>
+                            <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}
 
                         <button className={'btn default p15 add'} disabled={validationProcessing}>
