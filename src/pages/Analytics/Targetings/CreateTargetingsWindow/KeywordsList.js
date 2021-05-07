@@ -17,32 +17,35 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         e.preventDefault()
         setValidationProcessing(true)
 
-        const validKeywords = [...newKeyword.split('\n')
-            .filter(item => item !== '')
-            .filter(item => item.length < 80)
-            .filter(item => !keywords.find(el => el.text.replace(/\s/g, '') === item.replace(/\s/g, '')))
-            .map(item => unique(item).join(' '))
-            .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
-            .map(item => ({
-                keywordText: item,
-                matchType: keywordType
-            }))
-        ]
+        try {
+            const validKeywords = [...newKeyword.split('\n')
+                .filter(item => item !== '')
+                .filter(item => item.length < 80)
+                .filter(item => !keywords.find(el => el.text.replace(/\s/g, '') === item.replace(/\s/g, '')))
+                .map(item => unique(item).join(' '))
+                .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
+                .map(item => ({
+                    keywordText: item,
+                    matchType: keywordType
+                }))
+            ]
+            await onValidate({
+                entityType: 'keywords',
+                keywords: [...validKeywords]
+            })
 
-        await onValidate({
-            entityType: 'keywords',
-            keywords: [...validKeywords]
-        })
-
-        setValidationProcessing(false)
+            setValidationProcessing(false)
 
 
-        onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'text')])
+            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'text')])
 
-        setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
-        setValidKeywordsCount(validKeywords.length)
+            setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
+            setValidKeywordsCount(validKeywords.length)
 
-        setNewKeyword('')
+            setNewKeyword('')
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const clearKeywordsListHandler = () => {
