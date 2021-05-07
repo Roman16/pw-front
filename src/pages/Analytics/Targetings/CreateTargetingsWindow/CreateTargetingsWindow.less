@@ -52,6 +52,8 @@
   }
 
   .bid-block {
+    margin-bottom: 18px;
+
     h3 {
       font-weight: 600;
       font-size: 1.4285714285714286rem;
@@ -79,8 +81,30 @@
     }
 
     .actions {
+      align-items: center;
+
+      p {
+        margin: 0 auto 0 0;
+        font-size: 1rem;
+        color: #343C5A;
+
+        button {
+          color: #6d6df6;
+          font-weight: 500;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
       .btn {
+        height: max-content;
+        min-height: 2.28571429rem;
         position: relative;
+        margin: 0 0 0 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
 
         .ant-spin {
           position: absolute;
@@ -98,34 +122,45 @@
     .keywords-list {
       .header {
         width: 100%;
-        grid-template-columns: 41% 28% 33% !important;
+        grid-template-columns: 45% 27% 27% !important;
       }
 
       ul {
         li {
           display: flex;
+          position: relative;
 
           .text {
-            width: 50% !important;
+            width: 45% !important;
           }
 
           .type, .value {
-            width: 33% !important;
+            width: 27% !important;
+          }
+
+          .btn {
+            position: absolute;
+            right: 5px;
           }
         }
       }
 
       .InputCurrency {
-        width: 70px;
+        width: 80px;
         height: 1.7142857142857142rem;
 
         .Dollar {
           height: 75%;
+          right: 5px;
 
           svg {
             width: auto;
             height: 100%;
           }
+        }
+
+        input {
+          padding-left: 5px;
         }
       }
     }

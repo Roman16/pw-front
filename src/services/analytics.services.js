@@ -20,6 +20,7 @@ export const analyticsServices = {
     targetingsValidation,
 
     exactCreate,
+    bulkCreate,
     exactUpdateField,
     bulkUpdate
 }
@@ -150,6 +151,9 @@ function fetchAdGroupDetails(id) {
 
 function exactCreate(entity, data) {
     return api('post', analyticsUrls.createUrl(entity), data)
+}
+function bulkCreate(entity, data) {
+    return api('post', analyticsUrls.bulkCreateUrl(entity), data)
 }
 
 function targetingsValidation(data) {

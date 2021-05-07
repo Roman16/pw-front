@@ -10,7 +10,9 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         [keywordType, setKeywordType] = useState('exact'),
         [keywordsCount, setKeywordsCount] = useState(null),
         [validKeywordsCount, setValidKeywordsCount] = useState(null),
-        [validationProcessing, setValidationProcessing] = useState(false)
+        [validationProcessing, setValidationProcessing] = useState(false),
+        [defaultBid, setDefaultBid] = useState(1),
+        [invalidDetails, setInvalidDetails] = useState()
 
 
     const addKeywordsHandler = async (e) => {
@@ -18,34 +20,57 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         setValidationProcessing(true)
 
         try {
-            const validKeywords = [...newKeyword.split('\n')
+            let keywordsList = [...newKeyword.split('\n')
                 .filter(item => item !== '')
-                .filter(item => item.length < 80)
-                .filter(item => !keywords.find(el => el.keywordText.replace(/\s/g, '') === item.replace(/\s/g, '')))
-                .map(item => unique(item).join(' '))
-                .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
+                .map(i => i.trim())
+                .map(i => i.replace(/ +/g, ' '))
                 .map(item => ({
                     keywordText: item,
-                    matchType: keywordType
+                    matchType: keywordType,
+                    calculatedBid: defaultBid
                 }))
             ]
-            await onValidate({
+
+            const res = await onValidate({
                 entityType: 'keywords',
-                keywords: [...validKeywords]
+                keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
             })
 
-            setValidationProcessing(false)
+            setInvalidDetails(res.result)
 
+            let validKeywords = [],
+                invalidKeywords = []
 
-            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText')])
+            if (res.result.invalidCount > 0) {
+                res.result.invalidDetails
+                    .forEach(i => {
+                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                    })
+                    .forEach(i => {
+                        keywordsList.splice(i.entityRequestIndex, 1)
+                    })
+            }
+
+            validKeywords = keywordsList
+
+            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText')])
 
             setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
             setValidKeywordsCount(validKeywords.length)
 
-            setNewKeyword('')
+            setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
         } catch (e) {
             console.log(e)
         }
+
+        setValidationProcessing(false)
+    }
+
+    const changeBidHandler = (index, value) => {
+        onUpdate(keywords.map((item, i) => {
+            if (i === index) item.calculatedBid = value
+            return item
+        }))
     }
 
     const clearKeywordsListHandler = () => {
@@ -56,8 +81,37 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         onUpdate(keywords.filter((item, itemIndex) => itemIndex !== index))
     }
 
+    const downloadReport = () => {
+        let csv = 'Some keywords failed validation and couldn\'t be added. Here is why:\n'
+
+        csv += "\n"
+
+        invalidDetails.invalidDetails.forEach(function (row) {
+            csv += row.details
+            csv += "\n"
+        })
+
+        const hiddenElement = document.createElement('a')
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv)
+        hiddenElement.target = '_blank'
+        hiddenElement.download = 'keywords-validation-results.csv'
+        hiddenElement.click()
+    }
+
     return (
         <div className={`negative-keywords keyword-targetings`}>
+            <div className="bid-block">
+                <h3>Keywords</h3>
+
+                <div className="form-group row">
+                    <label htmlFor="">Bid</label>
+                    <InputCurrency
+                        value={defaultBid}
+                        onChange={(value) => setDefaultBid(value)}
+                    />
+                </div>
+            </div>
+
             <div className="row">
                 <form className="col new-keyword" onSubmit={addKeywordsHandler}>
                     <div className="row">
@@ -84,7 +138,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                     <div className="form-group">
                             <textarea
                                 value={newKeyword}
-                                onChange={({target: {value}}) => setNewKeyword(value)}
+                                onChange={({target: {value}}) => setNewKeyword(value.toLowerCase())}
                                 required
                                 disabled={validationProcessing}
                                 placeholder={'Enter your list and separate each item with a new line'}
@@ -92,7 +146,12 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                     </div>
 
                     <div className="actions">
-                        <button className={'btn default p15 add'}>
+                        {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
+                            {invalidDetails.invalidCount}/{invalidDetails.totalCount} {targetingType === '' ? 'keywords' : 'ASINs'} werent'
+                            added. <button type={'button'} onClick={downloadReport}>Download report</button>
+                        </p>}
+
+                        <button className={'btn default p15 add'} disabled={validationProcessing}>
                             <SVG id={'plus-icon'}/>
                             Add Keywords
 
@@ -135,7 +194,10 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                                     </div>
 
                                     <div className="value">
-                                        <InputCurrency value={createData.calculatedBid}/>
+                                        <InputCurrency
+                                            value={keyword.calculatedBid}
+                                            onChange={value => changeBidHandler(index, value)}
+                                        />
                                     </div>
 
                                     <button

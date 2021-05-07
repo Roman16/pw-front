@@ -1,24 +1,20 @@
-import React, {memo, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Radio, Select, Spin, Switch} from "antd"
+import {Radio, Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
-import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
 import './CreateTargetingsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
-import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import NegativePats from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativePats"
-import KeywordTargetingsList
-    from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/KeywordTargetingsList"
 import KeywordsList from "./KeywordsList"
 import TargetsList from "./TargetsList"
+import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const CreateTargetingsWindow = () => {
+const CreateTargetingsWindow = ({onReloadList}) => {
     const [createData, setCreateData] = useState({
             targets: [],
             keywords: [],
@@ -52,14 +48,31 @@ const CreateTargetingsWindow = () => {
         setCreateProcessing(true)
 
         try {
-            await analyticsServices.exactCreate('targetings', {
-                advertisingType: createData.advertisingType,
-                campaignId: createData.campaignId,
-                adGroupId: createData.adGroupId,
-                state: 'paused',
-                calculatedTargetingText: createData.negative_keywords.join(','),
-                entityType: targetingType
-            })
+            const res = await analyticsServices.bulkCreate('targetings', {
+                    targetings: createData[`${targetingType}`].map(i => ({
+                            advertisingType: createData.advertisingType,
+                            campaignId: createData.campaignId,
+                            adGroupId: createData.adGroupId,
+                            state: 'enabled',
+                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
+                            calculatedBid: i.calculatedBid,
+                            ...targetingType === 'keywords' ? {
+                                calculatedTargetingText: i.keywordText,
+                                calculatedTargetingMatchType: i.matchType
+                            } : {}
+                        }
+                    ))
+                }
+            )
+            const success = res.result.success
+
+            if (success > 0) {
+                notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
+
+                dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
+                onReloadList()
+
+            }
 
             setCreateProcessing(false)
         } catch (e) {
@@ -400,18 +413,6 @@ const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidat
                         Choose specific products, categories, brands, or other product features to target your ads.
                     </div>
                 </Radio.Group>
-
-                <div className="bid-block">
-                    <h3>{targetingType === 'keywords' ? 'Keywords' : 'Product Targetings'}</h3>
-
-                    <div className="form-group row">
-                        <label htmlFor="">Bid</label>
-                        <InputCurrency
-                            value={createData.calculatedBid}
-                            onChange={(value) => onUpdate({calculatedBid: value})}
-                        />
-                    </div>
-                </div>
             </div>
 
             <div className="col description">
@@ -432,8 +433,6 @@ const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidat
             onUpdate={(value) => onUpdate({targets: value})}
             onValidate={onValidate}
         />}
-
-
     </div>)
 }
 
