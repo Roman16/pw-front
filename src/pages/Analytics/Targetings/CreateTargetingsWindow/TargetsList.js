@@ -87,13 +87,10 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
     const downloadReport = () => {
         let csv = 'Some ASINs failed validation and couldn\'t be added. Here is why:\n'
 
-        const keywords = newKeyword.split('\n')
-
         csv += "\n"
 
         invalidDetails.invalidDetails.forEach((row, index) => {
             csv += `"${allKeywords[row.entityRequestIndex].text}", `
-            csv += `"${keywords[index].matchType}", `
             csv += `"${row.code}", `
             csv += `"${row.details}"${row.correctedValue ? ', ' : ''}`
             csv += row.correctedValue ? `"${row.correctedValue}"` : ''
@@ -154,7 +151,8 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
                             {invalidDetails.invalidCount}/{invalidDetails.totalCount} ASINs werent'
-                            added. <br/> <button type={'button'} onClick={downloadReport}>Download report</button>
+                            added. <br/>
+                            <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}
 
                         <button className={'btn default p15 add'} disabled={validationProcessing}>
