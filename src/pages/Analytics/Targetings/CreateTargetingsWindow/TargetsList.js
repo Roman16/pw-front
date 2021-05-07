@@ -77,6 +77,13 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
         onUpdate(keywords.filter((item, itemIndex) => itemIndex !== index))
     }
 
+    const changeBidHandler = (index, value) => {
+        onUpdate(keywords.map((item, i) => {
+            if (i === index) item.calculatedBid = value
+            return item
+        }))
+    }
+
     const downloadReport = () => {
         let csv = 'Some ASINs failed validation and couldn\'t be added. Here is why:\n'
 
@@ -187,7 +194,10 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                                     </div>
 
                                     <div className="value">
-                                        <InputCurrency value={createData.calculatedBid}/>
+                                        <InputCurrency
+                                            value={keyword.calculatedBid}
+                                            onChange={value => changeBidHandler(index, value)}
+                                        />
                                     </div>
 
 
