@@ -153,5 +153,6 @@ export const analyticsUrls = {
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
-    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`
+    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
+    targetingsValidation: `dynamic-analytics/targetings/bulk-validate`,
 }

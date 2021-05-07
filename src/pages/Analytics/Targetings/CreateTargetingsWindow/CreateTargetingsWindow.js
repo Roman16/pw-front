@@ -13,17 +13,19 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import NegativePats from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativePats"
 import KeywordTargetingsList
     from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/KeywordTargetingsList"
+import KeywordsList from "./KeywordsList"
+import TargetsList from "./TargetsList"
 
 const Option = Select.Option
 
 const CreateTargetingsWindow = () => {
     const [createData, setCreateData] = useState({
-            keyword_targetings: [],
-            negative_pats: [],
-            negative_keywords: [],
+            targets: [],
+            keywords: [],
             advertisingType: undefined,
             campaignId: undefined,
-            adGroupId: undefined
+            adGroupId: undefined,
+            calculatedBid: undefined
         }),
         [createProcessing, setCreateProcessing] = useState(false),
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
@@ -42,7 +44,8 @@ const CreateTargetingsWindow = () => {
     }
 
     const changeCreateDataHandler = (value) => {
-        setCreateData(prevState => ({...prevState, ...value}))
+        if (value.targetingType) setTargetingType(value.targetingType)
+        else setCreateData(prevState => ({...prevState, ...value}))
     }
 
     const onCreate = async () => {
@@ -54,8 +57,8 @@ const CreateTargetingsWindow = () => {
                 campaignId: createData.campaignId,
                 adGroupId: createData.adGroupId,
                 state: 'paused',
-                calculatedTargetingText: createData.negative_keywords.join(',')
-
+                calculatedTargetingText: createData.negative_keywords.join(','),
+                entityType: targetingType
             })
 
             setCreateProcessing(false)
@@ -114,6 +117,16 @@ const CreateTargetingsWindow = () => {
         setFetchAdGroupDetailsProcessing(false)
     }
 
+    const targetingsValidation = async (data) => {
+        try {
+            const res = analyticsServices.targetingsValidation(data)
+
+            return res
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         setCampaigns([])
         setAdGroups([])
@@ -166,7 +179,7 @@ const CreateTargetingsWindow = () => {
             handleCancel={closeWindowHandler}
         >
             <WindowHeader
-                title={'Create Targetings'}
+                title={'Create KeywordsList'}
                 onClose={closeWindowHandler}
             />
 
@@ -252,8 +265,9 @@ const CreateTargetingsWindow = () => {
                 </div> : targetingType ?
                     <RenderTargetingsDetails
                         createData={createData}
-                        targetingsType={targetingType}
+                        targetingType={targetingType}
                         onUpdate={changeCreateDataHandler}
+                        onValidate={targetingsValidation}
                     />
                     : ''}
             </div>
@@ -262,7 +276,7 @@ const CreateTargetingsWindow = () => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={createData.negative_keywords.length === 0 || createProcessing}
+                    disabled={(targetingType && createData[targetingType].length === 0) || createProcessing}
                 >
                     Create Targetings
                     {createProcessing && <Spin size={'small'}/>}
@@ -357,144 +371,70 @@ export const InfinitySelect = React.memo((props) => {
     )
 })
 
-const RenderTargetingsDetails = ({createData, targetingsType, onUpdate}) => {
+const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate}) => {
+    return (<div className="targetings-details-step">
+        <div className={`row `}>
+            <div className="col">
+                <Radio.Group
+                    value={targetingType}
+                    disabled={targetingType !== 'any'}
+                    onChange={({target: {value}}) => onUpdate({targetingType: value})}
+                >
+                    <h4>Targeting type</h4>
+                    <p className={'block-description'}>
+                        Can't be changed since ad group already has keyword targetings
+                    </p>
 
-    if (targetingsType === 'keywords') {
-        return (<div className="targetings-details-step">
-            <div className={`row `}>
-                <div className="col">
-                    <Radio.Group
-                        value={'keywords'}
-                        disabled={true}
-                    >
-                        <h4>Targeting type</h4>
-                        <p className={'block-description'}>Can't be changed since ad group already has keyword
-                            targetings</p>
-
-                        <Radio value={'keywords'}>
-                            Keyword Targeting
-                        </Radio>
-                        <div className="radio-description">
-                            Choose keywords to help your products appear in shopper searches.
-                        </div>
-
-                        <Radio value={'product'}>
-                            Product Targeting
-                        </Radio>
-
-                        <div className="radio-description">
-                            Choose specific products, categories, brands, or other product features to target your ads.
-                        </div>
-                    </Radio.Group>
-
-                    <div className="bid-block">
-                        <h3>Keywords</h3>
-
-                        <div className="form-group row">
-                            <label htmlFor="">Bid</label>
-                            <InputCurrency/>
-                        </div>
+                    <Radio value={'keywords'}>
+                        Keyword Targeting
+                    </Radio>
+                    <div className="radio-description">
+                        Choose keywords to help your products appear in shopper searches.
                     </div>
-                </div>
 
-                <div className="col description">
+                    <Radio value={'targets'}>
+                        Product Targeting
+                    </Radio>
 
+                    <div className="radio-description">
+                        Choose specific products, categories, brands, or other product features to target your ads.
+                    </div>
+                </Radio.Group>
+
+                <div className="bid-block">
+                    <h3>{targetingType === 'keywords' ? 'Keywords' : 'Product Targetings'}</h3>
+
+                    <div className="form-group row">
+                        <label htmlFor="">Bid</label>
+                        <InputCurrency
+                            value={createData.calculatedBid}
+                            onChange={(value) => onUpdate({calculatedBid: value})}
+                        />
+                    </div>
                 </div>
             </div>
 
-            <KeywordTargetingsList
-                disabled={false}
-                keywords={createData.negative_keywords}
-                onUpdate={onUpdate}
-                withMatchType={true}
-            />
+            <div className="col description">
 
-            {/*<NegativeKeywords*/}
-            {/*    disabled={!createData.adGroupId}*/}
-            {/*    keywords={createData.negative_keywords}*/}
-            {/*    onUpdate={onUpdate}*/}
-            {/*    withMatchType={true}*/}
-            {/*    // title={'Negative Keyword Targeting'}*/}
-            {/*/>*/}
-        </div>)
-    } else if (targetingsType === 'targets') {
-        return (<div className="targetings-details-step">
-            <div className={`row `}>
-                <div className="col">
-                    <Radio.Group
-                        value={'product'}
-                        disabled={true}
-                    >
-                        <h4>Targeting type</h4>
-                        <p className={'block-description'}>Can't be changed since ad group already has keyword
-                            targetings</p>
-
-                        <Radio value={'keywords'}>
-                            Keyword Targeting
-                        </Radio>
-                        <div className="radio-description">
-                            Choose keywords to help your products appear in shopper searches.
-                        </div>
-
-                        <Radio value={'product'}>
-                            Product Targeting
-                        </Radio>
-
-                        <div className="radio-description">
-                            Choose specific products, categories, brands, or other product features to target your ads.
-                        </div>
-                    </Radio.Group>
-
-                    <div className="bid-block">
-                        <h3>Keywords</h3>
-
-                        <div className="form-group row">
-                            <label htmlFor="">Bid</label>
-                            <InputCurrency/>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col description">
-
-                </div>
             </div>
+        </div>
 
-            <KeywordTargetingsList
-                disabled={false}
-                keywords={createData.negative_keywords}
-                onUpdate={onUpdate}
-                withMatchType={false}
-            />
+        {targetingType === 'keywords' ? <KeywordsList
+            createData={createData}
+            targetingType={targetingType}
+            keywords={createData.keywords}
+            onUpdate={(value) => onUpdate({keywords: value})}
+            onValidate={onValidate}
+        /> : <TargetsList
+            createData={createData}
+            targetingType={targetingType}
+            keywords={createData.targets}
+            onUpdate={(value) => onUpdate({targets: value})}
+            onValidate={onValidate}
+        />}
 
-            {/*<NegativeKeywords*/}
-            {/*    disabled={!createData.adGroupId}*/}
-            {/*    keywords={createData.negative_keywords}*/}
-            {/*    onUpdate={onUpdate}*/}
-            {/*    withMatchType={true}*/}
-            {/*    // title={'Negative Keyword Targeting'}*/}
-            {/*/>*/}
-        </div>)
-    } else if (targetingsType === 'any') {
-        return (<div className="targetings-details-step">
-            {/*<KeywordTargetingsList*/}
-            {/*    disabled={!createData.selected_ad_group}*/}
-            {/*    keywords={createData.keyword_targetings}*/}
-            {/*    onUpdate={changeCreateDataHandler}*/}
-            {/*    withMatchType={createData.t_targeting_type === 'keyword'}*/}
-            {/*/>*/}
 
-            <NegativeKeywords
-                disabled={!createData.adGroupId}
-                keywords={createData.negative_keywords}
-                onUpdate={onUpdate}
-                confirmRemove={false}
-                title={'Keywords'}
-            />
-        </div>)
-    } else {
-        return ''
-    }
+    </div>)
 }
 
 export default CreateTargetingsWindow

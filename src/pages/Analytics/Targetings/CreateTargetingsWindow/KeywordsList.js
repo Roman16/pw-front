@@ -1,19 +1,21 @@
 import React, {useState} from "react"
-import {unique, uniqueArrOfObj} from "../../../../../../utils/unique"
-import {Radio} from "antd"
-import {SVG} from "../../../../../../utils/icons"
-import InputCurrency from "../../../../../../components/Inputs/InputCurrency"
+import {unique, uniqueArrOfObj} from "../../../../utils/unique"
+import {Radio, Spin} from "antd"
+import {SVG} from "../../../../utils/icons"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {Popconfirm} from 'antd'
 
-const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) => {
+const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
         [keywordsCount, setKeywordsCount] = useState(null),
-        [validKeywordsCount, setValidKeywordsCount] = useState(null)
+        [validKeywordsCount, setValidKeywordsCount] = useState(null),
+        [validationProcessing, setValidationProcessing] = useState(false)
 
 
-    const addKeywordsHandler = (e) => {
+    const addKeywordsHandler = async (e) => {
         e.preventDefault()
+        setValidationProcessing(true)
 
         const validKeywords = [...newKeyword.split('\n')
             .filter(item => item !== '')
@@ -22,12 +24,20 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
             .map(item => unique(item).join(' '))
             .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
             .map(item => ({
-                text: item,
-                type: keywordType
+                keywordText: item,
+                matchType: keywordType
             }))
         ]
 
-        onUpdate({negative_keywords: [...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'phrase'), 'text')]})
+        await onValidate({
+            entityType: 'keywords',
+            keywords: [...validKeywords]
+        })
+
+        setValidationProcessing(false)
+
+
+        onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'text')])
 
         setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
         setValidKeywordsCount(validKeywords.length)
@@ -36,53 +46,54 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
     }
 
     const clearKeywordsListHandler = () => {
-        onUpdate({negative_keywords: []})
+        onUpdate([])
     }
 
     const removeKeywordHandler = (index) => {
-        onUpdate({negative_keywords: keywords.filter((item, itemIndex) => itemIndex !== index)})
+        onUpdate(keywords.filter((item, itemIndex) => itemIndex !== index))
     }
 
     return (
-        <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+        <div className={`negative-keywords keyword-targetings`}>
             <div className="row">
                 <form className="col new-keyword" onSubmit={addKeywordsHandler}>
                     <div className="row">
-                        {withMatchType && <>
-                            <label htmlFor="">Match type:</label>
+                        <label htmlFor="">Match type:</label>
 
-                            <Radio.Group disabled={disabled} value={keywordType}
-                                         onChange={({target: {value}}) => setKeywordType(value)}>
-                                <Radio value={'broad'}>
-                                    Broad
-                                </Radio>
+                        <Radio.Group
+                            value={keywordType}
+                            onChange={({target: {value}}) => setKeywordType(value)}
+                        >
+                            <Radio value={'broad'}>
+                                Broad
+                            </Radio>
 
-                                <Radio value={'phrase'}>
-                                    Phrase
-                                </Radio>
+                            <Radio value={'phrase'}>
+                                Phrase
+                            </Radio>
 
-
-                                <Radio value={'exact'}>
-                                    Exact
-                                </Radio>
-                            </Radio.Group>
-                        </>}
+                            <Radio value={'exact'}>
+                                Exact
+                            </Radio>
+                        </Radio.Group>
                     </div>
 
                     <div className="form-group">
                             <textarea
-                                disabled={disabled}
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value)}
                                 required
+                                disabled={validationProcessing}
                                 placeholder={'Enter your list and separate each item with a new line'}
                             />
                     </div>
 
                     <div className="actions">
-                        <button disabled={disabled} className={'btn default p15 add'}>
+                        <button className={'btn default p15 add'}>
                             <SVG id={'plus-icon'}/>
                             Add Keywords
+
+                            {validationProcessing && <Spin/>}
                         </button>
                     </div>
                 </form>
@@ -91,7 +102,7 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
                         {keywords.length > 0 &&
-                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>}
+                        <button onClick={clearKeywordsListHandler} disabled={validationProcessing}>Remove All</button>}
                     </div>
 
                     <div className="keywords-list">
@@ -100,9 +111,9 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                                 Keywords
                             </div>
 
-                            {withMatchType && < div>
+                            <div>
                                 Match type
-                            </div>}
+                            </div>
 
                             <div>
                                 Bid
@@ -113,21 +124,21 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                             {keywords.map((keyword, index) => (
                                 <li>
                                     <div className="text">
-                                        {keyword.text}
+                                        {keyword.keywordText}
                                     </div>
 
-                                    {withMatchType && <div className="type">
-                                        {keyword.type === 'exact' ? 'Exact' : 'Phrase'}
-                                    </div>}
+                                    <div className="type">
+                                        {keyword.matchType === 'exact' ? 'Exact' : keyword.matchType === 'broad' ? 'Broad' : 'Phrase'}
+                                    </div>
 
                                     <div className="value">
-                                        <InputCurrency disabled={disabled}/>
+                                        <InputCurrency value={createData.calculatedBid}/>
                                     </div>
-
 
                                     <button
                                         className={'btn icon'}
                                         onClick={() => removeKeywordHandler(index)}
+                                        disabled={validationProcessing}
                                     >
                                         <SVG id={'remove-filter-icon'}/>
                                     </button>
@@ -141,4 +152,4 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
     )
 }
 
-export default KeywordTargetingsList
+export default KeywordsList
