@@ -21,7 +21,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
             const validKeywords = [...newKeyword.split('\n')
                 .filter(item => item !== '')
                 .filter(item => item.length < 80)
-                .filter(item => !keywords.find(el => el.text.replace(/\s/g, '') === item.replace(/\s/g, '')))
+                .filter(item => !keywords.find(el => el.keywordText.replace(/\s/g, '') === item.replace(/\s/g, '')))
                 .map(item => unique(item).join(' '))
                 .filter(item => item.match(/\b\w+\b/g).length <= (keywordType === 'exact' ? 10 : 4))
                 .map(item => ({
@@ -37,7 +37,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
             setValidationProcessing(false)
 
 
-            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'text')])
+            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText')])
 
             setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
             setValidKeywordsCount(validKeywords.length)
