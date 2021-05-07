@@ -289,7 +289,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={(targetingType && createData[targetingType].length === 0) || createProcessing}
+                    disabled={!targetingType || (targetingType && createData[targetingType].length === 0) || createProcessing}
                 >
                     Create Targetings
                     {createProcessing && <Spin size={'small'}/>}
