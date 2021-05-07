@@ -90,7 +90,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
         invalidDetails.invalidDetails.forEach((row, index) => {
             csv += `"${allKeywords[row.entityRequestIndex].keywordText}", `
-            csv += `"${keywords[index].matchType}", `
+            csv += `"${allKeywords[row.entityRequestIndex].matchType}", `
             csv += `"${row.code}", `
             csv += `"${row.details}"${row.correctedValue ? ', ' : ''}`
             csv += row.correctedValue ? `"${row.correctedValue}"` : ''
