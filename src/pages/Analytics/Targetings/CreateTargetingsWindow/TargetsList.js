@@ -150,7 +150,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
 
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
-                            {invalidDetails.invalidCount}/{invalidDetails.totalCount} ASINs werent'
+                            <SVG id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} ASINs weren't
                             added. <br/>
                             <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}

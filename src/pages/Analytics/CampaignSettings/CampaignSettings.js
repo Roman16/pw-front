@@ -68,6 +68,7 @@ const CampaignSettings = () => {
             const response = {
                 ...res.response,
                 portfolioId: res.response.portfolioId === '0' || res.response.portfolioId === null ? 'null' : res.response.portfolioId,
+                endDate: res.response.endDate ? res.response.endDate : 'null',
                 id: mainState.campaignId,
                 bidding_adjustments: [
                     _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) ? _.find(res.response.bidding_adjustments, {predicate: 'placementTop'}) : {
@@ -318,7 +319,7 @@ const CampaignSettings = () => {
                             onOpenChange={(value) => setVisibleDatePopup(value)}
                             dropdownClassName={`dropdown-with-timezone with-clear`}
                             className={settingParams.endDate === 'null' && 'no-date'}
-                            defaultPickerValue={(settingParams.endDate === null || !settingParams.endDate) && moment.max([moment(settingParams.startDate), moment()]).add(1, 'month').startOf('month')}
+                            defaultPickerValue={(settingParams.endDate === 'null' || !settingParams.endDate) && moment.max([moment(settingParams.startDate), moment()]).add(1, 'month').startOf('month')}
                             renderExtraFooter={() => <>
                                 <button className={'btn clear-date'} onClick={() => {
                                     setVisibleDatePopup(false)

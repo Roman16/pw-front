@@ -45,6 +45,11 @@ const CreateTargetingsWindow = ({onReloadList}) => {
     }
 
     const onCreate = async () => {
+        if (createData[targetingType].some(i => i.calculatedBid > 1000 || i.calculatedBid < 0.02)) {
+            notification.error({title: 'Targeting bid should be greater than $0.02 and less than $1,000'})
+            return
+        }
+
         setCreateProcessing(true)
 
         try {
@@ -289,7 +294,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={!targetingType || (targetingType && createData[targetingType].length === 0) || createProcessing}
+                    disabled={!targetingType || (targetingType && createData[targetingType].some(i => !i.calculatedBid)) || (targetingType && createData[targetingType].length === 0) || createProcessing}
                 >
                     Create Targetings
                     {createProcessing && <Spin size={'small'}/>}

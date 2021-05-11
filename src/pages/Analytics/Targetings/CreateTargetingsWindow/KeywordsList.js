@@ -153,7 +153,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
-                            {invalidDetails.invalidCount}/{invalidDetails.totalCount} keywords werent'
+                           <SVG id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} keywords weren't
                             added. <br/>
                             <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}
