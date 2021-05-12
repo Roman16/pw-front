@@ -210,13 +210,7 @@ const ScrollToTop = () => {
     }, [])
 
 
-    return (<button className="btn white scroll-to-top" onClick={scrollToTop}>
-        <svg width="30" height="19" viewBox="0 0 30 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M1.41421 13.5858C0.633166 14.3668 0.633165 15.6332 1.41421 16.4142L3.27329 18.2733C4.05433 19.0543 5.32066 19.0543 6.10171 18.2733L13.5858 10.7892C14.3668 10.0082 15.6332 10.0082 16.4142 10.7892L23.8983 18.2733C24.6793 19.0543 25.9457 19.0543 26.7267 18.2733L28.5858 16.4142C29.3668 15.6332 29.3668 14.3668 28.5858 13.5858L16.4142 1.41421C15.6332 0.633166 14.3668 0.633165 13.5858 1.41421L1.41421 13.5858Z"
-            />
-        </svg>
-    </button>)
+    return (<button className="btn white scroll-to-top" onClick={scrollToTop}/>)
 }
 
 

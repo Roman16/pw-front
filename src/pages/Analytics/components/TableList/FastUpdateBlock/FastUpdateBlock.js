@@ -95,7 +95,7 @@ const FastUpdateBlock = ({
                     action: actionType,
                     value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
                 }
-            }, () => setSubmitProcessing(false))
+            }, () => setSubmitProcessing(false), () => setSubmitProcessing(false))
         }
     }
 

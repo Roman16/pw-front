@@ -193,10 +193,6 @@ const RenderPageParts = (props) => {
             ]
         }
 
-        // if (availableItemsId.length === 0) {
-        //     notification.warning({title: 'No entities found for update using provided filters.'})
-        // }
-
         try {
             const res = await analyticsServices.bulkUpdate(
                 location,
