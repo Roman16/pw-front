@@ -15,10 +15,11 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn, statusColumn, renderNumberField, EditableField,
+    campaignColumn,
+    statusColumn,
+    renderNumberField,
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
-import {Switch} from "antd"
 
 export const columnList = (setStateHandler, selectedCampaign) => ([
         {
@@ -27,12 +28,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             key: 'state',
             width: '65px',
             noTotal: true,
-            render: (state) => <div className="switch-block">
-                <Switch
-                    disabled={state === 'archived'}
-                    checked={state === 'enabled'}
-                />
-            </div>
+            editType: 'switch',
         },
         {
             title: 'Ad Group',
@@ -42,6 +38,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             sorter: true,
             locked: true,
             search: true,
+            editType: 'text',
             render: (adGroup, item) => (
                 <Link
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}

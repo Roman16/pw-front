@@ -35,6 +35,7 @@ const CustomTable = ({
                          rowKey,
                          selectedRows = [],
                          disabledRows = [],
+                         disabledRow = () => false,
                          revertSortingColumns = [],
                          onUpdateField
                      }) => {
@@ -159,7 +160,7 @@ const CustomTable = ({
                     {dataSource &&
                     dataSource.length > 0 &&
                     dataSource.map((report, index) => {
-                        const isDisabledRow = disabledRows.includes(report[rowKey])
+                        const isDisabledRow = disabledRows.includes(report[rowKey]) || disabledRow(report[rowKey], index)
                         return (<>
                             <div
                                 className={`table-body__row ${rowClassName && rowClassName(report)} ${(selectedRows.length > 0 && selectedRows.find(item => item === report[rowKey])) ? 'checked-row' : ''} ${isDisabledRow ? 'disabled-row' : ''}`}
@@ -196,7 +197,7 @@ const CustomTable = ({
                                                     column={item.dataIndex}
                                                     onUpdateField={onUpdateField}
                                                     render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
-                                                    disabled={(report.state && report.state === 'archived') || (item.disableField && (item.disableField(report[item.key], report) || false))}
+                                                    disabled={(report.state && report.state === 'archived') || isDisabledRow || (item.disableField && (item.disableField(report[item.key], report) || false))}
                                                 /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
                                         </div>
                                     )

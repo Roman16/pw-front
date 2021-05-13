@@ -34,6 +34,7 @@ const AdGroups = () => {
 
                 columns={columnList(setStateHandler, selectedCampaign)}
                 moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                disabledRow={(item, index) => item.advertisingType === 'SponsoredBrands'}
             />
 
             <CreateAdGroupWindow/>
