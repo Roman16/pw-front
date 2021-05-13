@@ -34,14 +34,14 @@ export const automatePatDescription = {
 
 
 export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'state',
-        //     key: 'state',
-        //     width: '65px',
-        //     noTotal: true,
-        //     editType: 'switch',
-        // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            editType: 'switch',
+        },
         {
             title: 'Keyword / PT',
             dataIndex: 'calculatedTargetingText',
