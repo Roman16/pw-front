@@ -128,10 +128,13 @@ const CampaignSettings = () => {
                 editFields.forEach(key => requestDate[key] = settingParams[key])
 
                 const res = await analyticsServices.exactUpdateField('campaigns', requestDate)
-                dataFromResponse = {...dataFromResponse, ...settingParams}
+
+                if(res.result.failed === 0) {
+                    dataFromResponse = {...dataFromResponse, ...settingParams}
+                    setEditFields([])
+                }
 
                 updateResponseHandler(res)
-                setEditFields([])
             } catch (e) {
                 console.log(e)
             }
