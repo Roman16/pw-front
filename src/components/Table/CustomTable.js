@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Spin, Switch, Tooltip} from 'antd'
+import {Checkbox, Input, Spin, Switch, Tooltip} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import $ from "jquery"
@@ -305,6 +305,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     onChange={value => setNewValue(value)}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
                     disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
+                    defaultPickerValue={column === 'endDate' && (newValue === null || !newValue) && moment.max([moment(item.startDate), moment()]).add(1, 'month').startOf('month')}
                     renderExtraFooter={() => <>
                         {column === 'endDate' && (newValue && newValue !== 'null') &&
                         <button className="btn clear" onClick={() => setNewValue('null')}>
@@ -341,6 +342,42 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 onChange={checked => submitFieldHandler(checked ? 'enabled' : 'paused')}
             />
         </div>)
+    } else if (type === 'text') {
+        return <div className={''} ref={wrapperRef}>
+            <div className={`field-value text ${disabled ? 'disabled' : ''}`}>
+                {render ? render() : value}
+
+                {!disabled && <i className={'edit'} onClick={openEditWindow}><SVG id={'edit-pen-icon'}/></i>}
+            </div>
+
+            {visibleEditableWindow && <div className="editable-window text">
+                <div className="form-group">
+                    <Input
+                        value={newValue}
+                        onChange={({target: {value}}) => setNewValue(value)}
+                        autoFocus={true}
+                    />
+                </div>
+
+                <button
+                    className={'btn default'}
+                    onClick={() => submitFieldHandler()}
+                    disabled={processing || !newValue}
+                >
+                    Save
+
+                    {processing && <Spin size={'small'}/>}
+                </button>
+
+                <button
+                    className={'btn transparent'}
+                    disabled={processing}
+                    onClick={() => setVisibleEditableWindow(false)}
+                >
+                    Cancel
+                </button>
+            </div>}
+        </div>
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>

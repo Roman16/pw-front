@@ -8,6 +8,8 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import queryString from "query-string"
 
+let newState = undefined
+
 const Header = ({location}) => {
     const locationDescription = allMenuItems.find(item => item.url === location.pathname)
     const dispatch = useDispatch()
@@ -18,9 +20,12 @@ const Header = ({location}) => {
     const [stateName, setStateName] = useState(mainState.name)
 
     const setMainState = (state, url, location) => {
-        dispatch(analyticsActions.setMainState(state))
-        dispatch(analyticsActions.setLocation(location))
         history.push(url)
+
+        newState = {
+            state,
+            location
+        }
     }
 
     const getStateInformation = async () => {
@@ -57,6 +62,15 @@ const Header = ({location}) => {
             getStateInformation()
         }
     }, [mainState])
+
+    useEffect(() => {
+        if (newState) {
+            dispatch(analyticsActions.setMainState(newState.state))
+            dispatch(analyticsActions.setLocation(newState.location))
+
+            newState = undefined
+        }
+    }, [history.location])
 
 
     const StepsRender = () => {

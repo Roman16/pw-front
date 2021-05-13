@@ -145,7 +145,7 @@ const SearchTerms = () => {
                 ...paginationParams ? paginationParams : tableRequestParams,
                 sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                 segment: localSegmentValue,
-                pageParts,
+                pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                 filtersWithState,
                 activeMetrics,
             })
@@ -299,7 +299,11 @@ const SearchTerms = () => {
 
     useEffect(() => {
         if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            getPageData(['chart'])
+            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                ...prevState,
+                chart: []
+            }))
+            else getPageData(['chart'])
             prevActiveMetrics = [...activeMetrics]
         }
     }, [activeMetrics])

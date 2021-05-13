@@ -5,10 +5,10 @@ import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
 import Jobs from "./Jobs/Jobs"
 import TokenBlock from "./TokenBlock/TokenBlock"
-import {SVG} from "../../../utils/icons";
+import {SVG} from "../../../utils/icons"
 
 const ZTH = () => {
-    if(history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
+    if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
         history.push('/admin-panel/zth/convert')
     }
 

@@ -3,7 +3,7 @@ import {SVG} from "../../../../../../utils/icons"
 import {Popconfirm, Radio} from "antd"
 import {unique, uniqueArrOfObj} from "../../../../../../utils/unique"
 
-const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) => {
+const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType, confirmRemove = true}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
         [keywordsCount, setKeywordsCount] = useState(null),
@@ -86,7 +86,7 @@ const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) 
                 <div className="col added-keywords">
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
-                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>
+                        <button disabled={disabled || keywords.length === 0} onClick={clearKeywordsListHandler}>Remove All</button>
                     </div>
 
                     <div className="keywords-list">
@@ -111,20 +111,25 @@ const NegativeKeywords = ({keywords, onUpdate, title, disabled, withMatchType}) 
                                         {keyword.type === 'exact' ? 'Negative Exact' : 'Negative Phrase'}
                                     </div>}
 
-                                    <Popconfirm
-                                        title="Are you sure to delete this keyword?"
-                                        onConfirm={() => removeKeywordHandler(index)}
-                                        getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
-                                        okButtonProps={{className: 'default'}}
-                                        cancelButtonProps={{className: 'white'}}
-                                        placement="topRight"
-                                        okText="Yes"
-                                        cancelText="No"
-                                    >
-                                        <button className={'btn icon'}>
+                                    {confirmRemove ? <Popconfirm
+                                            title="Are you sure to delete this keyword?"
+                                            onConfirm={() => removeKeywordHandler(index)}
+                                            getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
+                                            okButtonProps={{className: 'default'}}
+                                            cancelButtonProps={{className: 'white'}}
+                                            placement="topRight"
+                                            okText="Yes"
+                                            cancelText="No"
+                                        >
+                                            <button className={'btn icon'}>
+                                                <SVG id={'remove-filter-icon'}/>
+                                            </button>
+                                        </Popconfirm>
+                                        :
+                                        <button className={'btn icon'} onClick={() => removeKeywordHandler(index)}>
                                             <SVG id={'remove-filter-icon'}/>
                                         </button>
-                                    </Popconfirm>
+                                    }
                                 </li>
                             ))}
                         </ul>

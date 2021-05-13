@@ -505,17 +505,8 @@
         .table-body__row {
           position: relative;
 
-          &.disabled-row {
-            //.editable-field {
-            //  .field-value {
-            //    cursor: text !important;
-            //    pointer-events: none;
-            //  }
-            //
-            //  .edit {
-            //    display: none !important;
-            //  }
-            //}
+          .edit {
+            cursor: pointer;
           }
 
           .table-body__field {
@@ -709,13 +700,28 @@
                   cursor: initial;
                 }
 
+                &.text {
+                  a {
+                    width: max-content;
+                    max-width: 85%;
+                    align-items: center;
+
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                  }
+
+                  i {
+                    margin: 0 0 0 10px;
+                  }
+                }
+
                 i {
                   min-width: 2rem;
                   width: 2rem;
                   height: 2rem;
                   border-radius: 50%;
                   margin: 0 0 0 auto;
-                  cursor: initial;
                   display: none;
                   align-items: center;
                   justify-content: center;
@@ -724,6 +730,10 @@
                     width: 1rem;
                     height: 1rem;
                     fill: #C9CBD4;
+                  }
+
+                  &:hover {
+                    background: rgba(109, 109, 246, 0.05);
                   }
                 }
 
@@ -1066,6 +1076,17 @@
   padding: 5px 0 5px 10px;
   z-index: 10;
 
+  &.text {
+    width: 349px;
+    div.form-group {
+      margin: 0 12px 0 0;
+      input {
+        height: 2.2857142857142856rem;
+        font-size: 1rem;
+      }
+    }
+  }
+
   .InputCurrency {
     width: 120px;
     height: 2.2857142857142856rem;
@@ -1090,9 +1111,8 @@
       }
 
       &:disabled {
-        &:hover {
-          color: #656A84;
-        }
+        color: transparent;
+        cursor: default;
       }
     }
 
@@ -1210,6 +1230,7 @@
 .edit-field-picker {
   &.ant-calendar-picker-container-placement-bottomLeft {
     padding-top: 41px !important;
+
     .clear {
       top: -37px;
     }

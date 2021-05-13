@@ -337,7 +337,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 render: (date, item) => item.job && item.job.keywords_count
             },
             {
-                title: 'Product Targetings Amount',
+                title: 'Product KeywordsList Amount',
                 dataIndex: 'pts_count',
                 key: 'pts_count',
                 minWidth: '200px',

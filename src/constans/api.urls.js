@@ -147,8 +147,13 @@ export const analyticsUrls = {
     targetingsDetails: 'analytics/v2/search-terms/targetings-data',
     pageData: (location) => `analytics/v2/${location}`,
     portfolios: 'dynamic-analytics/entities/portfolios',
+    campaigns: 'dynamic-analytics/entities/campaigns',
+    adGroups: 'dynamic-analytics/entities/ad-groups',
+    adGroupDetails: id => `dynamic-analytics/entities/ad-group/${id}/targeting-type`,
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
+    bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
-    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`
+    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
+    targetingsValidation: `dynamic-analytics/targetings/bulk-validate`,
 }

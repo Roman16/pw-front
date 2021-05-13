@@ -31,7 +31,7 @@ const TargetingsDetails = ({createData, onChange}) => {
 
             <div className={`row ${disabledBlock ? 'disabled' : ''}`}>
                 <div className="col">
-                    <h3>Title</h3>
+                    <h3>Automatic Targeting</h3>
 
                     <div className="switch-table">
                         <div className="row header">

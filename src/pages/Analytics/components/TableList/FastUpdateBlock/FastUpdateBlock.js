@@ -81,7 +81,11 @@ const FastUpdateBlock = ({
         } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue < 1) {
             notification.error({title: 'Campaign budget should be at least $1.00'})
         } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue > 1000000) {
-            notification.error({title: 'Campaign budget should not be more than $1,000,000.00'})
+            notification.error({title: 'Campaign budget should not be more than $1,000,000'})
+        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue < 0.02) {
+            notification.error({title: 'Targeting bid should be at least $0.02'})
+        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue > 1000) {
+            notification.error({title: 'Targeting bid should not be more than $1,000'})
         } else {
             setSubmitProcessing(true)
 
@@ -91,7 +95,7 @@ const FastUpdateBlock = ({
                     action: actionType,
                     value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
                 }
-            })
+            }, () => setSubmitProcessing(false), () => setSubmitProcessing(false))
         }
     }
 
@@ -184,7 +188,7 @@ const FastUpdateBlock = ({
                 </button>
             </form>
 
-            <button className={'btn icon close'} onClick={onClose}>
+            <button className={`btn icon close ${submitProcessing ? 'disabled' : ''}`} onClick={onClose}>
                 <SVG id={'close-window-icon'}/>
             </button>
 
@@ -214,9 +218,9 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
         return (<DatePicker
             format={'DD MMM YYYY'}
             showToday={false}
+            allowClear={false}
             disabledDate={(date) => disabledStartDate(date, undefined)}
             value={value && value !== 'null' ? moment(value) : undefined}
-            allowClear={false}
             placeholder={value === 'null' ? 'No end date' : 'Select date'}
             onChange={(date) => onChangeValue(dateFormatting(date))}
             open={visibleDatePopup}

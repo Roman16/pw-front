@@ -82,7 +82,7 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                     <div className="actions">
                         <button disabled={disabled} className={'btn default p15 add'}>
                             <SVG id={'plus-icon'}/>
-                            Add Keyword
+                            Add Keywords
                         </button>
                     </div>
                 </form>
@@ -90,7 +90,8 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                 <div className="col added-keywords">
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
-                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>
+                        {keywords.length > 0 &&
+                        <button disabled={disabled} onClick={clearKeywordsListHandler}>Remove All</button>}
                     </div>
 
                     <div className="keywords-list">
@@ -116,27 +117,20 @@ const KeywordTargetingsList = ({keywords, onUpdate, disabled, withMatchType}) =>
                                     </div>
 
                                     {withMatchType && <div className="type">
-                                        {keyword.type === 'exact' ? 'Negative Exact' : 'Negative Phrase'}
+                                        {keyword.type === 'exact' ? 'Exact' : 'Phrase'}
                                     </div>}
 
                                     <div className="value">
                                         <InputCurrency disabled={disabled}/>
                                     </div>
 
-                                    <Popconfirm
-                                        title="Are you sure to delete this keyword?"
-                                        onConfirm={() => removeKeywordHandler(index)}
-                                        getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
-                                        okButtonProps={{className: 'default'}}
-                                        cancelButtonProps={{className: 'white'}}
-                                        placement="topRight"
-                                        okText="Yes"
-                                        cancelText="No"
+
+                                    <button
+                                        className={'btn icon'}
+                                        onClick={() => removeKeywordHandler(index)}
                                     >
-                                        <button className={'btn icon'}>
-                                            <SVG id={'remove-filter-icon'}/>
-                                        </button>
-                                    </Popconfirm>
+                                        <SVG id={'remove-filter-icon'}/>
+                                    </button>
                                 </li>
                             ))}
                         </ul>
