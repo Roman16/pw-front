@@ -109,7 +109,6 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
             filter: true,
             fastUpdating: true,
             editType: 'currency',
-            disableField: () => true
         },
         impressionsColumn,
         clicksColumn,
