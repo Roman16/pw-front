@@ -47,10 +47,6 @@ const Analytics = (props) => {
             setState(queryParams)
         }
 
-        history.listen((location, action) => {
-            console.log(location)
-        })
-
         window.addEventListener('popstate', function (event) {
             const queryParams = queryString.parse(event.target.location.search)
             if (queryParams.isParent) delete queryParams.isParent

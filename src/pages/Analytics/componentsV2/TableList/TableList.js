@@ -44,7 +44,8 @@ const TableList = ({
                        showRowSelection,
                        rowKey,
                        onUpdateField,
-                       onUpdateColumn
+                       onUpdateColumn,
+                       disabledRow
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -237,7 +238,7 @@ const TableList = ({
                     {...showRowSelection && {rowSelection: rowSelection}}
                     selectedAll={selectedAllRows}
                     selectedRows={selectedRows}
-
+                    disabledRow={disabledRow}
                     onUpdateField={onUpdateField}
                 />
 

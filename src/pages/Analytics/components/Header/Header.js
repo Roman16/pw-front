@@ -47,12 +47,6 @@ const Header = ({location}) => {
         }
     }
 
-    const goToDefaultPage = () => {
-        dispatch(analyticsActions.setMainState(undefined))
-        dispatch(analyticsActions.setLocation('products'))
-        history.push('/analytics/products')
-    }
-
     useEffect(() => {
         if (mainState.name) {
             setStateName(mainState.name)
@@ -185,7 +179,7 @@ const Header = ({location}) => {
 
     return (
         <section className={`analytics-header  ${visibleNavigation ? 'visible' : 'hidden'}`}>
-            <div className="title" onClick={goToDefaultPage}>
+            <div className="title" onClick={() => setMainState(undefined, '/analytics/products/regular')}>
                 <SVG id={'analytics-icon'}/>
                 <h1>Analytics</h1>
             </div>
