@@ -165,6 +165,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                             format={'MMM DD, YYYY'}
                             disabledDate={data => disabledEndDate(data, createData.startDate)}
                             dropdownClassName={'dropdown-with-timezone'}
+                            defaultPickerValue={(createData.endDate === 'null' || !createData.endDate) && moment.max([moment(createData.startDate), moment()]).add(1, 'month').startOf('month')}
                             renderExtraFooter={() => <>
                                 <p>America/Los_Angeles</p>
                             </>}

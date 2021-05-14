@@ -1,17 +1,17 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Input, Spin, Switch, Tooltip} from 'antd'
+import {Checkbox, Input, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
-import $ from "jquery"
-import moment from "moment"
+import moment from 'moment-timezone'
 import DatePicker from "../DatePicker/DatePicker"
 import InputCurrency from "../Inputs/InputCurrency"
-import {dateFormatting} from "../../utils/dateFormatting"
+import {dateFormatting, dateRequestFormat} from "../../utils/dateFormatting"
 import {round} from "../../utils/round"
 import {
     disabledEndDate,
     disabledStartDate
 } from "../../pages/Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const CustomTable = ({
                          columns,
@@ -235,7 +235,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? dateFormatting(newValue) : 'null' : newValue, onClose, () => setProcessing(false))
+        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, () => setProcessing(false))
     }
 
 
@@ -298,12 +298,14 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
                 {visibleEditableWindow && <DatePicker
                     value={newValue && newValue !== 'null' ? moment(newValue) : undefined}
-                    format={'DD MMM YYYY'}
                     open={visibleEditableWindow}
                     showToday={false}
+                    allowClear={false}
                     className={`editable-date-picker ${newValue === 'null' ? 'no-date' : ''}`}
                     dropdownClassName={'edit-field-picker'}
-                    onChange={value => setNewValue(value)}
+                    onChange={(date) => setNewValue(dateRequestFormat(date))}
+                    format={'DD MMM YYYY'}
+                    locale={locale}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
                     disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
                     defaultPickerValue={column === 'endDate' && (newValue === null || !newValue) && moment.max([moment(item.startDate), moment()]).add(1, 'month').startOf('month')}
