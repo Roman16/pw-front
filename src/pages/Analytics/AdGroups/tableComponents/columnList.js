@@ -20,6 +20,7 @@ import {
     renderNumberField,
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
+import {history} from "../../../../utils/history"
 
 export const columnList = (setStateHandler, selectedCampaign) => ([
         {
@@ -39,20 +40,22 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             locked: true,
             search: true,
             editType: 'text',
+            redirectLink: (item) => {
+                history.push(`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`)
+                setStateHandler('products', {
+                    name: {
+                        campaignName: item.campaignName,
+                        adGroupName: item.name
+                    }, campaignId: item.campaignId, adGroupId: item.adGroupId
+                })
+            },
             render: (adGroup, item) => (
-                <Link
-                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                <div
                     title={item.name}
                     className={'state-link'}
-                    onClick={() => setStateHandler('products', {
-                        name: {
-                            campaignName: item.campaignName,
-                            adGroupName: item.name
-                        }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                    })}
                 >
                     {adGroup}
-                </Link>
+                </div>
             )
         },
         ...selectedCampaign ? [] : [{

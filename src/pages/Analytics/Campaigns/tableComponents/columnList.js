@@ -23,6 +23,7 @@ import {Switch} from "antd"
 import moment from "moment"
 import tz from 'moment-timezone'
 import {round} from "../../../../utils/round"
+import {history} from "../../../../utils/history"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -43,20 +44,21 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             locked: true,
             search: true,
             editType: 'text',
-            render: (campaign, item) => (<Link
-                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+            redirectLink: (item) => {
+                history.push(`/analytics/ad-groups?campaignId=${item.campaignId}`)
+
+                setStateHandler('ad-groups', {
+                    name: {campaignName: item.name},
+                    campaignId: item.campaignId
+                })
+                setStateDetails(item)
+            },
+            render: (campaign) => (<div
                 className={'state-link'}
-                onClick={() => {
-                    setStateHandler('ad-groups', {
-                        name: {campaignName: item.name},
-                        campaignId: item.campaignId
-                    })
-                    setStateDetails(item)
-                }}
                 title={campaign}
             >
                 {campaign}
-            </Link>)
+            </div>)
         },
         {
             ...statusColumn,
@@ -107,7 +109,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             fastUpdating: true,
             editType: 'currency',
             render: (budget, item) => {
-                const text = budget ? `$${ round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
+                const text = budget ? `$${round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
                 return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
             }
         },

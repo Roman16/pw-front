@@ -12,6 +12,7 @@ import {
     disabledStartDate
 } from "../../pages/Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import locale from 'antd/lib/locale/en_US.js.map'
+import {Link} from "react-router-dom"
 
 const CustomTable = ({
                          columns,
@@ -195,6 +196,7 @@ const CustomTable = ({
                                                     type={item.editType}
                                                     value={report[item.key]}
                                                     column={item.dataIndex}
+                                                    columnInfo={item}
                                                     onUpdateField={onUpdateField}
                                                     render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
                                                     disabled={(report.state && report.state === 'archived') || isDisabledRow || (item.disableField && (item.disableField(report[item.key], report) || false))}
@@ -221,7 +223,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField, render, disabled}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -281,7 +283,9 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         }
     }, [visibleEditableWindow])
 
-    const openEditWindow = () => {
+    const openEditWindow = (e) => {
+        e.stopPropagation()
+
         if (!disabled) {
             setVisibleEditableWindow(prevState => !prevState)
         }
@@ -347,7 +351,10 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         </div>)
     } else if (type === 'text') {
         return <div className={''} ref={wrapperRef}>
-            <div className={`field-value text ${disabled ? 'disabled' : ''}`}>
+            <div
+                onClick={() => columnInfo.redirectLink(item)}
+                className={`field-value text ${disabled ? 'disabled' : ''}`}
+            >
                 {render ? render() : value}
 
                 {!disabled && <i className={'edit'} onClick={openEditWindow}><SVG id={'edit-pen-icon'}/></i>}

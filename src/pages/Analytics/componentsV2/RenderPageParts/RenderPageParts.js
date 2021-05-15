@@ -122,6 +122,9 @@ const RenderPageParts = (props) => {
         if (field === 'calculatedBudget' && value < 1) {
             notification.error({title: 'Campaign budget should be at least $1.00'})
             return false
+        } else if (field === 'calculatedBudget' && value > 1000000) {
+            notification.error({title: 'Campaign budget should not be more than $1,000,000'})
+            return false
         } else if (field === 'calculatedBid' && value < 0.02) {
             notification.error({title: 'Targeting bid should be at least $0.02'})
             return false
@@ -143,6 +146,13 @@ const RenderPageParts = (props) => {
                     ...location === 'targetings' && {entityType: item.entityType}
                 })
 
+                updateResponseHandler(res)
+
+                if (res.result.failed > 0) {
+                    error()
+                    return
+                }
+
                 setPageData({
                     ...pageData,
                     table: {
@@ -154,8 +164,6 @@ const RenderPageParts = (props) => {
                         })]
                     }
                 })
-
-                updateResponseHandler(res)
                 success()
             } catch (e) {
                 console.log(e)
