@@ -6,12 +6,13 @@ import './FastUpdateBlock.less'
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import {useSelector} from "react-redux"
-import moment from "moment"
-import {dateFormatting} from "../../../../../utils/dateFormatting"
+import moment from 'moment-timezone'
+import {dateFormatting, dateRequestFormat} from "../../../../../utils/dateFormatting"
 import ConfirmWindow from "./ConfirmWindow"
 import {round} from "../../../../../utils/round"
 import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {notification} from "../../../../../components/Notification"
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const Option = Select.Option
 
@@ -220,10 +221,11 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
             showToday={false}
             allowClear={false}
             disabledDate={(date) => disabledStartDate(date, undefined)}
-            value={value && value !== 'null' ? moment(value) : undefined}
+            value={value && value !== 'null' ? moment(value).tz('America/Los_Angeles') : undefined}
             placeholder={value === 'null' ? 'No end date' : 'Select date'}
-            onChange={(date) => onChangeValue(dateFormatting(date))}
+            onChange={(date) => onChangeValue(dateRequestFormat(date))}
             open={visibleDatePopup}
+            locale={locale}
             onOpenChange={(value) => setVisibleDatePopup(value)}
             dropdownClassName={`dropdown-with-timezone ${selectedColumn === 'endDate' ? 'with-clear' : ''}`}
             className={value === 'null' && 'no-date'}

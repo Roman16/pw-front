@@ -295,13 +295,13 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         return (<div ref={wrapperRef}>
 
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
-                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+                    {value ? `${moment(value).tz('America/Los_Angeles').format('DD MMM YYYY')}` : 'No end date'}
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
 
                 {visibleEditableWindow && <DatePicker
-                    value={newValue && newValue !== 'null' ? moment(newValue) : undefined}
+                    value={newValue && newValue !== 'null' ? moment(newValue).tz('America/Los_Angeles') : undefined}
                     open={visibleEditableWindow}
                     showToday={false}
                     allowClear={false}
@@ -311,7 +311,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     format={'DD MMM YYYY'}
                     locale={locale}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
-                    disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
+                    disabledDate={(date) => column === 'endDate' ? disabledEndDate(date, item.startDate) : disabledStartDate(date, item.endDate)}
                     defaultPickerValue={column === 'endDate' && (newValue === null || !newValue) && moment.max([moment(item.startDate), moment()]).add(1, 'month').startOf('month')}
                     renderExtraFooter={() => <>
                         {column === 'endDate' && (newValue && newValue !== 'null') &&

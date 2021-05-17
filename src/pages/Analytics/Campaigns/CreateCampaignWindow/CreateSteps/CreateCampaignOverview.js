@@ -1,5 +1,5 @@
 import React from "react"
-import moment from "moment"
+import moment from 'moment-timezone'
 import {numberMask} from "../../../../../utils/numberMask"
 import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
@@ -40,12 +40,12 @@ const CreateCampaignOverview = ({createData}) => {
         startDate: {
             title: 'Start',
             fieldKey: 'startDate',
-            render: value => value && moment(value).format('MMM DD, YYYY')
+            render: value => value && moment(value).tz('America/Los_Angeles').format('MMM DD, YYYY')
         },
         endDate: {
             title: 'End',
             fieldKey: 'endDate',
-            render: value => value ? moment(value).format('MMM DD, YYYY') : 'No end date'
+            render: value => value ? moment(value).tz('America/Los_Angeles').format('MMM DD, YYYY') : 'No end date'
         },
         dailyBudget: {
             title: 'Daily Budget',

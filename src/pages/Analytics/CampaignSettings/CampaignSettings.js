@@ -11,7 +11,7 @@ import CustomSelect from "../../../components/Select/Select"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {round} from "../../../utils/round"
 import {notification} from "../../../components/Notification"
-import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import {disabledEndDate, disabledStartDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {dateFormatting, dateRequestFormat} from "../../../utils/dateFormatting"
 import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageParts"
 import {Prompt} from "react-router-dom"
@@ -306,16 +306,16 @@ const CampaignSettings = () => {
                             format={'MMM DD, YYYY'}
                             locale={locale}
                             dropdownClassName={`dropdown-with-timezone`}
+                            disabledDate={date => disabledStartDate(date, settingParams.endDate)}
                             renderExtraFooter={() => <>
                                 <p className={'time-zone'}>America/Los_Angeles</p>
                             </>}
                         />
 
                         <DatePicker
-                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate) : undefined}
+                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
                             placeholder={'No end date'}
                             disabled={settingParams.state === 'archived'}
-                            disabledDate={data => disabledEndDate(data, settingParams.startDate)}
                             showToday={false}
                             allowClear={false}
                             onChange={(date) => changeSettingsHandler({endDate: dateRequestFormat(date)})}
@@ -326,6 +326,7 @@ const CampaignSettings = () => {
                             dropdownClassName={`dropdown-with-timezone with-clear`}
                             className={settingParams.endDate === 'null' && 'no-date'}
                             defaultPickerValue={(settingParams.endDate === 'null' || !settingParams.endDate) && moment.max([moment(settingParams.startDate), moment()]).add(1, 'month').startOf('month')}
+                            disabledDate={date => disabledEndDate(date, settingParams.startDate)}
                             renderExtraFooter={() => <>
                                 <button className={'btn clear-date'} onClick={() => {
                                     setVisibleDatePopup(false)
