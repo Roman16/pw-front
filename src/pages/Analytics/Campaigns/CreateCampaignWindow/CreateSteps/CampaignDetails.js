@@ -15,7 +15,7 @@ const Option = Select.Option
 export const disabledStartDate = (current, endDate) => {
     if (current) {
         if (endDate) {
-            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day')) || moment(current).tz('America/Los_Angeles').endOf('day') > moment(endDate).endOf('day')
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day')) || moment(current).endOf('day') > moment(endDate).endOf('day')
         } else {
             return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day'))
         }
@@ -24,7 +24,7 @@ export const disabledStartDate = (current, endDate) => {
 export const disabledEndDate = (current, startDate) => {
     if (current) {
         if (moment().tz('America/Los_Angeles').endOf('day') > moment(startDate).endOf('day')) return disabledStartDate(current, null)
-        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles').endOf('day'))
+        else return moment(current).endOf('day').isBefore(moment(startDate).endOf('day'))
     }
 }
 

@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {DatePicker as AntDatePicker} from 'antd'
 // import moment from 'moment'
 import moment from 'moment-timezone'
-import locale from 'antd/lib/locale/en_US.js.map'
 
 import './DatePicker.less'
 import {SVG} from "../../utils/icons"
@@ -21,11 +20,11 @@ class DatePicker extends Component {
 
 
     disabledDate = current => {
-        return current && moment(current) > moment.tz('America/Los_Angeles').endOf('day')
+        return current && moment(current).endOf('day') > moment().tz('America/Los_Angeles').endOf('day')
     }
 
     render() {
-        const {defaultValue} = this.props
+        const {value, locale} = this.props
 
         return (
             <div className="DatePicker">
@@ -65,7 +64,7 @@ class DatePicker extends Component {
                     suffixIcon={<SVG id={'select-icon'}/>}
                     onChange={this.handleChange}
                     disabledDate={this.disabledDate}
-                    defaultValue={defaultValue}
+                    value={value}
                     getCalendarContainer={(trigger) => trigger.parentNode}
                     getPopupContainer={trigger => trigger.parentNode}
                 />
