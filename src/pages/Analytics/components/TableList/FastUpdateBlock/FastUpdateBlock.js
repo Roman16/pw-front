@@ -196,6 +196,7 @@ const FastUpdateBlock = ({
             <ConfirmWindow
                 visible={visibleConfirmWindow}
                 count={selectedAll ? totalSize : selectedRows.length}
+                location={location}
 
                 onCancel={() => setVisibleConfirmWindow(false)}
                 onSubmit={(e) => submitHandler(e, true)}

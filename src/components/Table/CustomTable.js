@@ -299,7 +299,6 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
-
                 {visibleEditableWindow && <DatePicker
                     value={newValue && newValue !== 'null' ? moment(newValue).tz('America/Los_Angeles') : undefined}
                     open={visibleEditableWindow}

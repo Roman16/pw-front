@@ -14,15 +14,17 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
+const defaultState = {
+    targets: [],
+    keywords: [],
+    advertisingType: undefined,
+    campaignId: undefined,
+    adGroupId: undefined,
+    calculatedBid: undefined
+}
+
 const CreateTargetingsWindow = ({onReloadList}) => {
-    const [createData, setCreateData] = useState({
-            targets: [],
-            keywords: [],
-            advertisingType: undefined,
-            campaignId: undefined,
-            adGroupId: undefined,
-            calculatedBid: undefined
-        }),
+    const [createData, setCreateData] = useState({...defaultState}),
         [createProcessing, setCreateProcessing] = useState(false),
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
@@ -69,15 +71,25 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                     ))
                 }
             )
-            const success = res.result.success
+            const success = res.result.success,
+                failed = res.result.failed,
+                notApplicable = res.result.notApplicable
+
+
+            if (failed > 0 || notApplicable > 0) {
+                notification.error({title: `${failed + notApplicable} ${failed + notApplicable === 1 ? 'entity' : 'entities'} failed to create`})
+            }
 
             if (success > 0) {
                 notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
-
-                dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
                 onReloadList()
-
             }
+
+            if (failed + notApplicable === 0) {
+                dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
+                setCreateData({...defaultState})
+            }
+
 
             setCreateProcessing(false)
         } catch (e) {
@@ -197,7 +209,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
             handleCancel={closeWindowHandler}
         >
             <WindowHeader
-                title={'Create KeywordsList'}
+                title={'Create Targetings'}
                 onClose={closeWindowHandler}
             />
 
