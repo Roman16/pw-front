@@ -35,7 +35,8 @@ const CreateTargetingsWindow = ({onReloadList}) => {
     const dispatch = useDispatch()
 
     const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.targetings),
-        mainState = useSelector(state => state.analytics.mainState)
+        mainState = useSelector(state => state.analytics.mainState),
+        stateDetails = useSelector(state => state.analytics.stateDetails)
 
     const closeWindowHandler = () => {
         dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
@@ -58,8 +59,8 @@ const CreateTargetingsWindow = ({onReloadList}) => {
             const res = await analyticsServices.bulkCreate('targetings', {
                     targetings: createData[`${targetingType}`].map(i => ({
                             advertisingType: createData.advertisingType,
-                            campaignId: createData.campaignId,
-                            adGroupId: createData.adGroupId,
+                            campaignId: createData.campaignId || mainState.campaignId,
+                            adGroupId: createData.adGroupId || mainState.adGroupId,
                             state: 'enabled',
                             entityType: targetingType === 'keywords' ? 'keyword' : 'target',
                             calculatedBid: i.calculatedBid,
@@ -97,7 +98,6 @@ const CreateTargetingsWindow = ({onReloadList}) => {
             setCreateProcessing(false)
         }
     }
-
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         try {
@@ -158,16 +158,18 @@ const CreateTargetingsWindow = ({onReloadList}) => {
     }
 
     useEffect(() => {
-        setCampaigns([])
-        setAdGroups([])
-        setTargetingType(undefined)
-        setCreateData(prevState => ({
-            ...prevState,
-            campaignId: undefined,
-            adGroupId: undefined
-        }))
+        if (!mainState.campaignId) {
+            setCampaigns([])
+            setAdGroups([])
+            setTargetingType(undefined)
+            setCreateData(prevState => ({
+                ...prevState,
+                campaignId: undefined,
+                adGroupId: undefined
+            }))
 
-        if (createData.advertisingType) getCampaigns(createData.advertisingType)
+            if (createData.advertisingType) getCampaigns(createData.advertisingType)
+        }
     }, [createData.advertisingType])
 
     useEffect(() => {
@@ -196,11 +198,19 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                 adGroupId: mainState.adGroupId
             })
         }
+
         if (mainState.campaignId) setCreateData({
             ...createData,
-            campaignId: mainState.campaignId
+            campaignId: mainState.campaignId,
         })
     }, [mainState])
+
+    useEffect(() => {
+        if (mainState.campaignId) setCreateData({
+            ...createData,
+            advertisingType: stateDetails.advertisingType
+        })
+    }, [stateDetails])
 
     return (<ModalWindow
             className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
