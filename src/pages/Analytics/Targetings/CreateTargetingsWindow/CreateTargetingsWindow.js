@@ -29,7 +29,8 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
-        [targetingType, setTargetingType] = useState()
+        [targetingType, setTargetingType] = useState(),
+        [disabledTargetingType, setDisabledTargetingType] = useState(true)
 
 
     const dispatch = useDispatch()
@@ -67,7 +68,12 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                             ...targetingType === 'keywords' ? {
                                 calculatedTargetingText: i.keywordText,
                                 calculatedTargetingMatchType: i.matchType
-                            } : {}
+                            } : {
+                                expression: {
+                                    "type": "asinSameAs",
+                                    "value": i.text
+                                }
+                            }
                         }
                     ))
                 }
@@ -139,7 +145,10 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         try {
             const res = await analyticsServices.fetchAdGroupDetails(id)
 
-            setTargetingType(res.result.adGroupTargetingType)
+            const type = res.result.adGroupTargetingType
+
+            setTargetingType(type === 'any' ? 'keywords' : type)
+            setDisabledTargetingType(type !== 'any')
         } catch (e) {
             console.log(e)
         }
@@ -186,7 +195,6 @@ const CreateTargetingsWindow = ({onReloadList}) => {
     useEffect(() => {
         if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
     }, [createData.adGroupId])
-
 
     useEffect(() => {
         if (mainState.adGroupId) {
@@ -306,6 +314,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                     <RenderTargetingsDetails
                         createData={createData}
                         targetingType={targetingType}
+                        disabledTargetingType={disabledTargetingType}
                         onUpdate={changeCreateDataHandler}
                         onValidate={targetingsValidation}
                     />
@@ -316,7 +325,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={!targetingType || (targetingType && createData[targetingType].some(i => !i.calculatedBid)) || (targetingType && createData[targetingType].length === 0) || createProcessing}
+                    disabled={!targetingType || (targetingType && createData[targetingType].length === 0) || createProcessing}
                 >
                     Create Targetings
                     {createProcessing && <Spin size={'small'}/>}
@@ -411,13 +420,13 @@ export const InfinitySelect = React.memo((props) => {
     )
 })
 
-const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate}) => {
+const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate, disabledTargetingType}) => {
     return (<div className="targetings-details-step">
         <div className={`row `}>
             <div className="col">
                 <Radio.Group
                     value={targetingType}
-                    disabled={targetingType !== 'any'}
+                    disabled={disabledTargetingType}
                     onChange={({target: {value}}) => onUpdate({targetingType: value})}
                 >
                     <h4>Targeting type</h4>

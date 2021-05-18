@@ -19,12 +19,10 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
     const addKeywordsHandler = async (e) => {
         e.preventDefault()
 
-        setValidationProcessing(true)
-
         try {
             const keywordsList = [...newKeyword.split('\n')
-                .filter(item => item !== '')
                 .map(i => i.trim())
+                .filter(item => item !== '')
                 .map(i => i.replace(/ +/g, ' '))
                 .map(item => ({
                     text: item,
@@ -34,6 +32,10 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
             ]
 
             allKeywords = [...keywordsList.map(i => ({...i}))]
+
+            if(keywordsList.length === 0) return
+
+            setValidationProcessing(true)
 
             const res = await onValidate({
                 entityType: 'asins',

@@ -40,15 +40,13 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             locked: true,
             search: true,
             editType: 'text',
-            redirectLink: (item) => {
-                history.push(`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`)
-                setStateHandler('products', {
-                    name: {
-                        campaignName: item.campaignName,
-                        adGroupName: item.name
-                    }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                })
-            },
+            clickEvent: (item) => setStateHandler('products', {
+                name: {
+                    campaignName: item.campaignName,
+                    adGroupName: item.name
+                }, campaignId: item.campaignId, adGroupId: item.adGroupId
+            }),
+            redirectLink: (item) => `/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
             render: (adGroup, item) => (
                 <div
                     title={item.name}

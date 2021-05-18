@@ -44,15 +44,14 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             locked: true,
             search: true,
             editType: 'text',
-            redirectLink: (item) => {
-                history.push(`/analytics/ad-groups?campaignId=${item.campaignId}`)
-
+            clickEvent: (item) => {
                 setStateHandler('ad-groups', {
                     name: {campaignName: item.name},
                     campaignId: item.campaignId
                 })
                 setStateDetails(item)
             },
+            redirectLink: (item) => `/analytics/ad-groups?campaignId=${item.campaignId}`,
             render: (campaign) => (<div
                 className={'state-link'}
                 title={campaign}

@@ -7,6 +7,7 @@ import {history} from "../../../../utils/history"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import queryString from "query-string"
+import {Link} from "react-router-dom"
 
 let newState = undefined
 
@@ -179,10 +180,16 @@ const Header = ({location}) => {
 
     return (
         <section className={`analytics-header  ${visibleNavigation ? 'visible' : 'hidden'}`}>
-            <div className="title" onClick={() => setMainState(undefined, '/analytics/products/regular')}>
+            <Link to={'/analytics/products/regular'} className="title"
+                  onClick={() => {
+                      newState = {
+                          state: undefined,
+                          location: 'products'
+                      }
+                  }}>
                 <SVG id={'analytics-icon'}/>
                 <h1>Analytics</h1>
-            </div>
+            </Link>
 
 
             <div className="nav">

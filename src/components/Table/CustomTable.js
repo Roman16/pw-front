@@ -285,6 +285,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const openEditWindow = (e) => {
         e.stopPropagation()
+        e.preventDefault()
 
         if (!disabled) {
             setVisibleEditableWindow(prevState => !prevState)
@@ -350,14 +351,15 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         </div>)
     } else if (type === 'text') {
         return <div className={''} ref={wrapperRef}>
-            <div
-                onClick={() => columnInfo.redirectLink(item)}
+            <Link
+                to={columnInfo.redirectLink(item)}
+                onClick={() => columnInfo.clickEvent(item)}
                 className={`field-value text ${disabled ? 'disabled' : ''}`}
             >
                 {render ? render() : value}
 
                 {!disabled && <i className={'edit'} onClick={openEditWindow}><SVG id={'edit-pen-icon'}/></i>}
-            </div>
+            </Link>
 
             {visibleEditableWindow && <div className="editable-window text">
                 <div className="form-group">
