@@ -14,16 +14,16 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const CreateTargetingsWindow = ({onReloadList}) => {
-    const defaultState = {
-        targets: [],
-        keywords: [],
-        advertisingType: undefined,
-        campaignId: undefined,
-        adGroupId: undefined,
-        calculatedBid: undefined
-    }
+const defaultState = {
+    targets: [],
+    keywords: [],
+    advertisingType: undefined,
+    campaignId: undefined,
+    adGroupId: undefined,
+    calculatedBid: undefined
+}
 
+const CreateTargetingsWindow = ({onReloadList}) => {
     const [createData, setCreateData] = useState({...defaultState}),
         [createProcessing, setCreateProcessing] = useState(false),
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
@@ -69,10 +69,11 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                                 calculatedTargetingText: i.keywordText,
                                 calculatedTargetingMatchType: i.matchType
                             } : {
-                                expression: {
+                                expressionType: 'manual',
+                                expression: [{
                                     "type": "asinSameAs",
                                     "value": i.text
-                                }
+                                }]
                             }
                         }
                     ))
@@ -101,11 +102,14 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                         adGroupId: mainState.adGroupId,
                         advertisingType: stateDetails.advertisingType
                     })
+
+                    setDisabledTargetingType(true)
                 } else if (mainState.campaignId) {
                     setCreateData({
                         ...defaultState,
                         campaignId: mainState.campaignId,
-                        advertisingType: stateDetails.advertisingType
+                        advertisingType: stateDetails.advertisingType,
+                        adGroupId: undefined
                     })
                     setTargetingType(undefined)
                 } else {
@@ -196,8 +200,9 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         if (mainState.campaignId) setCreateData({
             ...createData,
             campaignId: mainState.campaignId,
+            adGroupId: undefined
         })
-    }, [mainState.adGroupId, mainState.campaignId, visibleWindow])
+    }, [mainState.adGroupId, mainState.campaignId])
 
     useEffect(() => {
         if (mainState.campaignId) setCreateData({
