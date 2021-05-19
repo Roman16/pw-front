@@ -1,5 +1,11 @@
 import React from "react"
-import {adGroupColumn, campaignColumn, keywordPTColumn, matchTypeColumn} from "../../components/TableList/tableColumns"
+import {
+    adGroupColumn,
+    campaignColumn,
+    keywordPTColumn,
+    matchTypeColumn,
+    statusColumn
+} from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 
 export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
@@ -46,7 +52,8 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
                 </Link>
             )
         }] : [],
-        matchTypeColumn
+        matchTypeColumn,
+        statusColumn
     ]
 )
 

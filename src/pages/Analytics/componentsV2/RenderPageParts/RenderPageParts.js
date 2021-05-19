@@ -58,7 +58,9 @@ const RenderPageParts = (props) => {
         showRowSelection,
         productType,
         showFilters = true,
-        disabledRow
+        disabledRow,
+        dateRange,
+        showOptions
     } = props
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
@@ -458,6 +460,8 @@ const RenderPageParts = (props) => {
                 fetching={tableFetchingStatus}
                 tableRequestParams={tableRequestParams}
                 showFilters={showFilters}
+                showOptions={showOptions}
+                dateRange={dateRange}
 
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}

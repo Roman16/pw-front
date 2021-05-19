@@ -4,6 +4,7 @@ import {Radio} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {Spin} from "antd/es"
+import _ from "lodash"
 
 let allKeywords = []
 
@@ -20,7 +21,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
         e.preventDefault()
 
         try {
-            const keywordsList = [...newKeyword.split('\n')
+            let keywordsList = [...newKeyword.split('\n')
                 .map(i => i.trim())
                 .filter(item => item !== '')
                 .map(i => i.replace(/ +/g, ' '))
@@ -31,39 +32,49 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                 }))
             ]
 
+            keywordsList = uniqueArrOfObj([...keywords, ...keywordsList].filter(item => item.type === 'asins'), 'text')
+
+            keywordsList = uniqueArrOfObj([...keywordsList], 'text').filter(item => !_.find(keywords, {
+                text: item.text
+            }))
+
+
             allKeywords = [...keywordsList.map(i => ({...i}))]
 
-            if(keywordsList.length === 0) return
+            if (keywordsList.length === 0) {
+                setNewKeyword('')
+                return
+            } else {
+                setValidationProcessing(true)
 
-            setValidationProcessing(true)
-
-            const res = await onValidate({
-                entityType: 'asins',
-                asins: [...keywordsList.map(i => i.text)]
-            })
-
-            setInvalidDetails(res.result)
-
-            let validKeywords = [],
-                invalidKeywords = []
-
-            if (res.result.invalidCount > 0) {
-                res.result.invalidDetails.forEach(i => {
-                    invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                const res = await onValidate({
+                    entityType: 'asins',
+                    asins: [...keywordsList.map(i => i.text)]
                 })
-                res.result.invalidDetails.forEach(i => {
-                    keywordsList.splice(i.entityRequestIndex, 1)
-                })
+
+                setInvalidDetails(res.result)
+
+                let validKeywords = [],
+                    invalidKeywords = []
+
+                if (res.result.invalidCount > 0) {
+                    res.result.invalidDetails.forEach(i => {
+                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                    })
+                    res.result.invalidDetails.forEach(i => {
+                        keywordsList.splice(i.entityRequestIndex, 1)
+                    })
+                }
+
+                validKeywords = keywordsList
+
+                onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'asins'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'categories'), 'text')])
+
+                setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
+                setValidKeywordsCount(validKeywords.length)
+
+                setNewKeyword(invalidKeywords.map(i => i.text).join('\n'))
             }
-
-            validKeywords = keywordsList
-
-            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'asins'), 'text'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.type === 'categories'), 'text')])
-
-            setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
-            setValidKeywordsCount(validKeywords.length)
-
-            setNewKeyword(invalidKeywords.map(i => i.text).join('\n'))
         } catch (e) {
             console.log(e)
         }
@@ -90,11 +101,16 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
         let csv = 'Some ASINs failed validation and couldn\'t be added. Here is why:\n'
 
         csv += "\n"
+        csv += "ASIN,"
+        csv += "Failure code,"
+        csv += "Reason for failure,"
+        csv += "Suggested value"
+        csv += "\n"
 
         invalidDetails.invalidDetails.forEach((row, index) => {
-            csv += `"${allKeywords[row.entityRequestIndex].text}", `
-            csv += `"${row.code}", `
-            csv += `"${row.details}"${row.correctedValue ? ', ' : ''}`
+            csv += `"${allKeywords[row.entityRequestIndex].text}",`
+            csv += `"${row.code}",`
+            csv += `"${row.details}",`
             csv += row.correctedValue ? `"${row.correctedValue}"` : ''
             csv += "\n"
         })
@@ -152,7 +168,9 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
 
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
-                            <SVG id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} ASINs weren't
+                            <SVG
+                                id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} ASINs
+                            weren't
                             added. <br/>
                             <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}

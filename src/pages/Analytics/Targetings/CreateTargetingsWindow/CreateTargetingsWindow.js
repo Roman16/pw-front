@@ -14,16 +14,16 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const defaultState = {
-    targets: [],
-    keywords: [],
-    advertisingType: undefined,
-    campaignId: undefined,
-    adGroupId: undefined,
-    calculatedBid: undefined
-}
-
 const CreateTargetingsWindow = ({onReloadList}) => {
+    const defaultState = {
+        targets: [],
+        keywords: [],
+        advertisingType: undefined,
+        campaignId: undefined,
+        adGroupId: undefined,
+        calculatedBid: undefined
+    }
+
     const [createData, setCreateData] = useState({...defaultState}),
         [createProcessing, setCreateProcessing] = useState(false),
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
@@ -94,9 +94,25 @@ const CreateTargetingsWindow = ({onReloadList}) => {
 
             if (failed + notApplicable === 0) {
                 dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
-                setCreateData({...defaultState})
+                if (mainState.adGroupId) {
+                    setCreateData({
+                        ...defaultState,
+                        campaignId: mainState.campaignId,
+                        adGroupId: mainState.adGroupId,
+                        advertisingType: stateDetails.advertisingType
+                    })
+                } else if (mainState.campaignId) {
+                    setCreateData({
+                        ...defaultState,
+                        campaignId: mainState.campaignId,
+                        advertisingType: stateDetails.advertisingType
+                    })
+                    setTargetingType(undefined)
+                } else {
+                    setCreateData({...defaultState})
+                    setTargetingType(undefined)
+                }
             }
-
 
             setCreateProcessing(false)
         } catch (e) {
@@ -167,36 +183,6 @@ const CreateTargetingsWindow = ({onReloadList}) => {
     }
 
     useEffect(() => {
-        if (!mainState.campaignId) {
-            setCampaigns([])
-            setAdGroups([])
-            setTargetingType(undefined)
-            setCreateData(prevState => ({
-                ...prevState,
-                campaignId: undefined,
-                adGroupId: undefined
-            }))
-
-            if (createData.advertisingType) getCampaigns(createData.advertisingType)
-        }
-    }, [createData.advertisingType])
-
-    useEffect(() => {
-        setAdGroups([])
-        setTargetingType(undefined)
-        setCreateData(prevState => ({
-            ...prevState,
-            adGroupId: undefined
-        }))
-
-        if (createData.campaignId) getAdGroups(createData.campaignId)
-    }, [createData.campaignId])
-
-    useEffect(() => {
-        if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
-    }, [createData.adGroupId])
-
-    useEffect(() => {
         if (mainState.adGroupId) {
             getAdGroupDetails(mainState.adGroupId)
 
@@ -211,19 +197,60 @@ const CreateTargetingsWindow = ({onReloadList}) => {
             ...createData,
             campaignId: mainState.campaignId,
         })
-    }, [mainState])
+    }, [mainState.adGroupId, mainState.campaignId])
 
     useEffect(() => {
         if (mainState.campaignId) setCreateData({
             ...createData,
+            campaignId: mainState.campaignId,
             advertisingType: stateDetails.advertisingType
         })
     }, [stateDetails])
+
+    useEffect(() => {
+        if (createData.campaignId) getAdGroups(createData.campaignId)
+    }, [createData.campaignId])
+
+    const changeAdvertisingTypeHandler = value => {
+        if (!mainState.campaignId) {
+            setCampaigns([])
+            setAdGroups([])
+            setTargetingType(undefined)
+            setCreateData(prevState => ({
+                ...prevState,
+                advertisingType: value,
+                campaignId: undefined,
+                adGroupId: undefined
+            }))
+
+            getCampaigns(value)
+        }
+    }
+
+    const changeCampaignHandler = value => {
+        setAdGroups([])
+        setTargetingType(undefined)
+        setCreateData(prevState => ({
+            ...prevState,
+            campaignId: value,
+            adGroupId: undefined
+        }))
+    }
+
+    const changeAdGroupHandler = value => {
+        setCreateData(prevState => ({
+            ...prevState,
+            adGroupId: value,
+        }))
+
+        getAdGroupDetails(value)
+    }
 
     return (<ModalWindow
             className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
             visible={visibleWindow}
             footer={false}
+            destroyOnClose={true}
             handleCancel={closeWindowHandler}
         >
             <WindowHeader
@@ -241,7 +268,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                                     <CustomSelect
                                         placeholder={'Select type'}
                                         getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={(value) => changeCreateDataHandler({advertisingType: value})}
+                                        onChange={changeAdvertisingTypeHandler}
                                         value={createData.advertisingType}
                                     >
                                         <Option value={'SponsoredProducts'}>
@@ -269,7 +296,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                                     label={'Campaign'}
                                     placeholder={'Select campaign'}
                                     value={createData.campaignId}
-                                    onChange={(value) => changeCreateDataHandler({campaignId: value})}
+                                    onChange={changeCampaignHandler}
                                     disabled={!createData.advertisingType}
                                     children={campaigns}
                                     onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
@@ -291,7 +318,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                                 label={'Ad Group'}
                                 placeholder={'Select ad group'}
                                 value={createData.adGroupId}
-                                onChange={(value) => changeCreateDataHandler({adGroupId: value})}
+                                onChange={changeAdGroupHandler}
                                 disabled={!createData.campaignId}
                                 reloadPage={createData.campaignId}
                                 children={adGroups}

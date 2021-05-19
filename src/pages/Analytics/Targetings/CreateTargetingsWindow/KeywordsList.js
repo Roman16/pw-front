@@ -3,6 +3,7 @@ import {uniqueArrOfObj} from "../../../../utils/unique"
 import {Radio, Spin} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import _ from 'lodash'
 
 let allKeywords = []
 
@@ -30,40 +31,48 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                 }))
             ]
 
+            keywordsList = uniqueArrOfObj([...keywordsList], 'keywordText').filter(item => !_.find(keywords, {
+                matchType: item.matchType,
+                keywordText: item.keywordText
+            }))
+
             allKeywords = [...keywordsList.map(i => ({...i}))]
 
-            if(keywordsList.length === 0) return
+            if (keywordsList.length === 0) {
+                setNewKeyword('')
+                return
+            } else {
+                setValidationProcessing(true)
 
-            setValidationProcessing(true)
-
-            const res = await onValidate({
-                entityType: 'keywords',
-                keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
-            })
-
-            setInvalidDetails(res.result)
-
-            let validKeywords = [],
-                invalidKeywords = []
-
-            if (res.result.invalidCount > 0) {
-                res.result.invalidDetails.forEach(i => {
-                    invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                const res = await onValidate({
+                    entityType: 'keywords',
+                    keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
                 })
 
-                res.result.invalidDetails.forEach(i => {
-                    keywordsList.splice(i.entityRequestIndex, 1)
-                })
+                setInvalidDetails(res.result)
+
+                let validKeywords = [],
+                    invalidKeywords = []
+
+                if (res.result.invalidCount > 0) {
+                    res.result.invalidDetails.forEach(i => {
+                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                    })
+
+                    res.result.invalidDetails.forEach(i => {
+                        keywordsList.splice(i.entityRequestIndex, 1)
+                    })
+                }
+
+                validKeywords = keywordsList
+
+                onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText')])
+
+                setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
+                setValidKeywordsCount(validKeywords.length)
+
+                setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
             }
-
-            validKeywords = keywordsList
-
-            onUpdate([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText')])
-
-            setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
-            setValidKeywordsCount(validKeywords.length)
-
-            setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
         } catch (e) {
             console.log(e)
         }
@@ -91,11 +100,18 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
         csv += "\n"
 
+        csv += "Keyword,"
+        csv += "Match Type,"
+        csv += "Failure code,"
+        csv += "Reason for failure,"
+        csv += "Suggested value"
+        csv += "\n"
+
         invalidDetails.invalidDetails.forEach((row, index) => {
-            csv += `"${allKeywords[row.entityRequestIndex].keywordText}", `
-            csv += `"${allKeywords[row.entityRequestIndex].matchType}", `
-            csv += `"${row.code}", `
-            csv += `"${row.details}"${row.correctedValue ? ', ' : ''}`
+            csv += `"${allKeywords[row.entityRequestIndex].keywordText}",`
+            csv += `"${allKeywords[row.entityRequestIndex].matchType}",`
+            csv += `"${row.code}",`
+            csv += `"${row.details}",`
             csv += row.correctedValue ? `"${row.correctedValue}"` : ''
             csv += "\n"
         })
@@ -156,7 +172,9 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
                     <div className="actions">
                         {invalidDetails && invalidDetails.invalidCount > 0 && <p className={'invalid-targetings'}>
-                           <SVG id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} keywords weren't
+                            <SVG
+                                id={'round-information-icon'}/> {invalidDetails.invalidCount}/{invalidDetails.totalCount} keywords
+                            weren't
                             added. <br/>
                             <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}

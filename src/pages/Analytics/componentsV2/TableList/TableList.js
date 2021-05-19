@@ -30,6 +30,7 @@ const TableList = ({
                        searchField = true,
                        showTotal = true,
                        dateRange = true,
+                       showOptions = true,
                        expandedRowRender,
                        metricsData,
                        localTableOptions,
@@ -201,11 +202,11 @@ const TableList = ({
 
                     <ExpandWorkplace/>
 
-                    <TableOptions
+                    {showOptions && <TableOptions
                         options={localTableOptions}
                         onChange={onChangeTableOptions}
                         selectedRangeDate={selectedRangeDate}
-                    />
+                    />}
 
                     {dateRange && <DateRange
                         onChange={dateRangeHandler}
