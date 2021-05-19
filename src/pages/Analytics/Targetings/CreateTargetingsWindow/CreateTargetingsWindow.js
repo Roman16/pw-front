@@ -197,7 +197,7 @@ const CreateTargetingsWindow = ({onReloadList}) => {
             ...createData,
             campaignId: mainState.campaignId,
         })
-    }, [mainState.adGroupId, mainState.campaignId])
+    }, [mainState.adGroupId, mainState.campaignId, visibleWindow])
 
     useEffect(() => {
         if (mainState.campaignId) setCreateData({
