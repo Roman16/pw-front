@@ -96,7 +96,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
     }
 
     const downloadReport = () => {
-        let csv = 'Some keywords failed validation and couldn\'t be added. Here is why:\n'
+        let csv = "Some keywords failed validation and couldn't be added. Here is why:\n"
 
         csv += "\n"
 
