@@ -86,7 +86,6 @@ const RenderPageParts = (props) => {
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
-        mainState = useSelector(state => state.analytics.mainState),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
@@ -132,6 +131,12 @@ const RenderPageParts = (props) => {
             return false
         } else if (field === 'calculatedBid' && value > 1000) {
             notification.error({title: 'Targeting bid should not be more than $1,000'})
+            return false
+        } else if (field === 'defaultBid' && value < 0.02) {
+            notification.error({title: 'Ad Group bid should be at least $0.02'})
+            return false
+        } else if (field === 'defaultBid' && value > 1000) {
+            notification.error({title: 'Ad Group bid should not be more than $1,000'})
             return false
         }
 
@@ -276,7 +281,7 @@ const RenderPageParts = (props) => {
                 filtersWithState.push({
                     filterBy: 'parent_productId',
                     type: 'eq',
-                    value: mainState.productId
+                    value: queryParams.productId
                 })
             }
 
@@ -356,16 +361,19 @@ const RenderPageParts = (props) => {
             }
         }
 
+        const queryParams = queryString.parse(history.location.search)
+
+
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
                 const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
                 let filtersWithState = [
                     ...filters,
-                    ...Object.keys(mainState).map(key => ({
+                    ...Object.keys(queryParams).map(key => ({
                         filterBy: key,
                         type: 'eq',
-                        value: mainState[key]
+                        value: queryParams[key]
                     })).filter(item => !!item.value),
                     {
                         filterBy: 'datetime',
@@ -383,7 +391,7 @@ const RenderPageParts = (props) => {
                     filtersWithState.push({
                         filterBy: 'parent_productId',
                         type: 'eq',
-                        value: mainState.productId
+                        value: queryParams.productId
                     })
                 }
 
@@ -433,7 +441,7 @@ const RenderPageParts = (props) => {
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
-    }, [selectedRangeDate, filters, mainState.campaignId, mainState.productId, mainState.adGroupId, mainState.portfolioId])
+    }, [selectedRangeDate, filters, history.location.search])
 
     return (
         <>

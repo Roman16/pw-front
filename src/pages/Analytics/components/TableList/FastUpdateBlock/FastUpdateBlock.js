@@ -83,10 +83,14 @@ const FastUpdateBlock = ({
             notification.error({title: 'Campaign budget should be at least $1.00'})
         } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue > 1000000) {
             notification.error({title: 'Campaign budget should not be more than $1,000,000'})
-        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue < 0.02) {
+        } else if (selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue < 0.02) {
             notification.error({title: 'Targeting bid should be at least $0.02'})
-        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue > 1000) {
+        } else if (selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue > 1000) {
             notification.error({title: 'Targeting bid should not be more than $1,000'})
+        } else if (selectedColumn === 'defaultBid' && actionType === 'setExact' && changingValue < 0.02) {
+            notification.error({title: 'Ad Group bid should be at least $0.02'})
+        } else if (selectedColumn === 'defaultBid' && actionType === 'setExact' && changingValue > 1000) {
+            notification.error({title: 'Ad Group bid should not be more than $1,000'})
         } else {
             setSubmitProcessing(true)
 
@@ -112,7 +116,7 @@ const FastUpdateBlock = ({
         if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
             setAvailableActions(updateActions.date)
             setChangingValue(undefined)
-        } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
+        } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {
             setAvailableActions(updateActions.number)
             setChangingValue(undefined)
         } else if (selectedColumn === 'portfolioId') {
@@ -242,7 +246,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 <p className={'time-zone'}>America/Los_Angeles</p>
             </>}
         />)
-    } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
+    } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}

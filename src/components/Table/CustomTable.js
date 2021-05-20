@@ -13,6 +13,7 @@ import {
 } from "../../pages/Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import locale from 'antd/lib/locale/en_US.js.map'
 import {Link} from "react-router-dom"
+import {notification} from "../Notification"
 
 const CustomTable = ({
                          columns,
@@ -237,7 +238,22 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, () => setProcessing(false))
+
+        const stopProcessing = () => setProcessing(false)
+
+        if (type === 'text') {
+            if (columnInfo.uniqueIndex === 'adGroupName' && newValue.trim().length > 255) {
+                notification.error({title: 'Ad group name should not be longer than 255 characters'})
+                stopProcessing()
+            } else if (columnInfo.uniqueIndex === 'campaignName' && newValue.trim().length > 128) {
+                notification.error({title: 'Campaign name should not be longer than 128 characters'})
+                stopProcessing()
+            } else {
+                onUpdateField(item, column, newValue.trim(), onClose, stopProcessing)
+            }
+        } else {
+            onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, stopProcessing)
+        }
     }
 
 

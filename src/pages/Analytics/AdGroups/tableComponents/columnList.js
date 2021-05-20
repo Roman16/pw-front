@@ -35,6 +35,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             title: 'Ad Group',
             dataIndex: 'name',
             key: 'name',
+            uniqueIndex: 'adGroupName',
             width: '350px',
             sorter: true,
             locked: true,

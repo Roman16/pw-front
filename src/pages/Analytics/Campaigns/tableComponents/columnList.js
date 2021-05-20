@@ -13,17 +13,14 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    EditableField,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
-import {Switch} from "antd"
 import moment from 'moment-timezone'
 import tz from 'moment-timezone'
 import {round} from "../../../../utils/round"
-import {history} from "../../../../utils/history"
 
 
 export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
@@ -39,6 +36,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             title: 'Campaign',
             dataIndex: 'name',
             key: 'name',
+            uniqueIndex: 'campaignName',
             width: '350px',
             sorter: true,
             locked: true,
