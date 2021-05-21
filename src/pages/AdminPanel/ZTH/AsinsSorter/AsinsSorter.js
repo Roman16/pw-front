@@ -30,7 +30,6 @@ const AsinsSorter = () => {
         setFieldValue('')
     }
 
-
     const asinClickHandler = (asin, type = 'positive') => (e) => {
         e.stopPropagation()
 
@@ -148,7 +147,6 @@ const AsinsSorter = () => {
                     </li>)}
                 </ul>
             </div>
-
         </section>
     )
 }
