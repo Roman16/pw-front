@@ -56,11 +56,11 @@ const AsinsSorter = () => {
     }
 
     const copyAsins = (type) => {
-        const convertArr = (asins) => asins.map(i => `asin="${i}"`).join('\n')
+        const copy = (asins) => {navigator.clipboard.writeText(asins.map(i => `asin="${i}"`).join('\n'))}
 
-        if (type === 'all') navigator.clipboard.writeText(convertArr(allAsins))
-        else if (type === 'positive') navigator.clipboard.writeText(convertArr(allAsins.filter(i => !negativeAsins.includes(i))))
-        else if (type === 'negative') navigator.clipboard.writeText(convertArr(negativeAsins))
+        if (type === 'all') copy(allAsins)
+        else if (type === 'positive') copy(allAsins.filter(i => !negativeAsins.includes(i)))
+        else if (type === 'negative') copy(negativeAsins)
     }
 
     return (
