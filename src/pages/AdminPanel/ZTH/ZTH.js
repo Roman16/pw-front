@@ -27,8 +27,8 @@ const ZTH = () => {
                 <NavLink to={'/admin-panel/zth/jobs'}>
                     ZTH Upload Jobs
                 </NavLink>
-                <NavLink to={'/admin-panel/zth/asins-sorter'}>
-                    ASINs Sorter
+                <NavLink to={'/admin-panel/zth/asins-filtering'}>
+                    ASINs Filtering
                 </NavLink>
 
                 <Link to={`/admin/word-sorter?token=${token}`} target={'_blank'}>
@@ -38,7 +38,7 @@ const ZTH = () => {
 
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
             <Route path="/admin-panel/zth/jobs" component={Jobs}/>
-            <Route path="/admin-panel/zth/asins-sorter" component={AsinsSorter}/>
+            <Route path="/admin-panel/zth/asins-filtering" component={AsinsSorter}/>
         </section>
     )
 }
