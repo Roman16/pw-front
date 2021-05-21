@@ -1,17 +1,19 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Input, Spin, Switch, Tooltip} from 'antd'
+import {Checkbox, Input, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
-import $ from "jquery"
-import moment from "moment"
+import moment from 'moment-timezone'
 import DatePicker from "../DatePicker/DatePicker"
 import InputCurrency from "../Inputs/InputCurrency"
-import {dateFormatting} from "../../utils/dateFormatting"
+import {dateFormatting, dateRequestFormat} from "../../utils/dateFormatting"
 import {round} from "../../utils/round"
 import {
     disabledEndDate,
     disabledStartDate
 } from "../../pages/Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import locale from 'antd/lib/locale/en_US.js.map'
+import {Link} from "react-router-dom"
+import {notification} from "../Notification"
 
 const CustomTable = ({
                          columns,
@@ -195,6 +197,7 @@ const CustomTable = ({
                                                     type={item.editType}
                                                     value={report[item.key]}
                                                     column={item.dataIndex}
+                                                    columnInfo={item}
                                                     onUpdateField={onUpdateField}
                                                     render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
                                                     disabled={(report.state && report.state === 'archived') || isDisabledRow || (item.disableField && (item.disableField(report[item.key], report) || false))}
@@ -221,7 +224,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField, render, disabled}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -235,7 +238,22 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
 
     const submitFieldHandler = (stateValue) => {
         setProcessing(true)
-        onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? dateFormatting(newValue) : 'null' : newValue, onClose, () => setProcessing(false))
+
+        const stopProcessing = () => setProcessing(false)
+
+        if (type === 'text') {
+            if (columnInfo.uniqueIndex === 'adGroupName' && newValue.trim().length > 255) {
+                notification.error({title: 'Ad group name should not be longer than 255 characters'})
+                stopProcessing()
+            } else if (columnInfo.uniqueIndex === 'campaignName' && newValue.trim().length > 128) {
+                notification.error({title: 'Campaign name should not be longer than 128 characters'})
+                stopProcessing()
+            } else {
+                onUpdateField(item, column, newValue.trim(), onClose, stopProcessing)
+            }
+        } else {
+            onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, stopProcessing)
+        }
     }
 
 
@@ -281,7 +299,10 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         }
     }, [visibleEditableWindow])
 
-    const openEditWindow = () => {
+    const openEditWindow = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+
         if (!disabled) {
             setVisibleEditableWindow(prevState => !prevState)
         }
@@ -291,21 +312,22 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         return (<div ref={wrapperRef}>
 
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
-                    {value ? `${moment(value).format('DD MMM YYYY')}` : 'No end date'}
+                    {value ? `${moment(value).tz('America/Los_Angeles').format('DD MMM YYYY')}` : 'No end date'}
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
-
                 {visibleEditableWindow && <DatePicker
-                    value={newValue && newValue !== 'null' ? moment(newValue) : undefined}
-                    format={'DD MMM YYYY'}
+                    value={newValue && newValue !== 'null' ? moment(newValue).tz('America/Los_Angeles') : undefined}
                     open={visibleEditableWindow}
                     showToday={false}
+                    allowClear={false}
                     className={`editable-date-picker ${newValue === 'null' ? 'no-date' : ''}`}
                     dropdownClassName={'edit-field-picker'}
-                    onChange={value => setNewValue(value)}
+                    onChange={(date) => setNewValue(dateRequestFormat(date))}
+                    format={'DD MMM YYYY'}
+                    locale={locale}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
-                    disabledDate={(data) => column === 'endDate' ? disabledEndDate(data, item.startDate) : disabledStartDate(data, item.endDate)}
+                    disabledDate={(date) => column === 'endDate' ? disabledEndDate(date, item.startDate) : disabledStartDate(date, item.endDate)}
                     defaultPickerValue={column === 'endDate' && (newValue === null || !newValue) && moment.max([moment(item.startDate), moment()]).add(1, 'month').startOf('month')}
                     renderExtraFooter={() => <>
                         {column === 'endDate' && (newValue && newValue !== 'null') &&
@@ -345,11 +367,15 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         </div>)
     } else if (type === 'text') {
         return <div className={''} ref={wrapperRef}>
-            <div className={`field-value text ${disabled ? 'disabled' : ''}`}>
+            <Link
+                to={columnInfo.redirectLink(item)}
+                onClick={() => columnInfo.clickEvent(item)}
+                className={`field-value text ${disabled ? 'disabled' : ''}`}
+            >
                 {render ? render() : value}
 
                 {!disabled && <i className={'edit'} onClick={openEditWindow}><SVG id={'edit-pen-icon'}/></i>}
-            </div>
+            </Link>
 
             {visibleEditableWindow && <div className="editable-window text">
                 <div className="form-group">

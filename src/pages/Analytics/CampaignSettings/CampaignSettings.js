@@ -5,17 +5,18 @@ import DatePicker from "../../../components/DatePicker/DatePicker"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsServices} from "../../../services/analytics.services"
-import moment from "moment"
+import moment from 'moment-timezone'
 import _ from 'lodash'
 import CustomSelect from "../../../components/Select/Select"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {round} from "../../../utils/round"
 import {notification} from "../../../components/Notification"
-import {disabledEndDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
-import {dateFormatting} from "../../../utils/dateFormatting"
+import {disabledEndDate, disabledStartDate} from "../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import {dateFormatting, dateRequestFormat} from "../../../utils/dateFormatting"
 import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageParts"
 import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const Option = Select.Option
 
@@ -129,7 +130,7 @@ const CampaignSettings = () => {
 
                 const res = await analyticsServices.exactUpdateField('campaigns', requestDate)
 
-                if(res.result.failed === 0) {
+                if (res.result.failed === 0) {
                     dataFromResponse = {...dataFromResponse, ...settingParams}
                     setEditFields([])
                 }
@@ -301,28 +302,31 @@ const CampaignSettings = () => {
                             showToday={false}
                             allowClear={false}
                             value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
-                            onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
+                            onChange={(date) => changeSettingsHandler({startDate: dateRequestFormat(date)})}
                             format={'MMM DD, YYYY'}
+                            locale={locale}
                             dropdownClassName={`dropdown-with-timezone`}
+                            disabledDate={date => disabledStartDate(date, settingParams.endDate)}
                             renderExtraFooter={() => <>
                                 <p className={'time-zone'}>America/Los_Angeles</p>
                             </>}
                         />
 
                         <DatePicker
+                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
                             placeholder={'No end date'}
                             disabled={settingParams.state === 'archived'}
-                            disabledDate={data => disabledEndDate(data, settingParams.startDate)}
                             showToday={false}
                             allowClear={false}
-                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
-                            onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
+                            onChange={(date) => changeSettingsHandler({endDate: dateRequestFormat(date)})}
                             format={'MMM DD, YYYY'}
+                            locale={locale}
                             open={visibleDatePopup}
                             onOpenChange={(value) => setVisibleDatePopup(value)}
                             dropdownClassName={`dropdown-with-timezone with-clear`}
                             className={settingParams.endDate === 'null' && 'no-date'}
                             defaultPickerValue={(settingParams.endDate === 'null' || !settingParams.endDate) && moment.max([moment(settingParams.startDate), moment()]).add(1, 'month').startOf('month')}
+                            disabledDate={date => disabledEndDate(date, settingParams.startDate)}
                             renderExtraFooter={() => <>
                                 <button className={'btn clear-date'} onClick={() => {
                                     setVisibleDatePopup(false)

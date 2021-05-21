@@ -58,7 +58,9 @@ const RenderPageParts = (props) => {
         showRowSelection,
         productType,
         showFilters = true,
-        disabledRow
+        disabledRow,
+        dateRange,
+        showOptions
     } = props
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
@@ -84,7 +86,6 @@ const RenderPageParts = (props) => {
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
-        mainState = useSelector(state => state.analytics.mainState),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
@@ -122,11 +123,20 @@ const RenderPageParts = (props) => {
         if (field === 'calculatedBudget' && value < 1) {
             notification.error({title: 'Campaign budget should be at least $1.00'})
             return false
+        } else if (field === 'calculatedBudget' && value > 1000000) {
+            notification.error({title: 'Campaign budget should not be more than $1,000,000'})
+            return false
         } else if (field === 'calculatedBid' && value < 0.02) {
             notification.error({title: 'Targeting bid should be at least $0.02'})
             return false
         } else if (field === 'calculatedBid' && value > 1000) {
             notification.error({title: 'Targeting bid should not be more than $1,000'})
+            return false
+        } else if (field === 'defaultBid' && value < 0.02) {
+            notification.error({title: 'Ad Group bid should be at least $0.02'})
+            return false
+        } else if (field === 'defaultBid' && value > 1000) {
+            notification.error({title: 'Ad Group bid should not be more than $1,000'})
             return false
         }
 
@@ -143,6 +153,13 @@ const RenderPageParts = (props) => {
                     ...location === 'targetings' && {entityType: item.entityType}
                 })
 
+                updateResponseHandler(res)
+
+                if (res.result.failed > 0) {
+                    error()
+                    return
+                }
+
                 setPageData({
                     ...pageData,
                     table: {
@@ -154,8 +171,6 @@ const RenderPageParts = (props) => {
                         })]
                     }
                 })
-
-                updateResponseHandler(res)
                 success()
             } catch (e) {
                 console.log(e)
@@ -266,7 +281,7 @@ const RenderPageParts = (props) => {
                 filtersWithState.push({
                     filterBy: 'parent_productId',
                     type: 'eq',
-                    value: mainState.productId
+                    value: queryParams.productId
                 })
             }
 
@@ -346,16 +361,19 @@ const RenderPageParts = (props) => {
             }
         }
 
+        const queryParams = queryString.parse(history.location.search)
+
+
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
                 const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
 
                 let filtersWithState = [
                     ...filters,
-                    ...Object.keys(mainState).map(key => ({
+                    ...Object.keys(queryParams).map(key => ({
                         filterBy: key,
                         type: 'eq',
-                        value: mainState[key]
+                        value: queryParams[key]
                     })).filter(item => !!item.value),
                     {
                         filterBy: 'datetime',
@@ -373,7 +391,7 @@ const RenderPageParts = (props) => {
                     filtersWithState.push({
                         filterBy: 'parent_productId',
                         type: 'eq',
-                        value: mainState.productId
+                        value: queryParams.productId
                     })
                 }
 
@@ -423,7 +441,7 @@ const RenderPageParts = (props) => {
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
-    }, [selectedRangeDate, filters, mainState.campaignId, mainState.productId, mainState.adGroupId, mainState.portfolioId])
+    }, [selectedRangeDate, filters, history.location.search])
 
     return (
         <>
@@ -450,6 +468,8 @@ const RenderPageParts = (props) => {
                 fetching={tableFetchingStatus}
                 tableRequestParams={tableRequestParams}
                 showFilters={showFilters}
+                showOptions={showOptions}
+                dateRange={dateRange}
 
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}

@@ -540,7 +540,7 @@
               justify-content: flex-start;
             }
 
-            a.state-link {
+            .state-link {
               color: #6D6DF6;
               font-weight: 500;
               width: 100%;
@@ -701,7 +701,9 @@
                 }
 
                 &.text {
-                  a {
+                  cursor: pointer !important;
+
+                  .state-link {
                     width: max-content;
                     max-width: 85%;
                     align-items: center;
@@ -713,6 +715,12 @@
 
                   i {
                     margin: 0 0 0 10px;
+                  }
+
+                  &:hover {
+                    .state-link {
+                      text-decoration: underline;
+                    }
                   }
                 }
 
@@ -1078,8 +1086,10 @@
 
   &.text {
     width: 349px;
+
     div.form-group {
       margin: 0 12px 0 0;
+
       input {
         height: 2.2857142857142856rem;
         font-size: 1rem;

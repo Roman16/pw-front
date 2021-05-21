@@ -4,28 +4,28 @@ import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import CustomSelect from "../../../../../components/Select/Select"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import _ from 'lodash'
-import moment from 'moment'
+import moment from 'moment-timezone'
 import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
-import {dateFormatting} from "../../../../../utils/dateFormatting"
+import {dateRequestFormat} from "../../../../../utils/dateFormatting"
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const Option = Select.Option
 
 export const disabledStartDate = (current, endDate) => {
     if (current) {
         if (endDate) {
-            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles')) || moment(current).endOf('day') > moment(endDate)
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day')) || moment(current).endOf('day') > moment(endDate).tz('America/Los_Angeles').endOf('day')
         } else {
-            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles'))
+            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day'))
         }
     }
 }
 export const disabledEndDate = (current, startDate) => {
     if (current) {
-        if (moment() > moment(startDate)) return disabledStartDate(current, null)
-        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles'))
+        if (moment().tz('America/Los_Angeles').endOf('day') > moment(startDate).tz('America/Los_Angeles').endOf('day')) return disabledStartDate(current, null)
+        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles').endOf('day'))
     }
-
 }
 
 
@@ -142,10 +142,11 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({startDate: dateFormatting(date)})}
-                            value={moment(createData.startDate)}
+                            onChange={(date) => onChange({startDate: dateRequestFormat(date)})}
+                            value={moment(createData.startDate).tz('America/Los_Angeles')}
                             showToday={false}
                             allowClear={false}
+                            locale={locale}
                             format={'MMM DD, YYYY'}
                             disabledDate={(data) => disabledStartDate(data, createData.endDate)}
                             dropdownClassName={'dropdown-with-timezone'}
@@ -159,12 +160,15 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">End</label>
                         <DatePicker
                             placeholder={'No end date'}
+                            value={createData.endDate ? moment(createData.endDate).tz('America/Los_Angeles') : undefined}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({endDate: dateFormatting(date)})}
+                            onChange={(date) => onChange({endDate: dateRequestFormat(date)})}
                             showToday={false}
+                            locale={locale}
                             format={'MMM DD, YYYY'}
                             disabledDate={data => disabledEndDate(data, createData.startDate)}
                             dropdownClassName={'dropdown-with-timezone'}
+                            defaultPickerValue={(createData.endDate === 'null' || !createData.endDate) && moment.max([moment(createData.startDate), moment()]).add(1, 'month').startOf('month')}
                             renderExtraFooter={() => <>
                                 <p>America/Los_Angeles</p>
                             </>}

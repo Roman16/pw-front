@@ -1,6 +1,7 @@
 import React from "react"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
-import moment from "moment"
+import moment from 'moment-timezone'
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
     const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
@@ -13,7 +14,8 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
             <DatePicker
                 timeRange={onChange}
                 placeholder={'lifetime'}
-                defaultValue={selectedRangeDate.startDate === 'lifetime' ? null : [moment(selectedRangeDate.startDate), moment(selectedRangeDate.endDate)]}
+                locale={locale}
+                value={selectedRangeDate.startDate === 'lifetime' ? null : [moment(selectedRangeDate.startDate).tz('America/Los_Angeles'), moment(selectedRangeDate.endDate).tz('America/Los_Angeles')]}
             />
 
             {selectedRangeDate.startDate !== 'lifetime' && <div className="compare-date">

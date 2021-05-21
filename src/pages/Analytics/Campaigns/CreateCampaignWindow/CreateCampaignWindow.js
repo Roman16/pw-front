@@ -16,13 +16,13 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import _ from "lodash"
 import moment from "moment"
-import {dateFormatting} from "../../../../utils/dateFormatting"
+import {dateRequestFormat} from "../../../../utils/dateFormatting"
 
 const defaultState = {
     //campaign
     name: undefined,
     portfolioId: null,
-    startDate: dateFormatting(moment()),
+    startDate: dateRequestFormat(moment().tz('America/Los_Angeles')),
     endDate: undefined,
     calculatedBudget: undefined,
     advertisingType: 'SponsoredProducts',

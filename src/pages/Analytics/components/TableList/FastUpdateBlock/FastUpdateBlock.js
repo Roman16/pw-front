@@ -6,12 +6,13 @@ import './FastUpdateBlock.less'
 import InputCurrency from "../../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../../components/DatePicker/DatePicker"
 import {useSelector} from "react-redux"
-import moment from "moment"
-import {dateFormatting} from "../../../../../utils/dateFormatting"
+import moment from 'moment-timezone'
+import {dateFormatting, dateRequestFormat} from "../../../../../utils/dateFormatting"
 import ConfirmWindow from "./ConfirmWindow"
 import {round} from "../../../../../utils/round"
 import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {notification} from "../../../../../components/Notification"
+import locale from 'antd/lib/locale/en_US.js.map'
 
 const Option = Select.Option
 
@@ -82,10 +83,14 @@ const FastUpdateBlock = ({
             notification.error({title: 'Campaign budget should be at least $1.00'})
         } else if (selectedColumn === 'calculatedBudget' && actionType === 'setExact' && changingValue > 1000000) {
             notification.error({title: 'Campaign budget should not be more than $1,000,000'})
-        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue < 0.02) {
+        } else if (selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue < 0.02) {
             notification.error({title: 'Targeting bid should be at least $0.02'})
-        } else if(selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue > 1000) {
+        } else if (selectedColumn === 'calculatedBid' && actionType === 'setExact' && changingValue > 1000) {
             notification.error({title: 'Targeting bid should not be more than $1,000'})
+        } else if (selectedColumn === 'defaultBid' && actionType === 'setExact' && changingValue < 0.02) {
+            notification.error({title: 'Ad Group bid should be at least $0.02'})
+        } else if (selectedColumn === 'defaultBid' && actionType === 'setExact' && changingValue > 1000) {
+            notification.error({title: 'Ad Group bid should not be more than $1,000'})
         } else {
             setSubmitProcessing(true)
 
@@ -111,7 +116,7 @@ const FastUpdateBlock = ({
         if (selectedColumn === 'startDate' || selectedColumn === 'endDate') {
             setAvailableActions(updateActions.date)
             setChangingValue(undefined)
-        } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
+        } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {
             setAvailableActions(updateActions.number)
             setChangingValue(undefined)
         } else if (selectedColumn === 'portfolioId') {
@@ -195,6 +200,7 @@ const FastUpdateBlock = ({
             <ConfirmWindow
                 visible={visibleConfirmWindow}
                 count={selectedAll ? totalSize : selectedRows.length}
+                location={location}
 
                 onCancel={() => setVisibleConfirmWindow(false)}
                 onSubmit={(e) => submitHandler(e, true)}
@@ -220,10 +226,11 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
             showToday={false}
             allowClear={false}
             disabledDate={(date) => disabledStartDate(date, undefined)}
-            value={value && value !== 'null' ? moment(value) : undefined}
+            value={value && value !== 'null' ? moment(value).tz('America/Los_Angeles') : undefined}
             placeholder={value === 'null' ? 'No end date' : 'Select date'}
-            onChange={(date) => onChangeValue(dateFormatting(date))}
+            onChange={(date) => onChangeValue(dateRequestFormat(date))}
             open={visibleDatePopup}
+            locale={locale}
             onOpenChange={(value) => setVisibleDatePopup(value)}
             dropdownClassName={`dropdown-with-timezone ${selectedColumn === 'endDate' ? 'with-clear' : ''}`}
             className={value === 'null' && 'no-date'}
@@ -239,7 +246,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 <p className={'time-zone'}>America/Los_Angeles</p>
             </>}
         />)
-    } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid') {
+    } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {
         return (<InputCurrency
             typeIcon={actionType === 'addPercent' || actionType === 'subPercent' ? 'percent' : ''}
             step={0.01}

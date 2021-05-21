@@ -13,14 +13,12 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    EditableField,
     impressionsColumn,
     roasColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
-import {Switch} from "antd"
-import moment from "moment"
+import moment from 'moment-timezone'
 import tz from 'moment-timezone'
 import {round} from "../../../../utils/round"
 
@@ -38,25 +36,26 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             title: 'Campaign',
             dataIndex: 'name',
             key: 'name',
+            uniqueIndex: 'campaignName',
             width: '350px',
             sorter: true,
             locked: true,
             search: true,
             editType: 'text',
-            render: (campaign, item) => (<Link
-                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+            clickEvent: (item) => {
+                setStateHandler('ad-groups', {
+                    name: {campaignName: item.name},
+                    campaignId: item.campaignId
+                })
+                setStateDetails(item)
+            },
+            redirectLink: (item) => `/analytics/ad-groups?campaignId=${item.campaignId}`,
+            render: (campaign) => (<div
                 className={'state-link'}
-                onClick={() => {
-                    setStateHandler('ad-groups', {
-                        name: {campaignName: item.name},
-                        campaignId: item.campaignId
-                    })
-                    setStateDetails(item)
-                }}
                 title={campaign}
             >
                 {campaign}
-            </Link>)
+            </div>)
         },
         {
             ...statusColumn,
@@ -107,7 +106,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             fastUpdating: true,
             editType: 'currency',
             render: (budget, item) => {
-                const text = budget ? `$${ round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
+                const text = budget ? `$${round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
                 return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
             }
         },
@@ -144,7 +143,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             noTotal: true,
             fastUpdating: true,
             editType: 'date',
-            disableField: (date, item) => moment(date).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')
+            disableField: (date, item) => moment(date).tz('America/Los_Angeles').endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')
         },
         {
             title: 'End date',
