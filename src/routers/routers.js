@@ -34,7 +34,7 @@ const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/Enlighten
 const RedefineApproach = React.lazy(() => import('../pages/LandingPages/RedefineApproach/RedefineApproach'))
 const CustomerSatisfactionSurvey = React.lazy(() => import('../pages/LandingPages/CustomerSatisfactionSurvey/CustomerSatisfactionSurvey'))
 const MainPage = React.lazy(() => import('../pages/LandingPages/MainPage/MainPage'))
-// const Course = React.lazy(() => import('../pages/LandingPages/Course/Course'))
+const Course = React.lazy(() => import('../pages/LandingPages/Course/Course'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 
@@ -81,7 +81,7 @@ const routers = () => {
                     <Route exact path="/enlighten-future" component={EnlightenFuture}/>
                     <Route exact path="/redefine-approach" component={RedefineApproach}/>
                     <Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>
-                    {/*<Route exact path="/course" component={Course}/>*/}
+                    <Route exact path="/course" component={Course}/>
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}

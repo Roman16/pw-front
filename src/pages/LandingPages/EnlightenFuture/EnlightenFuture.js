@@ -88,7 +88,7 @@ const EnlightenFuture = () => {
                         Start your <span>Success Journey</span> today!
                     </h3>
 
-                    <Link to={'/'} className={'btn default'}>learn more</Link>
+                    <Link to={'/course'} className={'btn default'}>learn more</Link>
                 </div>
             </div>
         </section>
