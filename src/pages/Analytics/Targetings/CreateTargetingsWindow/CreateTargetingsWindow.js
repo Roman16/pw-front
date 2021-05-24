@@ -463,7 +463,8 @@ const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidat
                 >
                     <h4>Targeting type</h4>
                     <p className={'block-description'}>
-                        Can't be changed since ad group already has keyword targetings
+                        Can't be changed since ad group already
+                        has {targetingType === 'keywords' ? 'keyword' : 'product'} targetings
                     </p>
 
                     <Radio value={'keywords'}>

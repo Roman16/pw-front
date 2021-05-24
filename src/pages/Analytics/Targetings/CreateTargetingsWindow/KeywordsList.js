@@ -59,7 +59,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                         invalidKeywords.push(keywordsList[i.entityRequestIndex])
                     })
 
-                    res.result.invalidDetails.forEach(i => {
+                    res.result.invalidDetails.reverse().forEach(i => {
                         keywordsList.splice(i.entityRequestIndex, 1)
                     })
                 }
@@ -107,7 +107,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         csv += "Suggested value"
         csv += "\n"
 
-        invalidDetails.invalidDetails.forEach((row, index) => {
+        invalidDetails.invalidDetails.reverse().forEach((row, index) => {
             csv += `"${allKeywords[row.entityRequestIndex].keywordText}",`
             csv += `"${allKeywords[row.entityRequestIndex].matchType}",`
             csv += `"${row.code}",`
@@ -116,8 +116,11 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
             csv += "\n"
         })
 
+        const encodedURI = encodeURI(csv)
+        const fixedEncodedURI = encodedURI.replaceAll('#', '%23')
+
         const hiddenElement = document.createElement('a')
-        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv)
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + fixedEncodedURI
         hiddenElement.target = '_blank'
         hiddenElement.download = 'keywords-validation-results.csv'
         hiddenElement.click()

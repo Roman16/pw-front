@@ -25,6 +25,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                 .map(i => i.trim())
                 .filter(item => item !== '')
                 .map(i => i.replace(/ +/g, ' '))
+                .map(i => i.toUpperCase())
                 .map(item => ({
                     text: item,
                     type: keywordType,
@@ -61,10 +62,12 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                     res.result.invalidDetails.forEach(i => {
                         invalidKeywords.push(keywordsList[i.entityRequestIndex])
                     })
-                    res.result.invalidDetails.forEach(i => {
+                    res.result.invalidDetails.reverse().forEach(i => {
                         keywordsList.splice(i.entityRequestIndex, 1)
                     })
                 }
+
+                console.log(keywordsList)
 
                 validKeywords = keywordsList
 
@@ -107,7 +110,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
         csv += "Suggested value"
         csv += "\n"
 
-        invalidDetails.invalidDetails.forEach((row, index) => {
+        invalidDetails.invalidDetails.reverse().forEach((row, index) => {
             csv += `"${allKeywords[row.entityRequestIndex].text}",`
             csv += `"${row.code}",`
             csv += `"${row.details}",`
@@ -115,15 +118,18 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
             csv += "\n"
         })
 
+        const encodedURI = encodeURI(csv)
+        const fixedEncodedURI = encodedURI.replaceAll('#', '%23')
+
         const hiddenElement = document.createElement('a')
-        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv)
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + fixedEncodedURI
         hiddenElement.target = '_blank'
         hiddenElement.download = 'asins-validation-results.csv'
         hiddenElement.click()
     }
 
     return (
-        <div className={`negative-keywords keyword-targetings`}>
+        <div className={`negative-keywords keyword-targetings asins`}>
             <div className="bid-block">
                 <h3>Product Targetings</h3>
 
@@ -159,7 +165,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                     <div className="form-group">
                             <textarea
                                 value={newKeyword}
-                                onChange={({target: {value}}) => setNewKeyword(value.toUpperCase())}
+                                onChange={({target: {value}}) => setNewKeyword(value.capitalize())}
                                 required
                                 placeholder={'Enter your list and separate each item with a new line'}
                                 disabled={validationProcessing}
