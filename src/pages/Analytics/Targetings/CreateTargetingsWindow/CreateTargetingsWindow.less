@@ -34,6 +34,7 @@
 
   .ant-radio-group {
     label.ant-radio-wrapper {
+      width: max-content;
       margin-bottom: 0 !important;
 
       font-size: 1rem;
@@ -70,10 +71,21 @@
   }
 
   .negative-keywords {
+
+    &.asins {
+      textarea {
+        text-transform: uppercase;
+
+        &::placeholder {
+          text-transform: initial;
+        }
+      }
+    }
     .ant-radio-group {
       flex-direction: row;
 
       .ant-radio-wrapper {
+        width: max-content;
         span:last-of-type {
           padding: 0;
         }
