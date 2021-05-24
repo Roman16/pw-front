@@ -173,7 +173,7 @@ const CustomerSatisfactionSurvey = () => {
                                     id={'ppc_performance_mark'}
                                 />
                                 <RateBlock
-                                    title={'Care Team specialists\' performance'}
+                                    title={'Client Manager specialists\' performance'}
                                     id={'careteam_performance_mark'}
                                 />
                                 <RateBlock
