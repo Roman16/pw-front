@@ -1,6 +1,4 @@
 import React from 'react'
-import Header from '../components/Header/Header'
-import Footer from '../components/Footer/Footer'
 import {Link} from 'react-router-dom'
 
 import './NotFound.less'
@@ -8,8 +6,7 @@ import './NotFound.less'
 const authorized = localStorage.getItem('token')
 
 const NotFound = () => (
-    <section className="not-found-page  landing-page">
-        <Header/>
+    <section className="not-found-page">
 
         <div className="box">
             <div className="container">
@@ -40,7 +37,7 @@ const NotFound = () => (
                     <p>Looks like something went wrong, let’s take you home.</p>
                     <Link
                         className="btn default"
-                        to={authorized ? '/ppc/optimization' : '/'}
+                        to={authorized ? '/ppc/optimization' : '/login'}
                     >
                         Back to home
                     </Link>
@@ -59,7 +56,6 @@ const NotFound = () => (
             </div>
         </div>
 
-        <Footer/>
     </section>
 )
 

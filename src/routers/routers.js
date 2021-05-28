@@ -54,34 +54,34 @@ const routers = () => {
         <Suspense fallback={<RouteLoader/>}>
             <Router history={history}>
                 <Switch>
-                    <Route exact path="/" component={MainPage}/>
-                    <Route exact path="/affiliates" component={LandingAffiliates}/>
-                    <Route exact path="/about-us" component={AboutUs}/>
+                    <Route exact path="/" render={() => <Redirect to={'/login'}/>}/>
+                    {/*<Route exact path="/affiliates" component={LandingAffiliates}/>*/}
+                    {/*<Route exact path="/about-us" component={AboutUs}/>*/}
                     {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
                     {/*<Route exact path="/pricing" component={Pricing}/>*/}
-                    <Route exact path="/amazon-ppc-blueprint" component={Ebook}/>
-                    <Route exact path="/thank-you" component={ThankYou}/>
+                    {/*<Route exact path="/amazon-ppc-blueprint" component={Ebook}/>*/}
+                    {/*<Route exact path="/thank-you" component={ThankYou}/>*/}
                     {/*<Route exact path="/demo-call" component={DemoCall}/>*/}
-                    <Route exact path="/contact-us/:status?" component={Contact}/>
+                    {/*<Route exact path="/contact-us/:status?" component={Contact}/>*/}
                     {/*<Route exact path="/help-support" component={HelpSupport}/>*/}
-                    <Route exact path="/partners" component={Partners}/>
-                    <Route exact path="/audit" component={Audit}/>
-                    <Route exact path="/book-a-demo" component={BookDemo}/>
-                    <Route exact path="/policy" component={PrivacyPolicy}/>
-                    <Route exact path="/terms-and-conditions" component={TermsOfUse}/>
-                    <Route exact path="/videos/:block?" component={Video}/>
-                    <Route exact path="/ppc-redirect" component={PPCRedirect}/>
-                    <Route exact path="/zero-to-hero-info" component={LandingZTH}/>
-                    <Route exact path="/care-we-do" component={CareWeDo}/>
-                    <Route exact path="/our-whale" component={OurWhale}/>
-                    <Route exact path="/recognition" component={Recognition}/>
-                    <Route exact path="/get-audit" component={GetAuditNew}/>
-                    <Route exact path="/get-audit-new" component={GetAudit}/>
-                    <Route exact path="/identify-option/:filter?" component={IdentifyOption}/>
-                    <Route exact path="/enlighten-future" component={EnlightenFuture}/>
-                    <Route exact path="/redefine-approach" component={RedefineApproach}/>
-                    <Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>
-                    <Route exact path="/course" component={Course}/>
+                    {/*<Route exact path="/partners" component={Partners}/>*/}
+                    {/*<Route exact path="/audit" component={Audit}/>*/}
+                    {/*<Route exact path="/book-a-demo" component={BookDemo}/>*/}
+                    {/*<Route exact path="/policy" component={PrivacyPolicy}/>*/}
+                    {/*<Route exact path="/terms-and-conditions" component={TermsOfUse}/>*/}
+                    {/*<Route exact path="/videos/:block?" component={Video}/>*/}
+                    {/*<Route exact path="/ppc-redirect" component={PPCRedirect}/>*/}
+                    {/*<Route exact path="/zero-to-hero-info" component={LandingZTH}/>*/}
+                    {/*<Route exact path="/care-we-do" component={CareWeDo}/>*/}
+                    {/*<Route exact path="/our-whale" component={OurWhale}/>*/}
+                    {/*<Route exact path="/recognition" component={Recognition}/>*/}
+                    {/*<Route exact path="/get-audit" component={GetAuditNew}/>*/}
+                    {/*<Route exact path="/get-audit-new" component={GetAudit}/>*/}
+                    {/*<Route exact path="/identify-option/:filter?" component={IdentifyOption}/>*/}
+                    {/*<Route exact path="/enlighten-future" component={EnlightenFuture}/>*/}
+                    {/*<Route exact path="/redefine-approach" component={RedefineApproach}/>*/}
+                    {/*<Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>*/}
+                    {/*<Route exact path="/course" component={Course}/>*/}
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
