@@ -137,7 +137,10 @@ const TableList = ({
     }
 
     const dateRangeHandler = (startDate, endDate) => {
-        dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
+        dispatch(analyticsActions.setDateRange({
+            startDate: moment(startDate).format('YYYY-MM-DD') || 'lifetime',
+            endDate: moment(endDate).format('YYYY-MM-DD') || 'lifetime'
+        }))
 
         if (startDate === null) {
             setTableOptions(_.mapValues(tableOptions, (value) => ({...value, comparePreviousPeriod: false})))

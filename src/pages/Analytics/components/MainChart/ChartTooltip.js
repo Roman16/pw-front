@@ -65,14 +65,16 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
                         Daily
                     </div>
 
-                    {activeMetrics.map((metric, index) => (
-                        metric && metric.key &&  <div className="daily-value" style={{color: chartColors[index]}}>
-                            <i style={{fill: chartColors[index], stroke: chartColors[index]}}>
-                                <SVG id='chart-tooltip-daily'/>
-                            </i>
-                            {payload[0] && getChartValue(payload[0].payload, metric.key, metric)}
-                        </div>
-                    ))}
+                    {activeMetrics.map((metric, index) => {
+                        return (
+                            metric && metric.key && <div className="daily-value" style={{color: chartColors[index]}}>
+                                <i style={{fill: chartColors[index], stroke: chartColors[index]}}>
+                                    <SVG id='chart-tooltip-daily'/>
+                                </i>
+                                {payload[0] && getChartValue(payload[0].payload, payload[0].payload[`dashed_${metric.key}`] !== undefined ? `dashed_${metric.key}` : metric.key, metric)}
+                            </div>
+                        )
+                    })}
                 </div>}
             </div>
         )
