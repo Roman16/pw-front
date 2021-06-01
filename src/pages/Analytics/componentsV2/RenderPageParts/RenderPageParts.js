@@ -13,7 +13,7 @@ import {notification} from "../../../../components/Notification"
 import axios from "axios"
 
 
-let prevActiveMetrics = [],
+let prevActiveMetrics = undefined,
     sorterTimeoutId = null
 
 const CancelToken = axios.CancelToken
@@ -287,6 +287,7 @@ const RenderPageParts = (props) => {
 
             let parentResponse
 
+
             let res = await analyticsServices.fetchPageData(
                 location,
                 {
@@ -299,6 +300,9 @@ const RenderPageParts = (props) => {
                 undefined,
                 source.token
             )
+
+            prevActiveMetrics = [...activeMetrics]
+
 
             if (productType === 'parent') {
                 parentResponse = await analyticsServices.fetchPageData(
@@ -425,13 +429,15 @@ const RenderPageParts = (props) => {
     }
 
     useEffect(() => {
-        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
-                ...prevState,
-                chart: []
-            }))
-            else getPageData(['chart'])
-            prevActiveMetrics = [...activeMetrics]
+        if (prevActiveMetrics) {
+            if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
+                if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                    ...prevState,
+                    chart: []
+                }))
+                else getPageData(['chart'])
+                prevActiveMetrics = [...activeMetrics]
+            }
         }
     }, [activeMetrics])
 
@@ -442,6 +448,10 @@ const RenderPageParts = (props) => {
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
     }, [selectedRangeDate, filters, history.location.search])
+
+    useEffect(() => {
+        prevActiveMetrics = undefined
+    }, [location])
 
     return (
         <>

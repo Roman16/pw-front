@@ -32,9 +32,9 @@ const stateIdValues = {
     portfolioId: 'portfolios',
 }
 
-const dateRangeToIso = (dateRange) => {
+const dateRangeFormatting = (dateRange) => {
     if (dateRange.startDate === 'lifetime') return ''
-    else return `${moment.tz(`${moment(dateRange.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(dateRange.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`
+    else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-07:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-07:00`
 }
 
 
@@ -44,7 +44,7 @@ const filtersHandler = (f) => {
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'datetime') {
-            parameters.unshift(`?datetime:range=${dateRangeToIso(value)}`)
+            parameters.unshift(`?datetime:range=${dateRangeFormatting(value)}`)
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'productView') {
@@ -127,24 +127,27 @@ function fetchPlacementData(params, idList) {
 }
 
 function fetchTargetingsDetails(id, date, sorterColumn, filters) {
-    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeToIso(date)}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeFormatting(date)}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
 }
 
 function fetchPageData(location, params, idList, cancelToken) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
 
-    return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null,null, cancelToken)
+    return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
 }
 
 function fetchPortfoliosForCampaign() {
     return api('get', `${analyticsUrls.portfolios}`)
 }
+
 function fetchCampaignsForTargeting({page, type, name}) {
     return api('get', `${analyticsUrls.campaigns}?size=30&page=${page}&advertisingType:in=${type}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
 }
+
 function fetchAdGroupsForTargeting({page, id, name}) {
     return api('get', `${analyticsUrls.adGroups}?size=30&page=${page}&campaignId:eq=${id}&state:in=enabled,paused${name ? `&name=${name}` : ''}`)
 }
+
 function fetchAdGroupDetails(id) {
     return api('get', `${analyticsUrls.adGroupDetails(id)}`)
 }
@@ -152,6 +155,7 @@ function fetchAdGroupDetails(id) {
 function exactCreate(entity, data) {
     return api('post', analyticsUrls.createUrl(entity), data)
 }
+
 function bulkCreate(entity, data) {
     return api('post', analyticsUrls.bulkCreateUrl(entity), data)
 }

@@ -16,7 +16,7 @@ import _ from 'lodash'
 import queryString from "query-string"
 import {history} from "../../../utils/history"
 
-let prevActiveMetrics = [],
+let prevActiveMetrics = undefined,
     sorterTimeoutId = null
 
 
@@ -149,6 +149,8 @@ const SearchTerms = () => {
                 filtersWithState,
                 activeMetrics,
             })
+
+            prevActiveMetrics = [...activeMetrics]
 
             if (localTableOptions.comparePreviousPeriod) {
                 getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
@@ -298,13 +300,15 @@ const SearchTerms = () => {
 
 
     useEffect(() => {
-        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
-                ...prevState,
-                chart: []
-            }))
-            else getPageData(['chart'])
-            prevActiveMetrics = [...activeMetrics]
+        if(prevActiveMetrics) {
+            if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
+                if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                    ...prevState,
+                    chart: []
+                }))
+                else getPageData(['chart'])
+                prevActiveMetrics = [...activeMetrics]
+            }
         }
     }, [activeMetrics])
 
@@ -320,6 +324,10 @@ const SearchTerms = () => {
     useEffect(() => {
         setTimeout(getPageData(['metrics', 'table', 'chart'], {...tableRequestParams, page: 1}), 100)
     }, [selectedRangeDate, filters])
+
+    useEffect(() => {
+        return () => prevActiveMetrics = undefined
+    }, [])
 
     return (
         <div className="search-terms-page">

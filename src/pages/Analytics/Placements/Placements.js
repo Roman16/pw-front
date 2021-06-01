@@ -17,7 +17,7 @@ import SegmentFilter from "./PTableComponents/SegmentFilter"
 import {expandedRowRender} from "./PTableComponents/expandRowRender"
 import {chartAreaKeys} from "./PlacementsStatistics/Chart"
 
-let prevActiveMetrics = [],
+let prevActiveMetrics = undefined,
     sorterTimeoutId = null
 
 
@@ -108,6 +108,8 @@ const Placements = () => {
                 activeMetrics,
                 areaChartMetric
             })
+
+            prevActiveMetrics = [...activeMetrics]
 
             if (localSegmentValue === 'advertisingType') {
                 setPageData(prevState => ({
@@ -258,15 +260,16 @@ const Placements = () => {
 
 
     useEffect(() => {
-        if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
-            if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
-                ...prevState,
-                chart: []
-            }))
-            else getPageData(['chart'])
-            prevActiveMetrics = [...activeMetrics]
+        if(prevActiveMetrics) {
+            if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
+                if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
+                    ...prevState,
+                    chart: []
+                }))
+                else getPageData(['chart'])
+                prevActiveMetrics = [...activeMetrics]
+            }
         }
-
     }, [activeMetrics])
 
     useEffect(() => {
@@ -285,6 +288,10 @@ const Placements = () => {
     useEffect(() => {
         getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
     }, [selectedRangeDate, filters])
+
+    useEffect(() => {
+        return () => prevActiveMetrics = undefined
+    }, [])
 
     return (
         <div className={'placements-workplace'}>

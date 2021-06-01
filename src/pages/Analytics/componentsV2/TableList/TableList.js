@@ -14,6 +14,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {numberColumns} from '../../components/TableList/tableColumns'
 import FastUpdateBlock from "../../components/TableList/FastUpdateBlock/FastUpdateBlock"
 import {notification} from "../../../../components/Notification"
+import moment from "moment"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -117,7 +118,10 @@ const TableList = ({
     const dateRangeHandler = (startDate, endDate) => {
         deselectAllRows()
 
-        dispatch(analyticsActions.setDateRange({startDate: startDate || 'lifetime', endDate: endDate || 'lifetime'}))
+        dispatch(analyticsActions.setDateRange({
+            startDate: moment(startDate).format('YYYY-MM-DD') || 'lifetime',
+            endDate: moment(endDate).format('YYYY-MM-DD') || 'lifetime'
+        }))
     }
 
     const changeBlackListHandler = (list) => {
