@@ -2,31 +2,22 @@ import React from "react"
 import {
     acosColumn,
     adCvrColumn,
-    adGroupColumn,
     adOrdersColumn,
     adSalesColumn,
     adSpendColumn,
     adUnitsColumn,
     budgetAllocationColumn,
-    campaignColumn,
     clicksColumn,
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    impressionsColumn, keywordPTColumn, matchTypeColumn,
+    impressionsColumn,
     roasColumn,
     salesShareColumn,
-    statusColumn
 } from "../../components/TableList/tableColumns"
-import {useDispatch, useSelector} from "react-redux"
-import {Link} from "react-router-dom"
-import {analyticsActions} from "../../../../actions/analytics.actions"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import TableList from "../../componentsV2/TableList/TableList"
-import {SVG} from "../../../../utils/icons"
-import {Spin} from "antd"
 
-export const PColumnsList = (selectedCampaign) => {
+export const PColumnsList = (selectedCampaign, stateDetails) => {
     return [
         {
             title: 'Placement',
@@ -39,7 +30,7 @@ export const PColumnsList = (selectedCampaign) => {
             search: true,
             render: (text) => <span title={text} className={'overflow-text'}>{text}</span>
         },
-        ...selectedCampaign ? [
+        ...(selectedCampaign && stateDetails.advertisingType !== 'SponsoredBrands') ? [
             {
                 title: 'Campaign Bidding Strategy',
                 dataIndex: 'bidding_strategy',
@@ -63,10 +54,15 @@ export const PColumnsList = (selectedCampaign) => {
                 sorter: false,
                 locked: true,
                 noTotal: true,
-                render: (bid_adjustment) => <InputCurrency
-                    disabled
-                    value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}
-                />
+                render: (bid_adjustment, item) => {
+                    if (item.placementName === 'Top of Search on-Amazon' || item.placementName === 'Detail Page on-Amazon') {
+                        return (<InputCurrency
+                            disabled
+                            typeIcon={'percent'}
+                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}
+                        />)
+                    } else return ''
+                }
             }
         ] : [],
         {...impressionsColumn, sorter: false},

@@ -56,7 +56,9 @@ const AsinsSorter = () => {
     }
 
     const copyAsins = (type) => {
-        const copy = (asins) => {navigator.clipboard.writeText(asins.map(i => `asin="${i}"`).join('\n'))}
+        const copy = (asins) => {
+            navigator.clipboard.writeText(asins.map(i => `asin="${i}"`).join('\n'))
+        }
 
         if (type === 'all') copy(allAsins)
         else if (type === 'positive') copy(allAsins.filter(i => !negativeAsins.includes(i)))
@@ -65,88 +67,103 @@ const AsinsSorter = () => {
 
     return (
         <section className={'asins-sorter'}>
-            <div className="col enter-asins">
+            <div className="row">
                 <div className="actions">
                     <button className="btn default" onClick={resetAllHandler}>
                         Reset All
                     </button>
-
-                    <button className="btn default" onClick={addAsinsHandler} disabled={fieldValue.trim().length === 0}>
-                        add
-                    </button>
-                </div>
-
-                <div className="form-group">
-                    <TextArea
-                        value={fieldValue}
-                        onChange={({target: {value}}) => setFieldValue(value)}
-                    />
                 </div>
             </div>
+            <div className="row">
+                <div className="col enter-asins">
+                    <div className="actions">
+                        <h3>Input</h3>
+                        <button className="btn default" onClick={addAsinsHandler}
+                                disabled={fieldValue.trim().length === 0}>
+                            add
+                        </button>
+                    </div>
 
-            <div className="col all-asins">
-                <div className="actions">
-                    <button className="btn default" onClick={() => copyAsins('all')}>
-                        Copy All
-                    </button>
-
-                    <button className="btn default" onClick={() => copyAsins('positive')}>
-                        Copy Positives
-                    </button>
+                    <div className="form-group">
+                        <TextArea
+                            value={fieldValue}
+                            onChange={({target: {value}}) => setFieldValue(value)}
+                        />
+                    </div>
                 </div>
 
-                <ul>
-                    {allAsins.map(asin => {
-                        const isDisabled = negativeAsins.includes(asin)
+                <div className="col all-asins">
+                    <div className="actions">
+                        <h3>
+                            All ASINs
+                        </h3>
 
-                        return (<li
-                            className={`asin ${isDisabled ? 'disabled' : ''}`}
-                            onClick={asinClickHandler(asin)}
-                        >
+                        <button className="btn default" onClick={() => copyAsins('all')}>
+                            Copy All
+                        </button>
+
+                        <button className="btn default" onClick={() => copyAsins('positive')}>
+                            Copy Positives
+                        </button>
+                    </div>
+
+                    <ul>
+                        {allAsins.map(asin => {
+                            const isDisabled = negativeAsins.includes(asin)
+
+                            return (<li
+                                className={`asin ${isDisabled ? 'disabled' : ''}`}
+                                onClick={asinClickHandler(asin)}
+                            >
+                                <div className="image">
+                                    <img src={asinImageUrl(asin)} alt=""/>
+                                </div>
+
+                                <p>
+                                    <span title={asin}>{asin}</span>
+                                    <button className="btn icon" data-asin={asin} onClick={openAsin(asin)}>
+                                        <SVG id={'outside-link'}/>
+                                    </button>
+
+                                    <button className="btn icon" onClick={addNegativeAsin(asin)}>
+                                        <SVG id={'close-window-icon'}/>
+                                    </button>
+                                </p>
+                            </li>)
+                        })}
+                    </ul>
+                </div>
+
+                <div className="col negative-asins">
+                    <div className="actions">
+                        <h3>
+                            Negative ASINs
+                        </h3>
+
+                        <button className="btn default" onClick={() => copyAsins('negative')}>
+                            Copy
+                        </button>
+                    </div>
+
+                    <ul ref={negativeBlockRef}>
+                        {negativeAsins.map(asin => <li className={'asin'} onClick={asinClickHandler(asin, 'negative')}>
                             <div className="image">
                                 <img src={asinImageUrl(asin)} alt=""/>
                             </div>
-
                             <p>
                                 <span title={asin}>{asin}</span>
+
                                 <button className="btn icon" data-asin={asin} onClick={openAsin(asin)}>
                                     <SVG id={'outside-link'}/>
                                 </button>
 
-                                <button className="btn icon" onClick={addNegativeAsin(asin)}>
+                                <button className="btn icon" onClick={removeNegativeAsin(asin)}>
                                     <SVG id={'close-window-icon'}/>
                                 </button>
                             </p>
-                        </li>)
-                    })}
-                </ul>
-            </div>
-
-            <div className="col negative-asins">
-                <div className="actions">
-                    <button className="btn default" onClick={() => copyAsins('negative')}>
-                        Copy
-                    </button>
+                        </li>)}
+                    </ul>
                 </div>
-
-                <ul ref={negativeBlockRef}>
-                    {negativeAsins.map(asin => <li className={'asin'} onClick={asinClickHandler(asin, 'negative')}>
-                        <div className="image">
-                            <img src={asinImageUrl(asin)} alt=""/>
-                        </div>
-                        <p>
-                            <span title={asin}>{asin}</span>
-
-                            <button className="btn icon" data-asin={asin} onClick={openAsin(asin)}>
-                                <SVG id={'outside-link'}/>
-                            </button>
-
-                            <button className="btn icon" onClick={removeNegativeAsin(asin)}>
-                                <SVG id={'close-window-icon'}/>
-                            </button>
-                        </p>
-                    </li>)}
-                </ul>
             </div>
         </section>
     )
