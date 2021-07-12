@@ -1,8 +1,6 @@
 import React from "react"
 import {columnList} from "./tableComponents/columnList"
-import CreateNegativeTargetingsWindow from "./CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
-import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../actions/analytics.actions"
 

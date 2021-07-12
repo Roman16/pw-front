@@ -3,6 +3,8 @@ import TextArea from "antd/es/input/TextArea"
 import './AsinsSorter.less'
 import {SVG} from "../../../../utils/icons"
 
+export const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
+
 const AsinsSorter = () => {
     const [fieldValue, setFieldValue] = useState(''),
         [allAsins, setAllAsins] = useState([]),
@@ -10,7 +12,6 @@ const AsinsSorter = () => {
 
     const negativeBlockRef = useRef(null)
 
-    const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
     const addAsinsHandler = async () => {
         await setAllAsins([...new Set([...allAsins, ...fieldValue

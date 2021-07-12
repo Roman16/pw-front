@@ -18,6 +18,9 @@ import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValue
 import {automatePatDescription} from "../../Targetings/tableComponents/columnList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
+import CustomSelect from "../../../../components/Select/Select"
+
+const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
 export const numberColumns = [
     'clicks',
@@ -237,6 +240,7 @@ export const impressionsColumn = {
     ...renderNumberField()
 }
 
+
 export const skuAsinColumn = {
     title: 'SKU/ASIN',
     dataIndex: 'sku_asin',
@@ -251,7 +255,12 @@ export const skuAsinColumn = {
             <a target={'_blank'}
                href={`https://www.amazon.${item.product_marketplace_id ? marketplaceIdValues[item.product_marketplace_id].domain : 'com'}/dp/${item.asin}`}
             >
-                {item.asin}
+                <Popover
+                    overlayClassName={'sku-asin-image-popover'}
+                    content={<img src={asinImageUrl(item.asin)} alt=""/>}
+                >
+                    {item.asin}
+                </Popover>
             </a>
         </div>
     </div>
