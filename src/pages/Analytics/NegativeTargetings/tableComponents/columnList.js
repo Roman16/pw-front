@@ -53,7 +53,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
             )
         }] : [],
         matchTypeColumn,
-        // statusColumn
+        statusColumn
     ]
 )
 
