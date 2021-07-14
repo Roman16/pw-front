@@ -183,6 +183,8 @@ const Navigation = ({location}) => {
         } else if (mainState.campaignId) {
             if (stateDetails.advertisingType && stateDetails.advertisingType === 'SponsoredDisplay') {
                 setCurrentMenu([...analyticsNavigation.campaign.filter(item => item.key !== 'placements')])
+            } else if (stateDetails.advertisingType && stateDetails.advertisingType === 'SponsoredBrands') {
+                setCurrentMenu([...analyticsNavigation.campaign.filter(item => item.key !== 'product-ads')])
             } else {
                 setCurrentMenu(analyticsNavigation.campaign)
             }
