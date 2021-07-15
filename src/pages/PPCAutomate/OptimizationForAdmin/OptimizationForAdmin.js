@@ -15,13 +15,14 @@ import {Prompt} from "react-router-dom"
 import {optimizationOptions} from './OptimizationVariations/OptimizationVariations'
 import {multiSelectVariations} from './CampaignsConfiguration/CampaignsConfiguration'
 import _ from 'lodash'
+import ConfirmActionPopup from "../../../components/ModalWindow/ConfirmActionPopup"
 
 const CancelToken = axios.CancelToken
 let source = null
 
-let productInformationFromRequest = null,
-    campaignSettingsFromRequest = [],
-    defaultOptimizationVariations = {}
+let campaignSettingsFromRequest = [],
+    defaultOptimizationVariations = {},
+    prevProduct = {id: null}
 
 optimizationOptions.forEach(item => {
     defaultOptimizationVariations[item.value] = true
@@ -29,24 +30,31 @@ optimizationOptions.forEach(item => {
 
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
+        [productInformationFromRequest, setProductInformationFromRequest] = useState(null),
         [visibleDrawer, setVisibleDrawer] = useState(false),
         [stopProcessing, setStopProcessing] = useState(false),
         [saveProcessing, setSaveProcessing] = useState(false),
         [productProcessing, setProductProcessing] = useState(false),
-        [campaignSettings, setCampaignSettings] = useState([])
+        [campaignSettings, setCampaignSettings] = useState([]),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false)
 
     const dispatch = useDispatch()
 
-    const {productId} = useSelector(state => ({
+    const {productId, selectedProduct} = useSelector(state => ({
+        selectedProduct: state.products.selectedProduct,
         productId: state.products.selectedProduct.id || null,
     }))
 
+    const hasChanges = productInformationFromRequest !== null ? ((JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))) : false
 
     const getProductInformation = async () => {
         source && source.cancel()
         source = CancelToken.source()
 
         setProductProcessing(true)
+        setVisibleConfirmWindow(false)
+
+        prevProduct = selectedProduct
 
         try {
             const res = await productsServices.getProductDetails(productId, source.token)
@@ -57,12 +65,12 @@ const OptimizationForAdmin = () => {
                     res[item.value] = true
                 })
             }
-            productInformationFromRequest = {
+            setProductInformationFromRequest({
                 ...res,
                 ...res.status === 'STOPPED' && defaultOptimizationVariations,
                 product_id: productId
 
-            }
+            })
             setProductInformation({
                 ...res,
                 ...res.status === 'STOPPED' && defaultOptimizationVariations,
@@ -206,7 +214,7 @@ const OptimizationForAdmin = () => {
                 optimization_strategy: 'AchieveTargetACoS',
             })
 
-            productInformationFromRequest = product
+            setProductInformationFromRequest(product)
             setProductInformation(product)
 
             dispatch(productsActions.updateProduct({
@@ -263,7 +271,7 @@ const OptimizationForAdmin = () => {
 
                         notification.start({title: productInformationFromRequest.status === 'RUNNING' ? 'Changes saved!' : 'Optimization successfully started'})
 
-                        productInformationFromRequest = product
+                        setProductInformationFromRequest(product)
                         campaignSettingsFromRequest = campaignSettings
 
                         optimizationOptions.forEach(item => {
@@ -283,16 +291,26 @@ const OptimizationForAdmin = () => {
         setSaveProcessing(false)
     }
 
+    const cancelChangingProduct = () => {
+        dispatch(productsActions.fetchProductDetails(prevProduct))
+        setVisibleConfirmWindow(false)
+    }
 
     useEffect(() => {
-        if (productId) getProductInformation()
-
-        return () => {
-            productInformationFromRequest = null
+        if (hasChanges && productId !== prevProduct.id) {
+            setVisibleConfirmWindow(true)
+        } else {
+            if (productId && (productId !== prevProduct.id)) getProductInformation()
         }
     }, [productId])
 
-    const hasChanges = productInformationFromRequest !== null ? ((JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))) : false
+    useEffect(() => {
+        return () => {
+            setProductInformationFromRequest(null)
+            prevProduct = {id: null}
+        }
+    }, [])
+
 
     return (
         <>
@@ -342,6 +360,15 @@ const OptimizationForAdmin = () => {
             </div>
 
             {saveProcessing && <div className="page-loader"><Spin size={'large'}/></div>}
+
+            <ConfirmActionPopup
+                className={'confirm-remove-product-window'}
+                visible={visibleConfirmWindow}
+                title={'Are you sure you want to change product?'}
+                description={'Changes you made are not saved and will be lost.'}
+                handleOk={getProductInformation}
+                handleCancel={cancelChangingProduct}
+            />
 
             <Prompt
                 when={hasChanges}
