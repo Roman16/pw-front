@@ -36,6 +36,7 @@ const OptimizationForAdmin = () => {
         [saveProcessing, setSaveProcessing] = useState(false),
         [productProcessing, setProductProcessing] = useState(false),
         [campaignSettings, setCampaignSettings] = useState([]),
+        [loadingCampaignSettings, setLoadingCampaignSettings] = useState(false),
         [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false)
 
     const dispatch = useDispatch()
@@ -85,6 +86,8 @@ const OptimizationForAdmin = () => {
     }
 
     const getCampaignSettings = async () => {
+        setLoadingCampaignSettings(true)
+
         try {
             const res = await productsServices.getCampaignsSettings(productInformation.id)
 
@@ -106,6 +109,8 @@ const OptimizationForAdmin = () => {
         } catch (e) {
             console.log(e)
         }
+
+        setLoadingCampaignSettings(false)
     }
 
     const updateCampaignSettingsHandler = (data) => {
@@ -341,6 +346,7 @@ const OptimizationForAdmin = () => {
                     optimizationJobId={productInformation.id}
                     isDisabled={productInformation.optimization_strategy == null}
                     jobsList={campaignSettings}
+                    loading={loadingCampaignSettings}
                     getSettings={getCampaignSettings}
                     onUpdate={updateCampaignSettingsHandler}
                 />

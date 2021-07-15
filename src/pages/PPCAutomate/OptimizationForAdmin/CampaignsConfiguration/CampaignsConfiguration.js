@@ -22,7 +22,7 @@ export const multiSelectVariations = [
 ]
 
 
-const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, jobsList, onUpdate}) => {
+const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,loading, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [hasJob, setJobState] = useState(false),
         [searchText, setSearchText] = useState()
@@ -193,7 +193,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, job
                 </div>
 
                 <CustomTable
-                    // loading={processing}
+                    loading={loading}
                     dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
                     // dataSource={jobsList}
                     columns={columns}
