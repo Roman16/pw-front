@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react"
+import React, {useState} from "react"
 import './SaveChanges.less'
 import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
@@ -71,8 +71,6 @@ const SaveChanges = ({product, hasChanges, onStart, onRevert, processing}) => {
                         </button>
                     </div>
                 </>}
-
-
             </section>
 
             <ConfirmActionPopup

@@ -53,6 +53,7 @@ const OptimizationForAdmin = () => {
 
         setProductProcessing(true)
         setVisibleConfirmWindow(false)
+        setCampaignSettings([])
 
         prevProduct = selectedProduct
 
