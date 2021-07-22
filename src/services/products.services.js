@@ -13,11 +13,28 @@ export const productsServices = {
     updateProductTargetAcos,
     getCampaignsSettings,
     updateCampaignsBlacklist,
-    updateProductSettingsById
+    updateProductSettingsById,
+    getProductCogs,
+    createProductCogs,
+    updateProductCogs,
+    deleteProductCogs
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
     return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
+}
+
+function getProductCogs(id) {
+    return api('get', `${productsUrls.productCogs}?product_id=${id}&force=1`)
+}
+function createProductCogs(data) {
+    return api('post', `${productsUrls.productCogs}`, data)
+}
+function updateProductCogs(data) {
+    return api('put', `${productsUrls.productCogs}`, {...data, force: 1})
+}
+function deleteProductCogs(id) {
+    return api('delete', `${productsUrls.productCogs}?record_id=${id}`,)
 }
 
 function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {

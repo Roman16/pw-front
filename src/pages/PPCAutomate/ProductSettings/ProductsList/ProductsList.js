@@ -12,6 +12,7 @@ import {Checkbox, Input, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import $ from 'jquery'
+import CogsWindow from "../CogsWindow/CogsWindow"
 
 const ACTIVE = 'RUNNING'
 const PRODUCT = 'product'
@@ -117,7 +118,9 @@ const advertisingStrategyVariations = [
 const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList, onBlur}) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAll, setSelectedAll] = useState(false),
-        [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false)
+        [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false),
+        [visibleCogsWindow, setVisibleCogsWindow] = useState(false),
+        [selectedProduct, setSelectedProduct] = useState()
 
     const isAdmin = localStorage.getItem('adminToken')
 
@@ -245,11 +248,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 )
             },
             {
-                minWidth: '160px',
+                minWidth: '180px',
                 render: (props, item) => (
                     <InputCurrency
-                        value={item[NET_MARGIN]}
-                        typeIcon='percent'
+                        value={item[COGS]}
                         disabled
                     />
                 )
@@ -311,16 +313,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     <InputCurrency
                         value={item[BREAK_EVEN_ACOS]}
                         typeIcon='percent'
-                        disabled
-                        step={0.01}
-                    />
-                )
-            },
-            {
-                minWidth: '160px',
-                render: (props, item) => (
-                    <InputCurrency
-                        value={item[COGS]}
                         disabled
                         step={0.01}
                     />
@@ -398,6 +390,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         setOpenedProduct(prevState => prevState === id ? null : id)
     }
 
+    const onEditCogs = (product) => {
+        setVisibleCogsWindow(true)
+        setSelectedProduct(product)
+    }
+
     const columns = [
         {
             title: 'Product Name',
@@ -442,26 +439,25 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             )
         },
         {
-            title: <InformationTooltip
-                type={'custom'}
-                description={'It is the percentage of profit generated from revenue after you have accounted for all of your expenses, costs, and open cash flow items. ' +
-                'The formula for calculating net profit margin is total revenue minus COGS, ' +
-                'divided by total revenue. We need this information, so the algorithm calculates your ' +
-                'target ACoS based on your product profitability and business goal.'}>
-                <span className='net-margin'>Net Margin*</span>
-            </InformationTooltip>,
-            dataIndex: NET_MARGIN,
-            key: NET_MARGIN,
-            minWidth: '160px',
+            title: 'CoGS',
+            dataIndex: COGS,
+            key: COGS,
+            minWidth: '180px',
             render: (index, item, indexRow) => {
                 return (
-                    <InputCurrency
-                        value={item[NET_MARGIN]}
-                        typeIcon='percent'
-                        data-intercom-target="net-margin-field"
-                        onChange={event => onChangeRow(event, NET_MARGIN, indexRow)}
-                        onBlur={({target: {value}}) => onBlur(value, NET_MARGIN, indexRow)}
-                    />
+                    <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
+                        <InputCurrency
+                            value={item[COGS]}
+                            disabled={true}
+                            data-intercom-target="net-margin-field"
+                            onChange={event => onChangeRow(event, COGS, indexRow)}
+                            onBlur={({target: {value}}) => onBlur(value, COGS, indexRow)}
+                        />
+
+                        <button className="btn icon edit-btn">
+                            <SVG id={'edit-pen-icon'}/>
+                        </button>
+                    </div>
                 )
             }
         },
@@ -555,20 +551,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                     typeIcon='percent'
                     onChange={event => onChangeRow(event, BREAK_EVEN_ACOS, indexRow)}
                     onBlur={({target: {value}}) => onBlur(value, BREAK_EVEN_ACOS, indexRow)}
-                />
-            )
-        },
-        {
-            title: () => (<span>CoGS</span>),
-            dataIndex: COGS,
-            key: COGS,
-            minWidth: '160px',
-            render: (index, item, indexRow) => (
-                <InputCurrency
-                    value={item[COGS]}
-                    step={0.01}
-                    onChange={event => onChangeRow(event, COGS, indexRow)}
-                    onBlur={({target: {value}}) => onBlur(value, COGS, indexRow)}
                 />
             )
         },
@@ -736,8 +718,14 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                             </div>
                         ))}
                     </div>
-                </div>
-                }            </div>
+                </div>}
+            </div>
+
+            <CogsWindow
+                visible={visibleCogsWindow}
+                productId={selectedProduct && selectedProduct.id}
+                onClose={() => setVisibleCogsWindow(false)}
+            />
         </Fragment>
     )
 }

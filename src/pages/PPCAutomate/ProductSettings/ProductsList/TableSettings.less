@@ -133,14 +133,6 @@
         }
 
         .table-body__row {
-          &:hover {
-            .table-body__field:first-child,
-            .table-body__field:nth-child(2) {
-              background: #FAFAFF;
-
-            }
-          }
-
           &.checked-row {
             .table-body__field:first-child,
             .table-body__field:nth-child(2) {
@@ -149,7 +141,6 @@
 
             .table-body__field .variation-indicator {
               background: #6D6DF6;
-
             }
           }
 
@@ -232,6 +223,31 @@
                 .open-children-list-button {
                   margin: 0 0 0 auto;
                 }
+              }
+            }
+
+            .cogs-field {
+              height: 100%;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              cursor: pointer;
+
+              input {
+                cursor: pointer;
+              }
+            }
+
+            .edit-btn {
+              min-width: 2.857142857142857rem;
+              width: 2.857142857142857rem;
+              height: 2.857142857142857rem;
+              margin: 0 0 0 5px;
+              display: none;
+
+              svg {
+                width: 50%;
+                fill: #C9CBD4;
               }
             }
 
@@ -335,6 +351,18 @@
                   }
                 }
               }
+            }
+          }
+
+
+          &:hover {
+            .table-body__field:first-child,
+            .table-body__field:nth-child(2) {
+              background: #FAFAFF;
+            }
+
+            .edit-btn {
+              display: flex;
             }
           }
         }
