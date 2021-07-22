@@ -17,7 +17,8 @@ const CogsWindow = ({visible, productId, onClose}) => {
     const getCogs = async () => {
         try {
             const res = await productsServices.getProductCogs(productId)
-            setCogsList(res.result.reverse())
+
+            setCogsList(res.result.sort((a,b) => moment(b.start_date).format('YYYYMMDD') - moment(a.start_date).format('YYYYMMDD')))
         } catch (e) {
             console.log(e)
         }
