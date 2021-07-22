@@ -11,29 +11,28 @@ import {Spin} from "antd"
 
 const CogsWindow = ({visible, productId, onClose}) => {
     const [cogsList, setCogsList] = useState([]),
-        [activeItem, setActiveItem] = useState(),
         [activeIndex, setActiveIndex] = useState()
 
     const getCogs = async () => {
         try {
             const res = await productsServices.getProductCogs(productId)
 
-            setCogsList(res.result.sort((a,b) => moment(b.start_date).format('YYYYMMDD') - moment(a.start_date).format('YYYYMMDD')))
+            setCogsList(res.result.sort((a, b) => moment(b.cogs_start_date).format('YYYYMMDD') - moment(a.cogs_start_date).format('YYYYMMDD')))
         } catch (e) {
             console.log(e)
         }
     }
 
     const addNew = (index) => {
-        const defaultItem = {start_date: undefined, cogs_value: undefined},
-            list = [...cogsList]
+        const defaultItem = {cogs_start_date: undefined, cogs_value: undefined},
+            list = [...cogsList.filter(item => item.record_id)]
 
         if (index === 0) {
             setCogsList([defaultItem, ...list])
             setActiveIndex(0)
         } else if (index === cogsList.length) {
             setCogsList([...list, defaultItem])
-            setActiveIndex(cogsList.length)
+            setActiveIndex(list.length)
         } else {
             list.splice(index, 0, defaultItem)
 
@@ -42,12 +41,14 @@ const CogsWindow = ({visible, productId, onClose}) => {
         }
     }
 
-    const onEdit = (index, item) => {
-        setActiveIndex(index)
-        setActiveItem(item)
+    const editHandler = (id) => {
+        const list = [...cogsList.filter(item => item.record_id)]
+        setCogsList(list)
+
+        setActiveIndex(list.findIndex(i => i.record_id === id))
     }
 
-    const onRemove = async (id) => {
+    const removeHandler = async (id) => {
         try {
             await productsServices.deleteProductCogs(id)
             setCogsList([...cogsList.filter((item) => item.record_id !== id)])
@@ -56,11 +57,16 @@ const CogsWindow = ({visible, productId, onClose}) => {
         }
     }
 
+    const cancelActiveHandler = () => {
+        setActiveIndex(undefined)
+        setCogsList([...cogsList.filter(item => item.record_id)])
+    }
+
     const submitItemHandler = async (data) => {
         try {
             const requestData = {
                 product_id: productId,
-                start_date: moment(data.start_date).utc(),
+                cogs_start_date: moment(data.cogs_start_date).utc(),
                 cogs_value: data.cogs_value,
                 record_id: data.record_id || undefined
             }
@@ -86,6 +92,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
 
     useEffect(() => {
         productId && getCogs()
+        setActiveIndex(undefined)
     }, [productId])
 
     return (
@@ -93,6 +100,8 @@ const CogsWindow = ({visible, productId, onClose}) => {
             visible={visible}
             footer={false}
             className={'cogs-window'}
+            handleCancel={onClose}
+            destroyOnClose={true}
         >
             <div className="window-header">
                 <h2>Edit CoGS</h2>
@@ -111,23 +120,29 @@ const CogsWindow = ({visible, productId, onClose}) => {
                 {cogsList.map((item, index) => <li className={activeIndex === index && 'active'}>
                     <div className="add-new-item" onClick={() => addNew(index)}>
                         <PlusIcon/>
+
+                        <div className="line"/>
+                    </div>
+
+                    <div className="current-value">
+                        {numberMask(item.cogs_value, 2)}$
                     </div>
 
                     <PlusIcon/>
 
                     {activeIndex === index ? <EditingCogsFields
-                        data={activeItem}
                         list={cogsList}
                         index={index}
                         onSubmit={submitItemHandler}
+                        onCancel={cancelActiveHandler}
                     /> : <>
-                        <div className="time">{moment(item.start_date).format('DD MMM YYYY, HH:mm')},</div>
+                        <div className="time">{moment(item.cogs_start_date).format('DD MMM YYYY, HH:mm')},</div>
                         <div className="value">{numberMask(item.cogs_value, 2)}$</div>
 
-                        <button className="btn icon edit-btn" onClick={() => onEdit(index, item)}>
+                        <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
                             <SVG id={'edit-pen-icon'}/>
                         </button>
-                        <button className="btn icon remove-btn" onClick={() => onRemove(item.record_id)}>
+                        <button className="btn icon remove-btn" onClick={() => removeHandler(item.record_id)}>
                             <SVG id={'close-window-icon'}/>
                         </button>
                     </>}
@@ -136,7 +151,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
                 {cogsList.length > 0 &&
                 <li className={'new-item'} onClick={() => addNew(cogsList.length)}>
                     <div className="add-new-item">
-                        <PlusIcon/>
+                        <div className="line"/>
                     </div>
 
                     <PlusIcon/>
@@ -147,8 +162,8 @@ const CogsWindow = ({visible, productId, onClose}) => {
     )
 }
 
-const EditingCogsFields = ({data, onSubmit, list, index}) => {
-    const [item, setItem] = useState({...data}),
+const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
+    const [item, setItem] = useState({...list[index]}),
         [processing, setProcessing] = useState(false)
 
     const submitHandler = () => {
@@ -157,25 +172,31 @@ const EditingCogsFields = ({data, onSubmit, list, index}) => {
     }
 
     function disabledDate(current) {
-        if (index === 0) {
-            return current && current <= moment(list[index + 1].start_date).endOf('day')
-        } else if (index === list.length - 1) {
-            return current && current >= moment(list[index - 1].start_date).subtract(1, "days").endOf('day')
+        if (index === 0 && list[index + 1]) {
+            return current && current <= moment(list[index + 1].cogs_start_date).endOf('day')
+        } else if (index === list.length - 1 && list[index - 1]) {
+            return current && current >= moment(list[index - 1].cogs_start_date).subtract(1, "days").endOf('day')
+        } else if (index > 0 && index < list.length - 1) {
+            return current && (current >= moment(list[index - 1].cogs_start_date).subtract(1, "days").endOf('day') || current <= moment(list[index + 1].cogs_start_date).endOf('day'))
         } else {
-            return current && (current >= moment(list[index - 1].start_date).subtract(1, "days").endOf('day') || current <= moment(list[index + 1].start_date).endOf('day'))
+            return false
         }
     }
+
+    useEffect(() => {
+        setItem({...list[index]})
+    }, [list, index])
 
     return (<>
         <DatePicker
             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
             showToday={false}
-            value={item.start_date ? moment(item.start_date) : undefined}
+            value={item.cogs_start_date ? moment(item.cogs_start_date) : undefined}
             showTime={{format: 'HH:mm'}}
             format="DD MMM YYYY, HH:mm"
             placeholder={'Date and time'}
             disabledDate={disabledDate}
-            onChange={(value) => setItem({...item, start_date: value})}
+            onChange={(value) => setItem({...item, cogs_start_date: value})}
         />
 
         <InputCurrency
@@ -184,9 +205,14 @@ const EditingCogsFields = ({data, onSubmit, list, index}) => {
             placeholder={'CoGS'}
         />
 
-        <button className="btn default" onClick={submitHandler} disabled={processing || !item.cogs_value || !item.start_date}>
+        <button className="btn default" onClick={submitHandler}
+                disabled={processing || !item.cogs_value || !item.cogs_start_date}>
             Save
             {processing && <Spin size={'small'}/>}
+        </button>
+
+        <button className="btn white" onClick={onCancel}>
+            Cancel
         </button>
     </>)
 }

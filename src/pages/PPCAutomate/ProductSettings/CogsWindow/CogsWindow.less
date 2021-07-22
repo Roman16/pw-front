@@ -1,6 +1,6 @@
 .custom-modal-window.cogs-window {
-  width: 50vw;
-  max-width: 570px;
+  width: 60vw !important;
+  max-width: 670px;
   height: 70vh;
   display: flex;
 
@@ -43,10 +43,10 @@
 
     ul {
       list-style: none;
-      flex: 1;
       overflow-y: auto;
-      padding: 1.4285714285714286rem 2.857142857142857rem 2.357142857142857rem;
+      padding: 1.4285714285714286rem 0 2.357142857142857rem;
       margin: 0;
+
 
       li {
         display: flex;
@@ -54,29 +54,55 @@
         margin-bottom: 2.857142857142857rem;
         min-height: 2.857142857142857rem;
         position: relative;
+        z-index: 10;
+        padding: 0 2.857142857142857rem;
+
+        .current-value {
+          height: 400%;
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -50%;
+          display: none;
+          justify-content: flex-end;
+          align-items: center;
+          padding: 0 2.857142857142857rem 0 0;
+          font-size: 1rem;
+          font-weight: 500;
+          color: #6D6DF6;
+          z-index: 1;
+        }
 
         .add-new-item {
-          width: 1px;
-          height: 53px;
+          width: 1.42857143rem;
+          height: calc(200% - 8px);
           position: absolute;
-          left: 7px;
-          bottom: 18px;
-          background: #C9CBD4;
+          bottom: calc(50% + 4px);
           display: flex;
           justify-content: center;
           align-items: center;
           z-index: 10;
+
+          .line {
+            height: 100%;
+            width: 2px;
+            background: #C9CBD4;
+
+          }
 
           i {
             display: none;
           }
 
           &:hover {
-            background: #6d6df6;
             cursor: pointer;
 
             i {
-              display: block;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              display: flex;
+              align-items: center;
 
               svg {
                 min-width: 1.4285714285714286rem;
@@ -85,24 +111,38 @@
               }
             }
 
+            .line {
+              background: #6d6df6;
+            }
+
             &::before,
             &::after {
               content: '';
-              width: 7px;
-              height: 7px;
+              width: 8px;
+              height: 8px;
               border-radius: 50%;
               background: #6d6df6;
               position: absolute;
-              left: -3px;
+              left: 0;
+              right: 0;
+              margin: 0 auto;
               z-index: 20;
             }
 
             &::before {
-              top: -7px;
+              top: -8px;
             }
 
             &::after {
-              bottom: -7px;
+              bottom: -8px;
+            }
+
+            & ~ .current-value {
+              display: flex;
+            }
+
+            & ~ li {
+              z-index: 1111111111;
             }
           }
         }
@@ -126,8 +166,8 @@
           z-index: 1;
 
           svg {
-            width: 7px;
-            height: 7px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: #C9CBD4;
 
@@ -191,7 +231,8 @@
             }
           }
 
-          &.default {
+          &.default,
+          &.white {
             height: 2.2857142857142856rem;
             font-weight: 500;
             font-size: 0.8571428571428571rem;
@@ -211,6 +252,8 @@
         }
 
         &.active {
+          z-index: 222;
+
           i {
             z-index: 11;
 
@@ -240,6 +283,11 @@
         font-weight: 500;
         color: #6D6DF6;
         cursor: pointer;
+        z-index: 333;
+
+        &:last-child {
+          z-index: 100;
+        }
 
         i {
           z-index: 11;
@@ -273,6 +321,10 @@
         align-items: center;
 
         .ant-calendar-time-picker-btn {
+          width: 100%;
+          text-align: center;
+          padding: 0 17px;
+          text-transform: capitalize;
           margin: 0;
           color: #6d6df6;
 
@@ -286,6 +338,10 @@
           border: 0;
           margin: 0 0 10px 0;
           color: #fff;
+          font-weight: 500;
+          padding: 0 20px;
+          border-radius: 4px;
+          font-family: Eina;
 
           &:hover {
             background: #5F5FBE;

@@ -248,7 +248,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 )
             },
             {
-                minWidth: '180px',
+                minWidth: '15.5rem',
                 render: (props, item) => (
                     <InputCurrency
                         value={item[COGS]}
@@ -442,16 +442,14 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             title: 'CoGS',
             dataIndex: COGS,
             key: COGS,
-            minWidth: '180px',
-            render: (index, item, indexRow) => {
+            minWidth: '15.5rem',
+            render: (index, item) => {
                 return (
                     <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
                         <InputCurrency
                             value={item[COGS]}
                             disabled={true}
                             data-intercom-target="net-margin-field"
-                            onChange={event => onChangeRow(event, COGS, indexRow)}
-                            onBlur={({target: {value}}) => onBlur(value, COGS, indexRow)}
                         />
 
                         <button className="btn icon edit-btn">
