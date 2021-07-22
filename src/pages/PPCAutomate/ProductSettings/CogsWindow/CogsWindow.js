@@ -151,7 +151,13 @@ const EditingCogsFields = ({data, onSubmit, list, index}) => {
     }
 
     function disabledDate(current) {
-        return current && (current >= moment(list[index - 1].start_date).subtract(1, "days").endOf('day') || current <= moment(list[index + 1].start_date).endOf('day'))
+        if (index === 0) {
+            return current && current <= moment(list[index + 1].start_date).endOf('day')
+        } else if (index === list.length - 1) {
+            return current && current >= moment(list[index - 1].start_date).subtract(1, "days").endOf('day')
+        } else {
+            return current && (current >= moment(list[index - 1].start_date).subtract(1, "days").endOf('day') || current <= moment(list[index + 1].start_date).endOf('day'))
+        }
     }
 
     return (<>
