@@ -119,8 +119,8 @@ const TableList = ({
         deselectAllRows()
 
         dispatch(analyticsActions.setDateRange({
-            startDate: moment(startDate).format('YYYY-MM-DD') || 'lifetime',
-            endDate: moment(endDate).format('YYYY-MM-DD') || 'lifetime'
+            startDate: startDate != null ? moment(startDate).format('YYYY-MM-DD') : 'lifetime',
+            endDate: endDate != null ? moment(endDate).format('YYYY-MM-DD') : 'lifetime'
         }))
     }
 
@@ -168,7 +168,7 @@ const TableList = ({
 
     useEffect(() => {
         deselectAllRows()
-    }, [filters, tableRequestParams,localSorterColumn])
+    }, [filters, tableRequestParams, localSorterColumn])
 
     return (
         <section className={'list-section'}>
