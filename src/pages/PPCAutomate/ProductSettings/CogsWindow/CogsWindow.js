@@ -71,6 +71,11 @@ const CogsWindow = ({visible, productId, onClose}) => {
                 await productsServices.createProductCogs(requestData)
             }
 
+            setCogsList([...cogsList.map((item, index) => {
+                if (index === activeIndex) item = {...data}
+                return item
+            })])
+
             getCogs()
         } catch (e) {
             console.log(e)
@@ -179,7 +184,7 @@ const EditingCogsFields = ({data, onSubmit, list, index}) => {
             placeholder={'CoGS'}
         />
 
-        <button className="btn default" onClick={submitHandler} disabled={processing}>
+        <button className="btn default" onClick={submitHandler} disabled={processing || !item.cogs_value || !item.start_date}>
             Save
             {processing && <Spin size={'small'}/>}
         </button>
