@@ -334,53 +334,51 @@
   }
 
   .pw-date-picker-dropdown {
-    .ant-calendar-footer-show-ok {
+    .ant-calendar-footer {
       width: 100%;
       background: #fff;
       padding: 0;
+      position: relative;
 
       .ant-calendar-footer-btn {
         width: 100%;
+        padding: 0 17px;
+      }
+
+      .ant-calendar-ok-btn {
+        display: none;
+      }
+
+      .ant-calendar-time-picker-btn {
+        position: absolute;
+        left: 17px;
+        top: 0;
+        color: transparent;
+      }
+
+      p {
+        width: max-content;
+        margin: 0 0 5px;
+        color: #6d6df6;
+        cursor: pointer;
+      }
+
+      .actions {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: space-between;
+        margin: 0 0 10px;
 
-        .ant-calendar-time-picker-btn {
-          width: 100%;
-          text-align: center;
-          padding: 0 17px;
-          text-transform: capitalize;
-          margin: 0;
-          color: #6d6df6;
-
-          &:hover {
-            color: #5F5FBE;
-          }
-        }
-
-        .ant-calendar-ok-btn {
-          background: #6D6DF6;
-          border: 0;
-          margin: 0 0 10px 0;
-          color: #fff;
+        .btn {
+          flex: 1;
+          padding: 0;
           font-weight: 500;
-          padding: 0 20px;
-          border-radius: 4px;
-          font-family: Eina;
-          box-shadow: none;
 
-          &:hover {
-            background: #5F5FBE;
-          }
-
-          &.ant-calendar-ok-btn-disabled {
-            cursor: not-allowed;
-            pointer-events: none;
-            background: #C9CBD4;
-            color: #fff;
+          &:first-of-type {
+            margin: 0 10px 0 0;
           }
         }
       }
+
     }
 
     .ant-calendar-time-picker-panel {

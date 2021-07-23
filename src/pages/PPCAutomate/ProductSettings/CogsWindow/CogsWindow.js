@@ -176,7 +176,9 @@ const CogsWindow = ({visible, productId, onClose}) => {
 
 const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
     const [item, setItem] = useState({...list[index]}),
-        [processing, setProcessing] = useState(false)
+        [processing, setProcessing] = useState(false),
+        [visibleDatePicker, setVisibleDatePicker] = useState(false),
+        [visibleTimePicker, setVisibleTimePicker] = useState(false)
 
     const submitHandler = () => {
         setProcessing(true)
@@ -209,8 +211,32 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             placeholder={'Date and time'}
             disabledDate={disabledDate}
             onChange={(value) => setItem({...item, cogs_start_date: value})}
+            open={visibleDatePicker}
+            onOpenChange={(e) => setVisibleDatePicker(true)}
+            onPanelChange={(value, mode) => {
+                setVisibleTimePicker(mode === 'time')
+            }}
+            renderExtraFooter={() => <>
+                <p onClick={() => setVisibleTimePicker(prevState => !prevState)}>Select {visibleTimePicker ? 'date' : 'time'}</p>
 
-            monthCellRender={() => <div><h2>test</h2></div>}
+                <div className="actions">
+                    <button className={'btn default'}
+                            onClick={() => setVisibleDatePicker(false)}>
+                        Ok
+                    </button>
+
+                    <button
+                        className={'btn white'}
+                        disabled={processing}
+                        onClick={() => {
+                            setItem(prevState => ({...prevState, cogs_start_date: list[index].cogs_start_date}))
+                            setVisibleDatePicker(false)
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </>}
         />
 
         <InputCurrency
