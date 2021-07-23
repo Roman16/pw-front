@@ -722,7 +722,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             <CogsWindow
                 visible={visibleCogsWindow}
                 productId={selectedProduct && selectedProduct.id}
-                onClose={() => setVisibleCogsWindow(false)}
+                onClose={() => {
+                    setSelectedProduct(undefined)
+                    setVisibleCogsWindow(false)
+                }}
             />
         </Fragment>
     )

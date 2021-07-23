@@ -95,6 +95,10 @@ const CogsWindow = ({visible, productId, onClose}) => {
         setActiveIndex(undefined)
     }, [productId])
 
+    useEffect(() => {
+        setCogsList([])
+    }, [visible])
+
     return (
         <ModalWindow
             visible={visible}
@@ -117,46 +121,54 @@ const CogsWindow = ({visible, productId, onClose}) => {
                     Add new
                 </li>
 
-                {cogsList.map((item, index) => <li className={activeIndex === index && 'active'}>
-                    <div className="add-new-item" onClick={() => addNew(index)}>
-                        <PlusIcon/>
-
-                        <div className="line"/>
-                    </div>
+                {cogsList.map((item, index) => <>
 
                     <div className="current-value">
-                        {numberMask(item.cogs_value, 2)}$
+                        <div className="add-new-item" onClick={() => addNew(index)}>
+                            <PlusIcon/>
+
+                            <div className="line"/>
+                        </div>
+
+                        <div className="value">{item.cogs_value && `${numberMask(item.cogs_value, 2)}$`}</div>
                     </div>
 
-                    <PlusIcon/>
+                    <li className={activeIndex === index && 'active'}>
+                        <PlusIcon/>
 
-                    {activeIndex === index ? <EditingCogsFields
-                        list={cogsList}
-                        index={index}
-                        onSubmit={submitItemHandler}
-                        onCancel={cancelActiveHandler}
-                    /> : <>
-                        <div className="time">{moment(item.cogs_start_date).format('DD MMM YYYY, HH:mm')},</div>
-                        <div className="value">{numberMask(item.cogs_value, 2)}$</div>
+                        {activeIndex === index ? <EditingCogsFields
+                            list={cogsList}
+                            index={index}
+                            onSubmit={submitItemHandler}
+                            onCancel={cancelActiveHandler}
+                        /> : <>
+                            <div className="time">{moment(item.cogs_start_date).format('DD MMM YYYY, HH:mm')},</div>
+                            <div className="value">{numberMask(item.cogs_value, 2)}$</div>
 
-                        <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
-                            <SVG id={'edit-pen-icon'}/>
-                        </button>
-                        <button className="btn icon remove-btn" onClick={() => removeHandler(item.record_id)}>
-                            <SVG id={'close-window-icon'}/>
-                        </button>
-                    </>}
-                </li>)}
+                            <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
+                                <SVG id={'edit-pen-icon'}/>
+                            </button>
+                            <button className="btn icon remove-btn" onClick={() => removeHandler(item.record_id)}>
+                                <SVG id={'close-window-icon'}/>
+                            </button>
+                        </>}
+                    </li>
+                </>)}
 
-                {cogsList.length > 0 &&
-                <li className={'new-item'} onClick={() => addNew(cogsList.length)}>
-                    <div className="add-new-item">
-                        <div className="line"/>
+                {cogsList.length > 0 && <>
+                    <div className="current-value">
+                        <div className="add-new-item">
+                            <PlusIcon/>
+
+                            <div className="line"/>
+                        </div>
                     </div>
 
-                    <PlusIcon/>
-                    Add new
-                </li>}
+                    <li className={'new-item'} onClick={() => addNew(cogsList.length)}>
+                        <PlusIcon/>
+                        Add new
+                    </li>
+                </>}
             </ul>
         </ModalWindow>
     )
@@ -197,6 +209,8 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             placeholder={'Date and time'}
             disabledDate={disabledDate}
             onChange={(value) => setItem({...item, cogs_start_date: value})}
+
+            monthCellRender={() => <div><h2>test</h2></div>}
         />
 
         <InputCurrency

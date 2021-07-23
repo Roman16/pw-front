@@ -147,8 +147,12 @@ function Report() {
     }, [filters])
 
     useEffect(() => {
-        if ((productId !== null || selectedAll) && !productsFetching)
+        if ((productId !== null || selectedAll) && !productsFetching) {
             fetchReportsList()
+
+        } else if (productId === null) {
+            setReportsList([])
+        }
     }, [productId, currentTab, selectedAll, paginationParams, sorterColumn, filters])
 
     const mainTabs = {
