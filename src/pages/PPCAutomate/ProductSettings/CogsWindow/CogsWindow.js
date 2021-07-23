@@ -17,7 +17,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
         try {
             const res = await productsServices.getProductCogs(productId)
 
-            setCogsList(res.result.sort((a, b) => moment(b.cogs_start_date).format('YYYYMMDD') - moment(a.cogs_start_date).format('YYYYMMDD')))
+            setCogsList(res.result.sort((a, b) => moment(b.cogs_start_date).format('YYYYMMDDHHmm') - moment(a.cogs_start_date).format('YYYYMMDDHHmm')))
         } catch (e) {
             console.log(e)
         }
@@ -66,7 +66,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
         try {
             const requestData = {
                 product_id: productId,
-                cogs_start_date: moment(data.cogs_start_date).utc(),
+                cogs_start_date: moment(data.cogs_start_date).set({second: 0, millisecond: 0}).utc(),
                 cogs_value: data.cogs_value,
                 record_id: data.record_id || undefined
             }
@@ -122,9 +122,12 @@ const CogsWindow = ({visible, productId, onClose}) => {
                 </li>
 
                 {cogsList.map((item, index) => <>
-
-                    <div className="current-value">
-                        <div className="add-new-item" onClick={() => addNew(index)}>
+                    <div
+                        className={`current-value ${(activeIndex === index || activeIndex + 1 === index) ? 'disabled' : ''}`}>
+                        <div
+                            className="add-new-item"
+                            onClick={() => addNew((activeIndex === undefined || cogsList[activeIndex].record_id) ? index : (index > activeIndex || activeIndex === 0) ? index - 1 : index)}
+                        >
                             <PlusIcon/>
 
                             <div className="line"/>
