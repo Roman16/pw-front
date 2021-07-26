@@ -54,7 +54,7 @@ const Templates = () => {
             const res = await adminServices.fetchZthTemplates(requestParams)
 
             setTotalSize(res.count)
-            setTemplatesList(res.templates)
+            setTemplatesList(res.templates.reverse())
         } catch (e) {
 
         }
