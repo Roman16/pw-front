@@ -27,13 +27,17 @@ export const adminServices = {
 
     zthVersionInformation,
     fetchZthJobs,
+    fetchZthCreationJobs,
     fetchSemanticInformation,
     fetchEnums,
     fetchExactBids,
     convertSemantic,
     uploadSemantic,
 
-    fetchZthTemplates
+    fetchZthTemplates,
+    restartZthJob,
+    downloadSearchTermReport,
+    downloadProductReport
 }
 
 function checkUserEmail(email) {
@@ -179,8 +183,11 @@ function zthVersionInformation() {
 }
 
 function fetchZthJobs({page, title, pageSize, status}) {
-
     return zthRequest('get', `${adminUrls.zthJobs}?limit=${pageSize}&offset=${(page - 1) * pageSize}${title && `&title=${title}`}${status && `&status=${status}`}`)
+}
+
+function fetchZthCreationJobs({page, title, pageSize, status}) {
+    return zthRequest('get', `${adminUrls.zthCreationJobs}?limit=${pageSize}&offset=${(page - 1) * pageSize}${title && `&title=${title}`}${status && `&status=${status}`}`)
 }
 
 function fetchSemanticInformation(url) {
@@ -205,5 +212,16 @@ function uploadSemantic(data) {
 
 function fetchZthTemplates({page, pageSize}) {
     return zthRequest('get', `${adminUrls.zthTemplates}`)
+}
+
+function restartZthJob(id) {
+    return zthRequest('post', `${adminUrls.restartJob(id)}`)
+}
+
+function downloadSearchTermReport(id) {
+    return zthRequest('get', `${adminUrls.searchTermReport(id)}`)
+}
+function downloadProductReport(id) {
+    return zthRequest('get', `${adminUrls.productReport(id)}`)
 }
 
