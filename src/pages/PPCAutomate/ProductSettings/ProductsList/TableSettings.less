@@ -366,7 +366,7 @@
           }
 
 
-          &:hover {
+          &:not(.expand-row):hover {
             .table-body__field:first-child,
             .table-body__field:nth-child(2) {
               background: #FAFAFF;
@@ -387,12 +387,19 @@
             padding: 0;
             border-bottom: 1px solid #c9cbd4;
 
+            &:hover {
+              .edit-btn {
+                display: flex;
+              }
+            }
+
             &:last-child {
               border: 0;
             }
           }
 
           .table-body__field {
+            background: none !important;
 
             .variation-indicator {
               min-width: 8px;

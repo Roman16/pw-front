@@ -389,7 +389,23 @@
           }
         }
       }
+    }
 
+    .ant-calendar-disabled-cell {
+      .ant-calendar-date {
+        background: #f5f5f5 !important;
+        color: rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .ant-calendar-selected-day {
+      .ant-calendar-date {
+        background: #8fd39d;
+      }
+    }
+
+     .ant-calendar .ant-calendar-today .ant-calendar-date {
+      border: 0 !important;
     }
 
     .ant-calendar-time-picker-panel {
@@ -413,6 +429,14 @@
             font-weight: 400;
             background: rgba(245, 245, 255, 0.45);
             color: #6D6DF6;
+          }
+
+          &.ant-calendar-time-picker-select-option-disabled {
+            color: #00000040;
+
+            &:hover {
+              background: #fff;
+            }
           }
         }
       }

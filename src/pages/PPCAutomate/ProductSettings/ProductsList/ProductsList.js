@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import InputCurrency from '../../../../components/Inputs/InputCurrency'
 import ProductItem from '../../../../components/ProductList/ProductItem'
 import {notification} from '../../../../components/Notification'
@@ -129,15 +129,15 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         $('.table-overflow').animate({scrollLeft: 100000}, 400)
     }
 
-    const onChangeRow = (value, item, index) => {
-        if (products[index][item] !== value) {
+    const onChangeRow = (value, item, index, parentIndex) => {
+        if (parentIndex ? products[parentIndex].product.variations[index][item]  !== value : products[index][item] !== value) {
             if (value === '' || value == null) {
-                setRowData(null, item, index)
+                setRowData(null, item, index, parentIndex)
             } else if (item === PRICE_FROM_USER && value > 0) {
-                setRowData(value, item, index)
+                setRowData(value, item, index, parentIndex)
                 clearTimeout(priceTimerId)
             } else if (item === PRICE_FROM_USER && value <= 0) {
-                setRowData(value, item, index)
+                setRowData(value, item, index, parentIndex)
 
                 clearTimeout(priceTimerId)
                 priceTimerId = setTimeout(() => {
@@ -217,7 +217,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         })
     }
 
-    const expandedRowRender = (props) => {
+    const expandedRowRender = (props, parentIndex) => {
         const columns = [
             {
                 width: '35rem',
@@ -232,29 +232,41 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 minWidth: '160px',
                 render: (props, item) => (
                     <InputCurrency
-                        value={item[PRICE]}
+                        value={props[PRICE]}
                         disabled
                     />
                 )
             },
             {
                 minWidth: '160px',
-                render: (props, item) => (
+                render: (props, item, indexRow) => (
                     <InputCurrency
-                        value={item[PRICE_FROM_USER]}
-                        disabled
+                        key={PRICE_FROM_USER}
+                        value={props[PRICE_FROM_USER]}
+                        min={0}
                         step={0.01}
+                        onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow, parentIndex)}
+                        onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow, parentIndex)}
                     />
                 )
             },
             {
                 minWidth: '15.5rem',
-                render: (props, item) => (
-                    <InputCurrency
-                        value={item[COGS]}
-                        disabled
-                    />
-                )
+                render: (index, item) => {
+                    return (
+                        <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
+                            <InputCurrency
+                                value={item[COGS]}
+                                disabled={true}
+                                data-intercom-target="net-margin-field"
+                            />
+
+                            <button className="btn icon edit-btn">
+                                <SVG id={'edit-pen-icon'}/>
+                            </button>
+                        </div>
+                    )
+                }
             },
             {
                 minWidth: '175px',
@@ -351,7 +363,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
 
 
         return (
-            props.product.variations && props.product.variations.map(productVariation => (
+            props.product.variations && props.product.variations.map((productVariation, i) => (
                     <div>
 
                         {columns.map((item, index) => {
@@ -364,7 +376,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                                     >
                                         {index === 0 && <div className="variation-indicator"/>}
 
-                                        {item.render(productVariation, props)}
+                                        {item.render(productVariation, props, i)}
                                     </div>
                                 )
                             }

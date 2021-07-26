@@ -190,13 +190,37 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
 
     function disabledDate(current) {
         if (index === 0 && list[index + 1]) {
-            return current && current <= moment(list[index + 1].cogs_start_date).endOf('day')
+            return current && current <= moment(list[index + 1].cogs_start_date).subtract(1, 'days').endOf('day')
         } else if (index === list.length - 1 && list[index - 1]) {
-            return current && current >= moment(list[index - 1].cogs_start_date).subtract(1, "days").endOf('day')
+            return current && current >= moment(list[index - 1].cogs_start_date).endOf('day')
         } else if (index > 0 && index < list.length - 1) {
-            return current && (current >= moment(list[index - 1].cogs_start_date).subtract(1, "days").endOf('day') || current <= moment(list[index + 1].cogs_start_date).endOf('day'))
+            return current && (current >= moment(list[index - 1].cogs_start_date).endOf('day') || current <= moment(list[index + 1].cogs_start_date).subtract(1, 'days').endOf('day'))
         } else {
             return false
+        }
+    }
+
+    function range(start, end) {
+        const result = []
+        for (let i = start; i < end; i++) {
+            result.push(i)
+        }
+        return result
+    }
+
+    function disabledDateTime() {
+        if (list[index + 1] && item.cogs_start_date && (moment(list[index + 1].cogs_start_date).format('YYYYMMDD') === moment(item.cogs_start_date).format('YYYYMMDD'))) {
+            return {
+                disabledHours: () => range(0, +moment(list[index + 1].cogs_start_date).format('HH')),
+                disabledMinutes: () => item.cogs_start_date && moment(list[index + 1].cogs_start_date).format('YYYYMMDDHH') === moment(item.cogs_start_date).format('YYYYMMDDHH') ? range(0, +moment(list[index + 1].cogs_start_date).format('mm') + 1) : [],
+            }
+        }
+
+        if (list[index - 1] && item.cogs_start_date && (moment(list[index - 1].cogs_start_date).format('YYYYMMDD') === moment(item.cogs_start_date).format('YYYYMMDD'))) {
+            return {
+                disabledHours: () => range(+moment(list[index - 1].cogs_start_date).format('HH') + 1, 24),
+                disabledMinutes: () => item.cogs_start_date && moment(list[index - 1].cogs_start_date).format('YYYYMMDDHH') === moment(item.cogs_start_date).format('YYYYMMDDHH') ? range(+moment(list[index - 1].cogs_start_date).format('mm'), 60 ) : [],
+            }
         }
     }
 
@@ -208,11 +232,13 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
         <DatePicker
             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
             showToday={false}
+            showNow={false}
             value={item.cogs_start_date ? moment(item.cogs_start_date) : undefined}
             showTime={{format: 'HH:mm'}}
             format="DD MMM YYYY, HH:mm"
             placeholder={'Date and time'}
             disabledDate={disabledDate}
+            disabledTime={disabledDateTime}
             onChange={(value) => setItem({...item, cogs_start_date: value})}
             open={visibleDatePicker}
             onOpenChange={(e) => setVisibleDatePicker(true)}
@@ -224,6 +250,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
 
                 <div className="actions">
                     <button className={'btn default'}
+                            disabled={!item.cogs_start_date}
                             onClick={() => setVisibleDatePicker(false)}>
                         Ok
                     </button>

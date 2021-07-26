@@ -210,7 +210,7 @@ const CustomTable = ({
                             {expandedRowRender && (openedRow ? openedRow(report) : true) &&
                             <div
                                 className={`table-body__row expand-row ${selectedRows.length > 0 && selectedRows.find(item => item === report.id) ? 'checked-row' : ''}`}>
-                                {expandedRowRender(report)}
+                                {expandedRowRender(report, index)}
                             </div>}
                         </>)
                     })}

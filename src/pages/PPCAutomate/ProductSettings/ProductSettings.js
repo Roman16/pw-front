@@ -141,18 +141,28 @@ const ProductSettingsMain = () => {
         })
     }
 
-    const setRowData = (value, item, index) => {
+    const setRowData = (value, item, index, parentIndex) => {
         editableRow = index
 
         const newList = productsList.map((product, productIndex) => {
-            if (productIndex === index) {
+            if (productIndex === index && !parentIndex) {
                 product[item] = value
+            }
+
+            if (parentIndex && parentIndex === productIndex) {
+                product.product.variations = [...product.product.variations.map((child, i) => {
+                    if (i === index) {
+                        child[item] = value
+                    }
+
+                    return child
+                })]
             }
 
             return (product)
         })
-        setProductsList(newList)
 
+        setProductsList(newList)
 
         clearTimeout(timerId)
         timerId = setTimeout(() => {
