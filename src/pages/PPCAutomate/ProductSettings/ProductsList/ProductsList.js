@@ -252,11 +252,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '15.5rem',
-                render: (index, item) => {
+                render: (props, item) => {
                     return (
-                        <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
+                        <div className={'cogs-field'} onClick={() => onEditCogs(props)}>
                             <InputCurrency
-                                value={item[COGS]}
+                                value={props[COGS]}
                                 disabled={true}
                                 data-intercom-target="net-margin-field"
                             />

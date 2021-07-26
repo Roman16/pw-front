@@ -6,6 +6,7 @@
   margin-bottom: 0;
   color: #000;
 
+
   .filters {
     display: flex;
     margin-bottom: 20px;
@@ -27,8 +28,10 @@
     }
   }
 
-  .btn.refresh {
-
+  &.zth-templates {
+    .custom-table {
+      max-height: 80vh;
+    }
   }
 
   .custom-table {
@@ -65,6 +68,25 @@
 
       .no-data {
         padding: 12px 0;
+      }
+
+      .align-left {
+        width: 100%;
+        text-align: left;
+      }
+
+      ul {
+        margin: 0;
+        list-style: none;
+
+        li {
+          display: flex;
+
+          &::before {
+            content: '-';
+            margin: 0 5px 0 0;
+          }
+        }
       }
 
       .table-body__row {

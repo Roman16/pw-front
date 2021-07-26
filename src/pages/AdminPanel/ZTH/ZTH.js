@@ -7,6 +7,7 @@ import Jobs from "./Jobs/Jobs"
 import TokenBlock from "./TokenBlock/TokenBlock"
 import {SVG} from "../../../utils/icons"
 import AsinsSorter from "./AsinsSorter/AsinsSorter"
+import Templates from "./Templates/Templates"
 
 const ZTH = () => {
     if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
@@ -27,6 +28,11 @@ const ZTH = () => {
                 <NavLink to={'/admin-panel/zth/jobs'}>
                     ZTH Upload Jobs
                 </NavLink>
+
+                <NavLink to={'/admin-panel/zth/templates'}>
+                    ZTH Templates
+                </NavLink>
+
                 <NavLink to={'/admin-panel/zth/asins-filtering'}>
                     ASINs Filtering
                 </NavLink>
@@ -39,6 +45,7 @@ const ZTH = () => {
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
             <Route path="/admin-panel/zth/jobs" component={Jobs}/>
             <Route path="/admin-panel/zth/asins-filtering" component={AsinsSorter}/>
+            <Route path="/admin-panel/zth/templates" component={Templates}/>
         </section>
     )
 }

@@ -32,6 +32,8 @@ export const adminServices = {
     fetchExactBids,
     convertSemantic,
     uploadSemantic,
+
+    fetchZthTemplates
 }
 
 function checkUserEmail(email) {
@@ -199,5 +201,9 @@ function convertSemantic(data) {
 
 function uploadSemantic(data) {
     return zthRequest('post', `${adminUrls.uploadSemantic}`, data)
+}
+
+function fetchZthTemplates({page, pageSize}) {
+    return zthRequest('get', `${adminUrls.zthTemplates}`)
 }
 
