@@ -142,7 +142,7 @@ const ProductSettingsMain = () => {
     }
 
     const setRowData = (value, item, index, parentIndex) => {
-        editableRow = index
+        editableRow = parentIndex || index
 
         const newList = productsList.map((product, productIndex) => {
             if (productIndex === index && !parentIndex) {
@@ -166,17 +166,22 @@ const ProductSettingsMain = () => {
 
         clearTimeout(timerId)
         timerId = setTimeout(() => {
-            savedRow = index
+            savedRow = parentIndex || index
             savedValue = value
 
-            updateSettingsHandlerById(productsList[index])
+            if (parentIndex) updateSettingsHandlerById(newList[parentIndex])
+            else updateSettingsHandlerById(newList[index])
+
+            editableRow = null
         }, 2000)
     }
 
-    const blurRowHandler = (value, item, index) => {
+    const blurRowHandler = (value, item, index, parentIndex) => {
+        const localIndex = parentIndex || index
+
         clearTimeout(timerId)
-        if (editableRow === index) {
-            if (value != savedValue || index != savedRow) {
+        if (editableRow === localIndex) {
+            if (value != savedValue || localIndex != savedRow) {
                 updateSettingsHandlerById(productsList[index])
                 editableRow = null
             }

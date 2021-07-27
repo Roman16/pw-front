@@ -17,14 +17,14 @@ const CogsWindow = ({visible, productId, onClose}) => {
         try {
             const res = await productsServices.getProductCogs(productId)
 
-            setCogsList(res.result.sort((a, b) => moment(b.cogs_start_date).format('YYYYMMDDHHmm') - moment(a.cogs_start_date).format('YYYYMMDDHHmm')))
+            setCogsList(res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm')))
         } catch (e) {
             console.log(e)
         }
     }
 
     const addNew = (index) => {
-        const defaultItem = {cogs_start_date: undefined, cogs_value: undefined},
+        const defaultItem = {cogs_start_datetime: undefined, cogs_value: undefined},
             list = [...cogsList.filter(item => item.record_id)]
 
         if (index === 0) {
@@ -66,7 +66,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
         try {
             const requestData = {
                 product_id: productId,
-                cogs_start_date: moment(data.cogs_start_date).set({second: 0, millisecond: 0}).utc(),
+                cogs_start_datetime: moment(data.cogs_start_datetime).set({second: 0, millisecond: 0}).utc(),
                 cogs_value: data.cogs_value,
                 record_id: data.record_id || undefined
             }
@@ -145,7 +145,7 @@ const CogsWindow = ({visible, productId, onClose}) => {
                             onSubmit={submitItemHandler}
                             onCancel={cancelActiveHandler}
                         /> : <>
-                            <div className="time">{moment(item.cogs_start_date).format('DD MMM YYYY, HH:mm')},</div>
+                            <div className="time">{moment(item.cogs_start_datetime).format('DD MMM YYYY, HH:mm')},</div>
                             <div className="value">{numberMask(item.cogs_value, 2)}$</div>
 
                             <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
@@ -190,11 +190,11 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
 
     function disabledDate(current) {
         if (index === 0 && list[index + 1]) {
-            return current && current <= moment(list[index + 1].cogs_start_date).subtract(1, 'days').endOf('day')
+            return current && current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day')
         } else if (index === list.length - 1 && list[index - 1]) {
-            return current && current >= moment(list[index - 1].cogs_start_date).endOf('day')
+            return current && current >= moment(list[index - 1].cogs_start_datetime).endOf('day')
         } else if (index > 0 && index < list.length - 1) {
-            return current && (current >= moment(list[index - 1].cogs_start_date).endOf('day') || current <= moment(list[index + 1].cogs_start_date).subtract(1, 'days').endOf('day'))
+            return current && (current >= moment(list[index - 1].cogs_start_datetime).endOf('day') || current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day'))
         } else {
             return false
         }
@@ -209,17 +209,17 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
     }
 
     function disabledDateTime() {
-        if (list[index + 1] && item.cogs_start_date && (moment(list[index + 1].cogs_start_date).format('YYYYMMDD') === moment(item.cogs_start_date).format('YYYYMMDD'))) {
+        if (list[index + 1] && item.cogs_start_datetime && (moment(list[index + 1].cogs_start_datetime).format('YYYYMMDD') === moment(item.cogs_start_datetime).format('YYYYMMDD'))) {
             return {
-                disabledHours: () => range(0, +moment(list[index + 1].cogs_start_date).format('HH')),
-                disabledMinutes: () => item.cogs_start_date && moment(list[index + 1].cogs_start_date).format('YYYYMMDDHH') === moment(item.cogs_start_date).format('YYYYMMDDHH') ? range(0, +moment(list[index + 1].cogs_start_date).format('mm') + 1) : [],
+                disabledHours: () => range(0, +moment(list[index + 1].cogs_start_datetime).format('HH')),
+                disabledMinutes: () => item.cogs_start_datetime && moment(list[index + 1].cogs_start_datetime).format('YYYYMMDDHH') === moment(item.cogs_start_datetime).format('YYYYMMDDHH') ? range(0, +moment(list[index + 1].cogs_start_datetime).format('mm') + 1) : [],
             }
         }
 
-        if (list[index - 1] && item.cogs_start_date && (moment(list[index - 1].cogs_start_date).format('YYYYMMDD') === moment(item.cogs_start_date).format('YYYYMMDD'))) {
+        if (list[index - 1] && item.cogs_start_datetime && (moment(list[index - 1].cogs_start_datetime).format('YYYYMMDD') === moment(item.cogs_start_datetime).format('YYYYMMDD'))) {
             return {
-                disabledHours: () => range(+moment(list[index - 1].cogs_start_date).format('HH') + 1, 24),
-                disabledMinutes: () => item.cogs_start_date && moment(list[index - 1].cogs_start_date).format('YYYYMMDDHH') === moment(item.cogs_start_date).format('YYYYMMDDHH') ? range(+moment(list[index - 1].cogs_start_date).format('mm'), 60 ) : [],
+                disabledHours: () => range(+moment(list[index - 1].cogs_start_datetime).format('HH') + 1, 24),
+                disabledMinutes: () => item.cogs_start_datetime && moment(list[index - 1].cogs_start_datetime).format('YYYYMMDDHH') === moment(item.cogs_start_datetime).format('YYYYMMDDHH') ? range(+moment(list[index - 1].cogs_start_datetime).format('mm'), 60 ) : [],
             }
         }
     }
@@ -233,13 +233,13 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
             showToday={false}
             showNow={false}
-            value={item.cogs_start_date ? moment(item.cogs_start_date) : undefined}
+            value={item.cogs_start_datetime ? moment(item.cogs_start_datetime) : undefined}
             showTime={{format: 'HH:mm'}}
             format="DD MMM YYYY, HH:mm"
             placeholder={'Date and time'}
             disabledDate={disabledDate}
             disabledTime={disabledDateTime}
-            onChange={(value) => setItem({...item, cogs_start_date: value})}
+            onChange={(value) => setItem({...item, cogs_start_datetime: value})}
             open={visibleDatePicker}
             onOpenChange={(e) => setVisibleDatePicker(true)}
             onPanelChange={(value, mode) => {
@@ -250,7 +250,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
 
                 <div className="actions">
                     <button className={'btn default'}
-                            disabled={!item.cogs_start_date}
+                            disabled={!item.cogs_start_datetime}
                             onClick={() => setVisibleDatePicker(false)}>
                         Ok
                     </button>
@@ -259,7 +259,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
                         className={'btn white'}
                         disabled={processing}
                         onClick={() => {
-                            setItem(prevState => ({...prevState, cogs_start_date: list[index].cogs_start_date}))
+                            setItem(prevState => ({...prevState, cogs_start_datetime: list[index].cogs_start_datetime}))
                             setVisibleDatePicker(false)
                         }}
                     >
@@ -276,7 +276,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
         />
 
         <button className="btn default" onClick={submitHandler}
-                disabled={processing || !item.cogs_value || !item.cogs_start_date}>
+                disabled={processing || !item.cogs_value || !item.cogs_start_datetime}>
             Save
             {processing && <Spin size={'small'}/>}
         </button>

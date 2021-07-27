@@ -27,12 +27,15 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasN
 function getProductCogs(id) {
     return api('get', `${productsUrls.productCogs}?product_id=${id}&force=1`)
 }
+
 function createProductCogs(data) {
     return api('post', `${productsUrls.productCogs}`, data)
 }
+
 function updateProductCogs(data) {
     return api('put', `${productsUrls.productCogs}`, {...data, force: 1})
 }
+
 function deleteProductCogs(id) {
     return api('delete', `${productsUrls.productCogs}?record_id=${id}`,)
 }
@@ -43,6 +46,7 @@ function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, on
 
 function updateProductSettings(parameters) {
     return api('post', `${productsUrls.updateSettings}/${parameters.id}`, {
+        product: {...parameters.product},
         'product_margin_value': parameters.product_margin_value,
         'item_price': parameters.item_price,
         'item_price_from_user': parameters.item_price_from_user,
