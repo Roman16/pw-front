@@ -219,7 +219,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
         if (list[index - 1] && item.cogs_start_datetime && (moment(list[index - 1].cogs_start_datetime).format('YYYYMMDD') === moment(item.cogs_start_datetime).format('YYYYMMDD'))) {
             return {
                 disabledHours: () => range(+moment(list[index - 1].cogs_start_datetime).format('HH') + 1, 24),
-                disabledMinutes: () => item.cogs_start_datetime && moment(list[index - 1].cogs_start_datetime).format('YYYYMMDDHH') === moment(item.cogs_start_datetime).format('YYYYMMDDHH') ? range(+moment(list[index - 1].cogs_start_datetime).format('mm'), 60 ) : [],
+                disabledMinutes: () => item.cogs_start_datetime && moment(list[index - 1].cogs_start_datetime).format('YYYYMMDDHH') === moment(item.cogs_start_datetime).format('YYYYMMDDHH') ? range(+moment(list[index - 1].cogs_start_datetime).format('mm'), 60) : [],
             }
         }
     }
@@ -273,10 +273,11 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             value={item.cogs_value}
             onChange={(value) => setItem({...item, cogs_value: value})}
             placeholder={'CoGS'}
+            className={item.cogs_value < 0 && 'failed'}
         />
 
         <button className="btn default" onClick={submitHandler}
-                disabled={processing || !item.cogs_value || !item.cogs_start_datetime}>
+                disabled={processing || item.cogs_value === undefined || item.cogs_value === '' || !item.cogs_start_datetime || item.cogs_value < 0}>
             Save
             {processing && <Spin size={'small'}/>}
         </button>
