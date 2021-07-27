@@ -46,7 +46,6 @@ function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, on
 
 function updateProductSettings(parameters) {
     return api('post', `${productsUrls.updateSettings}/${parameters.id}`, {
-        product: {...parameters.product},
         'product_margin_value': parameters.product_margin_value,
         'item_price': parameters.item_price,
         'item_price_from_user': parameters.item_price_from_user,
@@ -56,7 +55,6 @@ function updateProductSettings(parameters) {
         'max_bid_auto_campaign': parameters.max_bid_auto_campaign,
         'desired_acos': parameters.desired_acos,
         'break_even_acos': parameters.break_even_acos,
-        'cogs': parameters.cogs,
         'advertising_strategy': parameters.advertising_strategy,
         'bsr_tracking': parameters.bsr_tracking,
         'friendly_name': parameters.friendly_name,

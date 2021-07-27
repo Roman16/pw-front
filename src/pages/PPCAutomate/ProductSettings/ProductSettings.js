@@ -169,7 +169,7 @@ const ProductSettingsMain = () => {
             savedRow = parentIndex || index
             savedValue = value
 
-            if (parentIndex) updateSettingsHandlerById(newList[parentIndex])
+            if (parentIndex) updateSettingsHandlerById(newList[parentIndex].product.variations[index])
             else updateSettingsHandlerById(newList[index])
 
             editableRow = null
