@@ -107,6 +107,8 @@ export const adminUrls = {
     restartJob: id => `zero-to-hero/creation-jobs/${id}/restart`,
     searchTermReport: id => `zero-to-hero/creation-jobs/${id}/download-search-term-report`,
     productReport: id => `zero-to-hero/creation-jobs/${id}/download-product-report`,
+    createParams: `zero-to-hero/get-default-input-parameters`,
+    reportFileSize: `zero-to-hero/get-max-report-file-sizes`,
 }
 
 export const daypartingUrls = {

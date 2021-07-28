@@ -37,7 +37,10 @@ export const adminServices = {
     fetchZthTemplates,
     restartZthJob,
     downloadSearchTermReport,
-    downloadProductReport
+    downloadProductReport,
+    fetchCreateParams,
+    fetchReportFileSize
+
 }
 
 function checkUserEmail(email) {
@@ -223,5 +226,11 @@ function downloadSearchTermReport(id) {
 }
 function downloadProductReport(id) {
     return zthRequest('get', `${adminUrls.productReport(id)}`)
+}
+function fetchCreateParams() {
+    return zthRequest('get', `${adminUrls.createParams}`)
+}
+function fetchReportFileSize() {
+    return zthRequest('get', `${adminUrls.reportFileSize}`)
 }
 

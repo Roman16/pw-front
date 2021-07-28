@@ -1,48 +1,76 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 
 import './CreateSemanticCore.less'
 import '../ConvertSemanticCore/ConvertSemanticCore.less'
 import InputParameters from "./InputParameters"
-import MainKeywords from "./MainKeywords"
+import MainKeywords from "./Keywords/Keywords"
 import ReportFile from "./ReportFile"
 import ProductInformation from "./ProductInformation"
-import Variations from "../ConvertSemanticCore/Variations"
 import CreateOptions from "./CreateOptions"
+import {adminServices} from "../../../../services/admin.services"
+import Variations from "./Variations"
+import {Spin} from "antd"
 
 const CreateSemanticCore = () => {
-    const [semanticData, setSemanticData] = useState({
-        conversionOptions: {
-            converter: {
-                useInputParametersProductName: true,
-            },
-            productInformation: {
-                variations: []
-            },
-            saver: {
-                saveBulkUploadAs: 'xlsx'
-            },
-        }
+    const [semanticData, setSemanticData] = useState({}),
+        [allEnums, setAllEnums] = useState({}),
+        [reportFileSize, setReportFileSize] = useState({}),
+        [loading, setLoading] = useState(true)
 
-    })
+    const getDefaultParams = async () => {
+        setLoading(true)
+
+        try {
+            const [params, enums, fileSize] = await Promise.all([adminServices.fetchCreateParams(), adminServices.fetchEnums(), adminServices.fetchReportFileSize()])
+
+            setAllEnums(enums)
+            setReportFileSize(fileSize)
+            setSemanticData(params.defaultInputParameters)
+
+            setLoading(false)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const changeSemanticDataHandler = (data) => {
+        setSemanticData(data)
+    }
+
+    useEffect(() => {
+        getDefaultParams()
+    }, [])
 
     return (<section className={'convert-semantic-core create-semantic-core'}>
         <h2>Create Semantic Core</h2>
 
-        <InputParameters/>
+        {loading ? <Spin size={'large'}/> : <>
+            <InputParameters/>
 
-        <MainKeywords/>
+            <MainKeywords
+                semanticData={semanticData}
+            />
 
-        <ReportFile/>
+            <ReportFile
+                semanticData={semanticData}
+            />
 
-        <ProductInformation/>
+            <ProductInformation
+                semanticData={semanticData}
+                onChange={changeSemanticDataHandler}
+            />
 
-        <Variations
-            semanticData={semanticData}
-            onChange={(data) => setSemanticData(data)}
-        />
+            <Variations
+                semanticData={semanticData}
+                onChange={(data) => setSemanticData(data)}
+            />
 
-        <CreateOptions/>
+            <CreateOptions
+                semanticData={semanticData}
+                allEnums={allEnums}
 
+                onChange={changeSemanticDataHandler}
+            /></>}
     </section>)
 }
 

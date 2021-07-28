@@ -4,9 +4,50 @@
     flex-direction: column;
   }
 
+  .ant-upload {
+    display: flex;
+    flex-direction: column;
+
+    .ant-btn {
+      width: max-content;
+    }
+  }
+
+  .ant-upload-list {
+    max-width: 20%;
+  }
+
+  .all-keywords {
+    .custom-table {
+      max-height: 400px;
+      height: max-content;
+
+      .table-body .table-body__row .table-body__field {
+        padding: 0 !important;
+
+        input {
+          border-radius: 0;
+          border-color: transparent;
+        }
+
+        &:first-of-type {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+
   .product-information {
     .ant-checkbox-wrapper {
       margin: 0 0 15px 0;
     }
   }
+
+  .conversion-options {
+    .custom-table {
+      max-height: 400px;
+    }
+  }
+
 }

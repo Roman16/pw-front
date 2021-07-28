@@ -1,7 +1,17 @@
 import React from "react"
 import {Checkbox, Input} from "antd"
 
-const ProductInformation = () => {
+const ProductInformation = ({semanticData, onChange}) => {
+
+    const changeDataHandler = (obg, name, value) => {
+        onChange({
+            ...semanticData,
+            [obg]: {
+                ...semanticData[obg],
+                [name]: value
+            }
+        })
+    }
 
     return (
         <div className={'product-information col'}>
@@ -10,11 +20,19 @@ const ProductInformation = () => {
             <div className="row cols-4">
                 <div className="form-group">
                     <label htmlFor="">Product name:</label>
-                    <Input type="text"/>
+                    <Input
+                        type="text"
+                        value={semanticData.productInformation.productName}
+                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'productName', value)}
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="">Brand:</label>
-                    <Input type="text"/>
+                    <Input
+                        type="text"
+                        value={semanticData.productInformation.brand}
+                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'brand', value)}
+                    />
                 </div>
             </div>
 
@@ -22,11 +40,19 @@ const ProductInformation = () => {
             <div className="row cols-4">
                 <div className="form-group">
                     <label htmlFor="">Max new keywords count:</label>
-                    <Input type="number"/>
+                    <Input
+                        type="number"
+                        value={semanticData.keywordsProvider.maxNewKeywords}
+                        onChange={({target: {value}}) => changeDataHandler('keywordsProvider', 'maxNewKeywords', value)}
+                    />
                 </div>
                 <div className="form-group">
                     <label htmlFor="">TPK keywords count:</label>
-                    <Input type="number"/>
+                    <Input
+                        type="number"
+                        value={semanticData.keywordsProvider.tpkKeywordsCount}
+                        onChange={({target: {value}}) => changeDataHandler('keywordsProvider', 'tpkKeywordsCount', value)}
+                    />
                 </div>
             </div>
 
