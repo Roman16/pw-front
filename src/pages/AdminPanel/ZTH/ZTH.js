@@ -13,7 +13,7 @@ import CreateSemanticCore from "./CreateSemanticCore/CreateSemanticCore"
 
 const ZTH = () => {
     if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
-        history.push('/admin-panel/zth/convert')
+        history.push('/admin-panel/zth/create')
     }
 
     const token = localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : localStorage.getItem('token')
