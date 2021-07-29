@@ -39,7 +39,8 @@ export const adminServices = {
     downloadSearchTermReport,
     downloadProductReport,
     fetchCreateParams,
-    fetchReportFileSize
+    fetchReportFileSize,
+    createZTH
 
 }
 
@@ -145,7 +146,7 @@ function changeUserPassword(type, user, password) {
 
 //----------------------------
 
-const zthRequest = (method, url, data) => {
+const zthRequest = (method, url, data, contentType) => {
     const baseUrl =
         process.env.REACT_APP_ENV === 'production'
             ? `${process.env.REACT_APP_API_PROD}/api/agency-server/api/v1/` || ''
@@ -161,6 +162,7 @@ const zthRequest = (method, url, data) => {
         headers: {
             'Authorization': adminToken ? `Bearer ${adminToken}` : `Bearer ${token}`,
             'X-PW-Agency-ZTH-API-Token': zthToken,
+            'Content-Type': contentType ?  'multipart/form-data' : 'application/json'
         },
         data: data
     }
@@ -232,5 +234,8 @@ function fetchCreateParams() {
 }
 function fetchReportFileSize() {
     return zthRequest('get', `${adminUrls.reportFileSize}`)
+}
+function createZTH(data) {
+    return zthRequest('post', `${adminUrls.createSemantic}`, data, 'multipart/form-data')
 }
 

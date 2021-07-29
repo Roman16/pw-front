@@ -109,6 +109,7 @@ export const adminUrls = {
     productReport: id => `zero-to-hero/creation-jobs/${id}/download-product-report`,
     createParams: `zero-to-hero/get-default-input-parameters`,
     reportFileSize: `zero-to-hero/get-max-report-file-sizes`,
+    createSemantic: `zero-to-hero/create`,
 }
 
 export const daypartingUrls = {

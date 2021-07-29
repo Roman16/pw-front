@@ -3,7 +3,7 @@ import React from "react"
 const InputParameters = ({onUpload}) => {
 
     const changeUploadHandler = ({target: {files}}) => {
-        const file = files.item(0)
+        const file = files.item(files.length - 1)
 
         onUpload(file)
     }
@@ -16,6 +16,7 @@ const InputParameters = ({onUpload}) => {
                 id={'myFile'}
                 type="file"
                 accept=".json,application/json"
+                multiple={false}
                 onChange={changeUploadHandler}
             />
         </div>

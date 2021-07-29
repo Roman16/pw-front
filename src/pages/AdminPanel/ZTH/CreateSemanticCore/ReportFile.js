@@ -1,8 +1,15 @@
 import React from "react"
 
-const ReportFile = ({fileSize}) => {
-    const changeUploadHandler = () => {
+const ReportFile = ({fileSize, onChange}) => {
+    const changeUploadHandler = (name, files) => {
+        const file = files.item(files.length - 1)
 
+        if (file.size > fileSize.searchTermsReportMaxFileSizeBytes) {
+            alert(`Max size ${fileSize.searchTermsReportMaxFileSizeBytes / 1048576} MB`)
+            return
+        }
+
+        onChange({[name]: file})
     }
 
     return (
@@ -14,19 +21,20 @@ const ReportFile = ({fileSize}) => {
                     id={'myFile'}
                     type="file"
                     accept=".xlsx"
-                    onChange={changeUploadHandler}
+                    multiple={false}
+                    onChange={({target: {files}}) => changeUploadHandler('searchTerm', files)}
                 />
             </div>
             <br/>
             <div className={'form-group'}>
-
                 <label htmlFor="productReport">Choose Product report file to use</label>
                 <input
                     name="myFile"
                     id={'myFile'}
                     type="file"
                     accept=".xlsx"
-                    onChange={changeUploadHandler}
+                    multiple={false}
+                    onChange={({target: {files}}) => changeUploadHandler('productReport', files)}
                 />
             </div>
         </div>

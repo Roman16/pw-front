@@ -5,7 +5,7 @@ import CustomSelect from "../../../../components/Select/Select"
 
 const Option = Select.Option
 
-const CreateOptions = ({semanticData, allEnums, onChange, onGetParams}) => {
+const CreateOptions = ({semanticData, allEnums, onChange, onGetParams, onCreate}) => {
     const changeDataHandler = (obg, name, value) => {
         onChange({
             ...semanticData,
@@ -74,7 +74,7 @@ const CreateOptions = ({semanticData, allEnums, onChange, onGetParams}) => {
                 <button
                     // disabled={!selectedUserId}
                     className={'btn default submit'}
-                    // onClick={() => setVisibleConfirm(true)}
+                    onClick={onCreate}
                 >
                     Schedule Zero to Hero job
                 </button>

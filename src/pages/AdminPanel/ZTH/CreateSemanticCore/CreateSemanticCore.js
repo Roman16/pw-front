@@ -15,6 +15,10 @@ import * as dataSaveService from "../../../../utils/saveFile"
 
 const CreateSemanticCore = () => {
     const [semanticData, setSemanticData] = useState({}),
+        [reportFiles, setReportFiles] = useState({
+            searchTerm: undefined,
+            productReport: undefined
+        }),
         [allEnums, setAllEnums] = useState({}),
         [reportFileSize, setReportFileSize] = useState({}),
         [loading, setLoading] = useState(true)
@@ -63,6 +67,32 @@ const CreateSemanticCore = () => {
         dataSaveService.saveInputParameters([getInputParameters()])
     }
 
+    const createZeroToHeroHandler = async () => {
+        const requestData = new FormData()
+
+        const ips = JSON.stringify([getInputParameters()])
+        requestData.set(
+            'inputParameters',
+            new Blob([ips], {type: 'application/json'})
+        )
+
+        if (reportFiles.searchTerm) requestData.set('searchTerm', reportFiles.searchTerm)
+        if (reportFiles.productReport) requestData.set('productReport', reportFiles.productReport)
+
+
+        try {
+            const job = await adminServices.createZTH(requestData)
+
+            if (job.status !== 'ERROR' && job.status !== 'FAILED') {
+                alert(`Successfully scheduled Zero to Hero creation job with id: ${job.id}, with title: ${job.title}`)
+            } else {
+                alert(`Zero to Hero job with id: ${job.id}, failed to schedule with error message: ${job.errorText}`)
+            }
+        } catch (error) {
+            alert(`Failed to schedule new Zero to Hero creation job. Error message: ${error.message}`)
+        }
+    }
+
     const parseInputParametersFile = (file) => {
         setLoading(true)
 
@@ -101,6 +131,7 @@ const CreateSemanticCore = () => {
 
             <ReportFile
                 fileSize={reportFileSize}
+                onChange={(data) => setReportFiles({...reportFiles, ...data})}
             />
 
             <ProductInformation
@@ -120,6 +151,7 @@ const CreateSemanticCore = () => {
                 onChange={changeSemanticDataHandler}
 
                 onGetParams={downloadInputParams}
+                onCreate={createZeroToHeroHandler}
             /></>}
     </section>)
 }
