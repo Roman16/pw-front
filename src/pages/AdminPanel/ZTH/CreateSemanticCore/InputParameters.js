@@ -1,14 +1,23 @@
 import React from "react"
-import {Upload, Button} from 'antd'
 
-const InputParameters = () => {
+const InputParameters = ({onUpload}) => {
+
+    const changeUploadHandler = ({target: {files}}) => {
+        const file = files.item(0)
+
+        onUpload(file)
+    }
 
     return (
         <div className={'choose-input-parameters form-group'}>
-            <Upload maxCount={1} showUploadList={false}>
-                <label htmlFor="">Choose input-parameters.json file to upload settings</label>
-                <Button>Select File</Button>
-            </Upload>
+            <label htmlFor="myFile">Choose input-parameters.json file to upload settings</label>
+            <input
+                name="myFile"
+                id={'myFile'}
+                type="file"
+                accept=".json,application/json"
+                onChange={changeUploadHandler}
+            />
         </div>
     )
 }

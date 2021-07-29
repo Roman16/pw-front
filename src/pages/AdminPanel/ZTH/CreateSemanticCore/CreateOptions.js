@@ -5,7 +5,7 @@ import CustomSelect from "../../../../components/Select/Select"
 
 const Option = Select.Option
 
-const CreateOptions = ({semanticData, allEnums, onChange}) => {
+const CreateOptions = ({semanticData, allEnums, onChange, onGetParams}) => {
     const changeDataHandler = (obg, name, value) => {
         onChange({
             ...semanticData,
@@ -66,9 +66,8 @@ const CreateOptions = ({semanticData, allEnums, onChange}) => {
 
             <div className="row actions">
                 <button
-                    // disabled={convertProcessing}
                     className={'btn default submit'}
-                    // onClick={onConvert}
+                    onClick={onGetParams}
                 >
                     Get input parameters file
                 </button>

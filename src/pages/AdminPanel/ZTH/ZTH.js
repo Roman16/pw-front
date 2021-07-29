@@ -23,9 +23,9 @@ const ZTH = () => {
             <TokenBlock/>
 
             <div className="tabs">
-                {/*<NavLink to={'/admin-panel/zth/create'}>*/}
-                {/*    Create Semantic Core*/}
-                {/*</NavLink>*/}
+                <NavLink to={'/admin-panel/zth/create'}>
+                    Create Semantic Core
+                </NavLink>
 
                 <NavLink to={'/admin-panel/zth/convert'}>
                     Convert Semantic Core

@@ -64,13 +64,13 @@ const Variations = ({semanticData, onChange}) => {
         },
         {
             title: 'Use for Suggested ASINs',
-            dataIndex: 'useForSuggestedAsins',
-            key: 'useForSuggestedAsins',
+            dataIndex: 'useForSubCategoryASINsSearch',
+            key: 'useForSubCategoryASINsSearch',
             width: '300px',
             render: (checked, item, index) => {
                 return (<Checkbox
                     checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
+                    onChange={({target: {checked}}) => changeVariationHandler('useForSubCategoryASINsSearch', checked, index)}
                 />)
             }
         },
@@ -80,6 +80,7 @@ const Variations = ({semanticData, onChange}) => {
         setVariations([...variations, {
             sku: '',
             listingUrlsSKUs: [],
+            useForSubCategoryASINsSearch: true,
             useForProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
@@ -97,6 +98,7 @@ const Variations = ({semanticData, onChange}) => {
             if (index === activeVariationIndex) {
                 variation.listingUrlsSKUs[indexChangedRow] = {
                     ...variation.listingUrlsSKUs[indexChangedRow],
+                    useForSubCategoryASINsSearch: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForSubCategoryASINsSearch : true,
                     useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
                     [name]: value
                 }
@@ -145,11 +147,18 @@ const Variations = ({semanticData, onChange}) => {
             elem.listingUrlsSKUs.push({
                 listingUrl: x.listingUrl,
                 sku: x.sku,
-                useForProductAds: x.useForProductAds
+                useForSubCategoryASINsSearch: x.useForSubCategoryASINsSearch,
+                useForProductAds: x.useForProductAds,
             })
         })
 
-        setVariations(map)
+        setVariations([...map, {
+            sku: '',
+            listingUrlsSKUs: [],
+            useForSubCategoryASINsSearch: true,
+            useForProductAds: true,
+            themeValues: [{theme: '', value: '', relatedValues: []}]
+        }])
     }, [])
 
     useEffect(() => {
@@ -161,6 +170,7 @@ const Variations = ({semanticData, onChange}) => {
                     .reduce((result, variation) => result.concat(variation.listingUrlsSKUs.map(item => ({
                         listingUrl: item.listingUrl,
                         sku: item.sku,
+                        useForSubCategoryASINsSearch: item.useForSubCategoryASINsSearch,
                         useForProductAds: item.useForProductAds,
                         themeValues: variation.themeValues
                     }))), [])
@@ -211,7 +221,10 @@ const Variations = ({semanticData, onChange}) => {
 
             <CustomTable
                 columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true}]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
+                    useForSubCategoryASINsSearch: true,
+                    useForProductAds: true,
+                }]}
             />
 
             <br/>

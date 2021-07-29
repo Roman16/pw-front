@@ -2,8 +2,26 @@ import React from "react"
 import CustomTable from "../../../../../components/Table/CustomTable"
 import {columns} from "./allColumns"
 
-const Keywords = ({semanticData}) => {
-    const allColumns = columns()
+const Keywords = ({semanticData, onChange}) => {
+
+    const changeDataHandler = (name, field, value, index) => {
+        const newData = [...semanticData.creator[name]]
+        newData[index] = {
+            ...newData[index],
+            [field]: value
+        }
+
+        onChange({
+            ...semanticData,
+            creator: {
+                ...semanticData.creator,
+                [name]: [...newData]
+            }
+        })
+    }
+
+    const allColumns = columns(changeDataHandler)
+
 
     return (<div className={'all-keywords'}>
         <div className="row cols-5">
@@ -43,21 +61,21 @@ const Keywords = ({semanticData}) => {
             <div className="form-group">
                 <label htmlFor="">Negative ASINs:</label>
                 <CustomTable
-                    columns={allColumns.negativeExacts}
+                    columns={allColumns.negativeAsins}
                     dataSource={[...semanticData.creator.negativeASINs, {text: ''}]}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Global negative phrases:</label>
                 <CustomTable
-                    columns={allColumns.negativeExacts}
+                    columns={allColumns.globalNegativePhrases}
                     dataSource={[...semanticData.creator.globalNegativePhrases, {text: ''}]}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Global negative exacts:</label>
                 <CustomTable
-                    columns={allColumns.negativeExacts}
+                    columns={allColumns.globalNegativeExacts}
                     dataSource={[...semanticData.creator.globalNegativeExacts, {text: ''}]}
                 />
             </div>

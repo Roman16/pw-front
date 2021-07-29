@@ -1,23 +1,34 @@
 import React from "react"
-import {Button, Upload} from "antd"
 
-const ReportFile = () => {
+const ReportFile = ({fileSize}) => {
+    const changeUploadHandler = () => {
+
+    }
 
     return (
-        <div className={'choose-report-file form-group'}>
-            <Upload
-                accept={'.xlsx'}
-            >
+        <div className={'choose-report-file'}>
+            <div className={'form-group'}>
                 <label htmlFor="searchTermReport">Choose Search Term report file to use</label>
-                <Button>Select File</Button>
-            </Upload>
+                <input
+                    name="myFile"
+                    id={'myFile'}
+                    type="file"
+                    accept=".xlsx"
+                    onChange={changeUploadHandler}
+                />
+            </div>
             <br/>
-            <Upload
-                accept={'.xlsx'}
-            >
+            <div className={'form-group'}>
+
                 <label htmlFor="productReport">Choose Product report file to use</label>
-                <Button>Select File</Button>
-            </Upload>
+                <input
+                    name="myFile"
+                    id={'myFile'}
+                    type="file"
+                    accept=".xlsx"
+                    onChange={changeUploadHandler}
+                />
+            </div>
         </div>
     )
 }

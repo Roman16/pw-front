@@ -1,7 +1,7 @@
 import React from "react"
 import {Input} from "antd"
 
-export const columns = () => ({
+export const columns = (onChange) => ({
     mainKeywords: [
         {
             title: '',
@@ -14,18 +14,18 @@ export const columns = () => ({
             title: 'Keyword text',
             dataIndex: 'text',
             key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+            render: (text, item, index) => <Input
+                value={text}
+                onChange={({target: {value}}) => onChange('mainKeywords', 'text', value, index)}
             />
         },
         {
             title: 'Search volume',
-            dataIndex: 'value',
-            key: 'value',
-            render: (url, item, index) => <Input
-                value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+            dataIndex: 'searchVolume',
+            key: 'searchVolume',
+            render: (value, item, index) => <Input
+                value={value}
+                onChange={({target: {value}}) => onChange('mainKeywords', 'searchVolume', value, index)}
             />
         },
     ],
@@ -43,16 +43,16 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('baseKeywords', 'text', value, index)}
             />
         },
         {
             title: 'Search volume',
-            dataIndex: 'value',
-            key: 'value',
+            dataIndex: 'searchVolume',
+            key: 'searchVolume',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('baseKeywords', 'searchVolume', value, index)}
             />
         },
     ],
@@ -70,7 +70,7 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('productNegativePhrases', 'text', value, index)}
             />
         },
     ],
@@ -88,7 +88,7 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('productNegativeExacts', 'text', value, index)}
             />
         },
     ],
@@ -106,7 +106,7 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('negativeASINs', 'text', value, index)}
             />
         },
     ],
@@ -124,7 +124,7 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('globalNegativePhrases', 'text', value, index)}
             />
         },
     ],
@@ -142,7 +142,7 @@ export const columns = () => ({
             key: 'text',
             render: (url, item, index) => <Input
                 value={url}
-                // onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+                onChange={({target: {value}}) => onChange('globalNegativeExacts', 'text', value, index)}
             />
         },
     ],
