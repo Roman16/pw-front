@@ -5,8 +5,9 @@ import {adminServices} from "../../../../services/admin.services"
 import moment from "moment"
 import {Input, Select} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
-import {saveInputParameters} from "../../../../utils/saveFile"
+import {saveFile, saveInputParameters} from "../../../../utils/saveFile"
 import CustomSelect from "../../../../components/Select/Select"
+import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
@@ -55,32 +56,19 @@ const CreationJobs = () => {
 
 
     const restartHandler = async id => {
-        setJobsList([...jobsList.map(item => {
-            if (item.id === id) item.status = 'IN_PROGRESS'
-            return item
-        })])
-
         try {
             await adminServices.restartZthJob(id)
-
+            notification.success({title: `Successfully restarted Zero to Hero job with id: ${id}`})
+            await getData()
         } catch (e) {
             console.log(e)
         }
     }
 
-    const downloadSearchTermReportHandler = async id => {
+    const downloadReportHandler = async (report, id) => {
         try {
-            const res = await adminServices.downloadSearchTermReport(id)
-            console.log(res)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-    const downloadProductReportHandler = async id => {
-        try {
-            const res = await adminServices.downloadProductReport(id)
-            console.log(res)
-
+            const res = await adminServices.downloadReport(report, id)
+            saveFile(res, 'xlsx')
         } catch (e) {
             console.log(e)
         }
@@ -149,7 +137,7 @@ const CreationJobs = () => {
             key: 'searchTermReportExists',
             width: '150px',
             render: (value, item) => value ?
-                <button onClick={() => downloadSearchTermReportHandler(item.id)}>Download</button> :
+                <button onClick={() => downloadReportHandler('search-term', item.id)}>Download</button> :
                 <span className={'no-file'}>No File</span>
         },
         {
@@ -158,7 +146,7 @@ const CreationJobs = () => {
             key: 'productReportExists',
             width: '130px',
             render: (value, item) => value ?
-                <button onClick={() => downloadProductReportHandler(item.id)}>Download</button> :
+                <button onClick={() => downloadReportHandler('product', item.id)}>Download</button> :
                 <span className={'no-file'}>No File</span>
         },
         {

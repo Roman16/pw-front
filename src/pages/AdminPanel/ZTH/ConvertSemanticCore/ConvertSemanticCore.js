@@ -473,10 +473,12 @@ const ConvertSemanticCore = () => {
                 <ConversionOptions
                     zthEnums={zthEnums}
                     semanticData={semanticData}
-                    onChange={(data) => setSemanticData(data)}
+
                     uploadProcessing={uploadProcessing}
                     convertProcessing={convertProcessing}
 
+
+                    onChange={(data) => setSemanticData(data)}
                     onConvert={convertSemanticHandler}
                     onUpload={uploadSemanticHandler}
                 />

@@ -11,6 +11,7 @@ import {adminServices} from "../../../../services/admin.services"
 import Variations from "./Variations"
 import {Spin} from "antd"
 import * as dataSaveService from "../../../../utils/saveFile"
+import {notification} from "../../../../components/Notification"
 
 
 const CreateSemanticCore = () => {
@@ -84,12 +85,12 @@ const CreateSemanticCore = () => {
             const job = await adminServices.createZTH(requestData)
 
             if (job.status !== 'ERROR' && job.status !== 'FAILED') {
-                alert(`Successfully scheduled Zero to Hero creation job with id: ${job.id}, with title: ${job.title}`)
+                notification.success({title: `Successfully scheduled Zero to Hero creation job with id: ${job.id}, with title: ${job.title}`})
             } else {
-                alert(`Zero to Hero job with id: ${job.id}, failed to schedule with error message: ${job.errorText}`)
+                notification.error({title: `Zero to Hero job with id: ${job.id}, failed to schedule with error message: ${job.errorText}`})
             }
         } catch (error) {
-            alert(`Failed to schedule new Zero to Hero creation job. Error message: ${error.message}`)
+            console.log(error)
         }
     }
 
@@ -106,7 +107,7 @@ const CreateSemanticCore = () => {
                 setLoading(false)
             }
             reader.onerror = (event) => {
-                alert('Error reading file')
+                console.log(event)
                 setLoading(false)
             }
         }

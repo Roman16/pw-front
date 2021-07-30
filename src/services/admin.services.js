@@ -36,8 +36,7 @@ export const adminServices = {
 
     fetchZthTemplates,
     restartZthJob,
-    downloadSearchTermReport,
-    downloadProductReport,
+    downloadReport,
     fetchCreateParams,
     fetchReportFileSize,
     createZTH
@@ -222,12 +221,8 @@ function fetchZthTemplates({page, pageSize}) {
 function restartZthJob(id) {
     return zthRequest('post', `${adminUrls.restartJob(id)}`)
 }
-
-function downloadSearchTermReport(id) {
-    return zthRequest('get', `${adminUrls.searchTermReport(id)}`)
-}
-function downloadProductReport(id) {
-    return zthRequest('get', `${adminUrls.productReport(id)}`)
+function downloadReport(report,id) {
+    return zthRequest('get', `${adminUrls.downloadReport(id)}`)
 }
 function fetchCreateParams() {
     return zthRequest('get', `${adminUrls.createParams}`)

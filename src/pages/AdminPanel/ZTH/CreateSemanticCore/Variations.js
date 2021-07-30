@@ -189,52 +189,52 @@ const Variations = ({semanticData, onChange}) => {
             <button className={'btn default'} onClick={add}>Add new variation</button>
             <br/>
 
-            <ul className="variations-list list-tabs">
-                {variations.map((variation, index) => (<li
-                    onClick={() => setActiveVariationIndex(index)}
-                    className={index === activeVariationIndex && 'active'}
-                >
+            {variations.length > 0 && <>
+                <ul className="variations-list list-tabs">
+                    {variations.map((variation, index) => (<li
+                        onClick={() => setActiveVariationIndex(index)}
+                        className={index === activeVariationIndex && 'active'}
+                    >
 
-                    <VariationName
-                        variation={variation}
-                    />
+                        <VariationName
+                            variation={variation}
+                        />
 
-                    <button onClick={(e) => removeVariationHandler(e, index)}>
-                        <SVG id={'close-icon'}/>
+                        <button onClick={(e) => removeVariationHandler(e, index)}>
+                            <SVG id={'close-icon'}/>
+                        </button>
+                    </li>))}
+                </ul>
+                <div className="actions row">
+                    <button className="btn default"
+                            onClick={() => copiedThemes = variations[activeVariationIndex].themeValues}>
+                        Copy themes
                     </button>
-                </li>))}
-            </ul>
 
-            <div className="actions row">
-                <button className="btn default"
-                        onClick={() => copiedThemes = variations[activeVariationIndex].themeValues}>
-                    Copy themes
-                </button>
+                    <button className="btn default" onClick={pasteThemesHandler}>
+                        Paste themes
+                    </button>
+                </div>
+                <br/>
 
-                <button className="btn default" onClick={pasteThemesHandler}>
-                    Paste themes
-                </button>
-            </div>
-            <br/>
+                <h4>Listing URLs and SKUs:</h4>
 
-            <h4>Listing URLs and SKUs:</h4>
+                <CustomTable
+                    columns={columns}
+                    dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
+                        useForSubCategoryASINsSearch: true,
+                        useForProductAds: true,
+                    }]}
+                />
 
-            <CustomTable
-                columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
-                    useForSubCategoryASINsSearch: true,
-                    useForProductAds: true,
-                }]}
-            />
+                <br/>
 
-            <br/>
-
-            <Themes
-                themes={variations[activeVariationIndex] && variations[activeVariationIndex].themeValues}
-                variationIndex={activeVariationIndex}
-                setThemes={(value) => setVariationThemes(value)}
-            />
-
+                <Themes
+                    themes={variations[activeVariationIndex] && variations[activeVariationIndex].themeValues}
+                    variationIndex={activeVariationIndex}
+                    setThemes={(value) => setVariationThemes(value)}
+                />
+            </>}
         </div>
     )
 }
