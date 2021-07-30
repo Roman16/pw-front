@@ -5,7 +5,7 @@ import {adminServices} from "../../../../services/admin.services"
 import moment from "moment"
 import {Input, Select} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
-import {saveFile, saveInputParameters} from "../../../../utils/saveFile"
+import {saveInputParameters} from "../../../../utils/saveFile"
 import CustomSelect from "../../../../components/Select/Select"
 import {notification} from "../../../../components/Notification"
 
@@ -23,6 +23,14 @@ const CreationJobs = () => {
             pageSize: 200,
             status: ''
         })
+
+    const _baseUrl = process.env.REACT_APP_ENV === 'production'
+        ? `${process.env.REACT_APP_API_PROD}/api/agency-server/api/v1/` || ''
+        : `${process.env.REACT_APP_API_URL}/api/agency-server/api/v1/` || ''
+
+    const getZTHToken = () => {
+        return localStorage.getItem('zthToken')
+    }
 
     const getData = async () => {
         setProcessing(true)
@@ -65,13 +73,12 @@ const CreationJobs = () => {
         }
     }
 
-    const downloadReportHandler = async (report, id) => {
-        try {
-            const res = await adminServices.downloadReport(report, id)
-            saveFile(res, 'xlsx')
-        } catch (e) {
-            console.log(e)
-        }
+    const getZTHSearchTermReportDownloadPath = (jobId) => {
+        return `${_baseUrl}/zero-to-hero/creation-jobs/${jobId}/download-search-term-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
+    }
+
+    const getZTHProductReportDownloadPath = (jobId) => {
+        return `${_baseUrl}/zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
     }
 
     const columns = [
@@ -137,7 +144,7 @@ const CreationJobs = () => {
             key: 'searchTermReportExists',
             width: '150px',
             render: (value, item) => value ?
-                <button onClick={() => downloadReportHandler('search-term', item.id)}>Download</button> :
+                `<a target="_blank" href="${getZTHSearchTermReportDownloadPath(item.id)}">Download</a>` :
                 <span className={'no-file'}>No File</span>
         },
         {
@@ -146,7 +153,7 @@ const CreationJobs = () => {
             key: 'productReportExists',
             width: '130px',
             render: (value, item) => value ?
-                <button onClick={() => downloadReportHandler('product', item.id)}>Download</button> :
+                `<a target="_blank" href="${getZTHProductReportDownloadPath(item.id)}">Download</a>` :
                 <span className={'no-file'}>No File</span>
         },
         {
