@@ -233,4 +233,31 @@ function fetchReportFileSize() {
 function createZTH(data) {
     return zthRequest('post', `${adminUrls.createSemantic}`, data, 'multipart/form-data')
 }
+//
+// function createZTH(data) {
+//     const config = {
+//         method: 'POST',
+//         url: 'https://software.profitwhales.com:45888/api/v1/zero-to-hero/create',
+//         headers: {
+//             'X-PW-Agency-ZTH-API-Token': '5VTC7QSZ3OQpU3f02ghgMKl4btib1lAcGV9GmcBXs4pJ1N73JfYfcrel9zMWSOcU',
+//         },
+//         data: data
+//     }
+//
+//
+//     return new Promise((resolve, reject) => {
+//         axios(config)
+//             .then(function (response) {
+//                 resolve(response.data)
+//             })
+//             .catch(function (error) {
+//                 if (error.response && error.response.data && error.response.data.errorMessage) {
+//                     notification.error({title: error.response.data.errorMessage})
+//                 } else {
+//                     notification.error({title: 'Error!'})
+//                 }
+//                 reject(error)
+//             })
+//     })
+// }
 

@@ -7,7 +7,7 @@ import Variations from "./Variations"
 import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
 import {notification} from "../../../../components/Notification"
-import {saveFile} from "../../../../utils/saveFile"
+import {saveFile, saveGoogleSpreadsheet, saveWorkbook} from "../../../../utils/saveFile"
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -385,6 +385,8 @@ const ConvertSemanticCore = () => {
 
         try {
             const res = await adminServices.convertSemantic(semanticData)
+
+            semanticData.convertToXLSXWorkBook && saveGoogleSpreadsheet(res)
 
             res.bulkUploadDocuments && res.bulkUploadDocuments.forEach(doc => {
                 saveFile(doc, semanticData.conversionOptions.saver.saveBulkUploadAs)

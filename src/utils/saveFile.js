@@ -20,6 +20,19 @@ export const saveInputParameters = (objs) => {
     el.removeChild(link)
 }
 
+export const saveGoogleSpreadsheet = (apiResponse) => {
+// generate XLSX workbook
+    const workbook = XLSX.utils.book_new()
+    apiResponse.xlsxWorkBook.sheets.forEach(x => {
+        const sheet = XLSX.utils.json_to_sheet(x.jsonData, {skipHeader: true})
+        XLSX.utils.book_append_sheet(workbook, sheet, x.name)
+    })
+
+// save workbook to user file system
+    const workbookFilename = `${apiResponse.xlsxWorkBook.name}.xlsx`
+    XLSX.writeFile(workbook, workbookFilename)
+}
+
 
 const saveAsExcel = (doc, type) => {
     const staticData = {
