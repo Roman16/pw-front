@@ -8,7 +8,6 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import {productsServices} from "../../../../services/products.services"
 import {Spin} from "antd"
-import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 
 const CogsWindow = ({visible, productId, product, onClose}) => {
     const [cogsList, setCogsList] = useState([]),
@@ -60,6 +59,8 @@ const CogsWindow = ({visible, productId, product, onClose}) => {
             } catch (e) {
                 console.log(e)
             }
+
+            setVisibleConfirm(false)
         }
     }
 
@@ -183,12 +184,31 @@ const CogsWindow = ({visible, productId, product, onClose}) => {
                 </ul>
             </ModalWindow>
 
-            <ConfirmActionPopup
+            <ModalWindow
+                footer={false}
+                className={'delete-confirm-window'}
+                destroyOnClose={true}
                 visible={visibleConfirm}
-                description={'Are you sure?'}
-                handleOk={() => removeHandler(cogsList[0].record_id, true)}
                 handleCancel={() => setVisibleConfirm(false)}
-            />
+
+            >
+                <h1>Delete last COGS entry?</h1>
+
+                <p>
+                    You are trying to delete the last known COGS value for product on Optimization. If you delete it,
+                    Optimization won't be running until you set new COGS value for this product.
+                </p>
+
+                <div className="actions">
+                    <button className={'btn white'} onClick={() => removeHandler(cogsList[0].record_id, true)}>
+                        Confirm
+                    </button>
+
+                    <button type={'button'} className={'btn default'} onClick={() => setVisibleConfirm(false)}>
+                        Cancel
+                    </button>
+                </div>
+            </ModalWindow>
         </>
     )
 }
