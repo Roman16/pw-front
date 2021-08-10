@@ -247,7 +247,6 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         step={0.01}
                         onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow, parentIndex)}
                         onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow, parentIndex)}
-                        disabled
                     />
                 )
             },
@@ -735,6 +734,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             <CogsWindow
                 visible={visibleCogsWindow}
                 productId={selectedProduct && selectedProduct.id}
+                product={selectedProduct}
                 onClose={() => {
                     setSelectedProduct(undefined)
                     setVisibleCogsWindow(false)

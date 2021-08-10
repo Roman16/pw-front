@@ -36,8 +36,8 @@ function updateProductCogs(data) {
     return api('put', `${productsUrls.productCogs}`, {...data, force: 1})
 }
 
-function deleteProductCogs(id) {
-    return api('delete', `${productsUrls.productCogs}?record_id=${id}`,)
+function deleteProductCogs(recordId, productId) {
+    return api('delete', `${productsUrls.productCogs}?record_id=${recordId}&product_id=${productId}`,)
 }
 
 function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {

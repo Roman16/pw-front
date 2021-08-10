@@ -74,11 +74,11 @@ const CreationJobs = () => {
     }
 
     const getZTHSearchTermReportDownloadPath = (jobId) => {
-        return `${_baseUrl}/zero-to-hero/creation-jobs/${jobId}/download-search-term-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
+        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-search-term-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
     }
 
     const getZTHProductReportDownloadPath = (jobId) => {
-        return `${_baseUrl}/zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
+        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
     }
 
     const columns = [
@@ -108,7 +108,7 @@ const CreationJobs = () => {
             title: 'Title',
             dataIndex: 'title',
             key: 'title',
-            width: '250px',
+            minWidth: '250px',
         },
         {
             title: 'Status',
@@ -128,7 +128,8 @@ const CreationJobs = () => {
             dataIndex: 'googleSpreadsheetUrl',
             key: 'googleSpreadsheetUrl',
             width: '200px',
-            render: url => <a href={url} target={'_blank'} className={'google-url'} title={url}>Open</a>
+            render: url => url ?
+                <a href={url} target={'_blank'} className={'google-url'} title={url}>Open</a> : 'No Link'
         },
         {
             title: 'Input Parameters',
@@ -144,7 +145,7 @@ const CreationJobs = () => {
             key: 'searchTermReportExists',
             width: '150px',
             render: (value, item) => value ?
-                `<a target="_blank" href="${getZTHSearchTermReportDownloadPath(item.id)}">Download</a>` :
+                <a target="_blank" href={getZTHSearchTermReportDownloadPath(item.id)}>Download</a> :
                 <span className={'no-file'}>No File</span>
         },
         {
@@ -153,7 +154,7 @@ const CreationJobs = () => {
             key: 'productReportExists',
             width: '130px',
             render: (value, item) => value ?
-                `<a target="_blank" href="${getZTHProductReportDownloadPath(item.id)}">Download</a>` :
+                <a target="_blank" href={getZTHProductReportDownloadPath(item.id)}>Download</a> :
                 <span className={'no-file'}>No File</span>
         },
         {
@@ -168,8 +169,9 @@ const CreationJobs = () => {
             title: 'Error',
             dataIndex: 'errorText',
             key: 'errorText',
-            minWidth: '200px',
-            render: (errorText, item) => (item.status === 'ERROR' || item.status === 'FAILED') && errorText
+            width: '500px',
+            render: (errorText, item) => (item.status === 'ERROR' || item.status === 'FAILED') &&
+                <span className={'word-break'}> {errorText}</span>
         },
     ]
 

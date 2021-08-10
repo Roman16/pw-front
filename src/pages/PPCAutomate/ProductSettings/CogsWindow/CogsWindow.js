@@ -8,10 +8,12 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import {productsServices} from "../../../../services/products.services"
 import {Spin} from "antd"
+import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 
-const CogsWindow = ({visible, productId, onClose}) => {
+const CogsWindow = ({visible, productId, product, onClose}) => {
     const [cogsList, setCogsList] = useState([]),
-        [activeIndex, setActiveIndex] = useState()
+        [activeIndex, setActiveIndex] = useState(),
+        [visibleConfirm, setVisibleConfirm] = useState(false)
 
     const getCogs = async () => {
         try {
@@ -48,12 +50,16 @@ const CogsWindow = ({visible, productId, onClose}) => {
         setActiveIndex(list.findIndex(i => i.record_id === id))
     }
 
-    const removeHandler = async (id) => {
-        try {
-            await productsServices.deleteProductCogs(id)
-            setCogsList([...cogsList.filter((item) => item.record_id !== id)])
-        } catch (e) {
-            console.log(e)
+    const removeHandler = async (id, force = false) => {
+        if (cogsList.length === 1 && product.product.under_optimization && !force) {
+            setVisibleConfirm(true)
+        } else {
+            try {
+                await productsServices.deleteProductCogs(id, productId)
+                setCogsList([...cogsList.filter((item) => item.record_id !== id)])
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -100,80 +106,90 @@ const CogsWindow = ({visible, productId, onClose}) => {
     }, [visible])
 
     return (
-        <ModalWindow
-            visible={visible}
-            footer={false}
-            className={'cogs-window'}
-            handleCancel={onClose}
-            destroyOnClose={true}
-        >
-            <div className="window-header">
-                <h2>Edit CoGS</h2>
+        <>
+            <ModalWindow
+                visible={visible}
+                footer={false}
+                className={'cogs-window'}
+                handleCancel={onClose}
+                destroyOnClose={true}
+            >
+                <div className="window-header">
+                    <h2>Edit CoGS</h2>
 
-                <button className="btn icon" onClick={onClose}>
-                    <SVG id={'close-window-icon'}/>
-                </button>
-            </div>
+                    <button className="btn icon" onClick={onClose}>
+                        <SVG id={'close-window-icon'}/>
+                    </button>
+                </div>
 
-            <ul>
-                <li className={'new-item'} onClick={() => addNew(0)}>
-                    <PlusIcon/>
-                    Add new
-                </li>
-
-                {cogsList.map((item, index) => <>
-                    <div
-                        className={`current-value ${(activeIndex === index || activeIndex + 1 === index) ? 'disabled' : ''}`}>
-                        <div
-                            className="add-new-item"
-                            onClick={() => addNew((activeIndex === undefined || cogsList[activeIndex].record_id) ? index : (index > activeIndex || activeIndex === 0) ? index - 1 : index)}
-                        >
-                            <PlusIcon/>
-
-                            <div className="line"/>
-                        </div>
-
-                        <div className="value">{item.cogs_value && `${numberMask(item.cogs_value, 2)}$`}</div>
-                    </div>
-
-                    <li className={activeIndex === index && 'active'}>
-                        <PlusIcon/>
-
-                        {activeIndex === index ? <EditingCogsFields
-                            list={cogsList}
-                            index={index}
-                            onSubmit={submitItemHandler}
-                            onCancel={cancelActiveHandler}
-                        /> : <>
-                            <div className="time">{moment(item.cogs_start_datetime).format('DD MMM YYYY, HH:mm')},</div>
-                            <div className="value">{numberMask(item.cogs_value, 2)}$</div>
-
-                            <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
-                                <SVG id={'edit-pen-icon'}/>
-                            </button>
-                            <button className="btn icon remove-btn" onClick={() => removeHandler(item.record_id)}>
-                                <SVG id={'close-window-icon'}/>
-                            </button>
-                        </>}
-                    </li>
-                </>)}
-
-                {cogsList.length > 0 && <>
-                    <div className="current-value">
-                        <div className="add-new-item">
-                            <PlusIcon/>
-
-                            <div className="line"/>
-                        </div>
-                    </div>
-
-                    <li className={'new-item'} onClick={() => addNew(cogsList.length)}>
+                <ul>
+                    <li className={'new-item'} onClick={() => addNew(0)}>
                         <PlusIcon/>
                         Add new
                     </li>
-                </>}
-            </ul>
-        </ModalWindow>
+
+                    {cogsList.map((item, index) => <>
+                        <div
+                            className={`current-value ${(activeIndex === index || activeIndex + 1 === index) ? 'disabled' : ''}`}>
+                            <div
+                                className="add-new-item"
+                                onClick={() => addNew((activeIndex === undefined || cogsList[activeIndex].record_id) ? index : (index > activeIndex || activeIndex === 0) ? index - 1 : index)}
+                            >
+                                <PlusIcon/>
+
+                                <div className="line"/>
+                            </div>
+
+                            <div className="value">{item.cogs_value && `${numberMask(item.cogs_value, 2)}$`}</div>
+                        </div>
+
+                        <li className={activeIndex === index && 'active'}>
+                            <PlusIcon/>
+
+                            {activeIndex === index ? <EditingCogsFields
+                                list={cogsList}
+                                index={index}
+                                onSubmit={submitItemHandler}
+                                onCancel={cancelActiveHandler}
+                            /> : <>
+                                <div className="time">{moment(item.cogs_start_datetime).format('DD MMM YYYY, HH:mm')},
+                                </div>
+                                <div className="value">{numberMask(item.cogs_value, 2)}$</div>
+
+                                <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
+                                    <SVG id={'edit-pen-icon'}/>
+                                </button>
+                                <button className="btn icon remove-btn" onClick={() => removeHandler(item.record_id)}>
+                                    <SVG id={'close-window-icon'}/>
+                                </button>
+                            </>}
+                        </li>
+                    </>)}
+
+                    {cogsList.length > 0 && <>
+                        <div className="current-value">
+                            <div className="add-new-item">
+                                <PlusIcon/>
+
+                                <div className="line"/>
+                            </div>
+                        </div>
+
+                        <li className={'new-item'} onClick={() => addNew(cogsList.length)}>
+                            <PlusIcon/>
+                            Add new
+                        </li>
+                    </>}
+                </ul>
+            </ModalWindow>
+
+            <ConfirmActionPopup
+                visible={visibleConfirm}
+                description={'Are you sure?'}
+                handleOk={() => removeHandler(cogsList[0].record_id, true)}
+                handleCancel={() => setVisibleConfirm(false)}
+            />
+        </>
     )
 }
 
@@ -190,13 +206,13 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
 
     function disabledDate(current) {
         if (index === 0 && list[index + 1]) {
-            return current && current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day')
+            return current && (current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day') || current <= moment('2010-01-01', 'YYYY-MM-DD'))
         } else if (index === list.length - 1 && list[index - 1]) {
-            return current && current >= moment(list[index - 1].cogs_start_datetime).endOf('day')
+            return current && (current >= moment(list[index - 1].cogs_start_datetime).endOf('day') || current <= moment('2010-01-01', 'YYYY-MM-DD'))
         } else if (index > 0 && index < list.length - 1) {
-            return current && (current >= moment(list[index - 1].cogs_start_datetime).endOf('day') || current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day'))
+            return current && (current >= moment(list[index - 1].cogs_start_datetime).endOf('day') || current <= moment(list[index + 1].cogs_start_datetime).subtract(1, 'days').endOf('day')) && current <= moment('2010-01-01', 'YYYY-MM-DD')
         } else {
-            return false
+            return current && current <= moment('2010-01-01', 'YYYY-MM-DD')
         }
     }
 
