@@ -60,7 +60,12 @@ const api = (method, url, data, type, abortToken) => {
                         status: 'already'
                     })
                 } else if (result.status === 200 || result.status === 207) {
-                    resolve(result.data)
+                    if (typeof result.data === 'object') {
+                        resolve(result.data)
+                    } else {
+                        reject(result.data)
+                        notification.error({title: 'Error!'})
+                    }
                 } else {
                     reject(null)
                 }

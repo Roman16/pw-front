@@ -14,16 +14,16 @@ const ProductInformation = ({semanticData, onChange}) => {
         })
     }
 
-    const changeTableHandler = (name, value, index) => {
-        const newData = [...semanticData.zeroToHero[name]]
+    const changeTableHandler = (name, value, index, object = 'zeroToHero') => {
+        const newData = [...semanticData[object][name]]
 
 
         newData[index] = value
 
         onChange({
             ...semanticData,
-            zeroToHero: {
-                ...semanticData.zeroToHero,
+            [object]: {
+                ...semanticData[object],
                 [name]: [...newData]
             }
         })
@@ -101,6 +101,24 @@ const ProductInformation = ({semanticData, onChange}) => {
             />
         },
     ]
+    const brandNamesColumns = [
+        {
+            title: '',
+            dataIndex: 'index',
+            key: 'index',
+            width: '50px',
+            render: (i, item, index) => index + 1
+        },
+        {
+            title: 'Brand name',
+            dataIndex: 'text',
+            key: 'text',
+            render: (text, item, index) => <Input
+                value={item}
+                onChange={({target: {value}}) => changeTableHandler('brandNames', value, index, 'productInformation')}
+            />
+        },
+    ]
 
     return (
         <div className={'product-information col'}>
@@ -116,12 +134,12 @@ const ProductInformation = ({semanticData, onChange}) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="">Brand:</label>
-                    <Input
-                        type="text"
-                        value={semanticData.productInformation.brand}
-                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'brand', value)}
+                    <label htmlFor="">Brand name and alises:</label>
+                    <CustomTable
+                        columns={brandNamesColumns}
+                        dataSource={[...semanticData.productInformation.brandNames, '']}
                     />
+
                 </div>
             </div>
 

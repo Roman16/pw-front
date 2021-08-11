@@ -7,8 +7,17 @@ import noImage from '../../assets/img/no-image-available.svg'
 // default product image urls
 export const amazonDefaultImageUrls = ['https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif', '/img/products/product-1.png']
 
+const indicatorStateVariations = {
+    'STOPPED_BY_USER': 'Stopped by user',
+    'STOPPED_BY_SYSTEM': 'Stopped by system',
+    'PRODUCT_COGS_MISSING': 'Product hasn\'t CoGS',
+    'PRODUCT_FEE_MISSING': 'Product hasn\'t fee',
+    'RUNNING_WITH_NO_CHANGES_FOR_1D': 'No changes for 1 day',
+    'OPERATING_OK': 'Product on optimization'
+}
+
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations},
+                         product: {id, asin, name, sku, image_url, under_optimization, has_optimization_results, variations, optimization_indicator_state},
                          onClick,
                          product,
                          isActive,
@@ -61,35 +70,11 @@ const ProductItem = ({
                     {variations && <SVG id='select-icon'/>}
                 </div>
 
-                <div className='optimization-status'>
-                    {/*<InformationTooltip*/}
-                    {/*    arrowPointAtCenter={true}*/}
-                    {/*    type={'custom'}*/}
-                    {/*    description={'Product has new changes'}*/}
-                    {/*    position={'topRight'}*/}
-                    {/*>*/}
-                    {/*    <div className='has-changes'/>*/}
-                    {/*</InformationTooltip>*/}
-
-                    {under_optimization && has_optimization_results && <InformationTooltip
-                        arrowPointAtCenter={true}
-                        type={'custom'}
-                        description={'Product on optimization'}
-                        position={'topRight'}
-                    >
-                        <div className='on-optimization'/>
-                    </InformationTooltip>}
-
-                    {under_optimization && !has_optimization_results && <InformationTooltip
-                        arrowPointAtCenter={true}
-                        type={'custom'}
-                        description={'Waiting for data'}
-                        position={'topRight'}
-                    >
-                        <div className='optimization-processing'/>
-                    </InformationTooltip>}
-
-                </div>
+                {optimization_indicator_state && <div className='optimization-status'>
+                    <OptimizationIndicator
+                        indicatorState={optimization_indicator_state}
+                    />
+                </div>}
             </div>
 
             {(variations) && (openedProduct === id) && <div className='product-children-list'>
@@ -122,6 +107,28 @@ const ProductItem = ({
             </div>}
         </div>
     )
+}
+
+const OptimizationIndicator = ({indicatorState}) => {
+    if (indicatorState !== null) {
+        const {state, level} = indicatorState
+
+        return (<InformationTooltip
+            arrowPointAtCenter={true}
+            type={'custom'}
+            description={indicatorStateVariations[state] || state}
+            position={'topRight'}
+        >
+            <>
+                {(level === 'INDICATOR_STATUS_ERROR' || level === 'INDICATOR_STATUS_WARNING' || level === 'INDICATOR_STATUS_CRITICAL' || level === 'INDICATOR_STATUS_EMERGENCY' || level === 'INDICATOR_STATUS_ALERT') &&
+                <div className='optimization-failed'/>}
+                {(level === 'INDICATOR_STATUS_NOTICE' || level === 'INDICATOR_STATUS_INFORMATIONAL') &&
+                <div className='optimization-processing'/>}
+                {level === 'INDICATOR_STATUS_OK' && <div className='on-optimization'/>}
+            </>
+        </InformationTooltip>)
+
+    } else return ''
 }
 
 ProductItem.propTypes = {
