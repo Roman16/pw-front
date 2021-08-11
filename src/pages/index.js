@@ -42,6 +42,7 @@ const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
 const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'))
 const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
+const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 
 
 let timerId = null
@@ -264,6 +265,9 @@ const AuthorizedUser = (props) => {
 
                                     {/*ANALYTICS*/}
                                     <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    {/*-------------------------------------------*/}
+                                    {/*tableau*/}
+                                    <ConnectedAmazonRoute path="/tableau" component={Tableau}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (
