@@ -234,24 +234,24 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                     </CustomSelect>
                 </div>}
 
-                {/*{actionType === 'convert' && <>*/}
-                {/*    <Checkbox*/}
-                {/*        checked={semanticData.convertToXLSXWorkBook}*/}
-                {/*        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToXLSXWorkBook', checked)}*/}
-                {/*    >*/}
-                {/*        Save as google spreadsheet*/}
-                {/*    </Checkbox>*/}
-                {/*    <br/>*/}
-                {/*    <br/>*/}
-                {/*    <Checkbox*/}
-                {/*        checked={semanticData.convertToAmazonBulkUpload}*/}
-                {/*        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}*/}
-                {/*    >*/}
-                {/*        Save as Amazon Bulk Upload*/}
-                {/*    </Checkbox>*/}
-                {/*    <br/>*/}
-                {/*    <br/>*/}
-                {/*</>}*/}
+                {actionType === 'convert' && <>
+                    <Checkbox
+                        checked={semanticData.convertToXLSXWorkBook}
+                        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToXLSXWorkBook', checked)}
+                    >
+                        Save as google spreadsheet
+                    </Checkbox>
+                    <br/>
+                    <br/>
+                    <Checkbox
+                        checked={semanticData.convertToAmazonBulkUpload}
+                        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}
+                    >
+                        Save as Amazon Bulk Upload
+                    </Checkbox>
+                    <br/>
+                    <br/>
+                </>}
 
                 {actionType === 'convert' ?
                     <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>
