@@ -3,17 +3,18 @@ import {func, bool, string} from 'prop-types'
 import {SVG} from "../../utils/icons"
 import InformationTooltip from "../Tooltip/Tooltip"
 import noImage from '../../assets/img/no-image-available.svg'
+import CustomSelect from "../Select/Select"
 
 // default product image urls
 export const amazonDefaultImageUrls = ['https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif', '/img/products/product-1.png']
 
 const indicatorStateVariations = {
-    'STOPPED_BY_USER': 'Stopped by user',
-    'STOPPED_BY_SYSTEM': 'Stopped by system',
-    'PRODUCT_COGS_MISSING': 'Product hasn\'t CoGS',
-    'PRODUCT_FEE_MISSING': 'Product hasn\'t fee',
-    'RUNNING_WITH_NO_CHANGES_FOR_1D': 'No changes for 1 day',
-    'OPERATING_OK': 'Product on optimization'
+    'STOPPED_BY_USER': 'Optimization is stopped by user',
+    'STOPPED_BY_SYSTEM': 'Optimization is stopped by system',
+    'PRODUCT_COGS_MISSING': 'Product doesn’t have CoGS',
+    'PRODUCT_FEE_MISSING': 'Couldn’t calculate Amazon Fees for product',
+    'RUNNING_WITH_NO_CHANGES_FOR_1D': `Product is on optimization, but no changes for 1 day or more`,
+    'OPERATING_OK': 'Product is on optimization'
 }
 
 const ProductItem = ({
@@ -120,9 +121,9 @@ const OptimizationIndicator = ({indicatorState}) => {
             position={'topRight'}
         >
             <>
-                {(level === 'INDICATOR_STATUS_ERROR' || level === 'INDICATOR_STATUS_WARNING' || level === 'INDICATOR_STATUS_CRITICAL' || level === 'INDICATOR_STATUS_EMERGENCY' || level === 'INDICATOR_STATUS_ALERT') &&
+                {(level === 'INDICATOR_STATUS_EMERGENCY' || level === 'INDICATOR_STATUS_ALERT' || level === 'INDICATOR_STATUS_CRITICAL' || level === 'INDICATOR_STATUS_ERROR') &&
                 <div className='optimization-failed'/>}
-                {(level === 'INDICATOR_STATUS_NOTICE' || level === 'INDICATOR_STATUS_INFORMATIONAL') &&
+                {(level === 'INDICATOR_STATUS_WARNING' || level === 'INDICATOR_STATUS_NOTICE' || level === 'INDICATOR_STATUS_INFORMATIONAL') &&
                 <div className='optimization-processing'/>}
                 {level === 'INDICATOR_STATUS_OK' && <div className='on-optimization'/>}
             </>

@@ -87,6 +87,7 @@ const RenderPageParts = (props) => {
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
+        stateInformation = useSelector(state => state.analytics.stateDetails),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
     const changeSorterColumnHandler = (data) => {
@@ -150,7 +151,12 @@ const RenderPageParts = (props) => {
                     [idSelectors[location]]: item[idSelectors[location]],
                     advertisingType: item.advertisingType,
                     [column]: value,
-                    ...location === 'targetings' && {entityType: item.entityType}
+                    ...location === 'targetings' && {
+                        entityType: item.entityType,
+                        ...stateInformation.advertisingType && stateInformation.advertisingType === 'SponsoredBrands' && {
+                            adGroupId: item.adGroupId
+                        }
+                    }
                 })
 
                 updateResponseHandler(res)

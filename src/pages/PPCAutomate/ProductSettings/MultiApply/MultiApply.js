@@ -33,7 +33,6 @@ const MultiApply = ({selectedRows, totalSize, onSelectAll, selectedAll, onSubmit
                 <div className="form-group">
                     <CustomSelect value={fieldType} onChange={e => setFieldType(e)}>
                         <Option value={'item_price_from_user'}>Overwrite Product Price</Option>
-                        <Option value={'product_margin_value'}>Net Margin</Option>
                         <Option value={'min_bid_manual_campaign'}>Min Bid (Manual Campaign)</Option>
                         <Option value={'max_bid_manual_campaign'}>Max Bid (Manual Campaign)</Option>
                         <Option value={'min_bid_auto_campaign'}>Min Bid (Auto Campaign)</Option>
