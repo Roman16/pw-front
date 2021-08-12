@@ -50,7 +50,7 @@ const CogsWindow = ({visible, productId, product, onClose}) => {
     }
 
     const removeHandler = async (id, force = false) => {
-        if (cogsList.length === 1 && product.product.under_optimization && !force) {
+        if (cogsList.length === 1 && (product.product ? product.product.under_optimization : product.under_optimization) && !force) {
             setVisibleConfirm(true)
         } else {
             try {
