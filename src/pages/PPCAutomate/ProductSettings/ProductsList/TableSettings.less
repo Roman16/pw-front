@@ -150,7 +150,14 @@
 
             .InputCurrency {
               height: 2.2857142857142856rem;
-              width: 8.571428571428571rem;
+
+              .ant-input-number {
+                width: 8.571428571428571rem;
+
+                &.full-width {
+                  width: 100%;
+                }
+              }
 
               input {
                 font-size: 1rem;
