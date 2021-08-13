@@ -241,6 +241,7 @@ const ProductSettingsMain = () => {
                 setRowData={setRowData}
                 onBlur={blurRowHandler}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
+                onSetCogs={fetchProducts}
             />
         </div>
     )

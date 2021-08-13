@@ -9,7 +9,10 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import {productsServices} from "../../../../services/products.services"
 import {Spin} from "antd"
 
-const CogsWindow = ({visible, productId, product, onClose}) => {
+let hasChanges = false,
+    cogsFromApi = []
+
+const CogsWindow = ({visible, productId, product, onClose, onSetCogs}) => {
     const [cogsList, setCogsList] = useState([]),
         [activeIndex, setActiveIndex] = useState(),
         [visibleConfirm, setVisibleConfirm] = useState(false)
@@ -98,13 +101,26 @@ const CogsWindow = ({visible, productId, product, onClose}) => {
     }
 
     useEffect(() => {
-        productId && getCogs()
+        if (productId) {
+            productsServices.getProductCogs(productId)
+                .then(res => {
+                    setCogsList(res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm')))
+                    cogsFromApi = res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm'))
+                })
+        }
         setActiveIndex(undefined)
     }, [productId])
 
     useEffect(() => {
+        hasChanges = JSON.stringify(cogsList) !== JSON.stringify(cogsFromApi)
+    }, [cogsList])
+
+    useEffect(() => {
         setCogsList([])
+
+        if (!visible && hasChanges) onSetCogs()
     }, [visible])
+
 
     return (
         <>

@@ -13,10 +13,12 @@ import {SVG} from "../../../../utils/icons"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import $ from 'jquery'
 import CogsWindow from "../CogsWindow/CogsWindow"
+import {numberMask} from "../../../../utils/numberMask"
+import {round} from "../../../../utils/round"
 
 const ACTIVE = 'RUNNING'
 const PRODUCT = 'product'
-const NET_MARGIN = 'product_margin_value'
+const NET_MARGIN = 'calculated_product_margin'
 const PRICE = 'item_price'
 const PRICE_FROM_USER = 'item_price_from_user'
 const MIN_BID_MANUAL_CAMPING = 'min_bid_manual_campaign'
@@ -115,7 +117,7 @@ const advertisingStrategyVariations = [
 ]
 
 
-const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList, onBlur}) => {
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList, onBlur, onSetCogs}) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false),
@@ -130,7 +132,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
     }
 
     const onChangeRow = (value, item, index, parentIndex) => {
-        if (parentIndex ? products[parentIndex].product.variations[index][item]  !== value : products[index][item] !== value) {
+        if (parentIndex ? products[parentIndex].product.variations[index][item] !== value : products[index][item] !== value) {
             if (value === '' || value == null) {
                 setRowData(null, item, index, parentIndex)
             } else if (item === PRICE_FROM_USER && value > 0) {
@@ -472,6 +474,42 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 )
             }
         },
+        // {
+        //     title: () => 'Amazon Fees',
+        //     dataIndex: MIN_BID_MANUAL_CAMPING,
+        //     key: MIN_BID_MANUAL_CAMPING,
+        //     minWidth: '15.5rem',
+        //     render: (index, item) => {
+        //         return (
+        //             <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
+        //                 <InputCurrency
+        //                     value={item[COGS]}
+        //                     disabled={true}
+        //                     data-intercom-target="net-margin-field"
+        //                 />
+        //
+        //                 <button className="btn icon edit-btn">
+        //                     <SVG id={'edit-pen-icon'}/>
+        //                 </button>
+        //             </div>
+        //         )
+        //     }
+        // },
+        // {
+        //     title: () => 'Net Margin',
+        //     dataIndex: NET_MARGIN,
+        //     key: NET_MARGIN,
+        //     minWidth: '190px',
+        //     render: (index, item, indexRow) => (
+        //         <InputCurrency
+        //             value={item[NET_MARGIN] ? round(item[NET_MARGIN] * 100, 2) : undefined}
+        //             typeIcon={'percent'}
+        //             className={'full-width'}
+        //             placeholder={'Can’t calculate'}
+        //             disabled
+        //         />
+        //     )
+        // },
         {
             title: () => (<span>Min Bid <br/> (Manual Campaign)</span>),
             dataIndex: MIN_BID_MANUAL_CAMPING,
@@ -736,6 +774,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 visible={visibleCogsWindow}
                 productId={selectedProduct && selectedProduct.id}
                 product={selectedProduct}
+                onSetCogs={onSetCogs}
                 onClose={() => {
                     setSelectedProduct(undefined)
                     setVisibleCogsWindow(false)
