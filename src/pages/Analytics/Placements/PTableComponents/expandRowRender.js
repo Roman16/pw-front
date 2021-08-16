@@ -24,14 +24,14 @@ const advertisingOrder = ['SponsoredProducts', 'SponsoredBrands'],
     }
 
 
-export const expandedRowRender = (props, columnsBlackList, selectedCampaign) => {
+export const expandedRowRender = (props, columnsBlackList, selectedCampaign, stateDetails) => {
     const columns = [
         {
             width: '250px',
             dataIndex: 'advertisingType',
             render: (text) => advertisingTitle[text]
         },
-        ...selectedCampaign ? [
+        ...(selectedCampaign && stateDetails.advertisingType !== 'SponsoredBrands') ? [
             {
                 width: '250px',
             },
