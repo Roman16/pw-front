@@ -61,7 +61,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             key: 'text',
             render: (text, item, index) => <Input
                 value={item}
-                onChange={({target: {value}}) => changeTableHandler('keywordsForTPKP', value, index)}
+                onChange={({target: {value}}) => changeTableHandler('keywordsForTPKPCampaign', value, index)}
             />
         },
     ]
@@ -208,7 +208,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <label htmlFor="">Keywords for TPKP campaign:</label>
                 <CustomTable
                     columns={TPKPColumns}
-                    dataSource={[...semanticData.zeroToHero.keywordsForTPKP, '']}
+                    dataSource={[...semanticData.zeroToHero.keywordsForTPKPCampaign, '']}
                 />
             </div>}
 
