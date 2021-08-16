@@ -101,7 +101,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs}) => {
     }
 
     useEffect(() => {
-        if (productId) {
+        if (productId && visible) {
             productsServices.getProductCogs(productId)
                 .then(res => {
                     setCogsList(res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm')))

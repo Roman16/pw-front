@@ -52,7 +52,8 @@ export const productsUrls = {
     saveProductData: 'ppc-automation/start',
     productDetails: (id) => `products/${id}/details`,
     campaignsSettingList: (id) => `ppc-automation/${id}/custom-campaign-settings`,
-    productCogs: 'products-data/cogs'
+    productCogs: 'products-data/cogs',
+    productAmazonFees: 'products-data/fees',
 }
 
 export const reportsUrls = {

@@ -262,6 +262,12 @@
                 fill: #C9CBD4;
               }
 
+              &.full-width-icon {
+                svg {
+                  width: initial;
+                }
+              }
+
               &:hover {
                 svg {
                   fill: #6d6df6;
@@ -411,6 +417,12 @@
 
           .table-body__field {
             background: #fff;
+            padding-right: 20px !important;
+
+            .InputCurrency {
+              width: max-content;
+              max-width: 100%;
+            }
 
             .variation-indicator {
               min-width: 8px;
