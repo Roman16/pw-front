@@ -337,7 +337,7 @@ const Placements = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId) : undefined}
+                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onChangeSorterColumn={changeSorterColumnHandler}
