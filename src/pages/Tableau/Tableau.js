@@ -4,7 +4,6 @@ import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {tableauServices} from "../../services/tableau.services"
 
 const Tableau = () => {
-
     const getTableauToken = async () => {
         try {
             const res = await tableauServices.getToken()

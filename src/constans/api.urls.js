@@ -168,5 +168,5 @@ export const analyticsUrls = {
 }
 
 export const tableauUrls = {
-    token: 'tableau-token'
+    token: 'tableau/trusted-ticket-url'
 }
