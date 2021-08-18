@@ -196,6 +196,29 @@ const Sidebar = () => {
                                     </NavLink>
                                 </InformationTooltip>
                             </li>}
+                            {activeMarketplace.countryCode !== 'CA' && <li className="top-nav-item">
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={<Link onClick={setAnalyticState} to={'/tableau'}>Tableau</Link>}
+                                    position={'right'}
+                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                                >
+                                    <NavLink
+                                        className="top-nav-link"
+                                        activeClassName="top-nav-link-active"
+                                        to="/tableau"
+                                        onClick={setAnalyticState}
+                                    >
+                                        <div className="link-icon">
+                                            <SVG id='analytics-icon-sidebar'/>
+                                        </div>
+
+                                        <span className="top-span">
+                                            Tableau
+                                         </span>
+                                    </NavLink>
+                                </InformationTooltip>
+                            </li>}
 
                             <li className="top-nav-item ppc-automate-link">
                                 <InformationTooltip

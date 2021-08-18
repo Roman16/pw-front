@@ -65,6 +65,25 @@ const ProductInformation = ({semanticData, onChange}) => {
             />
         },
     ]
+
+    const defenseColumns = [
+        {
+            title: '',
+            dataIndex: 'index',
+            key: 'index',
+            width: '50px',
+            render: (i, item, index) => index + 1
+        },
+        {
+            title: 'ASIN',
+            dataIndex: 'text',
+            key: 'text',
+            render: (text, item, index) => <Input
+                value={item}
+                onChange={({target: {value}}) => changeTableHandler('asinsForDefenseCampaign', value, index)}
+            />
+        },
+    ]
     const keywordsToSearchForSuggestedASINsColumns = [
         {
             title: '',
@@ -209,6 +228,21 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <CustomTable
                     columns={TPKPColumns}
                     dataSource={[...semanticData.zeroToHero.keywordsForTPKPCampaign, '']}
+                />
+            </div>}
+
+            <Checkbox
+                checked={semanticData.zeroToHero.createDefenseCampaign}
+                onChange={({target: {checked}}) => changeDataHandler('zeroToHero', 'createDefenseCampaign', checked)}
+            >
+                Create "Defense ASINs" campaign
+            </Checkbox>
+
+            {semanticData.zeroToHero.createDefenseCampaign && <div className="form-group w-25">
+                <label htmlFor="">ASINs to Defend (create PATs in Defense ASINs campaign):</label>
+                <CustomTable
+                    columns={defenseColumns}
+                    dataSource={[...semanticData.zeroToHero.asinsForDefenseCampaign, '']}
                 />
             </div>}
 

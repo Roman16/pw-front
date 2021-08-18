@@ -24,7 +24,7 @@ const Keywords = ({semanticData, onChange}) => {
 
 
     return (<div className={'all-keywords'}>
-        <div className="row cols-5">
+        <div className="row main-keywords-row">
             <div className="form-group">
                 <label htmlFor="">Main keywords:</label>
 

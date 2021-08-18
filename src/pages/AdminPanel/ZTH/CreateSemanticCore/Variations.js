@@ -51,14 +51,25 @@ const Variations = ({semanticData, onChange}) => {
             />
         },
         {
-            title: 'Use for Product Ads',
+            title: 'Use for Ads',
             dataIndex: 'useForProductAds',
             key: 'useForProductAds',
-            width: '300px',
+            width: '250px',
             render: (checked, item, index) => {
                 return (<Checkbox
                     checked={checked}
                     onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
+                />)
+            }
+        },        {
+            title: 'Use for Ads in Defense Campaign',
+            dataIndex: 'useForProductAds',
+            key: 'useForProductAds',
+            width: '400px',
+            render: (checked, item, index) => {
+                return (<Checkbox
+                    checked={checked}
+                    onChange={({target: {checked}}) => changeVariationHandler('useForDefenseCampaignProductAds', checked, index)}
                 />)
             }
         },
@@ -81,6 +92,7 @@ const Variations = ({semanticData, onChange}) => {
             sku: '',
             listingUrlsSKUs: [],
             useForSubCategoryASINsSearch: true,
+            useForDefenseCampaignProductAds: true,
             useForProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
@@ -99,6 +111,7 @@ const Variations = ({semanticData, onChange}) => {
                 variation.listingUrlsSKUs[indexChangedRow] = {
                     ...variation.listingUrlsSKUs[indexChangedRow],
                     useForSubCategoryASINsSearch: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForSubCategoryASINsSearch : true,
+                    useForDefenseCampaignProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForDefenseCampaignProductAds : true,
                     useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
                     [name]: value
                 }
@@ -148,6 +161,7 @@ const Variations = ({semanticData, onChange}) => {
                 listingUrl: x.listingUrl,
                 sku: x.sku,
                 useForSubCategoryASINsSearch: x.useForSubCategoryASINsSearch,
+                useForDefenseCampaignProductAds: x.useForDefenseCampaignProductAds,
                 useForProductAds: x.useForProductAds,
             })
         })
@@ -156,6 +170,7 @@ const Variations = ({semanticData, onChange}) => {
             sku: '',
             listingUrlsSKUs: [],
             useForSubCategoryASINsSearch: true,
+            useForDefenseCampaignProductAds: true,
             useForProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
@@ -171,6 +186,7 @@ const Variations = ({semanticData, onChange}) => {
                         listingUrl: item.listingUrl,
                         sku: item.sku,
                         useForSubCategoryASINsSearch: item.useForSubCategoryASINsSearch,
+                        useForDefenseCampaignProductAds: item.useForDefenseCampaignProductAds,
                         useForProductAds: item.useForProductAds,
                         themeValues: variation.themeValues
                     }))), [])
@@ -223,6 +239,7 @@ const Variations = ({semanticData, onChange}) => {
                     columns={columns}
                     dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
                         useForSubCategoryASINsSearch: true,
+                        useForDefenseCampaignProductAds: true,
                         useForProductAds: true,
                     }]}
                 />
