@@ -14,7 +14,20 @@
   }
 
   .main-keywords-row {
-    grid-template-columns: 39% 39% 25%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 20px;
+    grid-template-areas: 'col1 col1 col2 col2 .';
+
+    .form-group {
+      &:first-of-type {
+        grid-area: col1;
+      }
+
+      &:last-of-type {
+        grid-area: col2;
+      }
+    }
   }
 
   .custom-table {
