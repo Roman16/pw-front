@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react"
 import './Tableau.less'
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {tableauServices} from "../../services/tableau.services"
-import axios from 'axios'
 
 const Tableau = () => {
     const [loading, setLoading] = useState(true),
@@ -15,7 +14,8 @@ const Tableau = () => {
             const res = await tableauServices.getToken()
             setTableauToken(res)
 
-            const url = await axios.get(res.result.urls.spsd)
+            const url = await tableauServices.getUrl(res.result.urls.spsd)
+
             console.log(url)
 
         } catch (e) {
@@ -40,11 +40,11 @@ const Tableau = () => {
                     height="100%"
                 />
 
-                {/*<iframe*/}
-                {/*    src={`https://public.tableau.com/views/Dashboardupd/Fullview?:language=en-US&:display_count=n&:origin=viz_share_link`}*/}
-                {/*    width="100%"*/}
-                {/*    height="100%"*/}
-                {/*/>*/}
+                <iframe
+                    src={`http://tableau.profitwhales.com/views/ihorprofitwhales_agency/SPSD?:embed=y#2`}
+                    width="100%"
+                    height="100%"
+                />
             </>
         }
 
