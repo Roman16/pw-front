@@ -24,32 +24,19 @@ const Tableau = () => {
 
 
     useEffect(() => {
-        var divElement = document.getElementById('viz1629369153169')
-        var vizElement = divElement.getElementsByTagName('object')[0]
-        if (divElement.offsetWidth > 800) {
-            vizElement.style.width = '100%'
-            vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'
-        } else if (divElement.offsetWidth > 500) {
-            vizElement.style.width = '1000px'
-            vizElement.style.height = '827px'
-        } else {
-            vizElement.style.width = '100%'
-            vizElement.style.height = '2927px'
-        }
-        var scriptElement = document.createElement('script')
-        scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'
-        vizElement.parentNode.insertBefore(scriptElement, vizElement)
-
         getTableauToken()
     }, [])
 
     return (<div className={'tableau-page'}>
+        <script src="https://public.tableau.com/javascripts/api/viz_v1.js"></script>
 
         {loading ? <RouteLoader/> :
             <>
-
-                <script type='text/javascript'>
-                </script>
+                <iframe
+                    src={`${tableauToken.result.urls.spsd}`}
+                    width="100%"
+                    height="100%"
+                />
                 <iframe
                     src={`${tableauToken.result.urls.fullview}?:embed=yes&:tabs=yes&:toolbar=yes`}
                     width="100%"
