@@ -152,7 +152,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                         onChange={({target: {value}}) => changeDataHandler('productInformation', 'productName', value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group padding-0">
                     <label htmlFor="">Brand name and alises:</label>
                     <CustomTable
                         columns={brandNamesColumns}
