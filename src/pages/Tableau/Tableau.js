@@ -27,45 +27,29 @@ const Tableau = () => {
         getTableauToken()
     }, [])
 
-    useEffect(() => {
-        // if (!loading) {
-        //     var divElement = document.getElementById('viz1626099549770')
-        //     var vizElement = divElement.getElementsByTagName('object')[0]
-        //     if (divElement.offsetWidth > 800) {
-        //         vizElement.style.width = '100%'
-        //         vizElement.style.height = (divElement.offsetWidth * 0.75) + 'px'
-        //     } else if (divElement.offsetWidth > 500) {
-        //         vizElement.style.width = '1000px'
-        //         vizElement.style.height = '827px'
-        //     } else {
-        //         vizElement.style.width = '100%'
-        //         vizElement.style.height = '2927px'
-        //     }
-        //     var scriptElement = document.createElement('script')
-        //     scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js'
-        //     vizElement.parentNode.insertBefore(scriptElement, vizElement)
-        // }
-    }, [loading])
-
-
     return (<div className={'tableau-page'}>
         {loading ? <RouteLoader/> :
 
             <>
-                {/*<script type="text/javascript" src="http://myserver/javascripts/api/viz_v1.js"></script>*/}
-                {/*<object className="tableauViz" width="800" height="600" style={{display: 'none'}}>*/}
-                {/*    <param name="name" value="MyCoSales/SalesScoreCard"/>*/}
-                {/*    <param name="ticket" value="9D1ObyqDQmSIOyQpKdy4Sw==:dg62gCsSE0QRArXNTOp6mlJ5"/>*/}
-                {/*</object>*/}
-
                 <iframe
-                    // src="http://tabserver/trusted/9D1ObyqDQmSIOyQpKdy4Sw==:dg62gCsSE0QRArXNTOp6mlJ5/views/workbookQ4/SalesQ4?:embed=yes"
                     src={tableauToken.result.urls.spsd}
                     width="100%"
                     height="100%"
                 />
+
+                <script type='text/javascript' src='http://tableau.profitwhales.com/javascripts/api/viz_v1.js'></script>
+                <div className='tableauPlaceholder'>
+                    <object className='tableauViz' width='1920' height='851' style={{'display': 'none'}}>
+                        <param name='host_url' value='http%3A%2F%2Ftableau.profitwhales.com%2F'/>
+                        <param name='embed_code_version' value='3'/>
+                        <param name='site_root' value=''/>
+                        <param name='name' value='ihorprofitwhales_agency&#47;SPSD'/>
+                        <param name='tabs' value='no'/>
+                        <param name='toolbar' value='yes'/>
+                    </object>
+                </div>
             </>
-           }
+        }
     </div>)
 }
 
