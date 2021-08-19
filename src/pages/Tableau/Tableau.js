@@ -31,10 +31,11 @@ const Tableau = () => {
         {loading ? <RouteLoader/> :
             <>
                 <iframe
-                    src={`${tableauToken.result.urls.spsd}?:showVizHome=no&:embed=true`}
+                    src={`${tableauToken.result.urls.fullview}?:embed=yes&:tabs=yes&:toolbar=yes`}
                     width="100%"
                     height="100%"
                 />
+
             </>
         }
     </div>)
