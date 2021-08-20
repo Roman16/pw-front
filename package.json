@@ -44,7 +44,7 @@
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.15",
     "slick-carousel": "^1.8.1",
-    "tableau-react": "^1.2.2",
+    "tableau-react-embed": "^1.1.0",
     "throttle-debounce": "^2.1.0",
     "wink-porter2-stemmer": "^2.0.1",
     "xlsx": "^0.15.6"

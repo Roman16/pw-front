@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import './Tableau.less'
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {tableauServices} from "../../services/tableau.services"
-import TableauReport from 'tableau-react';
+import TableauReport from 'tableau-react-embed'
 
 const Tableau = () => {
     const [loading, setLoading] = useState(true),
@@ -14,6 +14,8 @@ const Tableau = () => {
         try {
             const res = await tableauServices.getToken()
             setTableauToken(res)
+
+            console.log(res.result.urls.spsd.split('/')[4])
 
             // const url = await tableauServices.getUrl(res.result.urls.spsd)
 
@@ -32,17 +34,17 @@ const Tableau = () => {
         hideTabs: false,
         // All other vizCreate options are supported here, too
         // They are listed here: https://onlinehelp.tableau.com/current/api/js_api/en-us/JavaScriptAPI/js_api_ref.htm#ref_head_9
-    };
+    }
 
     const filters = {
         Colors: ['Blue', 'Red'],
         Sizes: ['Small', 'Medium']
-    };
+    }
 
     const parameters = {
         Param1: 'Value',
         Param2: 'Other Value'
-    };
+    }
 
 
     useEffect(() => {
@@ -67,12 +69,10 @@ const Tableau = () => {
 
                 <TableauReport
                     url={tableauToken.result.urls.spsd}
+                    token={tableauToken.result.urls.spsd.split('/')[4]}
                     filters={filters}
                     parameters={parameters}
                     options={options} // vizCreate options
-                    // Overwrite default query params
-                    // defaults to '?:embed=yes&:comments=no&:toolbar=yes&:refresh=yes'
-                    query="?:embed=yes&:comments=no&:toolbar=yes&:refresh=yes"
                 />
             </>
         }
