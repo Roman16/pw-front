@@ -51,7 +51,7 @@ const Variations = ({semanticData, onChange}) => {
             />
         },
         {
-            title: 'Use for Product Ads',
+            title: 'Use for Ads',
             dataIndex: 'useForProductAds',
             key: 'useForProductAds',
             width: '300px',
@@ -62,6 +62,18 @@ const Variations = ({semanticData, onChange}) => {
                 />)
             }
         },
+        {
+            title: 'Use for Ads in Defense Campaign',
+            dataIndex: 'useForDefenseCampaignProductAds',
+            key: 'useForDefenseCampaignProductAds',
+            width: '400px',
+            render: (checked, item, index) => {
+                return (<Checkbox
+                    checked={checked}
+                    onChange={({target: {checked}}) => changeVariationHandler('useForDefenseCampaignProductAds', checked, index)}
+                />)
+            }
+        }
     ]
 
     const add = () => {
@@ -69,6 +81,7 @@ const Variations = ({semanticData, onChange}) => {
             sku: '',
             listingUrlsSKUs: [],
             useForProductAds: true,
+            useForDefenseCampaignProductAds: true,
             themeValues: [{theme: '', value: '', relatedValues: []}]
         }])
     }
@@ -86,6 +99,7 @@ const Variations = ({semanticData, onChange}) => {
                 variation.listingUrlsSKUs[indexChangedRow] = {
                     ...variation.listingUrlsSKUs[indexChangedRow],
                     useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
+                    useForDefenseCampaignProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForDefenseCampaignProductAds : true,
                     [name]: value
                 }
             }
@@ -133,7 +147,8 @@ const Variations = ({semanticData, onChange}) => {
             elem.listingUrlsSKUs.push({
                 listingUrl: x.listingUrl,
                 sku: x.sku,
-                useForProductAds: x.useForProductAds
+                useForProductAds: x.useForProductAds,
+                useForDefenseCampaignProductAds: x.useForDefenseCampaignProductAds
             })
         })
 
@@ -152,6 +167,7 @@ const Variations = ({semanticData, onChange}) => {
                             listingUrl: item.listingUrl,
                             sku: item.sku,
                             useForProductAds: item.useForProductAds,
+                            useForDefenseCampaignProductAds: item.useForDefenseCampaignProductAds,
                             themeValues: variation.themeValues
                         }))), [])
                         .filter(variation => variation.sku || variation.listingUrl)
@@ -202,7 +218,7 @@ const Variations = ({semanticData, onChange}) => {
 
             <CustomTable
                 columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true}]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true, useForDefenseCampaignProductAds: true}]}
             />
 
             <br/>

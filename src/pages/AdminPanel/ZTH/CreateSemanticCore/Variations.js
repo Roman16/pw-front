@@ -61,10 +61,11 @@ const Variations = ({semanticData, onChange}) => {
                     onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
                 />)
             }
-        },        {
+        },
+        {
             title: 'Use for Ads in Defense Campaign',
-            dataIndex: 'useForProductAds',
-            key: 'useForProductAds',
+            dataIndex: 'useForDefenseCampaignProductAds',
+            key: 'useForDefenseCampaignProductAds',
             width: '400px',
             render: (checked, item, index) => {
                 return (<Checkbox
