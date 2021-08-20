@@ -14,13 +14,6 @@ const Tableau = () => {
         try {
             const res = await tableauServices.getToken()
             setTableauToken(res)
-
-            console.log(res.result.urls.spsd.split('/')[4])
-
-            // const url = await tableauServices.getUrl(res.result.urls.spsd)
-
-            // console.log(url)
-
         } catch (e) {
             console.log(e)
         }
@@ -32,20 +25,7 @@ const Tableau = () => {
         height: '100%',
         width: '100%',
         hideTabs: false,
-        // All other vizCreate options are supported here, too
-        // They are listed here: https://onlinehelp.tableau.com/current/api/js_api/en-us/JavaScriptAPI/js_api_ref.htm#ref_head_9
     }
-
-    const filters = {
-        Colors: ['Blue', 'Red'],
-        Sizes: ['Small', 'Medium']
-    }
-
-    const parameters = {
-        Param1: 'Value',
-        Param2: 'Other Value'
-    }
-
 
     useEffect(() => {
 
@@ -70,8 +50,6 @@ const Tableau = () => {
                 <TableauReport
                     url={tableauToken.result.urls.spsd}
                     token={tableauToken.result.urls.spsd.split('/')[4]}
-                    filters={filters}
-                    parameters={parameters}
                     options={options} // vizCreate options
                 />
             </>
