@@ -169,8 +169,6 @@ const zthRequest = (method, url, data, contentType) => {
     return new Promise((resolve, reject) => {
         axios(config)
             .then(function (response) {
-                console.log(response)
-
                 if (typeof response.data === 'object' || response.status === 204) {
                     resolve(response.data)
                 } else {
