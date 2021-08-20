@@ -23,6 +23,7 @@ export const columns = (onChange) => ({
             title: 'Search volume',
             dataIndex: 'searchVolume',
             key: 'searchVolume',
+            width: '25%',
             render: (value, item, index) => <Input
                 value={value}
                 onChange={({target: {value}}) => onChange('mainKeywords', 'searchVolume', value, index)}
@@ -50,6 +51,7 @@ export const columns = (onChange) => ({
             title: 'Search volume',
             dataIndex: 'searchVolume',
             key: 'searchVolume',
+            width: '25%',
             render: (url, item, index) => <Input
                 value={url}
                 onChange={({target: {value}}) => onChange('baseKeywords', 'searchVolume', value, index)}

@@ -44,7 +44,7 @@ const Variations = ({semanticData, onChange}) => {
             title: 'SKU',
             dataIndex: 'sku',
             key: 'sku',
-            width: '300px',
+            width: '220px',
             render: (sku, item, index) => <Input
                 value={sku}
                 onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
@@ -54,7 +54,7 @@ const Variations = ({semanticData, onChange}) => {
             title: 'Use for Ads',
             dataIndex: 'useForProductAds',
             key: 'useForProductAds',
-            width: '300px',
+            width: '120px',
             render: (checked, item, index) => {
                 return (<Checkbox
                     checked={checked}
@@ -66,7 +66,7 @@ const Variations = ({semanticData, onChange}) => {
             title: 'Use for Ads in Defense Campaign',
             dataIndex: 'useForDefenseCampaignProductAds',
             key: 'useForDefenseCampaignProductAds',
-            width: '400px',
+            width: '240px',
             render: (checked, item, index) => {
                 return (<Checkbox
                     checked={checked}
@@ -214,11 +214,14 @@ const Variations = ({semanticData, onChange}) => {
             </div>
             <br/>
 
-            <h4>Listing URLs and SKUs:</h4>
+            <h4>Products:</h4>
 
             <CustomTable
                 columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {useForProductAds: true, useForDefenseCampaignProductAds: true}]}
+                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
+                    useForProductAds: true,
+                    useForDefenseCampaignProductAds: true
+                }]}
             />
 
             <br/>
