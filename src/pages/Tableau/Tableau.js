@@ -40,18 +40,6 @@ const Tableau = () => {
                     width="100%"
                     height="100%"
                 />
-
-                {/*<iframe*/}
-                {/*    src={`http://tableau.profitwhales.com/views/ihorprofitwhales_agency/SPSD?:embed=y#2`}*/}
-                {/*    width="100%"*/}
-                {/*    height="100%"*/}
-                {/*/>*/}
-
-                <TableauReport
-                    url={tableauToken.result.urls.spsd}
-                    token={tableauToken.result.urls.spsd.split('/')[4]}
-                    options={options} // vizCreate options
-                />
             </>
         }
 
