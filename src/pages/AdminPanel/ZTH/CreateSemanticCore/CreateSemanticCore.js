@@ -124,6 +124,7 @@ const CreateSemanticCore = () => {
             onUpload={parseInputParametersFile}
         />
 
+
         {loading ? <Spin size={'large'}/> : <>
             <MainKeywords
                 semanticData={semanticData}

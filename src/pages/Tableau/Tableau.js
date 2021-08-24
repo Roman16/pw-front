@@ -35,11 +35,11 @@ const Tableau = () => {
     return (<div className={'tableau-page'}>
         {loading ? <RouteLoader/> :
             <>
-                {/*<iframe*/}
-                {/*    src={`${tableauToken.result.urls.spsd}?:language=en-US&:display_count=n&:origin=viz_share_link`}*/}
-                {/*    width="100%"*/}
-                {/*    height="100%"*/}
-                {/*/>*/}
+                <iframe
+                    src={`${tableauToken.result.urls.spsd}?:language=en-US&:display_count=n&:origin=viz_share_link`}
+                    width="100%"
+                    height="100%"
+                />
 
                 {/*<iframe*/}
                 {/*    src={`http://tableau.profitwhales.com/views/ihorprofitwhales_agency/SPSD?:embed=y#2`}*/}
