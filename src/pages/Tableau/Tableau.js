@@ -28,6 +28,7 @@ const Tableau = () => {
     return (<div className={'tableau-page'}>
         {loading ? <RouteLoader/> :
             <>
+
                 <iframe
                     src={`${tableauToken.result.urls.spsd}?:language=en-US&:display_count=n&:origin=viz_share_link`}
                     width="100%"
