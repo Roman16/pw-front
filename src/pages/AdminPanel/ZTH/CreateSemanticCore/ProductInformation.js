@@ -1,6 +1,9 @@
 import React from "react"
 import {Checkbox, Input} from "antd"
 import CustomTable from "../../../../components/Table/CustomTable"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {columns} from "./Keywords/allColumns"
+import {keyColumn, textColumn} from "react-datasheet-grid"
 
 const ProductInformation = ({semanticData, onChange}) => {
 
@@ -30,113 +33,83 @@ const ProductInformation = ({semanticData, onChange}) => {
     }
 
     const TCAColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Competitor ASIN',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('additionalTopCompetitorASINs', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Competitor ASIN', width: 1},
+
+        // {
+        //     title: 'Competitor ASIN',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('additionalTopCompetitorASINs', value, index)}
+        //     />
+        // },
     ]
     const TPKPColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('keywordsForTPKPCampaign', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
+        //
+        // {
+        //     title: 'Keyword text',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('keywordsForTPKPCampaign', value, index)}
+        //     />
+        // },
     ]
 
     const defenseColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'ASIN',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('asinsForDefenseCampaign', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'ASIN', width: 1},
+
+        // {
+        //     title: 'ASIN',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('asinsForDefenseCampaign', value, index)}
+        //     />
+        // },
     ]
     const keywordsToSearchForSuggestedASINsColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('keywordsToSearchForSuggestedASINs', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
+
+        // {
+        //     title: 'Keyword text',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('keywordsToSearchForSuggestedASINs', value, index)}
+        //     />
+        // },
     ]
     const categoryLinksToParseASINsFromColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'BSR category link',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('categoryLinksToParseASINsFrom', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'BSR category link', width: 1},
+
+        // {
+        //     title: 'BSR category link',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('categoryLinksToParseASINsFrom', value, index)}
+        //     />
+        // },
     ]
     const brandNamesColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Brand name',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('brandNames', value, index, 'productInformation')}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Brand name', width: 1},
+        //
+        // {
+        //     title: '',
+        //     dataIndex: 'text',
+        //     key: 'text',
+        //     render: (text, item, index) => <Input
+        //         value={item}
+        //         onChange={({target: {value}}) => changeTableHandler('brandNames', value, index, 'productInformation')}
+        //     />
+        // },
     ]
 
     return (
@@ -154,11 +127,16 @@ const ProductInformation = ({semanticData, onChange}) => {
                 </div>
                 <div className="form-group padding-0">
                     <label htmlFor="">Brand name and alises:</label>
-                    <CustomTable
-                        columns={brandNamesColumns}
-                        dataSource={[...semanticData.productInformation.brandNames, '']}
-                    />
+                    {/*<CustomTable*/}
+                    {/*    columns={brandNamesColumns}*/}
+                    {/*    dataSource={[...semanticData.productInformation.brandNames, '']}*/}
+                    {/*/>*/}
 
+                    <ExcelTable
+                        data={semanticData.productInformation.brandNames.length > 0 ? semanticData.productInformation.brandNames : [{text: ''}]}
+                        columns={brandNamesColumns}
+                        onChange={(data) => changeDataHandler(data, 'brandNames')}
+                    />
                 </div>
             </div>
 
@@ -210,9 +188,15 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             {semanticData.zeroToHero.createTCACampaign && <div className="form-group w-25">
                 <label htmlFor="">Add additional Top Competitors ASINs:</label>
-                <CustomTable
+                {/*<CustomTable*/}
+                {/*    columns={TCAColumns}*/}
+                {/*    dataSource={[...semanticData.zeroToHero.additionalTopCompetitorASINs, '']}*/}
+                {/*/>*/}
+
+                <ExcelTable
+                    data={semanticData.zeroToHero.additionalTopCompetitorASINs.length > 0 ? semanticData.zeroToHero.additionalTopCompetitorASINs : [{text: ''}]}
                     columns={TCAColumns}
-                    dataSource={[...semanticData.zeroToHero.additionalTopCompetitorASINs, '']}
+                    onChange={(data) => changeDataHandler(data, 'additionalTopCompetitorASINs')}
                 />
             </div>}
 
@@ -225,10 +209,17 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             {semanticData.zeroToHero.createTPKPCampaign && <div className="form-group w-25">
                 <label htmlFor="">Keywords for TPKP campaign:</label>
-                <CustomTable
+                {/*<CustomTable*/}
+                {/*    columns={TPKPColumns}*/}
+                {/*    dataSource={[...semanticData.zeroToHero.keywordsForTPKPCampaign, '']}*/}
+                {/*/>*/}
+
+                <ExcelTable
+                    data={semanticData.zeroToHero.keywordsForTPKPCampaign.length > 0 ? semanticData.zeroToHero.keywordsForTPKPCampaign : [{text: ''}]}
                     columns={TPKPColumns}
-                    dataSource={[...semanticData.zeroToHero.keywordsForTPKPCampaign, '']}
+                    onChange={(data) => changeDataHandler(data, 'keywordsForTPKPCampaign')}
                 />
+
             </div>}
 
             <Checkbox
@@ -240,9 +231,15 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             {semanticData.zeroToHero.createDefenseCampaign && <div className="form-group w-25">
                 <label htmlFor="">ASINs to Defend (create PATs in Defense ASINs campaign):</label>
-                <CustomTable
+                {/*<CustomTable*/}
+                {/*    columns={defenseColumns}*/}
+                {/*    dataSource={[...semanticData.zeroToHero.asinsForDefenseCampaign, '']}*/}
+                {/*/>*/}
+
+                <ExcelTable
+                    data={semanticData.zeroToHero.asinsForDefenseCampaign.length > 0 ? semanticData.zeroToHero.asinsForDefenseCampaign : [{text: ''}]}
                     columns={defenseColumns}
-                    dataSource={[...semanticData.zeroToHero.asinsForDefenseCampaign, '']}
+                    onChange={(data) => changeDataHandler(data, 'asinsForDefenseCampaign')}
                 />
             </div>}
 
@@ -263,9 +260,15 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             <div className="form-group w-50">
                 <label htmlFor="">Keywords to search on Amazon for Suggested ASINs (SA campaigns):</label>
-                <CustomTable
+                {/*<CustomTable*/}
+                {/*    columns={keywordsToSearchForSuggestedASINsColumns}*/}
+                {/*    dataSource={[...semanticData.zeroToHero.keywordsToSearchForSuggestedASINs, '']}*/}
+                {/*/>*/}
+
+                <ExcelTable
+                    data={semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.length > 0 ? semanticData.zeroToHero.keywordsToSearchForSuggestedASINs : [{text: ''}]}
                     columns={keywordsToSearchForSuggestedASINsColumns}
-                    dataSource={[...semanticData.zeroToHero.keywordsToSearchForSuggestedASINs, '']}
+                    onChange={(data) => changeDataHandler(data, 'keywordsToSearchForSuggestedASINs')}
                 />
             </div>
 
@@ -274,10 +277,17 @@ const ProductInformation = ({semanticData, onChange}) => {
                     _ngcontent-dqt-c36=""
                     href="https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden"
                     target="_blank">https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden</a>):</label>
-                <CustomTable
+                {/*<CustomTable*/}
+                {/*    columns={categoryLinksToParseASINsFromColumns}*/}
+                {/*    dataSource={[...semanticData.zeroToHero.categoryLinksToParseASINsFrom, '']}*/}
+                {/*/>*/}
+
+                <ExcelTable
+                    data={semanticData.zeroToHero.categoryLinksToParseASINsFrom.length > 0 ? semanticData.zeroToHero.categoryLinksToParseASINsFrom : [{text: ''}]}
                     columns={categoryLinksToParseASINsFromColumns}
-                    dataSource={[...semanticData.zeroToHero.categoryLinksToParseASINsFrom, '']}
+                    onChange={(data) => changeDataHandler(data, 'categoryLinksToParseASINsFrom')}
                 />
+
             </div>
         </div>
     )

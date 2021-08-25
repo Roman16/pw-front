@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react"
 import './Tableau.less'
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {tableauServices} from "../../services/tableau.services"
-import TableauReport from 'tableau-react-embed'
 
 const Tableau = () => {
     const [loading, setLoading] = useState(true),
@@ -21,12 +20,6 @@ const Tableau = () => {
         setLoading(false)
     }
 
-    const options = {
-        height: '100%',
-        width: '100%',
-        hideTabs: false,
-    }
-
     useEffect(() => {
 
         getTableauToken()
@@ -38,12 +31,10 @@ const Tableau = () => {
                 <iframe
                     src={`${tableauToken.result.urls.spsd}?:language=en-US&:display_count=n&:origin=viz_share_link`}
                     width="100%"
-                    height="100%"
+                    height="99%"
                 />
             </>
         }
-
-
     </div>)
 }
 

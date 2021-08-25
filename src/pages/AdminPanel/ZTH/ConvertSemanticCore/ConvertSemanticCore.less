@@ -123,9 +123,12 @@
   }
 
   .cols-5 {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
     grid-column-gap: 20px;
+
+    & > div {
+      width: calc(20% - 20px);
+    }
   }
 
 
