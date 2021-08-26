@@ -4,6 +4,8 @@ import Themes from "./Themes"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
 import _ from 'lodash'
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {checkboxColumn, keyColumn, textColumn} from "react-datasheet-grid"
 
 
 let copiedThemes
@@ -24,56 +26,10 @@ const Variations = ({semanticData, onChange}) => {
         [activeVariationIndex, setActiveVariationIndex] = useState(0)
 
     const columns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'URL',
-            dataIndex: 'listingUrl',
-            key: 'listingUrl',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
-            />
-        },
-        {
-            title: 'SKU',
-            dataIndex: 'sku',
-            key: 'sku',
-            width: '220px',
-            render: (sku, item, index) => <Input
-                value={sku}
-                onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
-            />
-        },
-        {
-            title: 'Use for Ads',
-            dataIndex: 'useForProductAds',
-            key: 'useForProductAds',
-            width: '120px',
-            render: (checked, item, index) => {
-                return (<Checkbox
-                    checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
-                />)
-            }
-        },
-        {
-            title: 'Use for Ads in Defense Campaign',
-            dataIndex: 'useForDefenseCampaignProductAds',
-            key: 'useForDefenseCampaignProductAds',
-            width: '240px',
-            render: (checked, item, index) => {
-                return (<Checkbox
-                    checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForDefenseCampaignProductAds', checked, index)}
-                />)
-            }
-        }
+        {...keyColumn('listingUrl', textColumn), title: 'URL', width: 5},
+        {...keyColumn('sku', textColumn), title: 'SKU', width: 2},
+        {...keyColumn('useForProductAds', checkboxColumn), title: 'Use for Ads', width: 1},
+        {...keyColumn('useForDefenseCampaignProductAds', checkboxColumn), title: 'Use for Ads in Defense Campaign', width: 2},
     ]
 
     const add = () => {
@@ -93,15 +49,10 @@ const Variations = ({semanticData, onChange}) => {
         setVariations([...variations.filter((item, i) => i !== index)])
     }
 
-    const changeVariationHandler = (name, value, indexChangedRow) => {
+    const changeVariationHandler = (data) => {
         setVariations(variations.map((variation, index) => {
             if (index === activeVariationIndex) {
-                variation.listingUrlsSKUs[indexChangedRow] = {
-                    ...variation.listingUrlsSKUs[indexChangedRow],
-                    useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
-                    useForDefenseCampaignProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForDefenseCampaignProductAds : true,
-                    [name]: value
-                }
+                variation.listingUrlsSKUs = data
             }
 
             return variation
@@ -215,13 +166,20 @@ const Variations = ({semanticData, onChange}) => {
             <br/>
 
             <h4>Products:</h4>
-
-            <CustomTable
-                columns={columns}
-                dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
+            <ExcelTable
+                data={variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs.length > 0 ? variations[activeVariationIndex].listingUrlsSKUs : [{
+                    useForProductAds: true,
+                    useForDefenseCampaignProductAds: true
+                }] : [{
                     useForProductAds: true,
                     useForDefenseCampaignProductAds: true
                 }]}
+                columns={columns}
+                createRow={() => ({
+                    useForProductAds: true,
+                    useForDefenseCampaignProductAds: true
+                })}
+                onChange={changeVariationHandler}
             />
 
             <br/>

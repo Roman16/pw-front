@@ -4,6 +4,8 @@ import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
 import _ from 'lodash'
 import Themes from "../ConvertSemanticCore/Themes"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {keyColumn, textColumn, checkboxColumn} from "react-datasheet-grid"
 
 
 let copiedThemes
@@ -24,68 +26,79 @@ const Variations = ({semanticData, onChange}) => {
         [activeVariationIndex, setActiveVariationIndex] = useState(0)
 
     const columns = [
+        // {
+        //     title: '',
+        //     dataIndex: 'index',
+        //     key: 'index',
+        //     width: '50px',
+        //     render: (i, item, index) => index + 1
+        // },
+        // {
+        //     title: 'URL',
+        //     dataIndex: 'listingUrl',
+        //     key: 'listingUrl',
+        //     render: (url, item, index) => <Input
+        //         value={url}
+        //         onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
+        //     />
+        // },
+        // {
+        //     title: 'SKU',
+        //     dataIndex: 'sku',
+        //     key: 'sku',
+        //     width: '220px',
+        //     render: (sku, item, index) => <Input
+        //         value={sku}
+        //         onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
+        //     />
+        // },
+        // {
+        //     title: 'Use for Ads',
+        //     dataIndex: 'useForProductAds',
+        //     key: 'useForProductAds',
+        //     width: '120px',
+        //     render: (checked, item, index) => {
+        //         return (<Checkbox
+        //             checked={checked}
+        //             onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
+        //         />)
+        //     }
+        // },
+        // {
+        //     title: 'Use for Ads in Defense Campaign',
+        //     dataIndex: 'useForDefenseCampaignProductAds',
+        //     key: 'useForDefenseCampaignProductAds',
+        //     width: '240px',
+        //     render: (checked, item, index) => {
+        //         return (<Checkbox
+        //             checked={checked}
+        //             onChange={({target: {checked}}) => changeVariationHandler('useForDefenseCampaignProductAds', checked, index)}
+        //         />)
+        //     }
+        // },
+        // {
+        //     title: 'Use for Suggested ASINs',
+        //     dataIndex: 'useForSubCategoryASINsSearch',
+        //     key: 'useForSubCategoryASINsSearch',
+        //     width: '180px',
+        //     render: (checked, item, index) => {
+        //         return (<Checkbox
+        //             checked={checked}
+        //             onChange={({target: {checked}}) => changeVariationHandler('useForSubCategoryASINsSearch', checked, index)}
+        //         />)
+        //     }
+        // },
+
+        {...keyColumn('listingUrl', textColumn), title: 'URL', width: 5},
+        {...keyColumn('sku', textColumn), title: 'SKU', width: 2},
+        {...keyColumn('useForProductAds', checkboxColumn), title: 'Use for Ads', width: 1},
         {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'URL',
-            dataIndex: 'listingUrl',
-            key: 'listingUrl',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => changeVariationHandler('listingUrl', value, index)}
-            />
-        },
-        {
-            title: 'SKU',
-            dataIndex: 'sku',
-            key: 'sku',
-            width: '220px',
-            render: (sku, item, index) => <Input
-                value={sku}
-                onChange={({target: {value}}) => changeVariationHandler('sku', value, index)}
-            />
-        },
-        {
-            title: 'Use for Ads',
-            dataIndex: 'useForProductAds',
-            key: 'useForProductAds',
-            width: '120px',
-            render: (checked, item, index) => {
-                return (<Checkbox
-                    checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForProductAds', checked, index)}
-                />)
-            }
-        },
-        {
+            ...keyColumn('useForDefenseCampaignProductAds', checkboxColumn),
             title: 'Use for Ads in Defense Campaign',
-            dataIndex: 'useForDefenseCampaignProductAds',
-            key: 'useForDefenseCampaignProductAds',
-            width: '240px',
-            render: (checked, item, index) => {
-                return (<Checkbox
-                    checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForDefenseCampaignProductAds', checked, index)}
-                />)
-            }
+            width: 2
         },
-        {
-            title: 'Use for Suggested ASINs',
-            dataIndex: 'useForSubCategoryASINsSearch',
-            key: 'useForSubCategoryASINsSearch',
-            width: '180px',
-            render: (checked, item, index) => {
-                return (<Checkbox
-                    checked={checked}
-                    onChange={({target: {checked}}) => changeVariationHandler('useForSubCategoryASINsSearch', checked, index)}
-                />)
-            }
-        },
+        {...keyColumn('useForSubCategoryASINsSearch', checkboxColumn), title: 'Use for Suggested ASINs', width: 2},
+
     ]
 
     const add = () => {
@@ -106,16 +119,10 @@ const Variations = ({semanticData, onChange}) => {
         setVariations([...variations.filter((item, i) => i !== index)])
     }
 
-    const changeVariationHandler = (name, value, indexChangedRow) => {
+    const changeVariationHandler = (data) => {
         setVariations(variations.map((variation, index) => {
             if (index === activeVariationIndex) {
-                variation.listingUrlsSKUs[indexChangedRow] = {
-                    ...variation.listingUrlsSKUs[indexChangedRow],
-                    useForSubCategoryASINsSearch: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForSubCategoryASINsSearch : true,
-                    useForDefenseCampaignProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForDefenseCampaignProductAds : true,
-                    useForProductAds: variation.listingUrlsSKUs[indexChangedRow] ? variation.listingUrlsSKUs[indexChangedRow].useForProductAds : true,
-                    [name]: value
-                }
+                variation.listingUrlsSKUs = data
             }
 
             return variation
@@ -236,13 +243,23 @@ const Variations = ({semanticData, onChange}) => {
 
                 <h4>Products:</h4>
 
-                <CustomTable
-                    columns={columns}
-                    dataSource={[...variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs : [], {
+                <ExcelTable
+                    data={variations[activeVariationIndex] ? variations[activeVariationIndex].listingUrlsSKUs.length > 0 ? variations[activeVariationIndex].listingUrlsSKUs : [{
                         useForSubCategoryASINsSearch: true,
                         useForDefenseCampaignProductAds: true,
-                        useForProductAds: true,
+                        useForProductAds: true
+                    }] : [{
+                        useForSubCategoryASINsSearch: true,
+                        useForDefenseCampaignProductAds: true,
+                        useForProductAds: true
                     }]}
+                    columns={columns}
+                    createRow={() => ({
+                        useForSubCategoryASINsSearch: true,
+                        useForDefenseCampaignProductAds: true,
+                        useForProductAds: true
+                    })}
+                    onChange={changeVariationHandler}
                 />
 
                 <br/>

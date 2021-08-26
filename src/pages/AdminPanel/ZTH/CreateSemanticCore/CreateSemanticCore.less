@@ -18,12 +18,11 @@
   }
 
   .main-keywords-row {
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr);
     grid-column-gap: 20px;
-    grid-template-areas: 'col1 col1 col2 col2 .';
 
     .form-group {
+      width: calc(40% - 15px) !important;
+
       &:first-of-type {
         grid-area: col1;
       }

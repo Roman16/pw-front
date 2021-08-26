@@ -30,7 +30,7 @@ const Tableau = () => {
             <>
 
                 <iframe
-                    src={`${tableauToken.result.urls.spsd}?:language=en-US&:display_count=n&:origin=viz_share_link`}
+                    src={`${tableauToken.result.urls.spsd}`}
                     width="100%"
                     height="99%"
                 />

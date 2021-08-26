@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react"
 import {Input} from "antd"
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {keyColumn, textColumn} from "react-datasheet-grid"
 
 const Themes = ({themes = [], setThemes, variationIndex}) => {
     const [activeThemeIndex, setActiveThemeIndex] = useState(0)
@@ -17,10 +19,10 @@ const Themes = ({themes = [], setThemes, variationIndex}) => {
         setThemes([...themes.filter((item, i) => i !== index)])
     }
 
-    const changeThemeRelatedValue = (index, value) => {
+    const changeThemeRelatedValue = (data) => {
         setThemes(themes.map((theme, i) => {
             if (activeThemeIndex === i) {
-                theme.relatedValues[index] = value
+                theme.relatedValues = data.map(item => item.value)
             }
 
             return theme
@@ -41,22 +43,7 @@ const Themes = ({themes = [], setThemes, variationIndex}) => {
     }, [variationIndex])
 
     const columns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Value',
-            dataIndex: 'value',
-            key: 'value',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => changeThemeRelatedValue(index, value)}
-            />
-        },
+        {...keyColumn('value', textColumn), title: 'Value'},
     ]
 
     return (
@@ -101,9 +88,10 @@ const Themes = ({themes = [], setThemes, variationIndex}) => {
                 </div>
 
                 <h4>Related theme values:</h4>
-                <CustomTable
+                <ExcelTable
+                    data={themes[activeThemeIndex].relatedValues.length > 0 ? themes[activeThemeIndex].relatedValues.map(value => ({value})) : [{value: ''}]}
                     columns={columns}
-                    dataSource={[...themes[activeThemeIndex].relatedValues, ''].map(value => ({value}))}
+                    onChange={changeThemeRelatedValue}
                 />
             </>}
         </div>
