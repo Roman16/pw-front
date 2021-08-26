@@ -7,7 +7,7 @@ import {numberMask} from "../../../../utils/numberMask"
 import {productsServices} from "../../../../services/products.services"
 
 
-const AmazonFeeWindow = ({visible, productId, onClose}) => {
+const AmazonFeeWindow = ({visible, productId, product, onClose}) => {
     const [feesList, setFeesList] = useState([])
 
     useEffect(() => {
@@ -21,6 +21,8 @@ const AmazonFeeWindow = ({visible, productId, onClose}) => {
 
 
     useEffect(() => {
+        console.log(product)
+
         setFeesList([])
     }, [visible])
 

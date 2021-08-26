@@ -277,9 +277,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '15.5rem',
-                render: (index, item) => {
+                render: (props, item) => {
                     return (
-                        <div className={'cogs-field'} onClick={() => onShowAmazonFees(item)}>
+                        <div className={'cogs-field'} onClick={() => onShowAmazonFees(props)}>
                             <InputCurrency
                                 value={item[AMAZON_FEES]}
                                 disabled={true}
