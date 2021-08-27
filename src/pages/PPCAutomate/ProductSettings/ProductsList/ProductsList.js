@@ -316,7 +316,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                                 variation_product_id: props.id
                             } : null)}
                             loading={processingVariation === props.id}
-                            disabled={processingVariation}
+                            disabled={processingVariation || props.is_default_variation}
                         />
                     </div>
                 )
