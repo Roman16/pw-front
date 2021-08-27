@@ -54,6 +54,7 @@ export const productsUrls = {
     campaignsSettingList: (id) => `ppc-automation/${id}/custom-campaign-settings`,
     productCogs: 'products-data/cogs',
     productAmazonFees: 'products-data/fees',
+    defaultVariation: 'products-data/variations/set-default-variation'
 }
 
 export const reportsUrls = {

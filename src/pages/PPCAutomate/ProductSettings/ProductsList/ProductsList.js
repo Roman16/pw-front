@@ -8,7 +8,7 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import MultiApply from "../MultiApply/MultiApply"
 import CustomSelect from "../../../../components/Select/Select"
-import {Checkbox, Input, Select} from "antd"
+import {Checkbox, Input, Select, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import $ from 'jquery'
@@ -119,7 +119,7 @@ const advertisingStrategyVariations = [
 ]
 
 
-const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, setRowData, updateSettingsHandlerByIdList, onBlur, onSetCogs}) => {
+const ProductsList = ({products, totalSize, paginationOption, changePagination, processing, isAgencyClient, processingVariation, setRowData, updateSettingsHandlerByIdList, onBlur, onSetCogs, setVariation}) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false),
@@ -303,6 +303,22 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         placeholder={'Can’t calculate'}
                         disabled
                     />
+                )
+            },
+            {
+                minWidth: '200px',
+                render: (props, item) => (
+                    <div className="switch-block">
+                        <Switch
+                            checked={props.is_default_variation}
+                            onChange={(checked) => setVariation(checked ? {
+                                parent_product_id: item.id,
+                                variation_product_id: props.id
+                            } : null)}
+                            loading={processingVariation === props.id}
+                            disabled={processingVariation}
+                        />
+                    </div>
                 )
             },
             {
@@ -550,6 +566,13 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 />
             )
         },
+        ...openedProduct ? [{
+            title: 'Calculate Net Margin based on product',
+            dataIndex: NET_MARGIN,
+            key: NET_MARGIN,
+            minWidth: '200px',
+            render: () => ('')
+        }] : [],
         {
             title: () => (<span>Min Bid <br/> (Manual Campaign)</span>),
             dataIndex: MIN_BID_MANUAL_CAMPING,

@@ -18,7 +18,8 @@ export const productsServices = {
     getProductAmazonFees,
     createProductCogs,
     updateProductCogs,
-    deleteProductCogs
+    deleteProductCogs,
+    setDefaultVariation
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
@@ -110,4 +111,7 @@ function getCampaignsSettings(id) {
 
 function updateCampaignsBlacklist(id, data) {
     return api('post', `${productsUrls.campaignsSettingList(id)}`, data)
+}
+function setDefaultVariation(data) {
+    return api('post', `${productsUrls.defaultVariation}`, data)
 }

@@ -24,6 +24,7 @@ const ProductSettingsMain = () => {
     const [productsList, setProductsList] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
+        [bootSettingsDefaultVariation, setBootSettingsDefaultVariation] = useState(),
         [requestPrams, setRequestParams] = useState(localStorage.getItem('productsSettingsRequestParams') ?
             JSON.parse(localStorage.getItem('productsSettingsRequestParams'))
             :
@@ -176,6 +177,30 @@ const ProductSettingsMain = () => {
         }, 2000)
     }
 
+    const setDefaultVariationHandler = async (data) => {
+        setBootSettingsDefaultVariation(data.variation_product_id)
+
+        try {
+            await productsServices.setDefaultVariation(data)
+
+            setProductsList([...productsList.map(item => {
+                if (item.id === data.parent_product_id) {
+                    item.product.variations = [...item.product.variations.map(variation => {
+                        variation.is_default_variation = false
+                        if (variation.id === data.variation_product_id) variation.is_default_variation = true
+                        return variation
+                    })]
+                }
+
+                return item
+            })])
+        } catch (e) {
+            console.log(e)
+        }
+
+        setBootSettingsDefaultVariation(undefined)
+    }
+
     const blurRowHandler = (value, item, index, parentIndex) => {
         const localIndex = parentIndex || index
 
@@ -236,12 +261,14 @@ const ProductSettingsMain = () => {
                 totalSize={totalSize}
                 paginationOption={paginationOptions}
                 isAgencyClient={isAgencyClient}
+                processingVariation={bootSettingsDefaultVariation}
 
                 changePagination={changePaginationHandler}
                 setRowData={setRowData}
                 onBlur={blurRowHandler}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
                 onSetCogs={fetchProducts}
+                setVariation={setDefaultVariationHandler}
             />
         </div>
     )
