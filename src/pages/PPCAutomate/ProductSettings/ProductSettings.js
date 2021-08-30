@@ -14,6 +14,7 @@ let source = null
 let timerId = null
 
 let editableRow = null
+let editableVariation = false
 
 let savedRow = null,
     savedValue = null
@@ -99,6 +100,15 @@ const ProductSettingsMain = () => {
         }
     }
 
+    const updateVariationById = async (data) => {
+        try {
+            await productsServices.updateVariationSettings(data)
+            showNotification('Changes saved')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const updateSettingsHandlerByIdList = async (data) => {
         try {
             await productsServices.updateProductSettingsByIdList({
@@ -142,8 +152,11 @@ const ProductSettingsMain = () => {
         })
     }
 
-    const setRowData = (value, item, index, parentIndex) => {
+    const setRowData = (value, item, index, parentIndex, isVariation) => {
+        console.log(isVariation)
+
         editableRow = parentIndex || index
+        editableVariation = isVariation
 
         const newList = productsList.map((product, productIndex) => {
             if (productIndex === index && !parentIndex) {
@@ -170,8 +183,13 @@ const ProductSettingsMain = () => {
             savedRow = parentIndex || index
             savedValue = value
 
-            if (parentIndex) updateSettingsHandlerById(newList[parentIndex].product.variations[index])
-            else updateSettingsHandlerById(newList[index])
+            if (parentIndex) {
+                if (editableVariation) {
+                    updateVariationById(newList[parentIndex].product.variations[index])
+                } else {
+                    updateSettingsHandlerById(newList[parentIndex].product.variations[index])
+                }
+            } else updateSettingsHandlerById(newList[index])
 
             editableRow = null
         }, 2000)
@@ -207,8 +225,14 @@ const ProductSettingsMain = () => {
         clearTimeout(timerId)
         if (editableRow === localIndex) {
             if (value != savedValue || localIndex != savedRow) {
-                updateSettingsHandlerById(productsList[index])
+                if (editableVariation) {
+                    updateVariationById(productsList[parentIndex].product.variations[index])
+                } else {
+                    updateSettingsHandlerById(productsList[index])
+                }
+
                 editableRow = null
+                editableVariation = false
             }
         }
     }

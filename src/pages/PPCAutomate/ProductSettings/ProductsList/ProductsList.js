@@ -16,7 +16,7 @@ import CogsWindow from "../CogsWindow/CogsWindow"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
 import AmazonFeeWindow from "../AmazonFeesWindow/AmazonFeesWindow"
-
+import _ from 'lodash'
 const ACTIVE = 'RUNNING'
 const PRODUCT = 'product'
 const NET_MARGIN = 'calculated_product_margin'
@@ -134,15 +134,15 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         $('.table-overflow').animate({scrollLeft: 100000}, 400)
     }
 
-    const onChangeRow = (value, item, index, parentIndex) => {
+    const onChangeRow = (value, item, index, parentIndex, isVariation = false) => {
         if (parentIndex ? products[parentIndex].product.variations[index][item] !== value : products[index][item] !== value) {
             if (value === '' || value == null) {
-                setRowData(null, item, index, parentIndex)
+                setRowData(null, item, index, parentIndex, isVariation)
             } else if (item === PRICE_FROM_USER && value > 0) {
-                setRowData(value, item, index, parentIndex)
+                setRowData(value, item, index, parentIndex, isVariation)
                 clearTimeout(priceTimerId)
             } else if (item === PRICE_FROM_USER && value <= 0) {
-                setRowData(value, item, index, parentIndex)
+                setRowData(value, item, index, parentIndex, isVariation)
 
                 clearTimeout(priceTimerId)
                 priceTimerId = setTimeout(() => {
@@ -152,7 +152,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 }, 1000)
                 return
             } else if (item === BSR_TRACKING || item === FRIENDLY_NAME) {
-                setRowData(value, item, index)
+                setRowData(value, item, index,parentIndex, isVariation)
             } else if (item !== NET_MARGIN) {
                 if (value < 0.02 || ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null)) {
                     clearTimeout(minBidManualTimerId)
@@ -196,9 +196,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 clearTimeout(minBidManualTimerId)
                 clearTimeout(maxBidManualTimerId)
 
-                setRowData(value, item, index)
+                setRowData(value, item, index,parentIndex, isVariation)
             } else if (item === NET_MARGIN && value > 0 && value <= 100) {
-                setRowData(value, item, index)
+                setRowData(value, item, index,parentIndex, isVariation)
                 clearTimeout(marginTimerId)
             } else if (item === NET_MARGIN && (value < 0 || value > 100)) {
                 clearTimeout(marginTimerId)
@@ -251,21 +251,19 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                         value={props[PRICE_FROM_USER]}
                         min={0}
                         step={0.01}
-                        onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow, parentIndex)}
-                        onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow, parentIndex)}
-                        disabled
+                        onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow, parentIndex, true)}
+                        onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow, parentIndex, true)}
                     />
                 )
             },
             {
                 minWidth: '15.5rem',
-                render: (props, item) => {
+                render: (props) => {
                     return (
                         <div className={'cogs-field'} onClick={() => onEditCogs(props)}>
                             <InputCurrency
                                 value={props[COGS]}
                                 disabled={true}
-                                data-intercom-target="net-margin-field"
                             />
 
                             <button className="btn icon edit-btn">
@@ -277,13 +275,13 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '15.5rem',
-                render: (props, item) => {
+                render: (props) => {
                     return (
-                        <div className={'cogs-field'} onClick={() => onShowAmazonFees(props)}>
+                        <div className={'cogs-field amazon-fees-field'} onClick={() => onShowAmazonFees(props)}>
                             <InputCurrency
-                                value={item[AMAZON_FEES]}
+                                value={props[AMAZON_FEES]}
                                 disabled={true}
-                                data-intercom-target="net-margin-field"
+                                // placeholder={'Non'}
                             />
 
                             <button className="btn icon edit-btn full-width-icon">
@@ -295,9 +293,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             },
             {
                 minWidth: '190px',
-                render: (index, item, indexRow) => (
+                render: (props) => (
                     <InputCurrency
-                        value={item[NET_MARGIN] ? round(item[NET_MARGIN] * 100, 2) : undefined}
+                        value={props[NET_MARGIN] ? round(props[NET_MARGIN] * 100, 2) : undefined}
                         typeIcon={'percent'}
                         className={'full-width'}
                         placeholder={'Can’t calculate'}
@@ -487,7 +485,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '160px',
             render: (index, item) => (
                 <InputCurrency
-                    value={item[PRICE]}
+                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[PRICE] : item[PRICE]}
                     disabled
                     className={'full-width'}
                 />
@@ -501,10 +499,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             render: (index, item, indexRow) => (
                 <InputCurrency
                     key={PRICE_FROM_USER}
-                    value={item[PRICE_FROM_USER]}
+                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[PRICE_FROM_USER] : item[PRICE_FROM_USER]}
                     min={0}
                     step={0.01}
-                    onChange={event => onChangeRow(event, PRICE_FROM_USER, indexRow)}
+                    disabled={item.product.variations}
+                    onChange={event => item.product.variations ? false : onChangeRow(event, PRICE_FROM_USER, indexRow)}
                     onBlur={({target: {value}}) => onBlur(value, PRICE_FROM_USER, indexRow)}
                 />
             )
@@ -516,9 +515,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '15.5rem',
             render: (index, item) => {
                 return (
-                    <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
+                    <div className={`cogs-field ${item.product.variations ? 'disabled' : ''}`} onClick={() => item.product.variations ? false : onEditCogs(item)}>
                         <InputCurrency
-                            value={item[COGS]}
+                            value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[COGS] : item[COGS]}
                             disabled={true}
                             data-intercom-target="net-margin-field"
                         />
@@ -537,10 +536,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '15.5rem',
             render: (index, item) => {
                 return (
-                    <div className={'cogs-field'} onClick={() => onShowAmazonFees(item)}>
+                    <div className={'cogs-field amazon-fees-field'} onClick={() => onShowAmazonFees(item)}>
                         <InputCurrency
                             value={item[AMAZON_FEES]}
                             disabled={true}
+                            // placeholder={'Non'}
                             data-intercom-target="net-margin-field"
                         />
 

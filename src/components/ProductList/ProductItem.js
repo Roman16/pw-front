@@ -3,7 +3,6 @@ import {func, bool, string} from 'prop-types'
 import {SVG} from "../../utils/icons"
 import InformationTooltip from "../Tooltip/Tooltip"
 import noImage from '../../assets/img/no-image-available.svg'
-import CustomSelect from "../Select/Select"
 
 // default product image urls
 export const amazonDefaultImageUrls = ['https://images-na.ssl-images-amazon.com/images/I/01RmK+J4pJL._SL75_.gif', '/img/products/product-1.png']
@@ -14,7 +13,8 @@ const indicatorStateVariations = {
     'PRODUCT_COGS_MISSING': 'Product doesn’t have CoGS',
     'PRODUCT_FEE_MISSING': 'Couldn’t calculate Amazon Fees for product',
     'RUNNING_WITH_NO_CHANGES_FOR_1D': `Product is on optimization, but no changes for 1 day or more`,
-    'OPERATING_OK': 'Product is on optimization'
+    'OPERATING_OK': 'Product is on optimization',
+    'RUNNING_WITH_NO_CHANGES_SINCE_LAUNCHED': `Product is on optimization, <br> but no changes yet`
 }
 
 const ProductItem = ({

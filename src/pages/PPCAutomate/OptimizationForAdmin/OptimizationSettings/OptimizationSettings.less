@@ -95,6 +95,49 @@
       margin: auto 0 auto 1.4285714285714286rem;
     }
 
+    .cogs-field {
+      display: flex;
+      align-items: center;
+
+      .InputCurrency {
+        width: 120px;
+        margin: 0 10px 0 0;
+
+        * {
+          cursor: pointer;
+        }
+
+        input {
+          background: #fff;
+          color: #343C5A;
+        }
+      }
+
+      .btn {
+        min-width: 2.85714286rem;
+        width: 2.85714286rem;
+        height: 2.85714286rem;
+        opacity: 0;
+        transition: .2s;
+
+        svg {
+          fill: #C9CBD4;
+        }
+
+        &:hover {
+          svg {
+            fill: #6d6df6;
+          }
+        }
+      }
+
+      &:hover {
+        .btn {
+          opacity: 1;
+        }
+      }
+    }
+
     .product-price {
       font-size: 1rem;
       color: #343C5A;
@@ -230,6 +273,9 @@
     }
 
     .InputCurrency {
+      input {
+        color: rgba(0, 0, 0, 0.25);
+      }
       .Dollar {
         svg {
           filter: grayscale(100%);

@@ -122,6 +122,8 @@ const OptimizationForAdmin = () => {
     }
 
     const updateProductInformationHandler = (name, value) => {
+        name === 'cogs' && setProductInformationFromRequest({...productInformationFromRequest, cogs: value})
+
         setProductInformation({
             ...productInformation,
             [name]: value
@@ -240,7 +242,7 @@ const OptimizationForAdmin = () => {
         setSaveProcessing(true)
 
         if (productInformation.optimization_strategy !== null) {
-            if (productInformation.product_margin_value) {
+            if (productInformation.cogs) {
                 if (bidValidator() && campaignValidator()) {
                     try {
                         const product = {
@@ -288,7 +290,7 @@ const OptimizationForAdmin = () => {
                     }
                 }
             } else {
-                notification.error({title: 'Net Margin is required field!'})
+                notification.error({title: 'CoGS is required field!'})
             }
         } else {
             stopOptimizationHandler()

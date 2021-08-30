@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {Fragment, useState} from "react"
 import './OptimizationSettings.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {Select, Spin} from "antd"
@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 import {productsActions} from "../../../../actions/products.actions"
 import {SVG} from "../../../../utils/icons"
+import CogsWindow from "./CogsWindow"
 
 const Option = Select.Option
 
@@ -46,7 +47,8 @@ const strategies = [
 ]
 
 
-const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing}) => {
+const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing, onSetCogs}) => {
+    const [visibleCogsWindow, setVisibleCogsWindow] = useState(false)
     const dispatch = useDispatch()
 
     const dontShowStopWindowAgain = useSelector(state => state.products.dontShowStopNotificationAgain)
@@ -156,14 +158,22 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                 <div className="row">
                     <div className="form-group">
-                        <div className="label">Net Margin</div>
+                        <div className="label">CoGS</div>
 
-                        <InputCurrency
-                            typeIcon={'percent'}
-                            value={product.product_margin_value}
-                            disabled={isDisabled}
-                            onChange={(value) => onUpdateField('product_margin_value', value)}
-                        />
+                        <div
+                            className={'cogs-field'}
+                            onClick={() => setVisibleCogsWindow(true)}
+                        >
+                            <InputCurrency
+                                value={product.cogs}
+                                disabled={true}
+                            />
+
+                            <button className="btn icon edit-btn">
+                                <SVG id={'edit-pen-icon'}/>
+                            </button>
+                        </div>
+
                     </div>
 
                     <div className="form-group">
@@ -221,6 +231,17 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                 title={' Are you sure you want to stop?'}
                 description={'We will stop the optimization of your active Amazon PPC campaigns. You can restart it anytime.'}
                 checkboxText={`Don't show this message again`}
+            />
+
+            <CogsWindow
+                visible={visibleCogsWindow}
+                productId={product.product_id}
+                product={product}
+                onSetCogs={() => {}}
+                setCurrentCogs={onUpdateField}
+                onClose={() => {
+                    setVisibleCogsWindow(false)
+                }}
             />
         </>
     )
