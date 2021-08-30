@@ -47,7 +47,7 @@ const strategies = [
 ]
 
 
-const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing, onSetCogs}) => {
+const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing, onSetCogs, hasVariations}) => {
     const [visibleCogsWindow, setVisibleCogsWindow] = useState(false)
     const dispatch = useDispatch()
 
@@ -161,8 +161,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">CoGS</div>
 
                         <div
-                            className={'cogs-field'}
-                            onClick={() => setVisibleCogsWindow(true)}
+                            className={`cogs-field ${hasVariations ? 'disabled' : ''}`}
+                            onClick={() => hasVariations ? false : setVisibleCogsWindow(true)}
                         >
                             <InputCurrency
                                 value={product.cogs}
@@ -212,7 +212,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
                         <InputCurrency
                             value={product.item_price_from_user}
-                            disabled={isDisabled}
+                            disabled={isDisabled || hasVariations}
                             onChange={(value) => onUpdateField('item_price_from_user', value)}
                         />
                     </div>
@@ -237,7 +237,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                 visible={visibleCogsWindow}
                 productId={product.product_id}
                 product={product}
-                onSetCogs={() => {}}
+                onSetCogs={() => {
+                }}
                 setCurrentCogs={onUpdateField}
                 onClose={() => {
                     setVisibleCogsWindow(false)

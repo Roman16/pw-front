@@ -332,6 +332,7 @@ const OptimizationForAdmin = () => {
                     product={productInformation}
                     isDisabled={productInformation.optimization_strategy == null}
                     processing={stopProcessing}
+                    hasVariations={selectedProduct && (selectedProduct.variations || false)}
 
                     onUpdateField={updateProductInformationHandler}
                     onStop={stopOptimizationHandler}
