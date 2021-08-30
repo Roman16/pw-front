@@ -15,6 +15,7 @@ export const productsServices = {
     updateCampaignsBlacklist,
     updateProductSettingsById,
     getProductCogs,
+    getProductAmazonFees,
     createProductCogs,
     updateProductCogs,
     deleteProductCogs
@@ -26,6 +27,10 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasN
 
 function getProductCogs(id) {
     return api('get', `${productsUrls.productCogs}?product_id=${id}&force=1`)
+}
+
+function getProductAmazonFees(id) {
+    return api('get', `${productsUrls.productAmazonFees}?product_id=${id}&force=1`)
 }
 
 function createProductCogs(data) {

@@ -15,7 +15,8 @@ import $ from 'jquery'
 import CogsWindow from "../CogsWindow/CogsWindow"
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
-
+import AmazonFeeWindow from "../AmazonFeesWindow/AmazonFeesWindow"
+import _ from 'lodash'
 const ACTIVE = 'RUNNING'
 const PRODUCT = 'product'
 const NET_MARGIN = 'calculated_product_margin'
@@ -34,6 +35,7 @@ const FRIENDLY_NAME = 'friendly_name'
 const DESIRED_ACOS = 'desired_acos'
 const BREAK_EVEN_ACOS = 'break_even_acos'
 const COGS = 'cogs'
+const AMAZON_FEES = 'amazon_total_fee'
 
 const Option = Select.Option
 
@@ -122,6 +124,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         [selectedAll, setSelectedAll] = useState(false),
         [strategiesDescriptionState, setStrategiesDescriptionState] = useState(false),
         [visibleCogsWindow, setVisibleCogsWindow] = useState(false),
+        [visibleAmazonFeesWindow, setVisibleAmazonFeesWindow] = useState(false),
         [selectedProduct, setSelectedProduct] = useState()
 
     const isAdmin = localStorage.getItem('adminToken')
@@ -272,6 +275,24 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 }
             },
             {
+                minWidth: '15.5rem',
+                render: (props) => {
+                    return (
+                        <div className={'cogs-field amazon-fees-field'} onClick={() => onShowAmazonFees(props)}>
+                            <InputCurrency
+                                value={props[AMAZON_FEES]}
+                                disabled={true}
+                                // placeholder={'Non'}
+                            />
+
+                            <button className="btn icon edit-btn full-width-icon">
+                                <SVG id={'question-mark-icon'}/>
+                            </button>
+                        </div>
+                    )
+                }
+            },
+            {
                 minWidth: '175px',
                 render: (props, item) => (
                     <InputCurrency
@@ -410,6 +431,11 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
         setSelectedProduct(product)
     }
 
+    const onShowAmazonFees = (product) => {
+        setVisibleAmazonFeesWindow(true)
+        setSelectedProduct(product)
+    }
+
     const columns = [
         {
             title: 'Product Name',
@@ -474,27 +500,28 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 )
             }
         },
-        // {
-        //     title: () => 'Amazon Fees',
-        //     dataIndex: MIN_BID_MANUAL_CAMPING,
-        //     key: MIN_BID_MANUAL_CAMPING,
-        //     minWidth: '15.5rem',
-        //     render: (index, item) => {
-        //         return (
-        //             <div className={'cogs-field'} onClick={() => onEditCogs(item)}>
-        //                 <InputCurrency
-        //                     value={item[COGS]}
-        //                     disabled={true}
-        //                     data-intercom-target="net-margin-field"
-        //                 />
-        //
-        //                 <button className="btn icon edit-btn">
-        //                     <SVG id={'edit-pen-icon'}/>
-        //                 </button>
-        //             </div>
-        //         )
-        //     }
-        // },
+        {
+            title: () => 'Amazon Fees',
+            dataIndex: AMAZON_FEES,
+            key: AMAZON_FEES,
+            minWidth: '15.5rem',
+            render: (index, item) => {
+                return (
+                    <div className={'cogs-field amazon-fees-field'} onClick={() => onShowAmazonFees(item)}>
+                        <InputCurrency
+                            value={item[AMAZON_FEES]}
+                            disabled={true}
+                            // placeholder={'Non'}
+                            data-intercom-target="net-margin-field"
+                        />
+
+                        <button className="btn icon edit-btn full-width-icon">
+                            <SVG id={'question-mark-icon'}/>
+                        </button>
+                    </div>
+                )
+            }
+        },
         // {
         //     title: () => 'Net Margin',
         //     dataIndex: NET_MARGIN,
@@ -778,6 +805,16 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 onClose={() => {
                     setSelectedProduct(undefined)
                     setVisibleCogsWindow(false)
+                }}
+            />
+
+            <AmazonFeeWindow
+                visible={visibleAmazonFeesWindow}
+                productId={selectedProduct && selectedProduct.id}
+                product={selectedProduct}
+                onClose={() => {
+                    setSelectedProduct(undefined)
+                    setVisibleAmazonFeesWindow(false)
                 }}
             />
         </Fragment>

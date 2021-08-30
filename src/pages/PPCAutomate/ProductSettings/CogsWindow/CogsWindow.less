@@ -452,6 +452,35 @@
       }
     }
   }
+
+
+  &.amazon-fees-window {
+    .ant-modal-body {
+      ul {
+        .current-value:first-of-type {
+          display: none;
+        }
+
+
+        .current-value .add-new-item {
+          margin: 0 0 0 34px;
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
+            margin: 0 0 0 26px;
+          }
+        }
+
+        li {
+          i {
+            width: 8px;
+            min-width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #C9CBD4;
+          }
+        }
+      }
+    }
+  }
 }
 
 .custom-modal-window.delete-confirm-window {
