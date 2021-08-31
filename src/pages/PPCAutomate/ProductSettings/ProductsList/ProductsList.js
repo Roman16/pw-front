@@ -17,6 +17,7 @@ import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
 import AmazonFeeWindow from "../AmazonFeesWindow/AmazonFeesWindow"
 import _ from 'lodash'
+
 const ACTIVE = 'RUNNING'
 const PRODUCT = 'product'
 const NET_MARGIN = 'calculated_product_margin'
@@ -152,7 +153,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 }, 1000)
                 return
             } else if (item === BSR_TRACKING || item === FRIENDLY_NAME) {
-                setRowData(value, item, index,parentIndex, isVariation)
+                setRowData(value, item, index, parentIndex, isVariation)
             } else if (item !== NET_MARGIN) {
                 if (value < 0.02 || ((item === MIN_BID_MANUAL_CAMPING) && (value > products[index][MAX_BID_MANUAL_CAMPING]) && products[index][MAX_BID_MANUAL_CAMPING] != null)) {
                     clearTimeout(minBidManualTimerId)
@@ -196,9 +197,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 clearTimeout(minBidManualTimerId)
                 clearTimeout(maxBidManualTimerId)
 
-                setRowData(value, item, index,parentIndex, isVariation)
+                setRowData(value, item, index, parentIndex, isVariation)
             } else if (item === NET_MARGIN && value > 0 && value <= 100) {
-                setRowData(value, item, index,parentIndex, isVariation)
+                setRowData(value, item, index, parentIndex, isVariation)
                 clearTimeout(marginTimerId)
             } else if (item === NET_MARGIN && (value < 0 || value > 100)) {
                 clearTimeout(marginTimerId)
@@ -485,7 +486,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '160px',
             render: (index, item) => (
                 <InputCurrency
-                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[PRICE] : item[PRICE]}
+                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true}) ? _.find(item.product.variations, {is_default_variation: true})[PRICE] : item.product.variations[0][PRICE] : item[PRICE]}
                     disabled
                     className={'full-width'}
                 />
@@ -499,7 +500,8 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             render: (index, item, indexRow) => (
                 <InputCurrency
                     key={PRICE_FROM_USER}
-                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[PRICE_FROM_USER] : item[PRICE_FROM_USER]}
+                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true}) ? _.find(item.product.variations, {is_default_variation: true})[PRICE_FROM_USER] : item.product.variations[0][PRICE_FROM_USER] : item[PRICE_FROM_USER]}
+
                     min={0}
                     step={0.01}
                     disabled={item.product.variations}
@@ -515,9 +517,10 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             minWidth: '15.5rem',
             render: (index, item) => {
                 return (
-                    <div className={`cogs-field ${item.product.variations ? 'disabled' : ''}`} onClick={() => item.product.variations ? false : onEditCogs(item)}>
+                    <div className={`cogs-field ${item.product.variations ? 'disabled' : ''}`}
+                         onClick={() => item.product.variations ? false : onEditCogs(item)}>
                         <InputCurrency
-                            value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true})[COGS] : item[COGS]}
+                            value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true}) ? _.find(item.product.variations, {is_default_variation: true})[COGS] : item.product.variations[0][COGS] : item[COGS]}
                             disabled={true}
                             data-intercom-target="net-margin-field"
                         />
@@ -556,9 +559,9 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
             dataIndex: NET_MARGIN,
             key: NET_MARGIN,
             minWidth: '190px',
-            render: (index, item, indexRow) => (
+            render: (index, item) => (
                 <InputCurrency
-                    value={item[NET_MARGIN] ? round(item[NET_MARGIN] * 100, 2) : undefined}
+                    value={item.product.variations ? _.find(item.product.variations, {is_default_variation: true}) ? round(_.find(item.product.variations, {is_default_variation: true})[NET_MARGIN] * 100, 2) : round(item.product.variations[0][NET_MARGIN] * 100, 2) : round(item[NET_MARGIN] * 100, 2)}
                     typeIcon={'percent'}
                     className={'full-width'}
                     placeholder={'Can’t calculate'}

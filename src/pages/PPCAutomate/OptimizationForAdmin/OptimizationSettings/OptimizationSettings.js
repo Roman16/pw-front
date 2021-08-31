@@ -235,6 +235,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
             <CogsWindow
                 visible={visibleCogsWindow}
+                // productId={product.variations ? _.find(product.variations, {is_default_variation: true}) : product.product_id}
                 productId={product.product_id}
                 product={product}
                 onSetCogs={() => {
