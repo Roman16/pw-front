@@ -235,7 +235,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 }
             },
             {
-                minWidth: '160px',
+                width: '160px',
                 render: (props, item) => (
                     <InputCurrency
                         value={props[PRICE]}
@@ -245,7 +245,7 @@ const ProductsList = ({products, totalSize, paginationOption, changePagination, 
                 )
             },
             {
-                minWidth: '160px',
+                width: '160px',
                 render: (props, item, indexRow) => (
                     <InputCurrency
                         key={PRICE_FROM_USER}

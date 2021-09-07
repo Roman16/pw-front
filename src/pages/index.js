@@ -43,6 +43,7 @@ const FullJourney = React.lazy(() => import('./authentication/AccountBinding/Ful
 const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'))
 const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
+const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 
 
 let timerId = null
@@ -215,7 +216,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/product-settings"
-                                        component={ProductSettings}
+                                        component={ProductsInfo}
                                     />
 
                                     {/*<ConnectedAmazonRoute*/}
