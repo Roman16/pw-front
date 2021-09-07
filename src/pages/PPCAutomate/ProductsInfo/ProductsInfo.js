@@ -73,9 +73,9 @@ const ProductsInfo = () => {
     const updateFieldHandler = async (item, column, value, success, error, isVariation = false) => {
         const breakSubmit = (text) => {
             notification.warning({title: text})
-
             error()
         }
+
         if (column === PRICE_FROM_USER && value <= 0) {
             breakSubmit('Price should be greater than 0')
         } else if ((column === MIN_BID_MANUAL_CAMPING || column === MAX_BID_MANUAL_CAMPING || column === MIN_BID_AUTO_CAMPING || column === MAX_BID_AUTO_CAMPING) && value < 0.02) {
@@ -180,6 +180,7 @@ const ProductsInfo = () => {
             requestParams={{...requestParams, totalSize}}
             processingVariation={processingVariation}
             isAgencyClient={isAgencyClient}
+
             onChangePagination={changePaginationHandler}
             onUpdateField={updateFieldHandler}
             onSetCogs={setCogsHandler}

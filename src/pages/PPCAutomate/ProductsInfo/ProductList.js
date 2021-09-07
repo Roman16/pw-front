@@ -424,20 +424,13 @@ const ProductList = ({
             align: 'right',
         },
         ...isAdmin ? [{
-            title: () => <div style={{width: '100%', textAlign: 'center'}}>BSR Tracking</div>,
+            title: 'BSR Tracking',
             dataIndex: BSR_TRACKING,
             key: BSR_TRACKING,
-            width: '130px',
+            width: '120px',
             align: 'center',
-            render: (value, item, indexRow) => (
-                <div className={'checkbox-container'}>
-                    <Checkbox
-                        checked={value}
-                        // onChange={e => onChangeRow(e.target.checked, BSR_TRACKING, indexRow)}
-                        // onBlur={({target: {value}}) => onBlur(value, BSR_TRACKING, indexRow)}
-                    />
-                </div>
-            )
+
+            editType: 'checkbox',
         }] : [],
         {
             title: 'Optimization Status',

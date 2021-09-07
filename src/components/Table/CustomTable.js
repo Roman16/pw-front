@@ -14,6 +14,7 @@ import {
 import locale from 'antd/lib/locale/en_US.js.map'
 import {Link} from "react-router-dom"
 import {notification} from "../Notification"
+import {BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
 
 const CustomTable = ({
                          columns,
@@ -253,6 +254,8 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
             } else {
                 onUpdateField(item, column, newValue.trim(), onClose, stopProcessing)
             }
+        } else if (type === 'checkbox') {
+            onUpdateField(item, column, stateValue, onClose, stopProcessing)
         } else {
             onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, stopProcessing)
         }
@@ -407,7 +410,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 </button>
             </div>}
         </div>
-    } else if(type === 'editable-text') {
+    } else if (type === 'editable-text') {
         return <div className={''} ref={wrapperRef}>
             <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
                 {render ? render() : value ? `$${value}` : ''}
@@ -443,7 +446,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 </button>
             </div>}
         </div>
-    } else if(type === 'select') {
+    } else if (type === 'select') {
         return <div className={''} ref={wrapperRef}>
             <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
                 {render ? render() : value ? `$${value}` : ''}
@@ -479,6 +482,14 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 </button>
             </div>}
         </div>
+    } else if (type === 'checkbox') {
+        return (<div className={'checkbox-container'}>
+            <Checkbox
+                checked={value}
+                disabled={processing}
+                onChange={({target: {checked}}) => submitFieldHandler(checked)}
+            />
+        </div>)
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
