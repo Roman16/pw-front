@@ -6,13 +6,15 @@ import InputCurrency from "../../../components/Inputs/InputCurrency"
 import _ from "lodash"
 import {SVG} from "../../../utils/icons"
 import {round} from "../../../utils/round"
-import {Checkbox, Input, Select, Switch} from "antd"
+import {Checkbox, Input, Popover, Select, Switch} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import noImage from "../../../assets/img/no-image-available.svg"
 import TableList from "../../Analytics/componentsV2/TableList/TableList"
 import CogsWindow from "../ProductSettings/CogsWindow/CogsWindow"
 import AmazonFeeWindow from "../ProductSettings/AmazonFeesWindow/AmazonFeesWindow"
 import MultiApply from "../ProductSettings/MultiApply/MultiApply"
+import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
+import $ from "jquery"
 
 
 export const ACTIVE = 'RUNNING'
@@ -36,6 +38,10 @@ export const COGS = 'cogs'
 export const AMAZON_FEES = 'amazon_total_fee'
 
 const advertisingStrategyVariations = [
+    {
+        label: 'Select a goal',
+        value: null,
+    },
     {
         label: 'ACoS Targeting',
         value: 'acos_targeting',
@@ -138,7 +144,7 @@ const ProductList = ({
     const getValue = (product, key, fromVariation = false, type = 'currency',) => {
         const value = (fromVariation && product.product.variations) ? getValueFromDefaultVariation(product.product.variations, key) : product[key]
 
-        return value ? type === 'currency' ? `$${value}` : `${round(value * 100)}%` : ''
+        return value ? type === 'currency' ? `$${value}` : `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
     }
 
     const openEditableWindow = (key, product) => {
@@ -147,10 +153,19 @@ const ProductList = ({
         setSelectedProduct(product)
     }
 
+    const switchStrategyDescription = () => {
+        setStrategiesDescriptionState(prevState => !prevState)
+        $('.table-overflow').animate({scrollLeft: 100000}, 400)
+    }
+
     const expandedRowRender = (props, parentIndex) => {
         const columns = [
             {
-                width: '450px',
+                width: '50px',
+                render: () => ''
+            },
+            {
+                width: '400px',
                 render: (props) => {
                     return (<ProductItem
                             product={props}
@@ -159,18 +174,32 @@ const ProductList = ({
                 }
             },
             {
-                minWidth: '150px',
+                width: '180px',
+                render: ({sku, asin}) => <div className={'sku-asin'}>
+                    <div title={sku}><b>SKU:</b>{sku}</div>
+                    <div title={asin}><b>ASIN:</b>
+                        <a
+                            target={'_blank'}
+                            href={`https://www.amazon.com/dp/${asin}`}
+                        >
+                            {asin}
+                        </a>
+                    </div>
+                </div>
+            },
+            {
+                width: '130px',
                 align: 'right',
                 render: (item) => getValue(item, PRICE)
             },
             {
-                minWidth: '170px',
+                width: '170px',
                 key: PRICE_FROM_USER,
                 editType: 'currency',
                 render: (item) => getValue(item, PRICE_FROM_USER)
             },
             {
-                minWidth: '130px',
+                width: '130px',
                 render: (item) => <div className="field-with-window"
                                        onClick={() => openEditableWindow('cogs', item)}>
                     {getValue(item, COGS)}
@@ -180,7 +209,7 @@ const ProductList = ({
                 </div>
             },
             {
-                minWidth: '130px',
+                width: '130px',
                 render: (item) => <div className="field-with-window"
                                        onClick={() => openEditableWindow('amazonFees', item)}>
                     {getValue(item, AMAZON_FEES)}
@@ -190,11 +219,11 @@ const ProductList = ({
                 </div>
             },
             {
-                minWidth: '130px',
-                render: (index, item) => getValue(item, AMAZON_FEES, false, 'percent')
+                width: '130px',
+                render: (index, item) => getValue(item, NET_MARGIN, false, 'percent')
             },
             {
-                minWidth: '200px',
+                width: '200px',
                 render: (item, parent) => (
                     <div className="switch-block">
                         <Switch
@@ -210,28 +239,29 @@ const ProductList = ({
                 )
             },
             {
-                minWidth: '175px',
-                render: (item, parent) => (parent[MIN_BID_MANUAL_CAMPING] && `$${parent[MIN_BID_MANUAL_CAMPING]}`)
+                width: '175px',
+                render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
+
             },
             {
-                minWidth: '175px',
-                render: (item, parent) => (item[parent] && `$${item[parent]}`)
+                width: '175px',
+                render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
             },
             {
-                minWidth: '175px',
-                render: (item, parent) => (parent[MIN_BID_AUTO_CAMPING] && `$${parent[MIN_BID_AUTO_CAMPING]}`)
+                width: '175px',
+                render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
             },
             {
-                minWidth: '175px',
-                render: (item, parent) => (parent[MAX_BID_AUTO_CAMPING] && `$${parent[MAX_BID_AUTO_CAMPING]}`)
+                width: '175px',
+                render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
             },
             {
-                minWidth: '160px',
-                render: (item, parent) => (parent[DESIRED_ACOS] && `${parent[DESIRED_ACOS]}%`)
+                width: '160px',
+                render: (item, parent) => (parent[DESIRED_ACOS] ? `${parent[DESIRED_ACOS]}%` : '-')
             },
             {
-                minWidth: '170px',
-                render: (item, parent) => (parent[BREAK_EVEN_ACOS] && `${parent[BREAK_EVEN_ACOS]}%`)
+                width: '170px',
+                render: (item, parent) => (parent[BREAK_EVEN_ACOS] ? `${parent[BREAK_EVEN_ACOS]}%` : '-')
             },
             {
                 width: '100px',
@@ -239,7 +269,7 @@ const ProductList = ({
 
             },
             ...isAdmin ? [{
-                width: '130px',
+                width: '120px',
                 render: () => ''
             }] : [],
             {
@@ -252,14 +282,13 @@ const ProductList = ({
                 width: '200px',
                 render: () => ''
             }] : [],
-            // ...isAgencyClient ? [
-            //     {
-            //         width: '18.571428571428573rem',
-            //         render: () => ''
-            //     }
-            // ] : []
+            ...isAgencyClient ? [
+                {
+                    width: '200px',
+                    render: () => ''
+                }
+            ] : []
         ]
-
 
         return (
             props.product.variations && props.product.variations.map((productVariation, i) => (
@@ -272,7 +301,7 @@ const ProductList = ({
                                         className={`table-body__field ${item.align || ''} ${item.editType ? 'editable-field' : ''}`}
                                         style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                     >
-                                        {index === 0 && <div className="variation-indicator"/>}
+                                        {index === 1 && <div className="variation-indicator"/>}
 
                                         {/*{item.render && item.render(productVariation, props, i)}*/}
 
@@ -283,7 +312,7 @@ const ProductList = ({
                                                 value={productVariation[item.key]}
                                                 column={item.dataIndex}
                                                 columnInfo={item}
-                                                onUpdateField={(item, column, value, success, error) => onUpdateField(item, column, value, success, error, true)}
+                                                onUpdateField={(item, column, value, success, error) => onUpdateField(item, column, value, success, error, openedProduct)}
                                                 render={() => item.render(productVariation, props, index, item.dataIndex)}
                                             /> : item.render(productVariation, props, index, item.dataIndex)}
 
@@ -310,10 +339,27 @@ const ProductList = ({
             />
         },
         {
+            title: 'SKU/ASIN',
+            dataIndex: 'sku_asin',
+            key: 'sku_asin',
+            width: '180px',
+            render: (text, {product: {sku, asin}}) => <div className={'sku-asin'}>
+                <div title={sku}><b>SKU:</b>{sku}</div>
+                <div title={asin}><b>ASIN:</b>
+                    <a
+                        target={'_blank'}
+                        href={`https://www.amazon.com/dp/${asin}`}
+                    >
+                        {asin}
+                    </a>
+                </div>
+            </div>
+        },
+        {
             title: 'Product Price',
             dataIndex: PRICE,
             key: PRICE,
-            minWidth: '150px',
+            width: '130px',
             align: 'right',
             render: (index, item) => getValue(item, PRICE, true)
         },
@@ -321,7 +367,7 @@ const ProductList = ({
             title: <>Overwrite <br/> Product Price</>,
             dataIndex: PRICE_FROM_USER,
             key: PRICE_FROM_USER,
-            minWidth: '170px',
+            width: '170px',
             editType: (item) => item.product.variations ? false : 'currency',
             render: (index, item) => getValue(item, PRICE_FROM_USER, true)
         },
@@ -329,7 +375,7 @@ const ProductList = ({
             title: 'CoGS',
             dataIndex: COGS,
             key: COGS,
-            minWidth: '130px',
+            width: '130px',
             render: (index, item) => <div className={`field-with-window ${item.product.variations ? 'disabled' : ''}`}
                                           onClick={() => item.product.variations ? false : openEditableWindow('cogs', item)}>
                 {getValue(item, COGS, true)}
@@ -343,7 +389,7 @@ const ProductList = ({
             title: () => 'Amazon Fees',
             dataIndex: AMAZON_FEES,
             key: AMAZON_FEES,
-            minWidth: '130px',
+            width: '130px',
             render: (index, item) => <div className={`field-with-window ${item.product.variations ? 'disabled' : ''}`}
                                           onClick={() => item.product.variations ? false : openEditableWindow('amazonFees', item)}>
                 {getValue(item, AMAZON_FEES, true)}
@@ -358,63 +404,63 @@ const ProductList = ({
             title: () => 'Net Margin',
             dataIndex: NET_MARGIN,
             key: NET_MARGIN,
-            minWidth: '130px',
-            render: (index, item) => getValue(item, AMAZON_FEES, true, 'percent')
+            width: '130px',
+            render: (index, item) => getValue(item, NET_MARGIN, true, 'percent')
         },
         ...openedProduct ? [{
             title: 'Calculate Net Margin based on product',
             dataIndex: NET_MARGIN,
             key: NET_MARGIN,
-            minWidth: '200px',
+            width: '200px',
             render: () => ('')
         }] : [],
         {
             title: <>Min Bid <br/> (Manual Campaign)</>,
             dataIndex: MIN_BID_MANUAL_CAMPING,
             key: MIN_BID_MANUAL_CAMPING,
-            minWidth: '175px',
+            width: '175px',
             editType: 'currency',
-            render: (value) => (value && `$${value}`)
+            render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
         },
         {
             title: <>Max Bid <br/> (Manual Campaign)</>,
             dataIndex: MAX_BID_MANUAL_CAMPING,
             key: MAX_BID_MANUAL_CAMPING,
-            minWidth: '175px',
+            width: '175px',
             editType: 'currency',
-            render: (value) => (value && `$${value}`)
+            render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
         },
         {
             title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
             dataIndex: MIN_BID_AUTO_CAMPING,
             key: MIN_BID_AUTO_CAMPING,
-            minWidth: '175px',
+            width: '175px',
             editType: 'currency',
-            render: (value) => (value && `$${value}`)
+            render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
         },
         {
             title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
             dataIndex: MAX_BID_AUTO_CAMPING,
             key: MAX_BID_AUTO_CAMPING,
-            minWidth: '175px',
+            width: '175px',
             editType: 'currency',
-            render: (value) => (value && `$${value}`)
+            render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
         },
         {
             title: () => (<span>Desired ACoS</span>),
             dataIndex: DESIRED_ACOS,
             key: DESIRED_ACOS,
-            minWidth: '160px',
+            width: '160px',
             editType: 'percent',
-            render: (value) => (value && `${value}%`)
+            render: (value) => value ? `${value}%` : '-'
         },
         {
             title: () => (<span>Break-even ACoS</span>),
             dataIndex: BREAK_EVEN_ACOS,
             key: BREAK_EVEN_ACOS,
-            minWidth: '170px',
+            width: '170px',
             editType: 'percent',
-            render: (value) => (value && `${value}%`)
+            render: (value) => value ? `${value}%` : '-'
         },
         {
             title: 'Total Changes',
@@ -422,6 +468,7 @@ const ProductList = ({
             key: TOTAL_CHANGES,
             width: '100px',
             align: 'right',
+            render: (value) => value ?? '-'
         },
         ...isAdmin ? [{
             title: 'BSR Tracking',
@@ -429,7 +476,6 @@ const ProductList = ({
             key: BSR_TRACKING,
             width: '120px',
             align: 'center',
-
             editType: 'checkbox',
         }] : [],
         {
@@ -447,57 +493,26 @@ const ProductList = ({
             key: FRIENDLY_NAME,
             width: '200px',
             editType: 'editable-text',
-
-            // render: (value, item, indexRow) => (
-            //     <div className="form-group">
-            //         <Input
-            //             value={value}
-            //             // onChange={e => onChangeRow(e.target.value, FRIENDLY_NAME, indexRow)}
-            //             // onBlur={({target: {value}}) => onBlur(value, FRIENDLY_NAME, indexRow)}
-            //             type="text"
-            //         />
-            //     </div>
-            // )
+            render: (value) => value ?? '-'
         }] : [],
-        // ...isAgencyClient ? [{
-        //     title: () => <div
-        //         // onClick={switchStrategyDescription}
-        //         className={'advertising-strategy-column'}
-        //     >
-        //         <span>Advertising Strategy</span>
-        //
-        //         <i className={strategiesDescriptionState ? 'opened' : ''}>
-        //             <SVG id={'right-icon'}/>
-        //         </i>
-        //     </div>,
-        //     dataIndex: ADVERTISING_STRATEGY,
-        //     key: ADVERTISING_STRATEGY,
-        //     width: '200px',
-        //     editType: 'select',
-        //
-        //     // render: (index, item, indexRow) => (
-        //     //     <CustomSelect
-        //     //         getPopupContainer={triggerNode => triggerNode.parentNode}
-        //     //         value={item[ADVERTISING_STRATEGY] || undefined}
-        //     //         // onChange={event => onChangeRow(event, ADVERTISING_STRATEGY, indexRow)}
-        //     //         // onBlur={(value) => onBlur(value, ADVERTISING_STRATEGY, indexRow)}
-        //     //         placeholder={'Select a goal'}
-        //     //     >
-        //     //         <Option value={null}>
-        //     //             Select a goal
-        //     //         </Option>
-        //     //
-        //     //         {advertisingStrategyVariations.map(item => (
-        //     //             <Option value={item.value}>
-        //     //                 <i style={{fill: `#${item.fill}`}}>
-        //     //                     <SVG id={item.icon}/>
-        //     //                 </i>
-        //     //                 {item.label}
-        //     //             </Option>
-        //     //         ))}
-        //     //     </CustomSelect>
-        //     // )
-        // }] : []
+        ...isAgencyClient ? [{
+            title: () => <div
+                onClick={switchStrategyDescription}
+            >
+                <span>Advertising Strategy</span>
+
+                <i className={strategiesDescriptionState ? 'opened' : ''}>
+                    <SVG id={'right-icon'}/>
+                </i>
+            </div>,
+            dataIndex: ADVERTISING_STRATEGY,
+            key: ADVERTISING_STRATEGY,
+            className: 'advertising-strategy-column',
+            width: '200px',
+            editType: 'select',
+            options: advertisingStrategyVariations,
+            render: value => _.find(advertisingStrategyVariations, {value: value}).label
+        }] : []
     ]
 
     const rowSelection = {
@@ -513,72 +528,119 @@ const ProductList = ({
     }
 
 
-    return (<div className={'table-block'}>
-        <MultiApply
-            visible={selectedRows.length > 0}
-            selectedRows={selectedRows}
-            totalSize={requestParams.totalSize}
-            onSelectAll={() => rowSelection.onChange([], true)}
-            selectedAll={selectedAll}
+    return (
+        <div className="row">
+            <div className={`table-block ${strategiesDescriptionState ? 'opened' : ''}`}>
+                <MultiApply
+                    visible={selectedRows.length > 0}
+                    selectedRows={selectedRows}
+                    totalSize={requestParams.totalSize}
+                    onSelectAll={() => rowSelection.onChange([], true)}
+                    selectedAll={selectedAll}
 
-            onSubmit={(value, success) => onSubmitSettingParams({
-                ...value,
-                ...!selectedAll && {product_id: selectedRows},
-            }, success)}
-        />
+                    onSubmit={(value, success) => onSubmitSettingParams({
+                        ...value,
+                        ...!selectedAll && {product_id: selectedRows},
+                    }, success)}
+                />
 
-        <CustomTable
-            key={'table'}
-            rowKey="id"
-            dataSource={products}
-            columns={columns}
-            loading={processing}
-            fixedColumns={[0]}
-            emptyText={'image'}
+                <CustomTable
+                    key={'table'}
+                    rowKey="id"
+                    dataSource={products}
+                    columns={columns}
+                    loading={processing}
+                    fixedColumns={[0]}
+                    emptyText={'image'}
 
-            rowSelection={rowSelection}
-            openedRow={(product) => product.id === openedProduct}
-            selectedAll={selectedAll}
-            selectedRows={selectedRows}
+                    rowSelection={rowSelection}
+                    openedRow={(product) => product.id === openedProduct}
+                    selectedAll={selectedAll}
+                    selectedRows={selectedRows}
 
-            expandedRowRender={expandedRowRender}
+                    expandedRowRender={expandedRowRender}
 
-            onUpdateField={onUpdateField}
+                    onUpdateField={onUpdateField}
 
-        />
+                />
 
-        <Pagination
-            onChange={onChangePagination}
-            page={requestParams.page}
-            pageSizeOptions={[10, 30, 50]}
-            pageSize={requestParams.pageSize}
-            totalSize={requestParams.totalSize}
-            listLength={products.length}
-            processing={processing}
-            disabled={(!processing && (!products || products.length === 0))}
-        />
+                <Pagination
+                    onChange={onChangePagination}
+                    page={requestParams.page}
+                    pageSizeOptions={[10, 30, 50]}
+                    pageSize={requestParams.pageSize}
+                    totalSize={requestParams.totalSize}
+                    listLength={products.length}
+                    processing={processing}
+                    disabled={(!processing && (!products || products.length === 0))}
+                />
 
-        <CogsWindow
-            visible={visibleCogsWindow}
-            productId={selectedProduct && selectedProduct.id}
-            product={selectedProduct}
-            onSetCogs={onSetCogs}
-            onClose={() => {
-                setSelectedProduct(undefined)
-                setVisibleCogsWindow(false)
-            }}
-        />
 
-        <AmazonFeeWindow
-            visible={visibleAmazonFeesWindow}
-            productId={selectedProduct && selectedProduct.id}
-            product={selectedProduct}
-            onClose={() => {
-                setSelectedProduct(undefined)
-                setVisibleAmazonFeesWindow(false)
-            }}
-        />
-    </div>)
+
+                <CogsWindow
+                    visible={visibleCogsWindow}
+                    productId={selectedProduct && selectedProduct.id}
+                    product={selectedProduct}
+                    onSetCogs={onSetCogs}
+                    onClose={() => {
+                        setSelectedProduct(undefined)
+                        setVisibleCogsWindow(false)
+                    }}
+                />
+
+                <AmazonFeeWindow
+                    visible={visibleAmazonFeesWindow}
+                    productId={selectedProduct && selectedProduct.id}
+                    product={selectedProduct}
+                    onClose={() => {
+                        setSelectedProduct(undefined)
+                        setVisibleAmazonFeesWindow(false)
+                    }}
+                />
+            </div>
+
+            {isAgencyClient &&
+            <div className={`strategies-description ${strategiesDescriptionState ? 'opened' : ''}`}>
+                <div className="title">
+                    Advertising Strategies
+                </div>
+
+                <div className="list">
+                    {advertisingStrategyVariations.map(item => (
+                        <div>
+                            <div className="row">
+                                <i><SVG id={item.icon}/></i>
+                                <b>{item.label}</b>
+                            </div>
+
+                            <div className="row">
+                                <div className="sales">
+                                    Sales
+
+                                    <div className="starts">
+                                        {[0, 1, 2, 3, 4].map(star => (
+                                            <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                                 className={star <= item.sales ? 'active' : ''}/>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="acos">
+                                    ACoS
+                                    <div className="starts">
+                                        {[0, 1, 2, 3, 4].map(star => (
+                                            <div style={{width: `${4 + star}px`, height: `${4 + star}px`}}
+                                                 className={star <= item.acos ? 'active' : ''}/>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>}
+        </div>
+       )
 }
 
 const ProductItem = ({product: {image_url, asin, name, id, variations}, openedProduct, onOpenVariations}) => {

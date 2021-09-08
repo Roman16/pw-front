@@ -16,7 +16,7 @@ const CreatingCampaign = () => {
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
-            {!availableTokens && <ProductAmountSlider description/>}
+            {/*{!availableTokens && <ProductAmountSlider description/>}*/}
 
             <AllProducts/>
 
@@ -25,7 +25,6 @@ const CreatingCampaign = () => {
             <ProductSettings/>
 
             <HasIncompleteBatch/>
-
         </div>
     )
 };

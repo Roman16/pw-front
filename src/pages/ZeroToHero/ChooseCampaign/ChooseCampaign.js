@@ -21,7 +21,7 @@ const ChooseCampaign = () => {
             setVisibleWindow(true)
         } else {
             dispatch(zthActions.setCampaign(campaign));
-            history.push('/zero-to-hero/ppc-structure');
+            history.push('/zero-to-hero/creating');
         }
     }
 

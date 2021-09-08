@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Input, Spin, Switch} from 'antd'
+import {Checkbox, Input, Select, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import moment from 'moment-timezone'
@@ -14,7 +14,10 @@ import {
 import locale from 'antd/lib/locale/en_US.js.map'
 import {Link} from "react-router-dom"
 import {notification} from "../Notification"
-import {BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
+import {ADVERTISING_STRATEGY, BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
+import CustomSelect from "../Select/Select"
+
+const Option = Select.Option
 
 const CustomTable = ({
                          columns,
@@ -108,7 +111,7 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''}`}
+                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
                                 key={`row_${item.dataIndex}_${index}`}
                                 style={{
                                     ...fieldWidth,
@@ -197,6 +200,7 @@ const CustomTable = ({
                                             {(typeof item.editType === 'function' ? item.editType(report) : item.editType) ?
                                                 <EditableField
                                                     item={report}
+                                                    columnParams={item}
                                                     type={item.editType}
                                                     value={report[item.key]}
                                                     column={item.dataIndex}
@@ -227,7 +231,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo, columnParams}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -454,13 +458,23 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
             </div>
 
-            {visibleEditableWindow && <div className="editable-window text">
+            {visibleEditableWindow && <div className="editable-window select">
                 <div className="form-group">
-                    <Input
+                    <CustomSelect
+                        getPopupContainer={triggerNode => triggerNode.parentNode}
                         value={newValue}
-                        onChange={({target: {value}}) => setNewValue(value)}
                         autoFocus={true}
-                    />
+                        onChange={value => setNewValue(value)}
+                    >
+                        {columnParams.options.map(k => (
+                            <Option value={k.value}>
+                                {k.icon && <i style={{fill: `#${k.fill}`}}>
+                                    <SVG id={k.icon}/>
+                                </i>}
+                                {k.label}
+                            </Option>
+                        ))}
+                    </CustomSelect>
                 </div>
 
                 <button

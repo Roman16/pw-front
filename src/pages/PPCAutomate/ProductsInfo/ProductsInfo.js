@@ -70,7 +70,7 @@ const ProductsInfo = () => {
     const changeFiltersHandler = (data) => setRequestParams({...requestParams, ...data, page: 1})
     const changePaginationHandler = (data) => setRequestParams({...requestParams, ...data})
 
-    const updateFieldHandler = async (item, column, value, success, error, isVariation = false) => {
+    const updateFieldHandler = async (item, column, value, success, error, parentId) => {
         const breakSubmit = (text) => {
             notification.warning({title: text})
             error()
@@ -90,12 +90,25 @@ const ProductsInfo = () => {
             breakSubmit('Min Bid (Auto Campaign) should be less than Max Bid (Auto Campaign)')
         } else {
             try {
-                await productsServices.updateProductSettings({...item, [column]: value})
+                if (parentId) {
+                    await productsServices.updateVariationSettings({id: item.id, item_price_from_user: value})
+                } else {
+                    await productsServices.updateProductSettings({...item, [column]: value})
+                }
+
                 success()
                 notification.success({title: 'Changes saved'})
 
                 setProductsList([...productsList.map(product => {
-                    if (product.id === item.id) product[column] = value
+                    if (parentId) {
+                        if (product.id === parentId) product.product.variations = [...product.product.variations.map(child => {
+                            if (child.id === item.id) child.item_price_from_user = value
+                            return child
+                        })]
+                    } else {
+                        if (product.id === item.id) product[column] = value
+                    }
+
                     return product
                 })])
             } catch (e) {
