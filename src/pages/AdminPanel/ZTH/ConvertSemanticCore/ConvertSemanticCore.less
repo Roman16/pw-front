@@ -101,6 +101,7 @@
     &.w-25 {
       width: 25%;
     }
+
     &.w-50 {
       width: 50%;
     }
@@ -120,10 +121,14 @@
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap: 30px;
   }
+
   .cols-5 {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    display: flex;
     grid-column-gap: 20px;
+
+    & > div {
+      width: 19%;
+    }
   }
 
 
@@ -155,16 +160,26 @@
   .variations {
     margin-bottom: 40px;
 
+    h4 {
+      padding: 0 0 0 15px;
+    }
+
+    .dsg-container {
+      margin: 0 0 0 15px;
+    }
+
+
     .custom-table {
       max-height: 300px;
+      margin-left: 15px;
 
       .table-body {
         .table-body__row {
           .table-body__field {
             padding: 0;
+            justify-content: center;
 
             &:first-child {
-              justify-content: center;
               font-weight: 500;
               background: #fff;
             }
@@ -230,10 +245,11 @@
     }
 
     .themes {
-      padding-left: 20px;
+      padding-left: 15px;
 
       .row {
         display: flex;
+        padding: 0 0 0 15px;
 
         .form-group {
           width: 250px;
@@ -244,9 +260,25 @@
         }
       }
     }
+
+    .actions {
+      display: flex;
+      padding: 0 0 0 15px;
+    }
+
+    .user-products-section.zth .convert-semantic-core h4 {
+      padding: 0 0 0 15px;
+    }
   }
 
   .conversion-options {
+    .dsg-container {
+      width: 35% !important;
+
+      .p-10 {
+        padding: 0 10px;
+      }
+    }
     .ant-radio-group {
       display: flex;
       flex-direction: column;

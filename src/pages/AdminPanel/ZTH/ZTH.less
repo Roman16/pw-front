@@ -61,6 +61,38 @@
     display: flex;
   }
 
+  //table
+  .dsg-container {
+    .dsg-scrollable-view-r {
+      box-shadow: none;
+    }
+
+    .dsg-row {
+      &.dsg-row-header {
+        .dsg-cell {
+          justify-content: center;
+          color: #000;
+        }
+      }
+    }
+
+    .dsg-cell {
+      padding: 0;
+
+      &.dsg-cell-gutter {
+        color: #000;
+      }
+
+      .dsg-input {
+        height: 100%;
+      }
+    }
+  }
+
+  .dsg-add-row {
+    display: none;
+  }
+
   & > .tabs {
     box-shadow: none;
     margin: 30px 0 40px 0;

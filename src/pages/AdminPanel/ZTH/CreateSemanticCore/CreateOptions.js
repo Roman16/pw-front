@@ -1,11 +1,14 @@
-import React from "react"
-import {Checkbox, Select} from "antd"
-import CustomTable from "../../../../components/Table/CustomTable"
+import React, {useEffect, useState} from "react"
+import {Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {checkboxColumn, keyColumn, textColumn} from "react-datasheet-grid"
 
 const Option = Select.Option
 
 const CreateOptions = ({semanticData, allEnums, onChange, onGetParams, onCreate}) => {
+    const [merchantWordsCategories, setMerchantWordsCategories] = useState([])
+
     const changeDataHandler = (obg, name, value) => {
         onChange({
             ...semanticData,
@@ -17,25 +20,28 @@ const CreateOptions = ({semanticData, allEnums, onChange, onGetParams, onCreate}
     }
 
     const columns = [
-        {
-            title: 'Category name',
-            dataIndex: 'campaignType',
-            key: 'campaignType',
-            width: '300px',
-            render: (text, item) => allEnums.aggregates.merchantWordsCategoriesNamesMap[item]
-        },
-        {
-            title: 'Use in search',
-            dataIndex: 'generateBulkUpload',
-            key: 'generateBulkUpload',
-            width: '150px',
-            render: (checked, item) => <Checkbox
-                checked={semanticData.keywordsProvider.merchantWordsCategories.find(i => i === item)}
-                onChange={({target: {checked}}) => changeDataHandler('keywordsProvider', 'merchantWordsCategories', checked ? [...semanticData.keywordsProvider.merchantWordsCategories, item] : [...semanticData.keywordsProvider.merchantWordsCategories.filter(i => i !== item)])}
-            />
-        },
+        {...keyColumn('title', textColumn), disabled: true, title: 'Category name', width: 3},
+        {...keyColumn('checked', checkboxColumn), title: 'Use in search', width: 2},
     ]
 
+    useEffect(() => {
+        setMerchantWordsCategories(allEnums.enums.MerchantWordsCategory.map(key => ({
+            key: key,
+            title: allEnums.aggregates.merchantWordsCategoriesNamesMap[key],
+            checked: semanticData.keywordsProvider.merchantWordsCategories.find(i => i === key)
+        })))
+    }, [])
+
+    useEffect(() => {
+        onChange({
+            ...semanticData,
+            keywordsProvider: {
+                ...semanticData.keywordsProvider,
+                merchantWordsCategories: merchantWordsCategories.filter(i => i.checked).map(i => i.key)
+            }
+        })
+
+    }, [merchantWordsCategories])
 
     return (<div className={'conversion-options'}>
             <div className="row cols-4">
@@ -56,10 +62,12 @@ const CreateOptions = ({semanticData, allEnums, onChange, onGetParams, onCreate}
 
             <h2>Merchant Words categories:</h2>
 
-            <CustomTable
+            <ExcelTable
+                data={merchantWordsCategories}
                 columns={columns}
-                dataSource={allEnums.enums.MerchantWordsCategory}
+                onChange={setMerchantWordsCategories}
             />
+
 
             <br/>
             <br/>

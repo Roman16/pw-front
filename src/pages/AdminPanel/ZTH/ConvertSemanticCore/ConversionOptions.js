@@ -7,6 +7,8 @@ import _ from 'lodash'
 import {CampaignType} from "./constans"
 import ConfirmUploadWindow from "./ConfirmUploadWindow"
 import {adminServices} from "../../../../services/admin.services"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {checkboxColumn, keyColumn, textColumn} from "react-datasheet-grid"
 
 const Option = Select.Option
 
@@ -17,6 +19,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
         [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
         [selectedUserId, setSelectedUserId] = useState(),
+        [merchantWordsCategories, setMerchantWordsCategories] = useState([]),
         [bulkUploadOptions, setBulkUploadOptions] = useState([...zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
             campaignType: key,
             generateBulkUpload: true
@@ -59,12 +62,8 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
         }
     }
 
-    const changeBulkUploadOptionsHandler = (campaignType, value) => {
-        setBulkUploadOptions(bulkUploadOptions.map(item => {
-            if (campaignType === item.campaignType) item.generateBulkUpload = value
-
-            return item
-        }))
+    const changeBulkUploadOptionsHandler = (data) => {
+        setBulkUploadOptions(data)
     }
 
     const changeConversionOptionsHandler = (object, name, value) => {
@@ -106,22 +105,8 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
     }, [uploadProcessing])
 
     const columns = [
-        {
-            title: 'Campaign type',
-            dataIndex: 'campaignType',
-            key: 'campaignType',
-            width: '300px',
-        },
-        {
-            title: 'Generate',
-            dataIndex: 'generateBulkUpload',
-            key: 'generateBulkUpload',
-            width: '150px',
-            render: (checked, item) => <Checkbox
-                checked={!!checked}
-                onChange={({target: {checked}}) => changeBulkUploadOptionsHandler(item.campaignType, checked)}
-            />
-        },
+        {...keyColumn('campaignType', textColumn), disabled: true, title: 'Campaign type', width: 3},
+        {...keyColumn('generateBulkUpload', checkboxColumn), title: 'Generate', width: 2},
     ]
 
     return (
@@ -163,10 +148,12 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
 
                     <br/>
 
-                    <CustomTable
+                    <ExcelTable
+                        data={bulkUploadOptions}
                         columns={columns}
-                        dataSource={bulkUploadOptions}
+                        onChange={changeBulkUploadOptionsHandler}
                     />
+                    <br/>
                 </>}
 
                 <div className="form-group  w-25">
@@ -234,24 +221,24 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                     </CustomSelect>
                 </div>}
 
-                {/*{actionType === 'convert' && <>*/}
-                {/*    <Checkbox*/}
-                {/*        checked={semanticData.convertToXLSXWorkBook}*/}
-                {/*        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToXLSXWorkBook', checked)}*/}
-                {/*    >*/}
-                {/*        Save as google spreadsheet*/}
-                {/*    </Checkbox>*/}
-                {/*    <br/>*/}
-                {/*    <br/>*/}
-                {/*    <Checkbox*/}
-                {/*        checked={semanticData.convertToAmazonBulkUpload}*/}
-                {/*        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}*/}
-                {/*    >*/}
-                {/*        Save as Amazon Bulk Upload*/}
-                {/*    </Checkbox>*/}
-                {/*    <br/>*/}
-                {/*    <br/>*/}
-                {/*</>}*/}
+                {actionType === 'convert' && <>
+                    <Checkbox
+                        checked={semanticData.convertToXLSXWorkBook}
+                        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToXLSXWorkBook', checked)}
+                    >
+                        Save as google spreadsheet
+                    </Checkbox>
+                    <br/>
+                    <br/>
+                    <Checkbox
+                        checked={semanticData.convertToAmazonBulkUpload}
+                        onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToAmazonBulkUpload', checked)}
+                    >
+                        Save as Amazon Bulk Upload
+                    </Checkbox>
+                    <br/>
+                    <br/>
+                </>}
 
                 {actionType === 'convert' ?
                     <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>

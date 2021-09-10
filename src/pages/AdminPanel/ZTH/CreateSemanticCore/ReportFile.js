@@ -25,7 +25,6 @@ const ReportFile = ({fileSize, onChange}) => {
                     onChange={({target: {files}}) => changeUploadHandler('searchTerm', files)}
                 />
             </div>
-            <br/>
             <div className={'form-group'}>
                 <label htmlFor="productReport">Choose Product report file to use</label>
                 <input

@@ -13,8 +13,32 @@
     }
   }
 
+  .cols-5 {
+
+  }
+
+  .main-keywords-row {
+    grid-column-gap: 20px;
+
+    .form-group {
+      width: calc(40% - 15px) !important;
+
+      &:first-of-type {
+        grid-area: col1;
+      }
+
+      &:last-of-type {
+        grid-area: col2;
+      }
+
+      .custom-table {
+        margin: 0;
+      }
+    }
+  }
+
   .custom-table {
-    max-height: 400px;
+    max-height: 200px;
     height: max-content;
 
     .table-body .table-body__row .table-body__field {
@@ -23,6 +47,7 @@
       input {
         border-radius: 0;
         border-color: transparent;
+        height: 2rem;
       }
 
       &:first-of-type {
@@ -44,6 +69,12 @@
     .ant-checkbox-wrapper {
       margin: 0 0 15px 0;
     }
+
+    .form-group.padding-0 {
+      .custom-table {
+        margin: 0;
+      }
+    }
   }
 
   .variations {
@@ -54,7 +85,7 @@
 
   .conversion-options {
     .custom-table {
-      max-height: 400px;
+      max-height: 300px;
     }
   }
 

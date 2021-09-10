@@ -1,150 +1,28 @@
-import React from "react"
-import {Input} from "antd"
+import {keyColumn, textColumn} from "react-datasheet-grid"
 
-export const columns = (onChange) => ({
+export const columns = {
     mainKeywords: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={text}
-                onChange={({target: {value}}) => onChange('mainKeywords', 'text', value, index)}
-            />
-        },
-        {
-            title: 'Search volume',
-            dataIndex: 'searchVolume',
-            key: 'searchVolume',
-            render: (value, item, index) => <Input
-                value={value}
-                onChange={({target: {value}}) => onChange('mainKeywords', 'searchVolume', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 5},
+        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 2},
     ],
     baseKeywords: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('baseKeywords', 'text', value, index)}
-            />
-        },
-        {
-            title: 'Search volume',
-            dataIndex: 'searchVolume',
-            key: 'searchVolume',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('baseKeywords', 'searchVolume', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 5},
+        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 2},
     ],
     negativePhrases: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('productNegativePhrases', 'text', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
     ],
     negativeExacts: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('productNegativeExacts', 'text', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text'},
     ],
     negativeAsins: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'ASIN',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('negativeASINs', 'text', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'ASIN'},
     ],
     globalNegativePhrases: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('globalNegativePhrases', 'text', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text'},
     ],
     globalNegativeExacts: [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (url, item, index) => <Input
-                value={url}
-                onChange={({target: {value}}) => onChange('globalNegativeExacts', 'text', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text'},
     ],
-})
+}
 

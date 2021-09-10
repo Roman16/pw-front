@@ -1,44 +1,37 @@
-import React from "react"
-import CustomTable from "../../../../../components/Table/CustomTable"
+import React, {useState} from "react"
 import {columns} from "./allColumns"
+import 'handsontable/dist/handsontable.full.css'
+import ExcelTable from "../../../../../components/ExcelTable/ExcelTable"
 
 const Keywords = ({semanticData, onChange}) => {
 
-    const changeDataHandler = (name, field, value, index) => {
-        const newData = [...semanticData.creator[name]]
-        newData[index] = {
-            ...newData[index],
-            [field]: value
-        }
-
+    const changeDataHandler = (data, key) => {
         onChange({
             ...semanticData,
             creator: {
                 ...semanticData.creator,
-                [name]: [...newData]
+                [key]: [...data]
             }
         })
     }
 
-    const allColumns = columns(changeDataHandler)
-
-
     return (<div className={'all-keywords'}>
-        <div className="row cols-5">
+        <div className="row main-keywords-row">
             <div className="form-group">
                 <label htmlFor="">Main keywords:</label>
-
-                <CustomTable
-                    columns={allColumns.mainKeywords}
-                    dataSource={[...semanticData.creator.mainKeywords, {text: '', searchVolume: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.mainKeywords.length > 0 ? semanticData.creator.mainKeywords : [{text: '', searchVolume: ''}]}
+                    columns={columns.mainKeywords}
+                    onChange={(data) => changeDataHandler(data, 'mainKeywords')}
                 />
-
             </div>
+
             <div className="form-group">
                 <label htmlFor="">Base keywords:</label>
-                <CustomTable
-                    columns={allColumns.baseKeywords}
-                    dataSource={[...semanticData.creator.baseKeywords, {text: '', searchVolume: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.baseKeywords.length > 0 ? semanticData.creator.baseKeywords : [{text: '', searchVolume: ''}]}
+                    columns={columns.baseKeywords}
+                    onChange={(data) => changeDataHandler(data, 'baseKeywords')}
                 />
             </div>
         </div>
@@ -46,37 +39,42 @@ const Keywords = ({semanticData, onChange}) => {
         <div className="row cols-5">
             <div className="form-group">
                 <label htmlFor="">Product negative phrases:</label>
-                <CustomTable
-                    columns={allColumns.negativePhrases}
-                    dataSource={[...semanticData.creator.productNegativePhrases, {text: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.productNegativePhrases.length > 0 ? semanticData.creator.productNegativePhrases : [{text: ''}]}
+                    columns={columns.negativePhrases}
+                    onChange={(data) => changeDataHandler(data, 'productNegativePhrases')}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Product negative exacts:</label>
-                <CustomTable
-                    columns={allColumns.negativeExacts}
-                    dataSource={[...semanticData.creator.productNegativeExacts, {text: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.productNegativeExacts.length > 0 ? semanticData.creator.productNegativeExacts : [{text: ''}]}
+                    columns={columns.negativeExacts}
+                    onChange={(data) => changeDataHandler(data, 'productNegativeExacts')}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Negative ASINs:</label>
-                <CustomTable
-                    columns={allColumns.negativeAsins}
-                    dataSource={[...semanticData.creator.negativeASINs, {text: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.negativeASINs.length > 0 ? semanticData.creator.negativeASINs : [{text: ''}]}
+                    columns={columns.negativeAsins}
+                    onChange={(data) => changeDataHandler(data, 'negativeASINs')}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Global negative phrases:</label>
-                <CustomTable
-                    columns={allColumns.globalNegativePhrases}
-                    dataSource={[...semanticData.creator.globalNegativePhrases, {text: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.globalNegativePhrases.length > 0 ? semanticData.creator.globalNegativePhrases : [{text: ''}]}
+                    columns={columns.globalNegativePhrases}
+                    onChange={(data) => changeDataHandler(data, 'globalNegativePhrases')}
                 />
             </div>
             <div className="form-group">
                 <label htmlFor="">Global negative exacts:</label>
-                <CustomTable
-                    columns={allColumns.globalNegativeExacts}
-                    dataSource={[...semanticData.creator.globalNegativeExacts, {text: ''}]}
+                <ExcelTable
+                    data={semanticData.creator.globalNegativeExacts.length > 0 ? semanticData.creator.globalNegativeExacts : [{text: ''}]}
+                    columns={columns.globalNegativeExacts}
+                    onChange={(data) => changeDataHandler(data, 'globalNegativeExacts')}
                 />
             </div>
         </div>

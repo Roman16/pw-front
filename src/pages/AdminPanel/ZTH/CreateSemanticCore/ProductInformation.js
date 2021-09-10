@@ -1,6 +1,9 @@
 import React from "react"
 import {Checkbox, Input} from "antd"
 import CustomTable from "../../../../components/Table/CustomTable"
+import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
+import {columns} from "./Keywords/allColumns"
+import {keyColumn, textColumn} from "react-datasheet-grid"
 
 const ProductInformation = ({semanticData, onChange}) => {
 
@@ -14,92 +17,33 @@ const ProductInformation = ({semanticData, onChange}) => {
         })
     }
 
-    const changeTableHandler = (name, value, index) => {
-        const newData = [...semanticData.zeroToHero[name]]
-
-
-        newData[index] = value
-
+    const changeTableHandler = (data, name, object = 'zeroToHero') => {
         onChange({
             ...semanticData,
-            zeroToHero: {
-                ...semanticData.zeroToHero,
-                [name]: [...newData]
+            [object]: {
+                ...semanticData[object],
+                [name]: [...data]
             }
         })
     }
 
     const TCAColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Competitor ASIN',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('additionalTopCompetitorASINs', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Competitor ASIN', width: 1},
     ]
     const TPKPColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('keywordsForTPKP', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
+    ]
+    const defenseColumns = [
+        {...keyColumn('text', textColumn), title: 'ASIN', width: 1},
     ]
     const keywordsToSearchForSuggestedASINsColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'Keyword text',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('keywordsToSearchForSuggestedASINs', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
     ]
     const categoryLinksToParseASINsFromColumns = [
-        {
-            title: '',
-            dataIndex: 'index',
-            key: 'index',
-            width: '50px',
-            render: (i, item, index) => index + 1
-        },
-        {
-            title: 'BSR category link',
-            dataIndex: 'text',
-            key: 'text',
-            render: (text, item, index) => <Input
-                value={item}
-                onChange={({target: {value}}) => changeTableHandler('categoryLinksToParseASINsFrom', value, index)}
-            />
-        },
+        {...keyColumn('text', textColumn), title: 'BSR category link', width: 1},
+    ]
+    const brandNamesColumns = [
+        {...keyColumn('text', textColumn), title: 'Brand name', width: 1},
     ]
 
     return (
@@ -115,12 +59,13 @@ const ProductInformation = ({semanticData, onChange}) => {
                         onChange={({target: {value}}) => changeDataHandler('productInformation', 'productName', value)}
                     />
                 </div>
-                <div className="form-group">
-                    <label htmlFor="">Brand:</label>
-                    <Input
-                        type="text"
-                        value={semanticData.productInformation.brand}
-                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'brand', value)}
+                <div className="form-group padding-0">
+                    <label htmlFor="">Brand name and alises:</label>
+
+                    <ExcelTable
+                        data={semanticData.productInformation.brandNames.length > 0 ? semanticData.productInformation.brandNames : [{text: ''}]}
+                        columns={brandNamesColumns}
+                        onChange={(data) => changeTableHandler(data, 'brandNames', 'productInformation')}
                     />
                 </div>
             </div>
@@ -173,9 +118,10 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             {semanticData.zeroToHero.createTCACampaign && <div className="form-group w-25">
                 <label htmlFor="">Add additional Top Competitors ASINs:</label>
-                <CustomTable
+                <ExcelTable
+                    data={semanticData.zeroToHero.additionalTopCompetitorASINs.length > 0 ? semanticData.zeroToHero.additionalTopCompetitorASINs : [{text: ''}]}
                     columns={TCAColumns}
-                    dataSource={[...semanticData.zeroToHero.additionalTopCompetitorASINs, '']}
+                    onChange={(data) => changeTableHandler(data, 'additionalTopCompetitorASINs')}
                 />
             </div>}
 
@@ -188,9 +134,27 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             {semanticData.zeroToHero.createTPKPCampaign && <div className="form-group w-25">
                 <label htmlFor="">Keywords for TPKP campaign:</label>
-                <CustomTable
+                <ExcelTable
+                    data={semanticData.zeroToHero.keywordsForTPKPCampaign.length > 0 ? semanticData.zeroToHero.keywordsForTPKPCampaign : [{text: ''}]}
                     columns={TPKPColumns}
-                    dataSource={[...semanticData.zeroToHero.keywordsForTPKP, '']}
+                    onChange={(data) => changeTableHandler(data, 'keywordsForTPKPCampaign')}
+                />
+
+            </div>}
+
+            <Checkbox
+                checked={semanticData.zeroToHero.createDefenseCampaign}
+                onChange={({target: {checked}}) => changeDataHandler('zeroToHero', 'createDefenseCampaign', checked)}
+            >
+                Create "Defense ASINs" campaign
+            </Checkbox>
+
+            {semanticData.zeroToHero.createDefenseCampaign && <div className="form-group w-25">
+                <label htmlFor="">ASINs to Defend (create PATs in Defense ASINs campaign):</label>
+                <ExcelTable
+                    data={semanticData.zeroToHero.asinsForDefenseCampaign.length > 0 ? semanticData.zeroToHero.asinsForDefenseCampaign : [{text: ''}]}
+                    columns={defenseColumns}
+                    onChange={(data) => changeTableHandler(data, 'asinsForDefenseCampaign')}
                 />
             </div>}
 
@@ -211,9 +175,10 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             <div className="form-group w-50">
                 <label htmlFor="">Keywords to search on Amazon for Suggested ASINs (SA campaigns):</label>
-                <CustomTable
+                <ExcelTable
+                    data={semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.length > 0 ? semanticData.zeroToHero.keywordsToSearchForSuggestedASINs : [{text: ''}]}
                     columns={keywordsToSearchForSuggestedASINsColumns}
-                    dataSource={[...semanticData.zeroToHero.keywordsToSearchForSuggestedASINs, '']}
+                    onChange={(data) => changeTableHandler(data, 'keywordsToSearchForSuggestedASINs')}
                 />
             </div>
 
@@ -222,9 +187,10 @@ const ProductInformation = ({semanticData, onChange}) => {
                     _ngcontent-dqt-c36=""
                     href="https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden"
                     target="_blank">https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden</a>):</label>
-                <CustomTable
+                <ExcelTable
+                    data={semanticData.zeroToHero.categoryLinksToParseASINsFrom.length > 0 ? semanticData.zeroToHero.categoryLinksToParseASINsFrom : [{text: ''}]}
                     columns={categoryLinksToParseASINsFromColumns}
-                    dataSource={[...semanticData.zeroToHero.categoryLinksToParseASINsFrom, '']}
+                    onChange={(data) => changeTableHandler(data, 'categoryLinksToParseASINsFrom')}
                 />
             </div>
         </div>
