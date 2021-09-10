@@ -5,7 +5,7 @@ const InputParameters = ({onUpload}) => {
     const changeUploadHandler = ({target: {files}}) => {
         const file = files.item(files.length - 1)
 
-        onUpload(file)
+        file && onUpload(file)
     }
 
     return (
