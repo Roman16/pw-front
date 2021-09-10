@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
-import './Settings.less';
-import {Input} from "antd";
-import ProductsList from "./ProductsList";
-import {SVG} from "../../../utils/icons";
-import {debounce} from "throttle-debounce";
-import {zthServices} from "../../../services/zth.services";
-import axios from "axios";
+import React, {useEffect, useState} from "react"
+import './Settings.less'
+import {Input} from "antd"
+import ProductsList from "./ProductsList"
+import {SVG} from "../../../utils/icons"
+import {debounce} from "throttle-debounce"
+import {zthServices} from "../../../services/zth.services"
+import axios from "axios"
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
-const {Search} = Input;
+const {Search} = Input
 
 const Settings = () => {
     const [selectedTab, setTab] = useState('zth-products'),
@@ -22,23 +22,25 @@ const Settings = () => {
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
-        });
+        })
 
 
     const changeSearchHandler = debounce(500, false, str => {
-        setSearchStr(str);
+        setSearchStr(str)
         setPaginationOptions({
             ...paginationOptions,
             page: 1
         })
-    });
+    })
 
 
-    const changePaginationHandler = (params) => setPaginationOptions(params);
+    const changePaginationHandler = (params) => setPaginationOptions(params)
 
     function changeTabHandler(tab) {
-        setTab(tab);
-        setSearchStr('');
+        setList([])
+
+        setTab(tab)
+        setSearchStr('')
         setPaginationOptions({
             ...paginationOptions,
             page: 1
@@ -46,34 +48,35 @@ const Settings = () => {
     }
 
     const getProductsList = async () => {
-        setProcessing(true);
-        source && source.cancel();
-        source = CancelToken.source();
+        setProcessing(true)
+        source && source.cancel()
+        source = CancelToken.source()
 
         try {
-            setProcessing(true);
+            setProcessing(true)
 
             const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
                 ...paginationOptions,
                 searchStr: searchStr,
                 ungroupVariations: 0,
                 cancelToken: source.token
-            });
+            })
 
-            setList(res.result || []);
-            setTotalSize(res.totalSize);
+            setList(res.result || [])
+            setTotalSize(res.totalSize)
 
-            setProcessing(false);
+            setProcessing(false)
 
         } catch (e) {
-            setList([]);
+            setList([])
         }
-    };
+    }
 
 
     useEffect(() => {
         getProductsList()
-    }, [paginationOptions]);
+    }, [paginationOptions])
+
 
     useEffect(() => {
         zthServices.checkIncompleteBatch()
@@ -83,7 +86,7 @@ const Settings = () => {
                 }
             })
 
-    }, []);
+    }, [])
 
 
     return (
@@ -141,6 +144,6 @@ const Settings = () => {
             />
         </div>
     )
-};
+}
 
-export default Settings;
+export default Settings

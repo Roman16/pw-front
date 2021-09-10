@@ -1,5 +1,94 @@
 @import '../../../style/variables';
 
+.zero-to-hero-page.payment-page {
+  .bulk-information {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+
+    .col {
+      width: 40%;
+      margin: 0 10px 0 0;
+
+      .product {
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        padding: 18px 15px 18px 20px;
+        margin-bottom: 10px;
+      }
+
+      ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        list-style: none;
+
+        li {
+          background: #fff;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+          min-height: 72px;
+        }
+      }
+    }
+
+    .campaigns-count {
+      flex: 1;
+      min-height: 21.428571428571427rem;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+
+      .total {
+        font-weight: bold;
+        font-size: 1.4285714285714286rem;
+        color: #343C5A;
+        padding: 1.7142857142857142rem;
+        border-bottom: 1px solid #C9CBD4;
+        text-align: center;
+      }
+
+      ul {
+        flex: 1;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        li {
+          flex: 1;
+          height: max-content;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 1rem;
+          text-align: center;
+          color: #656A84;
+          border-right: 1px solid #C9CBD4;
+
+          &:last-child {
+            border: 0;
+          }
+
+          b {
+            font-size: 5.714285714285714rem;
+            line-height: 6.428571428571429rem;
+
+            color: #6D6DF6;
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+
+
+  }
+}
+
 .payment-section {
   border-radius: 4px;
   background: #fff;
