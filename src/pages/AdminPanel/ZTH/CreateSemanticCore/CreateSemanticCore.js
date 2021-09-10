@@ -63,8 +63,13 @@ const CreateSemanticCore = () => {
             ...semanticData.productInformation,
             brandNames: semanticData.productInformation.brandNames.filter(x => x && x.length > 0),
             variations: semanticData.productInformation.variations.map(i => {
-                if(!i.listingUrl || i.listingUrl === null) i.listingUrl = ''
-                if(!i.sku || i.sku === null) i.sku = ''
+                if (!i.listingUrl || i.listingUrl === null) i.listingUrl = ''
+                if (!i.sku || i.sku === null) i.sku = ''
+
+                i.themeValues = i.themeValues.map(t => {
+                    t.relatedValues = t.relatedValues.filter(x => x && x.length > 0)
+                    return t
+                })
 
                 return i
             })
