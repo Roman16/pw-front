@@ -46,9 +46,9 @@ const CreateSemanticCore = () => {
 
     const getInputParameters = () => ({
         keywordsProvider: {
-            maxNewKeywords: semanticData.keywordsProvider.maxNewKeywords,
+            maxNewKeywords: +semanticData.keywordsProvider.maxNewKeywords,
             merchantWordsCategories: semanticData.keywordsProvider.merchantWordsCategories,
-            tpkKeywordsCount: semanticData.keywordsProvider.tpkKeywordsCount,
+            tpkKeywordsCount: +semanticData.keywordsProvider.tpkKeywordsCount,
         },
         creator: {
             mainKeywords: semanticData.creator.mainKeywords.filter(x => x.text && x.text.length > 0),
@@ -59,8 +59,24 @@ const CreateSemanticCore = () => {
             productNegativeExacts: semanticData.creator.productNegativeExacts.filter(x => x.text && x.text.length > 0),
             negativeASINs: semanticData.creator.negativeASINs.filter(x => x.text && x.text.length > 0)
         },
-        productInformation: semanticData.productInformation,
-        zeroToHero: semanticData.zeroToHero
+        productInformation: {
+            ...semanticData.productInformation,
+            brandNames: semanticData.productInformation.brandNames.filter(x => x && x.length > 0),
+            variations: semanticData.productInformation.variations.map(i => {
+                if(!i.listingUrl || i.listingUrl === null) i.listingUrl = ''
+                if(!i.sku || i.sku === null) i.sku = ''
+
+                return i
+            })
+        },
+        zeroToHero: {
+            ...semanticData.zeroToHero,
+            keywordsToSearchForSuggestedASINs: semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.filter(x => x && x.length > 0),
+            additionalTopCompetitorASINs: semanticData.zeroToHero.additionalTopCompetitorASINs.filter(x => x && x.length > 0),
+            categoryLinksToParseASINsFrom: semanticData.zeroToHero.categoryLinksToParseASINsFrom.filter(x => x && x.length > 0),
+            keywordsForTPKPCampaign: semanticData.zeroToHero.keywordsForTPKPCampaign.filter(x => x && x.length > 0),
+            asinsForDefenseCampaign: semanticData.zeroToHero.asinsForDefenseCampaign.filter(x => x && x.length > 0),
+        }
     })
 
 
