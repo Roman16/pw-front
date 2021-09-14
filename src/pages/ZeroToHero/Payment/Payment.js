@@ -64,57 +64,59 @@ const Payment = (props) => {
     }
 
     const handleSubmit = async (event) => {
-        event.preventDefault()
-        setPayProcessing(true)
+        // event.preventDefault()
+        // setPayProcessing(true)
+        //
+        // let res
+        //
+        // try {
+        //     if (selectedPaymentMethod === 'new_card') {
+        //         if (userName) {
+        //             const billing_details = {}
+        //             billing_details.name = userName
+        //             res = await props.stripe.createPaymentMethod('card', {billing_details})
+        //         } else {
+        //             res = await props.stripe.createPaymentMethod('card')
+        //         }
+        //
+        //         if (res.error) {
+        //             notification.error({title: res.error.message})
+        //         } else if (res.paymentMethod) {
+        //             await zthServices.payBatch(props.batchId, res.paymentMethod.id)
+        //             history.push('/zero-to-hero/success')
+        //         }
+        //     } else {
+        //         await zthServices.payBatch(props.batchId, cardsList[selectedCard].id)
+        //         history.push('/zero-to-hero/success')
+        //     }
+        // } catch ({response: {data}}) {
+        //     if (data.error_code === 'authentication_required') {
+        //         props.stripe.confirmCardPayment(
+        //             data.result.payment_intent_client_secret,
+        //             {
+        //                 payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
+        //             })
+        //             .then((res) => {
+        //                 if (res.error) {
+        //                     notification.error({title: res.error.message})
+        //                 } else {
+        //                     handleSubmit(event)
+        //                 }
+        //
+        //                 setPayProcessing(false)
+        //             })
+        //             .catch(e => {
+        //                 notification.error({title: e.error.message})
+        //                 console.log(e)
+        //
+        //                 setPayProcessing(false)
+        //             })
+        //     }
+        // }
+        //
+        // setPayProcessing(false)
 
-        let res
-
-        try {
-            if (selectedPaymentMethod === 'new_card') {
-                if (userName) {
-                    const billing_details = {}
-                    billing_details.name = userName
-                    res = await props.stripe.createPaymentMethod('card', {billing_details})
-                } else {
-                    res = await props.stripe.createPaymentMethod('card')
-                }
-
-                if (res.error) {
-                    notification.error({title: res.error.message})
-                } else if (res.paymentMethod) {
-                    await zthServices.payBatch(props.batchId, res.paymentMethod.id)
-                    history.push('/zero-to-hero/success')
-                }
-            } else {
-                await zthServices.payBatch(props.batchId, cardsList[selectedCard].id)
-                history.push('/zero-to-hero/success')
-            }
-        } catch ({response: {data}}) {
-            if (data.error_code === 'authentication_required') {
-                props.stripe.confirmCardPayment(
-                    data.result.payment_intent_client_secret,
-                    {
-                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
-                    })
-                    .then((res) => {
-                        if (res.error) {
-                            notification.error({title: res.error.message})
-                        } else {
-                            handleSubmit(event)
-                        }
-
-                        setPayProcessing(false)
-                    })
-                    .catch(e => {
-                        notification.error({title: e.error.message})
-                        console.log(e)
-
-                        setPayProcessing(false)
-                    })
-            }
-        }
-
-        setPayProcessing(false)
+        history.push('/zero-to-hero/settings/payment-success')
     }
 
     const swipeCardHandler = (index) => {
@@ -164,7 +166,7 @@ const Payment = (props) => {
 
                         <div className="col">
                             <Radio value={'select'} disabled={cardsList.length === 0}>
-                                Use an existing card
+                                Use card that attached to PPC Automate Tool
                             </Radio>
 
                             <div className="radio-description user-cards">
@@ -181,53 +183,42 @@ const Payment = (props) => {
                 </div>
 
                 <div className="summary">
-                    <h2>Summary</h2>
+                    <h2>Invoice</h2>
                     <div className="row">
-                        <label htmlFor="">Products:</label>
-                        <b>{currentButch.token_count} unique SKU</b>
+                        <div className="col">
+                            <h4>Description</h4>
+                            <p>Keywords</p>
+                            <p>ASIN’s</p>
+                        </div>
+                        <div className="col">
+                            <h4>Amount</h4>
+                            <p>1000</p>
+                            <p>300</p>
+                        </div>
+                        <div className="col">
+                            <h4>Unit Price</h4>
+                            <p>$10.00</p>
+                            <p>$3.00</p>
+                        </div>
+                        <div className="col">
+                            <h4>Total</h4>
+                            <p>$1000.00</p>
+                            <p>$300.00</p>
+                        </div>
                     </div>
 
-                    <div className="row">
-                        <label htmlFor="">Campaign type:</label>
-                        <b>Sponsored Products</b>
-                    </div>
-
-                    <div className="row">
-                        <label htmlFor="">Campaigns amount:</label>
-                        <b>{currentButch.jobs}</b>
-                    </div>
-
-                    {/*<div className="row">*/}
-                    {/*    <label htmlFor="">Approximate amount of keywords:</label>*/}
-                    {/*    <b>560</b>*/}
-                    {/*</div>*/}
-
-                    {/*{selectedPaymentMethod === 'select' && <div className="coupon-block">*/}
-                    {/*    <h3>Add a Coupon</h3>*/}
-
-                    {/*    <div className="row">*/}
-                    {/*        <div className="form-group">*/}
-                    {/*            <label htmlFor="">Enter Coupon</label>*/}
-                    {/*            <Input/>*/}
-                    {/*        </div>*/}
-
-                    {/*        <button className={'p15 btn white'}>*/}
-                    {/*            <SVG id={'plus-icon'}/>*/}
-                    {/*            Add coupon*/}
-                    {/*        </button>*/}
-                    {/*    </div>*/}
-                    {/*</div>}*/}
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
-                        <div
-                            className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>
+                        {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
+                        <div className="value">$1500</div>
                     </div>
 
-                    {productAmount > 5 && <div className="row save-info">
+                    <div className="row save-info">
                         <label htmlFor="">You save:</label>
-                        <div className="value">{saleRender(currentButch.jobs)}</div>
-                    </div>}
+                        {/*<div className="value">{saleRender(currentButch.jobs)}</div>*/}
+                        <div className="value">$500</div>
+                    </div>
 
                     <button
                         className={'btn white'}

@@ -117,32 +117,42 @@ const jobStatus = ({job}) => {
 }
 
 const jobActions = ({job, batch}) => {
-    if (job) {
-        if (batch.status === 'DRAFT') {
-            return (
-                <div className="issues-field">
-                    <button className={'btn default'}
-                            onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-                        Fix Payment
-                    </button>
-                </div>
-            )
-        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-            return (
-                <div className="issues-field">
-                    <button className={'btn default'}>
-                        Help Center
-                    </button>
-                </div>
-            )
-        } else {
-            return (
-                <div className="issues-field">
-                    {job.issue}
-                </div>
-            )
-        }
-    }
+    // if (job) {
+    //     if (batch.status === 'DRAFT') {
+    //         return (
+    //             <div className="issues-field">
+    //                 <button className={'btn default'}
+    //                         onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+    //                     Fix Payment
+    //                 </button>
+    //             </div>
+    //         )
+    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+    //         return (
+    //             <div className="issues-field">
+    //                 <button className={'btn default'}>
+    //                     Help Center
+    //                 </button>
+    //             </div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div className="issues-field">
+    //                 {job.issue}
+    //             </div>
+    //         )
+    //     }
+    // }
+
+    return (
+        <div className="issues-field">
+            <button className={'btn default'}
+                    onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                Pay & Upload
+            </button>
+        </div>
+    )
+
 }
 
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
@@ -154,9 +164,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         setOpenedProduct(prevState => prevState === id ? null : id)
     }
 
-    const goOptimizationPage = () => {
-        history.push('/ppc/optimization')
-    }
 
     const createZthHandler = (product) => {
         dispatch(zthActions.addProducts([product]))

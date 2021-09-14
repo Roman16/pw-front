@@ -122,46 +122,6 @@ const SetupSetting = ({
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col">
-                        <Checkbox
-                            checked={use_existing_ppc_targetings}
-                            onChange={({target: {checked}}) => changeProductHandler({use_existing_ppc_targetings: checked})}
-                        >
-                            Use existing PPC keywords / PTs for ZTH campaigns
-                        </Checkbox>
-                    </div>
-
-                    <div className="col">
-                        <p>
-                            If this option is enabled, we will try to find existing keywords / PTs on your account
-                            related to your product. These existing targetings will be merged into our Zero to Hero
-                            campaigns structure, so you will have everything in one place in Advertising Console. We
-                            recommend enabling this option.
-                        </p>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col">
-                        <Checkbox
-                            checked={pause_existing_duplicates_of_zth_targetings}
-                            onChange={({target: {checked}}) => changeProductHandler({pause_existing_duplicates_of_zth_targetings: checked})}
-                        >
-                            Pause existing keywords / PTs that are duplicates of ZTH targetings
-                        </Checkbox>
-                    </div>
-
-                    <div className="col">
-                        <p>
-                            If this option is enabled, we will try to find existing keywords / PTs on your account
-                            related to your product that are duplicates of targetings we would create in Zero to Hero
-                            campaigns on upload to Advertising Console. Such duplicates will be paused to prevent
-                            competition between them and new Zero to Hero campaigns. Works best when "Use existing PPC
-                            keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.
-                        </p>
-                    </div>
-                </div>
 
                 <div className="row portfolio-settings">
                     <div className="col">
@@ -366,6 +326,47 @@ const SetupSetting = ({
                             For the campaigns with the “Steal Marketshare” object, we need to know the top 5 or 10 of
                             your competitors that you want to steal sales from. We will use this as a starting point to
                             get the brand names of all your competitors.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            checked={use_existing_ppc_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({use_existing_ppc_targetings: checked})}
+                        >
+                            Use existing PPC keywords / PTs for ZTH campaigns
+                        </Checkbox>
+                    </div>
+
+                    <div className="col">
+                        <p>
+                            If this option is enabled, we will try to find existing keywords / PTs on your account
+                            related to your product. These existing targetings will be merged into our Zero to Hero
+                            campaigns structure, so you will have everything in one place in Advertising Console. We
+                            recommend enabling this option.
+                        </p>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="col">
+                        <Checkbox
+                            checked={pause_existing_duplicates_of_zth_targetings}
+                            onChange={({target: {checked}}) => changeProductHandler({pause_existing_duplicates_of_zth_targetings: checked})}
+                        >
+                            Pause existing keywords / PTs that are duplicates of ZTH targetings
+                        </Checkbox>
+                    </div>
+
+                    <div className="col">
+                        <p>
+                            If this option is enabled, we will try to find existing keywords / PTs on your account
+                            related to your product that are duplicates of targetings we would create in Zero to Hero
+                            campaigns on upload to Advertising Console. Such duplicates will be paused to prevent
+                            competition between them and new Zero to Hero campaigns. Works best when "Use existing PPC
+                            keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.
                         </p>
                     </div>
                 </div>

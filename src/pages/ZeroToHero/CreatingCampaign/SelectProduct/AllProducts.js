@@ -91,7 +91,10 @@ const AllProducts = () => {
                 searchStr: searchStr,
             });
 
-            setAllProducts(res.result || []);
+            setAllProducts(res.result || [{
+                id: 3,
+                title: 'ewfw'
+            }]);
             setTotalSize(res.totalSize);
         } catch (e) {
             setAllProducts([])

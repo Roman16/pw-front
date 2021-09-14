@@ -6,19 +6,24 @@ import {SVG} from "../../../utils/icons"
 import {debounce} from "throttle-debounce"
 import {zthServices} from "../../../services/zth.services"
 import axios from "axios"
+import CreateSuccessWindow from "./CreateSuccessWindow"
+import {history} from "../../../utils/history"
+import PaymentSuccessWindow from "./PaymentSuccessWindow"
 
 const CancelToken = axios.CancelToken
 let source = null
 
 const {Search} = Input
 
-const Settings = () => {
+const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
         [productsList, setList] = useState([]),
         [processing, setProcessing] = useState(false),
         [searchStr, setSearchStr] = useState(''),
         [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
+        [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(false),
+        [visibleSuccessPaymentWindow, setVisibleSuccessPaymentWindow] = useState(false),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
@@ -86,6 +91,9 @@ const Settings = () => {
                 }
             })
 
+        if (props.match.params.status) {
+            if (props.match.params.status === 'create-success' || props.match.params.status === 'payment-success' ) setVisibleSuccessCreateWindow(true)
+        }
     }, [])
 
 
@@ -141,6 +149,18 @@ const Settings = () => {
                 paginationOptions={paginationOptions}
                 totalSize={totalSize}
                 onChangePagination={changePaginationHandler}
+            />
+
+            <CreateSuccessWindow
+                visible={visibleSuccessCreateWindow}
+
+                onClose={() => setVisibleSuccessCreateWindow(false)}
+            />
+
+            <PaymentSuccessWindow
+                visible={visibleSuccessCreateWindow}
+
+                onClose={() => setVisibleSuccessCreateWindow(false)}
             />
         </div>
     )

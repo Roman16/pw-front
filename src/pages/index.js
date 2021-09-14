@@ -257,7 +257,7 @@ const AuthorizedUser = (props) => {
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings/:status?" component={Settings}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/notifications/listing-tracking"
                                                           component={ListingTracking}/>
