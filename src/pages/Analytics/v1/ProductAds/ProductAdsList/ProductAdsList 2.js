@@ -18,13 +18,11 @@ import {
     roasColumn,
     salesShareColumn, skuAsinColumn,
     statusColumn
-} from "../../components/TableList/tableColumns"
-import TableList from "../../components/TableList/TableList"
+} from "../../../components/TableList/tableColumns"
+import TableList from "../../../components/TableList/TableList"
 import {useDispatch, useSelector} from "react-redux"
 import {Link} from "react-router-dom"
-import {analyticsActions} from "../../../../actions/analytics.actions"
-import OpenCreateWindowButton from "../../components/OpenCreateWindowButton/OpenCreateWindowButton"
-import {Switch} from "antd"
+import {analyticsActions} from "../../../../../actions/analytics.actions"
 
 const ProductAdsList = ({location}) => {
     const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
@@ -34,7 +32,9 @@ const ProductAdsList = ({location}) => {
 
     const dispatch = useDispatch()
 
-    const setStateHandler = (location, state) => {
+    const setStateHandler = (location, state, event) => {
+        if (event.ctrlKey || event.metaKey) return
+
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
     }
@@ -76,10 +76,10 @@ const ProductAdsList = ({location}) => {
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
                 className={'state-link'}
-                onClick={() => setStateHandler('ad-groups', {
+                onClick={(e) => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},
                     campaignId: item.campaignId
-                })}
+                }, e)}
             >
                 {campaign}
             </Link>)
@@ -93,12 +93,12 @@ const ProductAdsList = ({location}) => {
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.adGroupName}
                     className={'state-link'}
-                    onClick={() => setStateHandler('products', {
+                    onClick={(e) => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
                             adGroupName: item.adGroupName
                         }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                    })}
+                    }, e)}
                 >
                     {item.adGroupName}
                 </Link>

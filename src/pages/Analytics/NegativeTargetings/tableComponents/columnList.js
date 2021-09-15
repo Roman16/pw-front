@@ -25,10 +25,10 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
                 className={'state-link'}
-                onClick={() => setStateHandler('ad-groups', {
+                onClick={(e) => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},
                     campaignId: item.campaignId
-                })}
+                }, e)}
             >
                 {campaign}
             </Link>)
@@ -41,12 +41,12 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
                     to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.adGroupName}
                     className={'state-link'}
-                    onClick={() => setStateHandler('products', {
+                    onClick={(e) => setStateHandler('products', {
                         name: {
                             campaignName: item.campaignName,
                             adGroupName: item.adGroupName
                         }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                    })}
+                    }, e)}
                 >
                     {item.adGroupName}
                 </Link>

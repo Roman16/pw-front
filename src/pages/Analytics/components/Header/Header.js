@@ -20,8 +20,8 @@ const Header = ({location}) => {
 
     const [stateName, setStateName] = useState(mainState.name)
 
-    const setMainState = (state, url, location) => {
-        history.push(url)
+    const setMainState = (state, location, event) => {
+        if (event.ctrlKey || event.metaKey) return
 
         newState = {
             state,
@@ -71,24 +71,28 @@ const Header = ({location}) => {
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/campaigns', 'campaigns')}>
+                <Link
+                    to={'/analytics/campaigns'}
+                    onClick={(e) => setMainState(undefined, 'campaigns', e)}>
                     Campaigns
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
                     </i>
-                </li>
+                </Link>
 
-                <li onClick={() => setMainState({
-                    campaignId: mainState.campaignId,
-                    name: {campaignName: stateName.campaignName}
-                }, `/analytics/ad-groups?campaignId=${mainState.campaignId}`, 'ad-groups')}>
+                <Link
+                    to={`/analytics/ad-groups?campaignId=${mainState.campaignId}`}
+                    onClick={(e) => setMainState({
+                        campaignId: mainState.campaignId,
+                        name: {campaignName: stateName.campaignName}
+                    }, 'ad-groups', e)}>
                     {stateName.campaignName}
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
                     </i>
-                </li>
+                </Link>
 
                 <li>
                     {stateName.adGroupName}
@@ -101,13 +105,15 @@ const Header = ({location}) => {
         } else if (mainState.campaignId) {
             return (
                 <>
-                    <li onClick={() => setMainState(undefined, '/analytics/campaigns')}>
+                    <Link
+                        to={'/analytics/campaigns'}
+                        onClick={(e) => setMainState(undefined, undefined, e)}>
                         Campaigns
 
                         <i>
                             <SVG id={'right-steps-arrow'}/>
                         </i>
-                    </li>
+                    </Link>
 
                     <li>
                         {stateName.campaignName}
@@ -119,25 +125,18 @@ const Header = ({location}) => {
                 </>
             )
         } else if (mainState.productId) {
+            const queryParams = queryString.parse(history.location.search)
+
             return (<>
-                <li onClick={() => {
-                    const queryParams = queryString.parse(history.location.search)
-                    let url = ''
-
-                    if (queryParams.isParent === 'true') {
-                        url = '/analytics/products/parents'
-                    } else {
-                        url = '/analytics/products/regular'
-                    }
-
-                    setMainState(undefined, url)
-                }}>
+                <Link
+                    to={queryParams.isParent === 'true' ? '/analytics/products/parents' : '/analytics/products/regular'}
+                    onClick={(e) => setMainState(undefined, undefined, e)}>
                     Products
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
                     </i>
-                </li>
+                </Link>
 
                 <li title={stateName.productName && stateName.productName.length > 30 && stateName.productName}>
                     {stateName.productName && stateName.productName.length > 30 ? `${stateName.productName.slice(0, 30)}...` : stateName.productName}
@@ -149,13 +148,15 @@ const Header = ({location}) => {
             </>)
         } else if (mainState.portfolioId) {
             return (<>
-                <li onClick={() => setMainState(undefined, '/analytics/portfolios')}>
+                <Link
+                    to={'/analytics/portfolios'}
+                    onClick={(e) => setMainState(undefined, undefined, e)}>
                     Portfolios
 
                     <i>
                         <SVG id={'right-steps-arrow'}/>
                     </i>
-                </li>
+                </Link>
 
                 <li>
                     {stateName.portfolioName}

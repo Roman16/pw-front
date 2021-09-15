@@ -42,11 +42,11 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             locked: true,
             search: true,
             editType: 'text',
-            clickEvent: (item) => {
+            clickEvent: (item, e) => {
                 setStateHandler('ad-groups', {
                     name: {campaignName: item.name},
                     campaignId: item.campaignId
-                })
+                }, e)
                 setStateDetails(item)
             },
             redirectLink: (item) => `/analytics/ad-groups?campaignId=${item.campaignId}`,
@@ -125,10 +125,10 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
                     to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                     title={item.portfolioName}
                     className={'state-link'}
-                    onClick={() => setStateHandler('campaigns', {
+                    onClick={(e) => setStateHandler('campaigns', {
                         name: item.portfolioName,
                         portfolioId: item.portfolioId
-                    })}
+                    }, e)}
                 >
                     {item.portfolioName}
                 </Link>
