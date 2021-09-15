@@ -153,7 +153,7 @@ const RenderPageParts = (props) => {
                     [column]: value,
                     ...location === 'targetings' && {
                         entityType: item.entityType,
-                        ...stateInformation.advertisingType && stateInformation.advertisingType === 'SponsoredBrands' && {
+                        ...((stateInformation.advertisingType && stateInformation.advertisingType === 'SponsoredBrands') || item.advertisingType === 'SponsoredBrands') && {
                             adGroupId: item.adGroupId
                         }
                     }
