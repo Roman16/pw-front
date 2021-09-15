@@ -33,10 +33,10 @@ export const columnList = (setStateHandler) => ([
                 to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
                 className={'state-link'}
                 title={portfolio}
-                onClick={() => setStateHandler('campaigns', {
+                onClick={(e) => setStateHandler('campaigns', {
                     name: {portfolioName: portfolio},
                     portfolioId: item.portfolioId
-                })}
+                }, e)}
             >
                 {portfolio}
             </Link>)

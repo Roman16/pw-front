@@ -119,7 +119,9 @@ export const dateColumn = {
 export const RenderProduct = ({product, isParent = false}) => {
     const dispatch = useDispatch()
 
-    const setStateHandler = (location, state) => {
+    const setStateHandler = (location, state, event) => {
+        if (event.ctrlKey || event.metaKey) return
+
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
     }
@@ -138,10 +140,10 @@ export const RenderProduct = ({product, isParent = false}) => {
                 <div className="col">
                     <Link
                         to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
-                        onClick={() => setStateHandler('ad-groups', {
+                        onClick={(e) => setStateHandler('ad-groups', {
                             name: {productName: product.product_name},
                             productId: product.productId
-                        })}
+                        }, e)}
                     >
                         <h4 title={product.product_name}>{product.product_name}</h4>
                     </Link>
@@ -163,10 +165,10 @@ export const RenderProduct = ({product, isParent = false}) => {
                             <li>
                                 <Link
                                     to={`/analytics/overview?productId=${product.childs_product_id_array[index]}&isParent=${false}`}
-                                    onClick={() => setStateHandler('ad-groups', {
+                                    onClick={(e) => setStateHandler('ad-groups', {
                                         name: {productName: product.childs_product_name_array[index]},
                                         productId: product.childs_product_id_array[index]
-                                    })}
+                                    }, e)}
                                 >
                                     <div
                                         className={'name'}
@@ -186,10 +188,10 @@ export const RenderProduct = ({product, isParent = false}) => {
                     <Link
                         to={`/analytics/overview?productId=${product.productId}&isParent=${true}`}
                         className={'see-all-link'}
-                        onClick={() => setStateHandler('ad-groups', {
+                        onClick={(e) => setStateHandler('ad-groups', {
                             name: {productName: product.product_name},
                             productId: product.productId
-                        })}
+                        }, e)}
                     >
                         See all
                     </Link>

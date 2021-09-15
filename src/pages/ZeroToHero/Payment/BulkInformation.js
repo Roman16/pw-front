@@ -82,7 +82,7 @@ const BulkInformation = ({zthBulk}) => {
                             </svg>
 
                         <div className="col">
-                            <p>Total negative Product Targetings</p>
+                            <p>Total Negative Product Targetings</p>
                             <h3>100</h3>
                         </div>
                     </li>

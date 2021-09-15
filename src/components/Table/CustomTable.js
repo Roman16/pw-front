@@ -378,7 +378,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         return <div className={''} ref={wrapperRef}>
             <Link
                 to={columnInfo.redirectLink(item)}
-                onClick={() => columnInfo.clickEvent(item)}
+                onClick={(e) => columnInfo.clickEvent(item, e)}
                 className={`field-value text ${disabled ? 'disabled' : ''}`}
             >
                 {render ? render() : value}

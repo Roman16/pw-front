@@ -187,37 +187,36 @@ const Payment = (props) => {
                     <div className="row">
                         <div className="col">
                             <h4>Description</h4>
+                            <p>Fee</p>
                             <p>Keywords</p>
-                            <p>ASIN’s</p>
+                            <p>ASINs</p>
                         </div>
                         <div className="col">
                             <h4>Amount</h4>
+                            <p></p>
                             <p>1000</p>
                             <p>300</p>
                         </div>
                         <div className="col">
                             <h4>Unit Price</h4>
+                            <p></p>
                             <p>$10.00</p>
                             <p>$3.00</p>
                         </div>
                         <div className="col">
                             <h4>Total</h4>
+                            <p>$39.00</p>
                             <p>$1000.00</p>
                             <p>$300.00</p>
                         </div>
                     </div>
 
+                    <div className="hr"/>
 
                     <div className="total-price">
                         <label htmlFor="">TOTAL PRICE:</label>
                         {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
                         <div className="value">$1500</div>
-                    </div>
-
-                    <div className="row save-info">
-                        <label htmlFor="">You save:</label>
-                        {/*<div className="value">{saleRender(currentButch.jobs)}</div>*/}
-                        <div className="value">$500</div>
                     </div>
 
                     <button

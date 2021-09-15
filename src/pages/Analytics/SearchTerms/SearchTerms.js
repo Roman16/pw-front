@@ -57,7 +57,9 @@ const SearchTerms = () => {
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
 
-    const setStateHandler = (location, state) => {
+    const setStateHandler = (location, state, event) => {
+        if (event.ctrlKey || event.metaKey) return
+
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
     }

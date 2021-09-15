@@ -16,7 +16,9 @@ const Campaigns = () => {
         selectedPortfolio: state.analytics.mainState.portfolioId,
     }))
 
-    const setStateHandler = (location, state) => {
+    const setStateHandler = (location, state, event) => {
+        if (event.ctrlKey || event.metaKey) return
+
         dispatch(analyticsActions.setLocation(location))
         dispatch(analyticsActions.setMainState(state))
     }

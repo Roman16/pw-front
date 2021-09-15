@@ -13,7 +13,7 @@ const CreateSuccessWindow = ({visible, onClose}) => {
             <p>
                 Our algorithm has started to create your campaigns. Because of the high volume and complexity of this
                 process of creating professionally structured campaigns from scratch, it takes our system up to 6 hours
-                to create the campaigns. This time will be reduced in the upcoming time.
+                to create the campaigns.
             </p>
 
             <button className="btn default" onClick={onClose}>
