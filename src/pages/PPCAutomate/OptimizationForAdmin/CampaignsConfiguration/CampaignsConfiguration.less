@@ -73,11 +73,23 @@
     flex-direction: column;
     flex: 1;
 
+    .block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.4285714285714286rem;
+
+      .btn {
+        height: 2.2857142857142856rem;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
 
     .form-group {
       width: 30%;
       height: 2.2857142857142856rem;
-      margin: 10px 0 1.4285714285714286rem 1.4285714285714286rem;
+      margin: 10px 0 1.4285714285714286rem 0;
     }
 
     .custom-table {
@@ -98,15 +110,20 @@
       & > div {
         border-left: 0.5px solid #C9CBD4;
 
-        &:nth-child(2),
-        &:nth-child(3) {
-          .title {
-            justify-content: center;
-          }
-        }
-
         .title {
           justify-content: flex-start;
+
+          .with-reset {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .btn {
+              min-width: 2.28571429rem;
+              stroke: #656A84;
+            }
+          }
         }
 
         &:first-child {

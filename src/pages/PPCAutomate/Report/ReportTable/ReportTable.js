@@ -25,6 +25,8 @@ const ReportTable = ({
                     loading={processing}
                     dataSource={reportsList}
                     sorterColumn={sorterColumn}
+                    revertSortingColumns={['datetime']}
+
                     columns={[
                         {...dateField},
                         ...columns,

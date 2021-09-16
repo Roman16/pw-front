@@ -22,7 +22,7 @@ export const multiSelectVariations = [
 ]
 
 
-const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,loading, jobsList, onUpdate}) => {
+const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loading, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [hasJob, setJobState] = useState(false),
         [searchText, setSearchText] = useState()
@@ -53,6 +53,16 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,load
         }))
     }
 
+    const resetSettingsHandler = (field) => {
+        onUpdate(jobsList.map((i) => {
+            return ({
+                ...i,
+                ...(field === 'all' || field === 'dont_optimize') ? {dont_optimize: false}:{},
+                ...(field === 'all' || field === 'dont_use_metrics') ? {dont_use_metrics: false}:{}
+            })
+        }))
+    }
+
     const columns = [
         {
             title: 'Campaign Name',
@@ -61,10 +71,12 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,load
             minWidth: '200px',
         },
         {
-            title: 'Optimize',
+            title: () => <div className={'with-reset'}>Optimize <button className="btn icon" onClick={() => resetSettingsHandler('dont_optimize')}>
+                <SVG id='reload-icon'/>
+            </button></div>,
             dataIndex: 'dont_optimize',
             key: 'dont_optimize',
-            width: '120px',
+            width: '160px',
             render: (dont_optimize, item, index) => {
                 return (
                     <Checkbox
@@ -75,10 +87,12 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,load
             }
         },
         {
-            title: 'Use for PPC Metrics',
+            title: () => <div className={'with-reset'}>Use for PPC Metrics <button className="btn icon" onClick={() => resetSettingsHandler('dont_use_metrics')}>
+                <SVG id='reload-icon'/>
+            </button></div>,
             dataIndex: 'dont_use_metrics',
             key: 'dont_use_metrics',
-            width: '150px',
+            width: '200px',
             render: (dontUseMetrics, item, index) => {
                 return (
                     <Checkbox
@@ -181,15 +195,21 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings,load
             </div>
 
             <div className={`table-block`}>
-                <div className="form-group">
-                    <Search
-                        className="search-field"
-                        placeholder={`Search by campaign name`}
-                        onPressEnter={e => setSearchText(e.target.value)}
-                        onBlur={e => setSearchText(e.target.value)}
-                        data-intercom-target='search-field'
-                        suffix={<SVG id={'search'}/>}
-                    />
+                <div className={'block-header'}>
+                    <div className="form-group">
+                        <Search
+                            className="search-field"
+                            placeholder={`Search by campaign name`}
+                            onPressEnter={e => setSearchText(e.target.value)}
+                            onBlur={e => setSearchText(e.target.value)}
+                            data-intercom-target='search-field'
+                            suffix={<SVG id={'search'}/>}
+                        />
+                    </div>
+
+                    <button className="btn default" onClick={() => resetSettingsHandler('all')}>
+                        Reset All
+                    </button>
                 </div>
 
                 <CustomTable
