@@ -19,9 +19,9 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
             </div>
 
             <div className="col">
-                <div className="name" title={product.name}>
+                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}>
                     {product.name}
-                </div>
+                </a>
 
                 {!product.variations ?
                     <div className="row">
@@ -116,33 +116,43 @@ const jobStatus = ({job}) => {
     }
 }
 
-const jobIssues = ({job, batch}) => {
-    if (job) {
-        if (batch.status === 'DRAFT') {
-            return (
-                <div className="issues-field">
-                    <button className={'btn green-btn'}
-                            onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-                        Fix Payment
-                    </button>
-                </div>
-            )
-        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-            return (
-                <div className="issues-field">
-                    <button className={'btn green-btn'}>
-                        Help Center
-                    </button>
-                </div>
-            )
-        } else {
-            return (
-                <div className="issues-field">
-                    {job.issue}
-                </div>
-            )
-        }
-    }
+const jobActions = ({job, batch}) => {
+    // if (job) {
+    //     if (batch.status === 'DRAFT') {
+    //         return (
+    //             <div className="issues-field">
+    //                 <button className={'btn default'}
+    //                         onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+    //                     Fix Payment
+    //                 </button>
+    //             </div>
+    //         )
+    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+    //         return (
+    //             <div className="issues-field">
+    //                 <button className={'btn default'}>
+    //                     Help Center
+    //                 </button>
+    //             </div>
+    //         )
+    //     } else {
+    //         return (
+    //             <div className="issues-field">
+    //                 {job.issue}
+    //             </div>
+    //         )
+    //     }
+    // }
+
+    return (
+        <div className="issues-field">
+            <button className={'btn default'}
+                    onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                Pay & Upload
+            </button>
+        </div>
+    )
+
 }
 
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
@@ -154,9 +164,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         setOpenedProduct(prevState => prevState === id ? null : id)
     }
 
-    const goOptimizationPage = () => {
-        history.push('/ppc/optimization')
-    }
 
     const createZthHandler = (product) => {
         dispatch(zthActions.addProducts([product]))
@@ -168,7 +175,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         const columns = {
             'zth-products': [
                 {
-                    width: '35.714285714285715rem',
+                    width: '400px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -177,52 +184,41 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    width: '10.714285714285714rem',
-                    render: (date) => (
-                        <div className='date-field'>
-                            {moment(date).format('DD MMM YYYY')}
+                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                        <div title={sku}><b>SKU:</b>{sku}</div>
+                        <div title={asin}><b>ASIN:</b>
+                            <a
+                                target={'_blank'}
+                                href={`https://www.amazon.com/dp/${asin}`}
+                            >
+                                {asin}
+                            </a>
                         </div>
-                    )
+                    </div>
                 },
                 {
-                    width: '150px',
-                    render: (props) => (<span>{props.asin}</span>)
+                    // render: (date) => (
+                    //     <div className='date-field'>
+                    //         {moment(date).format('DD MMM YYYY')}
+                    //     </div>
+                    // )
+                    render: () => ('')
+
                 },
+
                 {
-                    width: '14.285714285714286rem',
-                    render: (props) => (<span>{props.sku}</span>)
+                    // render: (props, item) => (jobStatus(item))
+                    render: () => ('')
+
                 },
+
                 {
-                    minWidth: '150px',
-                    render: (props, item) => (jobStatus(item))
-                },
-                {
-                    minWidth: '170px',
-                    render: (props) => ('')
-                },
-                {
-                    minWidth: '200px',
-                    render: (props) => ('')
-                },
-                {
-                    minWidth: '200px',
-                    render: (props, product) => (<div className="optimization-field">
-                        {product.under_optimization ? <span>Running</span> :
-                            <button className='btn default' onClick={goOptimizationPage}>Automate</button>}
-                    </div>)
-                },
-                {
-                    minWidth: '130px',
-                    render: () => <span>SP</span>
-                },
-                {
-                    minWidth: '200px',
-                    render: (props) => ('')
+                    render: () => ('')
                 },
             ],
             'other-products': [
                 {
-                    width: '35.714285714285715rem',
+                    width: '400px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -231,26 +227,20 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    minWidth: '14.285714285714286rem',
-                    render: (props) => (<span>{props.asin}</span>)
+                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                        <div title={sku}><b>SKU:</b>{sku}</div>
+                        <div title={asin}><b>ASIN:</b>
+                            <a
+                                target={'_blank'}
+                                href={`https://www.amazon.com/dp/${asin}`}
+                            >
+                                {asin}
+                            </a>
+                        </div>
+                    </div>
                 },
                 {
-                    minWidth: '14.285714285714286rem',
-                    render: (props) => (<span>{props.sku}</span>)
-                },
-                {
-                    minWidth: '14.285714285714286rem',
-                    render: (props) => ('')
-                },
-                {
-                    minWidth: '14.285714285714286rem',
-                    render: (props, item) => {
-                        return (
-                            <div className="optimization-field">
-                                {item.under_optimization && <span> Running</span>}
-                            </div>
-                        )
-                    }
+                    render: () => ''
                 },
             ]
         }
@@ -283,16 +273,33 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
 
     const defaultColumns = [
         {
-            title: 'Products with ZTH',
+            title: 'Products name',
             dataIndex: 'id',
             key: 'id',
-            width: '35.714285714285715rem',
+            width: '400px',
             render: (id, product) => (<ProductItem
                 product={product}
                 openedProduct={openedProduct}
                 onOpenVariations={openProductVariationsHandler}
             />)
-        }
+        },
+        {
+            title: 'SKU/ASIN',
+            dataIndex: 'id',
+            key: 'id',
+            render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                <div title={sku}><b>SKU:</b>{sku}</div>
+                <div title={asin}><b>ASIN:</b>
+                    <a
+                        target={'_blank'}
+                        href={`https://www.amazon.com/dp/${asin}`}
+                    >
+                        {asin}
+                    </a>
+                </div>
+            </div>
+        },
+
     ]
     const columns = {
         'zth-products': [
@@ -301,7 +308,6 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Created Date',
                 dataIndex: 'date',
                 key: 'date',
-                width: '10.714285714285714rem',
                 render: (date, item) => {
                     return (
                         <div className='date-field'>
@@ -311,103 +317,29 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 }
             },
             {
-                title: 'ASIN',
-                dataIndex: 'asin',
-                key: 'asin',
-                width: '150px',
-            },
-            {
-                title: 'SKU',
-                dataIndex: 'sku',
-                key: 'sku',
-                width: '14.285714285714286rem',
-            },
-            {
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
-                minWidth: '150px',
                 render: (status, item) => (jobStatus(item))
             },
             {
-                title: 'Keywords Amount',
-                dataIndex: 'keywords_count',
-                key: 'keywords_count',
-                minWidth: '170px',
-                render: (date, item) => item.job && item.job.keywords_count
-            },
-            {
-                title: 'Product KeywordsList Amount',
-                dataIndex: 'pts_count',
-                key: 'pts_count',
-                minWidth: '200px',
-                render: (date, item) => item.job && item.job.pts_count
-            },
-            {
-                title: 'PPC Automate Status',
-                dataIndex: 'under_optimization',
-                key: 'under_optimization',
-                minWidth: '200px',
-                render: (status) => (
-                    <div className="optimization-field">
-                        {status ? <span>Running</span> :
-                            <button className='btn default' onClick={goOptimizationPage}>Automate</button>}
-                    </div>
-                )
-            },
-            {
-                title: 'Campaign Type',
-                dataIndex: 'campaign_type',
-                key: 'campaign_type',
-                minWidth: '130px',
-                render: () => <span>SP</span>
-            },
-            {
-                title: 'Issues',
+                title: 'Actions',
                 dataIndex: 'problems',
                 key: 'problems',
-                minWidth: '200px',
-                render: (status, item) => (jobIssues(item))
+                render: (status, item) => (jobActions(item))
             },
         ],
         'other-products': [
             ...defaultColumns,
             {
-                title: 'ASIN',
-                dataIndex: 'asin',
-                key: 'asin',
-                minWidth: '14.285714285714286rem',
-            },
-            {
-                title: 'SKU',
-                dataIndex: 'sku',
-                key: 'sku',
-                minWidth: '14.285714285714286rem',
-            },
-            {
                 title: 'Zero To Hero Status',
                 dataIndex: 'zth_status',
                 key: 'zth_status',
-                minWidth: '14.285714285714286rem',
                 render: (status, product) => (
                     <div className="zth-status-field">
                         <button className='btn green-btn' onClick={() => createZthHandler(product)}>
                             Create
                         </button>
-                    </div>
-                )
-            },
-            {
-                title: 'PPC Automate Status',
-                dataIndex: 'under_optimization',
-                key: 'under_optimization',
-                minWidth: '14.285714285714286rem',
-                render: (status) => (
-                    <div className="optimization-field">
-                        {status ? <span>Running</span> :
-                            <button className='btn default' onClick={goOptimizationPage}>
-                                Automate
-                            </button>}
                     </div>
                 )
             },
@@ -422,6 +354,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 columns={columns[selectedTab]}
                 loading={processing}
                 openedRow={(product) => product.id === openedProduct}
+                emptyText={'image'}
 
                 expandedRowRender={expandedRowRender}
             />

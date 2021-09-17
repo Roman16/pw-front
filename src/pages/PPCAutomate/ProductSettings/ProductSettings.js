@@ -14,6 +14,7 @@ let source = null
 let timerId = null
 
 let editableRow = null
+let editableVariation = false
 
 let savedRow = null,
     savedValue = null
@@ -24,6 +25,7 @@ const ProductSettingsMain = () => {
     const [productsList, setProductsList] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
+        [bootSettingsDefaultVariation, setBootSettingsDefaultVariation] = useState(),
         [requestPrams, setRequestParams] = useState(localStorage.getItem('productsSettingsRequestParams') ?
             JSON.parse(localStorage.getItem('productsSettingsRequestParams'))
             :
@@ -98,6 +100,15 @@ const ProductSettingsMain = () => {
         }
     }
 
+    const updateVariationById = async (data) => {
+        try {
+            await productsServices.updateVariationSettings(data)
+            showNotification('Changes saved')
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const updateSettingsHandlerByIdList = async (data) => {
         try {
             await productsServices.updateProductSettingsByIdList({
@@ -141,8 +152,11 @@ const ProductSettingsMain = () => {
         })
     }
 
-    const setRowData = (value, item, index, parentIndex) => {
+    const setRowData = (value, item, index, parentIndex, isVariation) => {
+        console.log(isVariation)
+
         editableRow = parentIndex || index
+        editableVariation = isVariation
 
         const newList = productsList.map((product, productIndex) => {
             if (productIndex === index && !parentIndex) {
@@ -169,11 +183,40 @@ const ProductSettingsMain = () => {
             savedRow = parentIndex || index
             savedValue = value
 
-            if (parentIndex) updateSettingsHandlerById(newList[parentIndex].product.variations[index])
-            else updateSettingsHandlerById(newList[index])
+            if (parentIndex) {
+                if (editableVariation) {
+                    updateVariationById(newList[parentIndex].product.variations[index])
+                } else {
+                    updateSettingsHandlerById(newList[parentIndex].product.variations[index])
+                }
+            } else updateSettingsHandlerById(newList[index])
 
             editableRow = null
         }, 2000)
+    }
+
+    const setDefaultVariationHandler = async (data) => {
+        setBootSettingsDefaultVariation(data.variation_product_id)
+
+        try {
+            await productsServices.setDefaultVariation(data)
+
+            setProductsList([...productsList.map(item => {
+                if (item.id === data.parent_product_id) {
+                    item.product.variations = [...item.product.variations.map(variation => {
+                        variation.is_default_variation = false
+                        if (variation.id === data.variation_product_id) variation.is_default_variation = true
+                        return variation
+                    })]
+                }
+
+                return item
+            })])
+        } catch (e) {
+            console.log(e)
+        }
+
+        setBootSettingsDefaultVariation(undefined)
     }
 
     const blurRowHandler = (value, item, index, parentIndex) => {
@@ -182,8 +225,14 @@ const ProductSettingsMain = () => {
         clearTimeout(timerId)
         if (editableRow === localIndex) {
             if (value != savedValue || localIndex != savedRow) {
-                updateSettingsHandlerById(productsList[index])
+                if (editableVariation) {
+                    updateVariationById(productsList[parentIndex].product.variations[index])
+                } else {
+                    updateSettingsHandlerById(productsList[index])
+                }
+
                 editableRow = null
+                editableVariation = false
             }
         }
     }
@@ -236,12 +285,14 @@ const ProductSettingsMain = () => {
                 totalSize={totalSize}
                 paginationOption={paginationOptions}
                 isAgencyClient={isAgencyClient}
+                processingVariation={bootSettingsDefaultVariation}
 
                 changePagination={changePaginationHandler}
                 setRowData={setRowData}
                 onBlur={blurRowHandler}
                 updateSettingsHandlerByIdList={updateSettingsHandlerByIdList}
                 onSetCogs={fetchProducts}
+                setVariation={setDefaultVariationHandler}
             />
         </div>
     )

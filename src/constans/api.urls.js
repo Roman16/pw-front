@@ -168,3 +168,7 @@ export const analyticsUrls = {
     bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
     targetingsValidation: `dynamic-analytics/targetings/bulk-validate`,
 }
+
+export const tableauUrls = {
+    token: 'tableau/trusted-ticket-urls'
+}

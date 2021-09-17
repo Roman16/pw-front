@@ -1,5 +1,5 @@
 import React, {memo, useEffect, useRef, useState} from 'react'
-import {Checkbox, Input, Spin, Switch} from 'antd'
+import {Checkbox, Input, Select, Spin, Switch} from 'antd'
 import './CustomTable.less'
 import {SVG} from "../../utils/icons"
 import moment from 'moment-timezone'
@@ -14,6 +14,10 @@ import {
 import locale from 'antd/lib/locale/en_US.js.map'
 import {Link} from "react-router-dom"
 import {notification} from "../Notification"
+import {ADVERTISING_STRATEGY, BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
+import CustomSelect from "../Select/Select"
+
+const Option = Select.Option
 
 const CustomTable = ({
                          columns,
@@ -86,7 +90,9 @@ const CustomTable = ({
 
     return (
         <div className={`custom-table ${rowSelection ? 'with-checkbox' : ''}`}>
-            <div className="table-overflow" onScroll={scrollHandler}>
+            <div
+                className={`table-overflow ${(!loading && (!dataSource || dataSource.length === 0)) ? 'disabled' : ''}`}
+                onScroll={scrollHandler}>
                 <div className="table-head" key={'table-head'}>
                     {rowSelection && <div className={'th checkbox-column'}>
                         <Checkbox
@@ -105,7 +111,7 @@ const CustomTable = ({
 
                         return (
                             <div
-                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''}`}
+                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
                                 key={`row_${item.dataIndex}_${index}`}
                                 style={{
                                     ...fieldWidth,
@@ -156,7 +162,7 @@ const CustomTable = ({
 
                 <div className="table-body">
                     {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
-                        {emptyText ? emptyText : 'You don’t have any data yet'}
+                        {emptyText ? emptyText === 'image' ? <EmptyData/> : emptyText : 'You don’t have any data yet'}
                     </div>}
 
                     {dataSource &&
@@ -191,9 +197,10 @@ const CustomTable = ({
                                                 minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                             }}
                                         >
-                                            {item.editType ?
+                                            {(typeof item.editType === 'function' ? item.editType(report) : item.editType) ?
                                                 <EditableField
                                                     item={report}
+                                                    columnParams={item}
                                                     type={item.editType}
                                                     value={report[item.key]}
                                                     column={item.dataIndex}
@@ -224,7 +231,7 @@ const CustomTable = ({
     )
 }
 
-export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo}) => {
+export const EditableField = ({item, type, column, value, onUpdateField, render, disabled, columnInfo, columnParams}) => {
     const [visibleEditableWindow, setVisibleEditableWindow] = useState(false),
         [newValue, setNewValue] = useState(value),
         [processing, setProcessing] = useState(false)
@@ -251,6 +258,8 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
             } else {
                 onUpdateField(item, column, newValue.trim(), onClose, stopProcessing)
             }
+        } else if (type === 'checkbox') {
+            onUpdateField(item, column, stateValue, onClose, stopProcessing)
         } else {
             onUpdateField(item, column, stateValue ? stateValue : type === 'date' ? newValue !== 'null' ? newValue : 'null' : newValue, onClose, stopProcessing)
         }
@@ -369,7 +378,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         return <div className={''} ref={wrapperRef}>
             <Link
                 to={columnInfo.redirectLink(item)}
-                onClick={() => columnInfo.clickEvent(item)}
+                onClick={(e) => columnInfo.clickEvent(item, e)}
                 className={`field-value text ${disabled ? 'disabled' : ''}`}
             >
                 {render ? render() : value}
@@ -405,6 +414,96 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                 </button>
             </div>}
         </div>
+    } else if (type === 'editable-text') {
+        return <div className={''} ref={wrapperRef}>
+            <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
+                {render ? render() : value ? `$${value}` : ''}
+
+                {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
+            </div>
+
+            {visibleEditableWindow && <div className="editable-window text">
+                <div className="form-group">
+                    <Input
+                        value={newValue}
+                        onChange={({target: {value}}) => setNewValue(value)}
+                        autoFocus={true}
+                    />
+                </div>
+
+                <button
+                    className={'btn default'}
+                    onClick={() => submitFieldHandler()}
+                    disabled={processing || !newValue}
+                >
+                    Save
+
+                    {processing && <Spin size={'small'}/>}
+                </button>
+
+                <button
+                    className={'btn transparent'}
+                    disabled={processing}
+                    onClick={() => setVisibleEditableWindow(false)}
+                >
+                    Cancel
+                </button>
+            </div>}
+        </div>
+    } else if (type === 'select') {
+        return <div className={''} ref={wrapperRef}>
+            <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
+                {render ? render() : value ? `$${value}` : ''}
+
+                {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
+            </div>
+
+            {visibleEditableWindow && <div className="editable-window select">
+                <div className="form-group">
+                    <CustomSelect
+                        getPopupContainer={triggerNode => triggerNode.parentNode}
+                        value={newValue}
+                        autoFocus={true}
+                        onChange={value => setNewValue(value)}
+                    >
+                        {columnParams.options.map(k => (
+                            <Option value={k.value}>
+                                {k.icon && <i style={{fill: `#${k.fill}`}}>
+                                    <SVG id={k.icon}/>
+                                </i>}
+                                {k.label}
+                            </Option>
+                        ))}
+                    </CustomSelect>
+                </div>
+
+                <button
+                    className={'btn default'}
+                    onClick={() => submitFieldHandler()}
+                    disabled={processing || !newValue}
+                >
+                    Save
+
+                    {processing && <Spin size={'small'}/>}
+                </button>
+
+                <button
+                    className={'btn transparent'}
+                    disabled={processing}
+                    onClick={() => setVisibleEditableWindow(false)}
+                >
+                    Cancel
+                </button>
+            </div>}
+        </div>
+    } else if (type === 'checkbox') {
+        return (<div className={'checkbox-container'}>
+            <Checkbox
+                checked={value}
+                disabled={processing}
+                onChange={({target: {checked}}) => submitFieldHandler(checked)}
+            />
+        </div>)
     } else {
         return (<div className={''} ref={wrapperRef}>
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
@@ -419,6 +518,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                         step={0.01}
                         // max={column === 'calculatedBudget' ? 1000000 : 1000}
                         // min={column === 'calculatedBudget' ? 1 : 0.02}
+                        typeIcon={type === 'percent' ? 'percent' : 'currency'}
                         parser={value => value && Math.abs(value)}
                         onChange={(value) => setNewValue(value || undefined)}
                         onBlur={({target: {value}}) => setNewValue(value ? round(value, 2) : undefined)}
@@ -448,5 +548,29 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
     }
 }
 
+
+const EmptyData = () => (
+    <div className="empty-data-block">
+        <svg width="216" height="200" viewBox="0 0 216 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M15.9091 136.364H48.175C50.6297 136.364 52.905 137.649 54.1715 139.752L57.3267 144.991C58.7741 147.394 61.3744 148.864 64.1798 148.864H112.525C115.33 148.864 117.93 147.394 119.378 144.991L122.533 139.752C123.799 137.649 126.075 136.364 128.529 136.364H160.795L124.574 93.1818H52.1306L15.9091 136.364Z"
+                fill="#AEB6C3"/>
+            <rect x="37.5" y="42.0454" width="102.273" height="121.591" rx="4" fill="#F5F4F7"/>
+            <rect x="47.7272" y="59.0909" width="81.8182" height="42.0455" rx="2" fill="#DCDFE6"/>
+            <rect x="47.7272" y="114.773" width="81.8182" height="5.68182" rx="2.84091" fill="#DCDFE6"/>
+            <rect x="47.7272" y="125" width="81.8182" height="5.68182" rx="2.84091" fill="#DCDFE6"/>
+            <ellipse cx="88.0682" cy="185.796" rx="88.0682" ry="14.2045" fill="#F7F7F7"/>
+            <path
+                d="M15.9091 185.773V136.364H49.8703C51.273 136.364 52.5732 137.098 53.2968 138.3L58.4929 146.927C59.2166 148.129 60.5167 148.864 61.9194 148.864H114.785C116.188 148.864 117.488 148.129 118.212 146.927L123.408 138.3C124.131 137.098 125.432 136.364 126.834 136.364H160.795V185.773C160.795 187.982 159.005 189.773 156.795 189.773H19.9091C17.6999 189.773 15.9091 187.982 15.9091 185.773Z"
+                fill="#DCDFE6"/>
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M215.909 23.8636C215.909 37.0432 202.173 47.7273 185.227 47.7273C178.867 47.7273 172.958 46.2219 168.059 43.6442L158.755 47.4942C157.977 47.8158 157.174 47.0926 157.413 46.2861L160.024 37.4762C156.57 33.6153 154.546 28.9234 154.546 23.8636C154.546 10.6841 168.282 0 185.227 0C202.173 0 215.909 10.6841 215.909 23.8636ZM172.159 28.4091C174.356 28.4091 176.137 26.6285 176.137 24.4319C176.137 22.2353 174.356 20.4546 172.159 20.4546C169.963 20.4546 168.182 22.2353 168.182 24.4319C168.182 26.6285 169.963 28.4091 172.159 28.4091ZM189.773 24.4319C189.773 26.6285 187.992 28.4092 185.795 28.4092C183.599 28.4092 181.818 26.6285 181.818 24.4319C181.818 22.2353 183.599 20.4546 185.795 20.4546C187.992 20.4546 189.773 22.2353 189.773 24.4319ZM199.432 28.4092C201.628 28.4092 203.409 26.6285 203.409 24.4319C203.409 22.2353 201.628 20.4546 199.432 20.4546C197.235 20.4546 195.455 22.2353 195.455 24.4319C195.455 26.6285 197.235 28.4092 199.432 28.4092Z"
+                  fill="#DCDFE6"/>
+        </svg>
+
+        <h4>No data yet</h4>
+        <p>There’s currently no data to display</p>
+    </div>
+)
 
 export default memo(CustomTable)

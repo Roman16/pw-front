@@ -1,5 +1,177 @@
 @import '../../../style/variables';
 
+.zero-to-hero-page.payment-page {
+  display: flex !important;
+  flex-direction: column;
+
+  .bulk-information {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+
+    .col {
+      width: 40%;
+      margin: 0 10px 0 0;
+
+      .product {
+        width: 100%;
+        background: #fff;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        padding: 18px 15px 18px 20px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+
+        .image {
+          width: 7.142857142857143rem;
+          min-width: 7.142857142857143rem;
+          height: 7.142857142857143rem;
+          margin: 0 20px 0 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .col {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+
+          h3 {
+            font-size: 1.2857142857142858rem;
+            line-height: 1.5714285714285714rem;
+            color: #343C5A;
+            margin-bottom: 12px;
+          }
+
+          .price {
+            font-weight: bold;
+            font-size: 1.2857142857142858rem;
+            line-height: 1.5714285714285714rem;
+            color: #6D6DF6;
+            margin-bottom: 12px;
+          }
+
+          .row {
+            display: flex;
+
+            div {
+              font-size: 1.1428571428571428rem;
+              line-height: 1.3571428571428572rem;
+              color: #343C5A;
+              margin: 0 20px 0 0;
+
+              &:last-child {
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+
+      ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 10px;
+        list-style: none;
+        margin: 0;
+
+        li {
+          background: #fff;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+          min-height: 72px;
+          padding: 18px;
+          display: flex;
+          align-items: center;
+
+          svg {
+            width: 36px;
+            min-width: 36px;
+            height: 36px;
+            margin: 0 12px 0 0;
+          }
+
+          .col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+
+            p {
+              font-size: 1rem;
+              color: #656A84;
+              margin-bottom: 2px;
+            }
+
+            h3 {
+              font-size: 1.2857142857142858rem;
+              line-height: 1.5714285714285714rem;
+              color: #343C5A;
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .campaigns-count {
+      flex: 1;
+      min-height: 21.428571428571427rem;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+
+      .total {
+        font-weight: bold;
+        font-size: 1.4285714285714286rem;
+        color: #343C5A;
+        padding: 1.7142857142857142rem;
+        border-bottom: 1px solid #C9CBD4;
+        text-align: center;
+      }
+
+      ul {
+        flex: 1;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        margin: 0;
+
+        li {
+          flex: 1;
+          height: max-content;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: 1rem;
+          text-align: center;
+          color: #656A84;
+          border-right: 1px solid #C9CBD4;
+
+          &:last-child {
+            border: 0;
+          }
+
+          b {
+            font-size: 5.714285714285714rem;
+            line-height: 6.428571428571429rem;
+
+            color: #6D6DF6;
+            margin-bottom: 12px;
+          }
+        }
+      }
+    }
+
+
+  }
+}
+
 .payment-section {
   border-radius: 4px;
   background: #fff;
@@ -33,6 +205,9 @@
       .ant-radio-wrapper {
         & > span:last-child {
           padding: 0 0 0 15px;
+          font-weight: bold;
+          font-size: 1rem;
+          color: #343C5A;
         }
       }
     }
@@ -161,10 +336,11 @@
 
     .user-cards {
       .card-block {
-        width: 295px;
-        height: 180px;
+        width: 350px;
+        height: 212px;
         border-radius: 4px;
         background-image: url(../../../assets/img/card-background.svg);
+        background-size: cover;
         background-repeat: no-repeat;
         position: relative;
         padding: 20px;
@@ -273,8 +449,8 @@
           left: 0;
           right: 0;
           margin: 0 auto;
-          width: 295px;
-          height: 180px;
+          width: 350px;
+          height: 212px;
           border-radius: 4px;
           z-index: 0;
           opacity: .2;
@@ -342,24 +518,42 @@
 
   .summary {
     min-width: 320px;
-    width: 32%;
+    width: 37%;
     background: #6D6DF6;
     border-radius: 0px 4px 4px 0px;
     padding: 34px 20px;
+    display: flex;
+    flex-direction: column;
 
     h2 {
       font-size: 1.4285714285714286rem;
       line-height: 24px;
       color: #FFFFFF;
-      margin-bottom: 2.5rem;
+      margin-bottom: 30px;
     }
 
     .row {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 1.4285714285714286rem;
-      font-size: 1.1428571428571428rem;
+      margin-bottom: 20px;
       color: #fff;
+
+      .col {
+        p, h4 {
+          height: 1.3571428571428572rem;
+          font-size: 1.1428571428571428rem;
+          line-height: 1.3571428571428572rem;
+          color: #FFFFFF;
+          margin-bottom: 12px;
+          text-align: right;
+        }
+
+        &:first-child {
+          p, h4 {
+            text-align: left;
+          }
+        }
+      }
     }
 
     .coupon-block {
@@ -413,19 +607,28 @@
       }
     }
 
+    .hr {
+      width: 100%;
+      height: 1px;
+      background: #fff;
+      margin: auto 0;
+    }
+
     .total-price {
       display: flex;
       justify-content: space-between;
       font-weight: 500;
       font-size: 1.7142857142857142rem;
       color: #FFFFFF;
-      padding: 2.142857142857143rem 0 0 0;
-      border-top: 1px solid #FFFFFF;
-      margin-top: 1.4285714285714286rem;
+      margin-top: 20px;
     }
 
     .save-info {
-      margin: 1.0714285714285714rem 0 0 0;
+      margin: 12px 0 0 0;
+
+      label, .value {
+        font-size: 1.1428571428571428rem;
+      }
     }
 
     .btn {

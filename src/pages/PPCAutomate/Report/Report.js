@@ -11,6 +11,7 @@ import {searchTerms} from "./ReportTable/Tables/searchTerms"
 import {useSelector} from "react-redux"
 import axios from 'axios'
 import {dateField} from "./ReportTable/Tables/const"
+import {numberColumns} from "../../Analytics/components/TableList/tableColumns"
 
 
 const CancelToken = axios.CancelToken
@@ -29,7 +30,7 @@ function Report() {
             }),
         [sorterColumn, setSorterColumn] = useState({
             column: 'datetime',
-            type: 'asc'
+            type: 'desc'
         }),
         [totalSize, setTotalSize] = useState(0),
         [paginationParams, setPaginationParams] = useState({
@@ -56,7 +57,7 @@ function Report() {
         setReportsList([])
         setSorterColumn({
             column: 'datetime',
-            type: 'asc'
+            type: 'desc'
         })
 
         document.querySelector('.table-overflow').scroll(0, 0)
@@ -68,24 +69,67 @@ function Report() {
             page: 1,
         })
 
-        if (sorterColumn && sorterColumn.column === column) {
-            if (sorterColumn.type === 'asc') {
+        if (column === 'datetime') {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'asc'
+
+                    })
+                } else if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'desc'
+                    })
+                }
+            } else {
                 setSorterColumn({
                     column: column,
                     type: 'desc'
                 })
-            } else if (sorterColumn.type === 'desc') {
+            }
+        } else {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'desc'
+
+                    })
+                } else if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'asc'
+                    })
+                }
+            } else {
                 setSorterColumn({
-                    column: null,
+                    column: column,
                     type: 'asc'
                 })
             }
-        } else {
-            setSorterColumn({
-                column: column,
-                type: 'asc'
-            })
         }
+
+
+        // if (sorterColumn && sorterColumn.column === column) {
+        //     if (sorterColumn.type === 'asc') {
+        //         setSorterColumn({
+        //             column: column,
+        //             type: 'desc'
+        //         })
+        //     } else if (sorterColumn.type === 'desc') {
+        //         setSorterColumn({
+        //             column: null,
+        //             type: 'asc'
+        //         })
+        //     }
+        // } else {
+        //     setSorterColumn({
+        //         column: column,
+        //         type: 'asc'
+        //     })
+        // }
     }
 
     const changeFiltersHandler = (data) => {

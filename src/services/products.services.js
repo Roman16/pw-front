@@ -2,6 +2,7 @@ import api from './request'
 import {productsUrls} from '../constans/api.urls'
 import {productsConstants} from '../constans/actions.type'
 import {optimizationOptions} from '../pages/PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes'
+import {func} from "prop-types"
 
 export const productsServices = {
     getProducts,
@@ -9,6 +10,7 @@ export const productsServices = {
     getProductDetails,
     getProductsSettingsList,
     updateProductSettings,
+    updateVariationSettings,
     updateProductSettingsByIdList,
     updateProductTargetAcos,
     getCampaignsSettings,
@@ -18,7 +20,8 @@ export const productsServices = {
     getProductAmazonFees,
     createProductCogs,
     updateProductCogs,
-    deleteProductCogs
+    deleteProductCogs,
+    setDefaultVariation
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
@@ -63,6 +66,13 @@ function updateProductSettings(parameters) {
         'advertising_strategy': parameters.advertising_strategy,
         'bsr_tracking': parameters.bsr_tracking,
         'friendly_name': parameters.friendly_name,
+    })
+}
+
+function updateVariationSettings(variation) {
+    return api('post', `${productsUrls.updateVariation}`, {
+        product_id: variation.id,
+        item_price_from_user: variation.item_price_from_user
     })
 }
 
@@ -111,4 +121,8 @@ function getCampaignsSettings(id) {
 
 function updateCampaignsBlacklist(id, data) {
     return api('post', `${productsUrls.campaignsSettingList(id)}`, data)
+}
+
+function setDefaultVariation(data) {
+    return api('post', `${productsUrls.defaultVariation}`, data)
 }

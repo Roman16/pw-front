@@ -122,10 +122,38 @@ const OptimizationForAdmin = () => {
     }
 
     const updateProductInformationHandler = (name, value) => {
+        name === 'cogs' && setProductInformationFromRequest({...productInformationFromRequest, cogs: value})
+
         setProductInformation({
             ...productInformation,
             [name]: value
         })
+    }
+
+    const setProductCogs = async () => {
+        if(productId) {
+            try {
+                const res = await productsServices.getProductDetails(productId, source.token)
+
+                setProductInformationFromRequest({
+                    ...productInformationFromRequest,
+                    default_variation: {
+                        ...productInformationFromRequest.default_variation,
+                        cogs: res.default_variation.cogs
+                    }
+                })
+
+                setProductInformation({
+                    ...productInformation,
+                    default_variation: {
+                        ...productInformation.default_variation,
+                        cogs: res.default_variation.cogs
+                    }
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 
     const bidValidator = () => {
@@ -240,7 +268,7 @@ const OptimizationForAdmin = () => {
         setSaveProcessing(true)
 
         if (productInformation.optimization_strategy !== null) {
-            if (productInformation.product_margin_value) {
+            if (productInformation.cogs) {
                 if (bidValidator() && campaignValidator()) {
                     try {
                         const product = {
@@ -288,7 +316,7 @@ const OptimizationForAdmin = () => {
                     }
                 }
             } else {
-                notification.error({title: 'Net Margin is required field!'})
+                notification.error({title: 'CoGS is required field!'})
             }
         } else {
             stopOptimizationHandler()
@@ -330,9 +358,11 @@ const OptimizationForAdmin = () => {
                     product={productInformation}
                     isDisabled={productInformation.optimization_strategy == null}
                     processing={stopProcessing}
+                    hasVariations={selectedProduct && (selectedProduct.variations || false)}
 
                     onUpdateField={updateProductInformationHandler}
                     onStop={stopOptimizationHandler}
+                    onSetCogs={setProductCogs}
                     onShowDescription={() => setVisibleDrawer(true)}
                 />
 

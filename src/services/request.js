@@ -30,7 +30,7 @@ function handlerErrors(error) {
 }
 
 
-const api = (method, url, data, type, abortToken) => {
+const api = (method, url, data, type, abortToken, withDefaultUrl = true) => {
     loadProgressBar()
 
     const token = localStorage.getItem('token'),
@@ -41,7 +41,7 @@ const api = (method, url, data, type, abortToken) => {
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: `${baseUrl}/api/${url}`,
+            url: withDefaultUrl ? `${baseUrl}/api/${url}` : url,
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
@@ -60,7 +60,12 @@ const api = (method, url, data, type, abortToken) => {
                         status: 'already'
                     })
                 } else if (result.status === 200 || result.status === 207) {
-                    resolve(result.data)
+                    if (typeof result.data === 'object') {
+                        resolve(result.data)
+                    } else {
+                        reject(result.data)
+                        notification.error({title: 'Error!'})
+                    }
                 } else {
                     reject(null)
                 }
@@ -73,7 +78,7 @@ const api = (method, url, data, type, abortToken) => {
                     } else {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
-                        if(window.location.pathname !== '/login') {
+                        if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
                         }
                     }

@@ -42,6 +42,8 @@ const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
 const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'))
 const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
+const Tableau = React.lazy(() => import('./Tableau/Tableau'))
+const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 
 
 let timerId = null
@@ -214,7 +216,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/product-settings"
-                                        component={ProductSettings}
+                                        component={ProductsInfo}
                                     />
 
                                     {/*<ConnectedAmazonRoute*/}
@@ -255,7 +257,7 @@ const AuthorizedUser = (props) => {
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings" component={Settings}/>
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings/:status?" component={Settings}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/notifications/listing-tracking"
                                                           component={ListingTracking}/>
@@ -264,6 +266,9 @@ const AuthorizedUser = (props) => {
 
                                     {/*ANALYTICS*/}
                                     <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    {/*-------------------------------------------*/}
+                                    {/*tableau*/}
+                                    <ConnectedAmazonRoute path="/tableau" component={Tableau}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (

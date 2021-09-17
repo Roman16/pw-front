@@ -161,7 +161,7 @@ const zthRequest = (method, url, data, contentType) => {
         headers: {
             'Authorization': adminToken ? `Bearer ${adminToken}` : `Bearer ${token}`,
             'X-PW-Agency-ZTH-API-Token': zthToken,
-            'Content-Type': contentType ?  'multipart/form-data' : 'application/json'
+            'Content-Type': contentType ? 'multipart/form-data' : 'application/json'
         },
         data: data
     }
@@ -169,7 +169,13 @@ const zthRequest = (method, url, data, contentType) => {
     return new Promise((resolve, reject) => {
         axios(config)
             .then(function (response) {
-                resolve(response.data)
+                if (typeof response.data === 'object' || response.status === 204) {
+                    resolve(response.data)
+                } else {
+                    reject(response.data)
+
+                    notification.error({title: 'Error!'})
+                }
             })
             .catch(function (error) {
                 if (error.response && error.response.data && error.response.data.errorMessage) {
@@ -221,18 +227,23 @@ function fetchZthTemplates({page, pageSize}) {
 function restartZthJob(id) {
     return zthRequest('post', `${adminUrls.restartJob(id)}`)
 }
-function downloadReport(report,id) {
+
+function downloadReport(report, id) {
     return zthRequest('get', `${adminUrls.downloadReport(id)}`)
 }
+
 function fetchCreateParams() {
     return zthRequest('get', `${adminUrls.createParams}`)
 }
+
 function fetchReportFileSize() {
     return zthRequest('get', `${adminUrls.reportFileSize}`)
 }
+
 function createZTH(data) {
     return zthRequest('post', `${adminUrls.createSemantic}`, data, 'multipart/form-data')
 }
+
 //
 // function createZTH(data) {
 //     const config = {
