@@ -21,8 +21,6 @@ const AmazonFeeWindow = ({visible, productId, product, onClose}) => {
 
 
     useEffect(() => {
-        console.log(product)
-
         setFeesList([])
     }, [visible])
 
