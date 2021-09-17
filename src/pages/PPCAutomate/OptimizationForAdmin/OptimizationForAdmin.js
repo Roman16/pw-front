@@ -130,6 +130,32 @@ const OptimizationForAdmin = () => {
         })
     }
 
+    const setProductCogs = async () => {
+        if(productId) {
+            try {
+                const res = await productsServices.getProductDetails(productId, source.token)
+
+                setProductInformationFromRequest({
+                    ...productInformationFromRequest,
+                    default_variation: {
+                        ...productInformationFromRequest.default_variation,
+                        cogs: res.default_variation.cogs
+                    }
+                })
+
+                setProductInformation({
+                    ...productInformation,
+                    default_variation: {
+                        ...productInformation.default_variation,
+                        cogs: res.default_variation.cogs
+                    }
+                })
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
     const bidValidator = () => {
         const product = productInformation
 
@@ -336,6 +362,7 @@ const OptimizationForAdmin = () => {
 
                     onUpdateField={updateProductInformationHandler}
                     onStop={stopOptimizationHandler}
+                    onSetCogs={setProductCogs}
                     onShowDescription={() => setVisibleDrawer(true)}
                 />
 

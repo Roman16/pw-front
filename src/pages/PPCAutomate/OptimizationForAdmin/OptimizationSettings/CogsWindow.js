@@ -139,6 +139,9 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
         }
     }, [visible])
 
+    useEffect(() => {
+        if (!visible && hasChanges) onSetCogs()
+    }, [visible])
 
     return (
         <>

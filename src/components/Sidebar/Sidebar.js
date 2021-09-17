@@ -98,79 +98,79 @@ const Sidebar = () => {
 
                     <nav className="top-nav">
                         <ul className="top-nav-list">
-                            <li className="top-nav-item ">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<ul className="collapsed-automate-list">
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/campaign'}
-                                            >
-                                                Campaigns Setup
-                                            </NavLink>
-                                        </li>
+                            {/*<li className="top-nav-item ">*/}
+                            {/*    <InformationTooltip*/}
+                            {/*        type={'custom'}*/}
+                            {/*        description={<ul className="collapsed-automate-list">*/}
+                            {/*            <li className="automate-item">*/}
+                            {/*                <NavLink*/}
+                            {/*                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                    activeClassName="automate-link-active"*/}
+                            {/*                    exact*/}
+                            {/*                    to={'/zero-to-hero/campaign'}*/}
+                            {/*                >*/}
+                            {/*                    Campaigns Setup*/}
+                            {/*                </NavLink>*/}
+                            {/*            </li>*/}
 
-                                        <li className="automate-item">
-                                            <NavLink
-                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                activeClassName="automate-link-active"
-                                                exact
-                                                to={'/zero-to-hero/settings'}
-                                            >
-                                                ZTH Status
-                                            </NavLink>
-                                        </li>
-                                    </ul>}
-                                    position={'rightTop'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                                >
-                                    <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>
-                                        <NavLink
-                                            className="top-nav-link"
-                                            activeClassName="top-nav-link-active"
-                                            exact
-                                            to="/"
-                                            disabled
-                                        >
-                                            <div className="link-icon">
-                                                <SVG id='zth-icon'/>
-                                            </div>
+                            {/*            <li className="automate-item">*/}
+                            {/*                <NavLink*/}
+                            {/*                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                    activeClassName="automate-link-active"*/}
+                            {/*                    exact*/}
+                            {/*                    to={'/zero-to-hero/settings'}*/}
+                            {/*                >*/}
+                            {/*                    ZTH Status*/}
+                            {/*                </NavLink>*/}
+                            {/*            </li>*/}
+                            {/*        </ul>}*/}
+                            {/*        position={'rightTop'}*/}
+                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}*/}
+                            {/*    >*/}
+                            {/*        <div onClick={() => toggleSubMenu('zth')} className={'has-child'}>*/}
+                            {/*            <NavLink*/}
+                            {/*                className="top-nav-link"*/}
+                            {/*                activeClassName="top-nav-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to="/"*/}
+                            {/*                disabled*/}
+                            {/*            >*/}
+                            {/*                <div className="link-icon">*/}
+                            {/*                    <SVG id='zth-icon'/>*/}
+                            {/*                </div>*/}
 
-                                            <span className="top-span">
-                                        Zero to Hero
-                                                {/*<span className="new-fiches">new</span>*/}
-                                </span>
-                                        </NavLink>
-                                    </div>
-                                </InformationTooltip>
+                            {/*                <span className="top-span">*/}
+                            {/*            Zero to Hero*/}
+                            {/*                    /!*<span className="new-fiches">new</span>*!/*/}
+                            {/*    </span>*/}
+                            {/*            </NavLink>*/}
+                            {/*        </div>*/}
+                            {/*    </InformationTooltip>*/}
 
-                                <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/campaign'}
-                                        >
-                                            Campaigns Setup
-                                        </NavLink>
-                                    </li>
+                            {/*    <ul className={`automate-list ${subMenuState.zth ? 'opened' : 'closed'}`}>*/}
+                            {/*        <li className="automate-item">*/}
+                            {/*            <NavLink*/}
+                            {/*                className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                activeClassName="automate-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to={'/zero-to-hero/campaign'}*/}
+                            {/*            >*/}
+                            {/*                Campaigns Setup*/}
+                            {/*            </NavLink>*/}
+                            {/*        </li>*/}
 
-                                    <li className="automate-item">
-                                        <NavLink
-                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                            activeClassName="automate-link-active"
-                                            exact
-                                            to={'/zero-to-hero/settings'}
-                                        >
-                                            ZTH Status
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            </li>
+                            {/*        <li className="automate-item">*/}
+                            {/*            <NavLink*/}
+                            {/*                className={`automate-link ${automate ? 'visible' : 'hidden'}`}*/}
+                            {/*                activeClassName="automate-link-active"*/}
+                            {/*                exact*/}
+                            {/*                to={'/zero-to-hero/settings'}*/}
+                            {/*            >*/}
+                            {/*                ZTH Status*/}
+                            {/*            </NavLink>*/}
+                            {/*        </li>*/}
+                            {/*    </ul>*/}
+                            {/*</li>*/}
 
                             {activeMarketplace.countryCode !== 'CA' && <li className="top-nav-item">
                                 <InformationTooltip
@@ -196,29 +196,30 @@ const Sidebar = () => {
                                     </NavLink>
                                 </InformationTooltip>
                             </li>}
-                            {activeMarketplace.countryCode !== 'CA' && <li className="top-nav-item">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<Link onClick={setAnalyticState} to={'/tableau'}>Tableau</Link>}
-                                    position={'right'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                                >
-                                    <NavLink
-                                        className="top-nav-link"
-                                        activeClassName="top-nav-link-active"
-                                        to="/tableau"
-                                        onClick={setAnalyticState}
-                                    >
-                                        <div className="link-icon">
-                                            <SVG id='analytics-icon-sidebar'/>
-                                        </div>
 
-                                        <span className="top-span">
-                                            Tableau
-                                         </span>
-                                    </NavLink>
-                                </InformationTooltip>
-                            </li>}
+                            {/*{activeMarketplace.countryCode !== 'CA' && <li className="top-nav-item">*/}
+                            {/*    <InformationTooltip*/}
+                            {/*        type={'custom'}*/}
+                            {/*        description={<Link onClick={setAnalyticState} to={'/tableau'}>Tableau</Link>}*/}
+                            {/*        position={'right'}*/}
+                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}*/}
+                            {/*    >*/}
+                            {/*        <NavLink*/}
+                            {/*            className="top-nav-link"*/}
+                            {/*            activeClassName="top-nav-link-active"*/}
+                            {/*            to="/tableau"*/}
+                            {/*            onClick={setAnalyticState}*/}
+                            {/*        >*/}
+                            {/*            <div className="link-icon">*/}
+                            {/*                <SVG id='analytics-icon-sidebar'/>*/}
+                            {/*            </div>*/}
+
+                            {/*            <span className="top-span">*/}
+                            {/*                Tableau*/}
+                            {/*             </span>*/}
+                            {/*        </NavLink>*/}
+                            {/*    </InformationTooltip>*/}
+                            {/*</li>}*/}
 
                             <li className="top-nav-item ppc-automate-link">
                                 <InformationTooltip

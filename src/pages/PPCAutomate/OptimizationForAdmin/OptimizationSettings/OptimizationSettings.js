@@ -47,7 +47,7 @@ const strategies = [
 ]
 
 
-const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing, onSetCogs, hasVariations}) => {
+const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescription, onStop, processing, hasVariations, onSetCogs}) => {
     const [visibleCogsWindow, setVisibleCogsWindow] = useState(false)
     const dispatch = useDispatch()
 
@@ -74,6 +74,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
             setVisibleConfirmWindow(true)
         }
     }
+
 
     return (
         <>
@@ -161,12 +162,11 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">CoGS</div>
 
                         <div
-                            className={`cogs-field ${hasVariations ? 'disabled' : ''}`}
-                            onClick={() => hasVariations ? false : setVisibleCogsWindow(true)}
+                            className={`cogs-field`}
+                            onClick={() => setVisibleCogsWindow(true)}
                         >
                             <InputCurrency
-                                value={product.cogs}
-                                disabled={true}
+                                value={product.default_variation && product.default_variation.cogs}
                             />
 
                             <button className="btn icon edit-btn">
@@ -235,11 +235,10 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
 
             <CogsWindow
                 visible={visibleCogsWindow}
-                // productId={product.variations ? _.find(product.variations, {is_default_variation: true}) : product.product_id}
-                productId={product.product_id}
-                product={product}
-                onSetCogs={() => {
-                }}
+                productId={product.default_variation && product.default_variation.id}
+                // productId={product.product_id}
+                product={product.default_variation}
+                onSetCogs={onSetCogs}
                 setCurrentCogs={onUpdateField}
                 onClose={() => {
                     setVisibleCogsWindow(false)
