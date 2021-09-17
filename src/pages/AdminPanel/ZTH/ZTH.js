@@ -10,6 +10,7 @@ import AsinsSorter from "./AsinsSorter/AsinsSorter"
 import Templates from "./Templates/Templates"
 import CreationJobs from "./CreationJobs/CreationJobs"
 import CreateSemanticCore from "./CreateSemanticCore/CreateSemanticCore"
+import WordSorter from "./WordSorter/WordSorter"
 
 const ZTH = () => {
     if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
@@ -55,6 +56,7 @@ const ZTH = () => {
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
             <Route path="/admin-panel/zth/jobs" component={Jobs}/>
             <Route path="/admin-panel/zth/asins-filtering" component={AsinsSorter}/>
+            <Route path="/admin-panel/zth/word-sorter" component={WordSorter}/>
             <Route path="/admin-panel/zth/templates" component={Templates}/>
             <Route path="/admin-panel/zth/creation-jobs" component={CreationJobs}/>
             <Route path="/admin-panel/zth/create" component={CreateSemanticCore}/>

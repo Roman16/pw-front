@@ -57,8 +57,14 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
         onUpdate(jobsList.map((i) => {
             return ({
                 ...i,
-                ...(field === 'all' || field === 'dont_optimize') ? {dont_optimize: false}:{},
-                ...(field === 'all' || field === 'dont_use_metrics') ? {dont_use_metrics: false}:{}
+                ...(field === 'all' || field === 'dont_optimize') && {dont_optimize: false},
+                ...(field === 'all' || field === 'dont_use_metrics') && {dont_use_metrics: false},
+                ...(field === 'all' || field === 'min_bid') && {min_bid: null},
+                ...(field === 'all' || field === 'max_bid') && {max_bid: null},
+                ...(field === 'all' || field === 'optimization_parts') && {
+                    optimization_parts: multiSelectVariations.map(item => item.value),
+                    enable_optimization_parts: false
+                },
             })
         }))
     }
@@ -71,7 +77,8 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             minWidth: '200px',
         },
         {
-            title: () => <div className={'with-reset'}>Optimize <button className="btn icon" onClick={() => resetSettingsHandler('dont_optimize')}>
+            title: () => <div className={'with-reset'}>Optimize <button className="btn icon"
+                                                                        onClick={() => resetSettingsHandler('dont_optimize')}>
                 <SVG id='reload-icon'/>
             </button></div>,
             dataIndex: 'dont_optimize',
@@ -87,7 +94,8 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             }
         },
         {
-            title: () => <div className={'with-reset'}>Use for PPC Metrics <button className="btn icon" onClick={() => resetSettingsHandler('dont_use_metrics')}>
+            title: () => <div className={'with-reset'}>Use for PPC Metrics <button className="btn icon"
+                                                                                   onClick={() => resetSettingsHandler('dont_use_metrics')}>
                 <SVG id='reload-icon'/>
             </button></div>,
             dataIndex: 'dont_use_metrics',
@@ -104,7 +112,10 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             }
         },
         {
-            title: 'Min Bid',
+            title: () => <div className={'with-reset'}>Min Bid
+                <button className="btn icon" onClick={() => resetSettingsHandler('min_bid')}>
+                    <SVG id='reload-icon'/>
+                </button></div>,
             dataIndex: 'min_bid',
             key: 'min_bid',
             width: '130px',
@@ -119,7 +130,10 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             }
         },
         {
-            title: 'Max Bid',
+            title: () => <div className={'with-reset'}>Max Bid
+                <button className="btn icon" onClick={() => resetSettingsHandler('max_bid')}>
+                    <SVG id='reload-icon'/>
+                </button></div>,
             dataIndex: 'max_bid',
             key: 'max_bid',
             width: '130px',
@@ -134,7 +148,10 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             }
         },
         {
-            title: 'Custom Optimization Parts',
+            title: () => <div className={'with-reset'}>Custom Optimization Parts
+                <button className="btn icon" onClick={() => resetSettingsHandler('optimization_parts')}>
+                    <SVG id='reload-icon'/>
+                </button></div>,
             dataIndex: 'optimization_parts',
             key: 'optimization_parts',
             width: '260px',
@@ -184,7 +201,6 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
             getCampaignsSettings()
         }
     }, [sectionHeightState, optimizationJobId])
-
 
     return (
         <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
