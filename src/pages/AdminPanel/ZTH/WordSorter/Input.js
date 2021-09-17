@@ -28,29 +28,36 @@ const Input = ({disabled, onAddKeywords}) => {
         }
     }, [disabled])
 
-    return (<div className="card input">
-        <div className="block-header">
-            <h3>Input</h3>
-            <div className="count">{allKeywords.split('\n').filter(i => i && i.length > 0).length}</div>
-            <button className="btn default" onClick={addHandler}>add</button>
+    return (<div className="col input">
+        <div className="card">
+            <div className="block-header">
+                <h3>Input</h3>
+                <div className="count">{allKeywords.split('\n').filter(i => i && i.length > 0).length}</div>
+                <button className="btn default" onClick={addHandler}>add</button>
+            </div>
+
+            <div className="form-group">
+                <textarea
+                    value={allKeywords}
+                    onChange={({target: {value}}) => setAllKeywords(value)}
+                    disabled={disabled}
+                />
+            </div>
         </div>
 
-        <div className="form-group">
-            <label htmlFor="">Include keywords</label>
-            <textarea
-                value={allKeywords}
-                onChange={({target: {value}}) => setAllKeywords(value)}
-                disabled={disabled}
-            />
-        </div>
+        <div className="card">
+            <div className="block-header">
+                <h3>Negative Phrases</h3>
+                <div className="count">{negativeKeywords.split('\n').filter(i => i && i.length > 0).length}</div>
+            </div>
 
-        <div className="form-group">
-            <label htmlFor="">Negative Phrases</label>
+            <div className="form-group">
             <textarea
                 value={negativeKeywords}
                 onChange={({target: {value}}) => setNegativeKeywords(value)}
                 disabled={disabled}
             />
+            </div>
         </div>
     </div>)
 }

@@ -1,4 +1,5 @@
 import React from "react"
+import {Checkbox} from "antd"
 
 const Output = ({phrasesList, onAddPhrase}) => {
 
@@ -14,7 +15,12 @@ const Output = ({phrasesList, onAddPhrase}) => {
                 {item.keywords.map(keyword => <div
                     key={keyword}
                     onClick={() => onAddPhrase(keyword)}
-                >{keyword}</div>)}
+                >
+
+                    {keyword}
+                </div>)}
+
+                <Checkbox/>
             </li>))}
         </ul>
     </div>)
