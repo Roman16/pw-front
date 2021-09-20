@@ -131,7 +131,13 @@ function fetchTargetingsDetails(id, date, sorterColumn, filters) {
 }
 
 function fetchPageData(location, params, idList, cancelToken) {
-    const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
+    let {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
+    if (location === 'products') {
+        filtersWithState = [...filtersWithState.map(i => {
+            if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
+            return {...i}
+        })]
+    }
 
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
 }

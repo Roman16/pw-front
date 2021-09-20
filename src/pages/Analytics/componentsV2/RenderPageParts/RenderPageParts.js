@@ -282,13 +282,14 @@ const RenderPageParts = (props) => {
             }
 
             if (productType === 'parent') {
-                filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+                // filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
 
-                filtersWithState.push({
-                    filterBy: 'parent_productId',
-                    type: 'eq',
-                    value: queryParams.productId
-                })
+                // filtersWithState.push({
+                //     filterBy: 'productId',
+                //     // filterBy: 'parent_productId',
+                //     type: 'eq',
+                //     value: queryParams.productId
+                // })
             }
 
             let parentResponse
@@ -299,7 +300,7 @@ const RenderPageParts = (props) => {
                 {
                     ...paginationParams ? paginationParams : tableRequestParams,
                     sorterColumn: sorterParams ? sorterParams : localSorterColumn,
-                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
+                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : productType === 'parent' ? pageParts.filter(i => i !== 'table') : pageParts,
                     filtersWithState,
                     activeMetrics,
                 },
@@ -395,15 +396,15 @@ const RenderPageParts = (props) => {
                     },
                 ]
 
-                if (productType === 'parent') {
-                    filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
-
-                    filtersWithState.push({
-                        filterBy: 'parent_productId',
-                        type: 'eq',
-                        value: queryParams.productId
-                    })
-                }
+                // if (productType === 'parent') {
+                //     filtersWithState = [...filtersWithState.filter(item => item.filterBy !== 'productId')]
+                //
+                //     filtersWithState.push({
+                //         filterBy: 'parent_productId',
+                //         type: 'eq',
+                //         value: queryParams.productId
+                //     })
+                // }
 
                 const res = await analyticsServices.fetchPageData(location, {
                     sorterColumn: localSorterColumn,
