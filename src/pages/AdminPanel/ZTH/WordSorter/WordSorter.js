@@ -6,23 +6,51 @@ import Exacts from "./Exacts"
 import './WordSorter.less'
 
 const WordSorter = () => {
-    const [outputList, setOutputList] = useState([]),
+    const
+        [inputFields, setInputFields] = useState({
+            relevant: '',
+            negative: ''
+        }),
+        [outputList, setOutputList] = useState([]),
         [negativePhrasesList, setNegativePhrasesList] = useState([]),
+        [negativeExactsList, setNegativeExactsList] = useState([]),
         [disabledInput, setDisabledInput] = useState(false)
 
+    const changeInputFieldHandler = (key, value) => setInputFields({...inputFields, [key]: value})
 
-    const addDefaultListHandler = ({output}) => {
+    const addDefaultListHandler = () => {
         setDisabledInput(true)
-        setOutputList(output)
+
+        setOutputList(inputFields.relevant
+            .split('\n')
+            .filter(i => i && i.length > 0)
+            .map(i => i.toLowerCase())
+            .map((phrase, index) => ({
+                phrase,
+                id: index,
+                keywords: phrase.split(" "),
+                visible: true,
+            })))
+
+        setNegativeExactsList(inputFields.negative.split('\n').filter(i => i && i.length > 0))
     }
 
     const addNegativePhraseHandler = (keyword) => {
         setNegativePhrasesList([...new Set([...negativePhrasesList, keyword])])
     }
+    const addNegativeExactHandler = (keyword) => {
+        setNegativeExactsList([...negativeExactsList, keyword])
+    }
 
     const resetAllHandler = () => {
         setDisabledInput(false)
         setOutputList([])
+        setNegativePhrasesList([])
+        setNegativeExactsList([])
+    }
+
+    const copyListHandler = (list, type) => {
+        navigator.clipboard.writeText(list.map(i => type === 'output' ? i.phrase : i).join('\n'))
     }
 
     return (
@@ -35,21 +63,32 @@ const WordSorter = () => {
 
             <div className="work-area">
                 <Input
+                    inputFields={inputFields}
                     disabled={disabledInput}
+
+                    onChange={changeInputFieldHandler}
                     onAddKeywords={addDefaultListHandler}
                 />
 
                 <Output
                     phrasesList={outputList}
 
+                    onCopy={() => copyListHandler(outputList, 'output')}
                     onAddPhrase={addNegativePhraseHandler}
+                    onAddExact={addNegativeExactHandler}
                 />
 
                 <Phrases
                     phrasesList={negativePhrasesList}
+
+                    onCopy={() => copyListHandler(negativePhrasesList)}
                 />
 
-                <Exacts/>
+                <Exacts
+                    phrasesList={negativeExactsList}
+
+                    onCopy={() => copyListHandler(negativeExactsList)}
+                />
             </div>
         </section>
     )

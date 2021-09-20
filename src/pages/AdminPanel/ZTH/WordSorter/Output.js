@@ -2,13 +2,15 @@ import React from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
 
-const Output = ({phrasesList, onAddPhrase}) => {
+const Output = ({phrasesList, onAddPhrase, onAddExact, onCopy}) => {
 
 
     return (<div className={'card output'}>
         <div className="block-header">
             <h3>Output</h3>
             <div className="count">{phrasesList.length}</div>
+
+            <button className="btn default copy" onClick={onCopy}>copy</button>
         </div>
 
         <ul>
@@ -16,21 +18,26 @@ const Output = ({phrasesList, onAddPhrase}) => {
                 <AmazonLink keyword={item.phrase}/>
                 <TranslateLink keyword={item.phrase}/>
 
-                {item.keywords.map(keyword => <div
-                    key={keyword}
-                    onClick={() => onAddPhrase(keyword)}
-                >
-                    {keyword}
-                </div>)}
+                <div className="phrase">
+                    {item.keywords.map(keyword => <div
+                        key={keyword}
+                        onClick={() => onAddPhrase(keyword)}
+                    >
+                        {keyword}
+                    </div>)}
+                </div>
 
-                <button className="btn icon remove-item">
-                    <SVG id={'close-window-icon'}/>
+                <button className="btn icon" onClick={() => onAddExact(item.phrase)}>
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
+                         id="Capa_1" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 220.682 220.682">
+                        <g>
+                            <polygon
+                                points="92.695,38.924 164.113,110.341 92.695,181.758 120.979,210.043 220.682,110.341 120.979,10.639  "/>
+                            <polygon
+                                points="28.284,210.043 127.986,110.341 28.284,10.639 0,38.924 71.417,110.341 0,181.758  "/>
+                        </g>
+                    </svg>
                 </button>
-
-                <button className="btn icon remove-all">
-                    <SVG id={'remove'}/>
-                </button>
-
                 <Checkbox/>
             </li>))}
         </ul>
@@ -38,7 +45,7 @@ const Output = ({phrasesList, onAddPhrase}) => {
 }
 
 
-const AmazonLink = ({keyword}) => <a
+export const AmazonLink = ({keyword}) => <a
     href={`https://www.amazon.com/s/?url=search-alias%3Daps&field-keywords=${keyword}`}
     target={'_blank'}
 >
@@ -60,7 +67,7 @@ const AmazonLink = ({keyword}) => <a
     </svg>
 </a>
 
-const TranslateLink = ({keyword}) => <a
+export const TranslateLink = ({keyword}) => <a
     href={`https://translate.google.com/?hl=ru#en/ru/${keyword}`}
     target={'_blank'}
 >
