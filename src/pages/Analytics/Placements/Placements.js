@@ -60,7 +60,7 @@ const Placements = () => {
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
 
-    const columns = PColumnsList(!!mainState.campaignId, stateDetails)
+    const columns = PColumnsList(!!mainState.campaignId, stateDetails, localSegmentValue)
 
     const getPageData = debounce(50, false, async (pageParts) => {
         setOpenedSearchTerms([])

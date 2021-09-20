@@ -17,7 +17,7 @@ import {
 } from "../../components/TableList/tableColumns"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-export const PColumnsList = (selectedCampaign, stateDetails) => {
+export const PColumnsList = (selectedCampaign, stateDetails, segment) => {
     return [
         {
             title: 'Placement',
@@ -39,12 +39,16 @@ export const PColumnsList = (selectedCampaign, stateDetails) => {
                 sorter: false,
                 noTotal: true,
                 locked: true,
-                render: (text) => <>
-                    {text === 'legacyForSales' && 'Legacy For Sales'}
-                    {text === 'autoForSales' && 'Auto For Sales'}
-                    {text === 'manual' && 'Manual'}
-                    {(text !== 'manual' && text !== 'autoForSales' && text !== 'legacyForSales') && text}
-                </>
+                render: (text, item) => {
+                    if (segment !== 'none') text = item.bidding_strategy_segmented && item.bidding_strategy_segmented[0]
+
+                    return (<>
+                        {text === 'legacyForSales' && 'Legacy For Sales'}
+                        {text === 'autoForSales' && 'Auto For Sales'}
+                        {text === 'manual' && 'Manual'}
+                        {(text !== 'manual' && text !== 'autoForSales' && text !== 'legacyForSales') && text}
+                    </>)
+                }
             },
             {
                 title: 'Bid Adjustment',
@@ -55,11 +59,19 @@ export const PColumnsList = (selectedCampaign, stateDetails) => {
                 locked: true,
                 noTotal: true,
                 render: (bid_adjustment, item) => {
-                    if (item.placementName === 'Top of Search on-Amazon' || item.placementName === 'Detail Page on-Amazon') {
+                    if (segment !== 'none') bid_adjustment = item.bid_adjustment_segmented && item.bid_adjustment_segmented[0]
+
+                    if (item.placementName === 'Top of Search on-Amazon') {
                         return (<InputCurrency
                             disabled
                             typeIcon={'percent'}
-                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment[0].filter(item => typeof item == 'number')[0]}
+                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment.find(i => i[0] === 'placementTop')[1]}
+                        />)
+                    } else if (item.placementName === 'Detail Page on-Amazon') {
+                        return (<InputCurrency
+                            disabled
+                            typeIcon={'percent'}
+                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment.find(i => i[0] === 'placementProductPage')[1]}
                         />)
                     } else return ''
                 }
