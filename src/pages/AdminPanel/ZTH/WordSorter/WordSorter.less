@@ -2,6 +2,7 @@
   height: 82vh;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
 
   .filters {
     display: flex;
@@ -122,6 +123,18 @@
           border-bottom: 1px solid rgba(0, 0, 0, 0.125);
           padding: 5px 15px 2px;
 
+          a {
+            margin: 0 10px 0 0;
+            display: flex;
+            align-items: center;
+
+            svg {
+              width: 1.4285714285714286rem;
+              min-width: 1.4285714285714286rem;
+              height: 1.4285714285714286rem;
+            }
+          }
+
 
           div {
             margin: 0 2px 3px 0;
@@ -136,8 +149,40 @@
             }
           }
 
+          .btn {
+            padding: 0;
+            margin: 0 0 0 10px;
+            width: 2.142857142857143rem;
+            min-width: 2.142857142857143rem;
+            height: 2.142857142857143rem;
+
+            &.remove-item {
+              margin: 0 0 0 auto;
+
+              svg {
+                width: 100%;
+                height: 100%;
+              }
+            }
+
+            &.remove-all {
+              svg {
+                width: 75%;
+                height: 75%;
+                fill: #fff;
+                stroke: #656A84;
+              }
+
+              &:hover {
+                svg {
+                  stroke: #6D6DF6;
+                }
+              }
+            }
+          }
+
           .ant-checkbox-wrapper {
-            margin: 0 0 0 auto;
+            margin: 0 0 0 10px;
             width: 1.1428571428571428rem;
             min-width: 1.1428571428571428rem;
             height: 1.1428571428571428rem;
