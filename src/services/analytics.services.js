@@ -132,7 +132,7 @@ function fetchTargetingsDetails(id, date, sorterColumn, filters) {
 
 function fetchPageData(location, params, idList, cancelToken) {
     let {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn} = params
-    if (location === 'products') {
+    if (location === 'products' && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
         filtersWithState = [...filtersWithState.map(i => {
             if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
             return {...i}
