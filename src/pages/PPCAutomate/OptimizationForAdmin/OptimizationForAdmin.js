@@ -124,14 +124,24 @@ const OptimizationForAdmin = () => {
     const updateProductInformationHandler = (name, value) => {
         name === 'cogs' && setProductInformationFromRequest({...productInformationFromRequest, cogs: value})
 
-        setProductInformation({
-            ...productInformation,
-            [name]: value
-        })
+        if (name === 'item_price_from_user') {
+            setProductInformation({
+                ...productInformation,
+                default_variation: {
+                    ...productInformation.default_variation,
+                    [name]: value
+                }
+            })
+        } else {
+            setProductInformation({
+                ...productInformation,
+                [name]: value
+            })
+        }
     }
 
     const setProductCogs = async () => {
-        if(productId) {
+        if (productId) {
             try {
                 const res = await productsServices.getProductDetails(productId, source.token)
 
@@ -293,7 +303,14 @@ const OptimizationForAdmin = () => {
                             await productsServices.updateCampaignsBlacklist(productInformation.id, {custom_campaigns_settings})
                         }
 
-                        await productsServices.updateProductSettingsById(product)
+                        if (selectedProduct.variations && selectedProduct.variations.length > 0) {
+                            await Promise.all([productsServices.updateVariationSettings({
+                                id: product.default_variation.id,
+                                item_price_from_user: product.default_variation.item_price_from_user
+                            }), productsServices.updateProductSettingsById(_.omit(product, 'item_price_from_user'))])
+                        } else {
+                            await productsServices.updateProductSettingsById(product)
+                        }
 
                         await productsServices.updateProductById(product)
                         setProductInformation(product)
