@@ -220,7 +220,7 @@ const ProductList = ({
             },
             {
                 width: '130px',
-                render: (index, item) => getValue(item, NET_MARGIN, false, 'percent')
+                render: (item) => getValue(item, NET_MARGIN, false, 'percent')
             },
             {
                 width: '200px',
