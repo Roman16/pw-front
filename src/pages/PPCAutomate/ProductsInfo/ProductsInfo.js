@@ -25,7 +25,8 @@ const ProductsInfo = () => {
             onlyActive: false,
             onlyOptimization: false,
             page: 1,
-            pageSize: localStorage.getItem('productsSettingsPageSize') ? +localStorage.getItem('productsSettingsPageSize') : 10
+            pageSize: 10,
+            ...localStorage.getItem('productsSettingsRequestParams') ? JSON.parse(localStorage.getItem('productsSettingsRequestParams')) : {}
         }),
         [totalSize, setTotalSize] = useState(0)
 
@@ -176,6 +177,14 @@ const ProductsInfo = () => {
         }
     }
 
+    useEffect(() => {
+        localStorage.setItem('productsSettingsRequestParams', JSON.stringify({
+            searchStr: requestParams.searchStr,
+            onlyActive: requestParams.onlyActive,
+            onlyOptimization: requestParams.onlyOptimization,
+            pageSize: requestParams.pageSize
+        }))
+    }, [requestParams])
 
     useEffect(() => {
         fetchProducts()
