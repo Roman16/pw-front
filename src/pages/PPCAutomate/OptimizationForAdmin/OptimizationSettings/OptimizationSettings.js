@@ -192,7 +192,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Product Price</div>
 
                         <p className={'product-price'}>
-                            {product.item_price !== null && `$${product.item_price} `}(retrieved from Amazon)</p>
+                            {product.default_variation && product.default_variation.item_price !== null && `$${product.default_variation.item_price} `}(retrieved from Amazon)</p>
                     </div>
 
                     <div className="form-group">
@@ -211,8 +211,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Overwrite Product Price</div>
 
                         <InputCurrency
-                            value={product.item_price_from_user}
-                            disabled={isDisabled || hasVariations}
+                            value={product.default_variation && product.default_variation.item_price_from_user}
                             onChange={(value) => onUpdateField('item_price_from_user', value)}
                         />
                     </div>

@@ -78,8 +78,6 @@ function updateVariationSettings(variation) {
 
 function updateProductSettingsById(parameters) {
     return api('post', `${productsUrls.updateSettings}/${parameters.product_id}`, {
-        'product_margin_value': parameters.product_margin_value,
-        'item_price': parameters.item_price,
         'item_price_from_user': parameters.item_price_from_user,
         'min_bid_manual_campaign': parameters.min_bid_manual_campaign,
         'max_bid_manual_campaign': parameters.max_bid_manual_campaign,
