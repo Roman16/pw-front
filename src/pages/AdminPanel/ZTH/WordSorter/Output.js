@@ -2,21 +2,20 @@ import React from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
 
-const Output = ({phrasesList, onAddPhrase, onAddExact, onCopy}) => {
-
+const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPhrase, onAddExact, onCopy}) => {
 
     return (<div className={'card output'}>
         <div className="block-header">
             <h3>Output</h3>
-            <div className="count">{phrasesList.length}</div>
+            <div className="count">{[...phrasesList.filter(i => !negativeExactsList.includes(i.phrase))].length}</div>
 
             <button className="btn default copy" onClick={onCopy}>copy</button>
         </div>
 
         <ul>
-            {phrasesList.map(item => (item.visible && <li key={item.id}>
-                <AmazonLink keyword={item.phrase}/>
-                <TranslateLink keyword={item.phrase}/>
+            {phrasesList.map(item => <li key={item.id} className={negativeExactsList.includes(item.phrase) && 'hidden'}>
+                <AmazonLink keyword={item.phrase} marketplace={marketplace}/>
+                <TranslateLink keyword={item.phrase} language={language}/>
 
                 <div className="phrase">
                     {item.keywords.map(keyword => <div
@@ -28,25 +27,16 @@ const Output = ({phrasesList, onAddPhrase, onAddExact, onCopy}) => {
                 </div>
 
                 <button className="btn icon" onClick={() => onAddExact(item.phrase)}>
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1"
-                         id="Capa_1" x="0px" y="0px" width="18px" height="18px" viewBox="0 0 220.682 220.682">
-                        <g>
-                            <polygon
-                                points="92.695,38.924 164.113,110.341 92.695,181.758 120.979,210.043 220.682,110.341 120.979,10.639  "/>
-                            <polygon
-                                points="28.284,210.043 127.986,110.341 28.284,10.639 0,38.924 71.417,110.341 0,181.758  "/>
-                        </g>
-                    </svg>
+                    <SVG id={'close-window-icon'}/>
                 </button>
                 <Checkbox/>
-            </li>))}
+            </li>)}
         </ul>
     </div>)
 }
 
-
-export const AmazonLink = ({keyword}) => <a
-    href={`https://www.amazon.com/s/?url=search-alias%3Daps&field-keywords=${keyword}`}
+export const AmazonLink = ({keyword, marketplace}) => <a
+    href={`https://www.${marketplace}/s/?url=search-alias%3Daps&field-keywords=${keyword}`}
     target={'_blank'}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="2.167 .438 251.038 259.969">
@@ -67,8 +57,8 @@ export const AmazonLink = ({keyword}) => <a
     </svg>
 </a>
 
-export const TranslateLink = ({keyword}) => <a
-    href={`https://translate.google.com/?hl=ru#en/ru/${keyword}`}
+export const TranslateLink = ({keyword, language}) => <a
+    href={`https://translate.google.com/?hl=ru#${language}/ru/${keyword}`}
     target={'_blank'}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333334 333400" shape-rendering="geometricPrecision"

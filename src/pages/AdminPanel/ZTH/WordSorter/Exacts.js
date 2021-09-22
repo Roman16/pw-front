@@ -2,7 +2,7 @@ import React from "react"
 import {AmazonLink, TranslateLink} from "./Output"
 import {SVG} from "../../../../utils/icons"
 
-const Exacts = ({phrasesList, onCopy}) => {
+const Exacts = ({phrasesList, onRemove, language, marketplace, onCopy}) => {
 
     return (<div className="card exacts">
         <div className="block-header">
@@ -14,13 +14,13 @@ const Exacts = ({phrasesList, onCopy}) => {
         </div>
 
         <ul>
-            {phrasesList.map(phrase => <li>
-                <AmazonLink keyword={phrase}/>
-                <TranslateLink keyword={phrase}/>
+            {phrasesList.map((phrase, index) => <li>
+                <AmazonLink keyword={phrase} marketplace={marketplace}/>
+                <TranslateLink keyword={phrase} language={language}/>
 
                 {phrase}
 
-                <button className="btn icon remove-item">
+                <button className="btn icon remove-item" onClick={() => onRemove(index)}>
                     <SVG id={'close-window-icon'}/>
                 </button>
             </li>)}
