@@ -38,13 +38,19 @@
   .work-area {
     width: 100%;
     flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
     grid-column-gap: 20px;
+    overflow: hidden;
+
+    & > div {
+      flex: 1;
+    }
 
     ul {
+      flex: 1;
       list-style: none;
       margin: 0;
+      overflow-y: auto;
 
       li {
         min-height: 2.857142857142857rem;
@@ -167,6 +173,11 @@
           align-items: center;
           border-bottom: 1px solid rgba(0, 0, 0, 0.125);
           padding: 5px 15px 2px;
+
+          -webkit-user-select: none; /* Chrome all / Safari all */
+          -moz-user-select: none; /* Firefox all */
+          -ms-user-select: none; /* IE 10+ */
+          user-select: none;
 
           &.hidden {
             display: none;

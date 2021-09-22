@@ -1,36 +1,64 @@
-import React from "react"
+import React, {useEffect} from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
 
+let searchWordShift = []
+
 const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPhrase, onAddExact, onCopy}) => {
+
+
+    const addPhraseHandler = (phrase, e) => {
+        if (e.shiftKey) {
+            searchWordShift = [...searchWordShift, phrase]
+        } else {
+            onAddPhrase(phrase)
+        }
+    }
+
+    const logKey = (event) => {
+        if ((event.keyCode == 16 || event.wich == 16) && searchWordShift.length > 0) {
+            const p = [...searchWordShift].join(" ")
+            onAddPhrase(p)
+            searchWordShift = []
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('keyup', logKey)
+    }, [])
 
     return (<div className={'card output'}>
         <div className="block-header">
             <h3>Output</h3>
-            <div className="count">{[...phrasesList.filter(i => !negativeExactsList.includes(i.phrase))].length}</div>
+            <div className="count">{[...phrasesList.filter(i => !negativeExactsList.includes(i))].length}</div>
 
             <button className="btn default copy" onClick={onCopy}>copy</button>
         </div>
 
         <ul>
-            {phrasesList.map(item => <li key={item.id} className={negativeExactsList.includes(item.phrase) && 'hidden'}>
-                <AmazonLink keyword={item.phrase} marketplace={marketplace}/>
-                <TranslateLink keyword={item.phrase} language={language}/>
+            {phrasesList.map(item => {
+                const isNegative = negativeExactsList.includes(item)
 
-                <div className="phrase">
-                    {item.keywords.map(keyword => <div
-                        key={keyword}
-                        onClick={() => onAddPhrase(keyword)}
-                    >
-                        {keyword}
-                    </div>)}
-                </div>
+                return (<li key={item} className={isNegative && 'hidden'}>
+                    <AmazonLink keyword={item} marketplace={marketplace}/>
+                    <TranslateLink keyword={item} language={language}/>
 
-                <button className="btn icon" onClick={() => onAddExact(item.phrase)}>
-                    <SVG id={'close-window-icon'}/>
-                </button>
-                <Checkbox/>
-            </li>)}
+                    <div className="phrase">
+                        {item.split(" ").map(keyword => <div
+                            key={keyword}
+                            onClick={(e) => addPhraseHandler(keyword, e)}
+                        >
+                            {keyword}
+                        </div>)}
+                    </div>
+
+                    <button className="btn icon" onClick={() => onAddExact(item)}>
+                        <SVG id={'close-window-icon'}/>
+                    </button>
+
+                    {!isNegative && <Checkbox/>}
+                </li>)
+            })}
         </ul>
     </div>)
 }

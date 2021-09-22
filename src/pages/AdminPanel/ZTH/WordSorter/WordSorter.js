@@ -38,16 +38,7 @@ const WordSorter = () => {
     const changeInputFieldHandler = (key, value) => setInputFields({...inputFields, [key]: value})
 
     const addDefaultListHandler = () => {
-        const relevantList = inputFields.relevant
-            .split('\n')
-            .map(i => i.trim())
-            .filter(i => i && i.length > 0)
-            .map(i => i.toLowerCase())
-            .map((phrase, index) => ({
-                phrase,
-                id: index,
-                keywords: phrase.split(" "),
-            }))
+        const relevantList = [...new Set([...inputFields.relevant.split('\n').map(i => i.trim()).filter(i => i && i.length > 0).map(i => i.toLowerCase())])]
 
         setOutputList(relevantList)
 
@@ -58,28 +49,26 @@ const WordSorter = () => {
                 setNegativePhrasesList([...new Set([...negativePhrasesList, keyword])])
 
                 setNegativeExactsList([...negativeExactsList, ...relevantList
-                    .filter(i => !negativeExactsList.includes(i.phrase))
+                    .filter(i => !negativeExactsList.includes(i))
                     .filter(i => {
-                        console.log(i)
-
                         let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                        return i.phrase.search(re) !== -1
+                        return i.search(re) !== -1
                     })
-                    .map(i => i.phrase)]
+                    .map(i => i)]
                 )
             })
     }
 
     const addNegativePhraseHandler = (keyword) => {
-        setNegativePhrasesList([...new Set([...negativePhrasesList, keyword])])
+        setNegativePhrasesList([...negativePhrasesList, keyword])
 
         setNegativeExactsList([...negativeExactsList, ...outputList
-            .filter(i => !negativeExactsList.includes(i.phrase))
+            .filter(i => !negativeExactsList.includes(i))
             .filter(i => {
                 let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                return i.phrase.search(re) !== -1
+                return i.search(re) !== -1
             })
-            .map(i => i.phrase)]
+            .map(i => i)]
         )
     }
 
@@ -105,7 +94,7 @@ const WordSorter = () => {
     }
 
     const copyListHandler = (list, type) => {
-        navigator.clipboard.writeText(list.map(i => type === 'output' ? i.phrase : i).join('\n'))
+        navigator.clipboard.writeText(list.map(i => type === 'output' ? i : i).join('\n'))
     }
 
     useEffect(() => {
@@ -125,6 +114,7 @@ const WordSorter = () => {
             setNegativeExactsList(negativeExactsList)
         }
     }, [])
+
 
     return (
         <section className={'word-sorter'}>
