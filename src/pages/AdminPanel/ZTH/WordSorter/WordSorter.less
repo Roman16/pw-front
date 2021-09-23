@@ -2,14 +2,32 @@
   height: 82vh;
   display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
 
   .filters {
-    display: flex;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
     margin-bottom: 20px;
 
+    .form-group {
+      width: 100%;
+      display: flex;
+      margin: 0 20px 0 0;
+
+      label {
+        font-size: 1rem;
+        margin: 0 10px 5px 0;
+      }
+
+      .custom-select {
+        width: 100%;
+        height: 2.2857142857142856rem;
+      }
+    }
+
     .reset {
-      margin: 0 0 0 auto;
+      margin: auto 0 0 auto;
       height: 3rem;
       font-size: 1rem;
       font-weight: 500;
@@ -20,13 +38,47 @@
   .work-area {
     width: 100%;
     flex: 1;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
     grid-column-gap: 20px;
+    overflow: hidden;
+
+    & > div {
+      flex: 1;
+    }
 
     ul {
+      flex: 1;
       list-style: none;
       margin: 0;
+      overflow-y: auto;
+
+      li {
+        min-height: 2.857142857142857rem;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+        padding: 5px 15px 5px;
+
+        a {
+          margin: 0 10px 0 0;
+          display: flex;
+          align-items: center;
+
+          svg {
+            width: 1.4285714285714286rem;
+            min-width: 1.4285714285714286rem;
+            height: 1.4285714285714286rem;
+          }
+        }
+      }
+
+      .remove-item {
+        padding: 0;
+        width: 2.2857142857142856rem;
+        min-width: 2.2857142857142856rem;
+        height: 2.2857142857142856rem;
+        margin: 0 0 0 auto;
+      }
     }
 
     .card {
@@ -56,7 +108,7 @@
         }
 
         .btn {
-          height: 3rem;
+          height: 2.5714285714285716rem;
           font-size: 1rem;
           font-weight: 500;
           text-transform: uppercase;
@@ -118,29 +170,53 @@
       ul {
         li {
           display: flex;
-          flex-wrap: wrap;
+          align-items: center;
           border-bottom: 1px solid rgba(0, 0, 0, 0.125);
           padding: 5px 15px 2px;
 
+          -webkit-user-select: none; /* Chrome all / Safari all */
+          -moz-user-select: none; /* Firefox all */
+          -ms-user-select: none; /* IE 10+ */
+          user-select: none;
 
-          div {
-            margin: 0 2px 3px 0;
-            padding: 0 2px;
-            cursor: pointer;
-            border: 1px dotted #fff;
+          &.hidden {
+            display: none;
+          }
 
-            &:hover {
-              color: #6D6DF6;
-              border: 1px dotted #6D6DF6;
-              border-radius: 5px;
+          .phrase {
+            display: flex;
+            flex-wrap: wrap;
+
+            div {
+              padding: 1px 3px 2px;
+              cursor: pointer;
+              border: 1px dotted #fff;
+              font-size: 1rem;
+              line-height: 1.7142857142857142rem;
+
+              &:hover {
+                color: #6D6DF6;
+                border: 1px dotted #6D6DF6;
+                border-radius: 5px;
+              }
             }
           }
 
+
+          .btn {
+            padding: 0;
+            margin: 0 10px 0 auto;
+            width: 2.142857142857143rem;
+            min-width: 2.142857142857143rem;
+            height: 2.142857142857143rem;
+          }
+
           .ant-checkbox-wrapper {
-            margin: 0 0 0 auto;
             width: 1.1428571428571428rem;
             min-width: 1.1428571428571428rem;
             height: 1.1428571428571428rem;
+            display: flex;
+            margin: 2px 0 0 0;
 
             .ant-checkbox {
               width: 100%;
@@ -150,5 +226,37 @@
         }
       }
     }
+
+    .phrases {
+      ul {
+        li {
+          .btn.remove-all {
+            width: 2.2857142857142856rem;
+            min-width: 2.2857142857142856rem;
+            height: 2.2857142857142856rem;
+            padding: 0;
+            margin: 0 0 0 10px;
+
+            svg {
+              width: 60%;
+              height: 60%;
+              fill: #fff;
+              stroke: #656A84;
+            }
+
+            &:hover {
+              svg {
+                stroke: #6D6DF6;
+              }
+            }
+          }
+        }
+      }
+    }
   }
+}
+
+.ant-select-dropdown-menu-item-group-title {
+  font-size: 1rem;
+  color: #000;
 }

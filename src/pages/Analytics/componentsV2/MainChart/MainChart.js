@@ -3,7 +3,6 @@ import '../../components/MainChart/MainChart.less'
 import '../../../PPCAutomate/Dashboard/MainChart/MainChart.less'
 import ChartHeader from "../../components/MainChart/ChartHeader"
 import Chart from "../../components/MainChart/Chart"
-import {dashboardServices} from "../../../../services/dashboard.services"
 import {useSelector} from "react-redux"
 import {Spin} from "antd"
 import {analyticsServices} from "../../../../services/analytics.services"

@@ -1,17 +1,23 @@
-import React, {useRef, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import TextArea from "antd/es/input/TextArea"
 import './AsinsSorter.less'
 import {SVG} from "../../../../utils/icons"
+import CustomSelect from "../../../../components/Select/Select"
+import {Select} from "antd"
 
-export const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
+const {Option, OptGroup} = Select
 
 const AsinsSorter = () => {
-    const [fieldValue, setFieldValue] = useState(''),
-        [allAsins, setAllAsins] = useState([]),
-        [negativeAsins, setNegativeAsins] = useState([])
+    const paramsFromLocale = localStorage.getItem('asinsFiltering') ? JSON.parse(localStorage.getItem('asinsFiltering')) : undefined
+
+    const [fieldValue, setFieldValue] = useState(paramsFromLocale ? paramsFromLocale.inputFields : ''),
+        [allAsins, setAllAsins] = useState(paramsFromLocale ? paramsFromLocale.allAsins : []),
+        [negativeAsins, setNegativeAsins] = useState(paramsFromLocale ? paramsFromLocale.negativeAsins : []),
+        [marketplace, setMarketplace] = useState('com')
 
     const negativeBlockRef = useRef(null)
 
+    const asinImageUrl = asin => `https://ws-na.amazon-adsystem.${marketplace}/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
     const addAsinsHandler = async () => {
         await setAllAsins([...new Set([...allAsins, ...fieldValue
@@ -53,7 +59,7 @@ const AsinsSorter = () => {
 
     const openAsin = (asin) => (e) => {
         e.stopPropagation()
-        window.open(`https://www.amazon.com/dp/${asin}`)
+        window.open(`https://www.amazon.${marketplace}/dp/${asin}`)
     }
 
     const copyAsins = (type) => {
@@ -66,10 +72,51 @@ const AsinsSorter = () => {
         else if (type === 'negative') copy(negativeAsins)
     }
 
+    useEffect(() => {
+        localStorage.setItem('asinsFiltering', JSON.stringify({
+            inputFields: fieldValue,
+            allAsins: allAsins,
+            negativeAsins: negativeAsins
+        }))
+    }, [fieldValue, allAsins, negativeAsins])
+
     return (
         <section className={'asins-sorter'}>
             <div className="row">
                 <div className="actions">
+                    <div className="form-group">
+                        <label htmlFor="">Marketplace:</label>
+                        <CustomSelect
+                            value={marketplace}
+                            onChange={value => setMarketplace(value)}
+                        >
+                            <OptGroup label="Americas">
+                                <Option value="com">Amazon.com (United States)</Option>
+                                <Option value="ca">Amazon.ca (Canada)</Option>
+                                <Option value="com.mx">Amazon.com.mx (Mexico)</Option>
+                                <Option value="com.br">Amazon.com.br (Brazil)</Option>
+                            </OptGroup>
+                            <OptGroup label="Europe">
+                                <Option value="de">Amazon.de (Germany)</Option>
+                                <Option value="co.uk">Amazon.co.uk (United Kingdom)</Option>
+                                <Option value="fr">Amazon.fr (France)</Option>
+                                <Option value="it">Amazon.it (Italy)</Option>
+                                <Option value="es">Amazon.es (Spain)</Option>
+                                <Option value="nl">Amazon.nl (Netherlands)</Option>
+                            </OptGroup>
+                            <OptGroup label="Middle East and North Africa">
+                                <Option value="ae">Amazon.ae (United Arab Emirates)</Option>
+                                <Option value="com.tr">Amazon.com.tr (Turkey)</Option>
+                            </OptGroup>
+                            <OptGroup label="Asia-Pacific">
+                                <Option value="jp">Amazon.jp (Japan)</Option>
+                                <Option value="com.au">Amazon.com.au (Australia)</Option>
+                                <Option value="sg">Amazon.sg (Singapore)</Option>
+                                <Option value="in">Amazon.in (India)</Option>
+                            </OptGroup>
+                        </CustomSelect>
+                    </div>
+
                     <button className="btn default" onClick={resetAllHandler}>
                         Reset All
                     </button>

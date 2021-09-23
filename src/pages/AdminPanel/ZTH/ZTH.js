@@ -48,9 +48,9 @@ const ZTH = () => {
                     ASINs Filtering
                 </NavLink>
 
-                <Link to={`/admin/word-sorter?token=${token}`} target={'_blank'}>
-                    WordSorter <SVG id={'outside-link'}/>
-                </Link>
+                <NavLink to={`/admin-panel/zth/word-sorter`}>
+                    WordSorter
+                </NavLink>
             </div>
 
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>

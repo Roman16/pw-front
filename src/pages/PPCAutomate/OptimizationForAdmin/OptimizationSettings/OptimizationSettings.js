@@ -167,6 +167,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         >
                             <InputCurrency
                                 value={product.default_variation && product.default_variation.cogs}
+                                disabled
                             />
 
                             <button className="btn icon edit-btn">
