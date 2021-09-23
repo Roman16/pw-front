@@ -31,7 +31,7 @@ const Filters = ({language, marketplace, onChangeLanguage, onChangeMarketplace, 
                         <Option value="amazon.com">Amazon.com (United States)</Option>
                         <Option value="amazon.ca">Amazon.ca (Canada)</Option>
                         <Option value="amazon.com.mx">Amazon.com.mx (Mexico)</Option>
-                        <Option value="amazon.com.br">Amazon.com.br</Option>
+                        <Option value="amazon.com.br">Amazon.com.br (Brazil)</Option>
                     </OptGroup>
                     <OptGroup label="Europe">
                         <Option value="amazon.de">Amazon.de (Germany)</Option>

@@ -94,7 +94,7 @@ const AsinsSorter = () => {
                                 <Option value="com">Amazon.com (United States)</Option>
                                 <Option value="ca">Amazon.ca (Canada)</Option>
                                 <Option value="com.mx">Amazon.com.mx (Mexico)</Option>
-                                <Option value="com.br">Amazon.com.br</Option>
+                                <Option value="com.br">Amazon.com.br (Brazil)</Option>
                             </OptGroup>
                             <OptGroup label="Europe">
                                 <Option value="de">Amazon.de (Germany)</Option>

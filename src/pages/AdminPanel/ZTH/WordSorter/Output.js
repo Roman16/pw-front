@@ -1,12 +1,12 @@
 import React, {useEffect} from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
+import $ from 'jquery'
 
-let searchWordShift = []
+let searchWordShift = [],
+    arr = []
 
 const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPhrase, onAddExact, onCopy}) => {
-
-
     const addPhraseHandler = (phrase, e) => {
         if (e.shiftKey) {
             searchWordShift = [...searchWordShift, phrase]
@@ -16,16 +16,27 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
     }
 
     const logKey = (event) => {
-        if ((event.keyCode == 16 || event.wich == 16) && searchWordShift.length > 0) {
-            const p = [...searchWordShift].join(" ")
-            onAddPhrase(p)
+        if (event.keyCode === 16 && searchWordShift.length > 0) {
+            const keyword = [...searchWordShift].join(" ")
+
+            onAddPhrase(keyword, arr
+                .filter(i => !negativeExactsList.includes(i))
+                .filter(i => {
+                    let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
+                    return i.search(re) !== -1
+                })
+                .map(i => i))
             searchWordShift = []
         }
     }
 
     useEffect(() => {
-        document.addEventListener('keyup', logKey)
+        $(document).keyup(logKey)
     }, [])
+
+    useEffect(() => {
+        arr = phrasesList
+    }, [phrasesList])
 
     return (<div className={'card output'}>
         <div className="block-header">

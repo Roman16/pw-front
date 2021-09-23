@@ -6,7 +6,7 @@ const Input = ({inputFields, disabled, onChange, onAddKeywords}) => {
             <div className="block-header">
                 <h3>Input</h3>
                 <div className="count">{inputFields.relevant.split('\n').filter(i => i && i.length > 0).length}</div>
-                <button className="btn default" onClick={onAddKeywords}>add</button>
+                <button className="btn default" onClick={onAddKeywords} disabled={disabled}>add</button>
             </div>
 
             <div className="form-group">
