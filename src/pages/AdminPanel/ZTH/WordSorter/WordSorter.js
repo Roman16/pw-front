@@ -94,7 +94,11 @@ const WordSorter = () => {
     }
 
     const copyListHandler = (list, type) => {
-        navigator.clipboard.writeText(list.map(i => type === 'output' ? i : i).join('\n'))
+        if (type === 'output') {
+            navigator.clipboard.writeText(list.filter(i => !negativeExactsList.includes(i)).join('\n'))
+        } else {
+            navigator.clipboard.writeText(list.map(i => type === 'output' ? i : i).join('\n'))
+        }
     }
 
     useEffect(() => {
