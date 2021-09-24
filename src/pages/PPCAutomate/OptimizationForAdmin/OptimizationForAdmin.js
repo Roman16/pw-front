@@ -313,7 +313,10 @@ const OptimizationForAdmin = () => {
                                 await productsServices.updateProductSettingsById(_.omit(product, 'item_price_from_user'))
                             }
                         } else {
-                            await productsServices.updateProductSettingsById(product)
+                            await productsServices.updateProductSettingsById({
+                                ...product,
+                                item_price_from_user: product.default_variation.item_price_from_user
+                            })
                         }
 
                         await productsServices.updateProductById(product)
