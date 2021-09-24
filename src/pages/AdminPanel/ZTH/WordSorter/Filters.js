@@ -46,7 +46,7 @@ const Filters = ({language, marketplace, onChangeLanguage, onChangeMarketplace, 
                         <Option value="amazon.com.tr">Amazon.com.tr (Turkey)</Option>
                     </OptGroup>
                     <OptGroup label="Asia-Pacific">
-                        <Option value="amazon.jp">Amazon.jp (Japan)</Option>
+                        <Option value="amazon.co.jp">Amazon.co.jp (Japan)</Option>
                         <Option value="amazon.com.au">Amazon.com.au (Australia)</Option>
                         <Option value="amazon.sg">Amazon.sg (Singapore)</Option>
                         <Option value="amazon.in">Amazon.in (India)</Option>
