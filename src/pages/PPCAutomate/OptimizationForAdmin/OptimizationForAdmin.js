@@ -304,10 +304,14 @@ const OptimizationForAdmin = () => {
                         }
 
                         if (selectedProduct.variations && selectedProduct.variations.length > 0) {
-                            await Promise.all([productsServices.updateVariationSettings({
-                                id: product.default_variation.id,
-                                item_price_from_user: product.default_variation.item_price_from_user
-                            }), productsServices.updateProductSettingsById(_.omit(product, 'item_price_from_user'))])
+                            if (product.default_variation.item_price_from_user !== productInformationFromRequest.default_variation.item_price_from_user) {
+                                await Promise.all([productsServices.updateVariationSettings({
+                                    id: product.default_variation.id,
+                                    item_price_from_user: product.default_variation.item_price_from_user
+                                }), productsServices.updateProductSettingsById(_.omit(product, 'item_price_from_user'))])
+                            } else {
+                                await productsServices.updateProductSettingsById(_.omit(product, 'item_price_from_user'))
+                            }
                         } else {
                             await productsServices.updateProductSettingsById(product)
                         }
