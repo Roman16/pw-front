@@ -1,7 +1,9 @@
 @import "../../../style/variables.less";
 
 .choose-campaign-container {
+  height: 100vh;
   display: flex;
+  overflow: auto;
 
   .route-loader {
     display: none;
@@ -9,20 +11,17 @@
 }
 
 .choose-campaign {
+  width: 100%;
   background: #fff;
   box-shadow: @default-section-shadow;
   border-radius: 4px;
-
-  padding: 50px 100px;
-
+  padding: 50px 113px;
   display: flex;
   flex-direction: column;
 
-  position: relative;
-
   h2 {
     font-size: 2.2857142857142856rem;
-    color: #343C5A;
+    color: #312C51;
     margin-bottom: 20px;
   }
 
@@ -30,64 +29,47 @@
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-column-gap: 40px;
+    grid-column-gap: 10px;
+    margin: 0;
+    position: relative;
+    list-style: none;
 
-    & > div {
+    li {
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       background: #fff;
-
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border: 1px solid #F3F3F3;
+      box-sizing: border-box;
       border-radius: 4px;
 
       img {
         width: 100%;
-        height: 50vh;
+        max-height: 50vh;
+        margin: 0 0 3.4285714285714284rem;
       }
 
 
       h3 {
         font-size: 1.4285714285714286rem;
         text-align: center;
-        color: #394163;
-        margin: 3.2142857142857144rem 0 1.4285714285714286rem 0;
+        color: #312C51;
+        margin: 0 0 12px;
       }
 
       p {
         font-size: 1rem;
         text-align: center;
-        color: #656A84;
-        margin: 0 0 2.142857142857143rem 0;
-        padding: 0 3.5714285714285716rem;
+        color: #5B586F;
+        margin: 0 0 2rem;
+        padding: 0 20px;
       }
 
-      .btn {
+      .sds-btn {
         width: 45%;
         min-width: 13.214285714285714rem;
         height: 3.4285714285714284rem;
         font-size: 1.1428571428571428rem;
-        margin: auto 0 2.857142857142857rem 0;
-        font-weight: 500;
-      }
-    }
-  }
-
-  @media (max-width: 1100px) {
-    padding: 3.5714285714285716rem 2.142857142857143rem;
-  }
-
-  @media (max-width: 800px) {
-    overflow: scroll;
-
-    .campaign-types {
-      height: max-content;
-      display: flex;
-      flex-direction: column;
-
-      & > div {
-        margin-bottom: 20px;
+        font-weight: 600;
+        margin: 0 auto 3.4285714285714284rem;
       }
     }
   }

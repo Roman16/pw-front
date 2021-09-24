@@ -1,7 +1,7 @@
 import React from "react"
-import sponsoredProductsImage from "../../../../../assets/img/zth/sponsored-products-image.svg"
-import sponsoredBrandsImage from "../../../../../assets/img/zth/sponsored-brands-image.svg"
-import sponsoredDisplayImage from "../../../../../assets/img/zth/sponsored-display-image.svg"
+import sponsoredProductsImage from "../../../../../assets/img/zth/sponsored-products-image.png"
+import sponsoredBrandsImage from "../../../../../assets/img/zth/sponsored-brands-image.png"
+import sponsoredDisplayImage from "../../../../../assets/img/zth/sponsored-display-image.png"
 import {Radio} from "antd"
 
 const AdvertisingType = ({createData, onChange}) => {

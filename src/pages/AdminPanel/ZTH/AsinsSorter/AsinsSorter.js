@@ -13,11 +13,11 @@ const AsinsSorter = () => {
     const [fieldValue, setFieldValue] = useState(paramsFromLocale ? paramsFromLocale.inputFields : ''),
         [allAsins, setAllAsins] = useState(paramsFromLocale ? paramsFromLocale.allAsins : []),
         [negativeAsins, setNegativeAsins] = useState(paramsFromLocale ? paramsFromLocale.negativeAsins : []),
-        [marketplace, setMarketplace] = useState('com')
+        [marketplace, setMarketplace] = useState('US')
 
     const negativeBlockRef = useRef(null)
 
-    const asinImageUrl = asin => `https://ws-na.amazon-adsystem.${marketplace}/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
+    const asinImageUrl = asin => `https://ws-${(marketplace === 'US' || marketplace === 'CA' || marketplace === 'MX' || marketplace === 'BR') ? 'na' : 'eu'}.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=${marketplace}&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
     const addAsinsHandler = async () => {
         await setAllAsins([...new Set([...allAsins, ...fieldValue
@@ -91,28 +91,18 @@ const AsinsSorter = () => {
                             onChange={value => setMarketplace(value)}
                         >
                             <OptGroup label="Americas">
-                                <Option value="com">Amazon.com (United States)</Option>
-                                <Option value="ca">Amazon.ca (Canada)</Option>
-                                <Option value="com.mx">Amazon.com.mx (Mexico)</Option>
-                                <Option value="com.br">Amazon.com.br (Brazil)</Option>
+                                <Option value="US">Amazon.com (United States)</Option>
+                                <Option value="CA">Amazon.ca (Canada)</Option>
+                                <Option value="MX">Amazon.com.mx (Mexico)</Option>
+                                <Option value="BR">Amazon.com.br (Brazil)</Option>
                             </OptGroup>
                             <OptGroup label="Europe">
-                                <Option value="de">Amazon.de (Germany)</Option>
-                                <Option value="co.uk">Amazon.co.uk (United Kingdom)</Option>
-                                <Option value="fr">Amazon.fr (France)</Option>
-                                <Option value="it">Amazon.it (Italy)</Option>
-                                <Option value="es">Amazon.es (Spain)</Option>
-                                <Option value="nl">Amazon.nl (Netherlands)</Option>
-                            </OptGroup>
-                            <OptGroup label="Middle East and North Africa">
-                                <Option value="ae">Amazon.ae (United Arab Emirates)</Option>
-                                <Option value="com.tr">Amazon.com.tr (Turkey)</Option>
-                            </OptGroup>
-                            <OptGroup label="Asia-Pacific">
-                                <Option value="jp">Amazon.jp (Japan)</Option>
-                                <Option value="com.au">Amazon.com.au (Australia)</Option>
-                                <Option value="sg">Amazon.sg (Singapore)</Option>
-                                <Option value="in">Amazon.in (India)</Option>
+                                <Option value="DE">Amazon.de (Germany)</Option>
+                                <Option value="GB">Amazon.co.uk (United Kingdom)</Option>
+                                <Option value="FR">Amazon.fr (France)</Option>
+                                <Option value="IT">Amazon.it (Italy)</Option>
+                                <Option value="ES">Amazon.es (Spain)</Option>
+                                <Option value="NL">Amazon.nl (Netherlands)</Option>
                             </OptGroup>
                         </CustomSelect>
                     </div>
