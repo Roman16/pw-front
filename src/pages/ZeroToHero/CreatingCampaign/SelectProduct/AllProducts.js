@@ -4,7 +4,6 @@ import Pagination from "../../../../components/Pagination/Pagination";
 import {Input, Spin} from "antd";
 import {useDispatch, useSelector} from "react-redux";
 import {zthServices} from "../../../../services/zth.services";
-import './SelectProduct.less';
 import ProductItem from "./ProductItem";
 import {debounce} from "throttle-debounce";
 import {zthActions} from "../../../../actions/zth.actions";

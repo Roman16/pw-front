@@ -1,22 +1,12 @@
-.main-container div.zero-to-hero-page {
-  height: max-content;
-  overflow: auto;
+.main-container .page > div.zero-to-hero-page {
+  height: 100%;
+  padding: 0;
+  background: #F3F3F3;
+  display: flex;
+  flex-direction: column;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-column-gap: 20px;
-  grid-template-areas: 'productSlider productSlider' 'marketingBlock marketingBlock';
-
-  &.creating-campaign-page {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas: 'productSlider productSlider' 'allProducts selectedProducts' 'productSettings productSettings';
-    grid-column-gap: 10px;
-
-    @media (max-width: 900px) {
-      grid-template-areas: 'productSlider productSlider' 'allProducts allProducts' 'selectedProducts selectedProducts' 'productSettings productSettings';
-
-    }
+  & > * {
+    font-family: 'Montserrat';
   }
 
   & > h2 {

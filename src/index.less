@@ -1050,6 +1050,42 @@ a.sds-btn {
     }
   }
 
+  &.white {
+    border: 1px solid #C9CBD4;
+    background: #fff;
+    color: #5B586F;
+
+    &:hover {
+      background: #F3F3F3;
+    }
+  }
+
+  &.icon {
+      border-radius: 50%;
+      padding: 0;
+
+      svg {
+        fill: #5B586F;
+        transition: .2s ease-in-out;
+      }
+
+      &:hover {
+        background: rgba(105, 89, 171, 0.05);
+
+        svg {
+          fill: #6959AB;
+        }
+      }
+
+      &:focus {
+        background: rgba(105, 89, 171, 0.15);
+
+        svg {
+          fill: #6959AB;
+        }
+      }
+  }
+
   //ripple effect
   & {
     position: relative;
@@ -1161,15 +1197,14 @@ button.white[disabled] {
 *  TREE SELECT
 */
 
-  /*
-  *  /TREE SELECT
-  */
+/*
+*  /TREE SELECT
+*/
 
 
-
-  /*
-  *  INPUT
-  */
+/*
+*  INPUT
+*/
 .form-group {
   .form-control,
   .ant-input-search {

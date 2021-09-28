@@ -1,0 +1,54 @@
+.step.overview {
+  h2 {
+    font-weight: 600;
+    font-size: 1.4285714285714286rem;
+    color: #312C51;
+    margin-bottom: 20px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    border: 1px solid #C9CBD4;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+
+    li {
+      display: flex;
+      border-bottom: 1px solid #C9CBD4;
+
+      &:last-child {
+        border: 0;
+      }
+
+      div {
+        flex: 1;
+      }
+
+      .title {
+        border-right: 1px solid #C9CBD4;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #312C51;
+        padding: 10px 10px 10px 20px;
+      }
+
+      .value {
+        font-weight: 500;
+        font-size: 1rem;
+        color: #312C51;
+        padding: 10px 10px 10px 20px;
+
+        a {
+          color: #6959AB;
+          text-decoration: underline;
+
+          &:hover {
+            color: #564992;
+          }
+        }
+      }
+    }
+  }
+}
