@@ -4,8 +4,72 @@ import './AsinsSorter.less'
 import {SVG} from "../../../../utils/icons"
 import CustomSelect from "../../../../components/Select/Select"
 import {Select} from "antd"
+import _ from 'lodash'
 
 const {Option, OptGroup} = Select
+
+const marketplaces = [
+    {
+        label: 'Amazon.com (United States)',
+        domain: 'com',
+        key: 'US',
+        group: 'na'
+    },
+    {
+        label: 'Amazon.ca (Canada)',
+        domain: 'ca',
+        key: 'CA',
+        group: 'na'
+    },
+    {
+        label: 'Amazon.com.mx (Mexico)',
+        domain: 'com.mx',
+        key: 'MX',
+        group: 'na'
+    },
+    {
+        label: 'Amazon.com.br (Brazil)',
+        domain: 'com.br',
+        key: 'BR',
+        group: 'na'
+    },
+    {
+        label: 'Amazon.de (Germany)',
+        domain: 'de',
+        key: 'DE',
+        group: 'eu'
+    },
+    {
+        label: 'Amazon.co.uk (United Kingdom)',
+        domain: 'co.uk',
+        key: 'GB',
+        group: 'eu'
+    },
+    {
+        label: 'Amazon.fr (France)',
+        domain: 'fr',
+        key: 'FR',
+        group: 'eu'
+    },
+    {
+        label: 'Amazon.it (Italy)',
+        domain: 'it',
+        key: 'IT',
+        group: 'eu'
+    },
+    {
+        label: 'Amazon.es (Spain)',
+        domain: 'es',
+        key: 'ES',
+        group: 'eu'
+    },
+    {
+        label: 'Amazon.nl (Netherlands)',
+        domain: 'nl',
+        key: 'NL',
+        group: 'eu'
+    },
+]
 
 const AsinsSorter = () => {
     const paramsFromLocale = localStorage.getItem('asinsFiltering') ? JSON.parse(localStorage.getItem('asinsFiltering')) : undefined
@@ -13,11 +77,11 @@ const AsinsSorter = () => {
     const [fieldValue, setFieldValue] = useState(paramsFromLocale ? paramsFromLocale.inputFields : ''),
         [allAsins, setAllAsins] = useState(paramsFromLocale ? paramsFromLocale.allAsins : []),
         [negativeAsins, setNegativeAsins] = useState(paramsFromLocale ? paramsFromLocale.negativeAsins : []),
-        [marketplace, setMarketplace] = useState('US')
+        [marketplace, setMarketplace] = useState(marketplaces[0].key)
 
     const negativeBlockRef = useRef(null)
 
-    const asinImageUrl = asin => `https://ws-${(marketplace === 'US' || marketplace === 'CA' || marketplace === 'MX' || marketplace === 'BR') ? 'na' : 'eu'}.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=${marketplace}&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
+    const asinImageUrl = asin => `https://ws-${_.find(marketplaces, {key: marketplace}).group}.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=${marketplace}&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
     const addAsinsHandler = async () => {
         await setAllAsins([...new Set([...allAsins, ...fieldValue
@@ -59,7 +123,7 @@ const AsinsSorter = () => {
 
     const openAsin = (asin) => (e) => {
         e.stopPropagation()
-        window.open(`https://www.amazon.${marketplace}/dp/${asin}`)
+        window.open(`https://www.amazon.${_.find(marketplaces, {key: marketplace}).domain}/dp/${asin}`)
     }
 
     const copyAsins = (type) => {
@@ -90,19 +154,14 @@ const AsinsSorter = () => {
                             value={marketplace}
                             onChange={value => setMarketplace(value)}
                         >
-                            <OptGroup label="Americas">
-                                <Option value="US">Amazon.com (United States)</Option>
-                                <Option value="CA">Amazon.ca (Canada)</Option>
-                                <Option value="MX">Amazon.com.mx (Mexico)</Option>
-                                <Option value="BR">Amazon.com.br (Brazil)</Option>
+                            <OptGroup label={'Americas'}>
+                                {marketplaces.filter(i => i.group === 'na').map(item => <Option
+                                    value={item.key}>{item.label}</Option>)}
                             </OptGroup>
-                            <OptGroup label="Europe">
-                                <Option value="DE">Amazon.de (Germany)</Option>
-                                <Option value="GB">Amazon.co.uk (United Kingdom)</Option>
-                                <Option value="FR">Amazon.fr (France)</Option>
-                                <Option value="IT">Amazon.it (Italy)</Option>
-                                <Option value="ES">Amazon.es (Spain)</Option>
-                                <Option value="NL">Amazon.nl (Netherlands)</Option>
+
+                            <OptGroup label={'Europe'}>
+                                {marketplaces.filter(i => i.group === 'eu').map(item => <Option
+                                    value={item.key}>{item.label}</Option>)}
                             </OptGroup>
                         </CustomSelect>
                     </div>
