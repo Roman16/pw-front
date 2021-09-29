@@ -93,6 +93,7 @@ const CreatingCampaign = () => {
 
             <StepActions
                 currentStep={currentStep}
+                product={addedProducts[activeProductIndex]}
 
                 onChangeStep={setStepHandler}
             />
