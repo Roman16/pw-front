@@ -1,14 +1,23 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
 import $ from 'jquery'
 
 let searchWordShift = [],
-    arr = []
+    arr = [],
+    negativeListLocal = [],
+    negativeExactsListLocal = []
 
-const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPhrase, onAddExact, onCopy}) => {
+const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPhrase, onAddExact, onCopy, negativePhrasesList}) => {
+    const [checkedItems, setCheckedItems] = useState([])
+
     const addPhraseHandler = (phrase, e) => {
+        e.preventDefault()
+        e.stopPropagation()
+
         if (e.shiftKey) {
+            negativeListLocal = [...negativePhrasesList]
+            negativeExactsListLocal = [...negativeExactsList]
             searchWordShift = [...searchWordShift, phrase]
         } else {
             onAddPhrase(phrase)
@@ -16,17 +25,23 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
     }
 
     const logKey = (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
         if (event.keyCode === 16 && searchWordShift.length > 0) {
             const keyword = [...searchWordShift].join(" ")
 
-            onAddPhrase(keyword, arr
+            onAddPhrase(keyword, [...negativeExactsListLocal, ...arr
                 .filter(i => !negativeExactsList.includes(i))
                 .filter(i => {
                     let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
                     return i.search(re) !== -1
                 })
-                .map(i => i))
+                .map(i => i)], [...new Set([...negativeListLocal, keyword])])
+
             searchWordShift = []
+            negativeListLocal = []
+            negativeExactsListLocal = []
         }
     }
 
@@ -34,9 +49,18 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
         $(document).keyup(logKey)
     }, [])
 
+    const checkItemHandler = (key, checked) => {
+        if (checked) setCheckedItems([...checkedItems, key])
+        else setCheckedItems([...checkedItems.filter(i => i !== key)])
+    }
+
     useEffect(() => {
         arr = phrasesList
     }, [phrasesList])
+
+    useEffect(() => {
+        setCheckedItems([...checkedItems.filter(i => !negativeExactsList.includes(i))])
+    }, [negativeExactsList])
 
     return (<div className={'card output'}>
         <div className="block-header">
@@ -47,12 +71,11 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
         </div>
 
         <ul>
-            {phrasesList.map(item => {
+            {phrasesList.map((item) => {
                 const isNegative = negativeExactsList.includes(item)
-
                 return (<li key={item} className={isNegative && 'hidden'}>
-                    <AmazonLink keyword={item} marketplace={marketplace}/>
-                    <TranslateLink keyword={item} language={language}/>
+                    <AmazonLink keyword={item} marketplace={marketplace} onClick={() => checkItemHandler(item, true)}/>
+                    <TranslateLink keyword={item} language={language} onClick={() => checkItemHandler(item, true)}/>
 
                     <div className="phrase">
                         {item.split(" ").map(keyword => <div
@@ -67,15 +90,19 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
                         <SVG id={'close-window-icon'}/>
                     </button>
 
-                    {!isNegative && <Checkbox/>}
+                    {!isNegative && <Checkbox
+                        checked={checkedItems.includes(item)}
+                        onChange={({target: {checked}}) => checkItemHandler(item, checked)}
+                    />}
                 </li>)
             })}
         </ul>
     </div>)
 }
 
-export const AmazonLink = ({keyword, marketplace}) => <a
+export const AmazonLink = ({keyword, marketplace, onClick}) => <a
     href={`https://www.${marketplace}/s/?url=search-alias%3Daps&field-keywords=${keyword}`}
+    onClick={onClick}
     target={'_blank'}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="2.167 .438 251.038 259.969">
@@ -96,8 +123,9 @@ export const AmazonLink = ({keyword, marketplace}) => <a
     </svg>
 </a>
 
-export const TranslateLink = ({keyword, language}) => <a
+export const TranslateLink = ({keyword, language, onClick}) => <a
     href={`https://translate.google.com/?hl=ru#${language}/ru/${keyword}`}
+    onClick={onClick}
     target={'_blank'}
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 333334 333400" shape-rendering="geometricPrecision"

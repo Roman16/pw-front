@@ -58,18 +58,17 @@ const WordSorter = () => {
             })
     }
 
-    const addNegativePhraseHandler = (keyword, arr) => {
-        setNegativePhrasesList([...new Set([...negativePhrasesList, keyword])])
+    const addNegativePhraseHandler = (keyword, arr, negativeList) => {
+        setNegativePhrasesList(negativeList || [...new Set([...negativePhrasesList, keyword])])
 
-        setNegativeExactsList([...negativeExactsList, ...arr ? arr : outputList
-                .filter(i => !negativeExactsList.includes(i))
-                .filter(i => {
-                    let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                    return i.search(re) !== -1
-                })
-                .map(i => i)
-            ]
-        )
+        setNegativeExactsList(arr || [...negativeExactsList, ...outputList
+            .filter(i => !negativeExactsList.includes(i))
+            .filter(i => {
+                let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
+                return i.search(re) !== -1
+            })
+            .map(i => i)
+        ])
     }
 
     const addNegativeExactHandler = (keyword) => {
@@ -91,6 +90,8 @@ const WordSorter = () => {
         setOutputList([])
         setNegativePhrasesList([])
         setNegativeExactsList([])
+
+        localStorage.removeItem('wordSorter');
     }
 
     const copyListHandler = (list, type) => {
@@ -145,6 +146,7 @@ const WordSorter = () => {
                     negativeExactsList={negativeExactsList}
                     language={currentLanguage}
                     marketplace={currentMarketplace}
+                    negativePhrasesList={negativePhrasesList}
 
                     onCopy={() => copyListHandler(outputList, 'output')}
                     onAddPhrase={addNegativePhraseHandler}
