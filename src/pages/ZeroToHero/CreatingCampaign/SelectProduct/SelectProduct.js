@@ -35,6 +35,7 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
     const [products, setProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
+        [openedProduct, setOpenedProduct] = useState(null),
         [requestParams, setRequestParams] = useState({
             searchStr: '',
             page: 1,
@@ -72,6 +73,16 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
     }
 
     const changePaginationHandler = (options) => setRequestParams({...requestParams, ...options})
+    const openVariationsListHandler = (id) => setOpenedProduct(prevState => prevState === id ? null : id)
+
+    const selectVariationHandler = (product, variationStatus, parentStatus) => {
+        if (variationStatus) {
+            onAddProducts(addedProducts.filter(item => item.id !== product.id))
+        } else {
+            onAddProducts([...addedProducts.filter(item => item.parent_id !== product.id), product])
+        }
+    }
+
 
     const selectProductHandler = (product, status) => {
         if (status) {
@@ -115,15 +126,15 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
                     {products.map((product, index) => <ProductItem
                             key={product.id}
                             product={product}
-                            // isOpened={product.id === openedProduct}
+                            isOpened={product.id === openedProduct}
                             isSelected={!!addedProducts.find(item => item.id === product.id)}
                             // isDisabled={!!addedProducts.find(item => item.id === product.id)}
                             // addedProducts={addedProducts}
                             // addedProducts={addedProducts}
 
                             onSelect={selectProductHandler}
-                            // onSelectVariation={selectVariationHandler}
-                            // onOpenVariations={openVariationsListHandler}
+                            onSelectVariation={selectVariationHandler}
+                            onOpenVariations={openVariationsListHandler}
                         />
                     )}
                 </ul>
