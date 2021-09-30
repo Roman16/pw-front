@@ -14,7 +14,6 @@ import moment from "moment"
 import {history} from "../../../utils/history"
 
 
-
 const initialProductSettings = {
     portfolio: {
         type: 'CreateNew',
@@ -41,18 +40,13 @@ const CreatingCampaign = () => {
         [portfolioList, setPortfolioList] = useState([]),
         [addedProducts, setAddedProducts] = useState([]),
         [openedSteps, setOpenedSteps] = useState(0),
-        [activeProductIndex, setActiveProductIndex] = useState(0)
+        [activeProductIndex, setActiveProductIndex] = useState(0),
+        [invalidField, setInvalidField] = useState()
 
     const dispatch = useDispatch()
 
-    const {productAmount, invalidField, paidBatch} = useSelector(state => ({
-        productAmount: state.zth.productAmount,
-        invalidField: state.zth.invalidField.field,
-        paidBatch: state.zth.paidBatch
-    }))
-
     const updateProductHandler = (params, isInvalid) => {
-        dispatch(zthActions.updateActiveProduct(params))
+        setAddedProducts([{...addedProducts[0], ...params}])
 
         if (isInvalid) {
             dispatch(zthActions.setInvalidField({
@@ -68,11 +62,11 @@ const CreatingCampaign = () => {
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
             })
-        } else if(step === 4) {
+        } else if (step === 4) {
             history.push('/zero-to-hero/settings/create-success')
         } else {
             setCurrentStep(step)
-            setOpenedSteps(openedSteps > step ? openedSteps : step)
+            setOpenedSteps(openedSteps > step - 1 ? openedSteps : step - 1)
         }
     }
 
@@ -84,20 +78,17 @@ const CreatingCampaign = () => {
                 currentStep={currentStep}
                 openedSteps={openedSteps}
 
-                onChangeStep={setCurrentStep}
+                onChangeStep={setStepHandler}
             />
 
             <SelectProduct
                 visible={currentStep === 0}
-
                 addedProducts={addedProducts}
 
                 onAddProducts={addProductHandler}
             />
 
             {currentStep === 1 && <RequiredSettings
-                visible={currentStep === 1}
-
                 product={addedProducts[activeProductIndex]}
                 portfolioList={portfolioList}
                 invalidField={invalidField}

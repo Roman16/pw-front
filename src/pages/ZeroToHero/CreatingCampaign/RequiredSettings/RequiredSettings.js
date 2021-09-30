@@ -101,11 +101,13 @@ const RequiredSettings = ({
                                     unique={true}
                                 />
 
-                                <p><b>Estimated keywords count for campaigns: <InformationTooltip
-                                    type={'custom'}
-                                    description={'This is an estimated amount of keywords we will be able to gather based on provided Seed Keywords. Contributions by each keyword:'}>
-                                    <span>100 - 700</span>
-                                </InformationTooltip></b></p>
+                                <p><b>Estimated keywords count for campaigns: 0
+                                    {/*<InformationTooltip*/}
+                                    {/*    type={'custom'}*/}
+                                    {/*    description={'This is an estimated amount of keywords we will be able to gather based on provided Seed Keywords. Contributions by each keyword:'}>*/}
+                                    {/*    <span>100 - 700</span>*/}
+                                    {/*</InformationTooltip>*/}
+                                </b></p>
                             </div>
 
                             <div className="col">

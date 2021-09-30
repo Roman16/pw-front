@@ -13,8 +13,8 @@ const Navigation = ({currentStep, openedSteps, onChangeStep}) => {
     return (
         <ul className="zth-steps-navigation">
             {steps.map((item, index) => <li
-                className={`${currentStep === index ? 'active' : ''} ${index <= openedSteps ? 'opened' : ''}`}
-                onClick={index <= openedSteps ? () => onChangeStep(index) : false}
+                className={`${currentStep === index ? 'active' : ''} ${index <= openedSteps + 1? 'opened' : ''}`}
+                onClick={index <= openedSteps + 1 ? () => onChangeStep(index) : false}
             >
                 <div>{(currentStep > index || index <= openedSteps) ? <CheckSmall/> : index + 1}</div>
 
