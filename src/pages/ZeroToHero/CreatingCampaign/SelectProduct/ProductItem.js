@@ -92,13 +92,13 @@ const ProductItem = ({
             <div className={`variations-list`}>
                 {product.variations.map(variationProduct => {
                     if (type === 'all_products') {
-                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
-                            variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
+                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected
+                            // variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
 
                         return (
                             <div
-                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled || variationIsAdded) ? 'disabled' : ''}`}
-                                onClick={() => !isDisabled && !variationIsAdded && onSelect && onSelectVariation({
+                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled) ? 'disabled' : ''}`}
+                                onClick={() => !isDisabled && onSelect && onSelectVariation({
                                     ...variationProduct,
                                     parent_id: product.id
                                 }, variationIsSelected, isSelected)}
@@ -106,7 +106,8 @@ const ProductItem = ({
                                 <div className="variation-indicator"/>
                                 <ProductItem
                                     product={variationProduct}
-                                    isDisabled={!isDisabled && variationIsAdded}
+                                    isDisabled={false}
+                                    // isDisabled={!isDisabled}
                                 />
                             </div>
                         )

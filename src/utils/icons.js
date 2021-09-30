@@ -515,7 +515,7 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0, 0, 20, 20],
-            data: '<rect xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6D6DF6" rx="4"/><mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="14" x="3" y="3" maskUnits="userSpaceOnUse"><path fill="#D30202" d="M3 3H17V17H3z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="white" stroke-linecap="round" stroke-width="1.7" d="M15.5 4.5L4.5 15.5"/><circle cx="6" cy="6" r="2.2" stroke="white" fill="none" stroke-width="1.6"/><circle cx="14" cy="14" r="2.2" stroke="white" fill="none" stroke-width="1.6"/></g>'
+            data: '<rect xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6959AB" rx="4"/><mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="14" x="3" y="3" maskUnits="userSpaceOnUse"><path fill="#D30202" d="M3 3H17V17H3z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="white" stroke-linecap="round" stroke-width="1.7" d="M15.5 4.5L4.5 15.5"/><circle cx="6" cy="6" r="2.2" stroke="white" fill="none" stroke-width="1.6"/><circle cx="14" cy="14" r="2.2" stroke="white" fill="none" stroke-width="1.6"/></g>'
         },
         'notification-icon': {
             width: 9,

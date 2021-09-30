@@ -2,6 +2,9 @@
 @import "./style/fonts";
 
 
+@default-purple: #6959AB;
+
+
 html {
   box-sizing: border-box;
   font-size: 14px;
@@ -367,12 +370,12 @@ img {
       top: -50%;
       border-radius: 50%;
       position: absolute;
-      background: rgba(109, 109, 246, 0.05);
+      background: rgba(105, 89, 171, 0.05);
     }
   }
 
   .ant-checkbox-inner {
-    border-color: @action-color !important;
+    border-color: @default-purple !important;
     background-color: inherit;
   }
 
@@ -388,7 +391,7 @@ img {
 
   &.ant-checkbox-indeterminate {
     .ant-checkbox-inner {
-      background: @action-color;
+      background: @default-purple;
 
       &::after {
         width: 63%;
@@ -403,8 +406,8 @@ img {
 
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: @action-color !important;
-  border-color: @action-color !important;
+  background-color: @default-purple !important;
+  border-color: @default-purple !important;
 }
 
 .ant-checkbox-checked:hover {
@@ -488,11 +491,11 @@ img {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(109, 109, 246, 0.05);
+      background: rgba(105, 89, 171, 0.05);
     }
 
     .ant-radio-inner {
-      border-color: #6D6DF6;
+      border-color: @default-purple;
     }
   }
 
@@ -510,7 +513,7 @@ img {
     }
 
     .ant-radio-inner {
-      border-color: #6D6DF6;
+      border-color: @default-purple;
     }
   }
 
@@ -518,7 +521,7 @@ img {
     width: 18px;
     height: 18px;
     border-width: 2px;
-    border-color: #6D6DF6;
+    border-color: @default-purple;
     background: initial;
     box-shadow: none !important;
 
@@ -527,7 +530,7 @@ img {
     }
 
     &::after {
-      background-color: #6D6DF6;
+      background-color: @default-purple;
       width: 10px;
       height: 10px;
       top: 2px;
@@ -543,10 +546,10 @@ img {
     }
 
     .ant-radio-inner {
-      border-color: #6D6DF6 !important;
+      border-color: @default-purple !important;
 
       &::after {
-        background-color: #6D6DF6;
+        background-color: @default-purple;
         border: 0;
         width: 10px;
         height: 10px;
@@ -1073,7 +1076,7 @@ a.sds-btn {
         background: rgba(105, 89, 171, 0.05);
 
         svg {
-          fill: #6959AB;
+          fill: @default-purple;
         }
       }
 
@@ -1081,7 +1084,7 @@ a.sds-btn {
         background: rgba(105, 89, 171, 0.15);
 
         svg {
-          fill: #6959AB;
+          fill: @default-purple;
         }
       }
   }
@@ -1140,8 +1143,8 @@ button.white[disabled] {
   font-size: 1rem; // 14px
 
   .ant-checkbox-checked .ant-checkbox-inner {
-    background-color: @action-color;
-    border-color: @action-color;
+    background-color: @default-purple;
+    border-color: @default-purple;
   }
 
   .ant-checkbox {

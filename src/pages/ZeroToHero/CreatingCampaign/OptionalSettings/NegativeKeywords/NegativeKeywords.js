@@ -102,7 +102,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                                 it or 80 characters.
                             </div>
 
-                            <button className={'btn default p15 add'}>
+                            <button className={'sds-btn default p15 add'}>
                                 <SVG id={'plus-icon'}/>
                                 Add Keyword
                             </button>

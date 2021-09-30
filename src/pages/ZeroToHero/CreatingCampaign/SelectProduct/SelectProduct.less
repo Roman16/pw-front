@@ -37,6 +37,7 @@
     border-radius: 4px;
     display: flex;
     flex-direction: column;
+    overflow-y: hidden;
 
     .block-header {
       font-weight: 600;
@@ -75,6 +76,7 @@
       list-style: none;
       margin: 0;
       overflow-y: auto;
+      position: relative;
 
       .product-item {
         display: flex;
@@ -194,7 +196,7 @@
             }
 
             .asin {
-              width: 10rem;
+              min-width: 10rem;
               padding: 0 20px 0 0;
             }
 
@@ -261,6 +263,7 @@
           align-items: center;
           border-bottom: 1px solid rgba(101, 106, 132, 0.2);
           cursor: pointer;
+          padding: 0 0 0 1.42857143rem;
 
           &:hover {
             background: rgba(255, 250, 250, 0.6);
@@ -307,7 +310,7 @@
             height: 8px;
             border-radius: 50%;
             background: #C9CBD4;
-            margin: 0 2.142857142857143rem;
+            margin: 0 1.7142857142857142rem 0 0;
           }
 
           .product-item {

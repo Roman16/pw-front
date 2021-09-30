@@ -31,7 +31,7 @@ const StepActions = ({product, currentStep, onChangeStep}) => {
                 disabled={!product}
                 onClick={() => onChangeStep(currentStep + 1)}
             >
-                Next
+                {currentStep === 3 ? 'Create' : 'Next'}
             </button>
         </div>
     )

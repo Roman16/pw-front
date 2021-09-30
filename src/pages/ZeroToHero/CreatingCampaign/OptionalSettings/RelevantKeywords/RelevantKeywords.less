@@ -39,7 +39,17 @@
 
     .form-group {
       width: 100%;
-      margin: 30px 0 20px 0;
+      margin: 0 0 20px 0;
+      display: flex;
+      flex-direction: column;
+
+      label {
+        display: block;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #5B586F;
+        margin-bottom: 10px;
+      }
 
       textarea {
         height: 172px;
@@ -51,7 +61,7 @@
     .actions {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-end;
 
       .added-description {
         width: 60%;
@@ -65,12 +75,14 @@
       }
     }
 
-    .btn {
+    .sds-btn {
       height: 2.2857142857142856rem;
       font-size: 0.8571428571428571rem;
+      padding: 0 15px;
 
       svg {
         stroke: #fff;
+        margin: 0 12px 0 0;
       }
     }
   }
@@ -87,13 +99,13 @@
 
       .count {
         font-size: 1rem;
-        color: #343C5A;
+        color: #312C51;
       }
 
       button {
+        font-weight: 600;
         font-size: 1rem;
-        color: #6D6DF6;
-        font-weight: 500;
+        color: #5B586F;
       }
     }
 
@@ -111,8 +123,8 @@
 
       .header {
         font-size: 0.8571428571428571rem;
-        color: #343C5A;
-        font-weight: 500;
+        color: #312C51;
+        font-weight: 600;
         padding: 5px 10px;
         border-bottom: 1px solid #C9CBD4;
       }

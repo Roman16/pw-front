@@ -38,23 +38,32 @@
   }
 
   h3 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    color: #343C5A;
+    font-weight: 600;
+    font-size: 1.2857142857142858rem;
+    line-height: 1.5714285714285714rem;
+    color: #312C51;
+    margin-bottom: 17px;
   }
 
   p {
-    font-size: 1rem;
-    color: #656A84;
     margin-bottom: 0;
-    border-left: 0.5px solid #C9CBD4;
     padding: 0 0 0 10px;
     text-align: justify;
+    font-weight: 500;
+    font-size: 0.8571428571428571rem;
+    line-height: 1.0714285714285714rem;
+    color: #C9CBD4;
+    border-left: 0.5px solid #C9CBD4;
+
+    a {
+      text-decoration: underline;
+      color: inherit;
+    }
   }
 
   .form-group {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     margin-bottom: 20px;
 
     &:last-child {
@@ -62,9 +71,10 @@
     }
 
     label {
-      width: 260px;
+      font-weight: 600;
       font-size: 1rem;
-      color: #343C5A;
+      color: #5B586F;
+      margin-bottom: 10px;
     }
 
     .InputCurrency {
@@ -79,13 +89,13 @@
     }
 
     .recommend-label {
-      background: #7DD4A1;
+      background: #7FD3A1;
       border-radius: 4px;
       color: #FFFFFF;
       font-size: 0.8571428571428571rem;
       padding: 0 5px;
       height: max-content;
-      margin: -5px 0 0 2px;
+      margin: 0 0 0 8px;
       display: flex;
     }
 
@@ -96,6 +106,10 @@
       & > span:last-child {
         padding: 0 0 0 15px;
         display: flex;
+
+        font-weight: 600;
+        font-size: 1rem;
+        color: #5B586F;
       }
     }
 

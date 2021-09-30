@@ -93,20 +93,22 @@ const params = [
 const Overview = ({product}) => {
 
     return (<section className="step overview">
-        <div className="container">
-            <h2>Overview</h2>
+        <div className="bg-container">
+            <div className="container">
+                <h2>Overview</h2>
 
-            <ul>
-                {params.map(item => <li>
-                    <div className="title">
-                        {item.title}
-                    </div>
+                <ul>
+                    {params.map(item => <li>
+                        <div className="title">
+                            {item.title}
+                        </div>
 
-                    <div className="value">
-                        {item.render ? item.render(item) : product[item.key]}
-                    </div>
-                </li>)}
-            </ul>
+                        <div className="value">
+                            {item.render ? item.render(item) : product[item.key]}
+                        </div>
+                    </li>)}
+                </ul>
+            </div>
         </div>
     </section>)
 }

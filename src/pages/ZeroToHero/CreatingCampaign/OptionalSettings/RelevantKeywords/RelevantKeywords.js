@@ -67,6 +67,7 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
                 <div className="row">
                     <form className="col new-keyword" onSubmit={addKeywordsHandler}>
                         <div className="form-group">
+                            <label htmlFor="">Enter the keywords you consider relevant for your product</label>
                             <textarea
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value)}
@@ -82,7 +83,7 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
                                 it or 80 characters.
                             </div>
 
-                            <button className={'btn default p15'}>
+                            <button className={'sds-btn default p15'}>
                                 <SVG id={'plus-icon'}/>
                                 Add Keyword
                             </button>

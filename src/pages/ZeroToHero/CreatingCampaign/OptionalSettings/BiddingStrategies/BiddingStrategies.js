@@ -66,7 +66,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
                             <Radio value={'legacyForSales'}>
                                 Dynamic bids - down only
 
-                                <span className={'recommend-label'}>Recommended by Profit Whales</span>
+                                <span className={'recommend-label'}>recommended by Sponsoreds</span>
                             </Radio>
 
                             <div className="radio-description down-only">
@@ -77,7 +77,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
 
                         <div className="col">
                             <p>
-                                Dynamic bids - down only<br/>
+                                <b>Dynamic bids - down only</b><br/>
                                 When you choose the dynamic bids - down only strategy, Amazon will reduce your bids in
                                 real-time for clicks that may be less likely to convert to a sale.
                             </p>
@@ -98,7 +98,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
 
                         <div className="col">
                             <p>
-                                Dynamic bids - up and down<br/>
+                                <b>Dynamic bids - up and down</b><br/>
                                 When you choose the dynamic bids - up and down’ strategy, Amazon will increase your bids
                                 in real-time for clicks that may be more likely to convert to a sale, and reduce them
                                 for clicks that are less likely to convert to a sale. We do not recommend using this
@@ -121,7 +121,7 @@ const BiddingStrategies = ({campaigns, onUpdate}) => {
 
                         <div className="col">
                             <p>
-                                Fixed bids<br/>
+                                <b>Fixed bids</b><br/>
                                 When you choose the fixed bids strategy, Amazon will use your exact bid for all
                                 opportunities and will not adjust your bids based on the likelihood of a conversion.
                                 Compared to dynamic bidding strategies, you may get more impressions, but fewer

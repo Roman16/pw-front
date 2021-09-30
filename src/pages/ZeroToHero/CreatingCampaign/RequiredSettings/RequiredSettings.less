@@ -90,6 +90,14 @@
     height: 2.2857142857142856rem;
   }
 
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #5B586F;
+    margin-bottom: 10px;
+  }
+
   .error-field {
     & > {
       .InputCurrency .ant-input-number,
@@ -177,6 +185,12 @@
       margin-bottom: 20px;
       position: relative;
 
+      &:first-child {
+        .radio-description {
+          margin-top: 0;
+        }
+      }
+
       .form-group {
         margin: 10px 0 0 28px;
 
@@ -193,9 +207,6 @@
 
           label {
             display: block;
-            margin: 0 0 10px 0;
-            font-size: 1rem;
-            color: #343C5A;
             padding: 0;
           }
 
@@ -251,11 +262,7 @@
       }
 
       label {
-        font-size: 1rem;
-        color: #343C5A;
-        font-weight: 500;
         display: block;
-        margin: 0 0 10px 0;
       }
     }
 
@@ -307,7 +314,6 @@
 
   .brand-name-setting {
     .form-group {
-      height: 2.2857142857142856rem;
       width: 75%;
     }
   }

@@ -10,7 +10,31 @@ import {zthActions} from "../../../actions/zth.actions"
 import OptionalSettings from "./OptionalSettings/OptionalSettings"
 import Overview from "./Overview/Overview"
 import {notification} from "../../../components/Notification"
+import moment from "moment"
+import {history} from "../../../utils/history"
 
+
+
+const initialProductSettings = {
+    portfolio: {
+        type: 'CreateNew',
+        no_portfolio: false
+    },
+    campaigns: {
+        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
+        set_to_paused: false,
+        main_keywords: [],
+        bidding_strategy: 'legacyForSales',
+        adjust_bid_by_placements: {},
+    },
+    brand: {
+        competitor_brand_names: []
+    },
+    relevant_keywords: [],
+    negative_keywords: [],
+    use_existing_ppc_targetings: true,
+    pause_existing_duplicates_of_zth_targetings: true
+}
 
 const CreatingCampaign = () => {
     const [currentStep, setCurrentStep] = useState(0),
@@ -44,13 +68,15 @@ const CreatingCampaign = () => {
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
             })
+        } else if(step === 4) {
+            history.push('/zero-to-hero/settings/create-success')
         } else {
             setCurrentStep(step)
             setOpenedSteps(openedSteps > step ? openedSteps : step)
         }
     }
 
-    const addProductHandler = (products) => setAddedProducts(products)
+    const addProductHandler = (products) => setAddedProducts([...products.map(i => ({...i, ...initialProductSettings}))])
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
