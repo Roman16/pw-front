@@ -1,7 +1,8 @@
-import React from "react";
-import {SVG} from "../../../../utils/icons";
+import React from "react"
+import {SVG} from "../../../../utils/icons"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 
 const ProductItem = ({
                          type,
@@ -68,8 +69,9 @@ const ProductItem = ({
                         <div className="asin"><b>ASIN:</b> {product.asin}</div>
                         <div className="sku"><b>SKU:</b> {product.sku}</div>
 
-                        {isDisabled && <div className="added">Added</div>}
-                        {onRemove && <button className="remove" onClick={onRemove}>Remove</button>}
+                        {/*{isDisabled && <div className="added">Added</div>}*/}
+                        {/*{onRemove && <button className="remove" onClick={onRemove}>Remove</button>}*/}
+
                         {showChildCount && product.variations &&
                         <div className="variations-count">
                             This Product has <b>{product.variations.length}</b> child ASIN(s)
@@ -78,14 +80,23 @@ const ProductItem = ({
                 </div>
 
                 {product.variations && <button
+                    disabled={isDisabled}
                     onClick={e => {
-                        e.stopPropagation();
+                        e.stopPropagation()
                         onOpenVariations(product.id)
                     }}
                     className={`variations-button ${isOpened ? 'opened' : ''}`}
                 >
                     <SVG id='select-icon'/>
                 </button>}
+
+
+                <div className="eligibility-status">
+                    Ineligible
+                    <InformationTooltip
+                        description={'This product in not eligible for advertising on Amazon Marketplace, thus we cannot create ZTH campaigns for it. Ineligibility reasons:'}
+                    />
+                </div>
             </div>
 
             {product.variations && isOpened &&
@@ -93,7 +104,7 @@ const ProductItem = ({
                 {product.variations.map(variationProduct => {
                     if (type === 'all_products') {
                         const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected
-                            // variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
+                        // variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
 
                         return (
                             <div
@@ -127,6 +138,6 @@ const ProductItem = ({
             </div>}
         </>
     )
-};
+}
 
-export default React.memo(ProductItem);
+export default React.memo(ProductItem)

@@ -13,8 +13,8 @@ export const zthServices = {
     getUserPortfolio
 };
 
-function getAllProducts({pageSize, page, searchStr = '', cancelToken}) {
-    return api('get', `${zthUrls.productsList}?search_query=${searchStr}&page=${page}&size=${pageSize}`, false, false, cancelToken)
+function getAllProducts({pageSize, page, searchStr = '', cancelToken, sorting}) {
+    return api('get', `${zthUrls.productsList}?search_query=${searchStr}&page=${page}&size=${pageSize}&order_by:${sorting}=name`, false, false, cancelToken)
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {

@@ -78,6 +78,48 @@
       overflow-y: auto;
       position: relative;
 
+      .load-data {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(105, 89, 171, 0.05);
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 10;
+      }
+
+      .empty {
+        width: 100%;
+        min-height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+
+        svg {
+          margin: 0 0 2.142857142857143rem;
+        }
+
+        h4 {
+          font-weight: 600;
+          font-size: 1.2857142857142858rem;
+          color: #312C51;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-weight: 500;
+          font-size: 1rem;
+          color: #5B586F;
+          margin: 0;
+          text-align: center;
+        }
+      }
+
       .product-item {
         display: flex;
         align-items: center;
@@ -107,11 +149,38 @@
         }
 
         &.disabled {
-          opacity: .6;
           cursor: default;
 
           &:hover {
             background: #fff;
+          }
+
+          .photo {
+            opacity: 0.5;
+          }
+
+          .col {
+            .row {
+              .product-name,
+              .stock,
+              .price,
+              .asin,
+              .sku {
+                color: #C9CBD4;
+
+                span {
+                  color: inherit;
+                }
+              }
+            }
+          }
+
+          .variations-button {
+            pointer-events: none;
+
+            svg {
+              stroke: #C9CBD4;
+            }
           }
         }
 
@@ -251,6 +320,16 @@
           }
         }
 
+        .eligibility-status {
+          position: absolute;
+          right: 15px;
+          bottom: 13px;
+          font-weight: 500;
+          font-size: 0.8571428571428571rem;
+          color: #C9CBD4;
+          display: flex;
+          align-items: center;
+        }
       }
 
       .variations-list {

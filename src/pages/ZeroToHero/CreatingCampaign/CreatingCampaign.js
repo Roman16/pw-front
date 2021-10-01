@@ -1,4 +1,4 @@
-import React, {memo, useState} from "react"
+import React, {memo, useEffect, useState} from "react"
 import '../ZeroToHero.less'
 import './CreatingCampaign.less'
 import Navigation from "./Navigation/Navigation"
@@ -12,6 +12,7 @@ import Overview from "./Overview/Overview"
 import {notification} from "../../../components/Notification"
 import moment from "moment"
 import {history} from "../../../utils/history"
+import {zthServices} from "../../../services/zth.services"
 
 
 const initialProductSettings = {
@@ -71,6 +72,20 @@ const CreatingCampaign = () => {
     }
 
     const addProductHandler = (products) => setAddedProducts([...products.map(i => ({...i, ...initialProductSettings}))])
+
+    const fetchPortfolios = async () => {
+        try {
+            const {result} = await zthServices.getUserPortfolio()
+            setPortfolioList(result)
+        } catch (e) {
+            console.log(e)
+            setPortfolioList()
+        }
+    }
+
+    useEffect(() => {
+        fetchPortfolios()
+    }, [])
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>

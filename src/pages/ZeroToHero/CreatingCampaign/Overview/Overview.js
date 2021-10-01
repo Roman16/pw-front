@@ -1,97 +1,80 @@
 import React from "react"
 import './Overview.less'
+import moment from 'moment'
 
 const params = [
     {
         title: 'ZTH Type',
-        key: '',
         render: () => 'Sponsored Products'
     },
     {
         title: 'Seed Keywords',
-        key: '',
         render: () => <div>30 keywords. <a href="">Show</a></div>
     },
     {
         title: 'Campaign Name',
-        key: 'name',
-        render: () => 'Campaign Name'
+        render: (product) => product.name || '-'
     },
     {
         title: 'Portfolio',
-        key: 'portfolio',
         render: () => ''
     },
     {
         title: 'Start Date',
-        key: 'start_date',
-        render: () => ''
+        render: (product) => product.start_date ? moment(product.start_date).format('MMM DD, YYYY') : '-'
     },
     {
         title: 'End Date',
-        key: 'end_date',
-        render: () => ''
+        render: (product) => product.end_date ? moment(product.end_date).format('MMM DD, YYYY') : '-'
     },
     {
         title: 'Daily Budget',
-        key: 'budget',
-        render: () => ''
+        render: (product) => product.budget ? `$${product.budget}` : '-'
     },
     {
         title: 'Default Bid',
-        key: 'bid',
-        render: () => ''
+        render: (product) => product.bid ? `$${product.bid}` : '-'
     },
     {
         title: 'Your Brand Name',
-        key: 'brand_name',
-        render: () => ''
+        render: (product) => product.brand_name || '-'
     },
     {
         title: 'Competitors Brands Names',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Use existing PPC keywords / PTs for ZTH campaigns',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Pause existing keywords / PTs that are duplicates of ZTH targetings',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Campaign bidding strategy',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Bids adjustment by placement: Top of Search (first page)',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Bids adjustment by placement: Product pages (competitors pages)',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Relevant Keywords',
-        key: 'bid',
         render: () => ''
     },
     {
         title: 'Negative Keywords',
-        key: 'bid',
         render: () => ''
     },
 
 ]
 
 const Overview = ({product}) => {
-
     return (<section className="step overview">
         <div className="bg-container">
             <div className="container">
@@ -104,7 +87,7 @@ const Overview = ({product}) => {
                         </div>
 
                         <div className="value">
-                            {item.render ? item.render(item) : product[item.key]}
+                            {item.render(product)}
                         </div>
                     </li>)}
                 </ul>

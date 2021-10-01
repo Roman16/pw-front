@@ -126,14 +126,15 @@ export const daypartingUrls = {
 }
 
 export const zthUrls = {
-    productsList: 'zero-to-hero/products',
+    productsList: 'v2/zero-to-hero/products',
+    portfolioList: 'v2/zero-to-hero/portfolios',
+
     zthProductsList: 'zero-to-hero/jobs',
     setupSettings: 'zero-to-hero/setup-settings',
     incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
     payBatch: (batchId) => `zero-to-hero/batch/${batchId}/make-payment`,
     batchInfo: `zero-to-hero/batch`,
-    portfolioList: 'zero-to-hero/portfolio',
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`
 }
 
