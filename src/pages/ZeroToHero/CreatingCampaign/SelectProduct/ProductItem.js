@@ -3,6 +3,7 @@ import {SVG} from "../../../../utils/icons"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {Spin} from "antd"
 
 const ProductItem = ({
                          type,
@@ -16,7 +17,8 @@ const ProductItem = ({
                          onRemove,
                          showChildCount,
                          selectedProducts,
-                         addedProducts
+                         addedProducts,
+                         fetchVariationsProcessing
                      }) => {
 
     return (
@@ -91,25 +93,27 @@ const ProductItem = ({
                 </button>}
 
 
+                {((product.eligibility_status === 'INELIGIBLE' || product.eligibility_status == null) && product.eligibility_status !== undefined) &&
                 <div className="eligibility-status">
                     Ineligible
                     <InformationTooltip
                         description={'This product in not eligible for advertising on Amazon Marketplace, thus we cannot create ZTH campaigns for it. Ineligibility reasons:'}
                     />
-                </div>
+                </div>}
             </div>
 
             {product.variations && isOpened &&
             <div className={`variations-list`}>
-                {product.variations.map(variationProduct => {
+                {fetchVariationsProcessing ? <Spin size={'large'}/> : product.variations.map(variationProduct => {
                     if (type === 'all_products') {
-                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected
+                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
+                            variationIsDisabled = variationProduct.eligibility_status === 'INELIGIBLE' || variationProduct.eligibility_status == null
                         // variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
 
                         return (
                             <div
-                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled) ? 'disabled' : ''}`}
-                                onClick={() => !isDisabled && onSelect && onSelectVariation({
+                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled || variationIsDisabled) ? 'disabled' : ''}`}
+                                onClick={() => !variationIsDisabled && !isDisabled && onSelect && onSelectVariation({
                                     ...variationProduct,
                                     parent_id: product.id
                                 }, variationIsSelected, isSelected)}

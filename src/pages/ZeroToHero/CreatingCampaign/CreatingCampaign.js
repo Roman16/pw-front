@@ -13,6 +13,8 @@ import {notification} from "../../../components/Notification"
 import moment from "moment"
 import {history} from "../../../utils/history"
 import {zthServices} from "../../../services/zth.services"
+import {cleanMainKeyword, findExistingDuplicateOfNewMainKeyword} from "../components/MultiTextArea/isMainKeywordValid"
+import {Prompt} from "react-router-dom"
 
 
 const initialProductSettings = {
@@ -40,9 +42,10 @@ const CreatingCampaign = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [portfolioList, setPortfolioList] = useState([]),
         [addedProducts, setAddedProducts] = useState([]),
-        [openedSteps, setOpenedSteps] = useState(0),
+        [openedSteps, setOpenedSteps] = useState(-1),
         [activeProductIndex, setActiveProductIndex] = useState(0),
-        [invalidField, setInvalidField] = useState()
+        [invalidField, setInvalidField] = useState(),
+        [createProcessing, setCreateProcessing] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -64,7 +67,7 @@ const CreatingCampaign = () => {
                 description: 'Please select one product you want to create campaign for.'
             })
         } else if (step === 4) {
-            history.push('/zero-to-hero/settings/create-success')
+            createCampaignHandler()
         } else {
             setCurrentStep(step)
             setOpenedSteps(openedSteps > step - 1 ? openedSteps : step - 1)
@@ -80,6 +83,96 @@ const CreatingCampaign = () => {
         } catch (e) {
             console.log(e)
             setPortfolioList()
+        }
+    }
+
+    const createCampaignHandler = async () => {
+        try {
+            setCreateProcessing(true)
+
+            const setupSettingsFilter = (arr) => {
+                return arr.map(product => ({
+                    product_id: product.id,
+                    portfolio: {
+                        type: product.portfolio.type,
+                        enum: product.portfolio.type === 'NoPortfolio',
+                        ...product.portfolio.type === 'CreateNew' ? {name: product.portfolio.name, ...product.portfolio.monthly_recurring_budget && {monthly_recurring_budget: product.portfolio.monthly_recurring_budget}} : {id: product.portfolio.id}
+                    },
+                    campaigns: {
+                        ...product.campaigns,
+                        main_keywords: [
+                            ...product.campaigns.main_keywords
+                                .filter(item => item.hasMeaningfulWords !== false)
+                                .reverse()
+                                .filter(item => {
+                                    const clearKeyword = cleanMainKeyword(item.value)
+                                    return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                                })
+                                .reverse()
+                                .map(item => item.value)
+                        ],
+                    },
+                    brand: product.brand,
+                    relevant_keywords: product.relevant_keywords,
+                    negative_keywords: {
+                        exact: product.negative_keywords.filter(item => item.type === 'exact').map(item => item.text),
+                        phrase: product.negative_keywords.filter(item => item.type === 'phrase').map(item => item.text)
+                    },
+                    use_existing_ppc_targetings: product.use_existing_ppc_targetings,
+                    pause_existing_duplicates_of_zth_targetings: product.pause_existing_duplicates_of_zth_targetings,
+                }))
+            }
+
+            const res = await zthServices.saveSettings({
+                setup_settings: setupSettingsFilter(addedProducts)
+            })
+
+            setCreateProcessing(false)
+            history.push('/zero-to-hero/settings/create-success')
+        } catch (e) {
+            console.log(e)
+            setCreateProcessing(false)
+        }
+    }
+
+    const requiredSettingsValidation = () => {
+        const product = addedProducts[0]
+        if ([
+            ...product.campaigns.main_keywords
+                .filter(item => item.hasMeaningfulWords !== false)
+                .reverse()
+                .filter(item => {
+                    const clearKeyword = cleanMainKeyword(item.value)
+                    return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                })
+                .reverse()
+                .map(item => item.value)
+        ].length < 3) {
+            // notification.error({title: 'Please enter at least 3 main keywords'})
+            // setField('mainKeywords')
+            return true
+        } else if (product.portfolio.type === 'CreateNew' && (!product.portfolio.name || product.portfolio.name === '')) {
+            // notification.error({title: 'Please enter the portfolio name'})
+            // setField('portfolioName')
+            return true
+        } else if (product.portfolio.type === 'UseExisting' && (!product.portfolio.id)) {
+            // notification.error({title: 'Please select the existing portfolio'})
+            // setField('portfolioId')
+            return true
+        } else if (!product.campaigns.daily_budget) {
+            // notification.error({title: 'Please enter your daily budged'})
+            // setField('dailyBudget')
+            return true
+        } else if (!product.campaigns.default_bid) {
+            // notification.error({title: 'Please enter your default bid'})
+            // setField('defaultBid')
+            return true
+        } else if (!product.brand.name) {
+            // notification.error({title: 'Please enter your Brand Name'})
+            // setField('brandName')
+            return true
+        } else {
+            return false
         }
     }
 
@@ -99,8 +192,10 @@ const CreatingCampaign = () => {
             <SelectProduct
                 visible={currentStep === 0}
                 addedProducts={addedProducts}
+                openedSteps={openedSteps}
 
                 onAddProducts={addProductHandler}
+                onChangeOpenedSteps={setOpenedSteps}
             />
 
             {currentStep === 1 && <RequiredSettings
@@ -126,8 +221,15 @@ const CreatingCampaign = () => {
             <StepActions
                 currentStep={currentStep}
                 product={addedProducts[activeProductIndex]}
+                createProcessing={createProcessing}
+                disabled={currentStep === 1 ? requiredSettingsValidation() : false}
 
                 onChangeStep={setStepHandler}
+            />
+
+            <Prompt
+                when={openedSteps >= 0 && !localStorage.getItem('dontShowConfirmLeaveZthPage')}
+                message={'zth-settings'}
             />
         </div>
     )

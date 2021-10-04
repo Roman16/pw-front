@@ -80,7 +80,7 @@ const jobStatus = ({job}) => {
                     Draft
                 </div>
             )
-        } else if (job.status === 'PROCESSING') {
+        } else if (job.status === 'CREATION_IN_PROGRESS' || job.status === 'PAYMENT_IN_PROGRESS' || job.status === 'UPLOAD_IN_PROGRESS') {
             return (
                 <div className="status-field processing">
                     Processing...
@@ -90,13 +90,13 @@ const jobStatus = ({job}) => {
                     />
                 </div>
             )
-        } else if (job.status === 'PENDING') {
+        } else if (job.status === 'CREATION_PENDING' || job.status === 'PAYMENT_PENDING' || job.status === 'UPLOAD_PENDING') {
             return (
                 <div className="status-field processing">
                     Pending...
                 </div>
             )
-        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
+        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED' || job.status === 'CREATION_FAILED') {
             return (
                 <div className="status-field processing">
                     Processing...
@@ -117,41 +117,41 @@ const jobStatus = ({job}) => {
 }
 
 const jobActions = ({job, batch}) => {
-    // if (job) {
-    //     if (batch.status === 'DRAFT') {
-    //         return (
-    //             <div className="issues-field">
-    //                 <button className={'btn default'}
-    //                         onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-    //                     Fix Payment
-    //                 </button>
-    //             </div>
-    //         )
-    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-    //         return (
-    //             <div className="issues-field">
-    //                 <button className={'btn default'}>
-    //                     Help Center
-    //                 </button>
-    //             </div>
-    //         )
-    //     } else {
-    //         return (
-    //             <div className="issues-field">
-    //                 {job.issue}
-    //             </div>
-    //         )
-    //     }
-    // }
-
-    return (
-        <div className="issues-field">
-            <button className={'btn default'}
-                    onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-                Pay & Upload
-            </button>
-        </div>
-    )
+    if (job) {
+        if (job.status === 'DRAFT') {
+            return (
+                <div className="issues-field">
+                    {/*<button className={'btn default'}*/}
+                    {/*        onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>*/}
+                    {/*    Fix Payment*/}
+                    {/*</button>*/}
+                </div>
+            )
+        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED' || job.status === 'UPLOAD_FAILED') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn white'}>
+                        Help Center
+                    </button>
+                </div>
+            )
+        } else if (job.status === 'PAYMENT_PENDING') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn blue'}
+                            onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                        Pay & Upload
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div className="issues-field">
+                    {job.issue}
+                </div>
+            )
+        }
+    }
 
 }
 
@@ -337,8 +337,8 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 key: 'zth_status',
                 render: (status, product) => (
                     <div className="zth-status-field">
-                        <button className='btn green-btn' onClick={() => createZthHandler(product)}>
-                            Create
+                        <button className='sds-btn blue' onClick={() => createZthHandler(product)}>
+                            Create ZTH
                         </button>
                     </div>
                 )

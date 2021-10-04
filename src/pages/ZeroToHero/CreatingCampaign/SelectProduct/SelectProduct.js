@@ -5,17 +5,21 @@ import Pagination from "../../../../components/Pagination/Pagination"
 import ProductItem from "./ProductItem"
 import {zthServices} from "../../../../services/zth.services"
 import './SelectProduct.less'
-import moment from "moment"
 import {debounce} from "throttle-debounce"
+import ConfirmChangeProductWindow from "./ConfirmChangeProductWindow"
 
 const {Search} = Input
 
+let pr = {},
+    prStatus = ''
 
-const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
+const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onChangeOpenedSteps}) => {
     const [products, setProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
         [openedProduct, setOpenedProduct] = useState(null),
+        [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
+        [fetchVariationsProcessing, setFetchVariationsProcessing] = useState(false),
         [requestParams, setRequestParams] = useState({
             searchStr: '',
             page: 1,
@@ -49,26 +53,48 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
         })
     })
 
-    const openVariationsListHandler = (id) => setOpenedProduct(prevState => prevState === id ? null : id)
+    const getVariationsEligibilityStatus = async (parentId) => {
+        setFetchVariationsProcessing(true)
 
-    const selectVariationHandler = (product, variationStatus, parentStatus) => {
-        if (variationStatus) {
-            // onAddProducts(addedProducts.filter(item => item.id !== product.id))
-            onAddProducts([])
-        } else {
-            // onAddProducts([...addedProducts.filter(item => item.parent_id !== product.id), product])
-            onAddProducts([product])
+        try {
+            const res = await zthServices.getVariationsEligibilityStatus(parentId)
+
+            setProducts([...products.map(product => {
+                if (product.id === parentId) product.variations = [...res.result]
+
+                return product
+            })])
+
+            setFetchVariationsProcessing(false)
+        } catch (e) {
+            console.log(e)
+            setFetchVariationsProcessing(false)
         }
     }
 
+    const openVariationsListHandler = (id) => {
+        getVariationsEligibilityStatus(id)
+        setOpenedProduct(prevState => prevState === id ? null : id)
+    }
 
-    const selectProductHandler = (product, status) => {
-        if (status) {
-            // onAddProducts(addedProducts.filter(item => item.id !== product.id))
-            onAddProducts([])
+    const selectProductHandler = (product, status, force = false) => {
+        const dontShowAgain = localStorage.getItem('dontShowConfirmChaneZTHProduct')
+        onChangeOpenedSteps(-1)
+
+        if (openedSteps >= 0 && !force && !dontShowAgain) {
+            setVisibleConfirmWindow(true)
+            pr = {...product}
+            prStatus = status
         } else {
-            // onAddProducts([...addedProducts.filter(item => item.parent_id !== product.id), product])
-            onAddProducts([product])
+            setVisibleConfirmWindow(false)
+
+            if (status) {
+                // onAddProducts(addedProducts.filter(item => item.id !== product.id))
+                onAddProducts([])
+            } else {
+                // onAddProducts([...addedProducts.filter(item => item.parent_id !== product.id), product])
+                onAddProducts([product])
+            }
         }
     }
 
@@ -76,6 +102,7 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
         getProductsList()
 
         onAddProducts([])
+        setOpenedProduct(null)
     }, [requestParams])
 
     return (<section className={`step select-product ${visible ? 'visible' : ''}`}>
@@ -113,12 +140,13 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
                                 product={product}
                                 isOpened={product.id === openedProduct}
                                 isSelected={!!addedProducts.find(item => item.id === product.id)}
-                                isDisabled={product.eligibility_status === 'INELIGIBLE'}
+                                isDisabled={product.eligibility_status === 'INELIGIBLE' || product.eligibility_status == null}
                                 selectedProducts={addedProducts}
                                 type={'all_products'}
+                                fetchVariationsProcessing={fetchVariationsProcessing}
 
                                 onSelect={selectProductHandler}
-                                onSelectVariation={selectVariationHandler}
+                                onSelectVariation={selectProductHandler}
                                 onOpenVariations={openVariationsListHandler}
                             />
                         )}
@@ -137,6 +165,13 @@ const SelectProduct = ({visible, addedProducts, onAddProducts}) => {
                 </div>
             </div>
         </div>
+
+        <ConfirmChangeProductWindow
+            visibleWindow={visibleConfirmWindow}
+
+            onClose={() => setVisibleConfirmWindow(false)}
+            onChange={() => selectProductHandler(pr, prStatus, true)}
+        />
     </section>)
 }
 

@@ -67,8 +67,8 @@ const Settings = (props) => {
                 cancelToken: source.token
             })
 
-            setList(res.result || [])
-            setTotalSize(res.totalSize)
+            setList(res.result.products || [])
+            setTotalSize(res.result.totalSize)
 
             setProcessing(false)
 
@@ -158,9 +158,9 @@ const Settings = (props) => {
             />
 
             <PaymentSuccessWindow
-                visible={visibleSuccessCreateWindow}
+                visible={visibleSuccessPaymentWindow}
 
-                onClose={() => setVisibleSuccessCreateWindow(false)}
+                onClose={() => setVisibleSuccessPaymentWindow(false)}
             />
         </div>
     )

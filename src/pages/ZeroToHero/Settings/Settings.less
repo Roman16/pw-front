@@ -6,6 +6,10 @@
   display: flex;
   flex-direction: column;
 
+  * {
+    font-family: Montserrat;
+  }
+
   h2 {
     font-size: 2.2857142857142856rem;
     color: #343C5A;
@@ -55,12 +59,13 @@
       box-sizing: border-box;
       padding: 0 20px;
       text-decoration: none;
-      font-size: 1.1428571428571428rem;
-      color: #343C5A;
-      font-weight: 500;
       text-transform: uppercase;
       text-align: center;
       cursor: pointer;
+
+      font-weight: 600;
+      font-size: 1.1428571428571428rem;
+      color: #5B586F;
 
       &:first-child {
         margin: 0 0 0 auto;
@@ -83,10 +88,10 @@
 
 
       &.active {
-        color: #6D6DF6;
+        color: #6959AB;
 
         .border {
-          background: #6D6DF6;
+          background: #6959AB;
         }
       }
     }
@@ -146,6 +151,10 @@
           padding-left: 1.4285714285714286rem;
           padding-right: 1.4285714285714286rem;
           border-right: 1px solid #C9CBD4;
+
+          .title {
+            font-weight: 600;
+          }
 
           &:first-child {
             padding-left: 1.4285714285714286rem;
@@ -234,14 +243,16 @@
 
         .sku-asin {
           font-size: 1rem;
+          color: #5B586F;
 
           b {
             margin: 0 5px 0 0;
           }
 
           a {
-            color: #6D6DF6;
-            font-weight: bold;
+            font-weight: 600;
+            color: #5B586F;
+            text-decoration: underline;
 
             &:hover {
               text-decoration: underline;
@@ -278,8 +289,7 @@
             .name {
               font-weight: 600;
               font-size: 1rem;
-              letter-spacing: 0.2px;
-              color: #6D6DF6;
+              color: #5B586F;
               margin-bottom: 5px;
 
               overflow: hidden;
@@ -300,28 +310,17 @@
             }
 
             .price {
+              font-weight: 500;
               font-size: 0.8571428571428571rem;
-              letter-spacing: 0.2px;
-              color: #343C5A;
+              color: #5B586F;
               margin: 0 12px 0 0;
             }
 
             .stock {
-              font-size: 0.8571428571428571rem;
               letter-spacing: 0.2px;
-              text-shadow: 0px 6px 40px rgba(44, 48, 58, 0.03);
-
-              .in {
-                color: #7DD4A1;
-              }
-
-              .some {
-                color: #F0B849;
-              }
-
-              .out {
-                color: #EC7F5C;
-              }
+              font-weight: 600;
+              font-size: 0.8571428571428571rem;
+              color: #5B586F;
             }
           }
 

@@ -10,7 +10,9 @@ export const zthServices = {
     deleteIncompleteBatch,
     payBatch,
     checkBatchById,
-    getUserPortfolio
+    getUserPortfolio,
+    getKeysCount,
+    getVariationsEligibilityStatus
 };
 
 function getAllProducts({pageSize, page, searchStr = '', cancelToken, sorting}) {
@@ -24,6 +26,10 @@ function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
 
 function saveSettings(data) {
     return api('post', `${zthUrls.setupSettings}`, data, false)
+}
+
+function getKeysCount(keys) {
+    return api('get', `${zthUrls.keysCount}?keywords[]=${keys}`)
 }
 
 function createFreeBatch(id, data) {
@@ -48,5 +54,8 @@ function payBatch(id, token) {
 
 function getUserPortfolio() {
     return api('get', `${zthUrls.portfolioList}`, null, false)
+}
+function getVariationsEligibilityStatus(id) {
+    return api('get', `${zthUrls.variationsEligibilityStatus}?product_id=${id}`)
 }
 

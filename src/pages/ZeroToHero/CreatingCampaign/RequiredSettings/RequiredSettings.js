@@ -1,12 +1,13 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import MultiTextArea from "../../components/MultiTextArea/MultiTextArea"
-import {Checkbox, Input, Radio, Select} from "antd"
+import {Checkbox, Input, Radio, Select, Spin} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import CustomSelect from "../../../../components/Select/Select"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import moment from "moment"
 import './RequiredSettings.less'
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {zthServices} from "../../../../services/zth.services"
 
 const Option = Select.Option
 
@@ -24,6 +25,9 @@ const RequiredSettings = ({
                               }
                           }) => {
 
+    const [keysCountProcessing, setKeysCountProcessing] = useState(false),
+        [keysCount, setKeysCount] = useState(0)
+
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
             ...value
@@ -34,7 +38,8 @@ const RequiredSettings = ({
         onUpdate({
             portfolio: {
                 ...portfolio,
-                ...value
+                ...value,
+                ...value.id ? {selectName: portfolioList.find(i => i.id === value.id).name} : {}
             }
         }, isInvalid)
     }
@@ -57,6 +62,19 @@ const RequiredSettings = ({
         }, isInvalid)
     }
 
+    const getKeysCount = async () => {
+        setKeysCountProcessing(true)
+
+        try {
+            const res = await zthServices.getKeysCount(campaigns.main_keywords.map(i => i.value).join(','))
+
+            console.log(res)
+        } catch (e) {
+
+        }
+
+        setKeysCountProcessing(false)
+    }
 
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
@@ -72,6 +90,11 @@ const RequiredSettings = ({
             // document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"});
         }
     }, [invalidField])
+
+    useEffect(() => {
+        if (campaigns.main_keywords.length > 0) getKeysCount()
+        else setKeysCount(0)
+    }, [campaigns.main_keywords])
 
     return (
         <section className={`step required-setting`}>
@@ -101,12 +124,13 @@ const RequiredSettings = ({
                                     unique={true}
                                 />
 
-                                <p><b>Estimated keywords count for campaigns: 0
-                                    {/*<InformationTooltip*/}
-                                    {/*    type={'custom'}*/}
-                                    {/*    description={'This is an estimated amount of keywords we will be able to gather based on provided Seed Keywords. Contributions by each keyword:'}>*/}
-                                    {/*    <span>100 - 700</span>*/}
-                                    {/*</InformationTooltip>*/}
+                                <p><b>Estimated keywords count for campaigns:
+                                    {keysCountProcessing ? <Spin size={'small'}/> : keysCount === 0 ? ' 0' :
+                                        <InformationTooltip
+                                            type={'custom'}
+                                            description={'This is an estimated amount of keywords we will be able to gather based on provided Seed Keywords. Contributions by each keyword:'}>
+                                            <span>{keysCount}</span>
+                                        </InformationTooltip>}
                                 </b></p>
                             </div>
 
@@ -356,7 +380,7 @@ const RequiredSettings = ({
                         </div>
                     </div>
 
-                    <div className="block zth-settings">
+                    <div className="block required-zth-settings">
                         <div className="title">
                             <h3>ZTH Settings</h3>
                         </div>
