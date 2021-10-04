@@ -116,7 +116,7 @@ const jobStatus = ({job}) => {
     }
 }
 
-const jobActions = ({job, batch}) => {
+const jobActions = ({job}) => {
     if (job) {
         if (job.status === 'DRAFT') {
             return (
@@ -135,11 +135,11 @@ const jobActions = ({job, batch}) => {
                     </button>
                 </div>
             )
-        } else if (job.status === 'PAYMENT_PENDING') {
+        } else if (job.status === 'PAYMENT_PENDING' || job.status === 'PAYMENT_IN_PROGRESS') {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
-                            onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
                         Pay & Upload
                     </button>
                 </div>

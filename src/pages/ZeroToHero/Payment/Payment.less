@@ -4,6 +4,10 @@
   display: flex !important;
   flex-direction: column;
 
+  * {
+    font-family: Montserrat;
+  }
+
   .bulk-information {
     width: 100%;
     display: flex;
@@ -45,13 +49,14 @@
             line-height: 1.5714285714285714rem;
             color: #343C5A;
             margin-bottom: 12px;
+            font-weight: 600;
           }
 
           .price {
             font-weight: bold;
             font-size: 1.2857142857142858rem;
             line-height: 1.5714285714285714rem;
-            color: #6D6DF6;
+            color: #5B586F;
             margin-bottom: 12px;
           }
 
@@ -111,6 +116,7 @@
               line-height: 1.5714285714285714rem;
               color: #343C5A;
               margin: 0;
+              font-weight: 600;
             }
           }
         }
@@ -161,7 +167,7 @@
             font-size: 5.714285714285714rem;
             line-height: 6.428571428571429rem;
 
-            color: #6D6DF6;
+            color: #6959AB;
             margin-bottom: 12px;
           }
         }
@@ -186,9 +192,11 @@
     flex: 1;
 
     h2 {
-      font-size: 1.4285714285714286rem;
-      color: #343C5A;
-      margin-bottom: 2.5rem;
+      font-size: 1.7142857142857142rem;
+      line-height: 2.0714285714285716rem;
+      font-weight: 600;
+      color: #312C51;
+      margin-bottom: 20px;
     }
 
     .col {
@@ -322,7 +330,7 @@
 
         svg {
           margin: 0 5px 0 0;
-          fill: #6D6DF6;
+          fill: #6959AB;
         }
 
         p {
@@ -519,51 +527,80 @@
   .summary {
     min-width: 320px;
     width: 37%;
-    background: #6D6DF6;
-    border-radius: 0px 4px 4px 0px;
-    padding: 34px 20px;
     display: flex;
     flex-direction: column;
+    border-left: 2px solid #C9CBD4;
+    padding: 2.142857142857143rem 2.142857142857143rem 2.857142857142857rem;
 
     h2 {
-      font-size: 1.4285714285714286rem;
-      line-height: 24px;
-      color: #FFFFFF;
-      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 1.7142857142857142rem;
+      line-height: 2.0714285714285716rem;
+      color: #312C51;
+      margin-bottom: 20px;
     }
 
     .row {
       display: flex;
       justify-content: space-between;
       margin-bottom: 20px;
-      color: #fff;
+      border: 1px solid #C9CBD4;
+      border-radius: 4px;
+
+      h4 {
+        min-height: 2.857142857142857rem;
+        font-weight: 600;
+        font-size: 1.1428571428571428rem;
+        line-height: 1.4285714285714286rem;
+        color: #312C51;
+        border-bottom: 2px solid #C9CBD4;
+        padding: 10px 12px;
+        display: flex;
+        justify-content: flex-end;
+      }
 
       .col {
-        p, h4 {
-          height: 1.3571428571428572rem;
+        flex: 1;
+        border-left: 0.5px solid #C9CBD4;
+
+        p {
+          min-height: 2.857142857142857rem;
+          border-bottom: 0.5px solid #C9CBD4;
+          font-weight: 500;
           font-size: 1.1428571428571428rem;
-          line-height: 1.3571428571428572rem;
-          color: #FFFFFF;
-          margin-bottom: 12px;
-          text-align: right;
+          line-height: 1.4285714285714286rem;
+          color: #5B586F;
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 8px 12px;
+
+          &:last-child {
+            border: 0;
+          }
         }
 
         &:first-child {
+          border: 0;
+
           p, h4 {
-            text-align: left;
+            justify-content: flex-start;
+
+            span {
+              width: 25px;
+            }
           }
         }
       }
     }
 
     .coupon-block {
-      color: #FFFFFF;
       padding: 2.142857142857143rem 0 0 0;
       border-top: 1px solid #FFFFFF;
       margin-top: 1.4285714285714286rem;
 
       h3 {
-        color: #FFFFFF;
         font-size: 1.1428571428571428rem;
         margin-bottom: 15px;
       }
@@ -585,8 +622,6 @@
 
         input {
           background: inherit;
-          color: #fff;
-          border: 1px solid #fff;
           height: 2.2857142857142856rem;
 
           &:focus {
@@ -617,10 +652,42 @@
     .total-price {
       display: flex;
       justify-content: space-between;
-      font-weight: 500;
+      margin-bottom: 10px;
+      font-weight: 600;
       font-size: 1.7142857142857142rem;
-      color: #FFFFFF;
-      margin-top: 20px;
+      line-height: 2.0714285714285716rem;
+
+      .label {
+        color: #312C51;
+      }
+
+      .value {
+        color: #6959AB;
+      }
+    }
+
+    .discount, .save {
+      font-weight: 500;
+      font-size: 1.1428571428571428rem;
+      line-height: 1.4285714285714286rem;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .label {
+        color: #5B586F;
+      }
+
+      .value {
+        color: #5B586F;
+      }
+    }
+
+    .save {
+      .value {
+        color: #7FD3A1;
+      }
     }
 
     .save-info {
@@ -631,13 +698,12 @@
       }
     }
 
-    .btn {
-      margin: 2.5rem auto 0 auto;
+    .sds-btn {
+      margin: 20px auto 0 auto;
       padding: 0 5rem;
       height: 3.4285714285714284rem;
-      color: #6D6DF6;
       font-size: 1.1428571428571428rem;
-      font-weight: 500;
+      font-weight: 600;
       position: relative;
 
       .ant-spin {

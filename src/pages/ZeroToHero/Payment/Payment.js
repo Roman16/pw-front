@@ -64,59 +64,63 @@ const Payment = (props) => {
     }
 
     const handleSubmit = async (event) => {
-        // event.preventDefault()
-        // setPayProcessing(true)
-        //
-        // let res
-        //
-        // try {
-        //     if (selectedPaymentMethod === 'new_card') {
-        //         if (userName) {
-        //             const billing_details = {}
-        //             billing_details.name = userName
-        //             res = await props.stripe.createPaymentMethod('card', {billing_details})
-        //         } else {
-        //             res = await props.stripe.createPaymentMethod('card')
-        //         }
-        //
-        //         if (res.error) {
-        //             notification.error({title: res.error.message})
-        //         } else if (res.paymentMethod) {
-        //             await zthServices.payBatch(props.batchId, res.paymentMethod.id)
-        //             history.push('/zero-to-hero/success')
-        //         }
-        //     } else {
-        //         await zthServices.payBatch(props.batchId, cardsList[selectedCard].id)
-        //         history.push('/zero-to-hero/success')
-        //     }
-        // } catch ({response: {data}}) {
-        //     if (data.error_code === 'authentication_required') {
-        //         props.stripe.confirmCardPayment(
-        //             data.result.payment_intent_client_secret,
-        //             {
-        //                 payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
-        //             })
-        //             .then((res) => {
-        //                 if (res.error) {
-        //                     notification.error({title: res.error.message})
-        //                 } else {
-        //                     handleSubmit(event)
-        //                 }
-        //
-        //                 setPayProcessing(false)
-        //             })
-        //             .catch(e => {
-        //                 notification.error({title: e.error.message})
-        //                 console.log(e)
-        //
-        //                 setPayProcessing(false)
-        //             })
-        //     }
-        // }
-        //
-        // setPayProcessing(false)
+        event.preventDefault()
+        setPayProcessing(true)
 
-        history.push('/zero-to-hero/settings/payment-success')
+        let res
+
+        try {
+            if (selectedPaymentMethod === 'new_card') {
+                if (userName) {
+                    const billing_details = {}
+                    billing_details.name = userName
+                    res = await props.stripe.createPaymentMethod('card', {billing_details})
+                } else {
+                    res = await props.stripe.createPaymentMethod('card')
+                }
+
+                if (res.error) {
+                    notification.error({title: res.error.message})
+                } else if (res.paymentMethod) {
+                    await zthServices.payBatch({
+                        jobs_ids: [props.batchId],
+                        payment_token: res.paymentMethod.id
+                    })
+                    history.push('/zero-to-hero/settings/payment-success')
+                }
+            } else {
+                await zthServices.payBatch({
+                    jobs_ids: [props.batchId],
+                    payment_token: cardsList[selectedCard].id
+                })
+                history.push('/zero-to-hero/settings/payment-success')
+            }
+        } catch ({response: {data}}) {
+            if (data.error_code === 'authentication_required') {
+                props.stripe.confirmCardPayment(
+                    data.result.payment_intent_client_secret,
+                    {
+                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
+                    })
+                    .then((res) => {
+                        if (res.error) {
+                            notification.error({title: res.error.message})
+                        } else {
+                            handleSubmit(event)
+                        }
+
+                        setPayProcessing(false)
+                    })
+                    .catch(e => {
+                        notification.error({title: e.error.message})
+                        console.log(e)
+
+                        setPayProcessing(false)
+                    })
+            }
+        }
+
+        setPayProcessing(false)
     }
 
     const swipeCardHandler = (index) => {
@@ -183,13 +187,13 @@ const Payment = (props) => {
                 </div>
 
                 <div className="summary">
-                    <h2>Invoice</h2>
+                    <h2>Summary</h2>
                     <div className="row">
                         <div className="col">
-                            <h4>Description</h4>
-                            <p>Fee</p>
-                            <p>Keywords</p>
-                            <p>ASINs</p>
+                            <h4><span>#</span>Description</h4>
+                            <p><span>1</span>Fee</p>
+                            <p><span>2</span>Keywords</p>
+                            <p><span>3</span>ASINs</p>
                         </div>
                         <div className="col">
                             <h4>Amount</h4>
@@ -211,16 +215,23 @@ const Payment = (props) => {
                         </div>
                     </div>
 
-                    <div className="hr"/>
-
                     <div className="total-price">
-                        <label htmlFor="">TOTAL PRICE:</label>
+                        <div className={'label'}>TOTAL PRICE:</div>
                         {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
                         <div className="value">$1500</div>
                     </div>
 
+                    <div className="discount">
+                        <div className="label">Discount:</div>
+                        <div className="value">$500</div>
+                    </div>
+                    <div className="save">
+                        <div className="label">You save:</div>
+                        <div className="value">$500</div>
+                    </div>
+
                     <button
-                        className={'btn white'}
+                        className={'sds-btn default'}
                         disabled={payProcessing}
                     >
                         Pay

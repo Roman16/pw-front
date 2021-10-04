@@ -132,10 +132,10 @@ export const zthUrls = {
     zthProductsList: 'v2/zero-to-hero/products-jobs',
     keysCount: `v2/zero-to-hero/get-estimated-keywords-count`,
     variationsEligibilityStatus: 'v2/zero-to-hero/variations-eligibility',
+    payBatch: `v2/zero-to-hero/products-jobs/pay`,
 
     incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
-    payBatch: (batchId) => `zero-to-hero/batch/${batchId}/make-payment`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
 }

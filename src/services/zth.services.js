@@ -48,8 +48,8 @@ function deleteIncompleteBatch(id) {
     return api('post', `${zthUrls.deleteIncompleteBatch(id)}`, null, false)
 }
 
-function payBatch(id, token) {
-    return api('post', `${zthUrls.payBatch(id)}?batch_id=${id}&payment_token=${token}`, null, false)
+function payBatch(data) {
+    return api('post', `${zthUrls.payBatch}`, data, false)
 }
 
 function getUserPortfolio() {
