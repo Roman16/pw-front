@@ -127,6 +127,16 @@ const Payment = (props) => {
         setSelectedCard(index)
     }
 
+    const fetchBatchInformation = async () => {
+        try {
+            const res = await zthServices.fetchBatchInformation(props.batchId)
+            console.log(res)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         userService.fetchBillingInformation()
             .then(res => {
@@ -135,10 +145,7 @@ const Payment = (props) => {
                 }))
             })
 
-        zthServices.checkBatchById(props.batchId)
-            .then(res => {
-                setCurrentButch(res.result)
-            })
+        fetchBatchInformation()
     }, [])
 
     return (

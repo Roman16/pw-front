@@ -97,7 +97,13 @@ const ProductItem = ({
                 <div className="eligibility-status">
                     Ineligible
                     <InformationTooltip
-                        description={'This product in not eligible for advertising on Amazon Marketplace, thus we cannot create ZTH campaigns for it. Ineligibility reasons:'}
+                        overlayClassName={'ineligible-description'}
+                        description={<div>This product in not eligible for advertising on Amazon Marketplace, thus we
+                            cannot create ZTH campaigns for it. Ineligibility reasons:
+                            <ul>
+                                {product.eligibility_status_reasons.map(i => <li>{i.message}</li>)}
+                            </ul>
+                        </div>}
                     />
                 </div>}
             </div>

@@ -8,6 +8,10 @@ import moment from "moment"
 import './RequiredSettings.less'
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {zthServices} from "../../../../services/zth.services"
+import {
+    disabledEndDate,
+    disabledStartDate
+} from "../../../Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 
 const Option = Select.Option
 
@@ -79,9 +83,6 @@ const RequiredSettings = ({
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
             [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
-            ...type === 'start' && moment(campaigns.end_date) < moment(date) && {
-                end_date: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
-            }
         })
     }
 
@@ -242,7 +243,7 @@ const RequiredSettings = ({
                                             value={moment(campaigns.start_date)}
                                             onChange={(date) => changeDateHandler('start', date)}
                                             allowClear={false}
-                                            disabledDate={current => moment().tz('America/Los_Angeles').add(-1, 'days') >= current && moment()}
+                                            disabledDate={(data) => disabledStartDate(moment(data).endOf('day').add(1, 'd'), campaigns.end_date && moment(campaigns.end_date).endOf('day').add(1, 'd'))}
                                         />
                                     </div>
 
@@ -251,9 +252,9 @@ const RequiredSettings = ({
                                         <DatePicker
                                             showToday={false}
                                             format="MMM DD, YYYY"
-                                            value={campaigns.end_date && moment(campaigns.end_date)}
+                                            value={campaigns.end_date ? moment(campaigns.end_date) : undefined}
                                             onChange={(date) => changeDateHandler('end', date)}
-                                            disabledDate={current => moment(campaigns.start_date).tz('America/Los_Angeles') > current && moment()}
+                                            disabledDate={data => disabledEndDate(moment(data).endOf('day').add(1, 'd'), campaigns.start_date)}
                                         />
                                     </div>
                                 </div>

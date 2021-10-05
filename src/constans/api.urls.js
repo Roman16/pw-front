@@ -133,6 +133,7 @@ export const zthUrls = {
     keysCount: `v2/zero-to-hero/get-estimated-keywords-count`,
     variationsEligibilityStatus: 'v2/zero-to-hero/variations-eligibility',
     payBatch: `v2/zero-to-hero/products-jobs/pay`,
+    batchInformation: 'v2/zero-to-hero/products-jobs/ready-for-payment',
 
     incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,

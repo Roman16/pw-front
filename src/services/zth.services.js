@@ -12,7 +12,8 @@ export const zthServices = {
     checkBatchById,
     getUserPortfolio,
     getKeysCount,
-    getVariationsEligibilityStatus
+    getVariationsEligibilityStatus,
+    fetchBatchInformation
 };
 
 function getAllProducts({pageSize, page, searchStr = '', cancelToken, sorting}) {
@@ -55,7 +56,12 @@ function payBatch(data) {
 function getUserPortfolio() {
     return api('get', `${zthUrls.portfolioList}`, null, false)
 }
+
 function getVariationsEligibilityStatus(id) {
     return api('get', `${zthUrls.variationsEligibilityStatus}?product_id=${id}`)
+}
+
+function fetchBatchInformation(id) {
+    return api('get', `${zthUrls.batchInformation}?size=10&page=1`)
 }
 

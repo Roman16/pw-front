@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {Checkbox} from "antd"
 
@@ -12,6 +12,10 @@ const ConfirmChangeProductWindow = ({visibleWindow, onClose, onChange}) => {
 
         setDontShowAgain(false)
     }
+
+    useEffect(() => {
+        if (!visibleWindow) setDontShowAgain(false)
+    }, [visibleWindow])
 
     return (<ModalWindow
         className={'confirm-change-product-window'}

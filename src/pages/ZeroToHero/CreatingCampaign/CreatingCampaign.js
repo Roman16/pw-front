@@ -41,7 +41,7 @@ const initialProductSettings = {
 const CreatingCampaign = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [portfolioList, setPortfolioList] = useState([]),
-        [addedProducts, setAddedProducts] = useState([]),
+        [addedProducts, setAddedProducts] = useState([{...initialProductSettings}]),
         [openedSteps, setOpenedSteps] = useState(-1),
         [activeProductIndex, setActiveProductIndex] = useState(0),
         [invalidField, setInvalidField] = useState(),
@@ -74,7 +74,7 @@ const CreatingCampaign = () => {
         }
     }
 
-    const addProductHandler = (products) => setAddedProducts([...products.map(i => ({...i, ...initialProductSettings}))])
+    const addProductHandler = (product) => setAddedProducts([{...addedProducts[0], ...product}])
 
     const fetchPortfolios = async () => {
         try {
