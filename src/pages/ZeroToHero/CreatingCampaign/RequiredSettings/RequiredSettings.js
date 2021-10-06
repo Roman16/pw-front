@@ -12,8 +12,15 @@ import {
     disabledEndDate,
     disabledStartDate
 } from "../../../Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
+import axios from "axios"
 
 const Option = Select.Option
+
+const CancelToken = axios.CancelToken
+let source = null
+
+let prevCheckKeywords = []
+
 
 const RequiredSettings = ({
                               onUpdate,
@@ -30,7 +37,7 @@ const RequiredSettings = ({
                           }) => {
 
     const [keysCountProcessing, setKeysCountProcessing] = useState(false),
-        [keysCount, setKeysCount] = useState(0)
+        [keywordEstimations, setKeywordEstimations] = useState(0)
 
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
@@ -68,16 +75,24 @@ const RequiredSettings = ({
 
     const getKeysCount = async () => {
         setKeysCountProcessing(true)
-
         try {
-            const res = await zthServices.getKeysCount(campaigns.main_keywords.map(i => i.value).join(','))
+            const arr = [...campaigns.main_keywords.filter(i => !i.isDuplicate).map(i => i.value)]
 
-            console.log(res)
+            if (JSON.stringify(prevCheckKeywords) !== JSON.stringify(arr)) {
+                source && source.cancel()
+                source = CancelToken.source()
+
+                const {result} = await zthServices.getKeysCount(arr, source.token)
+
+                prevCheckKeywords = [...arr]
+
+                setKeywordEstimations(result.keywordEstimations)
+
+                setKeysCountProcessing(false)
+            }
         } catch (e) {
 
         }
-
-        setKeysCountProcessing(false)
     }
 
     const changeDateHandler = (type, date) => {
@@ -87,14 +102,8 @@ const RequiredSettings = ({
     }
 
     useEffect(() => {
-        if (invalidField) {
-            // document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"});
-        }
-    }, [invalidField])
-
-    useEffect(() => {
         if (campaigns.main_keywords.length > 0) getKeysCount()
-        else setKeysCount(0)
+        else setKeywordEstimations(0)
     }, [campaigns.main_keywords])
 
     return (
@@ -105,16 +114,7 @@ const RequiredSettings = ({
                         <div className="row">
                             <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
                                 <h3>Seed Keywords</h3>
-                                <p><b>Please add a minimum of 3 Seed Keywords that customers use to find your
-                                    Product</b>
-                                </p>
-
-                                {/*<a*/}
-                                {/*    href="https://learn.profitwhales.com/en/articles/4201379-seed-keywords-best-practices"*/}
-                                {/*    target={'_blank'}*/}
-                                {/*>*/}
-                                {/*    Here is the guide on how to do it*/}
-                                {/*</a>*/}
+                                <p>Please add a minimum of 3 Seed Keywords that customers use to find your Product</p>
 
                                 <MultiTextArea
                                     value={campaigns.main_keywords}
@@ -125,14 +125,32 @@ const RequiredSettings = ({
                                     unique={true}
                                 />
 
-                                <p><b>Estimated keywords count for campaigns:
-                                    {keysCountProcessing ? <Spin size={'small'}/> : keysCount === 0 ? ' 0' :
+                                <p>Estimated keywords count for campaigns:
+                                    {keysCountProcessing ? <Spin size={'small'}/> : keywordEstimations === 0 ?
                                         <InformationTooltip
                                             type={'custom'}
-                                            description={'This is an estimated amount of keywords we will be able to gather based on provided Seed Keywords. Contributions by each keyword:'}>
-                                            <span>{keysCount}</span>
+                                            description={'Add Seed Keywords to get an estimated amount of keywords that your campaigns will have.'}>
+                                            <span>0</span>
+                                        </InformationTooltip>
+                                        :
+                                        <InformationTooltip
+                                            type={'custom'}
+                                            overlayClassName={'estimate-description'}
+                                            description={<div className={''}>
+                                                This is an estimated amount of keywords we will be able to gather based
+                                                on provided Seed Keywords. Contributions by each keyword:
+
+                                                <ul>
+                                                    {keywordEstimations.map(i => (
+                                                        <li><span>{i.keywordText}</span>: {i.lowResultsCountRounded} - {i.highResultsCountRounded}</li>))}
+                                                </ul>
+
+                                                Note that amount of keywords for product will be capped at 5000 to
+                                                prevent overextension on campaigns with low-performing keywords.
+                                            </div>}>
+                                            <span>{keywordEstimations.reduce((sum, currentValue) => sum + currentValue.lowResultsCountRounded, 0) > 2500 ? '2500' : keywordEstimations.reduce((sum, currentValue) => sum + currentValue.lowResultsCountRounded, 0)} - {keywordEstimations.reduce((sum, currentValue) => sum + currentValue.highResultsCountRounded, 0) > 5000 ? '5000' : keywordEstimations.reduce((sum, currentValue) => sum + currentValue.highResultsCountRounded, 0)}</span>
                                         </InformationTooltip>}
-                                </b></p>
+                                </p>
                             </div>
 
                             <div className="col">

@@ -124,17 +124,23 @@
       margin: 10px 0 12px;
     }
 
-    p {
-      font-size: 1rem;
-      margin: 0;
+    .row {
+      .col:first-child {
+        p {
+          font-size: 1rem;
+          font-weight: 600;
+          margin: 0;
 
-      span {
-        color: #6959AB;
-        text-decoration: underline;
-      }
+          span {
+            font-weight: 600;
+            color: #6959AB;
+            text-decoration: underline;
+          }
 
-      .ant-spin {
-        margin: 0 0 0 5px;
+          .ant-spin {
+            margin: 0 0 0 10px;
+          }
+        }
       }
     }
   }
@@ -318,6 +324,26 @@
   .brand-name-setting {
     .form-group {
       width: 75%;
+    }
+  }
+}
+
+
+.ant-popover.estimate-description {
+  .ant-popover-inner-content {
+    max-width: 400px;
+  }
+
+  ul {
+    margin: 10px 0;
+    padding: 0 0 0 17px;
+
+    li {
+      margin: 5px 0 0 0;
+
+      span {
+        font-weight: 600;
+      }
     }
   }
 }

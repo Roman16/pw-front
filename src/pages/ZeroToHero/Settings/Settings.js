@@ -9,6 +9,7 @@ import axios from "axios"
 import CreateSuccessWindow from "./CreateSuccessWindow"
 import {history} from "../../../utils/history"
 import PaymentSuccessWindow from "./PaymentSuccessWindow"
+import {Link} from "react-router-dom"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -84,13 +85,6 @@ const Settings = (props) => {
 
 
     useEffect(() => {
-        zthServices.checkIncompleteBatch()
-            .then(res => {
-                if (res.result) {
-                    setTokens(res.result.available_tokens)
-                }
-            })
-
         if (props.match.params.status) {
             if (props.match.params.status === 'create-success' || props.match.params.status === 'payment-success' ) setVisibleSuccessCreateWindow(true)
         }
@@ -135,11 +129,10 @@ const Settings = (props) => {
                     />
                 </div>
 
-                {tokens > 0 && <div className="credits-count">
-                    ZTH Credits Left:
-
-                    <span>{tokens}</span>
-                </div>}
+                {selectedTab === 'zth-products' && <Link to={'/zero-to-hero/campaign'} className="sds-btn default">
+                    <SVG id={'plus-white'}/>
+                    Create New
+                </Link>}
             </div>
 
             <ProductsList

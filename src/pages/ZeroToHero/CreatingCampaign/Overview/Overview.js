@@ -24,7 +24,7 @@ const Overview = ({product}) => {
                 const key = 'main_keywords'
 
                 return (<div className="keywords">
-                    <p>{product.campaigns[key].length} keywords.
+                    <p>{product.campaigns[key].filter(i => !i.isDuplicate).length} keywords.
                         <div
                             onClick={() => openKeywordsHandler(key)}
                         >
@@ -33,7 +33,7 @@ const Overview = ({product}) => {
                     </p>
 
                     {visibleKeywords.includes(key) && <div className="list">
-                        {product.campaigns[key].map(i => i.value).join(', ')}
+                        {product.campaigns[key].filter(i => !i.isDuplicate).map(i => i.value).join(', ')}
                     </div>}
                 </div>)
             }

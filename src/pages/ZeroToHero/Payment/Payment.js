@@ -36,18 +36,14 @@ const Payment = (props) => {
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
         [userName, setUserName] = useState(''),
         [selectedCard, setSelectedCard] = useState(0),
-        [currentButch, setCurrentButch] = useState({}),
+        [productInformation, setProductInformation] = useState({}),
         [payProcessing, setPayProcessing] = useState(false),
+        [fetchProcessing, setFetchProcessing] = useState(true),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
             cvc: false,
         })
-
-    const {productAmount, selectedProducts} = useSelector(state => ({
-        productAmount: state.zth.productAmount,
-        selectedProducts: state.zth.selectedProducts,
-    }))
 
     const stripeElementChangeHandler = (element, name) => {
         if (!element.empty && element.complete) {
@@ -129,11 +125,15 @@ const Payment = (props) => {
 
     const fetchBatchInformation = async () => {
         try {
-            const res = await zthServices.fetchBatchInformation(props.batchId)
-            console.log(res)
+            setFetchProcessing(true)
 
+            const {result} = await zthServices.fetchBatchInformation(props.batchId)
+            setProductInformation(result.products[0])
+
+            setFetchProcessing(false)
         } catch (e) {
             console.log(e)
+            history.push('/zero-to-hero/settings')
         }
     }
 
@@ -150,102 +150,106 @@ const Payment = (props) => {
 
     return (
         <div className="zero-to-hero-page payment-page">
-            <BulkInformation/>
+            {fetchProcessing ? <div className={'page-loader'}><Spin size={'large'}/></div> : <>
+                <BulkInformation
+                    product={productInformation}
+                />
 
-            <form onSubmit={handleSubmit} className='payment-section'>
-                <div className="payment-method">
-                    <h2>Select payment method</h2>
+                <form onSubmit={handleSubmit} className='payment-section'>
+                    <div className="payment-method">
+                        <h2>Select payment method</h2>
 
-                    <Radio.Group
-                        value={selectedPaymentMethod}
-                        onChange={({target: {value}}) => setPaymentMethod(value)}
-                    >
-                        <div className="col">
-                            <Radio value={'new_card'}>
-                                New payment Method
-                            </Radio>
+                        <Radio.Group
+                            value={selectedPaymentMethod}
+                            onChange={({target: {value}}) => setPaymentMethod(value)}
+                        >
+                            <div className="col">
+                                <Radio value={'new_card'}>
+                                    New payment Method
+                                </Radio>
 
-                            <div className="radio-description">
-                                <NewCard
-                                    disabled={selectedPaymentMethod !== 'new_card'}
-                                    newCard={newCard}
-                                    stripeElementChange={stripeElementChangeHandler}
-                                    onChangeUserName={(value) => setUserName(value)}
-                                />
+                                <div className="radio-description">
+                                    <NewCard
+                                        disabled={selectedPaymentMethod !== 'new_card'}
+                                        newCard={newCard}
+                                        stripeElementChange={stripeElementChangeHandler}
+                                        onChangeUserName={(value) => setUserName(value)}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col">
+                                <Radio value={'select'} disabled={cardsList.length === 0}>
+                                    Use card that attached to PPC Automate Tool
+                                </Radio>
+
+                                <div className="radio-description user-cards">
+                                    <UserCards
+                                        disabled={selectedPaymentMethod !== 'select'}
+                                        selectedCard={selectedCard}
+                                        allCards={cardsList}
+
+                                        onSwipeCard={swipeCardHandler}
+                                    />
+                                </div>
+                            </div>
+                        </Radio.Group>
+                    </div>
+
+                    <div className="summary">
+                        <h2>Summary</h2>
+                        <div className="row">
+                            <div className="col">
+                                <h4><span>#</span>Description</h4>
+                                <p><span>1</span>Fee</p>
+                                <p><span>2</span>Keywords</p>
+                                <p><span>3</span>ASINs</p>
+                            </div>
+                            <div className="col">
+                                <h4>Amount</h4>
+                                <p></p>
+                                <p>1000</p>
+                                <p>300</p>
+                            </div>
+                            <div className="col">
+                                <h4>Unit Price</h4>
+                                <p></p>
+                                <p>$10.00</p>
+                                <p>$3.00</p>
+                            </div>
+                            <div className="col">
+                                <h4>Total</h4>
+                                <p>$39.00</p>
+                                <p>$1000.00</p>
+                                <p>$300.00</p>
                             </div>
                         </div>
 
-                        <div className="col">
-                            <Radio value={'select'} disabled={cardsList.length === 0}>
-                                Use card that attached to PPC Automate Tool
-                            </Radio>
+                        <div className="total-price">
+                            <div className={'label'}>TOTAL PRICE:</div>
+                            {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
+                            <div className="value">$1500</div>
+                        </div>
 
-                            <div className="radio-description user-cards">
-                                <UserCards
-                                    disabled={selectedPaymentMethod !== 'select'}
-                                    selectedCard={selectedCard}
-                                    allCards={cardsList}
+                        <div className="discount">
+                            <div className="label">Discount:</div>
+                            <div className="value">$500</div>
+                        </div>
+                        <div className="save">
+                            <div className="label">You save:</div>
+                            <div className="value">$500</div>
+                        </div>
 
-                                    onSwipeCard={swipeCardHandler}
-                                />
-                            </div>
-                        </div>
-                    </Radio.Group>
-                </div>
-
-                <div className="summary">
-                    <h2>Summary</h2>
-                    <div className="row">
-                        <div className="col">
-                            <h4><span>#</span>Description</h4>
-                            <p><span>1</span>Fee</p>
-                            <p><span>2</span>Keywords</p>
-                            <p><span>3</span>ASINs</p>
-                        </div>
-                        <div className="col">
-                            <h4>Amount</h4>
-                            <p></p>
-                            <p>1000</p>
-                            <p>300</p>
-                        </div>
-                        <div className="col">
-                            <h4>Unit Price</h4>
-                            <p></p>
-                            <p>$10.00</p>
-                            <p>$3.00</p>
-                        </div>
-                        <div className="col">
-                            <h4>Total</h4>
-                            <p>$39.00</p>
-                            <p>$1000.00</p>
-                            <p>$300.00</p>
-                        </div>
+                        <button
+                            className={'sds-btn default'}
+                            disabled={payProcessing}
+                        >
+                            Pay
+                            {payProcessing && <Spin size={'small'}/>}
+                        </button>
                     </div>
-
-                    <div className="total-price">
-                        <div className={'label'}>TOTAL PRICE:</div>
-                        {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
-                        <div className="value">$1500</div>
-                    </div>
-
-                    <div className="discount">
-                        <div className="label">Discount:</div>
-                        <div className="value">$500</div>
-                    </div>
-                    <div className="save">
-                        <div className="label">You save:</div>
-                        <div className="value">$500</div>
-                    </div>
-
-                    <button
-                        className={'sds-btn default'}
-                        disabled={payProcessing}
-                    >
-                        Pay
-                        {payProcessing && <Spin size={'small'}/>}
-                    </button>
-                </div>
-            </form>
+                </form>
+            </>}
         </div>
     )
 }

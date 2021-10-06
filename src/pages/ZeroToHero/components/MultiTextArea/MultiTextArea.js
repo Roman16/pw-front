@@ -144,8 +144,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                             </ol>
                                         </>}
                                     >
-                                        <i style={{fill: '#EC7F5C', stroke: 'white'}}>
-                                            <SVG id={'circle-warning-icon'}/>
+                                        <i>
+                                            <ErrorIcon/>
                                         </i>
 
                                     </InformationTooltip>
@@ -201,8 +201,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                             </ol>
                                         </>}
                                     >
-                                        <i style={{fill: '#F0B849', stroke: 'white'}}>
-                                            <SVG id={'circle-warning-icon'}/>
+                                        <i>
+                                            <WarningIcon/>
                                         </i>
 
                                     </InformationTooltip>
@@ -236,8 +236,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                             </ol>
                                         </>}
                                     >
-                                        <i style={{fill: 'white', stroke: '#6D6DF6'}}>
-                                            <SVG id={'circle-warning-icon'}/>
+                                        <i>
+                                            <ErrorIcon/>
                                         </i>
 
                                     </InformationTooltip>
@@ -285,5 +285,16 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
         </div>
     )
 };
+
+const WarningIcon = () => <svg width="12" height="13" stroke={'none'} viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fill-rule="evenodd" stroke={'none'} clip-rule="evenodd" d="M10.8833 12.5007H1.11701C0.373632 12.5007 -0.109865 11.7184 0.222586 11.0535L5.10575 1.28716C5.47427 0.550113 6.52608 0.550113 6.8946 1.28716L11.7778 11.0535C12.1102 11.7184 11.6267 12.5007 10.8833 12.5007ZM6.00016 4.14209C5.61546 4.14209 5.3036 4.45395 5.3036 4.83864C5.3036 5.22334 5.61546 5.5352 6.00016 5.5352C6.38486 5.5352 6.69672 5.22334 6.69672 4.83864C6.69672 4.45395 6.38486 4.14209 6.00016 4.14209ZM7.21914 11.1077C7.41148 11.1077 7.56741 10.9517 7.56741 10.7594C7.56741 10.567 7.41149 10.4111 7.21914 10.4111C7.02679 10.4111 6.87086 10.2552 6.87086 10.0628V6.58004C6.87086 6.38769 6.71493 6.23176 6.52258 6.23176H5.47774H5.12947C4.93712 6.23176 4.78119 6.38769 4.78119 6.58004C4.78119 6.77238 4.93712 6.92831 5.12947 6.92831C5.32181 6.92831 5.47774 7.08424 5.47774 7.27659V10.0628C5.47774 10.2552 5.32181 10.4111 5.12947 10.4111C4.93712 10.4111 4.78119 10.567 4.78119 10.7594C4.78119 10.9517 4.93712 11.1077 5.12947 11.1077H7.21914Z" fill="#FFAF52"/>
+</svg>
+
+const ErrorIcon = () => <svg width="12" height="13" viewBox="0 0 12 13" stroke={'none'} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="6" cy="6.5" r="6" fill="#FF5256" stroke={'none'}/>
+    <path stroke={'none'} d="M6 2.89844L6 7.69844" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+    <path stroke={'none'} d="M6.60039 9.90078C6.60039 10.2322 6.33176 10.5008 6.00039 10.5008C5.66902 10.5008 5.40039 10.2322 5.40039 9.90078C5.40039 9.56941 5.66902 9.30078 6.00039 9.30078C6.33176 9.30078 6.60039 9.56941 6.60039 9.90078Z" fill="white"/>
+</svg>
+
 
 export default MultiTextArea;

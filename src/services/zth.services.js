@@ -5,15 +5,16 @@ export const zthServices = {
     getAllProducts,
     getZthProducts,
     saveSettings,
-    createFreeBatch,
-    checkIncompleteBatch,
     deleteIncompleteBatch,
     payBatch,
-    checkBatchById,
     getUserPortfolio,
     getKeysCount,
     getVariationsEligibilityStatus,
-    fetchBatchInformation
+    fetchBatchInformation,
+
+    createFreeBatch,
+    checkIncompleteBatch,
+    checkBatchById,
 };
 
 function getAllProducts({pageSize, page, searchStr = '', cancelToken, sorting}) {
@@ -29,8 +30,8 @@ function saveSettings(data) {
     return api('post', `${zthUrls.setupSettings}`, data, false)
 }
 
-function getKeysCount(keys) {
-    return api('get', `${zthUrls.keysCount}?keywords[]=${keys}`)
+function getKeysCount(keys, cancelToken) {
+    return api('get', `${zthUrls.keysCount}?${keys.map(i => `keywords[]=${i}`).join('&')}`, undefined, undefined, cancelToken)
 }
 
 function createFreeBatch(id, data) {
@@ -62,6 +63,6 @@ function getVariationsEligibilityStatus(id) {
 }
 
 function fetchBatchInformation(id) {
-    return api('get', `${zthUrls.batchInformation}?size=10&page=1`)
+    return api('get', `${zthUrls.batchInformation}?size=10&page=1&ids[]=${id}`)
 }
 

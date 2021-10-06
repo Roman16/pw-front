@@ -80,7 +80,7 @@ const jobStatus = ({job}) => {
                     Draft
                 </div>
             )
-        } else if (job.status === 'CREATION_IN_PROGRESS' || job.status === 'PAYMENT_IN_PROGRESS' || job.status === 'UPLOAD_IN_PROGRESS') {
+        } else if (job.status === 'CREATION_IN_PROGRESS' || job.status === 'UPLOAD_IN_PROGRESS') {
             return (
                 <div className="status-field processing">
                     Processing...
@@ -90,7 +90,13 @@ const jobStatus = ({job}) => {
                     />
                 </div>
             )
-        } else if (job.status === 'CREATION_PENDING' || job.status === 'PAYMENT_PENDING' || job.status === 'UPLOAD_PENDING') {
+        } else if (job.status === 'PAYMENT_IN_PROGRESS' || job.status === 'PAYMENT_PENDING') {
+            return (
+                <div className="status-field waiting-payment">
+                    Waiting for Payment
+                </div>
+            )
+        } else if (job.status === 'CREATION_PENDING' || job.status === 'UPLOAD_PENDING') {
             return (
                 <div className="status-field processing">
                     Pending...
@@ -127,7 +133,7 @@ const jobActions = ({job}) => {
                     {/*</button>*/}
                 </div>
             )
-        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED' || job.status === 'UPLOAD_FAILED') {
+        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'CREATION_FAILED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED') {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn white'}>
@@ -158,24 +164,22 @@ const jobActions = ({job}) => {
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
     const [openedProduct, setOpenedProduct] = useState(null)
 
-    const dispatch = useDispatch()
-
     const openProductVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
     }
 
 
     const createZthHandler = (product) => {
-        dispatch(zthActions.addProducts([product]))
+        const searchStr = product.sku || product.asin || product.name
 
-        history.push('/zero-to-hero/creating')
+        history.push(`/zero-to-hero/creating?searchStr=${searchStr}`)
     }
 
     const expandedRowRender = (product) => {
         const columns = {
             'zth-products': [
                 {
-                    width: '400px',
+                    width: '500px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -184,7 +188,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                    render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
                             <a
@@ -227,7 +231,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                    render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
                             <a
@@ -240,7 +244,13 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 },
                 {
-                    render: () => ''
+                    render: (product) => (
+                        <div className="zth-status-field">
+                            <button className='sds-btn blue' onClick={() => createZthHandler(product)}>
+                                Create ZTH
+                            </button>
+                        </div>
+                    )
                 },
             ]
         }
@@ -273,10 +283,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
 
     const defaultColumns = [
         {
-            title: 'Products name',
+            title: 'Product name',
             dataIndex: 'id',
             key: 'id',
-            width: '400px',
+            width: '500px',
             render: (id, product) => (<ProductItem
                 product={product}
                 openedProduct={openedProduct}
@@ -305,7 +315,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         'zth-products': [
             ...defaultColumns,
             {
-                title: 'Created Date',
+                title: 'Created at Date',
                 dataIndex: 'date',
                 key: 'date',
                 render: (date, item) => {
@@ -332,7 +342,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         'other-products': [
             ...defaultColumns,
             {
-                title: 'Zero To Hero Status',
+                title: 'Actions',
                 dataIndex: 'zth_status',
                 key: 'zth_status',
                 render: (status, product) => (

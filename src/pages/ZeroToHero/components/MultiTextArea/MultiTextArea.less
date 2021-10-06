@@ -25,12 +25,7 @@
         width: 1.2142857142857142rem;
         height: 1.2142857142857142rem;
         margin: 0;
-        stroke: inherit;
       }
-    }
-
-    &.not-valid {
-      background: #C9CBD4;
     }
   }
 
@@ -41,25 +36,31 @@
   .item-text {
     height: 2.2857142857142856rem;
     padding: 0 10px;
-    color: #fff;
+    color: #6959AB;
     font-size: 0.8571428571428571rem;
     line-height: 0.8571428571428571rem;
     margin: 0 0 10px 10px;
-    background: #6D6DF6;
     border-radius: 40px;
     display: flex;
     align-items: center;
     font-weight: 500;
-    //border: 1px solid #6D6DF6;
+    border: 1px solid #6959AB;
 
     i {
       cursor: pointer;
+
+      &:last-child {
+        svg {
+          stroke: #6959AB;
+        }
+      }
+
+
     }
 
     svg {
       width: 0.7142857142857143rem;
       height: 0.7142857142857143rem;
-      stroke: #fff;
       margin: 0 0 0 10px;
     }
   }

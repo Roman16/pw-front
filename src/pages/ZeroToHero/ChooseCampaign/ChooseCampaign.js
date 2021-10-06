@@ -45,15 +45,6 @@ const ChooseCampaign = () => {
         }
     }
 
-    useEffect(() => {
-        zthServices.checkIncompleteBatch()
-            .then(res => {
-                if (res.result !== null) {
-                    setIncompleteBatch(res.result)
-                }
-            })
-    }, [])
-
     return (
         <div className={'choose-campaign-container'}>
 

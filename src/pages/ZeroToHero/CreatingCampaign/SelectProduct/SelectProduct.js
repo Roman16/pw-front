@@ -7,6 +7,8 @@ import {zthServices} from "../../../../services/zth.services"
 import './SelectProduct.less'
 import {debounce} from "throttle-debounce"
 import ConfirmChangeProductWindow from "./ConfirmChangeProductWindow"
+import {history} from "../../../../utils/history"
+import queryString from "query-string"
 
 const {Search} = Input
 
@@ -21,7 +23,7 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
         [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [fetchVariationsProcessing, setFetchVariationsProcessing] = useState(false),
         [requestParams, setRequestParams] = useState({
-            searchStr: '',
+            searchStr: queryString.parse(history.location.search).searchStr || '',
             page: 1,
             pageSize: 10,
             sorting: 'desc'
@@ -108,6 +110,7 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
                     <Search
                         className="search-field"
                         placeholder={'Search by product name, ASIN or SKU'}
+                        value={requestParams.searchStr}
                         onChange={e => changeSearchHandler(e.target.value)}
                         suffix={<SVG id={'search'}/>}
                     />
