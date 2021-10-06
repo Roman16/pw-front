@@ -82,9 +82,9 @@ const RequiredSettings = ({
                 source && source.cancel()
                 source = CancelToken.source()
 
-                const {result} = await zthServices.getKeysCount(arr, source.token)
-
                 prevCheckKeywords = [...arr]
+
+                const {result} = await zthServices.getKeysCount(arr, source.token)
 
                 setKeywordEstimations(result.keywordEstimations)
 
