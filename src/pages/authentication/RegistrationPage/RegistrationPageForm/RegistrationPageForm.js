@@ -10,6 +10,7 @@ import StripeForm from "./StripeForm";
 import {Elements, injectStripe, StripeProvider} from "react-stripe-elements";
 
 const stripeKey = process.env.REACT_APP_ENV === 'production' ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST;
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
 
 class RegistrationPage extends Component {
     state = {
@@ -118,7 +119,14 @@ class RegistrationPage extends Component {
                 password,
                 ...agencyUser ? {is_agency_client: 1} : {stripe_token},
                 ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
-            });
+            })
+                .then(res => {
+                    (function(t,a,p){t.TapfiliateObject=a;t[a]=t[a]||function(){
+                        (t[a].q=t[a].q||[]).push(arguments)}})(window,'tap');
+
+                    window.tap('create', tapfiliateKey,  { integration: "javascript" });
+                    window.tap('customer', res.id);
+                })
         }
     };
 
