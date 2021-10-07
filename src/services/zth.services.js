@@ -31,7 +31,7 @@ function saveSettings(data) {
 }
 
 function getKeysCount(keys, cancelToken) {
-    return api('get', `${zthUrls.keysCount}?${keys.map(i => `keywords[]=${i}`).join('&')}`, undefined, undefined, cancelToken)
+    return api('get', `${zthUrls.keysCount}?${keys.map(i => `keywords[]=${i}`).join('&')}`, undefined, undefined, cancelToken, undefined, false)
 }
 
 function createFreeBatch(id, data) {

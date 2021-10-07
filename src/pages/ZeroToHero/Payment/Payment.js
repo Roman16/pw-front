@@ -13,6 +13,7 @@ import {zthServices} from "../../../services/zth.services"
 import {SVG} from "../../../utils/icons"
 import {notification} from "../../../components/Notification"
 import BulkInformation from "./BulkInformation"
+import Summary from "./Summary"
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -196,58 +197,10 @@ const Payment = (props) => {
                         </Radio.Group>
                     </div>
 
-                    <div className="summary">
-                        <h2>Summary</h2>
-                        <div className="row">
-                            <div className="col">
-                                <h4><span>#</span>Description</h4>
-                                <p><span>1</span>Fee</p>
-                                <p><span>2</span>Keywords</p>
-                                <p><span>3</span>ASINs</p>
-                            </div>
-                            <div className="col">
-                                <h4>Amount</h4>
-                                <p></p>
-                                <p>1000</p>
-                                <p>300</p>
-                            </div>
-                            <div className="col">
-                                <h4>Unit Price</h4>
-                                <p></p>
-                                <p>$10.00</p>
-                                <p>$3.00</p>
-                            </div>
-                            <div className="col">
-                                <h4>Total</h4>
-                                <p>$39.00</p>
-                                <p>$1000.00</p>
-                                <p>$300.00</p>
-                            </div>
-                        </div>
-
-                        <div className="total-price">
-                            <div className={'label'}>TOTAL PRICE:</div>
-                            {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
-                            <div className="value">$1500</div>
-                        </div>
-
-                        <div className="discount">
-                            <div className="label">Discount:</div>
-                            <div className="value">$500</div>
-                        </div>
-                        <div className="save">
-                            <div className="label">You save:</div>
-                            <div className="value">$500</div>
-                        </div>
-
-                        <button
-                            className={'sds-btn default'}
-                            disabled={payProcessing}
-                        >
-                            Pay
-                            {payProcessing && <Spin size={'small'}/>}
-                        </button>
-                    </div>
+                    <Summary
+                        jobPrice={productInformation.job.pricing}
+                        payProcessing={payProcessing}
+                    />
                 </form>
             </>}
         </div>
