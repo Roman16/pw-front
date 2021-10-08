@@ -6,25 +6,24 @@ import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {Spin} from "antd"
 
 const ProductItem = ({
-                         type,
                          product,
                          onSelect,
                          onSelectVariation,
+                         onSelectParent,
                          isSelected,
-                         isDisabled,
                          isOpened,
                          onOpenVariations,
-                         onRemove,
                          showChildCount,
                          selectedProducts,
-                         addedProducts,
                          fetchVariationsProcessing
                      }) => {
 
+    const isIneligible = product.eligibility_status !== undefined && product.variations ? product.variations.every(i => i.eligibility_status === 'INELIGIBLE') : product.eligibility_status === 'INELIGIBLE'
+
     return (
         <>
-            <div className={`product-item ${isSelected ? 'selected' : ''} ${isDisabled ? 'disabled' : ''}`}
-                 onClick={() => !isDisabled && onSelect && onSelect(product, isSelected)}>
+            <div className={`product-item ${isSelected ? 'selected' : ''} ${isIneligible ? 'disabled' : ''}`}
+                 onClick={() => !isIneligible && onSelect && product.variations ? onSelectParent(product, isSelected) : onSelect(product, isSelected)}>
                 <div className="photo">
                     <img src={amazonDefaultImageUrls.includes(product.image_url) ? noImage : product.image_url} alt=""/>
                 </div>
@@ -71,9 +70,6 @@ const ProductItem = ({
                         <div className="asin"><b>ASIN:</b> {product.asin}</div>
                         <div className="sku"><b>SKU:</b> {product.sku}</div>
 
-                        {/*{isDisabled && <div className="added">Added</div>}*/}
-                        {/*{onRemove && <button className="remove" onClick={onRemove}>Remove</button>}*/}
-
                         {showChildCount && product.variations &&
                         <div className="variations-count">
                             This Product has <b>{product.variations.length}</b> child ASIN(s)
@@ -82,7 +78,6 @@ const ProductItem = ({
                 </div>
 
                 {product.variations && <button
-                    disabled={isDisabled}
                     onClick={e => {
                         e.stopPropagation()
                         onOpenVariations(product.id)
@@ -93,17 +88,18 @@ const ProductItem = ({
                 </button>}
 
 
-                {((product.eligibility_status === 'INELIGIBLE' || product.eligibility_status == null) && product.eligibility_status !== undefined) &&
+                {isIneligible &&
                 <div className="eligibility-status">
                     Ineligible
                     <InformationTooltip
                         overlayClassName={'ineligible-description'}
-                        description={<div>This product in not eligible for advertising on Amazon Marketplace, thus we
-                            cannot create ZTH campaigns for it. Ineligibility reasons:
-                            <ul>
-                                {product.eligibility_status_reasons.map(i => <li>{i.message}</li>)}
-                            </ul>
-                        </div>}
+                        description={product.variations ? 'All variations of the parent product are ineligible for advertising. Please add an eligible variation.' :
+                            <div>This product in not eligible for advertising on Amazon Marketplace, thus we
+                                cannot create ZTH campaigns for it. Ineligibility reasons:
+                                <ul>
+                                    {product.eligibility_status_reasons.map(i => <li>{i.message}</li>)}
+                                </ul>
+                            </div>}
                     />
                 </div>}
             </div>
@@ -111,39 +107,24 @@ const ProductItem = ({
             {product.variations && isOpened &&
             <div className={`variations-list`}>
                 {fetchVariationsProcessing ? <Spin size={'large'}/> : product.variations.map(variationProduct => {
-                    if (type === 'all_products') {
-                        const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
-                            variationIsDisabled = variationProduct.eligibility_status === 'INELIGIBLE' || variationProduct.eligibility_status == null
-                        // variationIsAdded = !!addedProducts.find(item => item.id === variationProduct.id);
+                    const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
+                        variationIsDisabled = variationProduct.eligibility_status === 'INELIGIBLE'
 
-                        return (
-                            <div
-                                className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isDisabled || variationIsDisabled) ? 'disabled' : ''}`}
-                                onClick={() => !variationIsDisabled && !isDisabled && onSelect && onSelectVariation({
-                                    ...variationProduct,
-                                    parent_id: product.id
-                                }, variationIsSelected, isSelected)}
-                            >
-                                <div className="variation-indicator"/>
-                                <ProductItem
-                                    product={variationProduct}
-                                    isDisabled={false}
-                                    // isDisabled={!isDisabled}
-                                />
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <div
-                                className={`variation-item ${(isSelected) ? 'selected' : ''} ${(isDisabled) ? 'disabled' : ''}`}
-                            >
-                                <div className="variation-indicator"/>
-                                <ProductItem
-                                    product={variationProduct}
-                                />
-                            </div>
-                        )
-                    }
+                    return (
+                        <div
+                            className={`variation-item ${(isSelected || variationIsSelected) ? 'selected' : ''} ${(isIneligible || variationIsDisabled) ? 'disabled' : ''}`}
+                            onClick={() => !variationIsDisabled && !isIneligible && onSelectVariation({
+                                ...variationProduct,
+                                parent_id: product.id
+                            }, variationIsSelected, isSelected)}
+                        >
+                            <div className="variation-indicator"/>
+                            <ProductItem
+                                product={variationProduct}
+                                onSelect={onSelectVariation}
+                            />
+                        </div>
+                    )
                 })}
             </div>}
         </>

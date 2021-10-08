@@ -152,6 +152,10 @@
           cursor: default;
           pointer-events: none;
 
+          &:hover {
+            background: initial;
+          }
+
           .photo {
             opacity: 0.5;
           }
@@ -173,11 +177,7 @@
           }
 
           .variations-button {
-            pointer-events: none;
-
-            svg {
-              stroke: #C9CBD4;
-            }
+            pointer-events: auto;
           }
         }
 

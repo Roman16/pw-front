@@ -15,6 +15,8 @@ import {history} from "../../../utils/history"
 import {zthServices} from "../../../services/zth.services"
 import {cleanMainKeyword, findExistingDuplicateOfNewMainKeyword} from "../components/MultiTextArea/isMainKeywordValid"
 import {Prompt} from "react-router-dom"
+import RouteLoader from "../../../components/RouteLoader/RouteLoader"
+import AvailableZTHWindow from "./AvailableZTHWindow/AvailableZTHWindow"
 
 
 const initialProductSettings = {
@@ -45,7 +47,9 @@ const CreatingCampaign = () => {
         [openedSteps, setOpenedSteps] = useState(-1),
         [activeProductIndex, setActiveProductIndex] = useState(0),
         [invalidField, setInvalidField] = useState(),
-        [createProcessing, setCreateProcessing] = useState(false)
+        [createProcessing, setCreateProcessing] = useState(false),
+        [pageLoading, setPageLoading] = useState(true),
+        [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -176,8 +180,24 @@ const CreatingCampaign = () => {
         }
     }
 
+    const checkIncompleteJobs = async () => {
+        setPageLoading(true)
+
+        try {
+            const res = await zthServices.checkIncompleteJobs()
+
+            console.log(res)
+        }catch (e) {
+            console.log(e)
+        }
+
+        setPageLoading(false)
+    }
+
     useEffect(() => {
         fetchPortfolios()
+
+        checkIncompleteJobs()
     }, [])
 
     return (
@@ -225,6 +245,12 @@ const CreatingCampaign = () => {
                 disabled={currentStep === 1 ? requiredSettingsValidation() : false}
 
                 onChangeStep={setStepHandler}
+            />
+
+            {pageLoading && <RouteLoader/>}
+
+            <AvailableZTHWindow
+                visible={visibleAvailableWindow}
             />
 
             <Prompt

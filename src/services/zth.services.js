@@ -1,5 +1,5 @@
-import api from './request';
-import {zthUrls} from '../constans/api.urls';
+import api from './request'
+import {zthUrls} from '../constans/api.urls'
 
 export const zthServices = {
     getAllProducts,
@@ -11,14 +11,14 @@ export const zthServices = {
     getKeysCount,
     getVariationsEligibilityStatus,
     fetchBatchInformation,
+    checkIncompleteJobs,
 
     createFreeBatch,
-    checkIncompleteBatch,
     checkBatchById,
-};
+}
 
-function getAllProducts({pageSize, page, searchStr = '', cancelToken, sorting}) {
-    return api('get', `${zthUrls.productsList}?search_query=${searchStr}&page=${page}&size=${pageSize}&order_by:${sorting}=name`, false, false, cancelToken)
+function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
+    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}&order_by:${sorting}=name${searchStr && `&search_query=${searchStr}`}`, false, false, cancelToken)
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
@@ -38,8 +38,8 @@ function createFreeBatch(id, data) {
     return api('post', `${zthUrls.saveBatchSettings(id)}`, data, false)
 }
 
-function checkIncompleteBatch(cancelToken) {
-    return api('get', `${zthUrls.incompleteBatch}`, false, false, cancelToken)
+function checkIncompleteJobs(cancelToken) {
+    return api('get', `${zthUrls.incompleteJobs}`, false, false, cancelToken)
 }
 
 function checkBatchById(id) {
@@ -58,8 +58,8 @@ function getUserPortfolio() {
     return api('get', `${zthUrls.portfolioList}`, null, false)
 }
 
-function getVariationsEligibilityStatus(id) {
-    return api('get', `${zthUrls.variationsEligibilityStatus}?product_id=${id}`)
+function getVariationsEligibilityStatus(id, cancelToken) {
+    return api('get', `${zthUrls.variationsEligibilityStatus}?product_id=${id}`, undefined, undefined, cancelToken)
 }
 
 function fetchBatchInformation(id) {

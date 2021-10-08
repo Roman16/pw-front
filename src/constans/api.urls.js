@@ -134,8 +134,8 @@ export const zthUrls = {
     variationsEligibilityStatus: 'v2/zero-to-hero/variations-eligibility',
     payBatch: `v2/zero-to-hero/products-jobs/pay`,
     batchInformation: 'v2/zero-to-hero/products-jobs/ready-for-payment',
+    incompleteJobs: 'v2/zero-to-hero/batch/incomplete-batch-data',
 
-    incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,

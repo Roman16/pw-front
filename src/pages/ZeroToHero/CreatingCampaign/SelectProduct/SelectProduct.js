@@ -9,11 +9,18 @@ import {debounce} from "throttle-debounce"
 import ConfirmChangeProductWindow from "./ConfirmChangeProductWindow"
 import {history} from "../../../../utils/history"
 import queryString from "query-string"
+import axios from "axios"
 
 const {Search} = Input
 
 let pr = {},
-    prStatus = ''
+    prStatus = '',
+    selectedParent = undefined
+
+const CancelToken = axios.CancelToken
+let source = null
+
+let timeoutId = null
 
 const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onChangeOpenedSteps}) => {
     const [products, setProducts] = useState([]),
@@ -22,8 +29,8 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
         [openedProduct, setOpenedProduct] = useState(null),
         [visibleConfirmWindow, setVisibleConfirmWindow] = useState(false),
         [fetchVariationsProcessing, setFetchVariationsProcessing] = useState(false),
+        [searchStr, setSearchStr] = useState(queryString.parse(history.location.search).searchStr || ''),
         [requestParams, setRequestParams] = useState({
-            searchStr: queryString.parse(history.location.search).searchStr || '',
             page: 1,
             pageSize: 10,
             sorting: 'desc'
@@ -33,7 +40,7 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
         setProcessing(true)
 
         try {
-            const {result} = await zthServices.getAllProducts(requestParams)
+            const {result} = await zthServices.getAllProducts({...requestParams, searchStr})
 
             setProducts(result.products || [])
             setTotalSize(result.totalSize)
@@ -47,25 +54,36 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
 
     const changePaginationHandler = (options) => setRequestParams({...requestParams, ...options})
 
-    const changeSearchHandler = debounce(500, false, str => {
-        setRequestParams({
-            ...requestParams,
-            searchStr: str,
-            page: 1
-        })
-    })
+    const changeSearchHandler = str => {
+        setSearchStr(str)
+
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            setRequestParams({
+                ...requestParams,
+                page: 1
+            })
+        }, 500)
+    }
 
     const getVariationsEligibilityStatus = async (parentId) => {
         setFetchVariationsProcessing(true)
 
         try {
-            const res = await zthServices.getVariationsEligibilityStatus(parentId)
+            source && source.cancel()
+            source = CancelToken.source()
+
+            const res = await zthServices.getVariationsEligibilityStatus(parentId, source.token)
 
             setProducts([...products.map(product => {
                 if (product.id === parentId) product.variations = [...res.result]
 
                 return product
             })])
+
+            if (res.result.some(i => i.eligibility_status === 'ELIGIBLE' || i.eligibility_status === 'ELIGIBLE_WITH_WARNING')) selectProductHandler(selectedParent)
+
+            selectedParent = undefined
 
             setFetchVariationsProcessing(false)
         } catch (e) {
@@ -94,6 +112,18 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
         }
     }
 
+    const selectParentHandler = (product) => {
+        if(openedProduct === product.id) {
+            selectProductHandler(product)
+            return
+        }
+
+        if(addedProducts[0].id !== product.id) {
+            selectedParent = product
+            openVariationsListHandler(product.id)
+        }
+    }
+
     useEffect(() => {
         getProductsList()
 
@@ -110,7 +140,7 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
                     <Search
                         className="search-field"
                         placeholder={'Search by product name, ASIN or SKU'}
-                        value={requestParams.searchStr}
+                        value={searchStr}
                         onChange={e => changeSearchHandler(e.target.value)}
                         suffix={<SVG id={'search'}/>}
                     />
@@ -129,21 +159,21 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
                     <ul>
                         {processing && <div className={'load-data'}><Spin size={'large'}/></div>}
 
-                        {(!processing && !requestParams.searchStr && totalSize === 0) && <NoFound/>}
-                        {(!processing && requestParams.searchStr && totalSize === 0) && <NoData/>}
+                        {(!processing && !searchStr && totalSize === 0) && <NoFound/>}
+                        {(!processing && searchStr && totalSize === 0) && <NoData/>}
 
                         {products.map(product => <ProductItem
                                 key={product.id}
                                 product={product}
                                 isOpened={product.id === openedProduct}
                                 isSelected={!!addedProducts.find(item => item.id === product.id)}
-                                isDisabled={product.eligibility_status === 'INELIGIBLE' || product.eligibility_status == null}
                                 selectedProducts={addedProducts}
                                 type={'all_products'}
                                 fetchVariationsProcessing={fetchVariationsProcessing}
 
                                 onSelect={selectProductHandler}
                                 onSelectVariation={selectProductHandler}
+                                onSelectParent={selectParentHandler}
                                 onOpenVariations={openVariationsListHandler}
                             />
                         )}

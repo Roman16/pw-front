@@ -563,6 +563,7 @@
       margin-bottom: 20px;
       border: 1px solid #C9CBD4;
       border-radius: 4px;
+      overflow-x: auto;
 
       .row {
         display: flex;
@@ -570,6 +571,7 @@
 
         div {
           flex: 1;
+          min-width: 130px;
           font-weight: 500;
           font-size: 1.1428571428571428rem;
           line-height: 1.4285714285714286rem;
@@ -580,11 +582,12 @@
           justify-content: flex-end;
 
           &:first-child {
+            min-width: 150px;
             border: 0;
             justify-content: flex-start;
 
             @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-              min-width: 28%;
+              min-width: 130px;
             }
 
             span {

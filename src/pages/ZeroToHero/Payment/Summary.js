@@ -37,7 +37,7 @@ const Summary = ({jobPrice, payProcessing}) => {
                         <SVG id='select-icon'/>
                     </button></div>
                     <div>{jobPrice.keywords.summary.total_entities_count}</div>
-                    <div>${numberMask(jobPrice.keywords.summary.total_average_price_in_cents_per_unit_rounded / 100, 4)}</div>
+                    <div>${numberMask(jobPrice.keywords.summary.total_average_price_in_cents_per_unit_rounded / 100, 2)}</div>
                     <div>${numberMask(jobPrice.keywords.summary.total_price_in_cents / 100, 2)}</div>
                 </div>
 
@@ -45,7 +45,7 @@ const Summary = ({jobPrice, payProcessing}) => {
                     {jobPrice.keywords.details.map(i => <div className="row">
                         <div></div>
                         <div>{i.entities_count}</div>
-                        <div>${numberMask(i.price_in_usd_cents / 100, 4)}</div>
+                        <div>${numberMask(i.price_in_usd_cents / 100, 2)}</div>
                         <div>${numberMask(i.sum_price_in_cents / 100, 2)}</div>
                     </div>)}
                 </div>}
@@ -58,7 +58,7 @@ const Summary = ({jobPrice, payProcessing}) => {
                         <SVG id='select-icon'/>
                     </button></div>
                     <div>{jobPrice.product_targetings.summary.total_entities_count}</div>
-                    <div>${numberMask(jobPrice.product_targetings.summary.total_average_price_in_cents_per_unit_rounded / 100, 4)}</div>
+                    <div>${numberMask(jobPrice.product_targetings.summary.total_average_price_in_cents_per_unit_rounded / 100, 2)}</div>
                     <div>${numberMask(jobPrice.product_targetings.summary.total_price_in_cents / 100, 2)}</div>
                 </div>
 
@@ -66,7 +66,7 @@ const Summary = ({jobPrice, payProcessing}) => {
                     {jobPrice.product_targetings.details.map(i => <div className="row">
                         <div></div>
                         <div>{i.entities_count}</div>
-                        <div>${numberMask(i.price_in_usd_cents / 100, 4)}</div>
+                        <div>${numberMask(i.price_in_usd_cents / 100, 2)}</div>
                         <div>${numberMask(i.sum_price_in_cents / 100, 2)}</div>
                     </div>)}
                 </div>}
