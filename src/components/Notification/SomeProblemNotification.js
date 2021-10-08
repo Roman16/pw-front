@@ -1,17 +1,16 @@
-import React from "react";
-import {toast} from 'react-toastify';
-import {SVG} from "../../utils/icons";
+import React from "react"
+import {toast} from 'react-toastify'
+import {SVG} from "../../utils/icons"
 
 const SomeProblemNotification = ({title, description}) => (
     toast.success(
-        <div>
-            <div className='notification__title'>
-                <SVG id='child'/>
-                <p dangerouslySetInnerHTML={{__html: title}}/>
+        <>
+            <SVG id='child'/>
+            <div>
+                <div className='notification__title' dangerouslySetInnerHTML={{__html: title}}/>
+                {description && <p className='notification__description'>{description}</p>}
             </div>
-
-            {description && <span className='notification__description'>{description}</span>}
-        </div>,
+        </>,
         {
             className: 'some-problem-notification',
             position: "bottom-right",
@@ -19,6 +18,6 @@ const SomeProblemNotification = ({title, description}) => (
             pauseOnHover: true,
             draggable: true,
         })
-);
+)
 
-export default SomeProblemNotification;
+export default SomeProblemNotification
