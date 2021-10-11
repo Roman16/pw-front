@@ -237,7 +237,7 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
                                         </>}
                                     >
                                         <i>
-                                            <ErrorIcon/>
+                                            <WarningIcon/>
                                         </i>
 
                                     </InformationTooltip>
