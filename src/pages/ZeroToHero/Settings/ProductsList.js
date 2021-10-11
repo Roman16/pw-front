@@ -90,10 +90,16 @@ const jobStatus = ({job}) => {
                     />
                 </div>
             )
-        } else if (job.status === 'PAYMENT_IN_PROGRESS' || job.status === 'PAYMENT_PENDING') {
+        } else if (job.status === 'PAYMENT_PENDING') {
             return (
                 <div className="status-field waiting-payment">
                     Waiting for Payment
+                </div>
+            )
+        }else if (job.status === 'PAYMENT_IN_PROGRESS') {
+            return (
+                <div className="status-field waiting-payment">
+                    Payment interrupted. Please complete payment
                 </div>
             )
         } else if (job.status === 'CREATION_PENDING' || job.status === 'UPLOAD_PENDING') {
@@ -141,12 +147,21 @@ const jobActions = ({job}) => {
                     </button>
                 </div>
             )
-        } else if (job.status === 'PAYMENT_PENDING' || job.status === 'PAYMENT_IN_PROGRESS') {
+        } else if (job.status === 'PAYMENT_PENDING') {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
                             onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
                         Pay & Upload
+                    </button>
+                </div>
+            )
+        }  else if ( job.status === 'PAYMENT_IN_PROGRESS') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn blue'}
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
+                        Complete Payment
                     </button>
                 </div>
             )

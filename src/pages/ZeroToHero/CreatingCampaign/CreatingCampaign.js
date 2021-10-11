@@ -184,10 +184,10 @@ const CreatingCampaign = () => {
         setPageLoading(true)
 
         try {
-            const res = await zthServices.checkIncompleteJobs()
+            const {result} = await zthServices.checkIncompleteJobs()
 
-            console.log(res)
-        }catch (e) {
+            if (result.max_available_count_of_unpaid_zth_for_current_user === 0) setVisibleAvailableWindow(true)
+        } catch (e) {
             console.log(e)
         }
 

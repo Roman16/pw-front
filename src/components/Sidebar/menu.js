@@ -1,62 +1,35 @@
-export const regionsMenu = [
+export const mainMenu = [
     {
-        region: 'North America',
-        countries: [
+        title: 'Zero to Hero',
+        key: 'zth',
+        link: 'zero-to-hero',
+        icon: 'zth-icon',
+        subMenu: [
             {
-                name: 'US',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
-                active: true
+                title: 'Campaigns Setup',
+                link: 'campaign'
             },
+
             {
-                name: 'Canada',
-                flag: 'canada.svg',
-                description: 'NBI49DMDH34BG'
+                title: 'ZTH Status',
+                link: 'settings'
             },
-            {
-                name: 'Mexico',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            }
         ]
     },
     {
-        region: 'Europe',
-        countries: [
-            {
-                name: 'UK',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'DE',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'FR',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'IT',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'ES',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            }
-        ]
-    }
-];
+        title: 'Analytics',
+        key: 'analytics',
+        icon: 'analytics-icon-sidebar',
+        link: 'analytics/products'
+    },
+    {
+        title: 'Tableau',
+        key: 'tableau',
+        icon: 'analytics-icon-sidebar',
+        link: 'tableau'
+    },
 
-export const ppcAutomateMenu = [
-    // {
-    //     title: 'Dashboard',
-    //     link: 'dashboard'
-    // },
+
     {
         title: 'Optimization Setup',
         link: 'optimization'
@@ -78,4 +51,4 @@ export const ppcAutomateMenu = [
         title: 'Dayparting',
         link: 'dayparting',
     }
-];
+]

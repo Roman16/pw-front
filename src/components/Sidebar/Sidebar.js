@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
-import {regionsMenu, ppcAutomateMenu} from "./menu"
+import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
 import logo from "../../assets/img/ProfitWhales-logo-white.svg"
 import "./Sidebar.less"
@@ -25,10 +25,11 @@ const Sidebar = () => {
             zth: false,
             ppc: false,
             notifications: false
-        }),
-        [regions] = useState(regionsMenu),
-        dispatch = useDispatch(),
-        {user, bootstrapInProgress} = useSelector(state => ({
+        })
+
+    const dispatch = useDispatch()
+
+    const {user, bootstrapInProgress} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
             bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
@@ -226,7 +227,7 @@ const Sidebar = () => {
                                     type={'custom'}
                                     description={<ul
                                         className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
-                                        {ppcAutomateMenu
+                                        {mainMenu
                                             .filter(menuItem => {
                                                 if (activeMarketplace.countryCode === 'CA' && menuItem.link === 'product-settings') return true
                                                 else if (activeMarketplace.countryCode === 'US') return true
@@ -275,7 +276,7 @@ const Sidebar = () => {
                                 </InformationTooltip>
 
                                 <ul className={`automate-list ${subMenuState.ppc ? 'opened' : 'closed'}`}>
-                                    {ppcAutomateMenu
+                                    {mainMenu
                                         .filter(menuItem => {
                                             if (activeMarketplace.countryCode === 'CA' && menuItem.link === 'product-settings') return true
                                             else if (activeMarketplace.countryCode === 'US') return true
