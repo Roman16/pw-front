@@ -16,7 +16,7 @@ const CreateSuccessWindow = ({visible, onClose}) => {
                 to create the campaigns.
             </p>
 
-            <button className="btn default" onClick={onClose}>
+            <button className="sds-btn default" onClick={onClose}>
                 View Status
             </button>
         </ModalWindow>

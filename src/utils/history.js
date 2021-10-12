@@ -37,12 +37,6 @@ const getUserConfirmation = (message, callback) => {
             </p>
 
             <div className="actions">
-                <Checkbox
-                    onChange={({target: {checked}}) => dontShowAgain = checked}
-                >
-                    Don’t show this message again
-                </Checkbox>
-
                 <button className="sds-btn white" onClick={() => withCleanup(false)}>No</button>
                 <button className="sds-btn default" onClick={confirmLeave}>Yes</button>
             </div>

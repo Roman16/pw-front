@@ -19,7 +19,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
             </div>
 
             <div className="col">
-                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}>
+                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name} target={'_blank'}>
                     {product.name}
                 </a>
 
@@ -96,10 +96,10 @@ const jobStatus = ({job}) => {
                     Waiting for Payment
                 </div>
             )
-        }else if (job.status === 'PAYMENT_IN_PROGRESS') {
+        } else if (job.status === 'PAYMENT_IN_PROGRESS') {
             return (
                 <div className="status-field waiting-payment">
-                    Payment interrupted. Please complete payment
+                    Payment interrupted. <br/> Please complete payment
                 </div>
             )
         } else if (job.status === 'CREATION_PENDING' || job.status === 'UPLOAD_PENDING') {
@@ -156,7 +156,7 @@ const jobActions = ({job}) => {
                     </button>
                 </div>
             )
-        }  else if ( job.status === 'PAYMENT_IN_PROGRESS') {
+        } else if (job.status === 'PAYMENT_IN_PROGRESS') {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
@@ -203,6 +203,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
+                    minWidth: '200px',
                     render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
@@ -216,28 +217,22 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 },
                 {
-                    // render: (date) => (
-                    //     <div className='date-field'>
-                    //         {moment(date).format('DD MMM YYYY')}
-                    //     </div>
-                    // )
+                    minWidth: '160px',
                     render: () => ('')
-
                 },
 
                 {
-                    // render: (props, item) => (jobStatus(item))
+                    minWidth: '150px',
                     render: () => ('')
-
                 },
-
                 {
+                    minWidth: '200px',
                     render: () => ('')
                 },
             ],
             'other-products': [
                 {
-                    width: '400px',
+                    width: '500px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -246,6 +241,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
+                    minWidth: '200px',
                     render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
@@ -259,6 +255,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 },
                 {
+                    minWidth: '200px',
                     render: (product) => (
                         <div className="zth-status-field">
                             <button className='sds-btn blue' onClick={() => createZthHandler(product)}>
@@ -312,6 +309,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
             title: 'SKU/ASIN',
             dataIndex: 'id',
             key: 'id',
+            minWidth: '200px',
             render: (text, {sku, asin}) => <div className={'sku-asin'}>
                 <div title={sku}><b>SKU:</b>{sku}</div>
                 <div title={asin}><b>ASIN:</b>
@@ -333,6 +331,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Created at Date',
                 dataIndex: 'date',
                 key: 'date',
+                minWidth: '160px',
                 render: (date, item) => {
                     return (
                         <div className='date-field'>
@@ -345,12 +344,14 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
+                minWidth: '150px',
                 render: (status, item) => (jobStatus(item))
             },
             {
                 title: 'Actions',
                 dataIndex: 'problems',
                 key: 'problems',
+                minWidth: '200px',
                 render: (status, item) => (jobActions(item))
             },
         ],
@@ -360,6 +361,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Actions',
                 dataIndex: 'zth_status',
                 key: 'zth_status',
+                minWidth: '200px',
                 render: (status, product) => (
                     <div className="zth-status-field">
                         <button className='sds-btn blue' onClick={() => createZthHandler(product)}>

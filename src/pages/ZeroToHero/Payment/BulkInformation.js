@@ -100,10 +100,6 @@ const BulkInformation = ({product}) => {
                         SP <br/> Campaigns
                     </li>
                     <li>
-                        <b>{job.sponsored_display_campaigns_count}</b>
-                        SD <br/> Campaigns
-                    </li>
-                    <li>
                         <b>{job.auto_campaigns_count}</b>
                         Auto <br/> Campaigns
                     </li>

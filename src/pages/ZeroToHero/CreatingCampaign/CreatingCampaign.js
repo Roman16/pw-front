@@ -78,7 +78,10 @@ const CreatingCampaign = () => {
         }
     }
 
-    const addProductHandler = (product) => setAddedProducts([{...addedProducts[0], ...product}])
+    const addProductHandler = (product) => setAddedProducts([{
+        ...addedProducts[0], ...product,
+        campaigns: {...addedProducts[0].campaigns, main_keywords: []}
+    }])
 
     const fetchPortfolios = async () => {
         try {
@@ -131,8 +134,10 @@ const CreatingCampaign = () => {
                 setup_settings: setupSettingsFilter(addedProducts)
             })
 
-            setCreateProcessing(false)
-            history.push('/zero-to-hero/settings/create-success')
+            setTimeout(() => {
+                history.push('/zero-to-hero/settings/create-success')
+                setCreateProcessing(false)
+            }, 100)
         } catch (e) {
             console.log(e)
             setCreateProcessing(false)
@@ -247,14 +252,12 @@ const CreatingCampaign = () => {
                 onChangeStep={setStepHandler}
             />
 
-            {pageLoading && <RouteLoader/>}
-
             <AvailableZTHWindow
                 visible={visibleAvailableWindow}
             />
 
             <Prompt
-                when={openedSteps >= 0 && !localStorage.getItem('dontShowConfirmLeaveZthPage')}
+                when={openedSteps >= 0 && !createProcessing}
                 message={'zth-settings'}
             />
         </div>

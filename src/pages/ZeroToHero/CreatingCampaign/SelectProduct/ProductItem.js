@@ -80,6 +80,7 @@ const ProductItem = ({
                 {product.variations && <button
                     onClick={e => {
                         e.stopPropagation()
+                        e.preventDefault()
                         onOpenVariations(product.id)
                     }}
                     className={`variations-button ${isOpened ? 'opened' : ''}`}
@@ -116,12 +117,12 @@ const ProductItem = ({
                             onClick={() => !variationIsDisabled && !isIneligible && onSelectVariation({
                                 ...variationProduct,
                                 parent_id: product.id
-                            }, variationIsSelected, isSelected)}
+                            }, variationIsSelected)}
                         >
                             <div className="variation-indicator"/>
                             <ProductItem
                                 product={variationProduct}
-                                onSelect={onSelectVariation}
+                                onSelect={() => {}}
                             />
                         </div>
                     )

@@ -13,6 +13,7 @@ import {
     disabledStartDate
 } from "../../../Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import axios from "axios"
+import _ from 'lodash'
 
 const Option = Select.Option
 
@@ -37,7 +38,8 @@ const RequiredSettings = ({
                           }) => {
 
     const [keysCountProcessing, setKeysCountProcessing] = useState(false),
-        [keywordEstimations, setKeywordEstimations] = useState(0)
+        [keywordEstimations, setKeywordEstimations] = useState(0),
+        [mainKeywords, setMainKeywords] = useState([])
 
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
@@ -73,26 +75,46 @@ const RequiredSettings = ({
         }, isInvalid)
     }
 
-    const getKeysCount = async () => {
-        setKeysCountProcessing(true)
-        try {
-            const arr = [...campaigns.main_keywords.filter(i => !i.isDuplicate).map(i => i.value)]
-
-            if (JSON.stringify(prevCheckKeywords) !== JSON.stringify(arr)) {
-                source && source.cancel()
-                source = CancelToken.source()
-
-                prevCheckKeywords = [...arr]
-
-                const {result} = await zthServices.getKeysCount(arr, source.token)
-
-                setKeywordEstimations(result.keywordEstimations)
-
-                setKeysCountProcessing(false)
+    const changeMainKeywordsHandler = (list) => {
+        onUpdate({
+            campaigns: {
+                ...campaigns,
+                main_keywords: list
             }
+        }, 'mainKeywords')
+
+
+        mainKeywords.forEach(i => {
+            if (_.find(list, {value: i.value})) {
+
+            } else {
+                i.cancel.cancel()
+            }
+        })
+
+        setMainKeywords(list.map(i => {
+            if (!i.isDuplicate) {
+                i.cancel = CancelToken.source()
+            }
+
+            return i
+        }))
+    }
+
+    const getKeysEstimation = async (item) => {
+        setKeysCountProcessing(true)
+
+        try {
+            zthServices.getKeysCount([item.value], item.cancel.token)
+                .then(({result}) => {
+                    setKeywordEstimations(result.keywordEstimations)
+                })
         } catch (e) {
 
         }
+
+        setKeysCountProcessing(false)
+
     }
 
     const changeDateHandler = (type, date) => {
@@ -102,9 +124,10 @@ const RequiredSettings = ({
     }
 
     useEffect(() => {
-        if (campaigns.main_keywords.length > 0) getKeysCount()
-        else setKeywordEstimations(0)
-    }, [campaigns.main_keywords])
+        mainKeywords.forEach((i) => {
+            getKeysEstimation(i)
+        })
+    }, [mainKeywords])
 
     return (
         <section className={`step required-setting`}>
@@ -113,12 +136,12 @@ const RequiredSettings = ({
                     <div className="block main-keywords-setting">
                         <div className="row">
                             <div className={`col ${invalidField === 'mainKeywords' ? 'error-field' : ''}`}>
-                                <h3>Seed Keywords</h3>
+                                <h3 className={'required'}>Seed Keywords <i>*</i></h3>
                                 <p>Please add a minimum of 3 Seed Keywords that customers use to find your Product</p>
 
                                 <MultiTextArea
                                     value={campaigns.main_keywords}
-                                    onChange={(main_keywords) => changeCampaignsHandler({main_keywords}, invalidField === 'mainKeywords')}
+                                    onChange={changeMainKeywordsHandler}
                                     max={5}
                                     toMark={true}
                                     productName={name}
@@ -142,7 +165,9 @@ const RequiredSettings = ({
 
                                                 <ul>
                                                     {keywordEstimations.map(i => (
-                                                        <li><span>{i.keywordText}</span>: {i.lowResultsCountRounded} - {i.highResultsCountRounded}</li>))}
+                                                        <li>
+                                                            <span>{i.keywordText}</span>: {i.lowResultsCountRounded} - {i.highResultsCountRounded}
+                                                        </li>))}
                                                 </ul>
 
                                                 Note that amount of keywords for product will be capped at 5000 to
@@ -171,7 +196,7 @@ const RequiredSettings = ({
                     <div className="block portfolio-settings">
                         <div className="row">
                             <div className="col">
-                                <h3>Portfolio Settings</h3>
+                                <h3 className={'required'}>Portfolio Settings <i>*</i></h3>
 
                                 <Radio.Group value={portfolio.type}
                                              onChange={({target: {value}}) => changePortfolioHandler({
@@ -253,7 +278,7 @@ const RequiredSettings = ({
 
                                 <div className="row">
                                     <div className="form-group mr-20">
-                                        <label htmlFor="">Start</label>
+                                        <label htmlFor="" className={'required'}>Start <i>*</i></label>
 
                                         <DatePicker
                                             showToday={false}
@@ -306,7 +331,7 @@ const RequiredSettings = ({
 
                         <div className="row daily-budget-settings">
                             <div className={`col form-group ${invalidField === 'dailyBudget' ? 'error-field' : ''}`}>
-                                <label>ZTH Campaigns Daily Budget</label>
+                                <label className={'required'}>ZTH Campaigns Daily Budget <i>*</i></label>
 
                                 <InputCurrency
                                     value={campaigns.daily_budget}
@@ -329,7 +354,7 @@ const RequiredSettings = ({
 
                         <div className="row default-bid-settings">
                             <div className={`col form-group ${invalidField === 'defaultBid' ? 'error-field' : ''}`}>
-                                <label>Default Bid</label>
+                                <label className={'required'}>Default Bid <i>*</i></label>
 
                                 <InputCurrency
                                     value={campaigns.default_bid}
@@ -357,7 +382,7 @@ const RequiredSettings = ({
                         <div className="row">
                             <div className="col">
                                 <div className={`form-group ${invalidField === 'brandName' ? 'error-field' : ''}`}>
-                                    <label htmlFor="">Your Brand Name</label>
+                                    <label htmlFor="" className={'required'}>Your Brand Name <i>*</i></label>
                                     <Input
                                         maxLength={80}
                                         placeholder={'Your Brand Name'}

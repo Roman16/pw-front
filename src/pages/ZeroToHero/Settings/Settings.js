@@ -23,8 +23,8 @@ const Settings = (props) => {
         [searchStr, setSearchStr] = useState(''),
         [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
-        [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(false),
-        [visibleSuccessPaymentWindow, setVisibleSuccessPaymentWindow] = useState(false),
+        [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(props.match.params.status === 'create-success'),
+        [visibleSuccessPaymentWindow, setVisibleSuccessPaymentWindow] = useState(props.match.params.status === 'payment-success'),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
@@ -85,9 +85,6 @@ const Settings = (props) => {
 
 
     useEffect(() => {
-        if (props.match.params.status) {
-            if (props.match.params.status === 'create-success' || props.match.params.status === 'payment-success' ) setVisibleSuccessCreateWindow(true)
-        }
     }, [])
 
 
@@ -146,14 +143,18 @@ const Settings = (props) => {
 
             <CreateSuccessWindow
                 visible={visibleSuccessCreateWindow}
-
-                onClose={() => setVisibleSuccessCreateWindow(false)}
+                onClose={() => {
+                    setVisibleSuccessCreateWindow(false)
+                    history.push('/zero-to-hero/settings')
+                }}
             />
 
             <PaymentSuccessWindow
                 visible={visibleSuccessPaymentWindow}
-
-                onClose={() => setVisibleSuccessPaymentWindow(false)}
+                onClose={() => {
+                    setVisibleSuccessPaymentWindow(false)
+                    history.push('/zero-to-hero/settings')
+                }}
             />
         </div>
     )

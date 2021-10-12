@@ -1,6 +1,7 @@
 import React from "react"
 import './StepActions.less'
 import ProductItem from "../SelectProduct/ProductItem"
+import {Spin} from "antd"
 
 const StepActions = ({product, currentStep, createProcessing, disabled, onChangeStep}) => {
     return (
@@ -8,6 +9,8 @@ const StepActions = ({product, currentStep, createProcessing, disabled, onChange
             {product.id && <ProductItem
                 key={product.id}
                 product={product}
+                onSelect={() => {}}
+                onSelectParent={() => {}}
             />}
 
             {currentStep > 0 && <button
@@ -24,6 +27,7 @@ const StepActions = ({product, currentStep, createProcessing, disabled, onChange
                 onClick={() => onChangeStep(currentStep + 1)}
             >
                 {currentStep === 3 ? 'Create' : 'Next'}
+                {createProcessing && <Spin size={'small'}/>}
             </button>
         </div>
     )

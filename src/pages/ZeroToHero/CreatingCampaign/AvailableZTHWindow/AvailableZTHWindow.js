@@ -15,7 +15,7 @@ const AvailableZTHWindow = ({visible}) => {
             relevant to the new product.
         </p>
 
-        <Link to={'zero-to-hero/settings'} className={'sds-btn default'}>Zero to Hero Products</Link>
+        <Link to={'/zero-to-hero/settings'} className={'sds-btn default'}>Zero to Hero Products</Link>
     </ModalWindow>)
 }
 

@@ -100,25 +100,27 @@ const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onCh
     const selectProductHandler = (product, status, force = false) => {
         const dontShowAgain = localStorage.getItem('dontShowConfirmChaneZTHProduct')
 
-        if (openedSteps >= 0 && !force && !dontShowAgain) {
-            setVisibleConfirmWindow(true)
-            pr = {...product}
-            prStatus = status
-        } else {
-            onChangeOpenedSteps(-1)
+        if (product) {
+            if (openedSteps >= 0 && !force && !dontShowAgain) {
+                setVisibleConfirmWindow(true)
+                pr = {...product}
+                prStatus = status
+            } else {
+                onChangeOpenedSteps(-1)
 
-            setVisibleConfirmWindow(false)
-            onAddProducts(product)
+                setVisibleConfirmWindow(false)
+                onAddProducts(product)
+            }
         }
     }
 
     const selectParentHandler = (product) => {
-        if(openedProduct === product.id) {
+        if (openedProduct === product.id) {
             selectProductHandler(product)
             return
         }
 
-        if(addedProducts[0].id !== product.id) {
+        if (addedProducts[0].id !== product.id) {
             selectedParent = product
             openVariationsListHandler(product.id)
         }
