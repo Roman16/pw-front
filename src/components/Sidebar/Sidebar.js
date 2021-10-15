@@ -168,6 +168,24 @@ const Sidebar = () => {
                     </nav>
 
                     {/*------------------------*/}
+                    <div className="facebook-link">
+                        <InformationTooltip
+                            type={'custom'}
+                            description={<a href='https://www.facebook.com/groups/profitwhales.software/'
+                                            target="_blank">Join
+                                us on Facebook</a>}
+                            position={'right'}
+                            overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
+                        >
+                            <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
+                                <div className="icon">
+                                    <SVG id='facebook-icon-white'/>
+                                </div>
+
+                                <span className="bottom-span">Join us on Facebook</span>
+                            </a>
+                        </InformationTooltip>
+                    </div>
 
                     <div className="refer-link">
                         <InformationTooltip

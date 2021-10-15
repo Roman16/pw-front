@@ -6,12 +6,12 @@ export const mainMenu = [
         icon: 'zth-icon',
         subMenu: [
             {
-                title: 'Campaigns Setup',
+                title: 'Start Setup',
                 link: 'campaign'
             },
 
             {
-                title: 'ZTH Status',
+                title: 'ZTH Statuses',
                 link: 'settings'
             },
         ]
