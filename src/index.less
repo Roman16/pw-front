@@ -1077,29 +1077,29 @@ a.sds-btn {
   }
 
   &.icon {
-      border-radius: 50%;
-      padding: 0;
+    border-radius: 50%;
+    padding: 0;
+
+    svg {
+      fill: #5B586F;
+      transition: .2s ease-in-out;
+    }
+
+    &:hover {
+      background: rgba(105, 89, 171, 0.05);
 
       svg {
-        fill: #5B586F;
-        transition: .2s ease-in-out;
+        fill: @default-purple;
       }
+    }
 
-      &:hover {
-        background: rgba(105, 89, 171, 0.05);
+    &:focus {
+      background: rgba(105, 89, 171, 0.15);
 
-        svg {
-          fill: @default-purple;
-        }
+      svg {
+        fill: @default-purple;
       }
-
-      &:focus {
-        background: rgba(105, 89, 171, 0.15);
-
-        svg {
-          fill: @default-purple;
-        }
-      }
+    }
   }
 
   //ripple effect
@@ -1221,6 +1221,43 @@ button.white[disabled] {
 /*
 *  INPUT
 */
+
+.form-group {
+  .ant-input,
+  input {
+    height: 2.2857142857142856rem;
+    border-radius: 4px;
+    border: 1px solid #C9CBD4;
+    background: #FFFFFF;
+    color: #5B586F;
+    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+    font-size: 1rem;
+
+    &:hover {
+      border-color: #5B586F !important;
+      outline: none;
+      box-shadow: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+      border-color: #6959AB !important;
+    }
+
+    &::placeholder {
+      color: rgba(101, 106, 132, 0.4);
+    }
+  }
+
+  &.error-field {
+    .ant-input,
+    input {
+      border: 1px solid #FF5256;
+    }
+  }
+}
+
 .form-group {
   .form-control,
   .ant-input-search {
@@ -1274,31 +1311,6 @@ button.white[disabled] {
     &::placeholder {
       font-size: 1rem;
       color: #C9CBD4;
-    }
-  }
-
-  .ant-input {
-    height: 2.2857142857142856rem;
-    border-radius: 4px;
-    border: 1px solid #C9CBD4;
-    background: #FFFFFF;
-    color: #656A84;
-    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    font-size: 1rem;
-
-    &:hover {
-      border: 1px solid #343C5A;
-      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-    }
-
-    &:focus {
-      box-shadow: none;
-      outline: none;
-      border: 1px solid #6D6DF6 !important;
-    }
-
-    &::placeholder {
-      color: rgba(101, 106, 132, 0.4);
     }
   }
 }

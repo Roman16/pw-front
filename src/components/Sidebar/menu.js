@@ -28,27 +28,28 @@ export const mainMenu = [
         icon: 'analytics-icon-sidebar',
         link: 'tableau'
     },
-
-
     {
-        title: 'Optimization Setup',
-        link: 'optimization'
-    },
-    {
-        title: 'Optimization Reports',
-        link: 'report'
-    },
-    {
-        title: 'Products Info',
-        link: 'product-settings'
-    },
-    // {
-    //     title: 'PPC Scanner',
-    //     link: 'scanner',
-    //     className: 'ppcScaner'
-    // },
-    {
-        title: 'Dayparting',
-        link: 'dayparting',
+        title: 'PPC Automate',
+        key: 'ppc-automate',
+        icon: 'ppc-automate-icon',
+        link: 'ppc',
+        subMenu: [
+            {
+                title: 'Optimization Setup',
+                link: 'optimization'
+            },
+            {
+                title: 'Optimization Reports',
+                link: 'report'
+            },
+            {
+                title: 'Products Info',
+                link: 'product-settings'
+            },
+            {
+                title: 'Dayparting',
+                link: 'dayparting',
+            }
+        ]
     }
 ]

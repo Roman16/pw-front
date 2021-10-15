@@ -1,9 +1,8 @@
 import {createBrowserHistory} from 'history'
-import React, {useState} from "react"
+import React from "react"
 import ReactDOM from "react-dom"
 import ConfirmActionPopup from "../components/ModalWindow/ConfirmActionPopup"
 import ModalWindow from "../components/ModalWindow/ModalWindow"
-import {Checkbox} from "antd"
 
 const getUserConfirmation = (message, callback) => {
     const modal = document.createElement("div")

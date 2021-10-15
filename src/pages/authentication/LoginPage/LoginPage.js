@@ -1,28 +1,73 @@
-import React, {useEffect} from 'react'
-import LoginPageForm from './LoginPageForm/LoginPageForm'
+import React, {useEffect, useState} from 'react'
 import './LoginPage.less'
 import {history} from "../../../utils/history"
-import logo from '../../../assets/img/ProfitWhales-logo-white.svg'
-import useScript from "../../../utils/hooks/useScript"
-import {Link} from "react-router-dom"
 import {useDispatch} from "react-redux"
 import {userActions} from "../../../actions/user.actions"
+import LoginForm from "./LoginForm"
+import PageDescription from "./PageDescription"
+import {userService} from "../../../services/user.services"
+import Cookies from "js-cookie"
 
 const LoginPage = (props) => {
+    const [user, setUser] = useState({
+            email: '',
+            password: '',
+            remember_me: false
+        }),
+        [loginProcessing, setLoginProcessing] = useState(false),
+        [failedFields, setFailedFields] = useState([])
+
     const dispatch = useDispatch()
 
-    useScript({
-        funk: `!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2628499780566506');
-fbq('track', 'PageView');`
-    })
+    const changeUserHandler = (value) => {
+        setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
+        setUser({...user, ...value})
+    }
+
+    const loginHandler = async (e) => {
+        e.preventDefault()
+
+        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(user.email)
+
+        if (user.password.length < 6 || user.email.length === 0 || !fieldEmailValid) {
+            if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
+            if (user.email.length === 0 || !fieldEmailValid) setFailedFields(prevState => [...prevState, 'email'])
+        } else {
+            try {
+                setLoginProcessing(true)
+
+                const res = await userService.login({
+                    ...user,
+                    ...props.location.search && {redirectLink: new URLSearchParams(props.location.search).get('redirect')},
+                    ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
+                })
+
+                localStorage.setItem('token', res.access_token)
+
+                const userFullInformation = await userService.getUserInfo()
+
+                const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
+                    ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
+
+                if (!mwsConnected && !ppcConnected) {
+                    history.push('/connect-amazon-account')
+                } else if (!mwsConnected && ppcConnected) {
+                    history.push('/connect-mws-account')
+                } else if (!ppcConnected && mwsConnected) {
+                    history.push('/connect-ppc-account')
+                } else {
+                    if (userFullInformation.user.is_agency_client) history.push('/ppc/optimization')
+                    else history.push('/account/settings')
+                }
+
+                dispatch(userActions.setInformation(userFullInformation))
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
+        setLoginProcessing(false)
+    }
 
     useEffect(() => {
         if (props.match.params.status === 'logout') {
@@ -40,27 +85,18 @@ fbq('track', 'PageView');`
     }, [])
 
     return (
-        <div className="auth-page ">
-            <div className="login-page">
-                <div className="logo-auth" onClick={() => history.push('/')}>
-                    <img src={logo} alt="logo"/>
-                </div>
+        <div className="auth-page login-page">
+            <div className="container">
+                <LoginForm
+                    user={user}
+                    processing={loginProcessing}
+                    failedFields={failedFields}
 
-                <div className="container">
-                    <div className="title-block">
-                        <h3>Sign in</h3>
-                        <h4>Welcome back, Please login <br/> to your account</h4>
-                    </div>
+                    onChange={changeUserHandler}
+                    onSubmit={loginHandler}
+                />
 
-                    <LoginPageForm
-                        location={props.location}
-                    />
-
-                    {/*<div className="redirect-link">*/}
-                    {/*    Don’t have an account?*/}
-                    {/*    <Link to={'/registration'}>SIGN UP</Link>*/}
-                    {/*</div>*/}
-                </div>
+                <PageDescription/>
             </div>
         </div>
     )

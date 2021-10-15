@@ -84,14 +84,14 @@ const routers = () => {
                     {/*<Route exact path="/course" component={Course}/>*/}
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
-                    {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
-                    <Route exact path="/registration/:tag?" render={(props) => {
-                        if (props.match.params.tag && props.match.params.tag === 'from-agency') {
-                            return (<RegistrationPage {...props}/>)
-                        } else {
-                            return (<AuditRegistration/>)
-                        }
-                    }}/>
+                    <Route exact path="/registration/:tag?" component={RegistrationPage}/>
+                    {/*<Route exact path="/registration/:tag?" render={(props) => {*/}
+                    {/*    if (props.match.params.tag && props.match.params.tag === 'from-agency') {*/}
+                    {/*        return (<RegistrationPage {...props}/>)*/}
+                    {/*    } else {*/}
+                    {/*        return (<AuditRegistration/>)*/}
+                    {/*    }*/}
+                    {/*}}/>*/}
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
