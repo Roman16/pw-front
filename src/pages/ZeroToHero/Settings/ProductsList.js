@@ -19,7 +19,8 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
             </div>
 
             <div className="col">
-                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name} target={'_blank'}>
+                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}
+                   target={'_blank'}>
                     {product.name}
                 </a>
 
@@ -68,26 +69,48 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 
 const jobStatus = ({job}) => {
     if (job) {
-        if (job.status === 'DONE') {
+        const status = job.status
+
+        if (status === 'DONE') {
             return (
                 <div className="status-field finished">
-                    Finished
+                    Created & Uploaded.
+                </div>
+            )
+        } else if (status === 'CREATION_PENDING') {
+            return (
+                <div className="status-field processing">
+                    Creation starting.
+                </div>
+            )
+        } else if (status === 'CREATION_IN_PROGRESS' || status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED') {
+            return (
+                <div className="status-field processing">
+                    Creation in progress.
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns.'}
+                    />
+                </div>
+            )
+        } else if (status === 'UPLOAD_PENDING') {
+            return (
+                <div className="status-field processing">
+                    Upload starting.
+                </div>
+            )
+        } else if (status === 'UPLOAD_IN_PROGRESS' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
+            return (
+                <div className="status-field processing">
+                    Upload in progress.
+                    <InformationTooltip
+                        description={'We are in the process of uploading your PPC campaigns to your Amazon account.'}
+                    />
                 </div>
             )
         } else if (job.status === 'DRAFT') {
             return (
                 <div className="status-field draft">
                     Draft
-                </div>
-            )
-        } else if (job.status === 'CREATION_IN_PROGRESS' || job.status === 'UPLOAD_IN_PROGRESS') {
-            return (
-                <div className="status-field processing">
-                    Processing...
-
-                    <InformationTooltip
-                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-                    />
                 </div>
             )
         } else if (job.status === 'PAYMENT_PENDING') {
@@ -102,22 +125,6 @@ const jobStatus = ({job}) => {
                     Payment interrupted. <br/> Please complete payment
                 </div>
             )
-        } else if (job.status === 'CREATION_PENDING' || job.status === 'UPLOAD_PENDING') {
-            return (
-                <div className="status-field processing">
-                    Pending...
-                </div>
-            )
-        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED' || job.status === 'CREATION_FAILED') {
-            return (
-                <div className="status-field processing">
-                    Processing...
-
-                    <InformationTooltip
-                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-                    />
-                </div>
-            )
         } else {
             return (
                 <div className="status-field">
@@ -130,7 +137,9 @@ const jobStatus = ({job}) => {
 
 const jobActions = ({job}) => {
     if (job) {
-        if (job.status === 'DRAFT') {
+        const status = job.status
+
+        if (status === 'DRAFT') {
             return (
                 <div className="issues-field">
                     {/*<button className={'btn default'}*/}
@@ -139,7 +148,7 @@ const jobActions = ({job}) => {
                     {/*</button>*/}
                 </div>
             )
-        } else if (job.status === 'CREATION_THROTTLED' || job.status === 'CREATION_FAILED' || job.status === 'UPLOAD_FAILED' || job.status === 'UPLOAD_THROTTLED') {
+        } else if (status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn white'}>

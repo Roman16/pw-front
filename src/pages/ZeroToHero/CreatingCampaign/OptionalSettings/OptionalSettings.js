@@ -8,8 +8,9 @@ const OptionalSettings = ({product, onUpdate}) => {
 
     return (<section className={'optional-settings'}>
         <h4>
-            This step is optional. This stepis optional.This stepis optional.This stepis <br/>
-            optional.This stepis optional.This stepis optional.
+            This step is optional. Next settings are not required for successful generation of Zero to Hero campaigns,
+            but <br/>
+            can be used to fine-tune campaigns to your preference or provide additional information about keywords.
         </h4>
 
         <BiddingStrategies

@@ -18,7 +18,7 @@ const ProductItem = ({
                          fetchVariationsProcessing
                      }) => {
 
-    const isIneligible = product.eligibility_status !== undefined && product.variations ? product.variations.every(i => i.eligibility_status === 'INELIGIBLE') : product.eligibility_status === 'INELIGIBLE'
+    const isIneligible = product.eligibility_status !== undefined && product.variations ? (product.variations.every(i => i.eligibility_status === 'INELIGIBLE') || product.variations.length === 0) : product.eligibility_status === 'INELIGIBLE'
 
     return (
         <>
@@ -94,7 +94,9 @@ const ProductItem = ({
                     Ineligible
                     <InformationTooltip
                         overlayClassName={'ineligible-description'}
-                        description={product.variations ? 'All variations of the parent product are ineligible for advertising. Please add an eligible variation.' :
+                        description={product.variations ?
+                            product.variations.length === 0 ? 'You have already created ZTH campaigns for each variation of this parent product. ZTH campaigns can\'t be created for the empty parent product.' :
+                                'All variations of the parent product are ineligible for advertising. Please add an eligible variation.' :
                             <div>This product in not eligible for advertising on Amazon Marketplace, thus we
                                 cannot create ZTH campaigns for it. Ineligibility reasons:
                                 <ul>
@@ -122,7 +124,8 @@ const ProductItem = ({
                             <div className="variation-indicator"/>
                             <ProductItem
                                 product={variationProduct}
-                                onSelect={() => {}}
+                                onSelect={() => {
+                                }}
                             />
                         </div>
                     )

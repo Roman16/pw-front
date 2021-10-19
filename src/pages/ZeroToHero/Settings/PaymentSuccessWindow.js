@@ -9,11 +9,11 @@ const PaymentSuccessWindow = ({visible, onClose}) => {
             footer={false}
             className={'success-zth-action'}
         >
-            <h2>Congratulations! Your campaigns are in progress!</h2>
+            <h2>Your payment is successful!</h2>
             <p>
-                Our algorithm has started to create your campaigns. Because of the high volume and complexity of this
-                process of creating professionally structured campaigns from scratch, it takes our system up to 6 hours
-                to create the campaigns.
+                Our system has started uploading campaigns to your Amazon account. Due to high volume of operations
+                required to create campaigns in Amazon Advertising, it may take up to 6 hours until campaigns appear in
+                your Amazon Campaigs Manager . You can see the status of the upload process on ZTH Statuses page.
             </p>
 
             <button className="sds-btn default" onClick={onClose}>

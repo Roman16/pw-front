@@ -37,7 +37,6 @@ const RequiredSettings = ({
                           }) => {
 
     const [mainKeywords, setMainKeywords] = useState([]),
-        [processingList, setProcessingList] = useState([]),
         [estimateProcessing, setEstimateProcessing] = useState(false)
 
     const changeProductHandler = (value, isInvalid) => {

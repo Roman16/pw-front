@@ -18,7 +18,7 @@ export const zthServices = {
 }
 
 function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
-    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}&order_by:${sorting}=name${searchStr && `&search_query=${searchStr}`}`, false, false, cancelToken)
+    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}&order_by:${sorting}=product_name${searchStr && `&search_query=${searchStr}`}`, false, false, cancelToken)
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {

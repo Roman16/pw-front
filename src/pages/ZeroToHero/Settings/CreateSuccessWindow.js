@@ -11,9 +11,9 @@ const CreateSuccessWindow = ({visible, onClose}) => {
         >
             <h2>Congratulations! Your campaigns are in progress!</h2>
             <p>
-                Our algorithm has started to create your campaigns. Because of the high volume and complexity of this
-                process of creating professionally structured campaigns from scratch, it takes our system up to 6 hours
-                to create the campaigns.
+                Our algorithm has started creating your campaigns. Due to the high volume and complexity of this process
+                of creating professionally structured campaigns from scratch, it takes our system up to 6 hours to
+                create the campaigns. This time will be reduced in the near future.
             </p>
 
             <button className="sds-btn default" onClick={onClose}>
