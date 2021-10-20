@@ -1,8 +1,6 @@
 import React from "react"
 import logo from '../../../assets/img/logo/sds-sidebar-logo.svg'
 import img from '../../../assets/img/page-login/description-img.svg'
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faFacebookSquare, faLinkedin, faYoutube} from "@fortawesome/free-brands-svg-icons"
 
 const PageDescription = () => (
     <div className="page-description">
@@ -14,7 +12,7 @@ const PageDescription = () => (
 
         <div className="social">
             <a
-                href="https://www.facebook.com/profitwhales/"
+                href="https://www.facebook.com/Sponsoreds-103322802120393"
                 target="_blank"
                 title="Facebook"
             >
@@ -26,7 +24,7 @@ const PageDescription = () => (
             </a>
 
             <a
-                href="https://www.linkedin.com/company/profitwhales/"
+                href="https://www.linkedin.com/company/76485296/admin"
                 target="_blank"
                 title="LinkedIn"
             >
@@ -38,7 +36,7 @@ const PageDescription = () => (
             </a>
 
             <a
-                href="https://www.linkedin.com/company/profitwhales/"
+                href="https://www.instagram.com/sponsoreds_com"
                 target="_blank"
                 title="Instagram"
             >
