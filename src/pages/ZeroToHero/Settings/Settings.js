@@ -9,6 +9,7 @@ import axios from "axios"
 import CreateSuccessWindow from "./CreateSuccessWindow"
 import {history} from "../../../utils/history"
 import PaymentSuccessWindow from "./PaymentSuccessWindow"
+import {Link} from "react-router-dom"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -22,8 +23,8 @@ const Settings = (props) => {
         [searchStr, setSearchStr] = useState(''),
         [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
-        [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(false),
-        [visibleSuccessPaymentWindow, setVisibleSuccessPaymentWindow] = useState(false),
+        [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(props.match.params.status === 'create-success'),
+        [visibleSuccessPaymentWindow, setVisibleSuccessPaymentWindow] = useState(props.match.params.status === 'payment-success'),
         [paginationOptions, setPaginationOptions] = useState({
             page: 1,
             pageSize: 10,
@@ -67,8 +68,8 @@ const Settings = (props) => {
                 cancelToken: source.token
             })
 
-            setList(res.result || [])
-            setTotalSize(res.totalSize)
+            setList(res.result.products || [])
+            setTotalSize(res.result.totalSize)
 
             setProcessing(false)
 
@@ -84,16 +85,6 @@ const Settings = (props) => {
 
 
     useEffect(() => {
-        zthServices.checkIncompleteBatch()
-            .then(res => {
-                if (res.result) {
-                    setTokens(res.result.available_tokens)
-                }
-            })
-
-        if (props.match.params.status) {
-            if (props.match.params.status === 'create-success' || props.match.params.status === 'payment-success' ) setVisibleSuccessCreateWindow(true)
-        }
     }, [])
 
 
@@ -135,11 +126,10 @@ const Settings = (props) => {
                     />
                 </div>
 
-                {tokens > 0 && <div className="credits-count">
-                    ZTH Credits Left:
-
-                    <span>{tokens}</span>
-                </div>}
+                {selectedTab === 'zth-products' && <Link to={'/zero-to-hero/campaign'} className="sds-btn default">
+                    <SVG id={'plus-white'}/>
+                    Create New
+                </Link>}
             </div>
 
             <ProductsList
@@ -153,14 +143,18 @@ const Settings = (props) => {
 
             <CreateSuccessWindow
                 visible={visibleSuccessCreateWindow}
-
-                onClose={() => setVisibleSuccessCreateWindow(false)}
+                onClose={() => {
+                    setVisibleSuccessCreateWindow(false)
+                    history.push('/zero-to-hero/settings')
+                }}
             />
 
             <PaymentSuccessWindow
-                visible={visibleSuccessCreateWindow}
-
-                onClose={() => setVisibleSuccessCreateWindow(false)}
+                visible={visibleSuccessPaymentWindow}
+                onClose={() => {
+                    setVisibleSuccessPaymentWindow(false)
+                    history.push('/zero-to-hero/settings')
+                }}
             />
         </div>
     )

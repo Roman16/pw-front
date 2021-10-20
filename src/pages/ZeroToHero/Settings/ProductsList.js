@@ -19,7 +19,8 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
             </div>
 
             <div className="col">
-                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}>
+                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}
+                   target={'_blank'}>
                     {product.name}
                 </a>
 
@@ -68,10 +69,42 @@ const ProductItem = ({product, openedProduct, onOpenVariations}) => {
 
 const jobStatus = ({job}) => {
     if (job) {
-        if (job.status === 'DONE') {
+        const status = job.status
+
+        if (status === 'DONE') {
             return (
                 <div className="status-field finished">
-                    Finished
+                    Created & Uploaded.
+                </div>
+            )
+        } else if (status === 'CREATION_PENDING') {
+            return (
+                <div className="status-field processing">
+                    Creation starting.
+                </div>
+            )
+        } else if (status === 'CREATION_IN_PROGRESS' || status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED') {
+            return (
+                <div className="status-field processing">
+                    Creation in progress.
+                    <InformationTooltip
+                        description={'We are in the process of creating your PPC campaigns.'}
+                    />
+                </div>
+            )
+        } else if (status === 'UPLOAD_PENDING') {
+            return (
+                <div className="status-field processing">
+                    Upload starting.
+                </div>
+            )
+        } else if (status === 'UPLOAD_IN_PROGRESS' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
+            return (
+                <div className="status-field processing">
+                    Upload in progress.
+                    <InformationTooltip
+                        description={'We are in the process of uploading your PPC campaigns to your Amazon account.'}
+                    />
                 </div>
             )
         } else if (job.status === 'DRAFT') {
@@ -80,30 +113,16 @@ const jobStatus = ({job}) => {
                     Draft
                 </div>
             )
-        } else if (job.status === 'PROCESSING') {
+        } else if (job.status === 'PAYMENT_PENDING') {
             return (
-                <div className="status-field processing">
-                    Processing...
-
-                    <InformationTooltip
-                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-                    />
+                <div className="status-field waiting-payment">
+                    Waiting for Payment
                 </div>
             )
-        } else if (job.status === 'PENDING') {
+        } else if (job.status === 'PAYMENT_IN_PROGRESS') {
             return (
-                <div className="status-field processing">
-                    Pending...
-                </div>
-            )
-        } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-            return (
-                <div className="status-field processing">
-                    Processing...
-
-                    <InformationTooltip
-                        description={'We are in the process of creating your PPC campaigns. You’ll get an email once it done.'}
-                    />
+                <div className="status-field waiting-payment">
+                    Payment interrupted. <br/> Please complete payment
                 </div>
             )
         } else {
@@ -116,49 +135,58 @@ const jobStatus = ({job}) => {
     }
 }
 
-const jobActions = ({job, batch}) => {
-    // if (job) {
-    //     if (batch.status === 'DRAFT') {
-    //         return (
-    //             <div className="issues-field">
-    //                 <button className={'btn default'}
-    //                         onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-    //                     Fix Payment
-    //                 </button>
-    //             </div>
-    //         )
-    //     } else if (job.status === 'THROTTLED' || job.status === 'FAILED') {
-    //         return (
-    //             <div className="issues-field">
-    //                 <button className={'btn default'}>
-    //                     Help Center
-    //                 </button>
-    //             </div>
-    //         )
-    //     } else {
-    //         return (
-    //             <div className="issues-field">
-    //                 {job.issue}
-    //             </div>
-    //         )
-    //     }
-    // }
+const jobActions = ({job}) => {
+    if (job) {
+        const status = job.status
 
-    return (
-        <div className="issues-field">
-            <button className={'btn default'}
-                    onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>
-                Pay & Upload
-            </button>
-        </div>
-    )
+        if (status === 'DRAFT') {
+            return (
+                <div className="issues-field">
+                    {/*<button className={'btn default'}*/}
+                    {/*        onClick={() => history.push(`/zero-to-hero/payment/${batch.id}`)}>*/}
+                    {/*    Fix Payment*/}
+                    {/*</button>*/}
+                </div>
+            )
+        } else if (status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn white'}>
+                        Help Center
+                    </button>
+                </div>
+            )
+        } else if (job.status === 'PAYMENT_PENDING') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn blue'}
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
+                        Pay & Upload
+                    </button>
+                </div>
+            )
+        } else if (job.status === 'PAYMENT_IN_PROGRESS') {
+            return (
+                <div className="issues-field">
+                    <button className={'sds-btn blue'}
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
+                        Complete Payment
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div className="issues-field">
+                    {job.issue}
+                </div>
+            )
+        }
+    }
 
 }
 
 const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
     const [openedProduct, setOpenedProduct] = useState(null)
-
-    const dispatch = useDispatch()
 
     const openProductVariationsHandler = (id) => {
         setOpenedProduct(prevState => prevState === id ? null : id)
@@ -166,16 +194,16 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
 
 
     const createZthHandler = (product) => {
-        dispatch(zthActions.addProducts([product]))
+        const searchStr = product.sku || product.asin || product.name
 
-        history.push('/zero-to-hero/creating')
+        history.push(`/zero-to-hero/creating?searchStr=${searchStr}`)
     }
 
     const expandedRowRender = (product) => {
         const columns = {
             'zth-products': [
                 {
-                    width: '400px',
+                    width: '500px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -184,7 +212,8 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                    minWidth: '200px',
+                    render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
                             <a
@@ -197,28 +226,22 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 },
                 {
-                    // render: (date) => (
-                    //     <div className='date-field'>
-                    //         {moment(date).format('DD MMM YYYY')}
-                    //     </div>
-                    // )
+                    minWidth: '160px',
                     render: () => ('')
-
                 },
 
                 {
-                    // render: (props, item) => (jobStatus(item))
+                    minWidth: '150px',
                     render: () => ('')
-
                 },
-
                 {
+                    minWidth: '200px',
                     render: () => ('')
                 },
             ],
             'other-products': [
                 {
-                    width: '400px',
+                    width: '500px',
                     render: (props) => {
                         return (<ProductItem
                                 product={props}
@@ -227,7 +250,8 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     }
                 },
                 {
-                    render: (text, {sku, asin}) => <div className={'sku-asin'}>
+                    minWidth: '200px',
+                    render: ({sku, asin}) => <div className={'sku-asin'}>
                         <div title={sku}><b>SKU:</b>{sku}</div>
                         <div title={asin}><b>ASIN:</b>
                             <a
@@ -240,7 +264,14 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                     </div>
                 },
                 {
-                    render: () => ''
+                    minWidth: '200px',
+                    render: (product) => (
+                        <div className="zth-status-field">
+                            <button className='sds-btn blue' onClick={() => createZthHandler(product)}>
+                                Create ZTH
+                            </button>
+                        </div>
+                    )
                 },
             ]
         }
@@ -273,10 +304,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
 
     const defaultColumns = [
         {
-            title: 'Products name',
+            title: 'Product name',
             dataIndex: 'id',
             key: 'id',
-            width: '400px',
+            width: '500px',
             render: (id, product) => (<ProductItem
                 product={product}
                 openedProduct={openedProduct}
@@ -287,6 +318,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
             title: 'SKU/ASIN',
             dataIndex: 'id',
             key: 'id',
+            minWidth: '200px',
             render: (text, {sku, asin}) => <div className={'sku-asin'}>
                 <div title={sku}><b>SKU:</b>{sku}</div>
                 <div title={asin}><b>ASIN:</b>
@@ -305,9 +337,10 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         'zth-products': [
             ...defaultColumns,
             {
-                title: 'Created Date',
+                title: 'Created at Date',
                 dataIndex: 'date',
                 key: 'date',
+                minWidth: '160px',
                 render: (date, item) => {
                     return (
                         <div className='date-field'>
@@ -320,25 +353,28 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 title: 'Status',
                 dataIndex: 'status',
                 key: 'status',
+                minWidth: '150px',
                 render: (status, item) => (jobStatus(item))
             },
             {
                 title: 'Actions',
                 dataIndex: 'problems',
                 key: 'problems',
+                minWidth: '200px',
                 render: (status, item) => (jobActions(item))
             },
         ],
         'other-products': [
             ...defaultColumns,
             {
-                title: 'Zero To Hero Status',
+                title: 'Actions',
                 dataIndex: 'zth_status',
                 key: 'zth_status',
+                minWidth: '200px',
                 render: (status, product) => (
                     <div className="zth-status-field">
-                        <button className='btn green-btn' onClick={() => createZthHandler(product)}>
-                            Create
+                        <button className='sds-btn blue' onClick={() => createZthHandler(product)}>
+                            Create ZTH
                         </button>
                     </div>
                 )

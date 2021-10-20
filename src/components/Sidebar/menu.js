@@ -1,81 +1,55 @@
-export const regionsMenu = [
+export const mainMenu = [
     {
-        region: 'North America',
-        countries: [
+        title: 'Zero to Hero',
+        key: 'zth',
+        link: 'zero-to-hero',
+        icon: 'zth-icon',
+        subMenu: [
             {
-                name: 'US',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG',
-                active: true
+                title: 'Start Setup',
+                link: 'campaign'
             },
-            {
-                name: 'Canada',
-                flag: 'canada.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'Mexico',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            }
-        ]
-    },
-    {
-        region: 'Europe',
-        countries: [
-            {
-                name: 'UK',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'DE',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'FR',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'IT',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            },
-            {
-                name: 'ES',
-                flag: 'us.svg',
-                description: 'NBI49DMDH34BG'
-            }
-        ]
-    }
-];
 
-export const ppcAutomateMenu = [
-    // {
-    //     title: 'Dashboard',
-    //     link: 'dashboard'
-    // },
-    {
-        title: 'Optimization Setup',
-        link: 'optimization'
+            {
+                title: 'ZTH Statuses',
+                link: 'settings'
+            },
+        ]
     },
     {
-        title: 'Optimization Reports',
-        link: 'report'
+        title: 'Analytics',
+        key: 'analytics',
+        icon: 'analytics-icon-sidebar',
+        link: 'analytics/products'
     },
     {
-        title: 'Products Info',
-        link: 'product-settings'
+        title: 'Tableau',
+        key: 'tableau',
+        icon: 'analytics-icon-sidebar',
+        link: 'tableau'
     },
-    // {
-    //     title: 'PPC Scanner',
-    //     link: 'scanner',
-    //     className: 'ppcScaner'
-    // },
     {
-        title: 'Dayparting',
-        link: 'dayparting',
+        title: 'PPC Automate',
+        key: 'ppc-automate',
+        icon: 'ppc-automate-icon',
+        link: 'ppc',
+        subMenu: [
+            {
+                title: 'Optimization Setup',
+                link: 'optimization'
+            },
+            {
+                title: 'Optimization Reports',
+                link: 'report'
+            },
+            {
+                title: 'Products Info',
+                link: 'product-settings'
+            },
+            {
+                title: 'Dayparting',
+                link: 'dayparting',
+            }
+        ]
     }
-];
+]

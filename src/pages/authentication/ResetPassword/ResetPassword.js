@@ -1,70 +1,83 @@
-import React, {useState, Fragment, useEffect} from "react";
-import logo from "../../../assets/img/logo.svg";
-import {Button, Form, Input, Spin} from "antd";
-import {Link} from "react-router-dom";
-import './ResetPassword.less';
-import {userService} from "../../../services/user.services";
-import {history} from "../../../utils/history";
-import '../LoginPage/LoginPage.less';
-import {notification} from "../../../components/Notification";
+import React, {useState, useEffect} from "react"
+import './ResetPassword.less'
+import {userService} from "../../../services/user.services"
+import {history} from "../../../utils/history"
+import '../LoginPage/LoginPage.less'
+import PageDescription from "../LoginPage/PageDescription"
+import Input from "../../../components/Input/Input"
+import {Spin} from "antd"
+import {Link} from "react-router-dom"
+import {SVG} from "../../../utils/icons"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const ResetPassword = (props) => {
-    const [userParams, setParams] = useState({}),
+    const [user, setUser] = useState({
+            password: '',
+            password_confirmation: ''
+        }),
+        [email, setEmail] = useState(''),
         [resetStatus, setResetStatus] = useState(null),
-        [processing, setProcessing] = useState(false);
+        [processing, setProcessing] = useState(false),
+        [failedFields, setFailedFields] = useState([]),
+        [openedPassword, setOpenedPassword] = useState([])
 
-    const handleChange = (e) => {
-        setParams({
-            ...userParams,
-            [e.target.name]: e.target.value
-        })
-    };
+
+    const openPasswordHandler = (field) => {
+        if (openedPassword.includes(field)) setOpenedPassword([...openedPassword.filter(i => i !== field)])
+        else setOpenedPassword([...openedPassword, field])
+    }
+
+    const onChange = (value) => {
+        setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
+        setUser({...user, ...value})
+    }
 
     const sendEmailHandler = async (e) => {
-        e.preventDefault();
-        setProcessing(true);
+        e.preventDefault()
 
-        try {
-            await userService.sendEmailForResetPassword({email: userParams.email});
-            setResetStatus('sent')
-        } catch (e) {
-            console.log(e);
+        if (!email) {
+            setFailedFields(prevState => [...prevState, 'email'])
+        } else {
+            setProcessing(true)
+
+            try {
+                await userService.sendEmailForResetPassword({email: email})
+                setResetStatus('sent')
+            } catch (e) {
+                console.log(e)
+            }
         }
 
-        setProcessing(false);
-    };
+        setProcessing(false)
+    }
 
     const changePasswordHandler = async (e) => {
-        e.preventDefault();
-        setProcessing(true);
+        e.preventDefault()
+        setProcessing(true)
 
-        if (userParams.password === userParams.confirmPassword) {
+        if (!user.password || user.password !== user.password_confirmation) {
+            if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
+            if (user.password !== user.password_confirmation) setFailedFields(prevState => [...prevState, 'password_confirmation'])
+        } else {
             try {
                 const res = await userService.changeUserPassword({
                     token: props.match.params.token,
                     userId: props.match.params.userId,
-                    newPassword: {
-                        password: userParams.password,
-                        password_confirmation: userParams.confirmPassword
-                    }
-                });
+                    newPassword: user
+                })
 
-                notification.success({title: 'Success'});
-
-                localStorage.setItem('token', res.access_token);
+                localStorage.setItem('token', res.access_token)
 
                 setTimeout(() => {
                     history.push('/account/settings')
                 }, 1)
             } catch (e) {
-                console.log(e);
+                console.log(e)
             }
-        } else {
-            notification.error({title: 'The password confirmation does not match'})
         }
 
-        setProcessing(false);
-    };
+        setProcessing(false)
+    }
 
     useEffect(() => {
         if (props.match.params && props.match.params.userId && props.match.params.token) {
@@ -72,119 +85,134 @@ const ResetPassword = (props) => {
                 token: props.match.params.token,
                 userId: props.match.params.userId,
             })
-                .then((res) => {
-                    setResetStatus('changePass');
+                .then(() => {
+                    setResetStatus('changePass')
                 })
                 .catch(() => {
-                    setResetStatus('sendEmail');
+                    setResetStatus('sendEmail')
                 })
         } else {
-            setResetStatus('sendEmail');
+            setResetStatus('sendEmail')
         }
-    }, []);
+    }, [])
 
 
     return (
-        <div className='auth-page'>
-            <div className="reset-password-page">
-                <div className="logo-auth" onClick={() => history.push('/')}>
-                    <img src={logo} alt="logo"/>
-                </div>
-
-                <div className="container">
-                    <div className="title-block">
-                        <h3>Reset Password</h3>
-                        <h4>
-                            {resetStatus === 'sendEmail' && 'Request an e-mail reset link'}
-                            {resetStatus === 'changePass' && 'Change your password'}
-                        </h4>
-                    </div>
-
-                    {!resetStatus && <Spin size={'large'}/>}
-
+        <div className='auth-page reset-password-page'>
+            <div className="container">
+                <form>
                     {resetStatus === 'sendEmail' &&
-                    <Form className="login-form" onSubmit={sendEmailHandler}>
-                        <Form.Item className="input-form-group">
+                    <>
+                        <h2>Reset Password</h2>
+                        <p>
+                            Please enter your email address and <br/> we will email you a link to reset
+                            your <br/> password
+                        </p>
+
+                        <diw className={`form-group ${failedFields.includes('email') ? 'error-field' : ''}`}>
                             <Input
-                                className="email-input"
                                 type="email"
-                                name="email"
-                                id="email"
-                                required={true}
-                                // autoComplete="off"
-                                placeholder="E-mail"
-                                onChange={handleChange}
+                                placeholder={'E-mail'}
+                                value={email}
+                                onChange={({target: {value}}) => {
+                                    setFailedFields([...failedFields.filter(i => i !== 'email')])
+                                    setEmail(value)
+                                }}
                             />
-                        </Form.Item>
 
-                        <Button
-                            className="btn default"
-                            disabled={processing}
-                            htmlType={'submit'}
-                        >
-                            Send
-                            {/*<Spin/>*/}
-                        </Button>
-                    </Form>}
+                            {failedFields.includes('email') && <div className={'input-suffix'}>
+                                <InformationTooltip
+                                    type={'custom'}
+                                    description={'Required field'}
+                                >
+                                    <SVG id={'failed-field'}/>
+                                </InformationTooltip>
+                            </div>}
+                        </diw>
 
-                    {resetStatus === 'sent' &&
-                    <p>
-                        The email has been sent to you.
-                        Check your email box and follow the instructions to reset the password.
-                    </p>}
+                        <button type={'button'} className="sds-btn default submit" disabled={processing}
+                                onClick={sendEmailHandler}>
+                            Get the link
+                            {processing && <Spin size={'small'}/>}
+                        </button>
 
-                    {resetStatus === 'changePass' &&
-                    <Form className="login-form" onSubmit={changePasswordHandler}>
-                        <Form.Item className="input-form-group">
+                        <p className={'sign-in'}>Remembered password? <Link to={'/login'}>Sign in</Link></p>
+
+                        <p className={'sign-up'}>Don’t have an account? <Link to={'/registration'}>Sign up</Link></p>
+                    </>}
+
+                    {resetStatus === 'sent' && <div className={'sent'}>
+                        <h2>Reset Password</h2>
+                        <h4>The email has been sent to you.</h4>
+
+                        <p>
+                            Check your email box and follow the instructions to reset the password.
+                        </p>
+                    </div>}
+
+                    {resetStatus === 'changePass' && <>
+                        <h2>Create new password</h2>
+
+                        <p>
+                            Please create new password
+                        </p>
+
+                        <diw className={`form-group ${failedFields.includes('password') ? 'error-field' : ''}`}>
                             <Input
-                                className="email-input"
-                                type="password"
-                                name="password"
-                                id="password"
-                                required={true}
-                                autoComplete="off"
-                                placeholder="New Password"
-                                onChange={handleChange}
+                                type={openedPassword.includes('password') ? 'text' : 'password'}
+                                placeholder={'Password'}
+                                value={user.password}
+                                onChange={({target: {value}}) => onChange({password: value})}
                             />
-                        </Form.Item>
 
-                        <Form.Item className="input-form-group">
+                            {failedFields.includes('password') ? <div className={'input-suffix'}><InformationTooltip
+                                    type={'custom'}
+                                    description={'The password must be at least 6 characters.'}
+                                >
+                                    <SVG id={'failed-field'}/>
+                                </InformationTooltip></div>
+                                :
+                                <div className={'input-suffix'} onClick={() => openPasswordHandler('password')}>
+                                    <SVG id={openedPassword.includes('password') ? 'eye-opened' : 'eye-closed'}/>
+                                </div>}
+                        </diw>
+
+                        <diw className={`form-group ${failedFields.includes('password_confirmation') ? 'error-field' : ''}`}>
                             <Input
-                                className="email-input"
-                                type="password"
-                                name="confirmPassword"
-                                id="confirmPassword"
-                                required={true}
-                                placeholder="Confirm New Password"
-                                autoComplete="off"
-                                onChange={handleChange}
+                                type={openedPassword.includes('password_confirmation') ? 'text' : 'password'}
+                                placeholder={'Confirm Password'}
+                                value={user.password_confirmation}
+                                onChange={({target: {value}}) => onChange({password_confirmation: value})}
                             />
-                        </Form.Item>
 
-                        <Button
-                            className="btn default"
-                            disabled={processing}
-                            htmlType={'submit'}
-                        >
-                            Update password
+                            {failedFields.includes('password_confirmation') ?
+                                <div className={'input-suffix'}><InformationTooltip
+                                    type={'custom'}
+                                    description={'Passwords do not match. Please make sure they match'}
+                                >
+                                    <SVG id={'failed-field'}/>
+                                </InformationTooltip></div>
+                                :
+                                <div className={'input-suffix'} onClick={() => openPasswordHandler('confirm-password')}>
+                                    <SVG
+                                        id={openedPassword.includes('confirm-password') ? 'eye-opened' : 'eye-closed'}/>
+                                </div>}
+                        </diw>
 
-                            {/*<Spin/>*/}
-                        </Button>
-                    </Form>}
+                        <button type={'button'} className="sds-btn default submit confirm" disabled={processing}
+                                onClick={changePasswordHandler}>
+                            Confirm
 
-                    <div className="redirect-link">
-                        Remembered password?
-                        <Link to={'/login'}>SIGN IN</Link>
-                    </div>
-                    <br/>
-                    <div className="redirect-link">
-                        Don’t have an account?
-                        <Link to={'/registration'}>SIGN UP</Link>
-                    </div>
-                </div>
+                            {processing && <Spin size={'small'}/>}
+                        </button>
+                    </>}
+                </form>
+
+                <PageDescription/>
             </div>
+
         </div>
     )
-};
+}
 
-export default ResetPassword;
+export default ResetPassword

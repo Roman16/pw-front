@@ -515,7 +515,7 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0, 0, 20, 20],
-            data: '<rect xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6D6DF6" rx="4"/><mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="14" x="3" y="3" maskUnits="userSpaceOnUse"><path fill="#D30202" d="M3 3H17V17H3z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="white" stroke-linecap="round" stroke-width="1.7" d="M15.5 4.5L4.5 15.5"/><circle cx="6" cy="6" r="2.2" stroke="white" fill="none" stroke-width="1.6"/><circle cx="14" cy="14" r="2.2" stroke="white" fill="none" stroke-width="1.6"/></g>'
+            data: '<rect xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#6959AB" rx="4"/><mask xmlns="http://www.w3.org/2000/svg" id="a" width="14" height="14" x="3" y="3" maskUnits="userSpaceOnUse"><path fill="#D30202" d="M3 3H17V17H3z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="white" stroke-linecap="round" stroke-width="1.7" d="M15.5 4.5L4.5 15.5"/><circle cx="6" cy="6" r="2.2" stroke="white" fill="none" stroke-width="1.6"/><circle cx="14" cy="14" r="2.2" stroke="white" fill="none" stroke-width="1.6"/></g>'
         },
         'notification-icon': {
             width: 9,
@@ -1384,9 +1384,17 @@ const files = {
             viewBox: [0, 0, 14, 20],
             data: '<circle cx="7.18185" cy="18.8632" r="1.13693" />\n' +
                 '<path fill-rule="evenodd" clip-rule="evenodd" d="M3.86313 3.27067C2.89621 4.07372 2.26517 5.36193 2.26517 7.02299C2.26517 7.65001 1.75809 8.15831 1.13258 8.15831C0.507075 8.15831 0 7.65001 0 7.02299C0 4.76324 0.874933 2.80371 2.41796 1.52219C3.96169 0.240087 6.06818 -0.275853 8.36304 0.142374C11.1943 0.658359 13.1049 2.26395 13.7588 4.34966C14.4091 6.42363 13.7256 8.70083 11.9342 10.3331C11.128 11.0678 10.4525 11.5523 9.90299 11.9199C9.72409 12.0396 9.57269 12.1385 9.4418 12.224C9.13792 12.4224 8.94464 12.5486 8.7746 12.6956C8.60543 12.8418 8.51537 12.9649 8.44306 13.2009C8.35284 13.4953 8.28906 13.9791 8.28906 14.8647C8.28906 15.4917 7.78198 16 7.15647 16C6.53096 16 6.02389 15.4917 6.02389 14.8647C6.02389 13.9206 6.08561 13.1611 6.27776 12.5341C6.48781 11.8487 6.837 11.3722 7.29532 10.976C7.59008 10.7212 7.96764 10.475 8.32665 10.241C8.43558 10.1699 8.54281 10.1 8.6455 10.0313C9.13139 9.70624 9.71086 9.29055 10.4106 8.65296C11.6312 7.54072 11.9516 6.15852 11.5979 5.0305C11.2479 3.91423 10.1465 2.77526 7.95787 2.37639C6.23681 2.06274 4.82935 2.4682 3.86313 3.27067Z"/>\n'
-        }
+        },
+        'failed-field': {
+            width: 16,
+            height: 16,
+            viewBox: [0, 0, 16, 16],
+            data: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"> <circle cx="8" cy="8" r="8" fill="#FF5256"/> <path d="M8 3.19983L8 9.59983" stroke="white" stroke-width="1.2" stroke-linecap="round"/> <path d="M8.80068 12.5336C8.80068 12.9755 8.44251 13.3336 8.00068 13.3336C7.55886 13.3336 7.20068 12.9755 7.20068 12.5336C7.20068 12.0918 7.55886 11.7336 8.00068 11.7336C8.44251 11.7336 8.80068 12.0918 8.80068 12.5336Z" fill="white"/>
+            </svg>`
+        },
     },
     allIds: [
+        'failed-field',
         'question-mark-icon',
         'round-information-icon',
         'uae-icon',

@@ -41,7 +41,7 @@ const AuthorizedUser = React.lazy(() => import('../pages'))
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'))
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'))
 const AuditRegistration = React.lazy(() => import('../pages/authentication/AuditRegistration/AuditRegistration'))
-const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/RegistrationPage/ConfirmEmailPage/ConfirmEmailPage'))
+const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/ConfirmEmailPage/ConfirmEmailPage'))
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'))
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'))
 const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'))
@@ -84,14 +84,14 @@ const routers = () => {
                     {/*<Route exact path="/course" component={Course}/>*/}
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
-                    {/*<Route exact path="/registration/:tag" component={RegistrationPage}/>*/}
-                    <Route exact path="/registration/:tag?" render={(props) => {
-                        if (props.match.params.tag && props.match.params.tag === 'from-agency') {
-                            return (<RegistrationPage {...props}/>)
-                        } else {
-                            return (<AuditRegistration/>)
-                        }
-                    }}/>
+                    <Route exact path="/registration/:tag?" component={RegistrationPage}/>
+                    {/*<Route exact path="/registration/:tag?" render={(props) => {*/}
+                    {/*    if (props.match.params.tag && props.match.params.tag === 'from-agency') {*/}
+                    {/*        return (<RegistrationPage {...props}/>)*/}
+                    {/*    } else {*/}
+                    {/*        return (<AuditRegistration/>)*/}
+                    {/*    }*/}
+                    {/*}}/>*/}
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>

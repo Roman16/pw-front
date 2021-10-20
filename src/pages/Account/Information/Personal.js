@@ -103,7 +103,7 @@ const Personal = () => {
                         className="btn-save btn default"
                         disabled={JSON.stringify(userInformation) === JSON.stringify(user)}
                     >
-                        save changes
+                        Save Changes
                     </button>
                 </form>
             </div>

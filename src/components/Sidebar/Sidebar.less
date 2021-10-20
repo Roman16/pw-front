@@ -26,28 +26,24 @@
   min-height: 0;
   height: 100%;
   position: relative;
-  background-color: @third-default-dark;
+  background: #312C51;
   z-index: 100;
   display: flex;
   flex-direction: column;
 
-  //font-family: 'Open Sans';
-  font-family: Eina;
-
   .sidebar-header {
-    height: 5.285714285714286rem;
+    height: 4.928571428571429rem;
     display: flex;
     align-items: center;
     padding: 0 1.7142857142857142rem;
 
     .sidebar-icon {
-      font-size: 1.8em; // 25.2px
-      color: #b6b6fb;
-      align-self: center;
-      margin: 0 1.7142857142857142rem 0 0;
+      margin: 0 0.8571428571428571rem 0 0;
+      display: flex;
+      align-items: center;
 
       svg {
-        fill: #b6b6fb;
+        fill: #fff;
       }
 
       &:hover {
@@ -63,13 +59,14 @@
       width: fit-content;
 
       .logo {
-        max-width: 9.2em;
+        max-width: 8.714285714285714rem;
+        margin: 3px 0 0 0;
       }
     }
   }
 
   .link-icon {
-    margin-right: 1.7142857142857142rem;
+    margin-right: 0.8571428571428571rem;
     text-align: center;
     height: 20px;
     position: relative;
@@ -101,8 +98,8 @@
       height: 20px !important;
 
       use {
-        fill: #B6B6FB;
-        stroke: #B6B6FB;
+        fill: #fff;
+        stroke: #fff;
         transition: 0.3s;
       }
 
@@ -119,7 +116,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -137,7 +133,7 @@
       max-height: 4rem;
       margin: 0 4px 0 4px;
       border-radius: 0.8em;
-      background: rgba(109, 109, 246, 0.1);
+      background: #2A244B;
       cursor: pointer;
       transition: @transition;
 
@@ -171,7 +167,8 @@
 
       &__description {
         font-size: 0.8rem; // 11.2px
-        color: @sidebar-text-color;
+        color: #fff;
+        font-weight: 600;
         line-height: 1.3333em;
         transform-origin: left;
         margin: 2px 0 12px 0;
@@ -183,7 +180,7 @@
     }
 
     .top-nav {
-      margin:  2em 0 0 0;
+      margin: 2em 0 auto 0;
 
       .top-nav-list {
         list-style: none;
@@ -193,22 +190,117 @@
           cursor: pointer;
         }
 
-        .top-nav-item {
-          margin: 1.5em 0 3em 0;
-          padding: 0 2.4em;
+        .automate-list {
+          list-style: none;
+          cursor: default;
+          opacity: 1;
+          transition: opacity 0.3s ease-in 0.3s;
+          padding: 0 0 0 2.4em;
 
-          .custom-tooltip {
-            margin: 0;
+          .automate-item:first-child {
+            margin-top: 10px;
           }
 
+          &.closed {
+            .automate-item {
+              animation: fadeOutItem .2s;
+              animation-fill-mode: forwards; /* or: backwards, both, none */
+            }
+          }
+
+          @keyframes fadeOutItem {
+            0% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0;
+            }
+            90% {
+              opacity: 0;
+              display: block;
+            }
+            100% {
+              opacity: 0;
+              z-index: -1;
+              display: none;
+              position: absolute;
+              left: -100%;
+            }
+          }
+
+          .automate-item {
+            margin: 2.2em 0;
+            transition: .1s;
+
+            .automate-link {
+              font-size: 1rem;
+              height: 100%;
+              width: 100%;
+              display: flex;
+              align-items: center;
+              color: rgba(255, 255, 255, 0.5);
+              white-space: nowrap;
+              opacity: 1;
+              cursor: pointer;
+
+              &.visible {
+                transition: opacity 0.1s ease-in 0.1s;
+                opacity: 1;
+              }
+
+              &.hidden {
+                transition: .1s;
+                cursor: default;
+                visibility: hidden;
+                opacity: 0;
+              }
+            }
+
+            .automate-link-active {
+              color: #fff;
+
+              .link-icon {
+                use {
+                  fill: #fff;
+                  stroke: #fff;
+                  transition: 0.3s;
+                }
+              }
+            }
+          }
+
+          .automate-item:hover > .automate-link {
+            color: #fff;
+          }
+        }
+
+
+        .top-nav-item {
+          width: 100%;
+          display: flex;
+          align-items: center;
+
+          .custom-tooltip {
+            width: 100%;
+            margin: 0;
+
+            & > span > div {
+              width: 100%;
+            }
+          }
 
           .top-nav-link {
+            width: 100%;
+            height: 3.5714285714285716rem;
+
             font-size: 1rem;
-            height: 100%;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            color: @sidebar-text-color;
+            color: #fff;
             white-space: nowrap;
+            padding: 0 10px 0 1.4285714285714286rem;
+            border-left: 0.42857142857142855rem solid #312C51;
 
             .anticon {
               font-size: 1.7143em;
@@ -219,8 +311,16 @@
             }
           }
 
+          &:hover {
+            .top-nav-link {
+              background: rgba(255, 255, 255, 0.05);
+              border-color: #FF5256;
+            }
+          }
+
           .top-nav-link-active {
-            color: @white;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #FF5256;
 
             .link-icon {
               use {
@@ -228,85 +328,6 @@
                 stroke: #fff;
                 transition: 0.3s;
               }
-            }
-          }
-
-          .automate-list {
-            list-style: none;
-            cursor: default;
-            opacity: 1;
-            transition: opacity 0.3s ease-in 0.3s;
-
-            &.closed {
-              .automate-item {
-                animation: fadeOutItem .2s;
-                animation-fill-mode: forwards; /* or: backwards, both, none */
-              }
-            }
-
-            @keyframes fadeOutItem {
-              0% {
-                opacity: 1;
-              }
-              50% {
-                opacity: 0;
-              }
-              90% {
-                opacity: 0;
-                display: block;
-              }
-              100% {
-                opacity: 0;
-                z-index: -1;
-                display: none;
-                position: absolute;
-                left: -100%;
-              }
-            }
-
-            .automate-item {
-              margin: 2.2em 0;
-              transition: .1s;
-
-              .automate-link {
-                font-size: 1rem;
-                height: 100%;
-                width: 100%;
-                display: flex;
-                align-items: center;
-                color: @sidebar-text-color;
-                white-space: nowrap;
-                opacity: 1;
-                cursor: pointer;
-
-                &.visible {
-                  transition: opacity 0.1s ease-in 0.1s;
-                  opacity: 1;
-                }
-
-                &.hidden {
-                  transition: .1s;
-                  cursor: default;
-                  visibility: hidden;
-                  opacity: 0;
-                }
-              }
-
-              .automate-link-active {
-                color: @white;
-
-                .link-icon {
-                  use {
-                    fill: #fff;
-                    stroke: #fff;
-                    transition: 0.3s;
-                  }
-                }
-              }
-            }
-
-            .automate-item:hover > .automate-link {
-              color: @white;
             }
           }
         }
@@ -330,7 +351,7 @@
         }
 
         .top-nav-item.disabled:hover > .top-nav-link {
-          color: #b6b6fb;
+          color: #fff;
         }
 
         .top-nav-item {
@@ -377,12 +398,12 @@
                   height: 100%;
                   display: flex;
                   align-items: center;
-                  color: @sidebar-text-color;
+                  color: #fff;
                   white-space: nowrap;
                 }
 
                 .automate-link-active {
-                  color: @white;
+                  color: #fff;
 
                   .link-icon {
                     use {
@@ -400,7 +421,7 @@
               // }
 
               .automate-item:hover > .automate-link {
-                color: @white;
+                color: #fff;
               }
             }
           }
@@ -409,7 +430,7 @@
     }
 
     .refer-link {
-      margin: 0 4px 0 4px;
+      margin: 0 4px 20px 4px;
 
       .custom-tooltip {
         margin: 0;
@@ -428,7 +449,7 @@
         font-weight: bold;
         font-size: 0.8571428571428571rem;
         color: #FFFFFF;
-        background: #6D6DF6;
+        background: #FF5256;
         border-radius: 4px;
         transition: background 0.3s;
 
@@ -486,7 +507,7 @@
         }
 
         &:hover {
-          background: #5F5FBE;
+          background: #D44043;
         }
       }
     }
@@ -510,7 +531,7 @@
         height: 3.4285714285714284rem;
         font-weight: bold;
         font-size: 0.8571428571428571rem;
-        color: #B6B6FB;
+        color: #fff;
         border: 1px solid #FFFFFF;
         border-radius: 4px;
 
@@ -546,43 +567,54 @@
     }
 
     .bottom-nav {
-      padding: 0 2.4em;
-
       .bottom-nav-list {
         list-style: none;
         margin: 0 0 0.6em;
 
 
         .bottom-nav-item {
-          margin: 3em 0;
           cursor: pointer;
           position: relative;
+          display: flex;
+          align-items: center;
 
           &:last-child {
             margin-bottom: 2em;
           }
 
           .custom-tooltip {
+            width: 100%;
             margin: 0;
           }
 
           button,
           a {
+            height: 3.5714285714285716rem;
+            width: 100%;
             font-size: 1rem; // 14px
-            height: 100%;
+            font-weight: 600;
             display: flex;
             align-items: center;
-            color: @sidebar-text-color;
+            color: #fff;
             white-space: nowrap;
             transition: .3s;
+            padding: 0 10px 0 1.42857143rem;
+            border-left: 0.42857143rem solid #312C51;
 
             .anticon {
               font-size: 1.7143em; // 24px
             }
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.05);
+              border-color: #FF5256;
+            }
           }
 
           .automate-link-active {
-            color: @white;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #FF5256;
 
             .link-icon {
               use {
@@ -696,22 +728,24 @@
     }
 
     .top-nav {
+      .automate-list {
+        opacity: 0;
+        visibility: hidden;
+        max-height: 0;
+        padding: 0 0 0 20px;
+
+        animation: .2s fadeOut;
+
+        .automate-item {
+          position: absolute;
+          opacity: 0;
+          left: -100%;
+        }
+      }
+
       .top-nav-list {
+
         .top-nav-item {
-          .automate-list {
-            //transition: opacity 0.1s;
-            opacity: 0;
-            visibility: hidden;
-            max-height: 0;
-
-            animation: .2s fadeOut;
-
-            .automate-item {
-              position: absolute;
-              opacity: 0;
-              left: -100%;
-            }
-          }
 
           @keyframes fadeOut {
             99% {
@@ -737,7 +771,6 @@
 
     .refer-link,
     .facebook-link {
-
       a {
         span {
           .hideAnimation();
@@ -849,18 +882,6 @@ a:focus {
           top: -0.7143em;
           right: 2.5em;
         }
-
-        //.new-fiches {
-        //  height: 1.1429em;
-        //  position: absolute;
-        //  padding: 0 5px;
-        //  top: -0.7143em;
-        //  left: 67px;
-        //
-        //  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-        //    left: 50px;
-        //  }
-        //}
       }
     }
   }
@@ -906,55 +927,32 @@ a:focus {
   }
 
   .ant-popover-inner {
-    background: #343C5A;
+    background: #2A254B;
 
     .ant-popover-inner-content {
-
-      height: 2.2857142857142856rem;
-      padding: 0 1.4285714285714286rem;
       display: flex;
       align-items: center;
+      padding: 5px 0;
 
-      a, button {
-        color: #B6B6FB;
+      .collapsed-automate-list {
+        margin: 0;
+        list-style: none;
+      }
+
+      a {
+        height: 2.4285714285714284rem;
+        color: rgba(255, 255, 255, 0.5);
         font-size: 1rem;
-        height: 1.4285714285714286rem;
+        padding: 0 2rem;
+        border-left: 4px solid #2A254B;
+        display: flex;
+        align-items: center;
 
         &:hover {
           color: #fff;
+          background: rgba(255, 255, 255, 0.05);
+          border-color: #FF5256;
         }
-      }
-    }
-  }
-
-  &.ppc {
-    .ant-popover-inner-content {
-      height: max-content;
-
-      ul {
-        list-style: none;
-        margin: 0;
-
-        li {
-          margin: 1.1em 0;
-          cursor: pointer;
-          position: relative;
-
-
-          a {
-            font-size: 1rem;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            color: #b6b6fb;
-            white-space: nowrap;
-
-            &.automate-link-active {
-              color: #fff;
-            }
-          }
-        }
-
       }
     }
   }
@@ -976,7 +974,7 @@ a:focus {
   button {
     width: 60px;
     height: 60px;
-    background: #7558E8;
+    background: #2A254B;
     border-radius: 50%;
 
     display: flex;
@@ -992,7 +990,7 @@ a:focus {
 
 .back-admin-tooltip {
   .ant-popover-inner-content {
-    background: #7558E8;
+    background: #2A254B;
     color: #fff;
     font-weight: 500;
     border-radius: 4px;
@@ -1006,8 +1004,8 @@ a:focus {
   }
 
   .ant-popover-arrow {
-    border-right-color: #7558E8 !important;
-    border-top-color: #7558E8 !important;
+    border-right-color: #2A254B !important;
+    border-top-color: #2A254B !important;
   }
 }
 
@@ -1053,7 +1051,7 @@ a:focus {
 
         &.active {
           background: rgba(109, 109, 246, 0.1);
-          border-left: 0.2857142857142857rem solid #6D6DF6;
+          border-left: 0.2857142857142857rem solid #2A254B;
           padding: 10px 0 10px 1.1428571428571428rem;
         }
 

@@ -187,7 +187,7 @@ const Password = () => {
                         disabled={inputsValue.current_password ? (inputsValue.new_password.length >= 6 ? (inputsValue.new_password !== inputsValue.password_confirmation) : true) : true}
                         onClick={handleSave}
                     >
-                        Change
+                        Save Changes
                     </button>
                 </div>
             </div>

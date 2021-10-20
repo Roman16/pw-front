@@ -30,7 +30,7 @@ function handlerErrors(error) {
 }
 
 
-const api = (method, url, data, type, abortToken, withDefaultUrl = true) => {
+const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true) => {
     loadProgressBar()
 
     const token = localStorage.getItem('token'),
@@ -91,7 +91,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true) => {
                     if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
                         handlerErrors('Something wrong!')
                         reject(error)
-                    } else if (typeof error.response.data === 'object') {
+                    } else if (typeof error.response.data === 'object' && showNotifications) {
                         reject(error)
                         if (error.response.status === 401) {
                             if (error.response.data) {

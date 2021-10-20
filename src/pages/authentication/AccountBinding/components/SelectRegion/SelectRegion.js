@@ -1,61 +1,56 @@
-import React, {Fragment} from "react";
-import {SVG} from "../../../../../utils/icons";
-import {Link} from "react-router-dom";
-import './SelectRegion.less';
+import React from "react"
+import {SVG} from "../../../../../utils/icons"
+import './SelectRegion.less'
 
-import americaImage from '../../../../../assets/img/north-america-bg.svg';
-import europeImage from '../../../../../assets/img/europe-bg.svg';
-import asiaImage from '../../../../../assets/img/asia-pacific-bg.svg';
+import americaImage from '../../../../../assets/img/north-america-bg.svg'
+import europeImage from '../../../../../assets/img/europe-bg.svg'
+import asiaImage from '../../../../../assets/img/asia-pacific-bg.svg'
+import {Radio} from "antd"
 
-const SelectRegion = ({onGoNextStep, onGoBackStep}) => {
+const SelectRegion = ({onGoNextStep, onGoBackStep, onCancel}) => {
 
     return (
-        <Fragment>
-            <section className={'select-region-section'}>
-                <h2>What region is this account in?</h2>
+        <section className={'select-region-section'}>
+            <h2>What region is this account in?</h2>
 
-                <div className="regions">
-                    <div>
-                        <div className="image">
-                            <img src={americaImage} alt=""/>
-                        </div>
-                        <h4>North America</h4>
-                    </div>
+            <ul className="regions">
+                <li className={'active'}>
+                    <h4>North America</h4>
+                    <img src={americaImage} alt=""/>
+                    <Radio checked/>
+                </li>
+                <li>
+                    <div className="soon">soon</div>
+                    <h4>Europe</h4>
+                    <img src={europeImage} alt=""/>
+                    <Radio disabled/>
+                </li>
+                <li>
+                    <div className="soon">soon</div>
+                    <h4>Asia-Pacific</h4>
+                    <img src={asiaImage} alt=""/>
+                    <Radio disabled/>
+                </li>
+            </ul>
 
-                    <div className='soon'>
-                        <div className="image">
-                            <img src={europeImage} alt=""/>
-                        </div>
-                        <h4>Europe <span>soon</span></h4>
-                    </div>
-
-                    <div className='soon'>
-                        <div className="image">
-                            <img src={asiaImage} alt=""/>
-                        </div>
-                        <h4>Asia-Pacific <span>soon</span></h4>
-                    </div>
-                </div>
-
-                <div className="actions">
-                    <button type={'button'} className="btn white" onClick={onGoBackStep}>
+            <div className="actions">
+                <div className="row">
+                    <button type={'button'} className="btn grey back" onClick={onGoBackStep}>
                         <SVG id={'left-grey-arrow'}/>
                         Back
                     </button>
 
-                    <button className="btn default" onClick={onGoNextStep}>
+                    <button className="btn default next" onClick={onGoNextStep}>
                         Next
                         <SVG id={'right-white-arrow'}/>
                     </button>
                 </div>
-            </section>
-
-            <div className="section-description">
-                <p>Not sure?</p>
-                <p><Link to={'/'}>Chat with us</Link></p>
+                <button className="btn cancel" onClick={onCancel}>
+                    Cancel
+                </button>
             </div>
-        </Fragment>
+        </section>
     )
-};
+}
 
-export default SelectRegion;
+export default SelectRegion

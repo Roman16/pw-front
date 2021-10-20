@@ -26,40 +26,24 @@ export const userActions = {
     getImpersonationUserInformation,
 }
 
-function login(user) {
+function login() {
     return dispatch => {
-        userService.login(user)
-            .then(res => {
-                localStorage.setItem('token', res.access_token)
+        userService.getUserInfo()
+            .then(userFullInformation => {
+                dispatch(setInformation(userFullInformation))
 
-                userService.getUserInfo()
-                    .then(userFullInformation => {
-                        dispatch(setInformation(userFullInformation))
+                const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
+                    ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
 
-                        // window.Intercom("boot", {
-                        //     app_id: "hkyfju3m",
-                        //     name: userFullInformation.user.name, // Full name
-                        //     email: userFullInformation.user.email, // Email address
-                        //     created_at: moment(new Date()).unix()// Signup date as a Unix timestamp
-                        // })
-
-                        const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
-                            ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
-
-                        if (!mwsConnected && !ppcConnected) {
-                            history.push('/connect-amazon-account')
-                        } else if (!mwsConnected && ppcConnected) {
-                            history.push('/connect-mws-account')
-                        } else if (!ppcConnected && mwsConnected) {
-                            history.push('/connect-ppc-account')
-                        } else {
-                            if (user.redirectLink) {
-                                history.push(user.redirectLink)
-                            } else {
-                                history.push('/ppc/optimization')
-                            }
-                        }
-                    })
+                if (!mwsConnected && !ppcConnected) {
+                    history.push('/connect-amazon-account')
+                } else if (!mwsConnected && ppcConnected) {
+                    history.push('/connect-mws-account')
+                } else if (!ppcConnected && mwsConnected) {
+                    history.push('/connect-ppc-account')
+                } else {
+                    history.push('/ppc/optimization')
+                }
             })
     }
 }

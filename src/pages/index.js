@@ -62,6 +62,8 @@ function throttle(func, delay) {
 }
 
 const developer = process.env.REACT_APP_ENV === "developer"
+const production = process.env.REACT_APP_ENV === "production"
+
 const isSuperAdmin = !!localStorage.getItem('adminToken')
 
 
@@ -110,7 +112,8 @@ const AuthorizedUser = (props) => {
     const dispatch = useDispatch()
     const pathname = props.location.pathname
     const [loadingUserInformation, setLoadingUserInformation] = useState(true)
-    const {lastStatusAction, bootstrapInProgress} = useSelector(state => ({
+    const {user, lastStatusAction, bootstrapInProgress} = useSelector(state => ({
+        user: state.user,
         lastStatusAction: state.user.lastUserStatusAction,
         bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }))
@@ -146,7 +149,9 @@ const AuthorizedUser = (props) => {
             })
     }, [])
 
-    const isSuperAdmin = !!localStorage.getItem('adminToken')
+
+    const isSuperAdmin = !!localStorage.getItem('adminToken') || user.user.id === 714 || !production,
+        isAgencyUser = user.user.is_agency_client
 
     if (loadingUserInformation) {
         return (
@@ -177,7 +182,15 @@ const AuthorizedUser = (props) => {
                         <div className="page">
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>
-                                    <ConnectedAmazonRoute
+                                    {/*ANALYTICS*/}
+                                    {(isSuperAdmin || isAgencyUser) &&
+                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
+                                    {/*-------------------------------------------*/}
+                                    {/*tableau*/}
+                                    {(isSuperAdmin || isAgencyUser) &&
+                                    <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
+                                    {/*-------------------------------------------*/}
+                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/optimization"
                                         render={() => {
@@ -187,9 +200,8 @@ const AuthorizedUser = (props) => {
                                                 return (<OptimizationFormAdmin/>)
                                             }
                                         }}
-                                    />
-
-                                    <ConnectedAmazonRoute
+                                    />}
+                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/optimization-loading"
                                         render={() => {
@@ -199,81 +211,87 @@ const AuthorizedUser = (props) => {
                                                 return (<Redirect to={'/ppc/optimization'}/>)
                                             }
                                         }}
-                                    />
-
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/dashboard"
-                                        // component={Dashboard}
-                                        render={() => <Redirect to={'/analytics/products'}/>}
-                                    />
-
-                                    <ConnectedAmazonRoute
+                                    />}
+                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         path="/ppc/report"
                                         component={Report}
-                                    />
-
-                                    <ConnectedAmazonRoute
+                                    />}
+                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/product-settings"
                                         component={ProductsInfo}
-                                    />
+                                    />}
+                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/dayparting"
+                                        component={Dayparting}
+                                    />}
 
-                                    {/*<ConnectedAmazonRoute*/}
-                                    {/*    exact*/}
-                                    {/*    path="/ppc/scanner"*/}
-                                    {/*    component={Scanner}*/}
-                                    {/*/>*/}
+                                    {/*-------------------------------------------*/}
+                                    {isSuperAdmin && <AdminRoute path="/admin-panel" component={AdminPanel}/>}
+                                    {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
                                     <Route exact path="/connect-mws-account" component={ConnectMWS}/>
                                     <Route exact path="/connect-ppc-account" component={ConnectPPC}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 
-                                    {developer && <Route exact path="/home" component={Home}/>}
 
                                     {/* ACCOUNT */}
                                     <Route path="/account" component={Account}/>
 
 
-                                    <ConnectedAmazonRoute exact path="/ppc/dayparting" component={Dayparting}/>
-
-                                    {/*-------------------------------------------*/}
-                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>
-                                    {/*-------------------------------------------*/}
-
                                     {/*ZERO TO HERO*/}
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/campaign"
-                                                          component={ChooseCampaign}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/campaign"
+                                        component={ChooseCampaign}
+                                    />
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/ppc-structure"
-                                                          component={Marketing}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/ppc-structure"
+                                        component={Marketing}
+                                    />
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/creating"
-                                                          component={CreatingCampaign}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/creating"
+                                        component={CreatingCampaign}
+                                    />
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/payment/:batchId?"
-                                                          component={Payment}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/payment/:batchId?"
+                                        component={Payment}
+                                    />
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
+                                    {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
 
-                                    <ConnectedAmazonRoute exact path="/zero-to-hero/settings/:status?" component={Settings}/>
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/zero-to-hero/settings/:status?"
+                                        component={Settings}
+                                    />
                                     {/*-------------------------------------------*/}
-                                    <ConnectedAmazonRoute exact path="/notifications/listing-tracking"
-                                                          component={ListingTracking}/>
 
                                     {/*-------------------------------------------*/}
 
-                                    {/*ANALYTICS*/}
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
-                                    {/*-------------------------------------------*/}
-                                    {/*tableau*/}
-                                    <ConnectedAmazonRoute path="/tableau" component={Tableau}/>
-                                    {/*-------------------------------------------*/}
 
                                     <Route path={'*'} render={() => (
                                         <Redirect to={'/404'}/>
                                     )}/>
+
+                                    {/*{developer && <Route exact path="/home" component={Home}/>}*/}
+                                    {/*<ConnectedAmazonRoute exact path="/notifications/listing-tracking"*/}
+                                    {/*                      component={ListingTracking}/>*/}
+                                    {/*<ConnectedAmazonRoute*/}
+                                    {/*    exact*/}
+                                    {/*    path="/ppc/dashboard"*/}
+                                    {/*    // component={Dashboard}*/}
+                                    {/*    render={() => <Redirect to={'/analytics/products'}/>}*/}
+                                    {/*/>*/}
+
                                 </Switch>
                             </Suspense>
                         </div>

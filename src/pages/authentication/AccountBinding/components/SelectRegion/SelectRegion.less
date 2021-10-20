@@ -1,45 +1,62 @@
 .amazon-connect .select-region-section {
   .regions {
+    width: 100%;
+    max-width: 48.57142857142857rem;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    list-style: none;
+    margin: 2.857142857142857rem 0 0 0;
 
-    & > div {
-      .image {
-        display: flex;
-        align-items: center;
-        height: 200px;
-      }
 
-      h4 {
-        font-size: 1.4285714285714286rem;
-        text-align: center;
-        color: #6D6DF6;
+    li {
+      flex: 1;
+      margin: 0 2.857142857142857rem 0 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.1428571428571428rem 0.7142857142857143rem 1.4285714285714286rem;
+      border: 1px solid #F3F3F3;
+      box-sizing: border-box;
+      border-radius: 4px;
+
+      &:last-child {
         margin: 0;
       }
 
-      &.soon {
-        h4 {
-          width: max-content;
-          margin: 0 auto;
-          color: #C9CBD4;
-          position: relative;
+      .soon {
+        background: #F8F7FB;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #5B586F;
+        padding: 3px 8px;
+        margin-bottom: 12px;
+      }
 
-          span {
-            display: block;
-            position: absolute;
-            right: -2.5714285714285716rem;
-            top: -0.7142857142857143rem;
-            background: #B6B6FB;
-            border-radius: 4px;
-            width: 2.5714285714285716rem;
-            height: 1.1428571428571428rem;
-            line-height: 1.1428571428571428rem;
-            font-size: 0.8571428571428571rem;
-            font-weight: 400;
-            color: #343C5A;
-            padding: 0 3px;
-          }
+      h4 {
+        font-size: 1.2857142857142858rem;
+        line-height: 1.5714285714285714rem;
+        font-weight: 600;
+        text-align: center;
+        color: #C9CBD4;
+        margin-bottom: 12px;
+      }
+
+      img {
+        margin-bottom: 15px;
+      }
+
+      .ant-radio-wrapper {
+        margin: auto 0 0 0;
+      }
+
+      &.active {
+        background: rgba(105, 89, 171, 0.05);
+        border: 2px solid #6959AB;
+        padding-top: 2.2857142857142856rem;
+
+        h4 {
+          color: #312C51;
         }
       }
     }

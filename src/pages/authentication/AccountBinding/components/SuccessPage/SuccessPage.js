@@ -6,13 +6,18 @@ import {history} from "../../../../../utils/history";
 const SuccessPage = () => {
 
     return (
-        <section className='success-section'>
+        <div className='success-section'>
             <img src={successImage} alt=""/>
-            <h3>You have successfully connected your Amazon Account with Profit Whales Software</h3>
+            <h2>Success!</h2>
+
+            <p>
+                You have succesfully connected your <br/> Amazon Account with Sponsoreds
+            </p>
+
             <div className="actions">
-                <button className='btn default' onClick={() => history.push('/ppc/optimization')}>Next</button>
+                <button className='btn default' onClick={() => history.push('/ppc/optimization')}>Finish</button>
             </div>
-        </section>
+        </div>
     )
 };
 

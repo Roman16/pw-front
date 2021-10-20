@@ -126,15 +126,19 @@ export const daypartingUrls = {
 }
 
 export const zthUrls = {
-    productsList: 'zero-to-hero/products',
-    zthProductsList: 'zero-to-hero/jobs',
-    setupSettings: 'zero-to-hero/setup-settings',
-    incompleteBatch: 'zero-to-hero/batch/incomplete-batch-data',
+    productsList: 'v2/zero-to-hero/products',
+    portfolioList: 'v2/zero-to-hero/portfolios',
+    setupSettings: 'v2/zero-to-hero/setup-settings',
+    zthProductsList: 'v2/zero-to-hero/products-jobs',
+    keysCount: `v2/zero-to-hero/get-estimated-keywords-count`,
+    variationsEligibilityStatus: 'v2/zero-to-hero/variations-eligibility',
+    payBatch: `v2/zero-to-hero/products-jobs/pay`,
+    batchInformation: 'v2/zero-to-hero/products-jobs/ready-for-payment',
+    incompleteJobs: 'v2/zero-to-hero/available-slots-info',
+
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
-    payBatch: (batchId) => `zero-to-hero/batch/${batchId}/make-payment`,
     batchInfo: `zero-to-hero/batch`,
-    portfolioList: 'zero-to-hero/portfolio',
-    saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`
+    saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
 }
 
 export const analyticsUrls = {

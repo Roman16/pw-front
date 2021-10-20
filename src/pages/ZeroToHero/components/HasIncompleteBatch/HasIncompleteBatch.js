@@ -16,26 +16,6 @@ const HasIncompleteBatch = ({visible = false, onChange}) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        setFetchProcessing(true);
-
-        zthServices.checkIncompleteBatch()
-            .then(res => {
-                if (res.result !== null) {
-                    setIncompleteBatch(res.result);
-
-                    if (res.result.status === 'PAID') {
-                        dispatch(zthActions.setPaidBatch(res.result))
-                    }
-                }
-
-                setFetchProcessing(false);
-            })
-            .catch(() => {
-                setFetchProcessing(false);
-            })
-    }, []);
-
     const deleteBatchHandler = async () => {
         setDeleteProcessing(true);
 

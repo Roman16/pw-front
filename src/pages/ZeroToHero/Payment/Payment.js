@@ -13,6 +13,7 @@ import {zthServices} from "../../../services/zth.services"
 import {SVG} from "../../../utils/icons"
 import {notification} from "../../../components/Notification"
 import BulkInformation from "./BulkInformation"
+import Summary from "./Summary"
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -36,18 +37,14 @@ const Payment = (props) => {
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
         [userName, setUserName] = useState(''),
         [selectedCard, setSelectedCard] = useState(0),
-        [currentButch, setCurrentButch] = useState({}),
+        [productInformation, setProductInformation] = useState({}),
         [payProcessing, setPayProcessing] = useState(false),
+        [fetchProcessing, setFetchProcessing] = useState(true),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
             cvc: false,
         })
-
-    const {productAmount, selectedProducts} = useSelector(state => ({
-        productAmount: state.zth.productAmount,
-        selectedProducts: state.zth.selectedProducts,
-    }))
 
     const stripeElementChangeHandler = (element, name) => {
         if (!element.empty && element.complete) {
@@ -64,63 +61,81 @@ const Payment = (props) => {
     }
 
     const handleSubmit = async (event) => {
-        // event.preventDefault()
-        // setPayProcessing(true)
-        //
-        // let res
-        //
-        // try {
-        //     if (selectedPaymentMethod === 'new_card') {
-        //         if (userName) {
-        //             const billing_details = {}
-        //             billing_details.name = userName
-        //             res = await props.stripe.createPaymentMethod('card', {billing_details})
-        //         } else {
-        //             res = await props.stripe.createPaymentMethod('card')
-        //         }
-        //
-        //         if (res.error) {
-        //             notification.error({title: res.error.message})
-        //         } else if (res.paymentMethod) {
-        //             await zthServices.payBatch(props.batchId, res.paymentMethod.id)
-        //             history.push('/zero-to-hero/success')
-        //         }
-        //     } else {
-        //         await zthServices.payBatch(props.batchId, cardsList[selectedCard].id)
-        //         history.push('/zero-to-hero/success')
-        //     }
-        // } catch ({response: {data}}) {
-        //     if (data.error_code === 'authentication_required') {
-        //         props.stripe.confirmCardPayment(
-        //             data.result.payment_intent_client_secret,
-        //             {
-        //                 payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
-        //             })
-        //             .then((res) => {
-        //                 if (res.error) {
-        //                     notification.error({title: res.error.message})
-        //                 } else {
-        //                     handleSubmit(event)
-        //                 }
-        //
-        //                 setPayProcessing(false)
-        //             })
-        //             .catch(e => {
-        //                 notification.error({title: e.error.message})
-        //                 console.log(e)
-        //
-        //                 setPayProcessing(false)
-        //             })
-        //     }
-        // }
-        //
-        // setPayProcessing(false)
+        event.preventDefault()
+        setPayProcessing(true)
 
-        history.push('/zero-to-hero/settings/payment-success')
+        let res
+
+        try {
+            if (selectedPaymentMethod === 'new_card') {
+                if (userName) {
+                    const billing_details = {}
+                    billing_details.name = userName
+                    res = await props.stripe.createPaymentMethod('card', {billing_details})
+                } else {
+                    res = await props.stripe.createPaymentMethod('card')
+                }
+
+                if (res.error) {
+                    notification.error({title: res.error.message})
+                } else if (res.paymentMethod) {
+                    await zthServices.payBatch({
+                        jobs_ids: [props.batchId],
+                        payment_token: res.paymentMethod.id
+                    })
+                    history.push('/zero-to-hero/settings/payment-success')
+                }
+            } else {
+                await zthServices.payBatch({
+                    jobs_ids: [props.batchId],
+                    payment_token: cardsList[selectedCard].id
+                })
+                history.push('/zero-to-hero/settings/payment-success')
+            }
+        } catch ({response: {data}}) {
+            if (data.error_code === 'authentication_required') {
+                props.stripe.confirmCardPayment(
+                    data.result.payment_intent_client_secret,
+                    {
+                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
+                    })
+                    .then((res) => {
+                        if (res.error) {
+                            notification.error({title: res.error.message})
+                        } else {
+                            handleSubmit(event)
+                        }
+
+                        setPayProcessing(false)
+                    })
+                    .catch(e => {
+                        notification.error({title: e.error.message})
+                        console.log(e)
+
+                        setPayProcessing(false)
+                    })
+            }
+        }
+
+        setPayProcessing(false)
     }
 
     const swipeCardHandler = (index) => {
         setSelectedCard(index)
+    }
+
+    const fetchBatchInformation = async () => {
+        try {
+            setFetchProcessing(true)
+
+            const {result} = await zthServices.fetchBatchInformation(props.batchId)
+            setProductInformation(result.products[0])
+
+            setFetchProcessing(false)
+        } catch (e) {
+            console.log(e)
+            history.push('/zero-to-hero/settings')
+        }
     }
 
     useEffect(() => {
@@ -131,103 +146,63 @@ const Payment = (props) => {
                 }))
             })
 
-        zthServices.checkBatchById(props.batchId)
-            .then(res => {
-                setCurrentButch(res.result)
-            })
+        fetchBatchInformation()
     }, [])
 
     return (
         <div className="zero-to-hero-page payment-page">
-            <BulkInformation/>
+            {fetchProcessing ? <div className={'page-loader'}><Spin size={'large'}/></div> : <>
+                <BulkInformation
+                    product={productInformation}
+                />
 
-            <form onSubmit={handleSubmit} className='payment-section'>
-                <div className="payment-method">
-                    <h2>Select payment method</h2>
+                <form onSubmit={handleSubmit} className='payment-section'>
+                    <div className="payment-method">
+                        <h2>Select payment method</h2>
 
-                    <Radio.Group
-                        value={selectedPaymentMethod}
-                        onChange={({target: {value}}) => setPaymentMethod(value)}
-                    >
-                        <div className="col">
-                            <Radio value={'new_card'}>
-                                New payment Method
-                            </Radio>
+                        <Radio.Group
+                            value={selectedPaymentMethod}
+                            onChange={({target: {value}}) => setPaymentMethod(value)}
+                        >
+                            <div className="col">
+                                <Radio value={'new_card'}>
+                                    New payment Method
+                                </Radio>
 
-                            <div className="radio-description">
-                                <NewCard
-                                    disabled={selectedPaymentMethod !== 'new_card'}
-                                    newCard={newCard}
-                                    stripeElementChange={stripeElementChangeHandler}
-                                    onChangeUserName={(value) => setUserName(value)}
-                                />
+                                <div className="radio-description">
+                                    <NewCard
+                                        disabled={selectedPaymentMethod !== 'new_card'}
+                                        newCard={newCard}
+                                        stripeElementChange={stripeElementChangeHandler}
+                                        onChangeUserName={(value) => setUserName(value)}
+                                    />
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="col">
-                            <Radio value={'select'} disabled={cardsList.length === 0}>
-                                Use card that attached to PPC Automate Tool
-                            </Radio>
+                            <div className="col">
+                                <Radio value={'select'} disabled={cardsList.length === 0}>
+                                    Use card that attached to PPC Automate Tool
+                                </Radio>
 
-                            <div className="radio-description user-cards">
-                                <UserCards
-                                    disabled={selectedPaymentMethod !== 'select'}
-                                    selectedCard={selectedCard}
-                                    allCards={cardsList}
+                                <div className="radio-description user-cards">
+                                    <UserCards
+                                        disabled={selectedPaymentMethod !== 'select'}
+                                        selectedCard={selectedCard}
+                                        allCards={cardsList}
 
-                                    onSwipeCard={swipeCardHandler}
-                                />
+                                        onSwipeCard={swipeCardHandler}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    </Radio.Group>
-                </div>
-
-                <div className="summary">
-                    <h2>Invoice</h2>
-                    <div className="row">
-                        <div className="col">
-                            <h4>Description</h4>
-                            <p>Fee</p>
-                            <p>Keywords</p>
-                            <p>ASINs</p>
-                        </div>
-                        <div className="col">
-                            <h4>Amount</h4>
-                            <p></p>
-                            <p>1000</p>
-                            <p>300</p>
-                        </div>
-                        <div className="col">
-                            <h4>Unit Price</h4>
-                            <p></p>
-                            <p>$10.00</p>
-                            <p>$3.00</p>
-                        </div>
-                        <div className="col">
-                            <h4>Total</h4>
-                            <p>$39.00</p>
-                            <p>$1000.00</p>
-                            <p>$300.00</p>
-                        </div>
+                        </Radio.Group>
                     </div>
 
-                    <div className="hr"/>
-
-                    <div className="total-price">
-                        <label htmlFor="">TOTAL PRICE:</label>
-                        {/*<div className="value">{currentButch.amount && `$${numberMask(currentButch.amount / 100, 0)}`}</div>*/}
-                        <div className="value">$1500</div>
-                    </div>
-
-                    <button
-                        className={'btn white'}
-                        disabled={payProcessing}
-                    >
-                        Pay
-                        {payProcessing && <Spin size={'small'}/>}
-                    </button>
-                </div>
-            </form>
+                    <Summary
+                        jobPrice={productInformation.job.pricing}
+                        payProcessing={payProcessing}
+                    />
+                </form>
+            </>}
         </div>
     )
 }

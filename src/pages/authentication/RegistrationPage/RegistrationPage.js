@@ -1,56 +1,85 @@
-import React, {useEffect} from 'react';
-import {Link} from 'react-router-dom';
-import './RegistrationPage.less';
-import '../LoginPage/LoginPage.less';
+import React, {useState} from 'react'
+import './RegistrationPage.less'
+import '../LoginPage/LoginPage.less'
 
-import RegistrationPageForm from './RegistrationPageForm/RegistrationPageForm';
-import logo from '../../../assets/img/ProfitWhales-logo-white.svg';
-import {history} from "../../../utils/history";
-import useScript from "../../../utils/hooks/useScript";
+import PageDescription from "../LoginPage/PageDescription"
+import RegistrationForm from "./RegistrationForm"
+import Cookies from "js-cookie"
+import {userService} from "../../../services/user.services"
+import {history} from "../../../utils/history"
+import {useDispatch} from "react-redux"
+import {userActions} from "../../../actions/user.actions"
 
 const RegistrationPage = (props) => {
-    useScript({
-        funk: `!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2628499780566506');
-fbq('track', 'PageView');`
-    });
+    const [user, setUser] = useState({
+            name: '',
+            last_name: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+        }),
+        [processing, setProcessing] = useState(false),
+        [failedFields, setFailedFields] = useState([])
+
+    const dispatch = useDispatch()
+
+
+    const changeUserHandler = (value) => {
+        setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
+        setUser({...user, ...value})
+    }
+
+    const registrationHandler = async (e) => {
+        e.preventDefault()
+
+        if (Object.values(user).some(i => !i) || user.password.length < 6 || user.password !== user.confirmPassword) {
+            if (!user.name) setFailedFields(prevState => [...prevState, 'name'])
+            if (!user.last_name) setFailedFields(prevState => [...prevState, 'last_name'])
+            if (!user.email) setFailedFields(prevState => [...prevState, 'email'])
+            if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
+            if (user.password !== user.confirmPassword) setFailedFields(prevState => [...prevState, 'confirmPassword'])
+        } else {
+            try {
+                setProcessing(true)
+
+                const res = await userService.regist({
+                    ...user,
+                    ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+                    ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
+                })
+
+                dispatch(userActions.setInformation({user: {email: user.email}}))
+
+                localStorage.setItem('token', res.access_token)
+
+                window.dataLayer.push({'event': 'Registration',})
+
+                history.push('/confirm-email')
+            } catch (e) {
+                console.log(e)
+            }
+
+            setProcessing(false)
+        }
+    }
 
     return (
-        <div className="auth-page">
-            <div className="registration-page">
-                <div className="logo-auth" onClick={() => history.push('/')}>
-                    <img src={logo} alt="logo"/>
-                </div>
+        <div className="auth-page registration-page">
+            <div className="container">
+                <RegistrationForm
+                    user={user}
+                    failedFields={failedFields}
+                    processing={processing}
 
-                <div className="container">
-                    <div className="title-block">
-                        <h3>Sign Up</h3>
-                        <h4>After 14-day free trial, plan renews to a monthly subscription.</h4>
-                    </div>
+                    onChange={changeUserHandler}
+                    onSubmit={registrationHandler}
+                />
 
-                    <RegistrationPageForm
-                        match={props.match}
-                    />
-
-                    <ul>
-                        <li>Cancel anytime</li>
-                    </ul>
-
-                    <div className="redirect-link">
-                        Already have an account?
-                        <Link to={'/login'}>SIGN IN</Link>
-                    </div>
-                </div>
+                <PageDescription/>
             </div>
-        </div>
-    );
-};
 
-export default RegistrationPage;
+        </div>
+    )
+}
+
+export default RegistrationPage

@@ -1,45 +1,55 @@
-import React from "react";
-import './AccountName.less';
-import {SVG} from "../../../../../utils/icons";
-import {Input} from "antd";
+import React from "react"
+import './AccountName.less'
+import {SVG} from "../../../../../utils/icons"
+import {Input} from "antd"
 
-const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput, accountName}) => {
+const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput, accountName, onCancel}) => {
     const onSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
-        onGoNextStep();
+        onGoNextStep()
     }
 
     return (
         <section className='account-name-section'>
-            <h2>What’s your seller account name?</h2>
+            <h2>Create an alias for your Amazon account</h2>
+
+            <p className={'section-description'}>
+                You can create an alias for your Amazon account you are going to connect in next steps. <br/>
+                It will make it easier to find this specific Amazon account later on your Account page.
+            </p>
 
             <form action="" onSubmit={onSubmit}>
                 <div className="form-group">
-                    <label htmlFor="">Seller Account Name</label>
+                    <label htmlFor="">Account Alias</label>
                     <Input
                         value={accountName}
-                        required
                         type="text"
                         name={'account_name'}
-                        placeholder={'eg. DSG14HAMO23R2'}
+                        placeholder={'eg. My US Account'}
                         onChange={onChangeInput}
                     />
                 </div>
 
                 <div className="actions">
-                    <button type={'button'} className="btn white" onClick={onGoBackStep}>
-                        <SVG id={'left-grey-arrow'}/>
-                        Back
-                    </button>
-                    <button className="btn default">
-                        Next
-                        <SVG id={'right-white-arrow'}/>
+                    <div className="row">
+                        <button type={'button'} className="btn grey back" onClick={onGoBackStep}>
+                            <SVG id={'left-grey-arrow'}/>
+                            Back
+                        </button>
+                        <button className="btn default next">
+                            {accountName ? 'Next' : 'Skip'}
+                            <SVG id={'right-white-arrow'}/>
+                        </button>
+                    </div>
+
+                    <button className="btn cancel" onClick={onCancel}>
+                        Cancel
                     </button>
                 </div>
             </form>
         </section>
     )
-};
+}
 
-export default AccountName;
+export default AccountName
