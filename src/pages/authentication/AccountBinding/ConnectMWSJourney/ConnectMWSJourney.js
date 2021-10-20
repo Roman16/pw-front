@@ -1,27 +1,28 @@
-import React, {useState} from "react";
-import '../components/Steps.less';
-import {SVG} from "../../../../utils/icons";
-import {history} from "../../../../utils/history";
-import {Steps} from "antd";
-import ConnectMws from "../components/ConnectMws/ConnectMws";
-import SuccessPage from "../components/SuccessPage/SuccessPage";
-import {userService} from "../../../../services/user.services";
-import {userActions} from "../../../../actions/user.actions";
-import {useDispatch, useSelector} from "react-redux";
+import React, {useState} from "react"
+import '../components/Steps.less'
+import {SVG} from "../../../../utils/icons"
+import {history} from "../../../../utils/history"
+import {Steps} from "antd"
+import ConnectMws from "../components/ConnectMws/ConnectMws"
+import SuccessPage from "../components/SuccessPage/SuccessPage"
+import {userService} from "../../../../services/user.services"
+import {userActions} from "../../../../actions/user.actions"
+import {useDispatch, useSelector} from "react-redux"
+import Navigations from "../components/Navigations/Navigations"
 
-const {Step} = Steps;
+const {Step} = Steps
 
 const customDot = (dot) => (
     <span>
         {dot}
     </span>
-);
+)
 
 const ConnectMWSJourney = () => {
-    const [currentStep, setCurrentStep] = useState(3);
-    const [fields, setFields] = useState({});
+    const [currentStep, setCurrentStep] = useState(3)
+    const [fields, setFields] = useState({})
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const {mwsId, mwsConnected} = useSelector(state => ({
         mwsId: state.user.account_links[0].amazon_mws.id,
@@ -32,7 +33,7 @@ const ConnectMWSJourney = () => {
         history.push('/account/api-connections')
     }
 
-    const goNextStep = () => setCurrentStep(prev => prev + 1);
+    const goNextStep = () => setCurrentStep(prev => prev + 1)
 
     const changeInputHandler = (e) => {
         setFields({
@@ -42,18 +43,18 @@ const ConnectMWSJourney = () => {
     }
 
     const onConnectMws = async (e) => {
-        e.preventDefault();
-        setConnectMwsStatus('processing');
+        e.preventDefault()
+        setConnectMwsStatus('processing')
 
         try {
             const res = await userService.setMWS({
                 ...fields,
                 ...mwsId && {id: mwsId}
-            });
+            })
             dispatch(userActions.setInformation(res))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
-            setConnectMwsStatus('error');
+            setConnectMwsStatus('error')
         }
     }
 
@@ -61,25 +62,17 @@ const ConnectMWSJourney = () => {
         setConnectMwsStatus('connect')
     }
 
-    if(mwsConnected) {
+    if (mwsConnected) {
         history.push('/account/api-connections')
     }
 
     return (
         <div className="amazon-connect full-journey">
+            <Navigations
+                current={currentStep}
+            />
+
             <div className="container">
-                <button className={'close-connect'} onClick={closeJourney}>
-                    <SVG id='close-page'/>
-                </button>
-
-                <Steps size="small" current={currentStep} progressDot={customDot}>
-                    <Step title="Choose Account"/>
-                    <Step title="Name Your Account"/>
-                    <Step title="Select Region"/>
-                    <Step title="Connect MWS"/>
-                    <Step title="Connect Amazon Advertising" status={'finish'}/>
-                </Steps>
-
                 {currentStep === 3 && <ConnectMws
                     onGoNextStep={goNextStep}
                     onChangeInput={changeInputHandler}
@@ -93,6 +86,6 @@ const ConnectMWSJourney = () => {
             </div>
         </div>
     )
-};
+}
 
-export default ConnectMWSJourney;
+export default ConnectMWSJourney

@@ -6,32 +6,15 @@ import {useDispatch, useSelector} from "react-redux"
 import loader from '../../../../../assets/img/loader.svg'
 import {userActions} from "../../../../../actions/user.actions"
 import {notification} from "../../../../../components/Notification"
+import {popupCenter} from "../../../../../utils/newWindow"
+import {Checkbox} from "antd"
 
-
-const popupCenter = ({url, title, w, h}) => {
-    const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX
-    const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY
-
-    const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : window.screen.width
-    const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : window.screen.height
-
-    const systemZoom = width / window.screen.availWidth
-    const left = (width - w) / 2 / systemZoom + dualScreenLeft
-    const top = (height - h) / 2 / systemZoom + dualScreenTop
-    return window.open(url, title,
-        `
-      scrollbars=yes,
-      width=${w / systemZoom}, 
-      height=${h / systemZoom}, 
-      top=${top}, 
-      left=${left}
-     `)
-}
 
 let intervalId
 
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
-    const [pageStatus, setPageStatus] = useState('connect')
+    const [pageStatus, setPageStatus] = useState('connect'),
+        [disabledConnect, setDisabledConnect] = useState(true)
     const dispatch = useDispatch()
 
     const {ppcLink} = useSelector(state => ({
@@ -91,47 +74,52 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
     if (pageStatus === 'connect') {
         return (
-            <Fragment>
-                <section className='connect-ppc-section'>
-                    <h2>Connect Amazon Advertising</h2>
-                    <Link to={'/videos/mws'} target="_blank">View Detailed Instructions</Link>
-                    <p>To use Profit Whales, we need access to your Amazon Advertising
-                        profile that is attached to the primary account that you used when connecting MWS. Click the
-                        button below to grant access.
-                    </p>
+            <section className='connect-ppc-section'>
+                <h2>Connect Advertising Account</h2>
+                <p>To use Sponsoreds we need programmatic access to your Advertising Account. <br/>
+                    This access can be granted via Amazon Advertising API (<a target={'_blank'}
+                                                                              href="https://advertising.amazon.com/API/docs/en-us/what-is/amazon-advertising-api">read
+                        more about it</a>). <br/>
+                    Click “Connect” button below and follow authorization workflow to grant Sponsoreds <br/> access to
+                    Amazon Advertising API.
+                </p>
 
-                    <div className="actions">
-                        <button className={'btn default'} onClick={openConnectLink}>Connect Amazon Advertising</button>
+                <Checkbox onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
+                    Connect Amazon Advertising API
+                </Checkbox>
+
+                <div className="actions">
+                    <div className="row">
+                        {onGoBackStep && <button type={'button'} className="btn grey back" onClick={onGoBackStep}>
+                            <SVG id={'left-grey-arrow'}/>
+                            Back
+                        </button>}
+
+                        <button disabled={disabledConnect} className="btn default next"
+                                onClick={openConnectLink}>
+                            Connect
+                        </button>
                     </div>
-                </section>
 
-                <div className="section-description">
+                    <button className="btn cancel" onClick={onClose}>
+                        Cancel
+                    </button>
+                </div>
+
+                <div className="connect-ppc-links">
                     <p>Don’t have access to Seller Central?</p>
                     <p><Link to={'/affiliates'}>Invite person who does</Link></p>
                 </div>
-            </Fragment>
-        )
-    } else if (pageStatus === 'getting-token') {
-        return (
-            <section className='connect-mws-section'>
-                <div className="progress">
-                    <h2>Advertising Account Connect</h2>
-                    <p>We are waiting for access to your Advertising Account</p>
-
-                    <img src={loader} alt=""/>
-                </div>
             </section>
         )
-    } else if (pageStatus === 'syncing-data') {
+    } else if (pageStatus === 'getting-token' || pageStatus === 'syncing-data') {
         return (
-            <section className='connect-mws-section'>
-                <div className="progress">
-                    <h2>Advertising Account Sync </h2>
-                    <p>We are syncing your data from Amazon Advertising API. <br/>
-                        It could take up to a few minutes.</p>
+            <section className='connect-mws-section progress'>
+                <h2>Amazon Account Synchronization</h2>
+                <p>We are syncing your data from MWS API and Amazon Advertising API <br/> with our system. It could take
+                    up to a few minutes.</p>
 
-                    <img src={loader} alt=""/>
-                </div>
+                <img src={loader} alt=""/>
             </section>
         )
     } else if (pageStatus === 'error') {
@@ -160,28 +148,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                 <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
             </div>
         </Fragment>)
-    } else if (pageStatus === 'success') {
-        return (
-            <Fragment>
-                <section className='connect-ppc-section'>
-                    <h2>Amazon Advertising successfully <br/> connected</h2>
-                    <p>In the next step we will connect Amazon MWS API. We need it to sync. <br/> your data from Seller
-                        Central with Profit Whales.</p>
-
-                    <div className="actions">
-                        <button className="btn default" onClick={onGoNextStep}>
-                            Next
-                            <SVG id={'right-white-arrow'}/>
-                        </button>
-                    </div>
-                </section>
-
-                <div className="section-description">
-                    <p>Not the primary account holder?</p>
-                    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
-                </div>
-            </Fragment>
-        )
     }
 }
 

@@ -1,101 +1,76 @@
 .amazon-connect .connect-mws-section {
-  a {
-    font-size: 1.4285714285714286rem;
-    color: #6D6DF6;
-    font-weight: 500;
-    margin-bottom: 1.0714285714285714rem;
-  }
 
-  h2 {
-    font-size: 2.2857142857142856rem;
-    line-height: 2.71428571rem;
-    margin-bottom: 2.14285714rem;
-  }
-
-  h4 {
-    font-size: 1.4285714285714286rem;
-    line-height: 1.7142857142857142rem;
-    color: #38454F;
-    margin-bottom: 1.7857142857142858rem;
+  .section-description {
+    margin: 1.4285714285714286rem 0 2.5714285714285716rem;
   }
 
   .select-marketplace {
+    width: 100%;
+    max-width: 35.714285714285715rem;
     display: flex;
     flex-direction: column;
-    max-width: 17.857142857142858rem;
+    margin-bottom: 2.142857142857143rem;
 
     label {
-      display: block;
+      font-weight: 600;
       font-size: 1rem;
-      color: #343C5A;
-      font-weight: 500;
-      margin-bottom: 0.7142857142857143rem;
+      line-height: 1.2142857142857142rem;
+      color: #312C51;
+      margin-bottom: 8px;
     }
 
     .custom-select {
       height: 2.2857142857142856rem;
-
-      .ant-select-arrow {
-        right: 10px;
-      }
-
-      .ant-select-selection-selected-value {
-        padding: 0 0 0 10px;
-      }
+      margin-bottom: 1.4285714285714286rem;
     }
 
     .btn {
-      height: 3.4285714285714284rem;
-      font-size: 1.1428571428571428rem;
-      font-weight: 500;
-      margin-top: 2.142857142857143rem;
-      margin-bottom: 4.285714285714286rem;
-      padding: 0;
-
-      a {
-        margin: 0;
-        color: #fff;
-        width: 100%;
-        height: 3.4285714285714284rem;
-        padding: 0 2.85714286rem;
-        font-size: 1.14285714rem;
-        font-weight: 500;
-
-        display: flex;
-        align-items: center;
-      }
+      margin: 0 auto;
+      height: 3.42857143rem;
+      font-size: 1.14285714rem;
     }
+  }
+
+  h4 {
+    font-weight: 500;
+    font-size: 1.1428571428571428rem;
+    line-height: 1.4285714285714286rem;
+    text-align: center;
+    color: #5B586F;
+    margin-bottom: 1.7857142857142858rem;
   }
 
   .mws-credentials {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    max-width: 35.714285714285715rem;
 
     .form-group {
       display: flex;
       flex-direction: column;
-      flex: 1;
-      min-width: 175px;
-      margin-bottom: 10px;
+      width: 50%;
+      max-width: 17.142857142857142rem;
 
       &:first-child {
-        margin-right: 2.142857142857143rem;
+        margin-right: 1.4285714285714286rem;
       }
 
       label {
+        font-weight: 600;
         font-size: 1rem;
-        color: #343C5A;
-        font-weight: 500;
-        display: block;
-        margin-bottom: 0.7142857142857143rem;
+        line-height: 1.2142857142857142rem;
+        color: #312C51;
+        margin-bottom: 8px;
+
+        i {
+          color: #FF5256;
+          font-style: inherit;
+        }
       }
 
       input {
         height: 2.2857142857142856rem;
-        background: #FFFFFF;
-        box-sizing: border-box;
-        border-radius: 4px;
-        padding: 0 10px;
       }
     }
 
@@ -105,6 +80,64 @@
 
         .form-group {
           margin: 0 0 10px 0 !important;
+        }
+      }
+    }
+  }
+
+  &.progress {
+    h2 {
+      font-weight: 600;
+      font-size: 2.2857142857142856rem;
+      line-height: 2.7142857142857144rem;
+      text-align: center;
+      color: #312C51;
+      margin-bottom: 1.6428571428571428rem;
+    }
+
+    p {
+      font-weight: 500;
+      font-size: 1.1428571428571428rem;
+      line-height: 1.4285714285714286rem;
+      text-align: center;
+      color: #5B586F;
+      margin-bottom: 2.5rem !important;
+    }
+  }
+
+  &.error {
+    position: relative;
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+
+      .home {
+        height: auto !important;
+        border: 0;
+        color: #5B586F;
+        margin: 1.4285714285714286rem 0 0 0;
+      }
+    }
+
+    .mws-error-links {
+      position: absolute;
+      top: 105%;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+
+      p {
+        margin: 0 0 6px !important;
+        font-weight: 500;
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        text-align: center;
+        color: #5B586F;
+
+        a {
+          color: #FF5256;
+          text-decoration: underline;
         }
       }
     }

@@ -24,7 +24,7 @@ const Navigation = ({currentStep, openedSteps, onChangeStep}) => {
     )
 }
 
-const CheckSmall = () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const CheckSmall = () => <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="14" height="14">
         <rect x="0.5" y="0.5" width="13" height="13" fill="#791313" stroke="#312C51"/>
     </mask>

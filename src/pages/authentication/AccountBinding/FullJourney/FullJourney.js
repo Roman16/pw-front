@@ -13,20 +13,19 @@ import '../components/Steps.less';
 import {userService} from "../../../../services/user.services";
 import {userActions} from "../../../../actions/user.actions";
 import {useDispatch, useSelector} from "react-redux";
+import Navigations from "../components/Navigations/Navigations"
 
 const {Step} = Steps;
 
-const customDot = (dot) => (
-    <span>
-        {dot}
-    </span>
-);
 
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [fields, setFields] = useState({
+        account_name: '',
         account_region: 'north_america',
-        account_type: 'seller_account'
+        account_type: 'seller_account',
+        mws_auth_token: '',
+        merchant_id: ''
     });
     const {mwsId, userEmail, mwsConnected, ppcConnected} = useSelector(state => ({
         mwsId: state.user.account_links[0].amazon_mws.id,
@@ -92,36 +91,32 @@ const FullJourney = () => {
 
     return (
         <div className="amazon-connect full-journey">
-            <div className="container">
-                <button className={'close-connect'} onClick={closeJourney}>
-                    <SVG id='close-page'/>
-                </button>
+            <Navigations
+                current={currentStep}
+            />
 
-                <Steps size="small" current={currentStep} progressDot={customDot}>
-                    <Step title="Choose Account"/>
-                    <Step title="Name Your Account"/>
-                    <Step title="Select Region"/>
-                    <Step title="Connect MWS"/>
-                    <Step title="Connect Amazon Advertising"/>
-                </Steps>
+            <div className="container">
 
                 {currentStep === 0 && <ChooseAccount
                     onGoNextStep={goNextStep}
                 />}
 
-                {currentStep === 1 && <AccountName
+                {currentStep === 1 && <SelectRegion
+                    onGoNextStep={goNextStep}
+                    onGoBackStep={goBackStep}
+                    onCancel={closeJourney}
+                />}
+
+                {currentStep === 2 && <AccountName
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
                     accountName={fields.account_name}
-                />}
-
-                {currentStep === 2 && <SelectRegion
-                    onGoNextStep={goNextStep}
-                    onGoBackStep={goBackStep}
+                    onCancel={closeJourney}
                 />}
 
                 {currentStep === 3 && <ConnectMws
+                    fields={fields}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
