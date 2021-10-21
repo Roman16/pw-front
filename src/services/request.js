@@ -74,6 +74,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
 
                 if (error.response && error.response.status === 401) {
                     if (error.response.data.message === 'Incorrect login or password') {
+                        reject(error)
                         handlerErrors(error.response.data.message)
                     } else {
                         localStorage.removeItem('token')

@@ -50,7 +50,9 @@ export const userService = {
     sendShortContactForm,
     sendFormToPartnerSupport,
     sendCustomerSatisfactionSurveyForm,
-    sendGrowthAccelerationForm
+    sendGrowthAccelerationForm,
+
+    getRegistrationTokens
 }
 
 function login(user) {
@@ -238,6 +240,9 @@ function sendCustomerSatisfactionSurveyForm(data) {
 
 function sendGrowthAccelerationForm(data) {
     return api('post', `${userUrls.growthAccelerationForm}`, data)
+}
+function getRegistrationTokens() {
+    return api('get', `${userUrls.registrationTokens}`)
 }
 
 //-------------------------------------

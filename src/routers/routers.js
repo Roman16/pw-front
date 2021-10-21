@@ -22,7 +22,6 @@ const Audit = React.lazy(() => import('../pages/LandingPages/ContactUs/Audit'))
 const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'))
 const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'))
 const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
-const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
 const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeDo'))
 const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
 const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/Recognition'))
@@ -37,9 +36,11 @@ const MainPage = React.lazy(() => import('../pages/LandingPages/MainPage/MainPag
 const Course = React.lazy(() => import('../pages/LandingPages/Course/Course'))
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
+const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
 
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'))
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'))
+const AgencyRegistrationPage = React.lazy(() => import('../pages/authentication/AgencyRegistration/AgencyRegistration'))
 const AuditRegistration = React.lazy(() => import('../pages/authentication/AuditRegistration/AuditRegistration'))
 const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/ConfirmEmailPage/ConfirmEmailPage'))
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'))
@@ -55,43 +56,12 @@ const routers = () => {
             <Router history={history}>
                 <Switch>
                     <Route exact path="/" render={() => <Redirect to={'/login'}/>}/>
-                    {/*<Route exact path="/affiliates" component={LandingAffiliates}/>*/}
-                    {/*<Route exact path="/about-us" component={AboutUs}/>*/}
-                    {/*<Route exact path="/scanner" component={PPCScanner}/>*/}
-                    {/*<Route exact path="/pricing" component={Pricing}/>*/}
-                    {/*<Route exact path="/amazon-ppc-blueprint" component={Ebook}/>*/}
-                    {/*<Route exact path="/thank-you" component={ThankYou}/>*/}
-                    {/*<Route exact path="/demo-call" component={DemoCall}/>*/}
-                    {/*<Route exact path="/contact-us/:status?" component={Contact}/>*/}
-                    {/*<Route exact path="/help-support" component={HelpSupport}/>*/}
-                    {/*<Route exact path="/partners" component={Partners}/>*/}
-                    {/*<Route exact path="/audit" component={Audit}/>*/}
-                    {/*<Route exact path="/book-a-demo" component={BookDemo}/>*/}
-                    {/*<Route exact path="/policy" component={PrivacyPolicy}/>*/}
-                    {/*<Route exact path="/terms-and-conditions" component={TermsOfUse}/>*/}
-                    {/*<Route exact path="/videos/:block?" component={Video}/>*/}
-                    {/*<Route exact path="/ppc-redirect" component={PPCRedirect}/>*/}
-                    {/*<Route exact path="/zero-to-hero-info" component={LandingZTH}/>*/}
-                    {/*<Route exact path="/care-we-do" component={CareWeDo}/>*/}
-                    {/*<Route exact path="/our-whale" component={OurWhale}/>*/}
-                    {/*<Route exact path="/recognition" component={Recognition}/>*/}
-                    {/*<Route exact path="/get-audit" component={GetAuditNew}/>*/}
-                    {/*<Route exact path="/get-audit-new" component={GetAudit}/>*/}
-                    {/*<Route exact path="/identify-option/:filter?" component={IdentifyOption}/>*/}
-                    {/*<Route exact path="/enlighten-future" component={EnlightenFuture}/>*/}
-                    {/*<Route exact path="/redefine-approach" component={RedefineApproach}/>*/}
-                    {/*<Route exact path="/customer-satisfaction-survey" component={CustomerSatisfactionSurvey}/>*/}
-                    {/*<Route exact path="/course" component={Course}/>*/}
+
                     {/*-----------------------------------------------------------*/}
                     <Route exact path="/login/:status?" component={LoginPage}/>
                     <Route exact path="/registration/:tag?" component={RegistrationPage}/>
-                    {/*<Route exact path="/registration/:tag?" render={(props) => {*/}
-                    {/*    if (props.match.params.tag && props.match.params.tag === 'from-agency') {*/}
-                    {/*        return (<RegistrationPage {...props}/>)*/}
-                    {/*    } else {*/}
-                    {/*        return (<AuditRegistration/>)*/}
-                    {/*    }*/}
-                    {/*}}/>*/}
+                    <Route exact path="/agency-registration/:token" component={AgencyRegistrationPage}/>
+
                     <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>

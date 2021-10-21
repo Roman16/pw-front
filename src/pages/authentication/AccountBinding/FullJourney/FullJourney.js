@@ -78,15 +78,15 @@ const FullJourney = () => {
         history.push('/welcome')
     }
 
-    // useEffect(() => {
-    //     if (mwsConnected && !ppcConnected) {
-    //         history.push('./connect-ppc-account');
-    //     } else if (!mwsConnected && ppcConnected) {
-    //         history.push('./connect-mws-account');
-    //     } else if (mwsConnected && ppcConnected) {
-    //         history.push('/account/api-connections');
-    //     }
-    // }, [])
+    useEffect(() => {
+        if (mwsConnected && !ppcConnected) {
+            history.push('./connect-ppc-account');
+        } else if (!mwsConnected && ppcConnected) {
+            history.push('./connect-mws-account');
+        } else if (mwsConnected && ppcConnected) {
+            history.push('/account/api-connections');
+        }
+    }, [])
 
 
     return (
