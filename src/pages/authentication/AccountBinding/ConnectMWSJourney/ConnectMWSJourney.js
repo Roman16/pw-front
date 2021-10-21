@@ -81,6 +81,7 @@ const ConnectMWSJourney = () => {
                     onChangeInput={changeInputHandler}
                     onConnectMws={onConnectMws}
                     connectMwsStatus={connectMwsStatus}
+                    fields={fields}
                     onClose={closeJourney}
                     tryAgainMws={tryAgainMws}
                 />}
