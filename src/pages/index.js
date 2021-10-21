@@ -150,7 +150,7 @@ const AuthorizedUser = (props) => {
     }, [])
 
 
-    const isSuperAdmin = !!localStorage.getItem('adminToken') || user.user.id === 714 || !production,
+    const isSuperAdmin = !!localStorage.getItem('adminToken') || user.user.id === 714,
         isAgencyUser = user.user.is_agency_client
 
     if (loadingUserInformation) {
@@ -228,7 +228,7 @@ const AuthorizedUser = (props) => {
                                     />}
 
                                     {/*-------------------------------------------*/}
-                                    {isSuperAdmin && <AdminRoute path="/admin-panel" component={AdminPanel}/>}
+                                    {(isSuperAdmin || developer) && <AdminRoute path="/admin-panel" component={AdminPanel}/>}
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
@@ -240,39 +240,38 @@ const AuthorizedUser = (props) => {
                                     {/* ACCOUNT */}
                                     <Route path="/account" component={Account}/>
 
-
                                     {/*ZERO TO HERO*/}
-                                    <ConnectedAmazonRoute
+                                    {!isAgencyUser && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/campaign"
                                         component={ChooseCampaign}
-                                    />
+                                    />}
 
-                                    <ConnectedAmazonRoute
+                                    {!isAgencyUser &&<ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/ppc-structure"
                                         component={Marketing}
-                                    />
+                                    />}
 
-                                    <ConnectedAmazonRoute
+                                    {!isAgencyUser &&<ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/creating"
                                         component={CreatingCampaign}
-                                    />
+                                    />}
 
-                                    <ConnectedAmazonRoute
+                                    {!isAgencyUser &&<ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/payment/:batchId?"
                                         component={Payment}
-                                    />
+                                    />}
 
                                     {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
 
-                                    <ConnectedAmazonRoute
+                                    {!isAgencyUser &&<ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/settings/:status?"
                                         component={Settings}
-                                    />
+                                    />}
                                     {/*-------------------------------------------*/}
 
                                     {/*-------------------------------------------*/}

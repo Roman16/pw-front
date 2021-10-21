@@ -13,7 +13,7 @@ const NotFound = () => (
             <p>Looks like something went wrong, let’s take you home.</p>
             <Link
                 className="btn default"
-                to={authorized ? '/ppc/optimization' : '/login'}
+                to={authorized ? '/account/settings' : '/login'}
             >
                 Back to home
             </Link>

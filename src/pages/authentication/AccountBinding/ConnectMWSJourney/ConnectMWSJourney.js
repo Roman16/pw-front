@@ -20,7 +20,10 @@ const customDot = (dot) => (
 
 const ConnectMWSJourney = () => {
     const [currentStep, setCurrentStep] = useState(3)
-    const [fields, setFields] = useState({})
+    const [fields, setFields] = useState({
+        mws_auth_token: '',
+        merchant_id: ''
+    })
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
     const dispatch = useDispatch()
 

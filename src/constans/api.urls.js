@@ -42,6 +42,7 @@ export const userUrls = {
     partnerContactForm: 'landings/request-partnership',
     customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
     growthAccelerationForm: 'landings/get-started-growth-acceleration',
+    registrationTokens: 'admin/support-manager/tokens-for-agency'
 }
 
 export const productsUrls = {

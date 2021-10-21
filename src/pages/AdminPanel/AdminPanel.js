@@ -13,6 +13,7 @@ import Impersonations from "./Impersonations/Impersonations"
 import Campaigns from "../Analytics/Campaigns/Campaigns"
 import {NavLink, Route, Redirect} from "react-router-dom"
 import ZTH from "./ZTH/ZTH"
+import AgencyUsers from "./AgencyUsers/AgencyUsers"
 
 const developer = process.env.REACT_APP_ENV === "developer"
 
@@ -137,6 +138,11 @@ const AdminPanel = () => {
                 >
                     Password
                 </NavLink>
+                <NavLink
+                    to={'/admin-panel/registration-links'}
+                >
+                    AGENCY REGISTRATION
+                </NavLink>
 
                 <NavLink
                     to={'/admin-panel/impersonate'}
@@ -203,6 +209,7 @@ const AdminPanel = () => {
             <Route path="/admin-panel/password" component={ChangePassword}/>
             <Route path="/admin-panel/impersonate" component={Impersonations}/>
             <Route path="/admin-panel/zth" component={ZTH}/>
+            <Route path="/admin-panel/registration-links" component={AgencyUsers}/>
         </div>
     )
 }

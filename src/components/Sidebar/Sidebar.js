@@ -98,7 +98,7 @@ const Sidebar = () => {
                     <nav className="top-nav">
                         <ul className="top-nav-list">
                             {mainMenu
-                                .filter(i => isAgencyUser || isAdmin ? i : i.key === 'zth')
+                                .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                                 .map(item => {
                                     return (
                                         <>
