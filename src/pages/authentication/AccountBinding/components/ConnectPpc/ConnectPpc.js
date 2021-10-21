@@ -123,31 +123,29 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             </section>
         )
     } else if (pageStatus === 'error') {
-        return (<Fragment>
-            <section className='connect-ppc-section'>
-                <div className="error">
-                    <h2>There was an error connecting your <br/> PPC account</h2>
-                    <p>
-                        Please connect our support to help you connect with Profit Whales.
-                    </p>
-                </div>
+        return (
+            <section className='connect-ppc-section error'>
+                <h2>There was an error connecting your <br/> PPC account</h2>
+                <p>
+                    Please connect our support to help you connect with Profit Whales.
+                </p>
 
                 <div className="actions">
-                    <button type={'button'} className="btn white" onClick={onClose}>
-                        Home
-                    </button>
-
                     <button className="btn default" onClick={tryAgain}>
                         Try Again
                     </button>
-                </div>
-            </section>
 
-            <div className="section-description">
-                <p>Not the primary account holder?</p>
-                <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
-            </div>
-        </Fragment>)
+                    <button type={'button'} className="btn white" onClick={onClose}>
+                        Back To Home
+                    </button>
+                </div>
+
+                <div className="connect-ppc-links">
+                    <p>Not the primary account holder?</p>
+                    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
+                </div>
+
+            </section>)
     }
 }
 
