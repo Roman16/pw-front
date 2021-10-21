@@ -1,4 +1,4 @@
-import {userConstants} from '../constans/actions.type';
+import {userConstants} from '../constans/actions.type'
 
 const initialState = {
     notFirstEntry: false,
@@ -12,8 +12,15 @@ const initialState = {
             is_connected: false
         },
     }],
-    default_accounts: {}
-};
+    default_accounts: {},
+    importStatus: {
+        analytics: {required_parts_ready: false},
+        dayparting: {required_parts_ready: false},
+        ppc_automate: {required_parts_ready: false},
+        products_info: {required_parts_ready: false},
+        zth: {required_parts_ready: false},
+    }
+}
 
 export function user(state = initialState, action) {
     switch (action.type) {
@@ -23,13 +30,16 @@ export function user(state = initialState, action) {
                 ...action.payload,
                 notFirstEntry: true,
                 lastUserStatusAction: new Date()
-            };
+            }
 
         case userConstants.UPDATE_USER:
             return {
                 ...state,
-                user: action.payload
-            };
+                user: {
+                    ...state.user,
+                    ...action.payload
+                }
+            }
 
         case userConstants.RESET_CHANGES_COUNT:
             return {
@@ -42,7 +52,7 @@ export function user(state = initialState, action) {
                         count_from_last_login: 0
                     }
                 }
-            };
+            }
 
         case userConstants.SET_PPC_STATUS:
             return {
@@ -55,7 +65,7 @@ export function user(state = initialState, action) {
                         ...action.payload
                     }
                 }]
-            };
+            }
 
         case userConstants.SET_BOOTSTRAP:
             return {
@@ -66,7 +76,7 @@ export function user(state = initialState, action) {
                         bootstrap_in_progress: action.payload
                     }
                 }
-            };
+            }
 
         case userConstants.UNSET_AMAZON_MWS:
             return {
@@ -85,7 +95,7 @@ export function user(state = initialState, action) {
                         seller_id: null
                     }
                 }
-            };
+            }
 
         case userConstants.UNSET_AMAZON_PPC:
             return {
@@ -104,9 +114,9 @@ export function user(state = initialState, action) {
                         seller_id: null
                     }
                 }
-            };
+            }
 
         default:
-            return state;
+            return state
     }
 }

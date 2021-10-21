@@ -24,6 +24,7 @@ export const userActions = {
     setPpcStatus,
     setBootstrap,
     getImpersonationUserInformation,
+    updateUser
 }
 
 function login() {
@@ -197,7 +198,6 @@ function getImpersonationUserInformation() {
 }
 
 function setInformation(user) {
-
     localStorage.setItem('userId', user.user.id)
 
     return {
@@ -217,13 +217,19 @@ function updateUserInformation(user) {
     return dispatch => {
         userService.updateInformation(user)
             .then(res => {
-                dispatch({
-                    type: userConstants.UPDATE_USER,
-                    payload: res.user
-                })
+                dispatch(updateUser(res.user))
 
                 notification.success({title: 'Completed'})
             })
+    }
+}
+
+
+
+function updateUser(user) {
+    return {
+        type: userConstants.UPDATE_USER,
+        payload: user
     }
 }
 

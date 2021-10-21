@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './RegistrationPage.less'
 import '../LoginPage/LoginPage.less'
 
@@ -9,6 +9,7 @@ import {userService} from "../../../services/user.services"
 import {history} from "../../../utils/history"
 import {useDispatch} from "react-redux"
 import {userActions} from "../../../actions/user.actions"
+import {seo} from "../../../utils/seo"
 
 const RegistrationPage = (props) => {
     const [user, setUser] = useState({
@@ -62,6 +63,11 @@ const RegistrationPage = (props) => {
             setProcessing(false)
         }
     }
+
+    useEffect(() => {
+        seo({title: 'Registration Sponsoreds'})
+
+    }, [])
 
     return (
         <div className="auth-page registration-page">

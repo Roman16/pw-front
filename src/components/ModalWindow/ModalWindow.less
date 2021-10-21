@@ -407,43 +407,86 @@
 //----------------------------------------------
 .amazon-loading-window {
   width: 100% !important;
-  max-width: 700px !important;
+  max-width: 42.857142857142854rem !important;
 
   .ant-modal-body {
-    padding: 80px 90px;
+    padding: 7.142857142857143rem 4.285714285714286rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
-    span {
-      font-size: 1.4285714285714286rem;
-      font-weight: bold;
-      margin: -20px 0 0 0;
-      text-align: center;
+    .icon {
+      width: 5rem;
+      height: 5rem;
+      margin-bottom: 3.5714285714285716rem;
     }
 
     h2 {
-      font-size: 2.142857142857143rem;
-      color: #363694;
-      margin: 40px 0;
+      font-weight: 600;
+      font-size: 2.2857142857142856rem;
+      line-height: 2.7142857142857144rem;
       text-align: center;
+      color: #312C51;
+      margin-bottom: 1.4285714285714286rem;
     }
 
-    .social-icons {
+    p {
+      font-weight: 500;
+      font-size: 1.1428571428571428rem;
+      line-height: 1.4285714285714286rem;
+      text-align: center;
+      color: #5B586F;
+      margin-bottom: 3.5714285714285716rem;
+    }
+
+    .table {
       width: 100%;
       display: flex;
-      justify-content: center;
-      margin: 50px 0 0 0;
+      flex-direction: column;
+      border: 1px solid #C9CBD4;
+      box-sizing: border-box;
+      border-radius: 4px;
 
-      img {
-        margin: 0 10px;
-        cursor: pointer;
-        border-radius: 50%;
-        padding: 5px;
+      font-weight: 600;
+      font-size: 1.1428571428571428rem;
+      line-height: 1.4285714285714286rem;
+      color: #5B586F;
 
-        &:hover {
-          -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
-          -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
-          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+      .row {
+        display: flex;
+        border-bottom: 0.5px solid #C9CBD4;
+
+        &.header {
+          border-bottom: 2px solid #C9CBD4;
+        }
+
+        &:last-child {
+          border: 0;
+        }
+
+        .col {
+          flex: 1;
+          padding: 0.7142857142857143rem 0.8571428571428571rem;
+          border-right: 0.5px solid #C9CBD4;
+
+          &:last-child {
+            max-width: 200px;
+            border: 0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+
+            i {
+              width: 1.1428571428571428rem;
+              height: 1.1428571428571428rem;
+              margin: 0 0 0 10px;
+
+              svg, img {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
         }
       }
     }

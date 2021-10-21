@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm"
 import PageDescription from "./PageDescription"
 import {userService} from "../../../services/user.services"
 import Cookies from "js-cookie"
+import {seo} from "../../../utils/seo"
 
 const LoginPage = (props) => {
     const [user, setUser] = useState({
@@ -44,6 +45,8 @@ const LoginPage = (props) => {
 
                 localStorage.setItem('token', res.access_token)
 
+                const importStatus = await userService.checkImportStatus()
+
                 const userFullInformation = await userService.getUserInfo()
 
                 const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
@@ -60,7 +63,7 @@ const LoginPage = (props) => {
                     else history.push('/account/settings')
                 }
 
-                dispatch(userActions.setInformation(userFullInformation))
+                dispatch(userActions.setInformation({...userFullInformation, importStatus: importStatus.result}))
             } catch (e) {
                 console.log(e)
             }
@@ -70,6 +73,9 @@ const LoginPage = (props) => {
     }
 
     useEffect(() => {
+        seo({title: 'Login Sponsoreds'})
+
+
         if (props.match.params.status === 'logout') {
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
