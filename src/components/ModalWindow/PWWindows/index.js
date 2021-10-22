@@ -26,11 +26,7 @@ const PWWindows = ({pathname}) => {
             (pathname.includes('/ppc/product-settings') && !importStatus.products_info.required_parts_ready) ||
             (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
-        }
-        // else if (!subscribedProduct.eligible_for_subscription) {
-        //     setVisibleWindow('smallSpend')
-        // }
-        else if (user.user.free_trial_available) {
+        } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access && !subscribedProduct.has_pending_payment_tx) {
             setVisibleWindow('expiredSubscription')

@@ -11,7 +11,6 @@ let intervalId = null
 
 const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, productList}) => {
     const dispatch = useDispatch()
-    console.log(pathname)
 
     let requiredParts = {}
 
@@ -74,30 +73,30 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
                     <div className="col">Description</div>
                     <div className="col">Status</div>
                 </div>
-                <div className="row ">
+                {requiredParts && requiredParts.products && <div className="row ">
                     <div className="col">Products</div>
                     <div
                         className="col">{requiredParts.products && requiredParts.products.part_ready ? <>Done <DoneIcon/></> : <>In
                         Progress... <ProgressIcon/></>}
                     </div>
-                </div>
+                </div>}
 
                 {!pathname.includes('/zero-to-hero') && <>
-                    {requiredParts.sp && <div className="row ">
+                    {requiredParts && requiredParts.sp && <div className="row ">
                         <div className="col">SP Advertising</div>
                         <div
                             className="col">{requiredParts.sp && requiredParts.sp.part_ready ? <>Done <DoneIcon/></> : <>In
                             Progress... <ProgressIcon/></>}
                         </div>
                     </div>}
-                    {requiredParts.sd && <div className="row ">
+                    {requiredParts && requiredParts.sd && <div className="row ">
                         <div className="col">SD Advertising</div>
                         <div
                             className="col">{requiredParts.sd && requiredParts.sd.part_ready ? <>Done <DoneIcon/></> : <>In
                             Progress... <ProgressIcon/></>}
                         </div>
                     </div>}
-                    {requiredParts.orders && <div className="row ">
+                    {requiredParts && requiredParts.orders && <div className="row ">
                         <div className="col">Orders Data</div>
                         <div
                             className="col">{requiredParts.orders && requiredParts.orders.part_ready ? <>Done <DoneIcon/></> : <>In
