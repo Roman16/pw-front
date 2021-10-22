@@ -45,6 +45,7 @@ const PWWindows = ({pathname}) => {
         <>
             {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics')) &&
             <LoadingAmazonAccount
+                pathname={pathname}
                 visible={visibleWindow === 'loadingAmazon'}
                 importStatus={importStatus}
                 lastName={user.user.last_name}

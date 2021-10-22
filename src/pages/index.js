@@ -112,6 +112,7 @@ const AuthorizedUser = (props) => {
     const dispatch = useDispatch()
     const pathname = props.location.pathname
     const [loadingUserInformation, setLoadingUserInformation] = useState(true)
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
     const {user, lastStatusAction, bootstrapInProgress} = useSelector(state => ({
         user: state.user,
         lastStatusAction: state.user.lastUserStatusAction,
@@ -149,9 +150,16 @@ const AuthorizedUser = (props) => {
             })
     }, [])
 
+    useEffect(() => {
+        if (!!localStorage.getItem('adminToken') || user.user.id === 714) {
+            setIsSuperAdmin(true)
+        } else {
+            setIsSuperAdmin(false)
+        }
+    }, [user])
 
-    const isSuperAdmin = !!localStorage.getItem('adminToken') || user.user.id === 714,
-        isAgencyUser = user.user.is_agency_client
+    let isAgencyUser = user.user.is_agency_client
+
 
     if (loadingUserInformation) {
         return (
@@ -163,7 +171,6 @@ const AuthorizedUser = (props) => {
                 <div className="main-pages">
 
                     <Sidebar props={props}/>
-
 
                     <div className="main-container">
                         <ErrorBar/>
@@ -228,7 +235,8 @@ const AuthorizedUser = (props) => {
                                     />}
 
                                     {/*-------------------------------------------*/}
-                                    {(isSuperAdmin || developer) && <AdminRoute path="/admin-panel" component={AdminPanel}/>}
+                                    {(isSuperAdmin || developer) &&
+                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>}
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
@@ -241,25 +249,25 @@ const AuthorizedUser = (props) => {
                                     <Route path="/account" component={Account}/>
 
                                     {/*ZERO TO HERO*/}
-                                    {!isAgencyUser && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/campaign"
                                         component={ChooseCampaign}
                                     />}
 
-                                    {!isAgencyUser &&<ConnectedAmazonRoute
+                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/ppc-structure"
                                         component={Marketing}
                                     />}
 
-                                    {!isAgencyUser &&<ConnectedAmazonRoute
+                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/creating"
                                         component={CreatingCampaign}
                                     />}
 
-                                    {!isAgencyUser &&<ConnectedAmazonRoute
+                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/payment/:batchId?"
                                         component={Payment}
@@ -267,7 +275,7 @@ const AuthorizedUser = (props) => {
 
                                     {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
 
-                                    {!isAgencyUser &&<ConnectedAmazonRoute
+                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/settings/:status?"
                                         component={Settings}

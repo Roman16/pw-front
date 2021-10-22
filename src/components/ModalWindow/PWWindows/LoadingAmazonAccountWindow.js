@@ -1,7 +1,6 @@
 import React, {useEffect} from "react"
 import {useDispatch} from "react-redux"
 import ModalWindow from "../ModalWindow"
-import icon from '../../../assets/img/connect-amazon-api-icon.svg'
 import {userActions} from "../../../actions/user.actions"
 import {productsActions} from "../../../actions/products.actions"
 import loader from "../../../assets/img/loader.svg"
@@ -9,7 +8,7 @@ import {userService} from "../../../services/user.services"
 
 let intervalId = null
 
-const LoadingAmazonAccount = ({visible, importStatus, firstName, productList}) => {
+const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, productList}) => {
     const dispatch = useDispatch()
 
     const checkStatus = async () => {
@@ -53,8 +52,6 @@ const LoadingAmazonAccount = ({visible, importStatus, firstName, productList}) =
             okText={'Check it now'}
             container={true}
         >
-            <img src={icon} alt="" className={'icon'}/>
-
             <h2>Welcome {firstName}!</h2>
 
             <p>
@@ -71,18 +68,21 @@ const LoadingAmazonAccount = ({visible, importStatus, firstName, productList}) =
                     <div className="col">Products</div>
                     <div className="col">In Progress... <ProgressIcon/></div>
                 </div>
-                <div className="row ">
-                    <div className="col">SP Advertising</div>
-                    <div className="col">In Progress... <ProgressIcon/></div>
-                </div>
-                <div className="row ">
-                    <div className="col">SD Advertising</div>
-                    <div className="col">In Progress... <ProgressIcon/></div>
-                </div>
-                <div className="row ">
-                    <div className="col">Orders Data</div>
-                    <div className="col">In Progress... <ProgressIcon/></div>
-                </div>
+
+                {!pathname.includes('/zero-to-hero') && <>
+                    <div className="row ">
+                        <div className="col">SP Advertising</div>
+                        <div className="col">In Progress... <ProgressIcon/></div>
+                    </div>
+                    <div className="row ">
+                        <div className="col">SD Advertising</div>
+                        <div className="col">In Progress... <ProgressIcon/></div>
+                    </div>
+                    <div className="row ">
+                        <div className="col">Orders Data</div>
+                        <div className="col">In Progress... <ProgressIcon/></div>
+                    </div>
+                </>}
             </div>
         </ModalWindow>
     )
