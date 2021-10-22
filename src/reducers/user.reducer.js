@@ -27,7 +27,7 @@ const initialState = {
 export function user(state = initialState, action) {
     switch (action.type) {
         case userConstants.SET_INFORMATION:
-            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus || defaultImportStatus))
+            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus))
 
             return {
                 ...initialState,
@@ -37,14 +37,15 @@ export function user(state = initialState, action) {
             }
 
         case userConstants.UPDATE_USER:
-            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus || defaultImportStatus))
+            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus))
 
             return {
                 ...state,
                 user: {
                     ...state.user,
                     ...action.payload
-                }
+                },
+                importStatus: action.payload.importStatus || defaultImportStatus
             }
 
         case userConstants.RESET_CHANGES_COUNT:
