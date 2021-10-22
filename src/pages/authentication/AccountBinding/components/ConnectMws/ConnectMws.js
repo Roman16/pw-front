@@ -125,10 +125,10 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                         </button>
                     </div>
 
-                    <div className="mws-error-links">
-                        <p>Not the primary account holder?</p>
-                        <p>Click <Link to={'/'}>here</Link> to send them instructions to connect.</p>
-                    </div>
+                    {/*<div className="mws-error-links">*/}
+                    {/*    <p>Not the primary account holder?</p>*/}
+                    {/*    <p>Click <Link to={'/'}>here</Link> to send them instructions to connect.</p>*/}
+                    {/*</div>*/}
                 </section>
             </Fragment>
         )

@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   padding: 7.142857142857143rem 3.5714285714285716rem;
+  font-family: Montserrat;
 
 
   .container {
@@ -169,7 +170,6 @@
     }
   }
 
-
   &.login-page {
     .row {
       display: flex;
@@ -237,6 +237,34 @@
         &:hover {
           text-decoration: underline;
         }
+      }
+    }
+  }
+
+
+  &.agency-registration {
+    .container {
+      form {
+        .sds-btn.submit {
+          background: #6D6DF6;
+
+          &:hover {
+            background: #5f5fd7;
+          }
+        }
+      }
+
+      .page-description {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 3.4285714285714284rem;
+
+        background: url('../../../assets/img/page-login/agency-description-bg.png') no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
       }
     }
   }

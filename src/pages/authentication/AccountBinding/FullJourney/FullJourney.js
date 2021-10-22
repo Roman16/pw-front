@@ -88,7 +88,6 @@ const FullJourney = () => {
         }
     }, [])
 
-
     return (
         <div className="amazon-connect full-journey">
             <Navigations
@@ -99,6 +98,7 @@ const FullJourney = () => {
 
                 {currentStep === 0 && <ChooseAccount
                     onGoNextStep={goNextStep}
+                    onCancel={closeJourney}
                 />}
 
                 {currentStep === 1 && <SelectRegion

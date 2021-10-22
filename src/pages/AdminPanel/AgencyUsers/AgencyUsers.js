@@ -1,11 +1,13 @@
 import React, {useState} from "react"
 import {userService} from "../../../services/user.services"
 import ExcelTable from "../../../components/ExcelTable/ExcelTable"
-import {keyColumn, textColumn} from "react-datasheet-grid"
+import {textColumn} from "react-datasheet-grid"
 import {notification} from "../../../components/Notification"
 
 const {hostname} = new URL(window.location.href)
 
+let copyArr = [],
+    timerId = null
 
 const onCopy = (str) => {
     notification.success({title: 'Copied'})
@@ -20,13 +22,24 @@ const selectColumn = () => ({
     component: SelectComponent,
 })
 
+const copyTableHandler = (data) => {
+    copyArr = [...copyArr, data]
+
+    clearTimeout(timerId)
+    timerId = setTimeout(() => {
+        onCopy(copyArr.join("\r\n"))
+        copyArr = []
+    }, 100)
+}
+
 
 const columns = [
     {
         ...selectColumn('token', textColumn),
         title: 'Registration Link',
-        disabled: () => true,
-        width: 10
+        copyValue: (props) => {
+            copyTableHandler(`${hostname}/agency-registration/${props.rowData.token}`)
+        }
     },
 ]
 
@@ -45,16 +58,7 @@ const AgencyUsers = () => {
 
 
     return (<section className={'registration-links'}>
-   <button className={'btn default'} onClick={getTokens}>Get registration link</button>
-
-        {/*<ul>*/}
-        {/*    {tokens.map(i => <li>*/}
-        {/*        <p title={i.token}> {`${hostname}/agency-registration/${i.token}`}</p>*/}
-
-
-        {/*    </li>)}*/}
-        {/*</ul>*/}
-
+        <button className={'btn default'} onClick={getTokens}>Get registration link</button>
         <ExcelTable
             data={tokens}
             columns={columns}

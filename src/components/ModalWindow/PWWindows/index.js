@@ -4,15 +4,15 @@ import SubscriptionNotificationWindow from "./SubscriptionNotificationWindow"
 import LoadingAmazonAccount from "./LoadingAmazonAccountWindow"
 import ReportsChangesCountWindow from "./ReportsChangesCountWindow"
 import {useSelector} from "react-redux"
-import SmallSpend from "./SmallSpend"
 
 const PWWindows = ({pathname}) => {
     const [visibleWindow, setVisibleWindow] = useState(null)
 
-    const {user, productList, subscribedProduct} = useSelector(state => ({
+    const {user, productList, subscribedProduct, importStatus} = useSelector(state => ({
         user: state.user,
         subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
         productList: state.products.productList || [],
+        importStatus: state.user.importStatus
     }))
 
     const closeWindowHandler = () => {
@@ -20,11 +20,15 @@ const PWWindows = ({pathname}) => {
     }
 
     useEffect(() => {
-        if (user.notifications.account_bootstrap.bootstrap_in_progress || (!subscribedProduct.has_access && subscribedProduct.has_pending_payment_tx)) {
+        if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
+            (pathname.includes('/ppc/') && !importStatus.dayparting.required_parts_ready) ||
+            (pathname.includes('/ppc/') && !importStatus.ppc_automate.required_parts_ready) ||
+            (pathname.includes('/ppc/') && !importStatus.products_info.required_parts_ready) ||
+            (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
         }
-            // else if (!subscribedProduct.eligible_for_subscription) {
-            //     setVisibleWindow('smallSpend')
+        // else if (!subscribedProduct.eligible_for_subscription) {
+        //     setVisibleWindow('smallSpend')
         // }
         else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
@@ -35,13 +39,15 @@ const PWWindows = ({pathname}) => {
         } else {
             setVisibleWindow(null)
         }
-    }, [user])
+    }, [user, pathname])
 
     return (
         <>
             {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics')) &&
             <LoadingAmazonAccount
+                pathname={pathname}
                 visible={visibleWindow === 'loadingAmazon'}
+                importStatus={importStatus}
                 lastName={user.user.last_name}
                 firstName={user.user.name}
                 productList={productList}

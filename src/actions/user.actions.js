@@ -24,6 +24,7 @@ export const userActions = {
     setPpcStatus,
     setBootstrap,
     getImpersonationUserInformation,
+    updateUser
 }
 
 function login() {
@@ -105,7 +106,7 @@ function setMWS(data) {
         if (data.account_links) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
             } else {
-                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization')
+                history.push('/ppc/optimization')
             }
         }
     }
@@ -197,7 +198,6 @@ function getImpersonationUserInformation() {
 }
 
 function setInformation(user) {
-
     localStorage.setItem('userId', user.user.id)
 
     return {
@@ -217,13 +217,19 @@ function updateUserInformation(user) {
     return dispatch => {
         userService.updateInformation(user)
             .then(res => {
-                dispatch({
-                    type: userConstants.UPDATE_USER,
-                    payload: res.user
-                })
+                dispatch(updateUser(res.user))
 
                 notification.success({title: 'Completed'})
             })
+    }
+}
+
+
+
+function updateUser(user) {
+    return {
+        type: userConstants.UPDATE_USER,
+        payload: user
     }
 }
 

@@ -52,7 +52,8 @@ export const userService = {
     sendCustomerSatisfactionSurveyForm,
     sendGrowthAccelerationForm,
 
-    getRegistrationTokens
+    getRegistrationTokens,
+    checkImportStatus
 }
 
 function login(user) {
@@ -244,6 +245,10 @@ function sendGrowthAccelerationForm(data) {
 function getRegistrationTokens() {
     return api('get', `${userUrls.registrationTokens}`)
 }
+function checkImportStatus() {
+    return api('get', `${userUrls.importStatus}`)
+}
+
 
 //-------------------------------------
 function getStripeAvailableCountries() {

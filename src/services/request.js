@@ -88,6 +88,8 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         .then(() => {
                             history.push('/confirm-email')
                         })
+                } else if (error.response && error.response.status === 423) {
+
                 } else if (error.response) {
                     if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
                         handlerErrors('Something wrong!')

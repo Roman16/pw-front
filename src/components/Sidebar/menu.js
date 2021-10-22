@@ -22,12 +22,12 @@ export const mainMenu = [
         icon: 'analytics-icon-sidebar',
         link: 'analytics/products'
     },
-    {
-        title: 'Tableau',
-        key: 'tableau',
-        icon: 'analytics-icon-sidebar',
-        link: 'tableau'
-    },
+    // {
+    //     title: 'Tableau',
+    //     key: 'tableau',
+    //     icon: 'analytics-icon-sidebar',
+    //     link: 'tableau'
+    // },
     {
         title: 'PPC Automate',
         key: 'ppc-automate',
