@@ -39,7 +39,7 @@ const PWWindows = ({pathname}) => {
         } else {
             setVisibleWindow(null)
         }
-    }, [user])
+    }, [user, pathname])
 
     return (
         <>

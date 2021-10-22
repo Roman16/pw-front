@@ -1,5 +1,13 @@
 import {userConstants} from '../constans/actions.type'
 
+const defaultImportStatus = {
+    analytics: {required_parts_ready: false},
+    dayparting: {required_parts_ready: false},
+    ppc_automate: {required_parts_ready: false},
+    products_info: {required_parts_ready: false},
+    zth: {required_parts_ready: false},
+}
+
 const initialState = {
     notFirstEntry: false,
     user: {},
@@ -13,18 +21,14 @@ const initialState = {
         },
     }],
     default_accounts: {},
-    importStatus: {
-        analytics: {required_parts_ready: false},
-        dayparting: {required_parts_ready: false},
-        ppc_automate: {required_parts_ready: false},
-        products_info: {required_parts_ready: false},
-        zth: {required_parts_ready: false},
-    }
+    importStatus: localStorage.getItem('importStatus') ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
 export function user(state = initialState, action) {
     switch (action.type) {
         case userConstants.SET_INFORMATION:
+            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus || defaultImportStatus))
+
             return {
                 ...initialState,
                 ...action.payload,
@@ -33,6 +37,8 @@ export function user(state = initialState, action) {
             }
 
         case userConstants.UPDATE_USER:
+            localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus || defaultImportStatus))
+
             return {
                 ...state,
                 user: {
