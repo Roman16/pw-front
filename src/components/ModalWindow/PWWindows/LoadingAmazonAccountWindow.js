@@ -54,6 +54,10 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
         })
     }, [visible])
 
+    useEffect(() => {
+        checkStatus()
+    }, [])
+
     return (
         <ModalWindow
             className={'amazon-loading-window'}
