@@ -3,7 +3,7 @@ import {SVG} from "../../../../../utils/icons";
 import './ChooseAccount.less';
 import {Radio} from "antd"
 
-const ChooseAccount = ({onGoNextStep}) => {
+const ChooseAccount = ({onGoNextStep, onCancel}) => {
 
     return (
         <section className={'choose-account'}>
@@ -39,6 +39,10 @@ const ChooseAccount = ({onGoNextStep}) => {
 
             <div className="actions">
                 <button onClick={onGoNextStep} className={'btn default next'}>Next <SVG id={'right-white-arrow'}/></button>
+
+                <button className="btn cancel" onClick={onCancel}>
+                    Cancel
+                </button>
             </div>
         </section>
     )

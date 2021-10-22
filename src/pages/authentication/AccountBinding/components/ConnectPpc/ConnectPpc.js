@@ -106,10 +106,10 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     </button>
                 </div>
 
-                <div className="connect-ppc-links">
-                    <p>Don’t have access to Seller Central?</p>
-                    <p><Link to={'/affiliates'}>Invite person who does</Link></p>
-                </div>
+                {/*<div className="connect-ppc-links">*/}
+                {/*    <p>Don’t have access to Seller Central?</p>*/}
+                {/*    <p><Link to={'/affiliates'}>Invite person who does</Link></p>*/}
+                {/*</div>*/}
             </section>
         )
     } else if (pageStatus === 'getting-token' || pageStatus === 'syncing-data') {
@@ -140,11 +140,10 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     </button>
                 </div>
 
-                <div className="connect-ppc-links">
-                    <p>Not the primary account holder?</p>
-                    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>
-                </div>
-
+                {/*<div className="connect-ppc-links">*/}
+                {/*    <p>Not the primary account holder?</p>*/}
+                {/*    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>*/}
+                {/*</div>*/}
             </section>)
     }
 }
