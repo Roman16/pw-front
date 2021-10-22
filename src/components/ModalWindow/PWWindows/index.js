@@ -35,7 +35,7 @@ const PWWindows = ({pathname}) => {
         } else {
             setVisibleWindow(null)
         }
-    }, [user, pathname])
+    }, [user, pathname, importStatus])
 
     return (
         <>
