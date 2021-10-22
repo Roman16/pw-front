@@ -29,10 +29,9 @@ const Sidebar = () => {
 
     const dispatch = useDispatch()
 
-    const {user, bootstrapInProgress} = useSelector(state => ({
+    const {user} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
-            bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
         })),
         accountLinks = user.account_links[0]
 
@@ -171,7 +170,7 @@ const Sidebar = () => {
                     <div className="facebook-link">
                         <InformationTooltip
                             type={'custom'}
-                            description={<a href='https://www.facebook.com/groups/profitwhales.software/'
+                            description={<a href='https://www.facebook.com/Sponsoreds-103322802120393'
                                             target="_blank">Join
                                 us on Facebook</a>}
                             position={'right'}

@@ -106,7 +106,7 @@ function setMWS(data) {
         if (data.account_links) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
             } else {
-                history.push((data.notifications.account_bootstrap && (data.notifications.account_bootstrap.bootstrap_in_progress || true)) ? '/ppc/optimization-loading' : '/ppc/optimization')
+                history.push('/ppc/optimization')
             }
         }
     }

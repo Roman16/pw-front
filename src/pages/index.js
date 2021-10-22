@@ -113,10 +113,9 @@ const AuthorizedUser = (props) => {
     const pathname = props.location.pathname
     const [loadingUserInformation, setLoadingUserInformation] = useState(true)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
-    const {user, lastStatusAction, bootstrapInProgress} = useSelector(state => ({
+    const {user, lastStatusAction} = useSelector(state => ({
         user: state.user,
         lastStatusAction: state.user.lastUserStatusAction,
-        bootstrapInProgress: state.user.notifications && state.user.notifications.account_bootstrap ? state.user.notifications.account_bootstrap.bootstrap_in_progress : true
     }))
 
 
@@ -201,22 +200,14 @@ const AuthorizedUser = (props) => {
                                         exact
                                         path="/ppc/optimization"
                                         render={() => {
-                                            if (bootstrapInProgress) {
-                                                return (<Redirect to={'/ppc/optimization-loading'}/>)
-                                            } else {
-                                                return (<OptimizationFormAdmin/>)
-                                            }
+                                            return (<OptimizationFormAdmin/>)
                                         }}
                                     />}
                                     {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/optimization-loading"
                                         render={() => {
-                                            if (bootstrapInProgress) {
-                                                return (<OptimizationFormAdmin/>)
-                                            } else {
-                                                return (<Redirect to={'/ppc/optimization'}/>)
-                                            }
+                                            return (<Redirect to={'/ppc/optimization'}/>)
                                         }}
                                     />}
                                     {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
