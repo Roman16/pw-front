@@ -86,7 +86,7 @@ const LoginPage = (props) => {
         }
 
         if (localStorage.getItem('token')) {
-            history.push('/ppc/optimization')
+            history.push('/account/settings')
         }
     }, [])
 
