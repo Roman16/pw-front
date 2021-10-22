@@ -8,8 +8,18 @@ import {userService} from "../../../services/user.services"
 
 let intervalId = null
 
+
 const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, productList}) => {
     const dispatch = useDispatch()
+    console.log(pathname)
+
+    let requiredParts = {}
+
+    if (pathname.includes('/ppc/optimization')) requiredParts = importStatus.ppc_automate.required_parts_details
+    if (pathname.includes('/ppc/dayparting')) requiredParts = importStatus.dayparting.required_parts_details
+    if (pathname.includes('/ppc/analytics')) requiredParts = importStatus.analytics.required_parts_details
+    if (pathname.includes('/ppc/product-settings')) requiredParts = importStatus.products_info.required_parts_details
+    if (pathname.includes('/zero-to-hero')) requiredParts = importStatus.zth.required_parts_details
 
     const checkStatus = async () => {
         try {
@@ -66,22 +76,34 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
                 </div>
                 <div className="row ">
                     <div className="col">Products</div>
-                    <div className="col">In Progress... <ProgressIcon/></div>
+                    <div
+                        className="col">{requiredParts.products && requiredParts.products.part_ready ? <>Done <DoneIcon/></> : <>In
+                        Progress... <ProgressIcon/></>}
+                    </div>
                 </div>
 
                 {!pathname.includes('/zero-to-hero') && <>
-                    <div className="row ">
+                    {requiredParts.sp && <div className="row ">
                         <div className="col">SP Advertising</div>
-                        <div className="col">In Progress... <ProgressIcon/></div>
-                    </div>
-                    <div className="row ">
+                        <div
+                            className="col">{requiredParts.sp && requiredParts.sp.part_ready ? <>Done <DoneIcon/></> : <>In
+                            Progress... <ProgressIcon/></>}
+                        </div>
+                    </div>}
+                    {requiredParts.sd && <div className="row ">
                         <div className="col">SD Advertising</div>
-                        <div className="col">In Progress... <ProgressIcon/></div>
-                    </div>
-                    <div className="row ">
+                        <div
+                            className="col">{requiredParts.sd && requiredParts.sd.part_ready ? <>Done <DoneIcon/></> : <>In
+                            Progress... <ProgressIcon/></>}
+                        </div>
+                    </div>}
+                    {requiredParts.orders && <div className="row ">
                         <div className="col">Orders Data</div>
-                        <div className="col">In Progress... <ProgressIcon/></div>
-                    </div>
+                        <div
+                            className="col">{requiredParts.orders && requiredParts.orders.part_ready ? <>Done <DoneIcon/></> : <>In
+                            Progress... <ProgressIcon/></>}
+                        </div>
+                    </div>}
                 </>}
             </div>
         </ModalWindow>

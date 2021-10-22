@@ -21,9 +21,9 @@ const PWWindows = ({pathname}) => {
 
     useEffect(() => {
         if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
-            (pathname.includes('/ppc/') && !importStatus.dayparting.required_parts_ready) ||
-            (pathname.includes('/ppc/') && !importStatus.ppc_automate.required_parts_ready) ||
-            (pathname.includes('/ppc/') && !importStatus.products_info.required_parts_ready) ||
+            (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
+            (pathname.includes('/ppc/optimization') && !importStatus.ppc_automate.required_parts_ready) ||
+            (pathname.includes('/ppc/product-settings') && !importStatus.products_info.required_parts_ready) ||
             (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
         }
