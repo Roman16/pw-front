@@ -74,7 +74,8 @@ const routers = () => {
                         if (localStorage.getItem('token')) {
                             return <AuthorizedUser {...history}/>
                         } else {
-                            return <Redirect to={`/login?redirect=${history.location.pathname + history.location.search}`}/>
+                            return <Redirect
+                                to={`/login?redirect=${history.location.pathname + history.location.search}`}/>
                         }
                     }
                     }/>
