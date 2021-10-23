@@ -21,6 +21,7 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [automate, setAutomate] = useState(true),
         [isAdmin, setAdminStatus] = useState(false),
+        [isAgencyUser, setAgencyUser] = useState(false),
         [subMenuState, setSubMenuState] = useState({
             zth: false,
             ppc: false,
@@ -64,15 +65,12 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        if (localStorage.getItem('adminToken')) {
-            setAdminStatus(true)
-        } else {
-            setAdminStatus(false)
-        }
+        if (user.user.id === 714) setAdminStatus(true)
+        else setAdminStatus(false)
+
+        if (user.user.is_agency_client) setAgencyUser(true)
+        else setAgencyUser(false)
     }, [user])
-
-
-    const isAgencyUser = user.user.is_agency_client
 
     return (
         <>
@@ -97,7 +95,7 @@ const Sidebar = () => {
                     <nav className="top-nav">
                         <ul className="top-nav-list">
                             {mainMenu
-                                .filter(i => isAdmin || user.user.id === 714 ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
+                                .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                                 .map(item => {
                                     return (
                                         <>
