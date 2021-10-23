@@ -21,7 +21,7 @@ const initialState = {
         },
     }],
     default_accounts: {},
-    importStatus: localStorage.getItem('importStatus') ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
+    importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
 export function user(state = initialState, action) {
