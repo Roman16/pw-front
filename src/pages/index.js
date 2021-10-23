@@ -150,7 +150,7 @@ const AuthorizedUser = (props) => {
     }, [])
 
     useEffect(() => {
-        if (!!localStorage.getItem('adminToken') || user.user.id === 714) {
+        if (user.user.id === 714) {
             setIsSuperAdmin(true)
         } else {
             setIsSuperAdmin(false)
@@ -226,8 +226,7 @@ const AuthorizedUser = (props) => {
                                     />}
 
                                     {/*-------------------------------------------*/}
-                                    {(isSuperAdmin || developer) &&
-                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>}
+                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
