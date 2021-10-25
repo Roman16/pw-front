@@ -203,6 +203,7 @@ const Billing = () => {
             />
 
             <CompanyDetails
+                paymentCards={paymentCards}
                 company={selectedCard && selectedCard.metadata}
                 onOpenWindow={handleOpenWindow}
             />
