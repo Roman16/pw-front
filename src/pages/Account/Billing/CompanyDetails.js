@@ -1,8 +1,8 @@
-import React from "react";
-import {allCountries} from '../../../utils/countries';
-import {SVG} from "../../../utils/icons";
+import React from "react"
+import {allCountries} from '../../../utils/countries'
+import {SVG} from "../../../utils/icons"
 
-const CompanyDetails = ({onOpenWindow, company}) => {
+const CompanyDetails = ({onOpenWindow, company, paymentCards}) => {
     return (
         <section className='company-details-block page-box'>
             <div className='block-description'>
@@ -16,7 +16,8 @@ const CompanyDetails = ({onOpenWindow, company}) => {
                 </span>
                 </div>
 
-                <button className={'btn icon'} onClick={() => onOpenWindow('company')}><SVG id={'edit-pen-icon'}/></button>
+                {paymentCards.length > 0 && <button className={'btn icon'} onClick={() => onOpenWindow('company')}
+                ><SVG id={'edit-pen-icon'}/></button>}
             </div>
 
             {company && <div className='company-information'>
@@ -52,6 +53,6 @@ const CompanyDetails = ({onOpenWindow, company}) => {
             </div>}
         </section>
     )
-};
+}
 
-export default CompanyDetails;
+export default CompanyDetails
