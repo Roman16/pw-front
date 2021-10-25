@@ -45,7 +45,7 @@ export function user(state = initialState, action) {
                     ...state.user,
                     ...action.payload
                 },
-                importStatus: action.payload.importStatus || defaultImportStatus
+                importStatus: action.payload.importStatus || state.importStatus || defaultImportStatus
             }
 
         case userConstants.RESET_CHANGES_COUNT:
