@@ -38,6 +38,8 @@ const ConfirmEmailPage = (props) => {
                     return prevCount - 1
                 })
             }, 1000)
+
+            setDisableResend(false)
         } catch (e) {
             setDisableResend(false)
             setDisabledTimer(60)
