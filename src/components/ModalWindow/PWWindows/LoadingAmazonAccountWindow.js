@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {useDispatch} from "react-redux"
 import ModalWindow from "../ModalWindow"
 import {userActions} from "../../../actions/user.actions"
@@ -58,7 +58,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
 
     useEffect(() => {
         window.addEventListener("storage", (e) => {
-            if (localStorage.getItem('importStatus') && JSON.stringify(importStatus) !== localStorage.getItem('importStatus')) checkStatus()
+            if (e.key === 'importStatus') checkStatus()
         })
     }, [])
 
