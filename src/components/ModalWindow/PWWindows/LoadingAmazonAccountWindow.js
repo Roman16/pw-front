@@ -30,6 +30,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
     }
 
     useEffect(() => {
+        visible && checkStatus()
+
         intervalId = setInterval(() => {
             if (visible) {
                 checkStatus()
