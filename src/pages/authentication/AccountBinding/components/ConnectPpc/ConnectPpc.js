@@ -84,7 +84,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     Amazon Advertising API.
                 </p>
 
-                <Checkbox checked={disabledConnect} onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
+                <Checkbox checked={!disabledConnect} onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
                     Connect Amazon Advertising API
                 </Checkbox>
 
