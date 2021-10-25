@@ -26,7 +26,7 @@ const Navigation = (props) => {
                             to="/account/subscription"
 
                         >
-                            Subscriptions
+                            Subscriptions & Billing
                         </NavLink>
 
                         <NavLink

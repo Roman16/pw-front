@@ -174,7 +174,7 @@ const Sidebar = () => {
                             position={'right'}
                             overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
                         >
-                            <a href='https://www.facebook.com/groups/profitwhales.software/' target="_blank">
+                            <a href='https://www.facebook.com/Sponsoreds-103322802120393' target="_blank">
                                 <div className="icon">
                                     <SVG id='facebook-icon-white'/>
                                 </div>
@@ -184,25 +184,25 @@ const Sidebar = () => {
                         </InformationTooltip>
                     </div>
 
-                    <div className="refer-link">
-                        <InformationTooltip
-                            type={'custom'}
-                            description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}
-                            position={'right'}
-                            overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                        >
-                            <Link to={'/affiliates'} target="_blank">
-                                <div className="icon">
-                                    <SVG id='refer-icon'/>
-                                </div>
+                    {/*<div className="refer-link">*/}
+                    {/*    <InformationTooltip*/}
+                    {/*        type={'custom'}*/}
+                    {/*        description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}*/}
+                    {/*        position={'right'}*/}
+                    {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}*/}
+                    {/*    >*/}
+                    {/*        <Link to={'/affiliates'} target="_blank">*/}
+                    {/*            <div className="icon">*/}
+                    {/*                <SVG id='refer-icon'/>*/}
+                    {/*            </div>*/}
 
-                                {devicePixelRatio === 2 ?
-                                    <span className="bottom-span">Refer sellers! <br/> Get Cash</span>
-                                    :
-                                    <span className="bottom-span">Refer sellers! Get Cash</span>}
-                            </Link>
-                        </InformationTooltip>
-                    </div>
+                    {/*            {devicePixelRatio === 2 ?*/}
+                    {/*                <span className="bottom-span">Refer sellers! <br/> Get Cash</span>*/}
+                    {/*                :*/}
+                    {/*                <span className="bottom-span">Refer sellers! Get Cash</span>}*/}
+                    {/*        </Link>*/}
+                    {/*    </InformationTooltip>*/}
+                    {/*</div>*/}
 
                     <nav className="bottom-nav">
                         <ul className="bottom-nav-list">
@@ -241,32 +241,32 @@ const Sidebar = () => {
                                 </InformationTooltip>
                             </li>
 
-                            <li className="bottom-nav-item">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<a
-                                        href="https://intercom.help/profitwhales/en/"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Help Center
-                                    </a>}
-                                    position={'right'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                                >
-                                    <a
-                                        href="https://intercom.help/profitwhales/en"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <div className="link-icon">
-                                            <SVG id='help-center'/>
-                                        </div>
+                            {/*<li className="bottom-nav-item">*/}
+                            {/*    <InformationTooltip*/}
+                            {/*        type={'custom'}*/}
+                            {/*        description={<a*/}
+                            {/*            href="https://intercom.help/profitwhales/en/"*/}
+                            {/*            target="_blank"*/}
+                            {/*            rel="noopener noreferrer"*/}
+                            {/*        >*/}
+                            {/*            Help Center*/}
+                            {/*        </a>}*/}
+                            {/*        position={'right'}*/}
+                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}*/}
+                            {/*    >*/}
+                            {/*        <a*/}
+                            {/*            href="https://intercom.help/profitwhales/en"*/}
+                            {/*            target="_blank"*/}
+                            {/*            rel="noopener noreferrer"*/}
+                            {/*        >*/}
+                            {/*            <div className="link-icon">*/}
+                            {/*                <SVG id='help-center'/>*/}
+                            {/*            </div>*/}
 
-                                        <span className="bottom-span">Help Center</span>
-                                    </a>
-                                </InformationTooltip>
-                            </li>
+                            {/*            <span className="bottom-span">Help Center</span>*/}
+                            {/*        </a>*/}
+                            {/*    </InformationTooltip>*/}
+                            {/*</li>*/}
 
                             <li className="bottom-nav-item">
                                 <InformationTooltip

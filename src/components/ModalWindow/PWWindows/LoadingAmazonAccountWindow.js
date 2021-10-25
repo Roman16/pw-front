@@ -55,7 +55,9 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
     }, [visible])
 
     useEffect(() => {
-        checkStatus()
+        window.addEventListener("storage", (e) => {
+            if (localStorage.getItem('importStatus') && JSON.stringify(importStatus) !== localStorage.getItem('importStatus')) checkStatus()
+        })
     }, [])
 
     return (
