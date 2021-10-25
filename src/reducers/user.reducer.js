@@ -30,7 +30,7 @@ export function user(state = initialState, action) {
             localStorage.setItem('importStatus', JSON.stringify(action.payload.importStatus || state.importStatus || defaultImportStatus))
 
             return {
-                ...initialState,
+                ...state,
                 ...action.payload,
                 notFirstEntry: true,
                 lastUserStatusAction: new Date()
