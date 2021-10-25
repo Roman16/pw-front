@@ -42,7 +42,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         setPageStatus('error')
                     } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
                         setPageStatus('syncing-data')
-
+                        onGoNextStep()
                         win.close()
                         clearInterval(timer)
                     } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
