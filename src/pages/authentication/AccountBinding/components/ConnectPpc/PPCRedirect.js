@@ -1,11 +1,11 @@
-import React from "react";
-import logo from '../../../../../assets/img/ProfitWhales-logo-dark.svg';
-import loader from '../../../../../assets/img/loader.svg';
-import './ConnectPpc.less';
+import React from "react"
+import logo from '../../../../../assets/img/logo/sds-sidebar-logo.svg'
+import loader from '../../../../../assets/img/loader.svg'
+import './ConnectPpc.less'
 
 const PPCRedirect = () => {
 
-    return(
+    return (
         <div className="ppc-redirect-page">
             <div className="image">
                 <img src={logo} alt=""/>
@@ -14,6 +14,6 @@ const PPCRedirect = () => {
 
         </div>
     )
-};
+}
 
-export default PPCRedirect;
+export default PPCRedirect

@@ -4,37 +4,6 @@ import {history} from '../utils/history'
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
 
-const LandingZTH = React.lazy(() => import('../pages/LandingPages/ZTH/ZTH'))
-const LandingAutomation = React.lazy(() => import('../pages/LandingPages/Automation/LandingAutomation'))
-const LandingAffiliates = React.lazy(() => import('../pages/LandingPages/Affiliates/LandingAffiliates'))
-const Ebook = React.lazy(() => import('../pages/LandingPages/Ebook/Ebook'))
-const ThankYou = React.lazy(() => import('../pages/LandingPages/Ebook/ThankYou'))
-const AboutUs = React.lazy(() => import('../pages/LandingPages/AboutUs/AboutUs'))
-const Pricing = React.lazy(() => import('../pages/LandingPages/Pricing/Pricing'))
-const PricingOld = React.lazy(() => import('../pages/LandingPages/PricingOld/PricingOld'))
-const PPCScanner = React.lazy(() => import('../pages/LandingPages/PPCScanner/PPCScanner'))
-const DemoCall = React.lazy(() => import('../pages/LandingPages/DemoCall/DemoCall'))
-const ContactUs = React.lazy(() => import('../pages/LandingPages/ContactUs/ContactUs'))
-const HelpSupport = React.lazy(() => import('../pages/LandingPages/ContactUs/HelpSupport'))
-const BookDemo = React.lazy(() => import('../pages/LandingPages/ContactUs/BookDemo'))
-const Partners = React.lazy(() => import('../pages/LandingPages/ContactUs/Partners'))
-const Audit = React.lazy(() => import('../pages/LandingPages/ContactUs/Audit'))
-const PrivacyPolicy = React.lazy(() => import('../pages/LandingPages/PrivacyPolicy/PrivacyPolicy'))
-const TermsOfUse = React.lazy(() => import('../pages/LandingPages/TermsOfUse/TermsOfUse'))
-const Video = React.lazy(() => import('../pages/LandingPages/Video/Video'))
-const CareWeDo = React.lazy(() => import('../pages/LandingPages/CareWeDo/CareWeDo'))
-const OurWhale = React.lazy(() => import('../pages/LandingPages/OurWhale/OurWhale'))
-const Recognition = React.lazy(() => import('../pages/LandingPages/Recognition/Recognition'))
-const Contact = React.lazy(() => import('../pages/LandingPages/Contact/Contact'))
-const GetAudit = React.lazy(() => import('../pages/LandingPages/GetAudit/GetAudit'))
-const GetAuditNew = React.lazy(() => import('../pages/LandingPages/GetAuditNew/GetAudit'))
-const IdentifyOption = React.lazy(() => import('../pages/LandingPages/IdentifyOption/IdentifyOption'))
-const EnlightenFuture = React.lazy(() => import('../pages/LandingPages/EnlightenFuture/EnlightenFuture'))
-const RedefineApproach = React.lazy(() => import('../pages/LandingPages/RedefineApproach/RedefineApproach'))
-const CustomerSatisfactionSurvey = React.lazy(() => import('../pages/LandingPages/CustomerSatisfactionSurvey/CustomerSatisfactionSurvey'))
-const MainPage = React.lazy(() => import('../pages/LandingPages/MainPage/MainPage'))
-const Course = React.lazy(() => import('../pages/LandingPages/Course/Course'))
-
 const AuthorizedUser = React.lazy(() => import('../pages'))
 const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
 
@@ -66,6 +35,7 @@ const routers = () => {
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     <Route path="/success-connect" component={ThankPage}/>
+                    <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     {/*-----------------------------------------------------------*/}
 
                     <Route exact path={'/404'} component={NotFound}/>

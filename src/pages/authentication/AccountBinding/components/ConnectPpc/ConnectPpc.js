@@ -36,7 +36,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         const checkWindowLocation = () => {
             const windowLocation = win.location
 
-            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com') {
+            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com') {
                 try {
                     if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
                         setPageStatus('error')
@@ -84,7 +84,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     Amazon Advertising API.
                 </p>
 
-                <Checkbox onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
+                <Checkbox checked={disabledConnect} onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
                     Connect Amazon Advertising API
                 </Checkbox>
 
