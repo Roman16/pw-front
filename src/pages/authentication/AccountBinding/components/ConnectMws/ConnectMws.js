@@ -18,7 +18,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
     }))
 
     const getCredentialsHandler = () => {
-        popupCenter({url: mwsLink, title: 'xtf', w: 520, h: 570})
+        popupCenter({url: mwsLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
     }
 
     if (connectMwsStatus === 'connect') {
