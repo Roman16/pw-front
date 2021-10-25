@@ -1,55 +1,56 @@
-import React, {useEffect, useState} from 'react';
-import {Drawer, Modal} from 'antd';
+import React, {useEffect, useState} from 'react'
+import {Drawer, Modal} from 'antd'
 
-import SubscriptionPlan from './SubscriptionPlan';
-import CancelAccountWindow from './DrawerWindows/CancelAccountWindow';
-import Reactivate from './DrawerWindows/Reactivate';
-import './Subscription.less';
-import './DrawerWindows/Reactivate.less';
-import {useSelector, useDispatch} from "react-redux";
-import {userService} from "../../../services/user.services";
-import {userActions} from "../../../actions/user.actions";
-import {subscriptionProducts} from "../../../constans/subscription.products.name";
-import {notification} from "../../../components/Notification";
-import {history} from "../../../utils/history";
-import Billing from "../Billing/Billing";
+import SubscriptionPlan from './SubscriptionPlan'
+import CancelAccountWindow from './DrawerWindows/CancelAccountWindow'
+import Reactivate from './DrawerWindows/Reactivate'
+import './Subscription.less'
+import './DrawerWindows/Reactivate.less'
+import {useSelector, useDispatch} from "react-redux"
+import {userService} from "../../../services/user.services"
+import {userActions} from "../../../actions/user.actions"
+import {subscriptionProducts} from "../../../constans/subscription.products.name"
+import {notification} from "../../../components/Notification"
+import {history} from "../../../utils/history"
+import Billing from "../Billing/Billing"
 
-const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON;
+const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
 const Subscription = () => {
-    let interval = null;
-    const dispatch = useDispatch();
-    const [openedReactivateWindow, openReactivateWindow] = useState(false);
-    const [openedAccountWindow, openAccountWindow] = useState(false);
-    const [selectedPlan, selectPlan] = useState();
-    const [subscriptions, setSubscriptions] = useState([]);
-    const [fetching, switchFetching] = useState(false);
-    const [cardsList, setCardsList] = useState(null);
-    const [disableButton, changeButton] = useState(false);
-    const [disableReactivateButtons, setDisableReactivateButtons] = useState(false);
+    let interval = null
+    const dispatch = useDispatch()
+    const [openedReactivateWindow, openReactivateWindow] = useState(false)
+    const [openedAccountWindow, openAccountWindow] = useState(false)
+    const [selectedPlan, selectPlan] = useState()
+    const [subscriptions, setSubscriptions] = useState([])
+    const [fetching, switchFetching] = useState(false)
+    const [cardsList, setCardsList] = useState(null)
+    const [disableButton, changeButton] = useState(false)
+    const [disableReactivateButtons, setDisableReactivateButtons] = useState(false)
 
-    const {mwsConnected, ppcConnected, stripeId} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, stripeId, user} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        stripeId: state.user.user.stripe_id
-    }));
+        stripeId: state.user.user.stripe_id,
+        user: state.user,
+    }))
 
     function handleOpenAccountWindow(plan) {
-        openAccountWindow(true);
+        openAccountWindow(true)
         selectPlan(plan)
     }
 
     function handleOpenReactivateWindow(plan) {
-        openReactivateWindow(true);
+        openReactivateWindow(true)
         selectPlan(plan)
     }
 
     function fetchSubscriptions() {
-        switchFetching(true);
+        switchFetching(true)
 
         userService.getSubscription()
             .then(res => {
-                switchFetching(false);
+                switchFetching(false)
 
                 setSubscriptions(Object.keys(res).map(productId => ({
                     productId,
@@ -83,7 +84,7 @@ const Subscription = () => {
     }
 
     async function handleSubscribe({plan_id, productId, coupon}) {
-        changeButton(true);
+        changeButton(true)
 
         if (cardsList && cardsList.length) {
             try {
@@ -93,128 +94,126 @@ const Subscription = () => {
                         subscription_id: productId,
                         marketplace_id: 'ATVPDKIKX0DER',
                         coupon_code: coupon
-                    });
+                    })
                 } else {
                     await userService.subscribe({
                         subscription_plan_id: plan_id,
                         subscription_id: productId,
                         marketplace_id: 'ATVPDKIKX0DER',
-                    });
+                    })
                 }
 
-                notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'});
-                changeButton(false);
+                notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'})
+                changeButton(false)
 
-                dispatch(userActions.getPersonalUserInfo());
-                fetchSubscriptions();
+                dispatch(userActions.getPersonalUserInfo())
+                fetchSubscriptions()
             } catch (e) {
-                changeButton(false);
+                changeButton(false)
             }
         } else {
-            changeButton(false);
-            history.push('/account/subscription#user-cards');
+            changeButton(false)
+            history.push('/account/subscription#user-cards')
             notification.error({title: 'Add card!'})
         }
     }
 
     async function handleReactivateSubscription() {
-        setDisableReactivateButtons(true);
+        setDisableReactivateButtons(true)
 
         try {
             await userService.reactivateSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
                 subscription_id: selectedPlan.productId,
-            });
+            })
 
-            dispatch(userActions.getPersonalUserInfo());
-            fetchSubscriptions();
-            selectPlan(null);
-            openReactivateWindow(false);
+            dispatch(userActions.getPersonalUserInfo())
+            fetchSubscriptions()
+            selectPlan(null)
+            openReactivateWindow(false)
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
         setTimeout(() => {
-            setDisableReactivateButtons(false);
+            setDisableReactivateButtons(false)
         }, 500)
     }
 
     async function handleCancelSubscription() {
-        setDisableReactivateButtons(true);
+        setDisableReactivateButtons(true)
 
         try {
             await userService.cancelSubscription({
                 subscription_plan_id: selectedPlan.plan_id,
                 subscription_id: selectedPlan.productId,
-            });
+            })
 
-            dispatch(userActions.getPersonalUserInfo());
-            fetchSubscriptions();
-            selectPlan(null);
-            openAccountWindow(false);
+            dispatch(userActions.getPersonalUserInfo())
+            fetchSubscriptions()
+            selectPlan(null)
+            openAccountWindow(false)
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
         setTimeout(() => {
-            setDisableReactivateButtons(false);
+            setDisableReactivateButtons(false)
         }, 500)
     }
 
     async function keepSubscriptionHandler() {
-        setDisableReactivateButtons(true);
+        setDisableReactivateButtons(true)
 
-        const {productId, plan_id} = subscriptions[0];
+        const {productId, plan_id} = subscriptions[0]
 
         try {
-            await userService.applyCoupon(productId, plan_id, cancelCoupon);
+            await userService.applyCoupon(productId, plan_id, cancelCoupon)
 
-            dispatch(userActions.getPersonalUserInfo());
-            fetchSubscriptions();
+            dispatch(userActions.getPersonalUserInfo())
+            fetchSubscriptions()
 
-            openAccountWindow(false);
+            openAccountWindow(false)
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
-        setDisableReactivateButtons(false);
+        setDisableReactivateButtons(false)
     }
 
     async function handleUpdateSubscriptionStatus() {
         if (subscriptions[0]) {
             if (subscriptions[0].next_charge_value !== null || subscriptions[0].flat_amount !== null || subscriptions[0].quantity !== null) {
-                clearInterval(interval);
+                clearInterval(interval)
                 return
             }
         }
 
         if (ppcConnected || mwsConnected) {
-            await userService.updateSubscriptionStatus();
-            dispatch(userActions.getPersonalUserInfo());
+            await userService.updateSubscriptionStatus()
+            dispatch(userActions.getPersonalUserInfo())
         }
     }
 
     useEffect(() => {
-        fetchSubscriptions();
+        fetchSubscriptions()
 
         if (ppcConnected || mwsConnected) {
-            userService.updateSubscriptionStatus();
+            userService.updateSubscriptionStatus()
         }
 
         userService.fetchBillingInformation()
             .then(res => {
                 setCardsList(res)
-            });
-
-        // interval = setInterval(handleUpdateSubscriptionStatus, 1000 * 60);
+            })
 
         return () => {
-            clearInterval(interval);
+            clearInterval(interval)
         }
-    }, []);
+    }, [])
 
     return (
         <div className="user-cabinet">
-            {subscriptionProducts.map((product) => (
+            {user.user.is_agency_client && subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.key}
                     onOpenAccountWindow={handleOpenAccountWindow}
@@ -266,7 +265,7 @@ const Subscription = () => {
                 />
             </Modal>
         </div>
-    );
-};
+    )
+}
 
-export default Subscription;
+export default Subscription
