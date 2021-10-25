@@ -1,9 +1,14 @@
-import React from "react"
+import React, {useEffect} from "react"
 import successImage from '../../../../../assets/img/success-connect.svg'
 import './SuccessPage.less'
 import {history} from "../../../../../utils/history"
+import _ from "lodash"
+import {defaultImportStatus} from "../../../../../reducers/user.reducer"
 
 const SuccessPage = () => {
+    useEffect(() => {
+        localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
+    }, [])
 
     return (
         <div className='success-section'>
