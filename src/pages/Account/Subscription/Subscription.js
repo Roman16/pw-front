@@ -213,7 +213,7 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            {user.user.is_agency_client && subscriptionProducts.map((product) => (
+            {(user.user.is_agency_client || user.user.id === 714) && subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.key}
                     onOpenAccountWindow={handleOpenAccountWindow}
