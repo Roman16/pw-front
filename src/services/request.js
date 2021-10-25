@@ -90,10 +90,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                             history.push('/confirm-email')
                         })
                 } else if (error.response && error.response.status === 423) {
-                    localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, (v) => ({
-                        ...v,
-                        required_parts_ready: false
-                    }))))
+                    localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                 } else if (error.response) {
                     if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
                         handlerErrors('Something wrong!')
