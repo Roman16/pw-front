@@ -1,4 +1,4 @@
-export const popupCenter = ({url, title, w, h}) => {
+export const popupCenter = ({url, title, w, h, importantWidth = true}) => {
     const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX
     const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY
 
@@ -11,8 +11,8 @@ export const popupCenter = ({url, title, w, h}) => {
     return window.open(url, title,
         `
       scrollbars=yes,
-      width=${w / systemZoom}, 
-      height=${h / systemZoom}, 
+      width=${importantWidth ? `${w}px` : w / systemZoom}, 
+      height=${importantWidth ? `${h}px` : h / systemZoom}, 
       top=${top}, 
       left=${left}
      `)

@@ -36,13 +36,13 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
         const checkWindowLocation = () => {
             const windowLocation = win.location
 
-            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com') {
+            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com'|| windowLocation.origin === 'https://sponsoreds.com') {
                 try {
                     if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
                         setPageStatus('error')
                     } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
                         setPageStatus('syncing-data')
-
+                        onGoNextStep()
                         win.close()
                         clearInterval(timer)
                     } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
