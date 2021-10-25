@@ -1,11 +1,11 @@
 import {userConstants} from '../constans/actions.type'
 
-const defaultImportStatus = {
-    analytics: {required_parts_ready: false, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
-    dayparting: {required_parts_ready: false, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
-    ppc_automate: {required_parts_ready: false, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
-    products_info: {required_parts_ready: false, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
-    zth: {required_parts_ready: false, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+export const defaultImportStatus = {
+    analytics: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+    dayparting: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+    ppc_automate: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+    products_info: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+    zth: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
 }
 
 const initialState = {
