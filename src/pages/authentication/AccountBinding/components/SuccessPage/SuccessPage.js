@@ -1,7 +1,7 @@
-import React from "react";
-import successImage from '../../../../../assets/img/success-connect.svg';
-import './SuccessPage.less';
-import {history} from "../../../../../utils/history";
+import React from "react"
+import successImage from '../../../../../assets/img/success-connect.svg'
+import './SuccessPage.less'
+import {history} from "../../../../../utils/history"
 
 const SuccessPage = () => {
 
@@ -15,10 +15,10 @@ const SuccessPage = () => {
             </p>
 
             <div className="actions">
-                <button className='btn default' onClick={() => history.push('/ppc/optimization')}>Finish</button>
+                <button className='btn default' onClick={() => history.push('/')}>Finish</button>
             </div>
         </div>
     )
-};
+}
 
-export default SuccessPage;
+export default SuccessPage
