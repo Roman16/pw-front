@@ -93,6 +93,7 @@ const ProductItem = ({
                 <div className="eligibility-status">
                     Ineligible
                     <InformationTooltip
+                        type={'custom'}
                         overlayClassName={'ineligible-description'}
                         description={product.variations ?
                             product.variations.length === 0 ? 'You have already created ZTH campaigns for each variation of this parent product. ZTH campaigns can\'t be created for the empty parent product.' :
@@ -103,7 +104,9 @@ const ProductItem = ({
                                     {product.eligibility_status_reasons.map(i => <li>{i.message}</li>)}
                                 </ul>
                             </div>}
-                    />
+                    >
+                        <SVG id={'information-triangle'}/>
+                    </InformationTooltip>
                 </div>}
             </div>
 

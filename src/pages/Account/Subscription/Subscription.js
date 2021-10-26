@@ -188,18 +188,16 @@ const Subscription = () => {
             }
         }
 
-        if (ppcConnected || mwsConnected) {
+        if ((ppcConnected || mwsConnected) && (user.user.is_agency_client || user.user.id === 714)) {
             await userService.updateSubscriptionStatus()
             dispatch(userActions.getPersonalUserInfo())
         }
     }
 
     useEffect(() => {
-        fetchSubscriptions()
+        if (user.user.is_agency_client || user.user.id === 714) fetchSubscriptions()
 
-        if (ppcConnected || mwsConnected) {
-            userService.updateSubscriptionStatus()
-        }
+        if ((ppcConnected || mwsConnected) && (user.user.is_agency_client || user.user.id === 714)) userService.updateSubscriptionStatus()
 
         userService.fetchBillingInformation()
             .then(res => {

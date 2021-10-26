@@ -166,10 +166,10 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
                         />
 
                         <TreeSelect
-                            getPopupContainer={triggerNode => triggerNode.parentNode}
                             treeCheckable={true}
                             showSearch={false}
                             placeholder={'Type'}
+                            dropdownClassName={'optimization-parts-dropdown'}
                             disabled={item.dont_optimize || !item.enable_optimization_parts}
                             value={optimization_parts}
                             treeData={multiSelectVariations}
@@ -231,6 +231,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
                 <CustomTable
                     loading={loading}
                     dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
+                    // dataSource={[{}, {}]}
                     // dataSource={jobsList}
                     columns={columns}
                     emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}

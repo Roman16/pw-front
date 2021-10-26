@@ -278,7 +278,7 @@ const OptimizationForAdmin = () => {
         setSaveProcessing(true)
 
         if (productInformation.optimization_strategy !== null) {
-            if (productInformation.cogs) {
+            if (productInformation.default_variation && productInformation.default_variation.cogs) {
                 if (bidValidator() && campaignValidator()) {
                     try {
                         const product = {
