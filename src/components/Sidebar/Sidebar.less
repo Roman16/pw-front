@@ -655,6 +655,89 @@
     }
   }
 
+  .social-links {
+    display: flex;
+    flex-direction: column;
+    padding: 0.7142857142857143rem 1.8571428571428572rem 0.7142857142857143rem 1.8571428571428572rem;
+    margin: auto 0 0 0;
+    transition: .3s ease-in-out;
+
+    h3 {
+      font-weight: 600;
+      font-size: 0.8571428571428571rem;
+      line-height: 1.0714285714285714rem;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+      margin: 0;
+      transition: opacity 0.3s ease-in 0.3s;
+      transform: scaleX(1);
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      li {
+        margin: 0.8571428571428571rem 0 0 0;
+
+        &:nth-child(1) {
+          a {
+            padding: 0;
+
+            svg {
+              height: 60%;
+            }
+          }
+        }
+
+        &:nth-child(2) {
+          a {
+            svg {
+              width: 55%;
+            }
+          }
+        }
+
+        &:nth-child(3) {
+          a {
+            svg {
+              width: 60%;
+            }
+          }
+        }
+      }
+
+      a {
+        width: 2rem;
+        min-width: 2rem;
+        height: 2rem;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: .2s ease-in-out;
+        padding: 0 0 0 1px;
+
+        svg {
+          fill: #fff;
+          transition: .2s ease-in-out;
+        }
+
+        &:hover {
+          background: #fff;
+
+          svg {
+            fill: #FF5256;
+          }
+        }
+      }
+    }
+  }
+
   //   ================================================================
 
   &.open {
@@ -786,6 +869,16 @@
             .hideAnimation();
           }
         }
+      }
+    }
+
+    .social-links {
+      padding-left: 1.5rem;
+
+      h3 {
+        transform: scaleX(1);
+        opacity: 0;
+        transition: width 0.3s ease-in 0.3s;
       }
     }
   }

@@ -493,7 +493,7 @@ const ProductList = ({
             key: FRIENDLY_NAME,
             width: '200px',
             editType: 'editable-text',
-            render: (value) => value ?? '-'
+            render: (value) => value ? <div className="friendly-name">{value}</div> : '-'
         }] : [],
         ...isAgencyClient ? [{
             title: () => <div
@@ -576,7 +576,6 @@ const ProductList = ({
                 />
 
 
-
                 <CogsWindow
                     visible={visibleCogsWindow}
                     productId={selectedProduct && selectedProduct.id}
@@ -640,7 +639,7 @@ const ProductList = ({
                 </div>
             </div>}
         </div>
-       )
+    )
 }
 
 const ProductItem = ({product: {image_url, asin, name, id, variations}, openedProduct, onOpenVariations}) => {
