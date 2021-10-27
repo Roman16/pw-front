@@ -11,14 +11,16 @@ const steps = [
 
 const Navigations = ({current}) => {
 
-    return (<div className="navigations">
+    return (<div className={`navigations active-${current}`}>
         <ul>
             {steps.map((item, index) => <>
-                <li className={`${current === index ? 'active' : ''} ${index <= current + 1 ? 'opened' : ''}`}>
+                <li className={`${current === index ? 'active' : ''} ${index <= current + 1 ? 'opened' : ''} ${index < current ? 'finished' : ''}`}>
                     <div>{current > index ? <CheckSmall/> : index + 1}</div>
-                    {item}
+                    <span>{item}</span>
                 </li>
                 {index < 4 && <hr/>}</>)}
+
+            <div className="bar" style={{width: `${20 * (current + 1)}%`}}/>
         </ul>
     </div>)
 }

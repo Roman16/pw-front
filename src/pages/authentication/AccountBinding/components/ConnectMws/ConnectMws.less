@@ -32,7 +32,7 @@
   }
 
   h4 {
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.1428571428571428rem;
     line-height: 1.4285714285714286rem;
     text-align: center;
@@ -142,6 +142,49 @@
         a {
           color: #FF5256;
           text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    .select-marketplace {
+      label {
+        font-size: 14px;
+        line-height: 17px;
+      }
+
+      .custom-select {
+        height: 32px;
+      }
+
+      .btn {
+        height: 32px;
+      }
+    }
+
+    h4 {
+      font-size: 16px;
+      line-height: 20px;
+    }
+
+    .mws-credentials {
+      .form-group {
+        max-width: 100%;
+        width: 100%;
+        margin: 0 0 20px !important;
+
+        label {
+          font-size: 14px;
+          line-height: 17px;
+        }
+
+        input {
+          height: 32px;
+        }
+
+        &:last-child {
+          margin: 0 !important;
         }
       }
     }
