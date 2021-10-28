@@ -45,11 +45,13 @@ const RegistrationPage = (props) => {
 
                 const urlParams = new URLSearchParams(props.location.search)
                 const ref = urlParams.get('ref')
+                const coupon = urlParams.get('coupon')
 
                 const res = await userService.regist({
                     ...user,
                     ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
                     ...ref ? {referral_code: ref} : {},
+                    ...coupon ? {coupon: coupon} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 
