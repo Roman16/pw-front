@@ -43,9 +43,13 @@ const RegistrationPage = (props) => {
             try {
                 setProcessing(true)
 
+                const urlParams = new URLSearchParams(props.location.search)
+                const ref = urlParams.get('ref')
+
                 const res = await userService.regist({
                     ...user,
                     ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+                    ...ref ? {referral_code: ref} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 
@@ -53,7 +57,7 @@ const RegistrationPage = (props) => {
 
                 localStorage.setItem('token', res.access_token)
 
-                window.dataLayer.push({'event': 'Registration',})
+                // window.dataLayer.push({'event': 'Registration',})
 
                 history.push('/confirm-email')
             } catch (e) {

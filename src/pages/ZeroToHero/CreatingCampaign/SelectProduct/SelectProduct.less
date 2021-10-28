@@ -318,15 +318,38 @@
           }
         }
 
+        .variation-selected {
+          position: absolute;
+          right: 26px;
+          top: 10px;
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            right: 21px;
+          }
+          .custom-tooltip {
+            margin: 0;
+          }
+
+          .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #FF5256;
+          }
+        }
+
         .eligibility-status {
           position: absolute;
-          right: 15px;
+          right: 20px;
           bottom: 13px;
           font-weight: 500;
           font-size: 0.8571428571428571rem;
           color: #FF5256;
           display: flex;
           align-items: center;
+
+          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+            right: 18px;
+          }
 
           .custom-tooltip {
             pointer-events: auto !important;
