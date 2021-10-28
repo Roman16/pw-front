@@ -44,15 +44,14 @@ const RegistrationPage = (props) => {
             try {
                 setProcessing(true)
 
-                const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
-
-                const coupon = urlParams.get('coupon')
+                // const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
+                // const coupon = urlParams.get('coupon')
 
                 const res = await userService.regist({
                     ...user,
                     ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
-                    ...ref ? {referral_code: ref} : {},
-                    ...coupon ? {coupon: coupon} : {},
+                    ...Cookies.get('tap_vid') ? {tracking_id: Cookies.get('tap_vid')} : {},
+                    // ...coupon ? {coupon: coupon} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 
@@ -74,6 +73,8 @@ const RegistrationPage = (props) => {
 
 
     useEffect(() => {
+        window.tap('detect')
+
         seo({title: 'Registration Sponsoreds'})
 
         if (urlParams.get('ref')) localStorage.setItem('refId', urlParams.get('ref'))

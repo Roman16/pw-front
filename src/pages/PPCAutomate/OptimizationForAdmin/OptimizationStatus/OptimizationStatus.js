@@ -29,7 +29,7 @@ const OptimizationStatus = ({product: {status = '', created_at, today_changes, o
 
                 <div>
                     <h5>Status</h5>
-                    <h4 style={{color: status === 'RUNNING' ? '#7DD4A1' : '#eb5757'}}>{status === 'RUNNING' ? 'Active' : 'Inactive'}</h4>
+                    <h4>{status === 'RUNNING' ? 'Active' : 'Inactive'}</h4>
                 </div>
             </li>
 

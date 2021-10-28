@@ -58,8 +58,9 @@
         align-items: center;
 
         span {
-          color: #6D6DF6;
+          color: #6959AB;
           margin: 0 0 0 5px;
+          font-size: 0.8571428571428571rem;
 
           b {
             font-weight: 500;
@@ -93,11 +94,11 @@
 
 
             &.active {
-              background: rgba(109, 109, 246, 0.15);
+              background: rgba(105, 89, 171, 0.15);
 
               svg {
                 use {
-                  fill: #6D6DF6;
+                  fill: #6959AB;
                 }
               }
             }
@@ -108,6 +109,12 @@
 
       .active-only {
         margin: 0 0 0 auto;
+
+        label {
+          font-size: 0.8571428571428571rem;
+          line-height: 1.0714285714285714rem;
+          color: #312C51;
+        }
 
         button {
           margin: 0 0 0 8px;
@@ -165,7 +172,7 @@
     }
 
     &:hover {
-      background: rgba(245, 245, 255, 0.45);
+      background: #FFFAFA;
     }
 
     .has-new-reports {
@@ -262,7 +269,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             width: fit-content;
-            font-weight: 500;
+            font-weight: 600;
           }
         }
 
@@ -308,7 +315,7 @@
             }
 
             span:first-child {
-              font-weight: 500;
+              font-weight: 600;
               margin: 0 5px 0 0;
             }
 
@@ -366,7 +373,7 @@
     }
 
     &.active {
-      background: rgba(245, 245, 255, 0.7);
+      background: #FFFAFA;
 
       &::before {
         content: '';
@@ -375,11 +382,11 @@
         position: absolute;
         left: 0;
         top: 0;
-        background: #6D6DF6;
+        background: #FF5256;
       }
 
       .product-children-list .children-indicator {
-        background: #6D6DF6;
+        background: #FF5256;
       }
     }
 
