@@ -24,6 +24,7 @@ const RegistrationPage = (props) => {
 
     const dispatch = useDispatch()
 
+    const urlParams = new URLSearchParams(props.location.search)
 
     const changeUserHandler = (value) => {
         setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
@@ -43,8 +44,8 @@ const RegistrationPage = (props) => {
             try {
                 setProcessing(true)
 
-                const urlParams = new URLSearchParams(props.location.search)
-                const ref = urlParams.get('ref')
+                const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
+
                 const coupon = urlParams.get('coupon')
 
                 const res = await userService.regist({
@@ -58,6 +59,7 @@ const RegistrationPage = (props) => {
                 dispatch(userActions.setInformation({user: {email: user.email}}))
 
                 localStorage.setItem('token', res.access_token)
+                localStorage.removeItem('refId')
 
                 // window.dataLayer.push({'event': 'Registration',})
 
@@ -70,9 +72,11 @@ const RegistrationPage = (props) => {
         }
     }
 
+
     useEffect(() => {
         seo({title: 'Registration Sponsoreds'})
 
+        if (urlParams.get('ref')) localStorage.setItem('refId', urlParams.get('ref'))
     }, [])
 
     return (
