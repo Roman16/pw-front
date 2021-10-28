@@ -13,9 +13,10 @@
     min-height: 5rem;
 
     h2 {
+      font-weight: 600;
       font-size: 1.4285714285714286rem;
-      line-height: 1.4285714285714286rem;
-      color: #363694;
+      line-height: 1.7142857142857142rem;
+      color: #312C51;
       margin: 0;
     }
 
@@ -73,7 +74,7 @@
       min-height: 100%;
       font-weight: 600;
       font-size: 1rem;
-      color: #343C5A;
+      color: #312C51;
       padding-right: 30px;
       margin: 0 20px 0 0;
       border-right: 0.5px solid #C9CBD4;
@@ -81,17 +82,17 @@
       align-items: center;
 
       a {
-        font-weight: 400;
-        font-size: 12px;
+        font-size: 0.8571428571428571rem;
         text-decoration-line: underline;
-        color: #6D6DF6;
+        color: #6959AB;
         margin: 2px 0 0 5px;
       }
     }
 
     h4 {
       font-size: 0.8571428571428571rem;
-      color: #656A84;
+      font-weight: 600;
+      color: #5B586F;
       margin: auto 0 auto 1.4285714285714286rem;
     }
 
@@ -126,7 +127,7 @@
 
         &:hover {
           svg {
-            fill: #6d6df6;
+            fill: #6959AB;
           }
         }
       }
@@ -157,7 +158,7 @@
 
     .product-price {
       font-size: 1rem;
-      color: #343C5A;
+      color: #312C51;
       margin: auto 0;
     }
 
@@ -184,6 +185,7 @@
         svg {
           width: 22px;
           height: 22px;
+          fill: #6959AB !important;
         }
       }
     }
@@ -192,6 +194,7 @@
       li {
         display: flex;
         align-items: center;
+        color: #312C51;
 
         i {
           width: 22px;
@@ -207,36 +210,19 @@
           }
         }
 
-        &:nth-child(2):hover {
+        &:hover {
+          background: #FFFAFA;
           i {
-            fill: #EC7F5C !important;
+            fill: #6959AB !important;
           }
         }
 
-        &:nth-child(3):hover {
+        &.ant-select-dropdown-menu-item-selected {
+          background: #FFFAFA;
           i {
-            fill: #6D6DF6 !important;
+            fill: #6959AB !important;
           }
         }
-
-        &:nth-child(4):hover {
-          i {
-            fill: #7DD4A1 !important;
-          }
-        }
-
-        &:nth-child(5):hover {
-          i {
-            fill: #F0B849 !important;
-          }
-        }
-
-        &:nth-child(6):hover {
-          i {
-            fill: #4DBEE1 !important;
-          }
-        }
-
       }
     }
 

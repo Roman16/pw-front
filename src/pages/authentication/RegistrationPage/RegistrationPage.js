@@ -11,6 +11,8 @@ import {useDispatch} from "react-redux"
 import {userActions} from "../../../actions/user.actions"
 import {seo} from "../../../utils/seo"
 
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
+
 const RegistrationPage = (props) => {
     const [user, setUser] = useState({
             name: '',
@@ -73,6 +75,7 @@ const RegistrationPage = (props) => {
 
 
     useEffect(() => {
+        window.tap('create', tapfiliateKey, {integration: "javascript"})
         window.tap('detect')
 
         seo({title: 'Registration Sponsoreds'})

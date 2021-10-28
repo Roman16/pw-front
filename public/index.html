@@ -24,16 +24,12 @@
     <!--    tapfiliate-->
 
     <script type="text/javascript">
-        const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
-
         (function (t, a, p) {
             t.TapfiliateObject = a
             t[a] = t[a] || function () {
                 (t[a].q = t[a].q || []).push(arguments)
             }
         })(window, 'tap')
-
-        window.tap('create', tapfiliateKey, {integration: "javascript"})
     </script>
     <!--   /tapfiliate -->
 
