@@ -68,7 +68,7 @@ const Overview = ({product}) => {
         },
         {
             title: 'Default Bid',
-            render: (product) => product.campaigns.default_bid ? `${numberMask(product.campaigns.default_bid)}$` : '-'
+            render: (product) => product.campaigns.default_bid ? `${numberMask(product.campaigns.default_bid, 2)}$` : '-'
         },
         {
             title: 'Your Brand Name',

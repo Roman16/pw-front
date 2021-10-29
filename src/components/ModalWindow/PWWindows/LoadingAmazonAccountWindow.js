@@ -3,22 +3,60 @@ import {useDispatch} from "react-redux"
 import ModalWindow from "../ModalWindow"
 import {userActions} from "../../../actions/user.actions"
 import {productsActions} from "../../../actions/products.actions"
-import loader from "../../../assets/img/loader.svg"
 import {userService} from "../../../services/user.services"
 
 let intervalId = null
 
+const serviceTitle = {
+    optimization: 'PPC Automate',
+    dayparting: 'Dayparting',
+    analytics: 'Analytics',
+    productSettings: 'Products Info',
+    zth: 'Zero to Hero',
+}
 
-const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, productList}) => {
+const importTypes = [
+    {
+        title: 'Products Data',
+        key: 'products'
+    },
+    {
+        title: 'Product Fees Data',
+        key: 'products_fees'
+    },
+    {
+        title: 'Orders Data',
+        key: 'orders'
+    },
+    {
+        title: 'Order Returns Data',
+        key: 'returns'
+    },
+    {
+        title: 'SB Advertising',
+        key: 'sb'
+    },
+    {
+        title: 'SD Advertising',
+        key: 'sd'
+    },
+    {
+        title: 'SP Advertising',
+        key: 'sp'
+    },
+]
+
+const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastName, productList}) => {
+    const [currentService, setCurrentService] = useState('')
     const dispatch = useDispatch()
 
     let requiredParts = {}
 
-    if (pathname.includes('/ppc/optimization')) requiredParts = importStatus.ppc_automate.required_parts_details
-    if (pathname.includes('/ppc/dayparting')) requiredParts = importStatus.dayparting.required_parts_details
-    if (pathname.includes('/ppc/analytics')) requiredParts = importStatus.analytics.required_parts_details
-    if (pathname.includes('/ppc/product-settings')) requiredParts = importStatus.products_info.required_parts_details
-    if (pathname.includes('/zero-to-hero')) requiredParts = importStatus.zth.required_parts_details
+    if (currentService === 'optimization') requiredParts = importStatus.ppc_automate.required_parts_details
+    if (currentService === 'dayparting') requiredParts = importStatus.dayparting.required_parts_details
+    if (currentService === 'analytics') requiredParts = importStatus.analytics.required_parts_details
+    if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
+    if (currentService === 'zth') requiredParts = importStatus.zth.required_parts_details
 
     const checkStatus = async () => {
         try {
@@ -62,6 +100,15 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
         })
     }, [])
 
+
+    useEffect(() => {
+        if (pathname.includes('/ppc/optimization') || pathname.includes('/ppc/report')) setCurrentService('optimization')
+        else if (pathname.includes('/ppc/dayparting')) setCurrentService('dayparting')
+        else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
+        else if (pathname.includes('/analytics')) setCurrentService('analytics')
+        else if (pathname.includes('/zero-to-hero')) setCurrentService('zth')
+    }, [pathname])
+
     return (
         <ModalWindow
             className={'amazon-loading-window'}
@@ -69,49 +116,28 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, produ
             okText={'Check it now'}
             container={true}
         >
-            <h2>Welcome {firstName}!</h2>
+            <h2>Welcome {firstName} {lastName}!</h2>
 
             <p>
-                We’re currently syncing your Amazon Account, which can take up to 24 hours. You’ll get an email when
-                sync is done so you can close the app and come back later.
+                We are currently syncing data from your Amazon Account with our system. This may take up to 24 hours. To
+                access {serviceTitle[currentService]} next data imports must be completed:
             </p>
 
             <div className="table">
                 <div className="row header">
-                    <div className="col">Description</div>
+                    <div className="col">Import type</div>
                     <div className="col">Status</div>
                 </div>
-                {requiredParts && requiredParts.products && <div className="row ">
-                    <div className="col">Products</div>
-                    <div
-                        className="col">{requiredParts.products && requiredParts.products.part_ready ? <>Done <DoneIcon/></> : <>In
-                        Progress... <ProgressIcon/></>}
-                    </div>
-                </div>}
 
-                {!pathname.includes('/zero-to-hero') && <>
-                    {requiredParts && requiredParts.sp && <div className="row ">
-                        <div className="col">SP Advertising</div>
-                        <div
-                            className="col">{requiredParts.sp && requiredParts.sp.part_ready ? <>Done <DoneIcon/></> : <>In
-                            Progress... <ProgressIcon/></>}
+                {requiredParts && importTypes.map(i => (
+                    requiredParts[i.key] && <div className="row ">
+                        <div className="col">{i.title}</div>
+                        <div className="col">
+                            {requiredParts[i.key].part_ready ?
+                                <>Done <DoneIcon/></> :
+                                <>In Progress... <ProgressIcon/></>}
                         </div>
-                    </div>}
-                    {requiredParts && requiredParts.sd && <div className="row ">
-                        <div className="col">SD Advertising</div>
-                        <div
-                            className="col">{requiredParts.sd && requiredParts.sd.part_ready ? <>Done <DoneIcon/></> : <>In
-                            Progress... <ProgressIcon/></>}
-                        </div>
-                    </div>}
-                    {requiredParts && requiredParts.orders && <div className="row ">
-                        <div className="col">Orders Data</div>
-                        <div
-                            className="col">{requiredParts.orders && requiredParts.orders.part_ready ? <>Done <DoneIcon/></> : <>In
-                            Progress... <ProgressIcon/></>}
-                        </div>
-                    </div>}
-                </>}
+                    </div>))}
             </div>
         </ModalWindow>
     )
@@ -126,6 +152,8 @@ const DoneIcon = () => <i>
     </svg>
 </i>
 
-const ProgressIcon = () => <i><img src={loader} alt=""/></i>
+const ProgressIcon = () => <i>
+    <div className="loader"/>
+</i>
 
 export default LoadingAmazonAccount

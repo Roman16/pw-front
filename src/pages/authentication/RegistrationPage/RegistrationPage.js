@@ -46,14 +46,15 @@ const RegistrationPage = (props) => {
             try {
                 setProcessing(true)
 
-                // const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
+                const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
                 // const coupon = urlParams.get('coupon')
 
                 const res = await userService.regist({
                     ...user,
                     ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
-                    ...Cookies.get('tap_vid') ? {tracking_id: Cookies.get('tap_vid')} : {},
+                    // ...Cookies.get('tap_vid') ? {tracking_id: Cookies.get('tap_vid')} : {},
                     // ...coupon ? {coupon: coupon} : {},
+                    ...ref ? {referral_code: ref} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 

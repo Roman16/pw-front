@@ -74,7 +74,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
             .catch(error => {
 
                 if (error.response && error.response.status === 401) {
-                    if (error.response.data.message === 'Incorrect login or password') {
+                    if (error.response.data.message === 'Incorrect login or password' || history.location.pathname.includes('/confirm-email')) {
                         reject(error)
                         handlerErrors(error.response.data.message)
                     } else {
@@ -85,10 +85,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         }
                     }
                 } else if (error.response && error.response.status === 412) {
-                    userService.resendConfirmEmail()
-                        .then(() => {
-                            history.push('/confirm-email')
-                        })
+                    history.push('/confirm-email')
                 } else if (error.response && error.response.status === 423) {
                     localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                 } else if (error.response) {
