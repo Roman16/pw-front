@@ -64,10 +64,10 @@ history.listen(location => {
         window.scrollTo(0, 0)
         prevLocation = location
 
-        if (userId) {
-            window.dataLayer.push({
-                'uid': userId
-            })
-        }
+        // if (userId) {
+        //     window.dataLayer.push({
+        //         'uid': userId
+        //     })
+        // }
     }
 })

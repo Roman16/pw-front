@@ -407,9 +407,21 @@ const RegistrationForm = ({setStep}) => {
                     <div className="form-group checkbox">
                         <Checkbox onChange={({target: {checked}}) => setAgreeWithTerms(checked)}>
                             Yes, I agree to Profit Whales
-                            <Link to={'/terms-and-conditions'} target={'_blank'}>Terms and Conditions</Link>
+                            <a
+                                target="_blank"
+                                href={'https://sponsoreds.com/terms-of-service'}
+                            >
+                                Terms and Conditions
+                            </a>
+
                             &
-                            <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
+                            <a
+                                target="_blank"
+                                href={'https://sponsoreds.com/privacy-policy'}
+                            >
+                                Privacy Policy
+                            </a>
+
                         </Checkbox>
                     </div>
 

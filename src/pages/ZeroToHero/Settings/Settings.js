@@ -16,6 +16,8 @@ let source = null
 
 const {Search} = Input
 
+let intervalId
+
 const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
         [productsList, setList] = useState([]),
@@ -85,6 +87,17 @@ const Settings = (props) => {
 
 
     useEffect(() => {
+        if (selectedTab === 'zth-products') {
+            intervalId = setInterval(() => {
+                getProductsList()
+            }, 30000)
+        } else {
+            clearInterval(intervalId)
+        }
+    }, [selectedTab])
+
+    useEffect(() => {
+        return (() => clearInterval(intervalId))
     }, [])
 
 

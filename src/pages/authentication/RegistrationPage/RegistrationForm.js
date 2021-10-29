@@ -119,19 +119,19 @@ const RegistrationForm = ({user, processing, failedFields, onChange, onSubmit}) 
 
         <p className="terms">
             By signing in, you agree to our <br/>
-            <Link
+            <a
                 target="_blank"
-                to={'/terms-and-conditions'}
+                href={'https://sponsoreds.com/terms-of-service'}
             >
                 Terms and Conditions
-            </Link>
+            </a>
             &
-            <Link
+            <a
                 target="_blank"
-                to={'/policy'}
+                href={'https://sponsoreds.com/privacy-policy'}
             >
                 Privacy Policy
-            </Link>
+            </a>
         </p>
 
         <p className="sign-up">

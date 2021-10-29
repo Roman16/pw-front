@@ -67,7 +67,7 @@ const ProductFilters = ({
                 </div>
                 }
                 <div className="active-only">
-                    <label htmlFor="">On optimization only</label>
+                    <label htmlFor="">On optimization</label>
                     <Switch
                         checked={onlyOptimization}
                         onChange={onShowOnlyOnOptimization}

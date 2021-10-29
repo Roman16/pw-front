@@ -163,8 +163,7 @@ img {
 
       grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
       grid-template-columns: 1fr;
-      grid-template-rows: auto;
-
+      grid-template-rows: max-content max-content max-content max-content;
       padding: 1.7142857em 1.42857143rem;
 
       .page {
@@ -631,7 +630,7 @@ img {
   }
 
   .ant-switch-checked {
-    background: #7DD4A1;
+    background: #6959AB;
   }
 
   @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
@@ -1148,6 +1147,19 @@ a.btn {
   &:focus {
     outline: none;
   }
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+button:focus,
+a:focus {
+  outline: none;
 }
 
 

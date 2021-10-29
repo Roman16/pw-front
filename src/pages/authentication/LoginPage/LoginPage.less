@@ -13,6 +13,7 @@
     filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.15));
     background: #fff;
     display: flex;
+    border-radius: 4px;
 
     form {
       width: 39%;
@@ -113,7 +114,7 @@
       display: flex;
       flex-direction: column;
       padding: 3.4285714285714284rem;
-
+      border-radius: 0 4px 4px 0;
       background: url('../../../assets/img/page-login/description-bg.png') no-repeat center center;
       -webkit-background-size: cover;
       -moz-background-size: cover;
@@ -122,11 +123,15 @@
 
 
       .logo {
-        width: 11.285714285714286rem;
         margin: 0 0 auto auto;
+
+        img {
+          width: 11.285714285714286rem;
+        }
       }
 
       .description-img {
+        width: 70%;
         max-width: 32.142857142857146rem;
         margin: 3.5714285714285716rem auto 1.4285714285714286rem;
       }
@@ -199,9 +204,7 @@
         & + span {
           padding: 0 0 0 10px;
           font-weight: 600;
-          font-size: 0.8571428571428571rem;
-          color: #5B586F;
-          margin-bottom: 2px;
+          font-size: 1rem;
         }
       }
     }
@@ -233,6 +236,7 @@
       a {
         color: #6959AB;
         padding: 0 3px;
+        font-weight: 600;
 
         &:hover {
           text-decoration: underline;
@@ -269,8 +273,153 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+
+        .logo .mob {
+          display: none;
+        }
+      }
+    }
+  }
+
+
+  @media (max-width: 1000px) {
+    .container {
+      form, .page-description {
+        padding: 3.42857143rem 1.4285714285714286rem;
+      }
+
+      form {
+        width: 45%;
+      }
+    }
+  }
+
+  @media (max-width: 800px) {
+    &, &.agency-registration {
+      padding: 0 0 100px;
+
+      .container {
+        flex-direction: column-reverse;
+        box-shadow: none;
+        position: relative;
+        background: none;
+
+        form {
+          width: calc(100% - 40px);
+          background: #FFFFFF;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+          border-radius: 4px;
+          margin: -130px auto 0;
+          z-index: 10;
+          padding: 60px 20px 40px;
+
+          h2 {
+            font-size: 32px;
+            line-height: 38px;
+            margin-bottom: 8px;
+          }
+
+          p {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+          }
+
+          .form-group {
+            input {
+              height: 48px;
+              font-size: 16px;
+            }
+          }
+
+          .submit {
+            height: 48px;
+            font-size: 18px;
+          }
+
+          .terms {
+            font-size: 12px;
+            line-height: 15px;
+            margin-bottom: 60px;
+          }
+
+          .sign-up {
+            font-size: 16px;
+            line-height: 20px;
+          }
+        }
+
+        .page-description {
+          padding: 45px 20px 120px;
+          border-radius: 0;
+
+          .logo {
+            margin: 0 auto;
+
+            img {
+              width: 158px;
+            }
+
+            .mob {
+              display: block;
+            }
+
+            .desk {
+              display: none;
+            }
+          }
+
+          .description-img {
+            width: 70%;
+            max-width: inherit;
+            margin: 2.5rem auto 0;
+          }
+
+          p {
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
+            text-align: center;
+            color: #FFFFFF;
+
+            br {
+              display: none;
+            }
+          }
+
+          .social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+
+            a {
+              margin: 0 40px 0 0;
+
+              svg {
+                height: 24px;
+                width: inherit;
+                fill: #6959AB;
+              }
+            }
+          }
+        }
+      }
+
+      &.login-page {
+        .ant-checkbox-wrapper .ant-checkbox {
+          width: 18px;
+          height: 18px;
+        }
+
+        .ant-checkbox-wrapper .ant-checkbox + span,
+        .row a{
+          font-size: 14px;
+        }
       }
     }
   }
 }
+
 

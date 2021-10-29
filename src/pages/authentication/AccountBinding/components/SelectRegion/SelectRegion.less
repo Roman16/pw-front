@@ -61,4 +61,38 @@
       }
     }
   }
+
+  @media (max-width: 850px) {
+    .regions {
+      flex-direction: column;
+
+      li {
+        padding: 10px 15px !important;
+        margin: 0 0 10px;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+          width: 48px;
+          height: 48px;
+          order: 4;
+          margin: 0 0 0 auto;
+        }
+
+        .ant-radio-wrapper {
+          order: 1;
+          margin: 0 10px 0 0;
+        }
+
+        h4 {
+          order: 2;
+          margin: 0 10px 0 0;
+        }
+
+        .soon {
+          order: 3;
+        }
+      }
+    }
+  }
 }

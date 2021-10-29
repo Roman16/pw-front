@@ -74,19 +74,19 @@ const jobStatus = ({job}) => {
         if (status === 'DONE') {
             return (
                 <div className="status-field finished">
-                    Created & Uploaded.
+                    Created & Uploaded
                 </div>
             )
         } else if (status === 'CREATION_PENDING') {
             return (
                 <div className="status-field processing">
-                    Creation starting.
+                    Creation starting
                 </div>
             )
         } else if (status === 'CREATION_IN_PROGRESS' || status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED') {
             return (
                 <div className="status-field processing">
-                    Creation in progress.
+                    Creation in progress
                     <InformationTooltip
                         description={'We are in the process of creating your PPC campaigns.'}
                     />
@@ -95,13 +95,13 @@ const jobStatus = ({job}) => {
         } else if (status === 'UPLOAD_PENDING') {
             return (
                 <div className="status-field processing">
-                    Upload starting.
+                    Upload starting
                 </div>
             )
         } else if (status === 'UPLOAD_IN_PROGRESS' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
             return (
                 <div className="status-field processing">
-                    Upload in progress.
+                    Upload in progress
                     <InformationTooltip
                         description={'We are in the process of uploading your PPC campaigns to your Amazon account.'}
                     />

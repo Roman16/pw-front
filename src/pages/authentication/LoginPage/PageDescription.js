@@ -4,7 +4,7 @@ import img from '../../../assets/img/page-login/description-img.svg'
 
 const PageDescription = () => (
     <div className="page-description">
-        <img src={logo} alt="" className={'logo'}/>
+        <a href="https://sponsoreds.com" className={'logo'}><img src={logo} alt=""/></a>
 
         <img src={img} alt="" className="description-img"/>
 

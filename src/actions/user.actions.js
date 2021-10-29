@@ -90,9 +90,9 @@ function regist(user) {
 
                 localStorage.setItem('token', res.access_token)
 
-                window.dataLayer.push({
-                    'event': 'Registration',
-                })
+                // window.dataLayer.push({
+                //     'event': 'Registration',
+                // })
 
                 history.push('/confirm-email')
             })

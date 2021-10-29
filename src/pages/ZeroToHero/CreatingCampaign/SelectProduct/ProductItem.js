@@ -77,6 +77,17 @@ const ProductItem = ({
                     </div>
                 </div>
 
+                {product.variations && product.variations.find(i => i.id === selectedProducts[0].id) &&
+                <div className="variation-selected">
+                    <InformationTooltip
+                        type={'custom'}
+                        overlayClassName={'ineligible-description'}
+                        description={'You have selected a variation of this parent product.'}
+                    >
+                        <div className={'dot'}/>
+                    </InformationTooltip>
+                </div>}
+
                 {product.variations && <button
                     onClick={e => {
                         e.stopPropagation()

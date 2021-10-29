@@ -12,11 +12,27 @@
         a {
           color: #6959AB;
           padding: 0 3px;
+          font-weight: 600;
 
           &:hover {
             text-decoration: underline;
           }
         }
+      }
+
+      @media (max-width: 800px) {
+        p {
+          br {
+            display: none;
+          }
+        }
+
+        .sign-up {
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 20px;
+        }
+
       }
     }
   }

@@ -11,6 +11,8 @@ import {useDispatch} from "react-redux"
 import {userActions} from "../../../actions/user.actions"
 import {seo} from "../../../utils/seo"
 
+const tapfiliateKey = process.env.REACT_APP_TAPFILIATE_KEY
+
 const RegistrationPage = (props) => {
     const [user, setUser] = useState({
             name: '',
@@ -24,6 +26,7 @@ const RegistrationPage = (props) => {
 
     const dispatch = useDispatch()
 
+    const urlParams = new URLSearchParams(props.location.search)
 
     const changeUserHandler = (value) => {
         setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
@@ -43,17 +46,24 @@ const RegistrationPage = (props) => {
             try {
                 setProcessing(true)
 
+                const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
+                // const coupon = urlParams.get('coupon')
+
                 const res = await userService.regist({
                     ...user,
                     ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+                    // ...Cookies.get('tap_vid') ? {tracking_id: Cookies.get('tap_vid')} : {},
+                    // ...coupon ? {coupon: coupon} : {},
+                    ...ref ? {referral_code: ref} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 
                 dispatch(userActions.setInformation({user: {email: user.email}}))
 
                 localStorage.setItem('token', res.access_token)
+                localStorage.removeItem('refId')
 
-                window.dataLayer.push({'event': 'Registration',})
+                // window.dataLayer.push({'event': 'Registration',})
 
                 history.push('/confirm-email')
             } catch (e) {
@@ -64,9 +74,14 @@ const RegistrationPage = (props) => {
         }
     }
 
+
     useEffect(() => {
+        window.tap('create', tapfiliateKey, {integration: "javascript"})
+        window.tap('detect')
+
         seo({title: 'Registration Sponsoreds'})
 
+        if (urlParams.get('ref')) localStorage.setItem('refId', urlParams.get('ref'))
     }, [])
 
     return (
