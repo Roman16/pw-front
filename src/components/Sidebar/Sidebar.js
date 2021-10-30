@@ -38,9 +38,6 @@ const Sidebar = () => {
 
     const activeMarketplace = marketplaceIdValues['ATVPDKIKX0DER']
 
-    const toggleCollapsed = () => {
-        setCollapsed((prevState) => !prevState)
-    }
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
@@ -50,7 +47,14 @@ const Sidebar = () => {
             [menu]: !subMenuState[menu]
         })
     }
-
+    const toggleCollapsed = () => {
+        setCollapsed((prevState) => !prevState)
+        setSubMenuState({
+            zth: false,
+            ppc: false,
+            notifications: false
+        })
+    }
     const setAnalyticState = () => {
         dispatch(analyticsActions.setMainState(undefined))
         dispatch(analyticsActions.setLocation('products'))
@@ -74,202 +78,112 @@ const Sidebar = () => {
 
     return (
         <>
-            <div
-                className={`sidebar ${className}`}
-            >
+            <div className={`sidebar ${className}`}>
                 <div className="sidebar-header">
-                    <i className="sidebar-icon" onClick={toggleCollapsed}>
+                    <div className="burger" onClick={toggleCollapsed}>
                         <SVG id={'menu-icon'}/>
-                    </i>
+                    </div>
 
                     <Link to="/" className="sidebar-logo">
                         <img className="logo" src={logo} alt="logo"/>
                     </Link>
                 </div>
 
-                <div className="sidebar-menu">
-                    <ToggleMarketplace
-                        user={user}
-                    />
+                <ToggleMarketplace
+                    user={user}
+                />
 
-                    <nav className="top-nav">
-                        <ul className="top-nav-list">
-                            {mainMenu
-                                .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
-                                .map(item => {
-                                    return (
-                                        <>
-                                            <li className={`top-nav-item ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
-                                                <InformationTooltip
-                                                    type={'custom'}
-                                                    description={<ul className="collapsed-automate-list">
-                                                        {item.subMenu ? item.subMenu.map(subItem => (
-                                                            <li className="automate-item">
-                                                                <NavLink
-                                                                    className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                                    activeClassName="automate-link-active"
-                                                                    exact
-                                                                    to={`/${item.link}/${subItem.link}`}
-                                                                >
-                                                                    {subItem.title}
-                                                                </NavLink>
-                                                            </li>
-                                                        )) : <li className="automate-item">
-                                                            <NavLink
-                                                                className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                                activeClassName="automate-link-active"
-                                                                exact
-                                                                to={`/${item.link}`}
-                                                            >
-                                                                {item.title}
-                                                            </NavLink>
-                                                        </li>
-                                                        }
-                                                    </ul>}
-                                                    position={'rightTop'}
-                                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip ppc'}
-                                                >
-                                                    <div onClick={() => item.subMenu && toggleSubMenu(item.key)}
-                                                         className={item.subMenu && 'has-child'}>
-                                                        <NavLink
-                                                            className="top-nav-link"
-                                                            activeClassName="top-nav-link-active"
-                                                            to={`/${item.link}`}
-                                                            disabled={item.subMenu}
-                                                        >
-                                                            <div className="link-icon"><SVG id={item.icon}/></div>
+                <nav className="top-nav">
+                    <h3>SERVICES</h3>
 
-                                                            <div className="top-span">{item.title}</div>
-                                                        </NavLink>
-                                                    </div>
-                                                </InformationTooltip>
-                                            </li>
+                    <ul className="top-nav-list">
+                        {mainMenu
+                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
+                            .map(item => {
+                                return (
+                                    <li className={`nav-item ${subMenuState[item.key] ? 'opened' : 'closed'} ${item.subMenu ? 'has-child' : ''}`}>
+                                        <NavLink
+                                            className={`menu-link ${item.subMenu ? 'has-child' : ''}`}
+                                            activeClassName="active"
+                                            to={`/${item.link}`}
+                                            onClick={(e) => {
+                                                e.preventDefault()
+                                                e.stopPropagation()
+                                                item.subMenu && toggleSubMenu(item.key)
+                                            }}
+                                            // disabled={item.subMenu}
+                                        >
+                                            <div className="link-icon"><SVG id={item.icon}/></div>
 
-                                            <ul className={`sub-menu automate-list ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
-                                                {item.subMenu && item.subMenu.map(subItem => (
-                                                    <li className="automate-item">
-                                                        <NavLink
-                                                            className={`automate-link ${automate ? 'visible' : 'hidden'}`}
-                                                            activeClassName="automate-link-active"
-                                                            exact
-                                                            to={`/${item.link}/${subItem.link}`}
-                                                        >
-                                                            {subItem.title}
-                                                        </NavLink>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </>)
-                                })}
-                        </ul>
-                    </nav>
+                                            <label>{item.title}</label>
 
-                    {/*------------------------*/}
-                    <SocialLinks/>
+                                            {item.subMenu && <i><SVG id={'has-sub-menu'}/></i>}
+                                        </NavLink>
 
-                    {/*<div className="refer-link">*/}
-                    {/*    <InformationTooltip*/}
-                    {/*        type={'custom'}*/}
-                    {/*        description={<Link to={'/affiliates'} target="_blank">Refer sellers! Get Cash</Link>}*/}
-                    {/*        position={'right'}*/}
-                    {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}*/}
-                    {/*    >*/}
-                    {/*        <Link to={'/affiliates'} target="_blank">*/}
-                    {/*            <div className="icon">*/}
-                    {/*                <SVG id='refer-icon'/>*/}
-                    {/*            </div>*/}
+                                        <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
+                                            <h4>{item.title}</h4>
 
-                    {/*            {devicePixelRatio === 2 ?*/}
-                    {/*                <span className="bottom-span">Refer sellers! <br/> Get Cash</span>*/}
-                    {/*                :*/}
-                    {/*                <span className="bottom-span">Refer sellers! Get Cash</span>}*/}
-                    {/*        </Link>*/}
-                    {/*    </InformationTooltip>*/}
-                    {/*</div>*/}
+                                            {item.subMenu && item.subMenu.map(subItem => (
+                                                <li className="automate-item">
+                                                    <NavLink
+                                                        className="sub-menu-link"
+                                                        activeClassName="active"
+                                                        exact
+                                                        to={`/${item.link}/${subItem.link}`}
+                                                    >
+                                                        {subItem.title}
+                                                    </NavLink>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </li>
+                                )
+                            })}
+                    </ul>
+                </nav>
 
-                    <nav className="bottom-nav">
-                        <ul className="bottom-nav-list">
-                            <li className="bottom-nav-item">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<NavLink
-                                        className="automate-link"
-                                        activeClassName="automate-link-active"
-                                        exact
-                                        to={`/account/settings`}
-                                    >Account</NavLink>}
-                                    position={'right'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                                >
-                                    <NavLink
-                                        className="automate-link"
-                                        activeClassName="automate-link-active"
-                                        exact
-                                        to={`/account/settings`}
-                                    >
-                                        <div className="link-icon">
-                                            <SVG id='account'/>
+                <SocialLinks/>
 
-                                            {(accountLinks.amazon_mws.status === 'FAILED' ||
-                                                accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
-                                                accountLinks.amazon_ppc.status === 'FAILED' ||
-                                                accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
-                                            <i><SVG id={'notification-icon'}/></i>}
-                                        </div>
+                <nav className="bottom-nav">
+                    <ul className="bottom-nav-list">
+                        <li className="bottom-nav-item">
+                            <NavLink
+                                className="menu-link"
+                                activeClassName="active"
+                                exact
+                                to={`/account/settings`}
+                            >
+                                <div className="link-icon">
+                                    <SVG id='account'/>
 
-                                        <span className="bottom-span">
+                                    {(accountLinks.amazon_mws.status === 'FAILED' ||
+                                        accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
+                                        accountLinks.amazon_ppc.status === 'FAILED' ||
+                                        accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
+                                    <i><SVG id={'notification-icon'}/></i>}
+                                </div>
+
+                                <label>
                                     Account
-                                </span>
-                                    </NavLink>
-                                </InformationTooltip>
-                            </li>
+                                </label>
+                            </NavLink>
+                        </li>
 
-                            {/*<li className="bottom-nav-item">*/}
-                            {/*    <InformationTooltip*/}
-                            {/*        type={'custom'}*/}
-                            {/*        description={<a*/}
-                            {/*            href="https://intercom.help/profitwhales/en/"*/}
-                            {/*            target="_blank"*/}
-                            {/*            rel="noopener noreferrer"*/}
-                            {/*        >*/}
-                            {/*            Help Center*/}
-                            {/*        </a>}*/}
-                            {/*        position={'right'}*/}
-                            {/*        overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}*/}
-                            {/*    >*/}
-                            {/*        <a*/}
-                            {/*            href="https://intercom.help/profitwhales/en"*/}
-                            {/*            target="_blank"*/}
-                            {/*            rel="noopener noreferrer"*/}
-                            {/*        >*/}
-                            {/*            <div className="link-icon">*/}
-                            {/*                <SVG id='help-center'/>*/}
-                            {/*            </div>*/}
+                        <li className="bottom-nav-item">
+                            <Link
+                                className="menu-link"
+                                activeClassName="active"
+                                to={'/login/logout'}
+                            >
+                                <div className="link-icon">
+                                    <SVG id='log-out'/>
+                                </div>
 
-                            {/*            <span className="bottom-span">Help Center</span>*/}
-                            {/*        </a>*/}
-                            {/*    </InformationTooltip>*/}
-                            {/*</li>*/}
-
-                            <li className="bottom-nav-item">
-                                <InformationTooltip
-                                    type={'custom'}
-                                    description={<Link type="button" to={'/login/logout'}>Log Out</Link>}
-                                    position={'right'}
-                                    overlayClassName={collapsed ? 'hide-tooltip' : 'sidebar-link-tooltip'}
-                                >
-                                    <Link type="button" to={'/login/logout'}>
-                                        <div className="link-icon">
-                                            <SVG id='log-out'/>
-                                        </div>
-
-                                        <span className="bottom-span">Log Out</span>
-                                    </Link>
-                                </InformationTooltip>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+                                <label>Log Out</label>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
             </div>
 
             {(!production || user.user.id === 714 || localStorage.getItem('adminToken')) &&

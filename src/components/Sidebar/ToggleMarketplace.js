@@ -1,11 +1,10 @@
 import React, {useState} from "react"
 import {SVG} from "../../utils/icons"
-import InformationTooltip from "../Tooltip/Tooltip"
 import {userService} from "../../services/user.services"
 import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
 import {useDispatch} from "react-redux"
 import {userActions} from "../../actions/user.actions"
-import {Spin} from "antd"
+import usFlag from '../../assets/img/icons/us-flag.png'
 
 const ToggleMarketplace = ({user}) => {
     // const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]),
@@ -31,10 +30,11 @@ const ToggleMarketplace = ({user}) => {
         setProcessing(false)
     }
 
-    return (<div className="country-active">
+    return (<div className="current-marketplace">
         <div className="country-active__title">
             {/*<SVG id={`${marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode'].toLowerCase()}-flag`}/>*/}
-            <SVG id={`${marketplaceIdValues['ATVPDKIKX0DER']['countryCode'].toLowerCase()}-flag`}/>
+            {/*<SVG id={`${marketplaceIdValues['ATVPDKIKX0DER']['countryCode'].toLowerCase()}-flag`}/>*/}
+            <img src={usFlag} alt=""/>
 
             {/*<h5>{marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]['countryCode']}</h5>*/}
             <h5>{marketplaceIdValues['ATVPDKIKX0DER']['countryCode']}</h5>

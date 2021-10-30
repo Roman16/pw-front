@@ -8,7 +8,7 @@ const ModalWindow = (props) => {
 
     useEffect(() => {
         if (container) {
-            document.querySelector('.sidebar-header .sidebar-icon').addEventListener('click', () => {
+            document.querySelector('.sidebar-header .burger').addEventListener('click', () => {
                 setTimeout(() => {
                     if (document.querySelector('.custom-modal-wrap')) {
                         document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
