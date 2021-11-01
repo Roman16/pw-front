@@ -90,12 +90,6 @@ img {
       top: 0;
       left: 0;
     }
-
-    @media (max-width: 1132px) {
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
   }
 }
 
@@ -108,8 +102,7 @@ img {
   height: 100vh;
   max-height: 100%;
   display: flex;
-  background: #f5f5ff;
-
+  background: #F3F3F3;
   font-family: Montserrat;
 
 
@@ -130,10 +123,6 @@ img {
     grid-template-rows: max-content 1fr;
 
     z-index: 10;
-
-    @media (max-width: 1132px) {
-      margin-left: 5.142857142857143rem;
-    }
 
     .page {
       max-height: 100%;
@@ -164,7 +153,7 @@ img {
       grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
       grid-template-columns: 1fr;
       grid-template-rows: max-content max-content max-content max-content;
-      padding: 1.7142857em 1.42857143rem;
+      padding: 90px 20px 30px;
 
       .page {
         & > div {
@@ -174,6 +163,9 @@ img {
     }
   }
 
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
   @media (max-width: 500px) {
     overflow-y: auto;
     height: max-content;

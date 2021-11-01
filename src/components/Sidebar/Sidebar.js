@@ -76,12 +76,18 @@ const Sidebar = () => {
         else setAgencyUser(false)
     }, [user])
 
+    useEffect(() => {
+        if (window.screen.width < 850) setTimeout(() => setCollapsed(false), 100)
+    }, [history.location])
+
     return (
         <>
             <div className={`sidebar ${className}`}>
                 <div className="sidebar-header">
                     <div className="burger" onClick={toggleCollapsed}>
-                        <SVG id={'menu-icon'}/>
+                        <div/>
+                        <div/>
+                        <div/>
                     </div>
 
                     <Link to="/" className="sidebar-logo">
@@ -107,9 +113,12 @@ const Sidebar = () => {
                                             activeClassName="active"
                                             to={`/${item.link}`}
                                             onClick={(e) => {
-                                                e.preventDefault()
-                                                e.stopPropagation()
-                                                item.subMenu && toggleSubMenu(item.key)
+                                                if (item.subMenu) {
+                                                    e.preventDefault()
+                                                    e.stopPropagation()
+
+                                                    collapsed && toggleSubMenu(item.key)
+                                                }
                                             }}
                                             // disabled={item.subMenu}
                                         >
@@ -120,6 +129,7 @@ const Sidebar = () => {
                                             {item.subMenu && <i><SVG id={'has-sub-menu'}/></i>}
                                         </NavLink>
 
+                                        {item.subMenu &&
                                         <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
                                             <h4>{item.title}</h4>
 
@@ -135,7 +145,7 @@ const Sidebar = () => {
                                                     </NavLink>
                                                 </li>
                                             ))}
-                                        </ul>
+                                        </ul>}
                                     </li>
                                 )
                             })}
@@ -169,7 +179,7 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
 
-                        <li className="bottom-nav-item">
+                        <li className="bottom-nav-item log-out-item">
                             <Link
                                 className="menu-link"
                                 activeClassName="active"
