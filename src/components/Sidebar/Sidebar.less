@@ -3,14 +3,14 @@
 @sidebarWidth: 14.285714285714286rem;
 
 .visibleAnimation {
-  transition: opacity 0.2s ease-in;
-  //transform: scaleX(1);
+  opacity: 1;
+  transition: 0.2s ease-in-out;
+
 }
 
 .hideAnimation {
-  //transform: scaleX(1);
   opacity: 0;
-  transition: 0.1s ease-in;
+  transition: 0.2s ease-in-out;
 }
 
 .sidebar {
@@ -21,6 +21,7 @@
   flex-direction: column;
   padding: 0 0 1.4285714285714286rem;
   transition: .3s ease-in-out;
+  z-index: 100;
 
   .sidebar-header {
     display: flex;
@@ -35,7 +36,7 @@
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      margin: 0 0.8571428571428571rem 0 0;
+      margin: 0 0.8571428571428571rem 1px 0;
       cursor: pointer;
       transition: .2s ease-in-out;
 
@@ -114,9 +115,10 @@
   }
 
   nav {
-    min-width: @sidebarWidth;
+    min-width: 100%;
     display: flex;
     flex-direction: column;
+    transition: .2s ease-in-out;
 
     h3 {
       font-weight: 600;
@@ -158,6 +160,7 @@
           }
 
           label {
+            min-width: max-content;
             flex: 1;
             font-weight: 600;
             font-size: 1rem;
@@ -166,12 +169,20 @@
             cursor: pointer;
             transition: opacity .2s ease-in;
             transform: scaleX(1);
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 4.142857142857143rem;
           }
 
           i {
-            margin: 0 1.4285714285714286rem 0 auto;
             display: flex;
             align-items: center;
+            position: absolute;
+            right: 1.4285714285714286rem;
+            transform: scaleX(1);
+            transition: opacity .2s ease-in;
+            transition-delay: .1s;
 
             svg {
               width: 0.8571428571428571rem;
@@ -336,6 +347,8 @@
   //   ================================================================
 
   &.open {
+    overflow: hidden;
+
     .sidebar-header {
       .sidebar-logo {
         .visibleAnimation();
@@ -415,7 +428,7 @@
         li {
           a {
             label, i {
-              .hideAnimation()
+              .hideAnimation();
             }
           }
         }

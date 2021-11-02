@@ -1,5 +1,6 @@
 export const userUrls = {
     login: 'user/login',
+    logOut: 'user/logout',
     loginAmazon: 'user/login/amazon/callback',
     regist: 'user/register',
     resetEmail: 'user/password/reset',

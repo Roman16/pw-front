@@ -77,9 +77,12 @@ const LoginPage = (props) => {
 
 
         if (props.match.params.status === 'logout') {
+            userService.logOut()
+
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
+
             dispatch(userActions.logOut())
 
             history.push('/login')
