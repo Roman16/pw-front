@@ -16,7 +16,13 @@ let source = null
 
 const {Search} = Input
 
-let intervalId
+let intervalId = null
+
+let pagination = {
+        page: 1,
+        pageSize: 10
+    },
+    search = ''
 
 const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
@@ -35,6 +41,7 @@ const Settings = (props) => {
 
     const changeSearchHandler = debounce(500, false, str => {
         setSearchStr(str)
+        search = str
         setPaginationOptions({
             ...paginationOptions,
             page: 1
@@ -42,7 +49,10 @@ const Settings = (props) => {
     })
 
 
-    const changePaginationHandler = (params) => setPaginationOptions(params)
+    const changePaginationHandler = (params) => {
+        pagination = params
+        setPaginationOptions(params)
+    }
 
     function changeTabHandler(tab) {
         setList([])
@@ -62,10 +72,9 @@ const Settings = (props) => {
 
         try {
             setProcessing(true)
-
             const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
-                ...paginationOptions,
-                searchStr: searchStr,
+                ...pagination,
+                searchStr: searchStr || search,
                 ungroupVariations: 0,
                 cancelToken: source.token
             })
@@ -99,7 +108,6 @@ const Settings = (props) => {
     useEffect(() => {
         return (() => clearInterval(intervalId))
     }, [])
-
 
     return (
         <div className="zth-settings">

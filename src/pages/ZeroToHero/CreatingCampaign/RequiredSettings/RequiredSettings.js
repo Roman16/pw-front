@@ -357,9 +357,7 @@ const RequiredSettings = ({
                                     onChange={daily_budget => changeCampaignsHandler({daily_budget}, invalidField === 'dailyBudget')}
                                 />
 
-                                {/*<div className="recommended-budget">*/}
-                                {/*    Recommended Daily Budget: <span>$500</span>*/}
-                                {/*</div>*/}
+                                {invalidField.daily_budget && <p className={'error-description'}></p>}
                             </div>
 
                             <div className="col">
@@ -380,6 +378,8 @@ const RequiredSettings = ({
                                     max={1000}
                                     onChange={default_bid => changeCampaignsHandler({default_bid}, invalidField === 'defaultBid')}
                                 />
+
+                                {invalidField.default_bid && <p className={'error-description'}></p>}
                             </div>
 
                             <div className="col">

@@ -1,22 +1,22 @@
-import React, {useState} from "react";
-import {CardCvcElement, CardExpiryElement, CardNumberElement} from "react-stripe-elements";
-import {SVG} from "../../../utils/icons";
-import {Input} from "antd";
+import React, {useState} from "react"
+import {CardCvcElement, CardExpiryElement, CardNumberElement} from "react-stripe-elements"
+import {SVG} from "../../../utils/icons"
+import {Checkbox, Input} from "antd"
 
 const NewCard = (props) => {
-    const [autofocus, setAutofocus] = useState(true);
+    const [autofocus, setAutofocus] = useState(true)
 
     const handleBlurCardElement = () => {
         setAutofocus(false)
-    };
+    }
 
     const stripeElementChange = (element, name) => {
-        props.stripeElementChange(element, name);
+        props.stripeElementChange(element, name)
 
         if (!element.empty && element.complete) {
-            setAutofocus(true);
+            setAutofocus(true)
         }
-    };
+    }
 
     const CardElementStyles = {
         base: {
@@ -31,7 +31,7 @@ const NewCard = (props) => {
                 cursor: 'not-allowed'
             }
         },
-    };
+    }
 
     return (
         <div className={`new-card-container ${props.disabled ? 'disabled' : ''}`}>
@@ -77,7 +77,7 @@ const NewCard = (props) => {
                         disabled={props.disabled}
                         style={CardElementStyles}
                         ref={(instance) => {
-                            (autofocus && props.newCard.expiry && instance && !props.newCard.cvc) && instance._element.focus();
+                            (autofocus && props.newCard.expiry && instance && !props.newCard.cvc) && instance._element.focus()
                         }}
                         onChange={(element) => stripeElementChange(element, 'cvc')}
                         onBlur={handleBlurCardElement}
@@ -92,8 +92,15 @@ const NewCard = (props) => {
                     </p>
                 </div>
             </div>
+
+            <Checkbox
+                checked={props.saveCard}
+                onChange={({target: {checked}}) => props.switchSaveCard(checked)}
+            >
+                Save this card for future payments
+            </Checkbox>
         </div>
     )
-};
+}
 
-export default NewCard;
+export default NewCard

@@ -2,15 +2,12 @@ import React, {useEffect, useState} from "react"
 import './Payment.less'
 import {Elements, injectStripe, StripeProvider} from "react-stripe-elements"
 import {userService} from "../../../services/user.services"
-import {Input, Radio, Spin} from "antd"
-import {useSelector} from "react-redux"
+import {Radio, Spin} from "antd"
 import NewCard from "./NewCard"
 import UserCards from './UserCards'
 import {numberMask} from "../../../utils/numberMask"
-import {saleRender} from "../components/ProductAmountSlider/ProductAmountSlider"
 import {history} from "../../../utils/history"
 import {zthServices} from "../../../services/zth.services"
-import {SVG} from "../../../utils/icons"
 import {notification} from "../../../components/Notification"
 import BulkInformation from "./BulkInformation"
 import Summary from "./Summary"
@@ -37,9 +34,10 @@ const Payment = (props) => {
         [selectedPaymentMethod, setPaymentMethod] = useState('new_card'),
         [userName, setUserName] = useState(''),
         [selectedCard, setSelectedCard] = useState(0),
-        [productInformation, setProductInformation] = useState({}),
+        [productInformation, setProductInformation] = useState({job: {}}),
         [payProcessing, setPayProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true),
+        [saveCard, setSaveCard] = useState(true),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
@@ -75,6 +73,9 @@ const Payment = (props) => {
                 } else {
                     res = await props.stripe.createPaymentMethod('card')
                 }
+
+                saveCard && await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
+
 
                 if (res.error) {
                     notification.error({title: res.error.message})
@@ -166,22 +167,24 @@ const Payment = (props) => {
                         >
                             <div className="col">
                                 <Radio value={'new_card'}>
-                                    New payment Method
+                                    New payment method
                                 </Radio>
 
                                 <div className="radio-description">
                                     <NewCard
                                         disabled={selectedPaymentMethod !== 'new_card'}
+                                        saveCard={saveCard}
                                         newCard={newCard}
                                         stripeElementChange={stripeElementChangeHandler}
                                         onChangeUserName={(value) => setUserName(value)}
+                                        switchSaveCard={setSaveCard}
                                     />
                                 </div>
                             </div>
 
                             <div className="col">
                                 <Radio value={'select'} disabled={cardsList.length === 0}>
-                                    Use card that attached to PPC Automate Tool
+                                    Use existing card
                                 </Radio>
 
                                 <div className="radio-description user-cards">
