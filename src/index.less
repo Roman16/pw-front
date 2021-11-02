@@ -439,7 +439,23 @@ img {
       display: none;
     }
   }
+
+  &.ant-checkbox-disabled {
+    .ant-checkbox-inner {
+      background: url(./assets/img/icons/disabled-checked-checkbox.svg) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      background-color: #C9CBD4 !important;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 }
+
 
 //radio
 .ant-radio-wrapper {

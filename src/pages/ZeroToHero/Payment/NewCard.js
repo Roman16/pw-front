@@ -94,6 +94,7 @@ const NewCard = (props) => {
             </div>
 
             <Checkbox
+                disabled={props.disabled}
                 checked={props.saveCard}
                 onChange={({target: {checked}}) => props.switchSaveCard(checked)}
             >

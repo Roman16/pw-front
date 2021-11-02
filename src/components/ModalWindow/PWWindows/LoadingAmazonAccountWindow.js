@@ -134,8 +134,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                         <div className="col">{i.title}</div>
                         <div className="col">
                             {requiredParts[i.key].part_ready ?
-                                <>Done <DoneIcon/></> :
-                                <>In Progress... <ProgressIcon/></>}
+                                <><span>Done</span> <DoneIcon/></> :
+                                <><span>In Progress...</span> <ProgressIcon/></>}
                         </div>
                     </div>))}
             </div>
