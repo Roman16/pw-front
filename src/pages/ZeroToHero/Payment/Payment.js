@@ -74,6 +74,8 @@ const Payment = (props) => {
                     res = await props.stripe.createPaymentMethod('card')
                 }
 
+                saveCard && await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
+
                 if (res.error) {
                     notification.error({title: res.error.message})
                 } else if (res.paymentMethod) {
@@ -82,7 +84,6 @@ const Payment = (props) => {
                         payment_token: res.paymentMethod.id
                     })
 
-                    saveCard && await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
 
                     history.push('/zero-to-hero/settings/payment-success')
                 }

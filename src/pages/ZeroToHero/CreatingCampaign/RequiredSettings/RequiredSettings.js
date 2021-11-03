@@ -17,8 +17,6 @@ import _ from 'lodash'
 
 const Option = Select.Option
 
-const CancelToken = axios.CancelToken
-
 let prevCheckKeywords = []
 
 
@@ -87,14 +85,14 @@ const RequiredSettings = ({
             if (_.find(list, {value: i.value})) {
 
             } else {
-                prevCheckKeywords = [...prevCheckKeywords.filter(text => text !== i.value)]
                 i.cancel.cancel()
+                prevCheckKeywords = [...prevCheckKeywords.filter(text => text !== i.value)]
             }
         })
 
         setMainKeywords(list
             .map(i => {
-                i.cancel = CancelToken.source()
+                i.cancel = i.cancel || axios.CancelToken.source()
                 i.processing = !(i.estimate && i.estimate.success)
                 i.estimate = {
                     lowResultsCountRounded: 0,
@@ -143,14 +141,13 @@ const RequiredSettings = ({
     }
 
     useEffect(() => {
-        console.log(mainKeywords)
-
         mainKeywords.map((i) => {
             if (!prevCheckKeywords.includes(i.value) && i.isDuplicate === undefined) getKeysEstimation(i)
 
             return i
         })
     }, [mainKeywords])
+
 
     return (
         <section className={`step required-setting`}>

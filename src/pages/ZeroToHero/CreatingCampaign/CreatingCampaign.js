@@ -79,6 +79,10 @@ const CreatingCampaign = () => {
 
             if (budget < 1 || budget > 1000000) setInvalidField(prevState => [...prevState, 'daily_budget'])
             if (bid < 0.02 || bid > 1000) setInvalidField(prevState => [...prevState, 'default_bid'])
+
+            setTimeout(() => {
+                document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"});
+            }, 10)
         } else if (step === 4) {
             createCampaignHandler()
         } else {
