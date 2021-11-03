@@ -148,6 +148,13 @@ const RequiredSettings = ({
         })
     }, [mainKeywords])
 
+    useEffect(() => {
+        if (campaigns.main_keywords.length === 0) {
+            prevCheckKeywords = []
+            setMainKeywords([])
+        }
+    }, [campaigns.main_keywords])
+
 
     return (
         <section className={`step required-setting`}>
