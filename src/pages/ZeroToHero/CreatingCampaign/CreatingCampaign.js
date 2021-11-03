@@ -81,7 +81,7 @@ const CreatingCampaign = () => {
             if (bid < 0.02 || bid > 1000) setInvalidField(prevState => [...prevState, 'default_bid'])
 
             setTimeout(() => {
-                document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"});
+                document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"})
             }, 10)
         } else if (step === 4) {
             createCampaignHandler()
@@ -236,14 +236,15 @@ const CreatingCampaign = () => {
                 onChangeOpenedSteps={setOpenedSteps}
             />
 
-            {currentStep === 1 && <RequiredSettings
+            <RequiredSettings
+                visible={currentStep === 1}
                 product={addedProducts[activeProductIndex]}
                 portfolioList={portfolioList}
                 invalidField={invalidField}
 
                 onUpdate={updateProductHandler}
                 onUpdateInvalidFields={setInvalidField}
-            />}
+            />
 
             {currentStep === 2 && <OptionalSettings
                 product={addedProducts[activeProductIndex]}

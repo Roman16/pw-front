@@ -1,4 +1,10 @@
 .step.required-setting {
+  display: none;
+
+&.visible {
+  display: block;
+}
+
   .section-header {
     &:hover {
       cursor: default;
@@ -141,6 +147,7 @@
 
     .multi-text-area {
       margin: 10px 0 12px;
+      font-size: 1rem;
     }
 
     .row {
@@ -366,6 +373,8 @@
 .ant-popover.estimate-description {
   .ant-popover-inner-content {
     max-width: 400px;
+    font-size: 0.8571428571428571rem;
+    line-height: 1.0714285714285714rem;
   }
 
   ul {

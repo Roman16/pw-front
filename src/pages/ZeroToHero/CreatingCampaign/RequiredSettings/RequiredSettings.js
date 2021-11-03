@@ -21,6 +21,7 @@ let prevCheckKeywords = []
 
 
 const RequiredSettings = ({
+                              visible,
                               onUpdate,
                               portfolioList,
                               invalidField,
@@ -157,7 +158,7 @@ const RequiredSettings = ({
 
 
     return (
-        <section className={`step required-setting`}>
+        <section className={`step required-setting ${visible ? 'visible' : ''}`}>
             <div className="bg-container">
                 <div className="container">
                     <div className="block main-keywords-setting">
