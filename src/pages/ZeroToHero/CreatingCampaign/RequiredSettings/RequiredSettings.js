@@ -26,7 +26,7 @@ const RequiredSettings = ({
                               onUpdate,
                               portfolioList,
                               invalidField,
-                              product,
+                              onUpdateInvalidFields,
                               product: {
                                   portfolio,
                                   campaigns,
@@ -38,9 +38,6 @@ const RequiredSettings = ({
                           }) => {
     const [mainKeywords, setMainKeywords] = useState([]),
         [estimateProcessing, setEstimateProcessing] = useState(false)
-
-    console.log(product)
-    console.log(campaigns)
 
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
@@ -59,6 +56,8 @@ const RequiredSettings = ({
     }
 
     const changeCampaignsHandler = (value, isInvalid) => {
+        onUpdateInvalidFields([...invalidField.filter(i => !Object.keys(value).includes(i))])
+
         onUpdate({
             campaigns: {
                 ...campaigns,
@@ -352,7 +351,7 @@ const RequiredSettings = ({
                         </div>
 
                         <div className="row daily-budget-settings">
-                            <div className={`col form-group ${invalidField === 'dailyBudget' ? 'error-field' : ''}`}>
+                            <div className={`col form-group ${invalidField.includes('daily_budget') ? 'error-field' : ''}`}>
                                 <label className={'required'}>ZTH Campaigns Daily Budget <i>*</i></label>
 
                                 <InputCurrency
@@ -360,7 +359,9 @@ const RequiredSettings = ({
                                     onChange={daily_budget => changeCampaignsHandler({daily_budget}, invalidField === 'dailyBudget')}
                                 />
 
-                                {/*{invalidField.daily_budget && <p className={'error-description'}></p>}*/}
+                                {invalidField.includes('daily_budget') && <p className={'error-description'}>
+                                    {campaigns.daily_budget < 1 ? 'Daily budget should be greater than or equal to $1.00' : 'Daily budget should be less than or equal to $1000000.00'}
+                                </p>}
                             </div>
 
                             <div className="col">
@@ -373,16 +374,17 @@ const RequiredSettings = ({
                         </div>
 
                         <div className="row default-bid-settings">
-                            <div className={`col form-group ${invalidField === 'defaultBid' ? 'error-field' : ''}`}>
+                            <div className={`col form-group ${invalidField.includes('default_bid') ? 'error-field' : ''}`}>
                                 <label className={'required'}>Default Bid <i>*</i></label>
 
                                 <InputCurrency
                                     value={campaigns.default_bid}
-                                    max={1000}
                                     onChange={default_bid => changeCampaignsHandler({default_bid}, invalidField === 'defaultBid')}
                                 />
 
-                                {/*{invalidField.default_bid && <p className={'error-description'}></p>}*/}
+                                {invalidField.includes('default_bid') && <p className={'error-description'}>
+                                    {campaigns.default_bid < 0.02 ? 'Bid should be greater than or equal to $0.02' : 'Bid should be less than or equal to $1000.00'}
+                                </p>}
                             </div>
 
                             <div className="col">

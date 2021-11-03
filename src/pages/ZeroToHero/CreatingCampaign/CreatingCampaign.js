@@ -46,7 +46,7 @@ const CreatingCampaign = () => {
         [addedProducts, setAddedProducts] = useState([{...initialProductSettings}]),
         [openedSteps, setOpenedSteps] = useState(-1),
         [activeProductIndex, setActiveProductIndex] = useState(0),
-        [invalidField, setInvalidField] = useState(),
+        [invalidField, setInvalidField] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false),
         [pageLoading, setPageLoading] = useState(true),
         [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false)
@@ -65,11 +65,20 @@ const CreatingCampaign = () => {
     }
 
     const setStepHandler = (step) => {
+        const budget = addedProducts[0].campaigns.daily_budget,
+            bid = addedProducts[0].campaigns.default_bid
+
         if (step === 1 && addedProducts.length === 0) {
             notification.error({
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
             })
+        } else if (step >= 2 && (budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
+            setCurrentStep(1)
+            notification.error({title: 'Please enter correct value!'})
+
+            if (budget < 1 || budget > 1000000) setInvalidField(prevState => [...prevState, 'daily_budget'])
+            if (bid < 0.02 || bid > 1000) setInvalidField(prevState => [...prevState, 'default_bid'])
         } else if (step === 4) {
             createCampaignHandler()
         } else {
@@ -229,6 +238,7 @@ const CreatingCampaign = () => {
                 invalidField={invalidField}
 
                 onUpdate={updateProductHandler}
+                onUpdateInvalidFields={setInvalidField}
             />}
 
             {currentStep === 2 && <OptionalSettings
