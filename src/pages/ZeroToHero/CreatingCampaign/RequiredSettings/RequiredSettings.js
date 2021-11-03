@@ -26,6 +26,7 @@ const RequiredSettings = ({
                               onUpdate,
                               portfolioList,
                               invalidField,
+                              product,
                               product: {
                                   portfolio,
                                   campaigns,
@@ -35,9 +36,11 @@ const RequiredSettings = ({
                                   name
                               }
                           }) => {
-
     const [mainKeywords, setMainKeywords] = useState([]),
         [estimateProcessing, setEstimateProcessing] = useState(false)
+
+    console.log(product)
+    console.log(campaigns)
 
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
@@ -357,7 +360,7 @@ const RequiredSettings = ({
                                     onChange={daily_budget => changeCampaignsHandler({daily_budget}, invalidField === 'dailyBudget')}
                                 />
 
-                                {invalidField.daily_budget && <p className={'error-description'}></p>}
+                                {/*{invalidField.daily_budget && <p className={'error-description'}></p>}*/}
                             </div>
 
                             <div className="col">
@@ -379,7 +382,7 @@ const RequiredSettings = ({
                                     onChange={default_bid => changeCampaignsHandler({default_bid}, invalidField === 'defaultBid')}
                                 />
 
-                                {invalidField.default_bid && <p className={'error-description'}></p>}
+                                {/*{invalidField.default_bid && <p className={'error-description'}></p>}*/}
                             </div>
 
                             <div className="col">

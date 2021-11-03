@@ -63,6 +63,8 @@ const LoginPage = (props) => {
                     else history.push('/account/settings')
                 }
 
+                seo({title: 'Sponsoreds'})
+
                 dispatch(userActions.setInformation({...userFullInformation, importStatus: importStatus.result}))
             } catch (e) {
                 console.log(e)
@@ -89,6 +91,7 @@ const LoginPage = (props) => {
         }
 
         if (localStorage.getItem('token')) {
+            seo({title: 'Sponsoreds'})
             history.push('/account/settings')
         }
     }, [])

@@ -63,7 +63,7 @@ const RegistrationPage = (props) => {
                 localStorage.setItem('token', res.access_token)
                 localStorage.removeItem('refId')
 
-                // window.dataLayer.push({'event': 'Registration',})
+                seo({title: 'Sponsoreds'})
 
                 history.push('/confirm-email')
             } catch (e) {
