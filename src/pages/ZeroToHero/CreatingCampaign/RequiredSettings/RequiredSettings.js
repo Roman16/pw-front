@@ -36,8 +36,7 @@ const RequiredSettings = ({
                                   name
                               }
                           }) => {
-    const [mainKeywords, setMainKeywords] = useState([]),
-        [estimateProcessing, setEstimateProcessing] = useState(false)
+    const [mainKeywords, setMainKeywords] = useState([])
 
     const changeProductHandler = (value, isInvalid) => {
         onUpdate({
@@ -96,6 +95,7 @@ const RequiredSettings = ({
         setMainKeywords(list
             .map(i => {
                 i.cancel = CancelToken.source()
+                i.processing = !(i.estimate && i.estimate.success)
                 i.estimate = {
                     lowResultsCountRounded: 0,
                     highResultsCountRounded: 0,
@@ -110,22 +110,28 @@ const RequiredSettings = ({
         try {
             prevCheckKeywords = [...prevCheckKeywords, item.value]
 
-            setEstimateProcessing(item.value)
 
             const {result} = await zthServices.getKeysCount([item.value], item.cancel.token)
 
             const estimate = result.keywordEstimations[0]
 
-            setMainKeywords([...mainKeywords.map(keyword => {
-                if (keyword.value === estimate.keywordText && estimate.success) {
-                    keyword.estimate = estimate
-                }
+            setMainKeywords(prevState =>
+                [...prevState.map(keyword => {
+                    if (keyword.value === estimate.keywordText && estimate.success) {
+                        keyword.estimate = estimate
+                    }
 
+                    if (keyword.value === item.value) keyword.processing = false
+
+                    return keyword
+                })])
+        } catch (e) {
+            setMainKeywords(prevState => [...prevState.map(keyword => {
+                if (keyword.value === item.value) {
+                    keyword.processing = false
+                }
                 return keyword
             })])
-
-            setEstimateProcessing(prevValue => prevValue === estimate.keywordText ? false : prevValue)
-        } catch (e) {
 
         }
     }
@@ -137,8 +143,12 @@ const RequiredSettings = ({
     }
 
     useEffect(() => {
-        mainKeywords.forEach((i) => {
+        console.log(mainKeywords)
+
+        mainKeywords.map((i) => {
             if (!prevCheckKeywords.includes(i.value) && i.isDuplicate === undefined) getKeysEstimation(i)
+
+            return i
         })
     }, [mainKeywords])
 
@@ -162,40 +172,43 @@ const RequiredSettings = ({
                                 />
 
                                 <p>Estimated keywords count for campaigns:
-                                    {estimateProcessing ? <Spin size={'small'}/> : mainKeywords.length === 0 ?
-                                        <InformationTooltip
-                                            type={'custom'}
-                                            description={'Add Seed Keywords to get an estimated amount of keywords that your campaigns will have.'}>
-                                            <span>0</span>
-                                        </InformationTooltip>
-                                        :
-
-                                        mainKeywords.some(i => i.estimate.success === true) ?
+                                    {mainKeywords.some(i => i.processing) ?
+                                        <Spin size={'small'}/> : mainKeywords.length === 0 ?
                                             <InformationTooltip
                                                 type={'custom'}
-                                                overlayClassName={'estimate-description'}
-                                                description={<div className={''}>
-                                                    This is an estimated amount of keywords we will be able to gather
-                                                    based
-                                                    on provided Seed Keywords. Contributions by each keyword:
+                                                description={'Add Seed Keywords to get an estimated amount of keywords that your campaigns will have.'}>
+                                                <span>0</span>
+                                            </InformationTooltip>
+                                            :
 
-                                                    <ul>
-                                                        {mainKeywords.map(i => (
-                                                            <li>
-                                                                <span>{i.value}</span>: {i.estimate.success ? `${i.estimate.lowResultsCountRounded} - ${i.estimate.highResultsCountRounded}` : '-'}
-                                                            </li>))}
-                                                    </ul>
+                                            mainKeywords.some(i => i.estimate.success === true) ?
+                                                <InformationTooltip
+                                                    type={'custom'}
+                                                    overlayClassName={'estimate-description'}
+                                                    description={<div className={''}>
+                                                        This is an estimated amount of keywords we will be able to
+                                                        gather
+                                                        based
+                                                        on provided Seed Keywords. Contributions by each keyword:
 
-                                                    Note that amount of keywords for product will be capped at 5000 to
-                                                    prevent overextension on campaigns with low-performing keywords.
-                                                </div>}>
+                                                        <ul>
+                                                            {mainKeywords.map(i => (
+                                                                <li>
+                                                                    <span>{i.value}</span>: {i.estimate.success ? `${i.estimate.lowResultsCountRounded} - ${i.estimate.highResultsCountRounded}` : '-'}
+                                                                </li>))}
+                                                        </ul>
+
+                                                        Note that amount of keywords for product will be capped at 5000
+                                                        to
+                                                        prevent overextension on campaigns with low-performing keywords.
+                                                    </div>}>
 
                                             <span>
                                                 {mainKeywords.reduce((sum, currentValue) => sum + currentValue.estimate.lowResultsCountRounded, 0) > 2500 ? '2500' : mainKeywords.reduce((sum, currentValue) => sum + currentValue.estimate.lowResultsCountRounded, 0)}
                                                 -
                                                 {mainKeywords.reduce((sum, currentValue) => sum + currentValue.estimate.highResultsCountRounded, 0) > 5000 ? '5000' : mainKeywords.reduce((sum, currentValue) => sum + currentValue.estimate.highResultsCountRounded, 0)}
                                             </span>
-                                            </InformationTooltip> : <div className="no-result"/>}
+                                                </InformationTooltip> : <div className="no-result"/>}
                                 </p>
                             </div>
 
@@ -351,7 +364,8 @@ const RequiredSettings = ({
                         </div>
 
                         <div className="row daily-budget-settings">
-                            <div className={`col form-group ${invalidField.includes('daily_budget') ? 'error-field' : ''}`}>
+                            <div
+                                className={`col form-group ${invalidField.includes('daily_budget') ? 'error-field' : ''}`}>
                                 <label className={'required'}>ZTH Campaigns Daily Budget <i>*</i></label>
 
                                 <InputCurrency
@@ -374,7 +388,8 @@ const RequiredSettings = ({
                         </div>
 
                         <div className="row default-bid-settings">
-                            <div className={`col form-group ${invalidField.includes('default_bid') ? 'error-field' : ''}`}>
+                            <div
+                                className={`col form-group ${invalidField.includes('default_bid') ? 'error-field' : ''}`}>
                                 <label className={'required'}>Default Bid <i>*</i></label>
 
                                 <InputCurrency
