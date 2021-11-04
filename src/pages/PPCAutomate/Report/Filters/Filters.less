@@ -2,65 +2,74 @@
   width: 100%;
   min-height: 4.285714285714286rem;
   background: #fff;
-  padding: 1.0714285714285714rem 1.4285714285714286rem 0.35714285714285715rem;
+  padding: 0.8571428571428571rem 1.4285714285714286rem;
 
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  border-bottom: 1px solid #C9CBD4;
-
+  grid-row-gap: 8px;
+  border-bottom: 0.5px solid #C9CBD4;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
   p {
     height: 2.28571429rem;
+    font-weight: 500;
     font-size: 1rem;
-    color: #343C5A;
-    margin: 0 15px 0.7142857142857143rem 0;
+    line-height: 1.2142857142857142rem;
+    color: #5B586F;
+    margin: 0 0.8571428571428571rem 0 0;
     display: flex;
     align-items: center;
   }
 
   .add-filter {
-    width: 2.2857142857142856rem;
-    height: 2.2857142857142856rem;
     padding: 0;
     border-radius: 50%;
     position: relative;
     text-align: center;
-    margin: 0 15px 0 0;
+    margin: 0 0.8571428571428571rem 0 0;
 
     svg {
-      use {
-        stroke: #fff;
+      width: 2.2857142857142856rem;
+      height: 2.2857142857142856rem;
+     fill: #6959AB;
+    }
+
+    &:hover {
+      svg {
+        fill: #24293F;
       }
     }
   }
 
   .reset-btn {
     height: 2.28571429rem;
-    color: #6D6DF6;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1rem;
+    color: #5B586F;
+
 
     &:hover {
-      text-decoration: underline;
+      color: #777391;
     }
   }
 }
 
 .filters-list {
   .filter-item {
-    background: #6D6DF6;
     border-radius: 2.857142857142857rem;
     min-height: 2.2857142857142856rem;
     display: flex;
     align-items: center;
-    padding: 2px 1.0714285714285714rem;
-    color: #fff;
+    padding: 2px 0.8571428571428571rem;
+    color: #6959AB;
+    font-weight: 600;
     font-size: 0.8571428571428571rem;
-    font-weight: 500;
-    margin: 0 15px 10px 0;
+    margin: 0 0.5714285714285714rem 0 0;
     cursor: pointer;
+
+    border: 1px solid #6959AB;
+
 
     i {
       margin: 0 0 0 10px;
@@ -70,7 +79,15 @@
 
       svg {
         use {
-          stroke: #fff;
+          stroke: #5B586F;
+        }
+      }
+
+      &:hover {
+        svg {
+          use {
+            stroke: #6959AB;
+          }
         }
       }
     }
@@ -81,12 +98,13 @@
 .filter-popover {
   .ant-popover-inner-content {
     max-width: max-content;
-    padding: 1.4285714285714286rem;
+    padding: 1.4285714285714286rem 1.4285714285714286rem 1.2142857142857142rem;
   }
 
   .ant-popover-content > .ant-popover-arrow {
     left: 12px;
     background: #fff;
+    display: block;
   }
 }
 
@@ -102,9 +120,9 @@
     display: flex;
 
     .form-group {
-      width: 200px;
-      margin: 0 15px 0 0;
-      min-height: 2.2857142857142856rem;
+      width: 10.357142857142858rem;
+      margin: 0 1rem 0 0;
+      height: 2.2857142857142856rem;
 
       &:last-child {
         margin: 0;
@@ -179,7 +197,21 @@
   .buttons {
     display: flex;
     justify-content: flex-end;
-    margin: 20px 0 0 0;
+    margin: 1.2857142857142858rem 0 0 0;
+
+    .btn {
+      font-weight: 600;
+      font-size: 0.8571428571428571rem;
+    }
+
+    .transparent {
+      padding: 0;
+      color: #5B586F;
+
+      &:hover {
+        color: #777391;
+      }
+    }
 
     button:last-child {
       margin: 0 0 0 15px;

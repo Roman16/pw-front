@@ -374,8 +374,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         </div>
 
         <div className="buttons">
-            <button type={'button'} className="btn white" onClick={onClose}>Cancel</button>
-            <button className="btn default" disabled={!filterValue}>Add Filter</button>
+            <button type={'button'} className="btn transparent" onClick={onClose}>Cancel</button>
+            <button className="btn blue" disabled={!filterValue}>Add Filter</button>
         </div>
     </form>)
 }
