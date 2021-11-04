@@ -12,12 +12,8 @@
 }
 
 .custom-modal-wrap {
-  left: 200px;
-  font-family: Eina;
-
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-    left: 150px;
-  }
+  left: 5.14285714rem;
+  font-family: Montserrat;
 
   @media (max-width: 600px) {
     left: 0 !important;
@@ -561,68 +557,66 @@
 
 .start-free-trial-window {
   width: 100% !important;
-  max-width: 57.142857142857146rem;
+  max-width: 42.857142857142854rem;
+  height: 80vh;
+  max-height: 47.857142857142854rem;
+  display: flex;
 
-
-  .ant-modal-body {
-    padding: 0;
-  }
-
-  .image {
-    padding: 3.5714285714285716rem 6.071428571428571rem 0;
+  .ant-modal-content {
     display: flex;
     align-items: center;
-    justify-content: center;
-
-    img {
-      width: 90%;
-    }
   }
 
-  .description {
-    background: #6D6DF6;
-    border-radius: 0 0 4px 4px;
-    padding: 3.5714285714285716rem 20px;
+  .ant-modal-body {
+    width: 100%;
+    height: max-content;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    padding: 3.5714285714285716rem 0;
+    overflow: auto;
+  }
 
-    h3 {
-      font-size: 2.2857142857142856rem;
-      text-align: center;
-      color: #FFFFFF;
-      margin-bottom: 2rem;
-    }
+  img {
+    width: 100%;
+    max-width: 18.285714285714285rem;
+    margin: 0 0 3.5714285714285716rem;
+  }
 
-    p {
-      font-size: 1.4285714285714286rem;
-      line-height: 1.7142857142857142rem;
-      text-align: center;
-      color: #FFFFFF;
-      margin-bottom: 3.5714285714285716rem;
-    }
+  h3 {
+    font-weight: 600;
+    font-size: 2.2857142857142856rem;
+    line-height: 2.7142857142857144rem;
+    text-align: center;
+    color: #312C51;
+    margin-bottom: 1.4285714285714286rem;
+  }
 
-    .btn {
-      height: 3.4285714285714284rem;
-      font-size: 1.1428571428571428rem;
-      font-weight: 500;
-      color: #6D6DF6;
-      position: relative;
+  p {
+    font-weight: 500;
+    font-size: 1.1428571428571428rem;
+    line-height: 1.4285714285714286rem;
+    text-align: center;
+    color: #5B586F;
+    margin: 0 0 2.142857142857143rem;
+  }
 
-      .ant-spin {
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+  .btn {
+    height: 3.4285714285714284rem;
+    font-size: 1.1428571428571428rem;
+    font-weight: 600;
+    position: relative;
 
-      &:hover {
-        color: #6D6DF6;
-      }
+    .ant-spin {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

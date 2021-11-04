@@ -104,7 +104,7 @@ const Sidebar = () => {
 
                     <ul className="top-nav-list">
                         {mainMenu
-                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
+                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : (i.key === 'zth' || i.key === 'ppc-automate'))
                             .map(item => {
                                 return (
                                     <li className={`nav-item ${subMenuState[item.key] ? 'opened' : 'closed'} ${item.subMenu ? 'has-child' : ''}`}>
@@ -133,18 +133,20 @@ const Sidebar = () => {
                                         <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
                                             <h4>{item.title}</h4>
 
-                                            {item.subMenu && item.subMenu.map(subItem => (
-                                                <li className="automate-item">
-                                                    <NavLink
-                                                        className="sub-menu-link"
-                                                        activeClassName="active"
-                                                        exact
-                                                        to={`/${item.link}/${subItem.link}`}
-                                                    >
-                                                        {subItem.title}
-                                                    </NavLink>
-                                                </li>
-                                            ))}
+                                            {item.subMenu && item.subMenu
+                                                .filter(i => isAdmin || isAgencyUser ? i : i.link !== 'dayparting')
+                                                .map(subItem => (
+                                                    <li className="automate-item">
+                                                        <NavLink
+                                                            className="sub-menu-link"
+                                                            activeClassName="active"
+                                                            exact
+                                                            to={`/${item.link}/${subItem.link}`}
+                                                        >
+                                                            {subItem.title}
+                                                        </NavLink>
+                                                    </li>
+                                                ))}
                                         </ul>}
                                     </li>
                                 )

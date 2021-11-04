@@ -1,8 +1,8 @@
-import React from "react";
-import {dateField, infoField, sorterByKeywordField} from './Tables/const';
-import "./ReportTable.less";
-import CustomTable from "../../../../components/Table/CustomTable";
-import Pagination from "../../../../components/Pagination/Pagination";
+import React from "react"
+import {dateField, infoField, sorterByKeywordField} from './Tables/const'
+import "./ReportTable.less"
+import CustomTable from "../../../../components/Table/CustomTable"
+import Pagination from "../../../../components/Pagination/Pagination"
 
 const ReportTable = ({
                          reportsList,
@@ -12,6 +12,7 @@ const ReportTable = ({
                          sortChangeHandler,
                          columns,
                          sorterColumn,
+                         filters,
                          addFilterHandler,
                          totalSize,
                          filteredById
@@ -26,6 +27,9 @@ const ReportTable = ({
                     dataSource={reportsList}
                     sorterColumn={sorterColumn}
                     revertSortingColumns={['datetime']}
+                    emptyText={'image'}
+                    emptyTitle={'No data found'}
+                    emptyDescription={'There’s currently no data to display'}
 
                     columns={[
                         {...dateField},
@@ -47,8 +51,8 @@ const ReportTable = ({
                 processing={processing}
             />
         </div>
-    );
+    )
 }
 
 
-export default React.memo(ReportTable);
+export default React.memo(ReportTable)

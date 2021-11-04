@@ -195,9 +195,9 @@ const Subscription = () => {
     }
 
     useEffect(() => {
-        if (user.user.is_agency_client || user.user.id === 714) fetchSubscriptions()
+        fetchSubscriptions()
 
-        if ((ppcConnected || mwsConnected) && (user.user.is_agency_client || user.user.id === 714)) userService.updateSubscriptionStatus()
+        if (ppcConnected || mwsConnected) userService.updateSubscriptionStatus()
 
         userService.fetchBillingInformation()
             .then(res => {
@@ -211,7 +211,7 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            {(user.user.is_agency_client || user.user.id === 714) && subscriptionProducts.map((product) => (
+            {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.key}
                     onOpenAccountWindow={handleOpenAccountWindow}

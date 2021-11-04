@@ -1,27 +1,27 @@
-import React, {useState} from "react";
-import ModalWindow from "../ModalWindow";
+import React, {useState} from "react"
+import ModalWindow from "../ModalWindow"
 
-import img from '../../../assets/img/start-free-trial-image.svg';
-import {userService} from "../../../services/user.services";
-import {Spin} from "antd";
-import {notification} from "../../Notification";
+import img from '../../../assets/img/start-free-trial-image.svg'
+import {userService} from "../../../services/user.services"
+import {Spin} from "antd"
+import {notification} from "../../Notification"
 
 const StartFreeTrialWindow = ({visible, onClose}) => {
-    const [processing, setProcessing] = useState(false);
+    const [processing, setProcessing] = useState(false)
 
     const handleOk = async () => {
-        setProcessing(true);
+        setProcessing(true)
 
         try {
-            await userService.startFreeTrial();
+            await userService.startFreeTrial()
             notification.success({title: 'Success!'})
-            onClose();
+            onClose()
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
-        setProcessing(false);
-    };
+        setProcessing(false)
+    }
 
     return (
         <ModalWindow
@@ -32,26 +32,21 @@ const StartFreeTrialWindow = ({visible, onClose}) => {
             container={true}
         >
 
-            <div className="image">
-                <img src={img} alt=""/>
-            </div>
+            <img src={img} alt=""/>
 
-            <div className={'description'}>
-                <h3>Hello!</h3>
+            <h3>Hello!</h3>
 
-                <p>
-                    In order to start the 14-days free trial please click this <br/> button below.
-                </p>
+            <p>
+                In order to start the 14-days free trial <br/> please click this button below.
+            </p>
 
-                <button className={'btn white'} onClick={handleOk} disabled={processing}>
-                    Start My Free Trial
+            <button className={'btn default'} onClick={handleOk} disabled={processing}>
+                Start My Free Trial
 
-                    {processing && <Spin size={'small'}/>}
-                </button>
-            </div>
-
+                {processing && <Spin size={'small'}/>}
+            </button>
         </ModalWindow>
     )
-};
+}
 
-export default StartFreeTrialWindow;
+export default StartFreeTrialWindow
