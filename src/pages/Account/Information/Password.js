@@ -107,7 +107,7 @@ const Password = () => {
             <div className="change-password">
                 <div className="description">
                     <h3>Passwords</h3>
-                    <p>Change the password you use to log in to Profit Whales</p>
+                    <p>Change the password you use to log in to Sponsoreds</p>
                 </div>
 
                 <div className="input-password">

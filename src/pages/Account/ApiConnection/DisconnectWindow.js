@@ -20,7 +20,7 @@ const DisconnectWindow = ({handleCancel, onDisconnect}) => {
         <>
             <h2>Are you sure?</h2>
             <p>
-                This action will delete the connection between Profit Whales and your Seller Central account, which will
+                This action will delete the connection between Sponsoreds and your Seller Central account, which will
                 lead to a stop of the advertising optimization process.
             </p>
 

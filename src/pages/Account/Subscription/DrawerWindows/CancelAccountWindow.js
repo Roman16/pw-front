@@ -19,7 +19,7 @@ const CancelAccountWindow = ({onCancelSubscription, onKeepSubscription, disableR
         <div className="cancel">
             <h3 className="reactivate-title">Are you sure you want to cancel Subscription?</h3>
             <p className="reactivate-text">
-                Stay with Profit Whales and save 30% for the next three months. <br/>
+                Stay with Sponsoreds and save 30% for the next three months. <br/>
                 {/*<span>You’ll save:</span> ${numberMask(subscriptionPrice * 0.3 * 3, 2)} that you can invest back in*/}
                 <span>You’ll save:</span> ${numberMask(saveCount() * 0.3 * 3, 2)} that you can invest back in
                 Amazon Advertising.
