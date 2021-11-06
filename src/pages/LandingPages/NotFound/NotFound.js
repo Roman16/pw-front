@@ -1,23 +1,29 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-
+import {SocialLinks} from "../../../components/Sidebar/Sidebar"
 import './NotFound.less'
-
-const authorized = localStorage.getItem('token')
 
 const NotFound = () => (
     <section className="not-found-page">
         <div className="container">
-            <img src="https://profitwhales.com/wp-content/uploads/2021/07/404-img2.png" alt=""/>
-            <h2>OOOPS...</h2>
-            <p>Looks like something went wrong, let’s take you home.</p>
-            <Link
-                className="btn default"
-                to={authorized ? '/account/settings' : '/login'}
-            >
-                Back to home
-            </Link>
+            <h1>404</h1>
+            <h2>Oops!</h2>
+            <p>We’re sorry but the page you requested was not found.</p>
+            <div className="actions">
+                <Link to={'/account/settings'} className="btn default">
+                    Go Home
+                </Link>
 
+                <a
+                    target={'_blank'}
+                    className="btn white"
+                    href={'https://sponsoreds.com/contact-us'}
+                >
+                    Contact Us
+                </a>
+            </div>
+
+            <SocialLinks/>
         </div>
     </section>
 )

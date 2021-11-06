@@ -225,7 +225,7 @@ const Sidebar = () => {
 }
 
 
-const SocialLinks = () => <div className="social-links">
+export const SocialLinks = () => <div className="social-links">
     <h3>OUR Social Media</h3>
 
     <ul>
