@@ -502,8 +502,8 @@
 //----------------------------------------------
 //----------------------------------------------
 
-.start-free-trial-window, .payment-notification-window {
-  width: 100% !important;
+.start-free-trial-window, .payment-notification-window, .only-desktop {
+  width: 90% !important;
   max-width: 42.857142857142854rem;
   height: 80vh;
   max-height: 47.857142857142854rem;
@@ -520,7 +520,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 3.5714285714285716rem 0;
+    padding: 3.5714285714285716rem 20px;
     margin: auto 0;
     overflow: auto;
   }
@@ -579,6 +579,21 @@
       &:hover {
         color: #fff;
       }
+    }
+  }
+}
+
+//----------------------------------------------
+//----------------------------------------------
+//----------------------------------------------
+
+.only-desktop {
+  .ant-modal-body {
+    padding: 3.5714285714285716rem 3.5714285714285716rem;
+
+    a {
+      font-weight: 600;
+      color: #FF5256;
     }
   }
 }
