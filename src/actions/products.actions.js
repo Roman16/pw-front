@@ -1,7 +1,7 @@
-import {productsConstants} from '../constans/actions.type';
-import {productsServices} from '../services/products.services';
-import {notification} from '../components/Notification';
-import {daypartingServices} from "../services/dayparting.services";
+import {productsConstants} from '../constans/actions.type'
+import {productsServices} from '../services/products.services'
+import {notification} from '../components/Notification'
+import {daypartingServices} from "../services/dayparting.services"
 
 export const productsActions = {
     fetchProducts,
@@ -18,7 +18,7 @@ export const productsActions = {
     showOnlyOnDayparting,
     switchFetching,
     setProductsList
-};
+}
 
 function switchFetching(state) {
     return ({
@@ -30,18 +30,34 @@ function switchFetching(state) {
 
 function fetchProducts(paginationParams) {
     return dispatch => {
-        dispatch(switchFetching(true));
+        dispatch(switchFetching(true))
 
         productsServices.getProducts(paginationParams)
             .then(res => {
-                if (res.totalSize > 0) {
+                if (res.totalSize > 0 && !res.result) {
+                    localStorage.setItem('productsSearchParams', JSON.stringify({
+                        ...JSON.parse(localStorage.getItem('productsSearchParams')),
+                        page: 1,
+                    }))
+
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            result: [],
+                            totalSize: res.totalSize,
+                            fetching: false
+                        }
+                    })
+
+                    dispatch(fetchProducts({...paginationParams, page: 1}))
+                } else if (res.totalSize > 0) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
                             ...res,
                             fetching: false
                         }
-                    });
+                    })
                 } else {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
@@ -50,11 +66,11 @@ function fetchProducts(paginationParams) {
                             totalSize: 0,
                             fetching: false
                         }
-                    });
+                    })
 
                 }
             })
-    };
+    }
 }
 
 function setProductsList(list) {
@@ -73,8 +89,8 @@ function fetchProductDetails(product) {
         dispatch({
             type: productsConstants.SELECT_PRODUCT,
             payload: {...product},
-        });
-    };
+        })
+    }
 }
 
 function updateProduct(product) {
@@ -82,8 +98,8 @@ function updateProduct(product) {
         dispatch({
             type: productsConstants.UPDATE_SELECTED_PRODUCT,
             payload: product
-        });
-    };
+        })
+    }
 }
 
 function updateOptions(options) {
@@ -91,8 +107,8 @@ function updateOptions(options) {
         dispatch({
             type: productsConstants.UPDATE_PRODUCT_OPTIONS,
             payload: options
-        });
-    };
+        })
+    }
 }
 
 function onSwitchOptimization(product) {
@@ -102,16 +118,16 @@ function onSwitchOptimization(product) {
                 dispatch({
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
                     payload: product
-                });
+                })
 
-                product.status === 'RUNNING' && notification.start({title: 'Optimize is started'});
+                product.status === 'RUNNING' && notification.start({title: 'Optimize is started'})
 
                 product.status === 'RUNNING' && dispatch({
                     type: productsConstants.UPDATE_PRODUCT_OPTIONS,
                     payload: product
-                });
-            });
-    };
+                })
+            })
+    }
 }
 
 function setNetMargin(product) {
@@ -121,9 +137,9 @@ function setNetMargin(product) {
                 dispatch({
                     type: productsConstants.UPDATE_SELECTED_PRODUCT,
                     payload: res
-                });
-            });
-    };
+                })
+            })
+    }
 }
 
 function selectAll(data) {
@@ -139,8 +155,8 @@ function showOnlyOptimized(data) {
         dispatch({
             type: productsConstants.SHOW_ONLY_OPTIMIZED,
             payload: data
-        });
-    };
+        })
+    }
 }
 
 function showOnlyOnDayparting(data) {
@@ -148,8 +164,8 @@ function showOnlyOnDayparting(data) {
         dispatch({
             type: productsConstants.SHOW_ONLY_ON_DAYPARTING,
             payload: data
-        });
-    };
+        })
+    }
 }
 
 function showOnlyActive(data) {
@@ -157,8 +173,8 @@ function showOnlyActive(data) {
         dispatch({
             type: productsConstants.SHOW_ONLY_ACTIVE,
             payload: data
-        });
-    };
+        })
+    }
 }
 
 
@@ -167,8 +183,8 @@ function dontShowWindowAgain(window) {
         dispatch({
             type: productsConstants[`SWITCH_${window.windowName}_CONFIRM_WINDOW`],
             payload: window.status
-        });
-    };
+        })
+    }
 }
 
 function updateCampaignBudget(product) {
@@ -176,7 +192,7 @@ function updateCampaignBudget(product) {
         dispatch({
             type: productsConstants.CAMPAIGN_BUDGET,
             payload: product
-        });
-    };
+        })
+    }
 }
 

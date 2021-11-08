@@ -124,6 +124,10 @@ const ProductList = ({pathname}) => {
         })
     }, [searchParams, onlyOptimization, ungroupVariations])
 
+    useEffect(() => {
+        if (productList.length === 0 && totalSize > 0) setSearchParams(prevState => ({...prevState, page: 1}))
+    }, [productList, totalSize])
+
     return (
         <Fragment>
             <div className={`${isOpenList ? 'product-list' : 'product-list closed'}`}>

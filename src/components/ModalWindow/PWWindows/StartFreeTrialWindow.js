@@ -1,27 +1,39 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import ModalWindow from "../ModalWindow"
 
 import img from '../../../assets/img/start-free-trial-image.svg'
 import {userService} from "../../../services/user.services"
 import {Spin} from "antd"
-import {notification} from "../../Notification"
+import {useDispatch} from "react-redux"
+import {userActions} from "../../../actions/user.actions"
 
-const StartFreeTrialWindow = ({visible, onClose}) => {
+let intervalId
+
+const StartFreeTrialWindow = ({visible}) => {
     const [processing, setProcessing] = useState(false)
+    const dispatch = useDispatch()
 
     const handleOk = async () => {
         setProcessing(true)
 
         try {
             await userService.startFreeTrial()
-            notification.success({title: 'Success!'})
-            onClose()
+
+            intervalId = setInterval(() => {
+                userService.getUserInfo()
+                    .then(user => dispatch(userActions.setInformation(user)))
+            }, 10000)
         } catch (e) {
             console.log(e)
+            setProcessing(false)
         }
+    }
+
+    useEffect(() => {
+        clearInterval(intervalId)
 
         setProcessing(false)
-    }
+    }, [visible])
 
     return (
         <ModalWindow
