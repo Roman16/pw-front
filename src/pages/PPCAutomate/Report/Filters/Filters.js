@@ -120,7 +120,7 @@ const PlusButton = () => <svg width="32" height="32" viewBox="0 0 32 32" fill="n
     <mask id="mask0_20400:68194" maskUnits="userSpaceOnUse" x="11" y="11" width="10" height="10">
         <rect x="11" y="11" width="10" height="10" fill="#C4C4C4"/>
     </mask>
-    <g mask="url(#mask0_20400:68194)">
+    <g>
         <path d="M16 11.5V16M16 16H20.5M16 16H11.5M16 16V20.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
     </g>
 </svg>

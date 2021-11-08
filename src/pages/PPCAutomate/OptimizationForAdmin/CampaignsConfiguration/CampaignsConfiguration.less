@@ -39,7 +39,7 @@
   }
 
   .custom-table .load-data {
-    top: 43px;
+    top: 3.57142857rem;
     bottom: 0;
     height: initial;
   }
@@ -52,14 +52,14 @@
     cursor: pointer;
 
     &:hover {
-      background: rgba(245, 245, 255, 0.5);
+      background: #FFFAFA;
     }
 
     h2 {
-      font-weight: 500;
       font-size: 1.4285714285714286rem;
-      line-height: 1.4285714285714286rem;
-      color: #363694;
+      line-height: 1.7142857142857142rem;
+      font-weight: 600;
+      color: #312C51;
       margin: 0;
     }
 
@@ -101,6 +101,7 @@
         min-height: 50px;
 
         .table-head {
+          min-height: 3.5714285714285716rem;
           border-top: 0.5px solid #C9CBD4;
           border-bottom: 2px solid #C9CBD4 !important;
           z-index: 50 !important;
@@ -112,6 +113,9 @@
 
             .title {
               justify-content: flex-start;
+              font-size: 1rem;
+              color: #312C51;
+              font-weight: 600;
 
               .with-reset {
                 width: 100%;
@@ -127,7 +131,7 @@
             }
 
             &:first-child {
-              padding-left: 20px;
+              padding-left: 1.4285714285714286rem;
               border: 0;
 
               .title {
@@ -170,7 +174,7 @@
                 opacity: .6;
 
                 .ant-checkbox-inner {
-                  border: 1px solid #6D6DF6;
+                  border: 1px solid #6959AB;
                 }
               }
 
@@ -218,7 +222,7 @@
               }
 
               &:first-child {
-                padding-left: 20px;
+                padding-left: 1.4285714285714286rem;
                 border: 0;
                 justify-content: flex-start;
               }
@@ -288,12 +292,23 @@
       border-color: #6959AB;
     }
 
-    .ant-checkbox.ant-checkbox-checked .ant-checkbox-inner {
-      background: url(../../../../assets/img/icons/checked-checkbox.svg) no-repeat center center;
-      -webkit-background-size: cover;
-      -moz-background-size: cover;
-      -o-background-size: cover;
-      background-size: cover;
+    .ant-select-tree-checkbox.ant-select-tree-checkbox-checked {
+      .ant-select-tree-checkbox-inner {
+        background: url(../../../../assets/img/icons/checked-checkbox.svg) no-repeat center center !important;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        transition: 0s;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      &::after {
+        display: none;
+      }
     }
 
     .ant-select-tree-checkbox:hover .ant-select-tree-checkbox-inner {

@@ -28,6 +28,189 @@ optimizationOptions.forEach(item => {
     defaultOptimizationVariations[item.value] = true
 })
 
+const fakeCampaignConfiguration = [
+    {
+        "campaignId": "242934841676092",
+        "campaignName": "M4O Matcha 4 Oz (Brands)",
+        "custom_settings": {
+            "campaign_id": "242934841676092",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "8218692389796",
+        "campaignName": "M4O Matcha 4 Oz (ST Exact / Phrase)",
+        "custom_settings": {
+            "campaign_id": "8218692389796",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "205805238754209",
+        "campaignName": "M4O Matcha 4 Oz - Matcha (TPKP)",
+        "custom_settings": {
+            "campaign_id": "205805238754209",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "13396533313597",
+        "campaignName": "M4O Matcha 4 Oz (CA)",
+        "custom_settings": {
+            "campaign_id": "13396533313597",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "214011109328725",
+        "campaignName": "M4O Matcha 4 Oz - Matcha Powder (TPKP)"
+    },
+    {
+        "campaignId": "210386042690172",
+        "campaignName": "PW_EZ-QEI5-AHVA (PAT)",
+        "custom_settings": {
+            "campaign_id": "210386042690172",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "7467024606829",
+        "campaignName": "M4O Matcha 4 Oz (TPK Exact)",
+        "custom_settings": {
+            "campaign_id": "7467024606829",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "26480278379269",
+        "campaignName": "M4O Matcha 4 Oz (TPA)",
+        "custom_settings": {
+            "campaign_id": "26480278379269",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "73793861235524",
+        "campaignName": "M4O Matcha 4 Oz - Matcha Green Tea Powder (TPKP)"
+    },
+    {
+        "campaignId": "55185943184293",
+        "campaignName": "PW_EZ-QEI5-AHVA (ST Exact / Phrase)",
+        "custom_settings": {
+            "campaign_id": "55185943184293",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "77619044236271",
+        "campaignName": "M4O Matcha 4 Oz (Broad Negative)",
+        "custom_settings": {
+            "campaign_id": "77619044236271",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "179329445533514",
+        "campaignName": "M4O Matcha 4 Oz (Exact Simple)",
+        "custom_settings": {
+            "campaign_id": "179329445533514",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "95421578052102",
+        "campaignName": "M4O Matcha 4 Oz - Green Matcha Powder (TPKP)"
+    },
+    {
+        "campaignId": "20218206924026",
+        "campaignName": "M4O Matcha 4 Oz (Exact Other)",
+        "custom_settings": {
+            "campaign_id": "20218206924026",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "108015054330725",
+        "campaignName": "M4O Matcha 4 Oz (Auto CTA)",
+        "custom_settings": {
+            "campaign_id": "108015054330725",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    }
+]
+
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
         [productInformationFromRequest, setProductInformationFromRequest] = useState(null),
@@ -90,6 +273,10 @@ const OptimizationForAdmin = () => {
 
         try {
             const res = await productsServices.getCampaignsSettings(productInformation.id)
+
+            //====================================================
+            // res.result = fakeCampaignConfiguration //fake data
+            //====================================================
 
             campaignSettingsFromRequest = res.result.map(campaign => ({
                 ...campaign.custom_settings,

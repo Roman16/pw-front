@@ -130,7 +130,7 @@
 }
 
 .confirm-action-modal {
-  max-width: 42.857142857142854rem;
+  max-width: 44.285714285714285rem;
   width: 100% !important;
   border-radius: 4px;
   height: max-content;
@@ -151,6 +151,7 @@
 
   .ant-modal-title {
     font-size: 1.7142857142857142rem;
+    font-weight: 600;
     text-align: left;
     color: #343C5A;
     margin-bottom: 1rem;
@@ -183,6 +184,10 @@
       span {
         font-size: 0.9285714285714286rem;
         color: #656A84;
+      }
+
+      .ant-checkbox-checked::after {
+        display: none;
       }
 
       .ant-checkbox {
@@ -227,7 +232,7 @@
         height: 2.2857142857142856rem;
         padding: 0 2.857142857142857rem;
         box-shadow: none;
-        font-weight: 500;
+        font-weight: 600;
         font-size: 0.8571428571428571rem;
 
         &::after {
@@ -239,24 +244,25 @@
         }
 
         &.ant-btn {
-          background-color: rgba(109, 109, 246, 0.1) !important;
+          background: #FFFFFF !important;
+          border: 1px solid #C9CBD4;
           border-radius: 4px;
           font-size: 0.8571428571428571rem;
           text-align: center;
-          color: #363694;
-          border: 0;
+          color: #5B586F;
 
           &:hover {
-            background-color: rgba(109, 109, 246, 0.3) !important;
+            background: #F3F3F3 !important;
           }
         }
 
         &.ant-btn-primary {
-          background-color: rgba(109, 109, 246, 1) !important;
+          border: 0;
+          background-color: #6959AB !important;
           color: #fff;
 
           &:hover {
-            background: #5151a3 !important;
+            background-color: #24293F !important;
             color: #fff;
           }
         }
@@ -338,6 +344,7 @@
     max-width: 95vw;
   }
 }
+
 //----------------------------------------------
 //----------------------------------------------
 //----------------------------------------------

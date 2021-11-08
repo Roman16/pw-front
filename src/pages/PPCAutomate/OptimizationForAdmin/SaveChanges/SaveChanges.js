@@ -40,14 +40,14 @@ const SaveChanges = ({product, hasChanges, onStart, onRevert, processing}) => {
 
                     <div className="buttons">
                         <button
-                            className={'btn default'}
+                            className={'btn transparent'}
                             onClick={onRevert}
                         >
                             Revert
                         </button>
 
                         <button
-                            className={'btn white'}
+                            className={'btn default'}
                             disabled={processing}
                             onClick={onStart}
                         >
@@ -61,7 +61,7 @@ const SaveChanges = ({product, hasChanges, onStart, onRevert, processing}) => {
 
                     <div className="buttons">
                         <button
-                            className={'btn white'}
+                            className={'btn default'}
                             onClick={confirmStartOptimization}
                             disabled={processing}
                         >

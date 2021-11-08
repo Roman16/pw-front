@@ -9,7 +9,10 @@ html {
   box-sizing: border-box;
   font-size: 14px;
 
-  font-family: Montserrat;
+
+  * {
+    font-family: Montserrat;
+  }
 }
 
 #root {
@@ -53,10 +56,10 @@ img {
 }
 
 .ant-btn-primary {
-  background-color: @action-color !important;
+  background-color: #6959AB !important;
 
   &:hover {
-    background-color: @second-default-dark !important;
+    background-color: #24293F !important;
   }
 }
 
@@ -833,6 +836,11 @@ td.ant-calendar-cell.ant-calendar-in-range-cell::before {
   }
 }
 
+.ant-drawer .ant-drawer-mask,
+.ant-modal-mask {
+  background-color: rgba(0, 0, 0, 0.65) !important;
+}
+
 .ant-drawer-content {
   .ant-drawer-header {
     padding-top: 60px;
@@ -1155,6 +1163,13 @@ a.btn {
   &:focus {
     outline: none;
   }
+
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #C9CBD4;
+    color: #fff;
+  }
 }
 
 button {
@@ -1238,6 +1253,7 @@ button.white[disabled] {
   font-size: 1rem;
 }
 
+
 /*
 *  /SELECT
 */
@@ -1245,6 +1261,50 @@ button.white[disabled] {
 /*
 *  TREE SELECT
 */
+
+.ant-select-dropdown {
+  .ant-select-tree {
+    .ant-select-tree-checkbox-inner {
+      border-radius: 2px;
+      width: 1.28571429rem;
+      height: 1.28571429rem;
+      border-color: #6959AB;
+    }
+
+    .ant-select-tree-checkbox.ant-select-tree-checkbox-checked {
+      .ant-select-tree-checkbox-inner {
+        background: url(./assets/img/icons/checked-checkbox.svg) no-repeat center center !important;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        transition: 0s;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .ant-select-tree-checkbox:hover .ant-select-tree-checkbox-inner {
+      border-color: #6959AB;
+    }
+
+    .ant-select-tree-node-content-wrapper-normal:hover {
+      background: #fff;
+    }
+
+    .ant-select-tree-node-content-wrapper-normal .ant-select-tree-title {
+      color: #343C5A;
+      font-size: 0.85714286rem;
+      line-height: 10px;
+    }
+  }
+}
 
 /*
 *  /TREE SELECT

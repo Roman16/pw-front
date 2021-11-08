@@ -328,7 +328,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             className={item.cogs_value < 0 && 'failed'}
         />
 
-        <button className="btn default" onClick={submitHandler}
+        <button className="btn blue" onClick={submitHandler}
                 disabled={processing || item.cogs_value === undefined || item.cogs_value === '' || !item.cogs_start_datetime || item.cogs_value < 0}>
             Save
             {processing && <Spin size={'small'}/>}
@@ -340,9 +340,10 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
     </>)
 }
 
+
 const PlusIcon = () => (<i>
     <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="10" cy="10" r="10" fill="#6D6DF6"/>
+        <circle cx="10" cy="10" r="10" fill="#6959AB"/>
 
         <mask id="mask0000" mask-type="alpha" maskUnits="userSpaceOnUse" x="5" y="5" width="10" height="10">
             <rect x="5" y="5" width="10" height="10" fill="#C4C4C4"/>

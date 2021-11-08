@@ -125,6 +125,7 @@
       height: 2.2857142857142856rem;
 
       &:last-child {
+        width: 14.285714285714286rem;
         margin: 0;
       }
     }
@@ -165,14 +166,6 @@
       &:nth-child(3) {
         margin: 0;
       }
-
-      .ant-select-selection-selected-value,
-      .ant-select-selection__placeholder {
-        padding-left: 1.0714285714285714rem;
-        font-size: 1rem;
-        //display: flex !important;
-      }
-
     }
   }
 
@@ -189,8 +182,13 @@
       display: none;
     }
 
+    .ant-calendar-picker-input {
+      padding-left: 11px;
+      display: flex;
+    }
+
     .ant-calendar-range-picker-input:placeholder-shown {
-      padding-left: 5px;
+      padding-left: 0;
     }
   }
 

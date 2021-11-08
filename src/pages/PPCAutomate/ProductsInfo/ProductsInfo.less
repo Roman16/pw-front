@@ -62,8 +62,8 @@
       right: 10px;
       display: none;
       align-items: center;
-      background: #6D6DF6;
-      padding: 10px 20px;
+      background: #6959AB;
+      padding: 10px 1.4285714285714286rem;
       z-index: 10;
 
       &.visible {
@@ -74,6 +74,14 @@
         font-size: 1.14285714rem;
         color: #fff;
         margin: 0;
+
+        .select-all-btn {
+          font-weight: 600;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
 
       form {
@@ -103,15 +111,9 @@
 
         .btn {
           height: 2.28571429rem;
-          background: #7DD4A1;
           padding: 0 1.42857143rem;
-          font-weight: 500;
           font-size: 0.85714286rem;
           position: relative;
-
-          &:hover {
-            background: #76c898;
-          }
 
           .ant-spin {
             position: absolute;
@@ -259,7 +261,7 @@
               height: 5rem;
               align-items: initial;
               padding: 0;
-              border-bottom:0;
+              border-bottom: 0;
 
               &:hover {
                 .table-body__field:nth-child(1),

@@ -79,10 +79,17 @@ const files = {
             data: '<path xmlns="http://www.w3.org/2000/svg" fill="#343C5A" d="M4.63642 6.05025C4.2459 5.65973 4.2459 5.02656 4.63642 4.63604C5.02695 4.24551 5.66011 4.24551 6.05064 4.63604L13.3643 11.9497C13.7549 12.3403 13.7549 12.9734 13.3643 13.364C12.9738 13.7545 12.3407 13.7545 11.9501 13.364L4.63642 6.05025Z"/><path xmlns="http://www.w3.org/2000/svg" fill="#343C5A" d="M4.63642 13.364C4.2459 12.9734 4.2459 12.3403 4.63642 11.9497L11.9501 4.63604C12.3407 4.24551 12.9738 4.24552 13.3643 4.63604C13.7549 5.02656 13.7549 5.65973 13.3643 6.05025L6.05064 13.364C5.66011 13.7545 5.02695 13.7545 4.63642 13.364Z"/>'
         },
         'close-window-icon': {
-            width: 18,
-            height: 18,
-            viewBox: [0, 0, 18, 18],
-            data: '<path xmlns="http://www.w3.org/2000/svg" d="M4.63642 6.05025C4.2459 5.65973 4.2459 5.02656 4.63642 4.63604C5.02695 4.24551 5.66011 4.24551 6.05064 4.63604L13.3643 11.9497C13.7549 12.3403 13.7549 12.9734 13.3643 13.364C12.9738 13.7545 12.3407 13.7545 11.9501 13.364L4.63642 6.05025Z"/><path xmlns="http://www.w3.org/2000/svg" d="M4.63642 13.364C4.2459 12.9734 4.2459 12.3403 4.63642 11.9497L11.9501 4.63604C12.3407 4.24551 12.9738 4.24552 13.3643 4.63604C13.7549 5.02656 13.7549 5.65973 13.3643 6.05025L6.05064 13.364C5.66011 13.7545 5.02695 13.7545 4.63642 13.364Z"/>'
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_20405:62875" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<rect width="20" height="20" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0_20405:62875)">
+<path d="M1 1L9.96875 9.96875M9.96875 9.96875L18.9375 1M9.96875 9.96875L1 18.9375M9.96875 9.96875L18.9375 18.9375" stroke="#C9CBD4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>`
         },
         'coupon-icon': {
             width: 21,
@@ -1451,11 +1458,11 @@ const files = {
                       fill="#FF5256"/>
             </svg>`
         },
-        'has-sub-menu' : {
+        'has-sub-menu': {
             width: 12,
             height: 12,
             viewBox: [0, 0, 12, 12],
-            data:`<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            data: `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9.5 7.5L6 4L2.5 7.5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>`
         }

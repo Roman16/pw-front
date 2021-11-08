@@ -83,14 +83,15 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                     <h2>Settings</h2>
 
                     {product.status !== 'STOPPED' && <button
-                        className={'btn default '}
+                        className={'btn blue'}
                         disabled={processing}
                         onClick={confirmStopOptimization}
                     >
-                        <i>
-                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
-                        </i>
+                        <div className={'icon'}/>
+
                         Stop Optimization
+
+                        {processing && <Spin size={'small'}/>}
                     </button>}
                 </div>
 
@@ -193,7 +194,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Product Price</div>
 
                         <p className={'product-price'}>
-                            {product.default_variation && product.default_variation.item_price !== null && `$${product.default_variation.item_price} `}(retrieved from Amazon)</p>
+                            {product.default_variation && product.default_variation.item_price !== null && `$${product.default_variation.item_price} `}(retrieved
+                            from Amazon)</p>
                     </div>
 
                     <div className="form-group">

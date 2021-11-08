@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 import Pagination from "../../../components/Pagination/Pagination"
 import CustomTable, {EditableField} from "../../../components/Table/CustomTable"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
@@ -526,6 +526,10 @@ const ProductList = ({
         }
     }
 
+    useEffect(() => {
+        setSelectedRows([])
+        setSelectedAll(false)
+    }, [requestParams])
 
     return (
         <div className="row">

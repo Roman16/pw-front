@@ -16,7 +16,8 @@
     flex-direction: column;
 
     .window-header {
-      padding: 1.4285714285714286rem 2.857142857142857rem;
+      min-height: 4.285714285714286rem;
+      padding:0 2.857142857142857rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -25,18 +26,20 @@
       h2 {
         font-size: 1.4285714285714286rem;
         line-height: 1.7142857142857142rem;
-        font-weight: 500;
-        color: #343C5A;
+        font-weight: 600;
+        color: #312C51;
         margin: 0;
       }
 
       .btn {
-        min-width: 1.7142857142857142rem;
-        width: 1.7142857142857142rem;
-        height: 1.7142857142857142rem;
+        min-width: 2.2857142857142856rem;
+        width: 2.2857142857142856rem;
+        height: 2.2857142857142856rem;
       }
 
       svg {
+        width: 1.4285714285714286rem;
+        height: 1.4285714285714286rem;
         fill: #C9CBD4;
       }
     }
@@ -73,7 +76,7 @@
           justify-content: flex-end;
           font-size: 1rem;
           font-weight: 500;
-          color: #6D6DF6;
+          color: #6959AB;
           background: rgba(245, 245, 255, 0.7);
           display: none;
 
@@ -145,11 +148,11 @@
 
             &::before,
             &::after {
-              background: #6d6df6;
+              background: #6959AB;
             }
 
             .line {
-              background: #6d6df6;
+              background: #6959AB;
             }
 
             & ~ .value {
@@ -211,12 +214,12 @@
 
         .time {
           font-size: 1rem;
-          color: #343C5A;
+          color: #312C51;
         }
 
         .value {
           font-size: 1rem;
-          color: #6d6df6;
+          color: #6959AB;
           margin: 0 0 0 5px;
         }
 
@@ -244,9 +247,9 @@
         }
 
         .btn {
-          width: 2.857142857142857rem;
-          min-width: 2.857142857142857rem;
-          height: 2.857142857142857rem;
+          width: 2.2857142857142856rem;
+          min-width: 2.2857142857142856rem;
+          height: 2.2857142857142856rem;
           margin: 0 0 0 5px;
 
           svg {
@@ -255,22 +258,22 @@
 
           &.edit-btn {
             svg {
-              width: 35%;
-              height: 35%;
+              width: 50%;
+              height: 50%;
             }
           }
 
           &.remove-btn {
             svg {
-              width: 55%;
-              height: 55%;
+              width: 45%;
+              height: 45%;
             }
           }
 
           &.default,
           &.white {
             height: 2.2857142857142856rem;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 0.8571428571428571rem;
             margin: 0 0 0 12px;
 
@@ -285,10 +288,6 @@
               justify-content: center;
             }
           }
-
-          &.white {
-            color: #6d6df6;
-          }
         }
 
         &.active {
@@ -302,7 +301,7 @@
               width: 1.4285714285714286rem;
               height: 1.4285714285714286rem;
               display: block;
-              fill: #6d6df6;
+              fill: #6959AB;
               transform: rotate(45deg);
 
               & > * {
@@ -320,8 +319,8 @@
       .new-item {
         font-size: 1rem;
         line-height: 1.2142857142857142rem;
-        font-weight: 500;
-        color: #6D6DF6;
+        font-weight: 600;
+        color: #6959AB;
         cursor: pointer;
         z-index: 333;
 
@@ -337,7 +336,7 @@
             width: 1.4285714285714286rem;
             height: 1.4285714285714286rem;
             display: block;
-            fill: #6d6df6;
+            fill: #6959AB;
 
             & > * {
               display: block;
@@ -380,7 +379,7 @@
       p {
         width: max-content;
         margin: 0 0 5px;
-        color: #6d6df6;
+        color: #6959AB;
         cursor: pointer;
       }
 
@@ -438,7 +437,7 @@
           &.ant-calendar-time-picker-select-option-selected {
             font-weight: 400;
             background: rgba(245, 245, 255, 0.45);
-            color: #6D6DF6;
+            color: #6959AB;
           }
 
           &.ant-calendar-time-picker-select-option-disabled {

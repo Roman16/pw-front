@@ -6,6 +6,8 @@ import {Input, Select} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {dashboardActions} from "../../../../actions/dashboard.actions"
 import _ from 'lodash'
+import moment from "moment-timezone"
+import {dateRequestFormat} from "../../../../utils/dateFormatting"
 
 const Option = Select.Option
 
@@ -236,9 +238,11 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
     }
 
     const changeFilterByHandler = (value) => {
+        if (value === 'datetime') setFilterValue({startDate: undefined, endDate: undefined})
+        else setFilterValue(null)
+
         setFilterBy(value)
         setFilterType(containsVariations[value][0])
-        setFilterValue(null)
     }
 
     const changeTypeHandler = (value) => {
@@ -321,6 +325,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     getPopupContainer={trigger => document.querySelector('.filter-variables')}
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                     defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
+                    value={[filterValue.startDate, filterValue.endDate ]}
                 />}
 
                 {(!filterType ||
