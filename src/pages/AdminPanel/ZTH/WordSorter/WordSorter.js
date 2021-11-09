@@ -6,19 +6,26 @@ import Exacts from "./Exacts"
 import './WordSorter.less'
 import Filters from "./Filters"
 
-// const findContiguousArrayIndex = (arr, subarr, fromIndex) => {
-//     const sl = subarr.length
-//     const l = arr.length + 1 - sl
-//     loop: for (let i = Math.trunc(fromIndex); i < l; i++) {
-//         for (let j = 0; j < sl; j++) {
-//             if (arr[i + j] !== subarr[j]) {
-//                 continue loop
-//             }
-//         }
-//         return i
-//     }
-//     return -1
-// }
+const findContiguousArrayIndex = (arr, subarr, fromIndex) => {
+    const sl = subarr.length
+    const l = arr.length + 1 - sl
+    loop: for (let i = Math.trunc(fromIndex); i < l; i++) {
+        for (let j = 0; j < sl; j++) {
+            if (arr[i + j] !== subarr[j]) {
+                continue loop
+            }
+        }
+        return i
+    }
+    return -1
+}
+
+export const filteringNegativeExactList = (negativePhrase, arr, isIncludes = false) => {
+    return arr.filter(keyword => {
+        if (isIncludes) return findContiguousArrayIndex(keyword.split(' '), negativePhrase.split(' '), 0) === -1
+        else return findContiguousArrayIndex(keyword.split(' '), negativePhrase.split(' '), 0) > -1
+    })
+}
 
 const WordSorter = () => {
     let paramsFromLocale
@@ -44,31 +51,28 @@ const WordSorter = () => {
         inputFields.negative
             .split('\n')
             .filter(i => i && i.length > 0)
-            .forEach(keyword => {
-                setNegativePhrasesList([...new Set([...negativePhrasesList, keyword])])
+            .forEach(negativePhrase => {
+                setNegativePhrasesList(prevState => [...new Set([...prevState, negativePhrase])])
 
-                setNegativeExactsList([...negativeExactsList, ...relevantList
-                    .filter(i => !negativeExactsList.includes(i))
-                    .filter(i => {
-                        let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                        return i.search(re) !== -1
-                    })
-                    .map(i => i)]
-                )
+                setNegativeExactsList(prevState => [...prevState, ...filteringNegativeExactList(negativePhrase, relevantList)])
             })
     }
 
-    const addNegativePhraseHandler = (keyword, arr, negativeList) => {
-        setNegativePhrasesList(negativeList || [...new Set([...negativePhrasesList, keyword])])
+    const addNegativePhraseHandler = (negativePhrase, arr, negativeList) => {
+        setNegativePhrasesList(negativeList || [...new Set([...negativePhrasesList, negativePhrase])])
 
-        setNegativeExactsList(arr || [...negativeExactsList, ...outputList
-            .filter(i => !negativeExactsList.includes(i))
-            .filter(i => {
-                let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                return i.search(re) !== -1
-            })
-            .map(i => i)
-        ])
+        // setNegativeExactsList(arr || [...negativeExactsList, ...outputList
+        //     .filter(i => !negativeExactsList.includes(i))
+        //     .filter(i => {
+        //         let re = new RegExp('(\\s|^)+' + negativePhrase + '+(\\s|$)', 'gm')
+        //         return i.search(re) !== -1
+        //     })
+        //     .map(i => i)
+        // ])
+
+        const negativeExactArr = [...negativeExactsList, ...filteringNegativeExactList(negativePhrase, [...outputList.filter(i => !negativeExactsList.includes(i))])]
+
+        setNegativeExactsList([...negativeExactArr])
     }
 
     const addNegativeExactHandler = (keyword) => {
@@ -76,13 +80,13 @@ const WordSorter = () => {
     }
 
     const removeExactHandler = (index) => setNegativeExactsList([...negativeExactsList.filter((item, i) => i !== index)])
+
     const removePhraseHandler = (index) => setNegativePhrasesList([...negativePhrasesList.filter((item, i) => i !== index)])
+
     const removePhraseWithExactsHandler = (keyword) => {
         setNegativePhrasesList([...negativePhrasesList.filter(i => i !== keyword)])
-        setNegativeExactsList([...negativeExactsList.filter(i => {
-            let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-            return i.search(re) === -1
-        })])
+
+        setNegativeExactsList([...filteringNegativeExactList(keyword, negativeExactsList, true)])
     }
 
     const resetAllHandler = () => {
@@ -91,7 +95,7 @@ const WordSorter = () => {
         setNegativePhrasesList([])
         setNegativeExactsList([])
 
-        localStorage.removeItem('wordSorter');
+        localStorage.removeItem('wordSorter')
     }
 
     const copyListHandler = (list, type) => {

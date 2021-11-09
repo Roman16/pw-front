@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Checkbox} from "antd"
 import {SVG} from "../../../../utils/icons"
 import $ from 'jquery'
+import {filteringNegativeExactList, findContiguousArrayIndex} from "./WordSorter"
 
 let searchWordShift = [],
     arr = [],
@@ -29,15 +30,11 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
         event.stopPropagation()
 
         if (event.keyCode === 16 && searchWordShift.length > 0) {
-            const keyword = [...searchWordShift].join(" ")
+            const negativePhrase = [...searchWordShift].join(" ")
 
-            onAddPhrase(keyword, [...negativeExactsListLocal, ...arr
-                .filter(i => !negativeExactsList.includes(i))
-                .filter(i => {
-                    let re = new RegExp('(\\s|^)+' + keyword + '+(\\s|$)', 'gm')
-                    return i.search(re) !== -1
-                })
-                .map(i => i)], [...new Set([...negativeListLocal, keyword])])
+            const negativeExactArr = [...negativeExactsListLocal, ...filteringNegativeExactList(negativePhrase, phrasesList)]
+
+            onAddPhrase(negativePhrase, [...negativeExactArr], [...new Set([...negativeListLocal, negativePhrase])])
 
             searchWordShift = []
             negativeListLocal = []
@@ -73,6 +70,7 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
         <ul>
             {phrasesList.map((item) => {
                 const isNegative = negativeExactsList.includes(item)
+
                 return (<li key={item} className={isNegative && 'hidden'}>
                     <AmazonLink keyword={item} marketplace={marketplace} onClick={() => checkItemHandler(item, true)}/>
                     <TranslateLink keyword={item} language={language} onClick={() => checkItemHandler(item, true)}/>

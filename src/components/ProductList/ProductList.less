@@ -23,6 +23,8 @@
     min-width: 0;
     padding: 0;
     transition: all .2s ease-in;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .products-filters,
@@ -393,37 +395,37 @@
     .optimization-status {
       position: absolute;
       display: flex;
-      right: 0.7142857142857143rem;
+      right: 1.4285714285714286rem;
       top: 0.7142857142857143rem;
 
       .custom-tooltip {
         margin: 0;
 
         .on-optimization {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #409600;
           border-radius: 50%;
         }
 
         .has-changes {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #409600;
           border-radius: 50%;
           animation: pulse 1s infinite;
         }
 
         .optimization-processing {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #FFDC3F;
           border-radius: 50%;
         }
 
         .optimization-failed {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #EC7F5C;
           border-radius: 50%;
         }
@@ -626,7 +628,7 @@
 
   &.closed {
     button {
-      left: -2.5rem;
+      left: -1.5714285714285714rem;
       transition: .2s;
       border-radius: 0 50% 50% 0;
 
@@ -635,7 +637,7 @@
       }
 
       &:hover {
-        left: -1.4285714285714286rem;
+        left: -10px;
         transition: .2s;
 
         .image {

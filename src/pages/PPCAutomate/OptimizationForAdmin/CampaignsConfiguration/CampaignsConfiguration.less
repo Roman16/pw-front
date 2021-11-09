@@ -99,6 +99,8 @@
 
       .table-overflow {
         min-height: 50px;
+        height: initial;
+        flex: 1;
 
         .table-head {
           min-height: 3.5714285714285716rem;
@@ -142,6 +144,10 @@
         }
 
         .table-body {
+          .no-data {
+            top: 3.57142857rem;
+            align-items: center;
+          }
           .table-body__row {
             &:last-child {
               border-bottom: 1px solid #c9cbd4;
