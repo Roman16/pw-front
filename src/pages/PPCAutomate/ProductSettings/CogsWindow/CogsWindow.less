@@ -407,17 +407,12 @@
       }
     }
 
-    .ant-calendar-selected-day {
-      .ant-calendar-date {
-        background: #8fd39d;
-      }
-    }
-
     .ant-calendar .ant-calendar-today .ant-calendar-date {
       border: 0 !important;
     }
 
     .ant-calendar-time-picker-panel {
+      z-index: 111111;
       ul {
         max-height: 100%;
         padding: 0;
@@ -431,13 +426,14 @@
           font-weight: 400;
 
           &:hover {
-            background: rgba(245, 245, 255, 0.45);
+            background: #FFFAFA;
           }
 
           &.ant-calendar-time-picker-select-option-selected {
             font-weight: 400;
-            background: rgba(245, 245, 255, 0.45);
+            background: #FFFAFA;
             color: #6959AB;
+            z-index: 111111;
           }
 
           &.ant-calendar-time-picker-select-option-disabled {

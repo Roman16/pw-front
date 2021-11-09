@@ -352,6 +352,25 @@ const files = {
                 '</g>\n' +
                 '</svg>\n'
         },
+        'dayparting-icon': {
+            width: 22,
+            height: 22,
+            viewBox: [0, 0, 22, 22],
+            data: '<svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+                '<mask id="mask0_21048:66747" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="22" height="22">\n' +
+                '<rect width="22" height="22"/>\n' +
+                '</mask>\n' +
+                '<g>\n' +
+                '<circle cx="11" cy="11" r="6"  stroke-width="2"/>\n' +
+                '<circle cx="13" cy="9" r="3" fill="auto"  stroke-width="2"/>\n' +
+                '<path d="M11 1L11 2" fill="none" stroke-width="2" stroke-linecap="round"/>\n' +
+                '<path d="M11 20L11 21" fill="none" stroke-width="2" stroke-linecap="round"/>\n' +
+                '<path d="M20 11H21" fill="none" stroke-width="2" stroke-linecap="round"/>\n' +
+                '<path d="M1 11H2" fill="none" stroke-width="2" stroke-linecap="round"/>\n' +
+                '<path d="M3.49928 3.99975L4.20638 4.70685M17.2922 17.7926L17.9993 18.4997M4.91405 17.7928L4.20695 18.4999M18.5 3.99975L17.7929 4.70685" fill="none" stroke-width="2" stroke-linecap="round"/>\n' +
+                '</g>\n' +
+                '</svg>\n'
+        },
         'refer-icon': {
             width: 20,
             height: 20,
@@ -1468,6 +1487,7 @@ const files = {
         }
     },
     allIds: [
+        'dayparting-icon',
         'has-sub-menu',
         'information-triangle',
         'failed-field',

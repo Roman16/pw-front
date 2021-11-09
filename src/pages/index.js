@@ -271,7 +271,7 @@ const AuthorizedUser = (props) => {
                                         component={Settings}
                                     />}
                                     {/*-------------------------------------------*/}
-
+                                    <Route exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
 
 
@@ -279,7 +279,7 @@ const AuthorizedUser = (props) => {
                                         <Redirect to={'/404'}/>
                                     )}/>
 
-                                    {/*{developer && <Route exact path="/home" component={Home}/>}*/}
+
                                     {/*<ConnectedAmazonRoute exact path="/notifications/listing-tracking"*/}
                                     {/*                      component={ListingTracking}/>*/}
                                     {/*<ConnectedAmazonRoute*/}

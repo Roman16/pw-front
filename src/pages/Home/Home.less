@@ -1,125 +1,73 @@
 .home-page {
-  padding: 1.7142857em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-  .page-title {
-    font-size: 3rem;
-    letter-spacing: -0.06px;
-    color: #363694;
-    margin: 0 0 1.429em 0;
-  }
+  h2 {
+    font-weight: 600;
+    font-size: 2.2857142857142856rem;
+    line-height: 2.7142857142857144rem;
+    color: #312C51;
+    margin: 5rem 0 2.857142857142857rem;
 
-  .row {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    align-items: flex-end;
+
+    svg {
+      height: 2.2857142857142856rem;
+      width: initial;
+      margin: 0 0 0 0.8571428571428571rem;
+    }
   }
 
-  .bottom-image {
+  ul {
     width: 100%;
-  }
+    max-width: 92.14285714285714rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28.571428571428573rem, 1fr));
+    grid-gap: 0.7142857142857143rem;
 
-  section {
-    padding: 60px 40px 45px 40px;
-    background: #fff;
-    border-radius: 12px;
-
-    .section-title {
+    li {
       display: flex;
-      align-items: center;
-      font-size: 1.7142857142857142rem;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-      color: #6D6DF6;
-      margin: 0 0 2.083em 0;
+      flex-direction: column;
+      flex: 1;
+      background: #FFFFFF;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      padding: 2.857142857142857rem 2.142857142857143rem;
 
-      img {
-        margin: 0 15px 0 0;
-      }
-    }
-  }
-
-  .software-updates {
-    width: 63%;
-    margin: 0 25px 0 0;
-
-    .updates-list {
-      .updates {
-        margin: 0 0 30px 0;
-
-        .title {
-          font-size: 1.1428571428571428rem; //16px
-          letter-spacing: -0.06px;
-          color: #363694;
-          margin: 0 0 10px 0;
-        }
-
-        .description {
-          font-size: 1rem; //14px
-          text-align: justify;
-          letter-spacing: -0.06px;
-          color: #656A84;
-        }
-      }
-    }
-  }
-
-  .announcements {
-    flex: 1;
-    background: rgba(255, 255, 255, 0.5);
-    box-shadow: 0px 16px 16px rgba(44, 48, 58, 0.08), 0px 6px 40px rgba(44, 48, 58, 0.03);
-
-    .announcements-list {
-      & > div {
+      h3 {
+        font-weight: 600;
+        font-size: 1.7142857142857142rem;
+        line-height: 2.0714285714285716rem;
+        color: #312C51;
         display: flex;
         align-items: center;
-        background: rgba(255, 255, 255, 0.5);
-        border-radius: 4px;
-        margin: 0 0 15px 0;
-        padding: 10px;
+        margin-bottom: 0.7857142857142857rem;
 
-        &:hover {
-          background: #FFFFFF;
-          box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+        svg {
+          min-width: 1.5714285714285714rem;
+          width: 1.5714285714285714rem;
+          height: 1.5714285714285714rem;
+          margin: 0 0.8571428571428571rem 0 0;
         }
+      }
 
-        .image {
-          width: 120px;
-          height: 80px;
-          overflow: hidden;
-          margin: 0 10px 0 0;
-          border-radius: 4px;
+      p {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #5B586F;
+        margin-bottom: 1.4285714285714286rem;
+      }
 
-          img {
-            height: 100%;
-          }
-        }
-
-        .content {
-          .title {
-            font-size: 1.1428571428571428rem; //16px
-            letter-spacing: -0.06px;
-            color: #363694;
-            margin: 0 0 10px 0;
-          }
-
-          .description {
-            font-size: 1rem; //14px
-            text-align: justify;
-            letter-spacing: -0.06px;
-            color: #656A84;
-          }
-        }
+      .btn {
+        height: 2.2857142857142856rem;
+        font-size: 0.8571428571428571rem;
+        margin: auto 0 0 0;
       }
     }
   }
-
-  @media (max-width: 800px) {
-    & {
-      .software-updates {
-        width: 100%;
-        margin: 0 0 25px 0;
-      }
-    }
-  }
-
 }
