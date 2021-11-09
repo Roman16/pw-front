@@ -84,7 +84,7 @@ const services = [
                     fill="#6959AB"/>
             </g>
         </svg>,
-        link: '/zero-to-hero/campaign'
+        link: '/analytics/products/regular'
     },
     {
         title: 'Dayparting',
@@ -107,7 +107,7 @@ const services = [
                     stroke="#6959AB" stroke-width="2" stroke-linecap="round"/>
             </g>
         </svg>,
-        link: '/zero-to-hero/campaign'
+        link: '/ppc/dayparting'
     },
 
 ]
@@ -179,7 +179,7 @@ const Home = () => {
                     <Link
                         to={i.link}
                         className={'btn default'}
-                        disabled={(isAdmin || isAgencyUser) ? false : (i.key === 'dayparting' || i.key === 'analytics')}
+                        disabled={isAdmin  ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting' || i.key === 'analytics')}
                     >
                         Get Started
                     </Link>
