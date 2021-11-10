@@ -90,7 +90,7 @@ const Sidebar = () => {
                         <div/>
                     </div>
 
-                    <Link to="/" className="sidebar-logo">
+                    <Link to="/home" className="sidebar-logo">
                         <img className="logo" src={logo} alt="logo"/>
                     </Link>
                 </div>

@@ -2,8 +2,6 @@ import React, {useEffect} from "react"
 import successImage from '../../../../../assets/img/success-connect.svg'
 import './SuccessPage.less'
 import {history} from "../../../../../utils/history"
-import _ from "lodash"
-import {defaultImportStatus} from "../../../../../reducers/user.reducer"
 import {userService} from "../../../../../services/user.services"
 import {userActions} from "../../../../../actions/user.actions"
 import {useDispatch} from "react-redux"
@@ -33,7 +31,7 @@ const SuccessPage = () => {
             </p>
 
             <div className="actions">
-                <button className='btn default' onClick={() => history.push('/')}>Finish</button>
+                <button className='btn default' onClick={() => history.push('/home')}>Finish</button>
             </div>
         </div>
     )

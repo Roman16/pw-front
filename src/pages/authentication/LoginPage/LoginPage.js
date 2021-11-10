@@ -59,8 +59,7 @@ const LoginPage = (props) => {
                 } else if (!ppcConnected && mwsConnected) {
                     history.push('/connect-ppc-account')
                 } else {
-                    if (userFullInformation.user.is_agency_client) history.push('/ppc/optimization')
-                    else history.push('/account/settings')
+                    history.push('/home')
                 }
 
                 seo({title: 'Sponsoreds'})
@@ -92,7 +91,7 @@ const LoginPage = (props) => {
 
         if (localStorage.getItem('token')) {
             seo({title: 'Sponsoreds'})
-            history.push('/account/settings')
+            history.push('/home')
         }
     }, [])
 

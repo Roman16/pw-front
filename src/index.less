@@ -1202,6 +1202,12 @@ button.white[disabled] {
     &::placeholder {
       color: rgba(101, 106, 132, 0.4);
     }
+
+    &:disabled {
+      &:hover {
+        border-color: #C9CBD4 !important;
+      }
+    }
   }
 
   &.error-field {
@@ -1228,7 +1234,7 @@ button.white[disabled] {
 
       .ant-input:not(.ant-input-disabled),
       .ant-input {
-        border: 1px solid #6D6DF6;
+        border: 1px solid #6959AB;
       }
     }
   }

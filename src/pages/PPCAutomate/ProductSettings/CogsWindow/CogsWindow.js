@@ -297,6 +297,7 @@ const EditingCogsFields = ({onSubmit, list, index, onCancel}) => {
             onPanelChange={(value, mode) => {
                 setVisibleTimePicker(mode === 'time')
             }}
+            dropdownClassName={'dropdown-with-time'}
             renderExtraFooter={() => <>
                 <p onClick={() => setVisibleTimePicker(prevState => !prevState)}>Select {visibleTimePicker ? 'date' : 'time'}</p>
 

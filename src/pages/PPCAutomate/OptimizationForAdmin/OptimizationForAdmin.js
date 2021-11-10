@@ -224,9 +224,10 @@ const OptimizationForAdmin = () => {
 
     const dispatch = useDispatch()
 
-    const {productId, selectedProduct} = useSelector(state => ({
+    const {productId, selectedProduct, user} = useSelector(state => ({
         selectedProduct: state.products.selectedProduct,
         productId: state.products.selectedProduct.id || null,
+        user: state.user,
     }))
 
     const hasChanges = productInformationFromRequest !== null ? ((JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))) : false
@@ -582,7 +583,7 @@ const OptimizationForAdmin = () => {
                     onUpdateField={updateProductInformationHandler}
                 />
 
-                <CampaignsConfiguration
+                {user.user.is_agency_client && <CampaignsConfiguration
                     productId={productId}
                     optimizationJobId={productInformation.id}
                     isDisabled={productInformation.optimization_strategy == null}
@@ -590,7 +591,7 @@ const OptimizationForAdmin = () => {
                     loading={loadingCampaignSettings}
                     getSettings={getCampaignSettings}
                     onUpdate={updateCampaignSettingsHandler}
-                />
+                />}
 
                 <SaveChanges
                     product={productInformation}

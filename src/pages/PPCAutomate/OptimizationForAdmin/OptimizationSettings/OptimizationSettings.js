@@ -214,6 +214,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Overwrite Product Price</div>
 
                         <InputCurrency
+                            disabled={isDisabled}
                             value={product.default_variation && product.default_variation.item_price_from_user}
                             onChange={(value) => onUpdateField('item_price_from_user', value)}
                         />

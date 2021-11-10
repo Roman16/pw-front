@@ -10,7 +10,7 @@ const NotFound = () => (
             <h2>Oops!</h2>
             <p>We’re sorry but the page you requested was not found.</p>
             <div className="actions">
-                <Link to={'/account/settings'} className="btn default">
+                <Link to={'/home'} className="btn default">
                     Go Home
                 </Link>
 

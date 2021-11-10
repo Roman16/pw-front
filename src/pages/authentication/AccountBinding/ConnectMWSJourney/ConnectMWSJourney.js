@@ -1,8 +1,6 @@
 import React, {useState} from "react"
 import '../components/Steps.less'
-import {SVG} from "../../../../utils/icons"
 import {history} from "../../../../utils/history"
-import {Steps} from "antd"
 import ConnectMws from "../components/ConnectMws/ConnectMws"
 import SuccessPage from "../components/SuccessPage/SuccessPage"
 import {userService} from "../../../../services/user.services"
@@ -10,13 +8,6 @@ import {userActions} from "../../../../actions/user.actions"
 import {useDispatch, useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
 
-const {Step} = Steps
-
-const customDot = (dot) => (
-    <span>
-        {dot}
-    </span>
-)
 
 const ConnectMWSJourney = () => {
     const [currentStep, setCurrentStep] = useState(3)
