@@ -63,7 +63,13 @@ const PWWindows = ({pathname}) => {
                 onClose={closeWindowHandler}
             />}
 
-            {(!pathname.includes('/account') && !pathname.includes('/admin-panel') && !pathname.includes('/welcome') && !pathname.includes('/connect-amazon-account') && !pathname.includes('/connect-ppc-account') && !pathname.includes('/connect-mws-account')) &&
+            {(!pathname.includes('/account') &&
+                !pathname.includes('/admin-panel') &&
+                !pathname.includes('/home') &&
+                !pathname.includes('/welcome') &&
+                !pathname.includes('/connect-amazon-account') &&
+                !pathname.includes('/connect-ppc-account') &&
+                !pathname.includes('/connect-mws-account')) &&
             <OnlyDesktopWindow
                 visible={visibleWindow === 'onlyDesktop'}
             />}
