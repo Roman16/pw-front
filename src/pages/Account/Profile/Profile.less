@@ -17,7 +17,7 @@
 
     svg {
       height: 8.571428571428571rem;
-      width: initial;
+      width: 8.571428571428571rem;
     }
   }
 
@@ -61,6 +61,31 @@
 
       input {
         flex: 1;
+        height: 2.2857142857142856rem;
+      }
+
+      &.password {
+        position: relative;
+
+        .input-suffix {
+          position: absolute;
+          right: 1.2142857142857142rem;
+          margin: auto 0;
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+
+          svg {
+            height: 1rem;
+            width: initial;
+          }
+
+          &.opened {
+            svg {
+              height: 0.8571428571428571rem;
+            }
+          }
+        }
       }
     }
   }

@@ -7,6 +7,8 @@ import ApiConnection from '../ApiConnection/ApiConnection'
 import Subscription from '../Subscription/Subscription'
 import {icons} from "./icons"
 import Profile from "../Profile/Profile"
+import AccessSettings from "../AccessSettings/AccessSettings"
+import BillingHistory from "../BillingHistory/BillingHistory"
 
 const menu = [
     {
@@ -35,7 +37,7 @@ const menu = [
     },
 ]
 
-const Navigation = (props) => {
+const Navigation = () => {
     return (
         <div className={'account-page'}>
             <div className="account-navigation">
@@ -51,6 +53,8 @@ const Navigation = (props) => {
 
             <div className="account-content">
                 <Route exact path="/account/profile" component={Profile}/>
+                <Route exact path="/account/access-settings" component={AccessSettings}/>
+                <Route exact path="/account/billing-history" component={BillingHistory}/>
 
             </div>
 

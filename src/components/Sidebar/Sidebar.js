@@ -163,7 +163,7 @@ const Sidebar = () => {
                                 className="menu-link"
                                 activeClassName="active"
                                 exact
-                                to={`/account/settings`}
+                                to={`/account/profile`}
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>
