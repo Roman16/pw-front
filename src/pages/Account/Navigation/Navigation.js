@@ -1,80 +1,64 @@
-import React from "react";
-import {NavLink, Route} from "react-router-dom";
-import './Navigation.less';
+import React from "react"
+import {NavLink, Route} from "react-router-dom"
+import './Navigation.less'
 
-import Information from '../Information/Information';
-import ApiConnection from '../ApiConnection/ApiConnection';
-import Subscription from '../Subscription/Subscription';
+import Information from '../Information/Information'
+import ApiConnection from '../ApiConnection/ApiConnection'
+import Subscription from '../Subscription/Subscription'
+import {icons} from "./icons"
+import Profile from "../Profile/Profile"
+
+const menu = [
+    {
+        title: 'Profile',
+        link: 'profile',
+    },
+    {
+        title: 'Access Settings',
+        link: 'access-settings',
+    },
+    {
+        title: 'Billing Information',
+        link: 'billing-information',
+    },
+    {
+        title: 'Subscription',
+        link: 'subscription',
+    },
+    {
+        title: 'Billing History',
+        link: 'billing-history',
+    },
+    {
+        title: 'API Connection',
+        link: 'api-connection',
+    },
+]
 
 const Navigation = (props) => {
     return (
-        <>
+        <div className={'account-page'}>
             <div className="account-navigation">
-                <div className="container">
-                    <div className="cabinet-nav">
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/settings"
-                        >
-                            Account information
-                        </NavLink>
+                {menu.map(i => <NavLink
+                    activeClassName={'active'}
+                    exact
+                    to={`/account/${i.link}`}
+                >
+                    <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
+                    {i.title}
+                </NavLink>)}
+            </div>
 
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/subscription"
+            <div className="account-content">
+                <Route exact path="/account/profile" component={Profile}/>
 
-                        >
-                            Subscriptions & Billing
-                        </NavLink>
-
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/api-connections"
-                        >
-                            API Connections
-                        </NavLink>
-                    </div>
-
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-1`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/settings'}
-                    />
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-2`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/subscription'}
-                    />
-
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-3`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/api-connections'}
-                    />
-
-                    <div className="slider">
-                        <div className="bar"/>
-                    </div>
-                </div>
             </div>
 
             <Route exact path="/account/settings" component={Information}/>
             <Route exact path="/account/api-connections" component={ApiConnection}/>
             <Route exact path="/account/subscription" component={Subscription}/>
-        </>
-    );
-};
+        </div>
+    )
+}
 
-export default React.memo(Navigation);
+export default React.memo(Navigation)
