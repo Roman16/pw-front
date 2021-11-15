@@ -1,13 +1,14 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
-import {Input, Spin, Table} from "antd";
-import moment from "moment";
-import {numberMask} from "../../../utils/numberMask";
-import {useSelector} from "react-redux";
-import {SVG} from "../../../utils/icons";
+import React, {useState} from "react"
+import {Link} from "react-router-dom"
+import {Input, Spin} from "antd"
+import moment from "moment"
+import {numberMask} from "../../../utils/numberMask"
+import {useSelector} from "react-redux"
+import {SVG} from "../../../utils/icons"
+import CustomTable from "../../../components/Table/CustomTable"
 
 const CouponField = ({applyCoupon, setCoupon, product}) => {
-    const [openedField, openField] = useState(false);
+    const [openedField, openField] = useState(false)
 
     const submitCouponHandler = () => {
         if (!openedField) {
@@ -38,7 +39,7 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
             </div>
         )
     }
-};
+}
 
 const ProductPrice = ({product}) => {
     if (product.status === 'not_connect') {
@@ -80,7 +81,7 @@ const ProductPrice = ({product}) => {
     } else {
         return '---'
     }
-};
+}
 
 
 const SubscriptionPlan = ({
@@ -100,13 +101,13 @@ const SubscriptionPlan = ({
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
         sellerId: state.user.default_accounts.amazon_mws.seller_id,
         subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
-    }));
+    }))
 
-    const [coupon, setCoupon] = useState(null);
+    const [coupon, setCoupon] = useState(null)
 
 
     function handleSubscribe() {
-        onSubscribe({coupon, ...product});
+        onSubscribe({coupon, ...product})
     }
 
     const columns = [
@@ -120,6 +121,7 @@ const SubscriptionPlan = ({
             title: 'Status',
             dataIndex: 'stripe_status',
             key: 'stripe_status',
+            width: '200px',
             render: status => {
                 if (product.grace_period && product.grace_period.on_grace_period) {
                     return (<div className={'status-field'}>
@@ -154,21 +156,18 @@ const SubscriptionPlan = ({
                     </div>)
                 }
             },
-            width: '12.857142857142858rem'
         },
         {
             title: 'Next invoice date',
             dataIndex: 'next_invoice_at',
             key: 'next_invoice_at',
             render: date => date ? moment(date).format('MMM DD, YYYY') : '---',
-            width: '14.285714285714286rem'
         },
         {
             title: 'Price',
             dataIndex: 'next_charge_value',
             key: 'next_charge_value',
             render: (price, product) => <ProductPrice product={product}/>,
-            width: '14.285714285714286rem'
         },
         {
             title: 'Plan',
@@ -177,14 +176,12 @@ const SubscriptionPlan = ({
             render: (plan, product) => product.status === 'not_connect' ? <>---</> : <> ${product.flat_amount || 0} + {product.percent_amount || 0}%
                 last
                 30 <br/> days ad spend</>,
-            width: '14.285714285714286rem'
         },
         {
             title: 'Last 30-days Ad Spend',
             dataIndex: 'quantity',
             key: 'quantity',
             render: spend => spend ? <>${numberMask(spend, 2)}</> : '---',
-            width: '14.285714285714286rem'
         },
         {
             title: 'Coupon',
@@ -197,9 +194,9 @@ const SubscriptionPlan = ({
                 setCoupon={setCoupon}
                 product={product}
             />,
-            width: '14.285714285714286rem'
+            width: '170px'
         },
-    ];
+    ]
 
 
     const notConnectData = [{
@@ -209,13 +206,11 @@ const SubscriptionPlan = ({
 
     return (
         <div className="subscriptions">
-            <div className="description">
-                <h2>Subscription for Seller ID: {sellerId || ''}</h2>
-                <p>This is a prepaid plan, and you are paying for the next 30 days of using it.</p>
-                <p>To view your invoices, <a href="#user-cards">see billing info</a></p>
-            </div>
+            <h3>Subscription for Seller ID: {sellerId || ''}</h3>
+            <p>This is a prepaid plan, and you are paying for the next 30 days of using it. To view your invoices, <Link
+                to={'/account/billing-history'}>see billing history</Link></p>
 
-            <Table
+            <CustomTable
                 dataSource={
                     (!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
                         ...product,
@@ -232,12 +227,14 @@ const SubscriptionPlan = ({
                 {(!mwsConnected || !ppcConnected) && <button disabled className={'btn default'}>Subscribe</button>}
 
                 {mwsConnected && ppcConnected && !product.has_access && stripeId &&
-                <button className="btn default on-subscribe" onClick={handleSubscribe} disabled={disableButton || !subscribedProduct.eligible_for_subscription}>
-                    {disableButton ? <Spin/> : 'Subscribe'}
+                <button className="btn default on-subscribe" onClick={handleSubscribe}
+                        disabled={disableButton || !subscribedProduct.eligible_for_subscription}>
+                    Subscribe
+                    {disableButton && <Spin/>}
                 </button>}
 
                 {mwsConnected && ppcConnected && product.has_access && !product.cancelled && <>
-                    <button className={'btn white bord'} onClick={() => onOpenAccountWindow(product)}>
+                    <button className={'btn cancel'} onClick={() => onOpenAccountWindow(product)}>
                         Cancel Subscription
                     </button>
 
@@ -249,6 +246,7 @@ const SubscriptionPlan = ({
                     <button className={'btn default'} onClick={() => onOpenReactivateWindow(product)}>
                         Reactivate
                     </button>
+
                     <p>You will have access to the software until
                         the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.</p>
                 </>
@@ -257,6 +255,6 @@ const SubscriptionPlan = ({
             }
         </div>
     )
-};
+}
 
-export default SubscriptionPlan;
+export default SubscriptionPlan

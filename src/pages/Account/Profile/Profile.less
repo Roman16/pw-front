@@ -5,19 +5,20 @@
   display: flex;
   justify-content: center;
   padding: 2.142857142857143rem 1.4285714285714286rem;
+  margin: 0 0 10px 0;
 
   .container {
     flex: 1;
     max-width: 59.285714285714285rem;
     display: flex;
-  }
 
-  i {
-    margin: 0 2.857142857142857rem 0 0;
+    & > i {
+      margin: 0 2.857142857142857rem 0 0;
 
-    svg {
-      height: 8.571428571428571rem;
-      width: 8.571428571428571rem;
+      svg {
+        height: 8.571428571428571rem;
+        width: 8.571428571428571rem;
+      }
     }
   }
 
@@ -50,6 +51,7 @@
       align-items: center;
       justify-content: space-between;
       margin-top: 1.4285714285714286rem;
+      position: relative;
 
       label {
         width: 13.928571428571429rem;
@@ -64,29 +66,32 @@
         height: 2.2857142857142856rem;
       }
 
-      &.password {
-        position: relative;
+      .input-suffix {
+        position: absolute;
+        right: 1.2142857142857142rem;
+        margin: auto 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
 
-        .input-suffix {
-          position: absolute;
-          right: 1.2142857142857142rem;
-          margin: auto 0;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
+        svg {
+          height: 1rem;
+          width: initial;
+        }
 
+        &.opened {
           svg {
-            height: 1rem;
-            width: initial;
-          }
-
-          &.opened {
-            svg {
-              height: 0.8571428571428571rem;
-            }
+            height: 0.8571428571428571rem;
           }
         }
       }
+    }
+
+    .btn {
+      height: 32px;
+      font-size: 12px;
+      margin: 1.4285714285714286rem 0 0 13.92857143rem;
+      position: relative;
     }
   }
 }
