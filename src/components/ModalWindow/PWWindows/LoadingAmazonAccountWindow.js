@@ -85,7 +85,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                     }))
                 }
 
-                dispatch(userActions.getPersonalUserInfo)
+                userService.getUserInfo()
+                    .then(user => dispatch(userActions.setInformation(user)))
 
                 clearInterval(intervalId)
             }
