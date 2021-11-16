@@ -1,256 +1,189 @@
-@import "../../../style/variables.less";
+.account-page .subscriptions {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding: 2.142857142857143rem 0;
 
-.main-container .user-cabinet {
-  font-size: 0.714286rem; // 10px
+  h3 {
+    font-weight: 600;
+    font-size: 1.4285714285714286rem;
+    line-height: 1.7142857142857142rem;
+    color: #312C51;
+    margin: 0 0 0.7142857142857143rem 1.4285714285714286rem;
+  }
 
-  .subscriptions {
-    width: 100%;
-    height: max-content;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    border-radius: 0 0 4px 4px;
-    padding: 2.857142857142857rem 2.5em;
-    background-color: @white;
-    margin-bottom: 10px;
-    box-shadow: @default-section-shadow;
-    z-index: 5;
-    position: relative;
+  p {
+    font-size: 1rem;
+    line-height: 1.2142857142857142rem;
+    color: #5B586F;
+    margin: 0 0 1.4285714285714286rem 1.4285714285714286rem;
 
-    .description {
-      margin-bottom: 1.2142857142857142rem;
+    a {
+      color: #6959AB;
 
-      h2 {
-        font-size: 1.4285714285714286rem;
-        color: #38454F;
-        margin-bottom: 1.7142857142857142rem;
-        font-weight: 600;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .custom-table {
+    border-top: 0.5px solid #C9CBD4;
+    border-bottom: 0.5px solid #C9CBD4;
+    margin-bottom: 1.4285714285714286rem;
+
+    .load-data {
+      height: initial;
+      top: 3.5714285714285716rem;
+      bottom: 0;
+    }
+
+    .table-head {
+      min-height: 3.5714285714285716rem;
+      border-bottom: 2px solid #C9CBD4;
+      align-items: initial;
+
+      .th {
+        border-left: 0.5px solid #C9CBD4;
+        padding: 5px 12px;
+
+        .title {
+          font-weight: 600;
+          font-size: 1.1428571428571428rem;
+          line-height: 1.4285714285714286rem;
+          color: #312C51;
+        }
+
+        &:first-child {
+          border: 0;
+          padding-left: 1.4285714285714286rem;
+        }
+      }
+    }
+
+    .table-body {
+      min-height: 4.285714285714286rem;
+
+      .table-body__row {
+        &:hover {
+          background: #fff;
+        }
       }
 
-      p {
-        font-size: 0.8571428571428571rem;
-        color: #343C5A;
-        margin-bottom: 0;
+      .table-body__field {
+        font-size: 1.1428571428571428rem;
+        line-height: 1.4285714285714286rem;
+        color: #5B586F;
+        align-items: flex-start;
+        padding: 1.0714285714285714rem 0.8571428571428571rem;
+        border-left: 0.5px solid #C9CBD4;
+
+        &:first-child {
+          border: 0;
+          padding-left: 1.4285714285714286rem;
+        }
 
         a {
-          color: #ff5256;
-        }
-      }
-    }
-
-    .ant-table-wrapper {
-      font-weight: 600;
-
-      .ant-table-thead > tr > th {
-        background: #F5F5FF;
-        border-top: 1px solid #C9CBD4;
-        border-bottom: 1px solid #C9CBD4;
-        border-radius: 0;
-        font-size: 1rem;
-        font-weight: 600;
-      }
-
-      .ant-table-tbody > tr > td {
-        border-bottom: 1px solid #C9CBD4;
-        border-radius: 0;
-        font-size: 1rem;
-      }
-
-      .ant-table-tbody > tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected) > td {
-        background: initial;
-      }
-
-      .price {
-        color: #343C5A;
-        font-size: 1rem;
-
-        .prev-value {
-          color: #343C5A;
-          text-decoration: line-through;
+          color: #6959AB;
         }
 
-        .new-value {
-          color: #7DD4A1;
-          margin: 0 0 0 10px;
-        }
-      }
+        .price {
+          .prev-value {
+            font-size: 1rem;
+            line-height: 1.2142857142857142rem;
+            text-decoration-line: line-through;
+            color: #5B586F;
+            margin: 0 4px 0 0;
+            display: inline-block;
+          }
 
-      a {
-        font-size: 0.8571428571428571rem;
-        text-decoration-line: underline;
-        color: #FF5256;
-      }
-
-      .status-field {
-        font-size: 1rem;
-        text-transform: capitalize;
-
-        .error-status {
-          color: #EC7F5C;
+          .new-value {
+            font-size: 1.1428571428571428rem;
+            line-height: 1.4285714285714286rem;
+            color: #7FD3A1;
+          }
 
           a {
-            color: #EC7F5C;
-            text-decoration: underline;
-          }
-        }
+            font-size: 0.8571428571428571rem;
+            color: #6959AB;
 
-        .success-status {
-          color: #7DD4A1;
-        }
-
-        .progress-status {
-          color: #6D6DF6;
-        }
-      }
-
-      .coupon-fields {
-        position: relative;
-        width: 9.357142857142858rem;
-        min-width: 9.357142857142858rem;
-
-        .ant-input {
-          width: 9.357142857142858rem;
-          height: 2.2857142857142856rem;
-          box-sizing: border-box;
-        }
-
-        .btn {
-          position: absolute;
-          right: 0;
-          top: 0;
-
-          svg {
-            width: 1rem;
-            height: 1rem;
-            min-width: 1rem;
-            line-height: 2.2857142857142856rem;
-
-            use {
-              stroke: #fff;
+            &:hover {
+              text-decoration: underline;
             }
           }
+        }
 
-          &.short {
-            width: 2.2857142857142856rem;
-            padding: 0;
-            transition: width .1s;
+        .coupon-fields {
+          position: relative;
+
+          input {
+            height: 2.2857142857142856rem;
+          }
+
+          .btn {
+            width: 100%;
+            height: 2.2857142857142856rem;
+            position: absolute;
+            right: 0;
+            top: 0;
 
             svg {
-              margin: 0;
+              stroke: #fff;
             }
 
-            span {
-              display: none;
+            &.short {
+              width: 2.4285714285714284rem;
+              padding: 0;
+              transition: width .1s;
+
+              svg {
+                margin: 0;
+              }
+
+              span {
+                display: none;
+              }
             }
           }
-        }
 
-        .coupon-name {
-          display: block;
-          color: #6959AB;
-          margin: 3px 0 0 0;
+          .coupon-name {
+            font-size: 0.8571428571428571rem;
+            color: #312C51;
+            margin: 2px 0 0 0;
 
-          b {
-            margin: 0 0 0 5px;
-          }
-        }
-      }
-    }
-
-
-
-    .subscription-actions {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 1.4285714285714286rem;
-
-      .btn {
-        margin: 0 20px 0 0;
-
-        .ant-spin {
-          height: 2.2857142857142856rem;
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      .white {
-        margin-right: 2.142857142857143rem;
-        background: #fff;
-      }
-
-      p {
-        font-size: 0.8571428571428571rem;
-        color: #656A84;
-        margin: 0;
-      }
-    }
-
-
-    .reactivate {
-      width: 100%;
-      min-height: 4.8em;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: 0.8em;
-      padding: 5px 1.6em 5px 2em;
-      background-color: rgba(189, 189, 189, 0.2);
-      margin: 0 0 20px 0;
-
-      .reactivate-title {
-        font-size: 1.1429rem; // 16px
-        color: #343C5A;
-        margin: 0;
-      }
-
-      .reactivate-text {
-        font-size: 1.0714285714285714rem; // 15px
-        color: @third-default-dark;
-        margin: 0;
-        padding: 0 10px;
-
-        .reactivate-data {
-          font-weight: 600;
-        }
-      }
-
-      .reactivate-btn {
-        font-size: 1.1428571428571428rem;
-        width: 13em;
-        height: 2em;
-        position: relative;
-        color: @white;
-
-        .reactivate-img {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          right: 1em;
-
-          display: flex;
-          align-items: center;
-
-          svg {
-            width: 1.2857142857142858rem;
+            b {
+              margin: 0 0 0 3px;
+            }
           }
         }
       }
     }
 
   }
-}
 
-.reactivate-account {
-  .actions {
+  .subscription-actions {
+    padding: 0 0 0 1.4285714285714286rem;
     display: flex;
-    justify-content: center;
-    height: 32px;
+    align-items: center;
 
-    .btn:last-child {
-      margin: 0 0 0 15px;
+    .btn {
+      height: 3.4285714285714284rem;
+      font-size: 1.1428571428571428rem;
+
+      &.cancel {
+        background: #F3F3F3;
+        color: #5B586F;
+
+        &:hover {
+          background: #eaeaea;
+        }
+      }
+    }
+
+    p {
+      margin: 0 0 0 1.4285714285714286rem;
+      font-size: 0.8571428571428571rem;
+      color: #5B586F;
     }
   }
 }

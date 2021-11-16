@@ -5,7 +5,6 @@ import './Billing.less';
 import './Windows/Window.less';
 import AccountBilling from "./AccountBilling";
 import CompanyDetails from "./CompanyDetails";
-import BillingHistory from "./BillingHistory";
 import ModalWindow from "../../../components/ModalWindow/ModalWindow";
 import UpdateCompanyInformationWindow from "./Windows/UpdateCompanyInformationWindow";
 import ConfirmPaymentWindow from './Windows/ConfirmPaymentWindow';
@@ -208,12 +207,12 @@ const Billing = () => {
                 onOpenWindow={handleOpenWindow}
             />
 
-            <BillingHistory
-                historyList={paymentHistory}
-                paginationParams={paginationParams}
-                handlePaginationChange={handlePaginationChange}
-                processing={historyFetching}
-            />
+            {/*<BillingHistory*/}
+            {/*    historyList={paymentHistory}*/}
+            {/*    paginationParams={paginationParams}*/}
+            {/*    handlePaginationChange={handlePaginationChange}*/}
+            {/*    processing={historyFetching}*/}
+            {/*/>*/}
 
             <Drawer
                 placement="right"

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Drawer, Modal} from 'antd'
+import {Modal} from 'antd'
 
 import SubscriptionPlan from './SubscriptionPlan'
 import CancelAccountWindow from './DrawerWindows/CancelAccountWindow'
@@ -12,7 +12,6 @@ import {userActions} from "../../../actions/user.actions"
 import {subscriptionProducts} from "../../../constans/subscription.products.name"
 import {notification} from "../../../components/Notification"
 import {history} from "../../../utils/history"
-import Billing from "../Billing/Billing"
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
@@ -226,8 +225,6 @@ const Subscription = () => {
                     stripeId={stripeId}
                 />
             ))}
-
-            <Billing/>
 
             <Modal
                 className="cancel-account reactivate-account"
