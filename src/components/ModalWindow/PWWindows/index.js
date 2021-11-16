@@ -32,7 +32,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('onlyDesktop')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
-        } else if (!user.user.free_trial_available && !subscribedProduct.has_access && !subscribedProduct.has_pending_payment_tx) {
+        } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
         } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount')
