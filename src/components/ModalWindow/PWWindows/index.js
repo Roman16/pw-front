@@ -4,6 +4,8 @@ import SubscriptionNotificationWindow from "./SubscriptionNotificationWindow"
 import LoadingAmazonAccount from "./LoadingAmazonAccountWindow"
 import ReportsChangesCountWindow from "./ReportsChangesCountWindow"
 import {useSelector} from "react-redux"
+import OnlyDesktopWindow from "./OnlyDesktopWindow"
+import {mobileCheck} from "../../../utils/mobileCheck"
 
 const PWWindows = ({pathname}) => {
     const [visibleWindow, setVisibleWindow] = useState(null)
@@ -26,9 +28,11 @@ const PWWindows = ({pathname}) => {
             (pathname.includes('/ppc/product-settings') && !importStatus.products_info.required_parts_ready) ||
             (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
+        } else if (mobileCheck()) {
+            setVisibleWindow('onlyDesktop')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
-        } else if (!user.user.free_trial_available && !subscribedProduct.has_access && !subscribedProduct.has_pending_payment_tx) {
+        } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
         } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount')
@@ -57,6 +61,17 @@ const PWWindows = ({pathname}) => {
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <StartFreeTrialWindow
                 visible={visibleWindow === 'freeTrial'}
                 onClose={closeWindowHandler}
+            />}
+
+            {(!pathname.includes('/account') &&
+                !pathname.includes('/admin-panel') &&
+                !pathname.includes('/home') &&
+                !pathname.includes('/welcome') &&
+                !pathname.includes('/connect-amazon-account') &&
+                !pathname.includes('/connect-ppc-account') &&
+                !pathname.includes('/connect-mws-account')) &&
+            <OnlyDesktopWindow
+                visible={visibleWindow === 'onlyDesktop'}
             />}
 
             {/*{pathname.includes('/ppc/') && <SmallSpend*/}
