@@ -11,6 +11,7 @@ const StepActions = ({product, currentStep, createProcessing, disabled, onChange
                 product={product}
                 onSelect={() => {}}
                 onSelectParent={() => {}}
+                disabled={true}
             />}
 
             {currentStep > 0 && <button

@@ -15,7 +15,8 @@ const ProductItem = ({
                          onOpenVariations,
                          showChildCount,
                          selectedProducts,
-                         fetchVariationsProcessing
+                         fetchVariationsProcessing,
+                         disabled
                      }) => {
 
     const isIneligible = product.eligibility_status !== undefined && product.variations ? (product.variations.every(i => i.eligibility_status === 'INELIGIBLE') || product.variations.length === 0) : product.eligibility_status === 'INELIGIBLE'
@@ -70,23 +71,23 @@ const ProductItem = ({
                         <div className="asin"><b>ASIN:</b> {product.asin}</div>
                         <div className="sku"><b>SKU:</b> {product.sku}</div>
 
-                        {showChildCount && product.variations &&
+                        {!disabled && showChildCount && product.variations &&
                         <div className="variations-count">
                             This Product has <b>{product.variations.length}</b> child ASIN(s)
                         </div>}
                     </div>
                 </div>
 
-                {product.variations && product.variations.find(i => i.id === selectedProducts[0].id) &&
-                <div className="variation-selected">
-                    <InformationTooltip
-                        type={'custom'}
-                        overlayClassName={'ineligible-description'}
-                        description={'You have selected a variation of this parent product.'}
-                    >
-                        <div className={'dot'}/>
-                    </InformationTooltip>
-                </div>}
+                {/*{!disabled && product.variations && product.variations.find(i => i.id === selectedProducts[0].id) &&*/}
+                {/*<div className="variation-selected">*/}
+                {/*    <InformationTooltip*/}
+                {/*        type={'custom'}*/}
+                {/*        overlayClassName={'ineligible-description'}*/}
+                {/*        description={'You have selected a variation of this parent product.'}*/}
+                {/*    >*/}
+                {/*        <div className={'dot'}/>*/}
+                {/*    </InformationTooltip>*/}
+                {/*</div>}*/}
 
                 {product.variations && <button
                     onClick={e => {
