@@ -1,27 +1,40 @@
 import React, {useState} from "react"
 import moment from "moment"
-import {Dropdown, Menu} from "antd"
+import {Dropdown, Menu, Popover, Spin} from "antd"
 import {PlusIcon} from "../ApiConnection/ConnectedAccounts"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
-const AddedCards = ({cards, activeCardIndex, onDelete, onSetDefault, onSetActive}) => {
+const AddedCards = ({cards, activeCardIndex, defaultProcessing, deleteProcessing, onDelete, onSetDefault, onSetActive}) => {
     const [visibleDropdown, setVisibleDropdown] = useState(false)
+
+    const updateCard = (key, id) => (e) => {
+        e.stopPropagation()
+
+        if (key === 'delete') onDelete(id)
+        else onSetDefault(id)
+
+        setVisibleDropdown(false)
+    }
 
     return (<ul>
         {cards.map((card, index) => <li className={activeCardIndex === index && 'active'}
                                         onClick={() => onSetActive(index)}>
             <div className="row">
                 {card.brand === 'visa' ? <VisaLogo/> : <MasterLogo/>}
-                {card.default && <p className={'default'}>Default</p>}
+                {(defaultProcessing === card.id || deleteProcessing === card.id) ?
+                    <Spin size={'small'}/> : card.default && <IsDefaultIcon/>}
+
                 <Dropdown
                     visible={visibleDropdown === index}
                     onClick={e => e.stopPropagation()}
                     onVisibleChange={e => e ? setVisibleDropdown(index) : setVisibleDropdown(false)}
-                    overlay={
-                        <Menu>
-                            {!card.default &&
-                            <Menu.Item key="0" onClick={() => onSetDefault(index)}>Set as default</Menu.Item>}
-                            <Menu.Item key="2" onClick={() => onDelete(index)}>Delete</Menu.Item>
-                        </Menu>}
+                    overlayClassName={'card-menu'}
+                    placement={'bottomRight'}
+                    getPopupContainer={(node) => node.parentNode.parentNode.parentNode}
+                    overlay={<>
+                        {!card.default && <div onClick={updateCard('default', card.id)}>Set as default</div>}
+                        <div onClick={updateCard('delete', card.id)}>Delete</div>
+                    </>}
                     trigger={['click']}
                 >
                     <div className="ant-dropdown-link">
@@ -39,12 +52,25 @@ const AddedCards = ({cards, activeCardIndex, onDelete, onSetDefault, onSetActive
             </div>
         </li>)}
 
-        <li className={'add-new'}>
+        <li
+            className={`add-new ${activeCardIndex === cards.length ? 'active' : ''}`}
+            onClick={() => onSetActive(cards.length)}
+        >
             <PlusIcon/>
             Add Payment Method
         </li>
     </ul>)
 }
+
+const IsDefaultIcon = () => <InformationTooltip type={'custom'} description={'Default card'}>
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M8.75997 0.326736C9.2103 -0.108912 9.92498 -0.108912 10.3753 0.326736L11.744 1.65085C12.0016 1.89997 12.3596 2.01632 12.7144 1.96614L14.6 1.69943C15.2204 1.61168 15.7986 2.03176 15.9069 2.6489L16.2359 4.52465C16.2978 4.87756 16.5191 5.18216 16.8356 5.35009L18.5179 6.24266C19.0714 6.53632 19.2922 7.21603 19.017 7.77894L18.1807 9.48985C18.0233 9.81175 18.0233 10.1882 18.1807 10.5101L19.017 12.2211C19.2922 12.784 19.0714 13.4637 18.5179 13.7573L16.8356 14.6499C16.5191 14.8178 16.2978 15.1224 16.2359 15.4753L15.9069 17.3511C15.7986 17.9682 15.2204 18.3883 14.6 18.3006L12.7144 18.0339C12.3596 17.9837 12.0016 18.1 11.744 18.3491L10.3753 19.6733C9.92498 20.1089 9.2103 20.1089 8.75997 19.6733L7.39124 18.3491C7.13372 18.1 6.77565 17.9837 6.42088 18.0339L4.53526 18.3006C3.91487 18.3883 3.33668 17.9682 3.22842 17.3511L2.89939 15.4753C2.83748 15.1224 2.61618 14.8178 2.29967 14.6499L0.617405 13.7573C0.0639196 13.4637 -0.156929 12.784 0.118238 12.2211L0.954584 10.5101C1.11194 10.1882 1.11194 9.81175 0.954583 9.48985L0.118237 7.77894C-0.15693 7.21603 0.0639208 6.53632 0.617406 6.24266L2.29968 5.35009C2.61618 5.18216 2.83748 4.87756 2.89939 4.52465L3.22842 2.6489C3.33668 2.03176 3.91487 1.61168 4.53526 1.69943L6.42088 1.96614C6.77565 2.01632 7.13372 1.89997 7.39124 1.65085L8.75997 0.326736Z"
+            fill="#6959AB"/>
+        <path d="M5.26953 10.6451L8.05743 13.4846L13.6332 7.0957" stroke="white" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round"/>
+    </svg>
+</InformationTooltip>
 
 const VisaLogo = () => <i className={'visa'}>
     <svg width="55" height="18" viewBox="0 0 55 18" fill="none" xmlns="http://www.w3.org/2000/svg">

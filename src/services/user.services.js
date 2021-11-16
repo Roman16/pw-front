@@ -159,8 +159,8 @@ function updatePaymentMethod(card) {
     return api('post', userUrls.updatePaymentMethod(data.id), data)
 }
 
-function setDefaultPaymentMethod(id) {
-    return api('post', userUrls.setDefaultPaymentMethod(id))
+function setDefaultPaymentMethod(id, cancelToken) {
+    return api('post', userUrls.setDefaultPaymentMethod(id), undefined, undefined, cancelToken)
 }
 
 function deletePaymentMethod(id) {
