@@ -70,6 +70,8 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
+        // window.Intercom('update', {app_id: "hkyfju3m", name: user.user.name})
+
         if (user.user.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
 
