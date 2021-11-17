@@ -1,7 +1,7 @@
 import React from "react"
 import USAFlag from '../../../assets/img/icons/us-flag.png'
 import {Spin} from "antd"
-
+import sectionIcon from '../../../assets/img/account/api-connection-icon.svg'
 
 const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onReconnect}) => {
 
@@ -68,14 +68,20 @@ const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onR
     return (
         <section className={`seller-account`}>
             <div className="container">
-                <SectionIcon/>
+                <img src={sectionIcon} alt=""/>
 
                 <div className="col">
-                    <h3>Seller Name: {sellerName}<img src={USAFlag} alt=""/></h3>
-                    <p>Here you can see current status of MWS Authorization and Advertising API. </p>
+                    <div className="description-row">
+                        <img src={sectionIcon} alt="" className={'icon'}/>
+
+                        <div className="section-description">
+                            <h3>Seller Name: <span>{sellerName}<img src={USAFlag} alt=""/></span></h3>
+                            <p>Here you can see current status of MWS Authorization and Advertising API. </p>
+                        </div>
+                    </div>
 
                     <div className="row">
-                        <h4>MWS Authorization</h4>
+                        <h4>MWS <br/> Authorization</h4>
 
                         <div className={`account-status`}>
                             <MWSStatus/>
@@ -90,7 +96,7 @@ const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onR
                     </div>
 
                     <div className="row">
-                        <h4>Advertising API</h4>
+                        <h4>Advertising <br/> API</h4>
 
                         <div className={`account-status`}>
                             <PPCStatus/>

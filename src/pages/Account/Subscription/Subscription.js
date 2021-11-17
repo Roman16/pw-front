@@ -112,8 +112,7 @@ const Subscription = () => {
             }
         } else {
             changeButton(false)
-            history.push('/account/subscription#user-cards')
-            notification.error({title: 'Add card!'})
+            notification.error({title: 'No payment method found. Please add payment method at Billing Information'})
         }
     }
 

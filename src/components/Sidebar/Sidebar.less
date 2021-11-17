@@ -358,6 +358,7 @@
     align-items: center;
     cursor: pointer;
     transition: .2s ease-in-out;
+    overflow: hidden;
 
     * {
       cursor: pointer;
@@ -765,12 +766,17 @@
 
       .log-out-item {
         position: absolute;
-        bottom: -110px;
+        bottom: -180px;
         display: flex;
         justify-content: center;
 
         a {
           width: max-content;
+          padding: 0;
+
+          &:hover {
+            background: none;
+          }
 
           .link-icon {
             display: none;
@@ -783,10 +789,21 @@
       }
     }
 
+    .intercom-chat {
+      height: 56px;
+      width: 90%;
+      max-width: 300px;
+      margin: 0 auto;
+      font-size: 16px;
+      line-height: 20px;
+      justify-content: center;
+      order: 2;
+    }
+
     &.closed {
       height: 60px;
 
-      .current-marketplace, nav, .social-links {
+      .current-marketplace, nav, .social-links, .intercom-chat {
         display: none;
       }
     }
@@ -937,22 +954,18 @@
   display: none !important;
 }
 
-.intercom-app {
-  left: 6.571428571428571rem !important;
-  bottom: 178px !important;
-}
 
 .intercom-app {
   position: fixed !important;
   left: 0 !important;
-  z-index: 1111 !important;
+  z-index: 111111 !important;
 
   .intercom-messenger-frame {
     right: auto;
     left: 0 !important;
     bottom: 178px !important;
     transition: 0.3s ease-in-out !important;
-    margin: 0 0 0 6.571428571428571rem !important;
+    margin: 0 0 0 5.857142857142857rem !important;
   }
 
   &.open {
@@ -960,5 +973,15 @@
       margin-left: 15.714285714285714rem !important;
     }
   }
+
+  @media (max-width: 850px) {
+    .intercom-messenger-frame {
+      z-index: 1111111111111;
+      margin: 0 !important;
+      bottom: 0 !important;
+    }
+  }
 }
+
+
 

@@ -179,8 +179,7 @@ const Sidebar = () => {
                             <NavLink
                                 className="menu-link"
                                 activeClassName="active"
-                                exact
-                                to={`/account/profile`}
+                                to={`/account`}
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>

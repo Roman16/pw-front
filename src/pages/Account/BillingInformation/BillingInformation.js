@@ -70,6 +70,9 @@ const BillingInformation = () => {
                     return i
                 })])
             }
+
+            if (_.findIndex(addedCardsList, {id: id}) === activeCardIndex) setActiveCardIndex(0)
+
         } catch (e) {
             console.log(e)
         }
@@ -156,9 +159,11 @@ const BillingInformation = () => {
                 card={addedCardsList[activeCardIndex] ? {...addedCardsList[activeCardIndex]} : newCardValue}
                 isNewCard={addedCardsList.length === activeCardIndex}
                 updateProcessing={updateProcessing}
+                deleteProcessing={deleteProcessing}
 
                 onAddCard={addNewCardHandler}
                 onUpdateCard={updateCardHandler}
+                onDelete={deleteCardHandler}
             />
 
             {fetchingProcessing && <RouteLoader/>}

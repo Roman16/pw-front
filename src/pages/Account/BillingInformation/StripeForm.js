@@ -14,6 +14,7 @@ import {SVG} from "../../../utils/icons"
 import moment from 'moment'
 import {expiresFormat} from "../../../utils/expiresFormat"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import sectionIcon from "../../../assets/img/account/profile-icon.svg"
 
 const {Option} = Select
 
@@ -209,18 +210,22 @@ class StripeForm extends Component {
     }
 
     render() {
-        const {card, isNewCard, updateProcessing} = this.props,
+        const {card, isNewCard, updateProcessing, onDelete, deleteProcessing} = this.props,
             {defaultCard, autofocus, expiry, card_number, cvc, paymentDetails, localProcessing, errorFields} = this.state
 
         return (<>
             <div className="container">
-                <i>
-                    <img src={cardInfoIcon} alt=""/>
-                </i>
+                <img src={cardInfoIcon} alt=""/>
 
                 <div className="col">
-                    <h3>Credit Card information</h3>
-                    <p>You can update your credit card information here.</p>
+                    <div className="description-row">
+                        <img src={cardInfoIcon} alt=""/>
+
+                        <div className="section-description">
+                            <h3>Credit Card information</h3>
+                            <p>You can update your credit card information here.</p>
+                        </div>
+                    </div>
 
                     <div
                         className={`form-group ${!isNewCard ? 'disabled' : ''} ${errorFields.includes('card_number') ? 'error-field' : ''}`}>
@@ -320,13 +325,17 @@ class StripeForm extends Component {
             </div>
 
             <div className="container">
-                <i>
-                    <img src={billingInfoIcon} alt=""/>
-                </i>
+                <img src={billingInfoIcon} alt=""/>
 
                 <div className="col">
-                    <h3>Billing Information</h3>
-                    <p>You can update your billing information here.</p>
+                    <div className="description-row">
+                        <img src={billingInfoIcon} alt=""/>
+
+                        <div className="section-description">
+                            <h3>Billing Information</h3>
+                            <p>You can update your billing information here.</p>
+                        </div>
+                    </div>
 
                     <div className="form-group">
                         <label htmlFor="">Full Name</label>
@@ -350,20 +359,23 @@ class StripeForm extends Component {
                     </div>
                     <div className="form-group">
                         <label htmlFor="">City / Zip Code</label>
-                        <Input
-                            type="text"
-                            placeholder={'City'}
-                            value={paymentDetails.city}
-                            name={'city'}
-                            onChange={this.handleChangeInput}
-                        />
-                        <Input
-                            type="text"
-                            placeholder={'Zip Code'}
-                            value={paymentDetails.postal_code}
-                            name={'postal_code'}
-                            onChange={this.handleChangeInput}
-                        />
+
+                        <div className="inputs-row">
+                            <Input
+                                type="text"
+                                placeholder={'City'}
+                                value={paymentDetails.city}
+                                name={'city'}
+                                onChange={this.handleChangeInput}
+                            />
+                            <Input
+                                type="text"
+                                placeholder={'Zip Code'}
+                                value={paymentDetails.postal_code}
+                                name={'postal_code'}
+                                onChange={this.handleChangeInput}
+                            />
+                        </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="">Country</label>
@@ -399,8 +411,13 @@ class StripeForm extends Component {
                             Save Changes
 
                             {(updateProcessing || localProcessing) && <Spin size={'small'}/>}
-                        </button>
-                    }
+                        </button>}
+
+                    {!isNewCard && <button disabled={deleteProcessing} className={'btn transparent delete-card'}
+                                           onClick={() => onDelete(card.id)}>
+                        Delete this payment method
+                        {deleteProcessing && <Spin size={'small'}/>}
+                    </button>}
                 </div>
             </div>
         </>)

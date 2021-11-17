@@ -12,13 +12,12 @@
     max-width: 59.285714285714285rem;
     display: flex;
 
-    & > i {
-      margin: 0 2.857142857142857rem 0 0;
 
-      svg {
-        height: 8.571428571428571rem;
-        width: 8.571428571428571rem;
-      }
+    & > img {
+      height: 8.571428571428571rem;
+      width: 8.571428571428571rem;
+      min-width: 8.571428571428571rem;
+      margin: 0 2.857142857142857rem 0 0;
     }
   }
 
@@ -28,6 +27,17 @@
     flex-direction: column;
     padding: 0 0 0 2.857142857142857rem;
     border-left: 1px solid #F3F3F3;
+
+    .row {
+      img {
+        display: none;
+      }
+
+      .section-description {
+        display: flex;
+        flex-direction: column;
+      }
+    }
 
     h3 {
       font-weight: 600;
@@ -64,6 +74,7 @@
       input {
         flex: 1;
         height: 2.2857142857142856rem;
+        min-height: 2.2857142857142856rem;
       }
 
       .input-suffix {
@@ -92,6 +103,102 @@
       font-size: 12px;
       margin: 1.4285714285714286rem 0 0 13.92857143rem;
       position: relative;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .col {
+      .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+
+        label {
+          width: max-content;
+          margin: 0 0 10px;
+        }
+
+        input {
+          width: 100%;
+        }
+
+        .input-suffix {
+          bottom: 7px;
+        }
+      }
+
+      .btn {
+        margin: 1.42857143rem auto 0;
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    padding: 20px 20px 30px;
+
+    .container {
+      max-width: 100%;
+
+      & > img {
+        display: none;
+      }
+    }
+
+    .col {
+      border: 0;
+      padding: 0;
+
+      .row {
+        display: flex;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #F3F3F3;
+
+        img {
+          min-width: 64px;
+          width: 64px;
+          height: 64px;
+          display: block;
+          margin: 0 12px 0 0;
+        }
+      }
+
+      h3 {
+        font-size: 16px;
+        line-height: 20px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        font-size: 12px;
+        line-height: 15px;
+      }
+
+      .form-group {
+        label {
+          font-size: 14px;
+          line-height: 17px;
+          margin-bottom: 10px;
+        }
+
+        input {
+          height: 32px;
+          min-height: 32px;
+          font-size: 14px;
+        }
+
+        .input-suffix {
+          bottom: 9px;
+
+          svg {
+            height: 14px;
+          }
+        }
+      }
+
+      .btn {
+        width: 100%;
+        height: 42px;
+        font-size: 14px;
+      }
     }
   }
 }

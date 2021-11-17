@@ -21,8 +21,8 @@
     font-size: 1rem;
     line-height: 1.2142857142857142rem;
     color: #5B586F;
-    padding: 0 0 1.4285714285714286rem 1.4285714285714286rem;
-    margin: 0;
+    padding: 0 0 0 1.4285714285714286rem;
+    margin: 0 0 01.4285714285714286rem;
   }
 
   .table-block {
@@ -36,9 +36,9 @@
         min-height: 3.5714285714285716rem;
         border-top: 0.5px solid #C9CBD4;
         border-bottom: 2px solid #C9CBD4;
+        align-items: initial;
 
         .th {
-          height: 100%;
           border-left: 0.5px solid #C9CBD4;
           padding: 0 0 0 0.8571428571428571rem;
 
@@ -144,6 +144,28 @@
     .pw-pagination {
       border-top: 0.5px solid #C9CBD4;
       padding-left: 1.4285714285714286rem;
+    }
+  }
+
+  @media (max-width: 850px) {
+    h3 {
+      font-size: 18px;
+      line-height: 22px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 12px;
+      line-height: 15px;
+      margin-bottom: 20px;
+    }
+    .pw-pagination {
+      .page-size {
+        margin: 0 auto 0 0;
+        label {
+          display: none;
+        }
+      }
     }
   }
 }

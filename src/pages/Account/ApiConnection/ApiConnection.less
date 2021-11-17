@@ -133,13 +133,11 @@
     max-width: 59.285714285714285rem;
     display: flex;
 
-    & > i {
+    & > img {
+      height: 8.571428571428571rem;
+      width: 8.571428571428571rem;
+      min-width: 8.571428571428571rem;
       margin: 0 2.857142857142857rem 0 0;
-
-      svg {
-        height: 8.571428571428571rem;
-        width: 8.571428571428571rem;
-      }
     }
   }
 
@@ -149,6 +147,17 @@
     flex-direction: column;
     padding: 0 0 0 2.857142857142857rem;
     border-left: 1px solid #F3F3F3;
+
+    .description-row {
+      .icon {
+        display: none;
+      }
+
+      .section-description {
+        display: flex;
+        flex-direction: column;
+      }
+    }
 
     h3 {
       font-weight: 600;
@@ -187,6 +196,10 @@
         line-height: 1.2142857142857142rem;
         color: #5B586F;
         margin: 0;
+
+        br {
+          display: none;
+        }
       }
 
       .account-status {
@@ -205,6 +218,125 @@
         min-width: 100px;
         height: 2.2857142857142856rem;
         font-size: 0.8571428571428571rem;
+      }
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .col {
+      .row {
+        flex-wrap: wrap;
+
+        h4 {
+          flex: 1;
+        }
+
+        .account-status {
+          width: max-content;
+          margin: 0;
+        }
+
+        .account-action {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          margin: 20px 0;
+
+          .btn {
+            width: 140px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    ul {
+      justify-content: center;
+
+      li {
+        margin: 0;
+
+        &.disabled {
+          display: none;
+        }
+      }
+    }
+
+    .seller-account {
+      .container {
+        max-width: 100%;
+
+        & > img {
+          display: none;
+        }
+      }
+
+      .col {
+        width: 100%;
+        padding: 0;
+        border: 0;
+
+        .description-row {
+          display: flex;
+          align-items: flex-start;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #F3F3F3;
+
+          .icon {
+            width: 64px;
+            min-width: 64px;
+            height: 64px;
+            display: block;
+            margin: 0 12px 0 0;
+          }
+
+          h3 {
+            flex-wrap: wrap;
+            font-size: 16px;
+            line-height: 20px;
+
+            img {
+              width: 27px;
+              height: 15px;
+            }
+          }
+
+          p {
+            font-size: 12px;
+            line-height: 15px;
+          }
+        }
+
+        .row {
+          border: 1px solid #C9CBD4;
+          box-sizing: border-box;
+          border-radius: 4px;
+          padding: 20px;
+
+          h4 {
+            font-size: 16px;
+            line-height: 20px;
+
+            br {
+              display: block;
+            }
+          }
+
+          .account-status {
+            font-size: 16px;
+            line-height: 20px;
+          }
+
+          .account-action {
+            margin: 20px 0 0 0;
+
+            .white {
+              background: #F3F3F3;
+              border: 0;
+            }
+          }
+        }
       }
     }
   }

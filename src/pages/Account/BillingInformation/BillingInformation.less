@@ -172,6 +172,10 @@
     }
   }
 
+  .dots {
+    display: none;
+  }
+
   section {
     background: #FFFFFF;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
@@ -191,13 +195,12 @@
         margin: 0 0 2.857142857142857rem;
       }
 
-      & > i {
-        margin: 0 2.857142857142857rem 0 0;
 
-        svg {
-          height: 8.571428571428571rem;
-          width: 8.571428571428571rem;
-        }
+      & > img {
+        height: 8.571428571428571rem;
+        width: 8.571428571428571rem;
+        min-width: 8.571428571428571rem;
+        margin: 0 2.857142857142857rem 0 0;
       }
     }
 
@@ -207,6 +210,17 @@
       flex-direction: column;
       padding: 0 0 0 2.857142857142857rem;
       border-left: 1px solid #F3F3F3;
+
+      .description-row {
+        img {
+          display: none;
+        }
+
+        .section-description {
+          display: flex;
+          flex-direction: column;
+        }
+      }
 
       h3 {
         font-weight: 600;
@@ -231,6 +245,14 @@
         margin-top: 1.4285714285714286rem;
         position: relative;
 
+        .inputs-row {
+          flex: 1;
+          display: flex;
+
+          input:nth-child(2) {
+            margin: 0 0 0 1.4285714285714286rem;
+          }
+        }
 
         label {
           width: 13.928571428571429rem;
@@ -243,6 +265,8 @@
         .StripeElement {
           flex: 1;
           height: 2.2857142857142856rem;
+          min-height: 2.2857142857142856rem;
+          max-height: 2.2857142857142856rem;
           border-radius: 4px;
           border: 1px solid #C9CBD4;
           color: #5B586F;
@@ -273,15 +297,13 @@
         input {
           flex: 1;
           height: 2.2857142857142856rem;
-
-          &:nth-child(3) {
-            margin: 0 0 0 1.4285714285714286rem;
-          }
+          min-height: 2.2857142857142856rem;
         }
 
         .custom-select {
           flex: 1;
           height: 2.2857142857142856rem;
+          min-height: 2.2857142857142856rem;
         }
 
         .input-suffix {
@@ -415,6 +437,145 @@
           display: flex;
           align-items: center;
           justify-content: center;
+        }
+      }
+
+      .delete-card {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 1000px) {
+    section {
+      .col {
+        .form-group {
+          flex-direction: column;
+          align-items: flex-start;
+
+          label {
+            margin: 0 0 10px;
+          }
+
+          .StripeElement {
+            width: 100%;
+          }
+
+          .inputs-row, .custom-select {
+            width: 100%;
+          }
+        }
+
+        .payment-logo, .ant-checkbox-wrapper {
+          margin-left: 0;
+        }
+
+        .btn {
+          margin: 1.42857143rem auto 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 850px) {
+    overflow: hidden;
+
+    ul {
+      width: 100%;
+      display: flex;
+      overflow: auto;
+      padding: 0 0 0 50px;
+
+      li {
+        width: 260px;
+        min-width: 260px;
+        height: 100px;
+      }
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      margin: 12px auto 20px;
+
+      div {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin: 0 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &::before {
+          content: '';
+          width: 6px;
+          height: 6px;
+          background: #C9CBD4;
+          border-radius: 50%;
+        }
+
+        &.active {
+          background: #6959AB;
+
+          &::before {
+            display: none;
+          }
+        }
+      }
+    }
+
+    section {
+      .container {
+        max-width: 100%;
+
+        & > img {
+          display: none;
+        }
+      }
+
+      .col {
+        border: 0;
+        padding: 0;
+
+        .description-row {
+          display: flex;
+          padding-bottom: 20px;
+          border-bottom: 1px solid #F3F3F3;
+
+          img {
+            min-width: 64px;
+            width: 64px;
+            height: 64px;
+            display: block;
+            margin: 0 12px 0 0;
+          }
+        }
+
+        h3 {
+          font-size: 16px;
+          line-height: 20px;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-size: 12px;
+          line-height: 15px;
+        }
+
+        .btn {
+          height: 42px;
+          width: 100%;
+        }
+
+        .delete-card {
+          display: flex;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 14px;
+          line-height: 17px;
+          color: #312C51;
+          margin: 10px 0 0 0;
         }
       }
     }

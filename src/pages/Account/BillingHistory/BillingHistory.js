@@ -29,6 +29,7 @@ const columns = [
         title: 'Description',
         dataIndex: 'description',
         key: 'description',
+        minWidth: '300px',
     },
     {
         title: 'Payment method',

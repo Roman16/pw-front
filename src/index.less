@@ -151,14 +151,18 @@ img {
     }
 
     @media (max-width: 850px) {
+      min-height: 100vh;
       height: max-content;
 
-      grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
-      grid-template-columns: 1fr;
-      grid-template-rows: max-content max-content max-content max-content;
-      padding: 90px 20px 30px;
+      display: flex;
+      flex-direction: column;
+      padding: 90px 10px 10px;
 
       .page {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
         & > div {
           padding: 0;
         }
