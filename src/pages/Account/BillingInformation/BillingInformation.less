@@ -228,9 +228,9 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: space-between;
         margin-top: 1.4285714285714286rem;
         position: relative;
+
 
         label {
           width: 13.928571428571429rem;
@@ -243,6 +243,31 @@
         .StripeElement {
           flex: 1;
           height: 2.2857142857142856rem;
+          border-radius: 4px;
+          border: 1px solid #C9CBD4;
+          color: #5B586F;
+          padding: 8px 0 8px 1.07142857rem;
+
+          &:hover {
+            border-color: #5B586F;
+          }
+
+          &--focus {
+            border-color: #6959AB !important;
+          }
+        }
+
+        &.error-field {
+          .StripeElement {
+            border-color: #FF5256 !important;
+          }
+        }
+
+        &.disabled {
+          .StripeElement {
+            background-color: #f5f5f5;
+            pointer-events: none;
+          }
         }
 
         input {
@@ -278,6 +303,98 @@
             }
           }
         }
+
+        &.card-container__cvc {
+          .StripeElement, input {
+            max-width: 10rem;
+            width: 10rem;
+            min-width: 10rem;
+          }
+        }
+
+        .fake-card-field {
+          position: absolute;
+          height: 2.2857142857142856rem;
+          right: 0;
+          top: 0;
+          left: 13.92857143rem;
+          display: flex;
+          align-items: center;
+          border-radius: 4px;
+          border: 1px solid #C9CBD4;
+          font-size: 1rem;
+          padding-left: 1.07142857rem;
+          background: #FAFAFA;
+          pointer-events: none;
+          color: rgba(0, 0, 0, .25);
+        }
+      }
+
+      .row {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        margin: 1.42857143rem 0 0 0;
+
+        .form-group {
+          width: max-content;
+          margin: 0;
+
+
+        }
+
+        .lock-description {
+          display: flex;
+          align-items: center;
+
+          font-size: 0.8571428571428571rem;
+          line-height: 1.0714285714285714rem;
+          color: #5B586F;
+          margin: 0 0 0 20px;
+
+          svg {
+            width: 1rem;
+            min-width: 1rem;
+            height: 1rem;
+            margin: 0 8px 0 0;
+
+            fill: #5B586F;
+          }
+        }
+
+      }
+
+      .payment-logo {
+        margin: 0.7142857142857143rem 0 0 13.92857143rem;
+        display: flex;
+        align-items: center;
+
+        img {
+          height: 1.4285714285714286rem;
+          width: initial;
+          margin: 0 10px 0 0;
+
+          &:last-child {
+            margin: 0 0 0 auto;
+          }
+        }
+      }
+
+      .ant-checkbox-wrapper {
+        margin: 1.4285714285714286rem 0 0 13.92857143rem;
+        width: max-content;
+
+        .ant-checkbox {
+          width: 1.2857142857142858rem;
+          height: 1.2857142857142858rem;
+
+          span {
+            font-size: 0.8571428571428571rem;
+            line-height: 1.0714285714285714rem;
+            color: #5B586F;
+            padding: 0 0 0 8px;
+          }
+        }
       }
 
       .btn {
@@ -285,6 +402,17 @@
         font-size: 12px;
         margin: 1.4285714285714286rem 0 0 13.92857143rem;
         position: relative;
+
+        .ant-spin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
       }
     }
   }

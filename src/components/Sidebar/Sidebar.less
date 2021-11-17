@@ -938,3 +938,29 @@
 .intercom-launcher-frame, .intercom-lightweight-app-launcher {
   display: none !important;
 }
+
+.intercom-app {
+  left: 6.571428571428571rem !important;
+  bottom: 178px !important;
+}
+
+.intercom-app {
+  position: fixed !important;
+  left: 0 !important;
+  z-index: 1111 !important;
+
+  .intercom-messenger-frame {
+    right: auto;
+    left: 0 !important;
+    bottom: 178px !important;
+    transition: 0.3s ease-in-out !important;
+    margin: 0 0 0 6.571428571428571rem !important;
+  }
+
+  &.open {
+    .intercom-messenger-frame {
+      margin-left: 15.714285714285714rem !important;
+    }
+  }
+}
+

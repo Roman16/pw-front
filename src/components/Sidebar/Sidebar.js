@@ -50,11 +50,14 @@ const Sidebar = () => {
     }
     const toggleCollapsed = () => {
         setCollapsed((prevState) => !prevState)
+
         setSubMenuState({
             zth: false,
             ppc: false,
             notifications: false
         })
+
+
     }
     const setAnalyticState = () => {
         dispatch(analyticsActions.setMainState(undefined))
@@ -70,7 +73,7 @@ const Sidebar = () => {
     }
 
     useEffect(() => {
-        // window.Intercom('update', {app_id: "hkyfju3m", name: user.user.name})
+        window.Intercom('update', {app_id: "hkyfju3m", first_name: user.user.name})
 
         if (user.user.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
@@ -82,6 +85,15 @@ const Sidebar = () => {
     useEffect(() => {
         if (window.screen.width < 850) setTimeout(() => setCollapsed(false), 100)
     }, [history.location])
+
+    useEffect(() => {
+        const intercomApp = document.querySelector('.intercom-app')
+
+        if (intercomApp) {
+            if (collapsed) intercomApp.classList.add('open')
+            else intercomApp.classList.remove('open')
+        }
+    }, [collapsed])
 
     return (
         <>
