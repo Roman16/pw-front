@@ -383,17 +383,20 @@
       .ant-checkbox-wrapper {
         margin: 1.4285714285714286rem 0 0 13.92857143rem;
         width: max-content;
+        display: flex;
+        align-items: center;
 
         .ant-checkbox {
           width: 1.2857142857142858rem;
+          min-width: 1.2857142857142858rem;
           height: 1.2857142857142858rem;
+        }
 
-          span {
-            font-size: 0.8571428571428571rem;
-            line-height: 1.0714285714285714rem;
-            color: #5B586F;
-            padding: 0 0 0 8px;
-          }
+        span:last-child {
+          font-size: 0.8571428571428571rem;
+          line-height: 1.0714285714285714rem;
+          color: #5B586F;
+          padding: 0 0 0 8px;
         }
       }
 
