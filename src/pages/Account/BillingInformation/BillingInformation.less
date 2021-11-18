@@ -488,7 +488,7 @@
       width: 100%;
       display: flex;
       overflow: auto;
-      padding: 0 0 0 50px;
+      padding: 0 12vw 0 12vw;
 
       li {
         width: 260px;
@@ -553,6 +553,34 @@
             height: 64px;
             display: block;
             margin: 0 12px 0 0;
+          }
+        }
+
+        .row {
+          align-items: flex-end;
+
+          .form-group.card-container__cvc {
+            width: max-content;
+
+            input, .StripeElement {
+              width: 110px;
+              min-width: 110px;
+              max-width: 110px;
+            }
+          }
+
+
+        }
+
+
+        .form-group {
+          label {
+            width: max-content;
+          }
+
+          .StripeElement {
+            padding-top: 8px;
+            padding-bottom: 8px;
           }
         }
 
