@@ -115,7 +115,8 @@ const SubscriptionPlan = ({
             title: 'Product',
             dataIndex: 'productName',
             key: 'productName',
-            width: '12.857142857142858rem'
+            width: '12.857142857142858rem',
+            render: (productName) => productName
         },
         {
             title: 'Status',
@@ -199,10 +200,10 @@ const SubscriptionPlan = ({
     ]
 
 
-    const notConnectData = [{
+    const notConnectData = {
         stripe_status: 'not_connect',
         productName: product.productName
-    }]
+    }
 
     return (
         <div className="subscriptions">
@@ -210,17 +211,21 @@ const SubscriptionPlan = ({
             <p>This is a prepaid plan, and you are paying for the next 30 days of using it. To view your invoices, <Link
                 to={'/account/billing-history'}>see billing history</Link></p>
 
-            <CustomTable
-                dataSource={
-                    (!mwsConnected || !ppcConnected) ? notConnectData : product.productId && [{
-                        ...product,
-                    }]
-                }
-                columns={columns}
-                pagination={false}
-                loading={fetching}
-                scroll={{x: 800}}
-            />
+            <div className="table">
+                {columns.map(column => {
+                    return (<div className="col">
+                        <div className="header">
+                            {column.title}
+                        </div>
+
+                        <div className="value">
+                            {!fetching ? (!mwsConnected || !ppcConnected) ? column.render(notConnectData[column.key], notConnectData) : column.render(product[column.key], product) : '---'}
+                        </div>
+                    </div>)
+                })}
+
+                {fetching && <div className="load-data"><Spin/></div>}
+            </div>
 
 
             {!fetching && <div className="subscription-actions">

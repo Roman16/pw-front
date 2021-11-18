@@ -49,7 +49,7 @@ const Navigation = () => {
         if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '14px'
 
         return (() => {
-            document.querySelector('html').style.fontSize = '10.5px'
+            if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '10.5px'
         })
     }, [])
 

@@ -221,8 +221,8 @@ class StripeForm extends Component {
                         <img src={cardInfoIcon} alt=""/>
 
                         <div className="section-description">
-                            <h3>Credit Card information</h3>
-                            <p>You can update your credit card information here.</p>
+                            <h3>{isNewCard ? 'Add Credit Card information' : 'Credit Card information'}</h3>
+                            <p>{isNewCard ? 'You can add your credit card information here.' : 'You can update your credit card information here.'}</p>
                         </div>
                     </div>
 
@@ -331,8 +331,8 @@ class StripeForm extends Component {
                         <img src={billingInfoIcon} alt=""/>
 
                         <div className="section-description">
-                            <h3>Billing Information</h3>
-                            <p>You can update your billing information here.</p>
+                            <h3>{isNewCard ? 'Add Billing Information' : 'Billing Information'}</h3>
+                            <p>{isNewCard ? 'You can add your billing information here.' : 'You can update your billing information here.'}</p>
                         </div>
                     </div>
 
