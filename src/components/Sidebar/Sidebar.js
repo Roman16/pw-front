@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
@@ -13,10 +13,12 @@ import {analyticsActions} from "../../actions/analytics.actions"
 import ToggleMarketplace from "./ToggleMarketplace"
 import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
 import useScript from "../../utils/hooks/useScript"
+import {IntercomProvider, useIntercom} from 'react-use-intercom'
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
 
+let chatCount = 1
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
@@ -30,6 +32,8 @@ const Sidebar = () => {
         })
 
     const dispatch = useDispatch()
+
+    const {boot, update, hardShutdown} = useIntercom()
 
     const {user} = useSelector(state => ({
             user: state.user,
@@ -72,9 +76,8 @@ const Sidebar = () => {
         }
     }
 
-    useEffect(() => {
-        window.Intercom('update', {app_id: "hkyfju3m", first_name: user.user.name, name: user.user.name})
 
+    useEffect(() => {
         if (user.user.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
 
@@ -87,13 +90,27 @@ const Sidebar = () => {
     }, [history.location])
 
     useEffect(() => {
-        const intercomApp = document.querySelector('.intercom-app')
+        boot({
+            name: user.user.name,
+            email: user.user.email,
+            user_hash: ''
+        })
 
-        if (intercomApp) {
-            if (collapsed) intercomApp.classList.add('open')
-            else intercomApp.classList.remove('open')
-        }
-    }, [collapsed])
+        return (() => {
+            chatCount = 1
+            hardShutdown()
+        })
+    }, [])
+
+    // useEffect(() => {
+    //     const intercomApp = document.querySelector('.intercom-app')
+    //
+    //     if (intercomApp) {
+    //         if (collapsed) intercomApp.classList.add('open')
+    //         else intercomApp.classList.remove('open')
+    //     }
+    // }, [collapsed])
+
 
     return (
         <>
@@ -275,14 +292,14 @@ export const SocialLinks = () => <div className="social-links">
     </ul>
 </div>
 
-let count = 1
 
 const IntercomChat = () => {
-    const onOpenIntercomChat = () => {
-        if (count % 2 === 0) window.Intercom('hide')
-        else window.Intercom('show')
+    const {hide, show} = useIntercom()
 
-        count += 1
+    const onOpenIntercomChat = () => {
+        if (chatCount % 2 === 0) hide()
+        else show()
+        chatCount += 1
     }
 
     return (<div className="intercom-chat" onClick={onOpenIntercomChat}>

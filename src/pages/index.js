@@ -5,7 +5,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 import ProductList from "../components/ProductList/ProductList"
 import {userActions} from "../actions/user.actions"
 import moment from "moment"
-import {useSelector, useDispatch} from "react-redux"
+import {useSelector, useDispatch, Provider} from "react-redux"
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import ErrorBar from "../components/ErrorBar/ErrorBar"
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage"
@@ -13,6 +13,7 @@ import CampaignList from "../components/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
+import { IntercomProvider, useIntercom } from 'react-use-intercom';
 
 const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
@@ -47,6 +48,7 @@ const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/Product
 
 
 let timerId = null
+
 
 function throttle(func, delay) {
     let timeout = null
@@ -166,137 +168,139 @@ const AuthorizedUser = (props) => {
         )
     } else {
         return (
-            <Fragment>
-                <div className="main-pages">
+            <IntercomProvider appId={'hkyfju3m'}>
+                <Fragment>
+                    <div className="main-pages">
 
-                    <Sidebar props={props}/>
-
-                    <div className="main-container">
-                        <ErrorBar/>
-
-                        {(pathname === '/ppc/optimization' ||
-                            pathname === '/ppc/report' ||
-                            pathname === '/ppc/scanner' ||
-                            pathname === '/ppc/optimization-loading'
-                        ) &&
-                        <ProductList
-                            pathname={props.location.pathname}
-                        />}
-
-                        {pathname === '/ppc/dayparting' && <CampaignList/>}
-
-                        <div className="page">
-                            <Suspense fallback={<RouteLoader/>}>
-                                <Switch>
-                                    {/*ANALYTICS*/}
-                                    {(isSuperAdmin || isAgencyUser) &&
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
-                                    {/*-------------------------------------------*/}
-                                    {/*tableau*/}
-                                    {(isSuperAdmin || isAgencyUser) &&
-                                    <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
-                                    {/*-------------------------------------------*/}
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/optimization"
-                                        render={() => {
-                                            return (<OptimizationFormAdmin/>)
-                                        }}
-                                    />
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/optimization-loading"
-                                        render={() => {
-                                            return (<Redirect to={'/ppc/optimization'}/>)
-                                        }}
-                                    />
-                                    <ConnectedAmazonRoute
-                                        path="/ppc/report"
-                                        component={Report}
-                                    />
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/product-settings"
-                                        component={ProductsInfo}
-                                    />
-                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/dayparting"
-                                        component={Dayparting}
-                                    />}
-
-                                    {/*-------------------------------------------*/}
-                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>
-                                    {/*-------------------------------------------*/}
-
-                                    <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account" component={ConnectMWS}/>
-                                    <Route exact path="/connect-ppc-account" component={ConnectPPC}/>
-                                    <Route exact path="/welcome" component={WelcomePage}/>
+                        <Sidebar props={props}/>
 
 
-                                    {/* ACCOUNT */}
-                                    <Route path="/account" component={Account}/>
+                        <div className="main-container">
+                            <ErrorBar/>
 
-                                    {/*ZERO TO HERO*/}
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/campaign"
-                                        component={ChooseCampaign}
-                                    />}
+                            {(pathname === '/ppc/optimization' ||
+                                pathname === '/ppc/report' ||
+                                pathname === '/ppc/scanner' ||
+                                pathname === '/ppc/optimization-loading'
+                            ) &&
+                            <ProductList
+                                pathname={props.location.pathname}
+                            />}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/ppc-structure"
-                                        component={Marketing}
-                                    />}
+                            {pathname === '/ppc/dayparting' && <CampaignList/>}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/creating"
-                                        component={CreatingCampaign}
-                                    />}
+                            <div className="page">
+                                <Suspense fallback={<RouteLoader/>}>
+                                    <Switch>
+                                        {/*ANALYTICS*/}
+                                        {(isSuperAdmin || isAgencyUser) &&
+                                        <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
+                                        {/*-------------------------------------------*/}
+                                        {/*tableau*/}
+                                        {(isSuperAdmin || isAgencyUser) &&
+                                        <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
+                                        {/*-------------------------------------------*/}
+                                        <ConnectedAmazonRoute
+                                            exact
+                                            path="/ppc/optimization"
+                                            render={() => {
+                                                return (<OptimizationFormAdmin/>)
+                                            }}
+                                        />
+                                        <ConnectedAmazonRoute
+                                            exact
+                                            path="/ppc/optimization-loading"
+                                            render={() => {
+                                                return (<Redirect to={'/ppc/optimization'}/>)
+                                            }}
+                                        />
+                                        <ConnectedAmazonRoute
+                                            path="/ppc/report"
+                                            component={Report}
+                                        />
+                                        <ConnectedAmazonRoute
+                                            exact
+                                            path="/ppc/product-settings"
+                                            component={ProductsInfo}
+                                        />
+                                        {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/ppc/dayparting"
+                                            component={Dayparting}
+                                        />}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/payment/:batchId?"
-                                        component={Payment}
-                                    />}
+                                        {/*-------------------------------------------*/}
+                                        <AdminRoute path="/admin-panel" component={AdminPanel}/>
+                                        {/*-------------------------------------------*/}
 
-                                    {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
-
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
-                                        exact
-                                        path="/zero-to-hero/settings/:status?"
-                                        component={Settings}
-                                    />}
-                                    {/*-------------------------------------------*/}
-                                    <Route exact path="/home" component={Home}/>
-                                    {/*-------------------------------------------*/}
+                                        <Route exact path="/connect-amazon-account" component={FullJourney}/>
+                                        <Route exact path="/connect-mws-account" component={ConnectMWS}/>
+                                        <Route exact path="/connect-ppc-account" component={ConnectPPC}/>
+                                        <Route exact path="/welcome" component={WelcomePage}/>
 
 
-                                    <Route path={'*'} render={() => (
-                                        <Redirect to={'/404'}/>
-                                    )}/>
+                                        {/* ACCOUNT */}
+                                        <Route path="/account" component={Account}/>
+
+                                        {/*ZERO TO HERO*/}
+                                        {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/zero-to-hero/campaign"
+                                            component={ChooseCampaign}
+                                        />}
+
+                                        {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/zero-to-hero/ppc-structure"
+                                            component={Marketing}
+                                        />}
+
+                                        {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/zero-to-hero/creating"
+                                            component={CreatingCampaign}
+                                        />}
+
+                                        {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/zero-to-hero/payment/:batchId?"
+                                            component={Payment}
+                                        />}
+
+                                        {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
+
+                                        {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                            exact
+                                            path="/zero-to-hero/settings/:status?"
+                                            component={Settings}
+                                        />}
+                                        {/*-------------------------------------------*/}
+                                        <Route exact path="/home" component={Home}/>
+                                        {/*-------------------------------------------*/}
 
 
-                                    {/*<ConnectedAmazonRoute exact path="/notifications/listing-tracking"*/}
-                                    {/*                      component={ListingTracking}/>*/}
-                                    {/*<ConnectedAmazonRoute*/}
-                                    {/*    exact*/}
-                                    {/*    path="/ppc/dashboard"*/}
-                                    {/*    // component={Dashboard}*/}
-                                    {/*    render={() => <Redirect to={'/analytics/products'}/>}*/}
-                                    {/*/>*/}
+                                        <Route path={'*'} render={() => (
+                                            <Redirect to={'/404'}/>
+                                        )}/>
 
-                                </Switch>
-                            </Suspense>
+
+                                        {/*<ConnectedAmazonRoute exact path="/notifications/listing-tracking"*/}
+                                        {/*                      component={ListingTracking}/>*/}
+                                        {/*<ConnectedAmazonRoute*/}
+                                        {/*    exact*/}
+                                        {/*    path="/ppc/dashboard"*/}
+                                        {/*    // component={Dashboard}*/}
+                                        {/*    render={() => <Redirect to={'/analytics/products'}/>}*/}
+                                        {/*/>*/}
+
+                                    </Switch>
+                                </Suspense>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <PWWindows pathname={pathname}/>
-            </Fragment>
+                    <PWWindows pathname={pathname}/>
+                </Fragment>
+            </IntercomProvider>
         )
     }
 }
