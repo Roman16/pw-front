@@ -3,7 +3,7 @@ export const icons = {
         '<mask id="mask0_20457:62617"  maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" rx="8" fill="#B6B6FB"/>\n' +
         '</mask>\n' +
-        '<g mask="url(#mask0_20457:62617)">\n' +
+        '<g>\n' +
         '<path fill-rule="evenodd" clip-rule="evenodd" d="M0 8C0 3.58172 3.58172 0 8 0C12.4183 0 16 3.58172 16 8C16 9.62557 15.5152 11.1379 14.6822 12.4003C13.2512 10.2315 10.7927 8.80055 8 8.80055C5.20729 8.80055 2.74881 10.2315 1.3178 12.4003C0.48484 11.1379 0 9.62557 0 8ZM7.99986 1.6011C6.23255 1.6011 4.79986 3.03379 4.79986 4.8011C4.79986 6.56841 6.23255 8.0011 7.99986 8.0011C9.76717 8.0011 11.1999 6.56841 11.1999 4.8011C11.1999 3.03379 9.76717 1.6011 7.99986 1.6011Z" fill="#312C51"/>\n' +
         '<rect x="0.75" y="0.75" width="14.5" height="14.5" rx="7.25" stroke="#312C51" stroke-width="1.5"/>\n' +
         '</g>\n' +
@@ -12,7 +12,7 @@ export const icons = {
         '<mask id="mask0_20457:62624"  maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" fill="#C4C4C4"/>\n' +
         '</mask>\n' +
-        '<g mask="url(#mask0_20457:62624)">\n' +
+        '<g>\n' +
         '<path d="M12.8 5.33333H12V3.80952C12 1.70667 10.208 0 7.99998 0C5.79198 0 3.99998 1.70667 3.99998 3.80952V5.33333H3.19998C2.31598 5.33333 1.59998 6.01524 1.59998 6.85714V14.4762C1.59998 15.3181 2.31598 16 3.19998 16H12.8C13.684 16 14.4 15.3181 14.4 14.4762V6.85714C14.4 6.01524 13.684 5.33333 12.8 5.33333ZM7.99998 12.1905C7.11598 12.1905 6.39998 11.5086 6.39998 10.6667C6.39998 9.82476 7.11598 9.14286 7.99998 9.14286C8.88398 9.14286 9.59998 9.82476 9.59998 10.6667C9.59998 11.5086 8.88398 12.1905 7.99998 12.1905ZM10.48 5.33333H5.51997V3.80952C5.51997 2.50667 6.63198 1.44762 7.99998 1.44762C9.36798 1.44762 10.48 2.50667 10.48 3.80952V5.33333Z" fill="#312C51"/>\n' +
         '</g>\n' +
         '</svg>\n',
@@ -20,7 +20,7 @@ export const icons = {
         '<mask id="mask0_20457:62659"  maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" fill="#C4C4C4"/>\n' +
         '</mask>\n' +
-        '<g mask="url(#mask0_20457:62659)">\n' +
+        '<g>\n' +
         '<rect x="0.799805" y="3.19922" width="14.4" height="10.4" rx="1" stroke="#312C51" stroke-width="1.5"/>\n' +
         '<path d="M0.799805 5.14355H15.1998V7.2007H0.799805V5.14355Z" fill="#312C51"/>\n' +
         '<path d="M3.2002 8.80078H9.37162M3.2002 11.2289H7.05734" stroke="#312C51" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
@@ -30,7 +30,7 @@ export const icons = {
         '<mask id="mask0_20457:62702"  maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" fill="#C4C4C4"/>\n' +
         '</mask>\n' +
-        '<g mask="url(#mask0_20457:62702)">\n' +
+        '<g>\n' +
         '<rect x="4" y="0.799805" width="11.2" height="11.2" rx="2" stroke="#312C51" stroke-width="1.5"/>\n' +
         '<rect x="0.800049" y="4" width="11.2" height="11.2" rx="2" fill="#312C51" stroke="#312C51" stroke-width="1.5"/>\n' +
         '<path d="M3.59998 10.1651C3.59998 11.6205 4.85358 12.8004 6.39998 12.8004C7.94637 12.8004 9.19998 11.6205 9.19998 10.1651C9.19998 8.70966 7.94637 7.5298 6.39998 7.5298H5.19998M5.19998 7.5298L6.39998 6.40039M5.19998 7.5298L6.39998 8.65921" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
@@ -43,7 +43,7 @@ export const icons = {
         '<mask id="mask0_20459:62743" maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" fill="#C4C4C4"/>\n' +
         '</mask>\n' +
-        '<g mask="url(#mask0_20459:62743)">\n' +
+        '<g >\n' +
         '<rect y="9.59961" width="6.4" height="6.4" rx="1" fill="#312C51"/>\n' +
         '<rect x="9.59998" width="6.4" height="6.4" rx="1" fill="#312C51"/>\n' +
         '<path d="M4.8 12.8002H9.6C10.9255 12.8002 12 11.7257 12 10.4002V10.4002C12 9.07471 10.9255 8.0002 9.6 8.0002H6.4C5.07452 8.0002 4 6.92568 4 5.6002V5.6002C4 4.27471 5.07452 3.2002 6.4 3.2002H12" stroke="#312C51" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +

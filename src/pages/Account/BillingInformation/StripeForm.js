@@ -14,7 +14,6 @@ import {SVG} from "../../../utils/icons"
 import moment from 'moment'
 import {expiresFormat} from "../../../utils/expiresFormat"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
-import sectionIcon from "../../../assets/img/account/profile-icon.svg"
 
 const {Option} = Select
 
