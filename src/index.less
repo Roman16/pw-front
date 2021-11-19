@@ -9,7 +9,10 @@ html {
   box-sizing: border-box;
   font-size: 14px;
 
-  font-family: Montserrat;
+
+  * {
+    font-family: Montserrat;
+  }
 }
 
 #root {
@@ -90,12 +93,6 @@ img {
       top: 0;
       left: 0;
     }
-
-    @media (max-width: 1132px) {
-      position: fixed;
-      top: 0;
-      left: 0;
-    }
   }
 }
 
@@ -108,8 +105,7 @@ img {
   height: 100vh;
   max-height: 100%;
   display: flex;
-  background: #f5f5ff;
-
+  background: #F3F3F3;
   font-family: Montserrat;
 
 
@@ -130,10 +126,6 @@ img {
     grid-template-rows: max-content 1fr;
 
     z-index: 10;
-
-    @media (max-width: 1132px) {
-      margin-left: 5.142857142857143rem;
-    }
 
     .page {
       max-height: 100%;
@@ -159,14 +151,18 @@ img {
     }
 
     @media (max-width: 850px) {
+      min-height: 100vh;
       height: max-content;
 
-      grid-template-areas: 'errorsBar' 'productList' 'switchProductList' 'mainPage';
-      grid-template-columns: 1fr;
-      grid-template-rows: max-content max-content max-content max-content;
-      padding: 1.7142857em 1.42857143rem;
+      display: flex;
+      flex-direction: column;
+      padding: 90px 10px 10px;
 
       .page {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
         & > div {
           padding: 0;
         }
@@ -174,6 +170,9 @@ img {
     }
   }
 
+  @media (max-width: 850px) {
+    flex-direction: column;
+  }
   @media (max-width: 500px) {
     overflow-y: auto;
     height: max-content;
@@ -437,7 +436,7 @@ img {
 
 .ant-checkbox.ant-checkbox-checked {
   .ant-checkbox-inner {
-    background: url(./assets/img/icons/checked-checkbox.svg) no-repeat center center;
+    background: #6959AB url(./assets/img/icons/checked-checkbox.svg) no-repeat center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -447,7 +446,23 @@ img {
       display: none;
     }
   }
+
+  &.ant-checkbox-disabled {
+    .ant-checkbox-inner {
+      background: url(./assets/img/icons/disabled-checked-checkbox.svg) no-repeat center center;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      background-color: #C9CBD4 !important;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 }
+
 
 //radio
 .ant-radio-wrapper {
@@ -604,7 +619,7 @@ img {
     &:active,
     &:focus {
       &::after {
-        box-shadow: 0 1px 3px rgba(125, 212, 161, 0.15), 0 0 0 0.9285714285714286rem rgba(125, 212, 161, 0.15);
+        box-shadow: 0 1px 3px rgba(105, 89, 171, 0.15), 0 0 0 0.9285714285714286rem rgba(105, 89, 171, 0.15);
         transition: 0.1s !important;
       }
     }
@@ -1061,11 +1076,11 @@ a.btn {
   &.white {
     border: 1px solid #C9CBD4;
     background: #fff;
-    color: #5B586F;
+    color: #6E6A83;
 
     &:hover {
       background: #F3F3F3;
-      color: #5B586F;
+      color: #6E6A83;
     }
   }
 
@@ -1085,6 +1100,15 @@ a.btn {
 
     &:hover {
       background: #d3d3d3;
+    }
+  }
+
+  &.transparent {
+    color: #5B586F;
+    padding: 0;
+
+    &:hover {
+      color: #777391;
     }
   }
 
@@ -1146,6 +1170,24 @@ a.btn {
 
   &:focus {
     outline: none;
+  }
+
+  &[disabled] {
+    cursor: not-allowed;
+    pointer-events: none;
+    background: #C9CBD4;
+    color: #fff;
+
+    .ant-spin {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }
 
@@ -1237,6 +1279,45 @@ button.white[disabled] {
 /*
 *  TREE SELECT
 */
+
+.ant-select-dropdown {
+  .ant-select-tree {
+    .ant-select-tree-checkbox-inner {
+      border-radius: 2px;
+      width: 1.28571429rem;
+      height: 1.28571429rem;
+      border-color: #6959AB;
+    }
+
+    .ant-select-tree-checkbox.ant-select-tree-checkbox-checked {
+      .ant-select-tree-checkbox-inner {
+        transition: 0s;
+
+        &::after {
+          display: none;
+        }
+      }
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .ant-select-tree-checkbox:hover .ant-select-tree-checkbox-inner {
+      border-color: #6959AB;
+    }
+
+    .ant-select-tree-node-content-wrapper-normal:hover {
+      background: #fff;
+    }
+
+    .ant-select-tree-node-content-wrapper-normal .ant-select-tree-title {
+      color: #343C5A;
+      font-size: 0.85714286rem;
+      line-height: 10px;
+    }
+  }
+}
 
 /*
 *  /TREE SELECT

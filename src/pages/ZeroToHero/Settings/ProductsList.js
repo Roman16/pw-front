@@ -151,7 +151,7 @@ const jobActions = ({job}) => {
         } else if (status === 'CREATION_THROTTLED' || status === 'CREATION_FAILED' || status === 'UPLOAD_THROTTLED' || status === 'UPLOAD_FAILED') {
             return (
                 <div className="issues-field">
-                    <button className={'sds-btn white'}>
+                    <button className={'sds-btn white'} onClick={() => window.Intercom('show')}>
                         Help Center
                     </button>
                 </div>

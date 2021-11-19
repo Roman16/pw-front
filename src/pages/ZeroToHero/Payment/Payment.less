@@ -3,6 +3,7 @@
 .zero-to-hero-page.payment-page {
   display: flex !important;
   flex-direction: column;
+  padding: 10px !important;
 
   .page-loader {
     width: 100%;
@@ -192,6 +193,18 @@
 
 
   }
+
+  @media (max-width: 1150px) {
+    .bulk-information {
+      display: flex;
+      flex-direction: column;
+
+      .col {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  }
 }
 
 .payment-section {
@@ -220,6 +233,10 @@
       width: 50%;
       display: flex;
       flex-direction: column;
+
+      &:last-child {
+        width: max-content;
+      }
     }
 
     .ant-radio-group {
@@ -234,6 +251,10 @@
           color: #343C5A;
         }
       }
+
+      @media (max-width: 1300px) {
+
+      }
     }
 
     .radio-description {
@@ -246,7 +267,9 @@
 
 
       .form-group {
-        width: 23.571428571428573rem;
+        max-width: 23.571428571428573rem;
+
+        width: 100%;
         display: flex;
         flex-direction: column;
         margin-bottom: 1.4285714285714286rem;
@@ -264,6 +287,7 @@
       }
 
       .card-container {
+        width: 100%;
         display: flex;
         flex-direction: column;
         margin-bottom: 1.4285714285714286rem;
@@ -275,6 +299,8 @@
         }
 
         .StripeElement {
+          max-width: 23.571428571428573rem;
+
           height: 2.2857142857142856rem;
           line-height: 2.2857142857142856rem;
           border-radius: 4px;
@@ -297,7 +323,7 @@
           }
 
           &.StripeElement--focus {
-            border: 1px solid #6D6DF6;
+            border: 1px solid #6959AB;
           }
 
           &.StripeElement--invalid {
@@ -322,10 +348,20 @@
       .row {
         display: flex;
         align-items: flex-end;
+        margin-bottom: 1.42857143rem;
       }
 
-      .card-container__card {
-        width: 23.571428571428573rem;
+      .ant-checkbox-wrapper {
+        width: max-content;
+
+        .ant-checkbox {
+          width: 1.2857142857142858rem;
+          height: 1.2857142857142858rem;
+        }
+
+        span {
+          font-size: 1rem;
+        }
       }
 
       .card-container__expiry {
@@ -351,23 +387,25 @@
 
         p {
           margin: 0;
-          color: #656A84;
-          font-size: 1rem;
+          color: #5B586F;
+          font-size: 0.8571428571428571rem;
           line-height: 1.1428571428571428rem;
         }
       }
     }
 
     .user-cards {
+      width: max-content;
+
       .card-block {
-        width: 350px;
-        height: 212px;
+        width: 25rem;
+        height: 15.142857142857142rem;
         border-radius: 4px;
-        background-image: url(../../../assets/img/card-background.svg);
+        background-image: url(../../../assets/img/card-background.png);
         background-size: cover;
         background-repeat: no-repeat;
         position: relative;
-        padding: 20px;
+        padding: 1.4285714285714286rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -468,13 +506,13 @@
 
         .card-shadow {
           position: absolute;
-          background: #6D6DF6;
+          background: #6959AB;
           top: 0;
           left: 0;
           right: 0;
           margin: 0 auto;
-          width: 350px;
-          height: 212px;
+          width: 25rem;
+          height: 15.142857142857142rem;
           border-radius: 4px;
           z-index: 0;
           opacity: .2;
@@ -494,8 +532,8 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #6D6DF6;
-            border: 1px solid #6D6DF6;
+            background: #6959AB;
+            border: 1px solid #6959AB;
             margin: 0 10px 0 0;
             cursor: pointer;
           }
@@ -566,6 +604,8 @@
       overflow-x: auto;
 
       .row {
+        min-width: 100%;
+        width: max-content;
         display: flex;
         border-bottom: 0.5px solid #C9CBD4;
 
@@ -637,7 +677,8 @@
       }
 
       .description-list {
-        width: 100%;
+        min-width: 100%;
+        width: max-content;
         border-bottom: 0.5px solid #C9CBD4;
         display: flex;
         flex-direction: column;
@@ -769,11 +810,17 @@
       & {
         width: 100%;
         padding: 15px 20px;
+        border: 0;
+        border-top: 2px solid #C9CBD4;
       }
     }
 
     @media (max-width: 500px) {
       min-width: auto;
+    }
+
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 43%;
     }
   }
 }
