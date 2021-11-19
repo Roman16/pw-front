@@ -90,8 +90,10 @@ const Navigation = () => {
 const BackLink = () => {
     const location = history.location
 
+    const locationDescriptions = _.find(menu, {link: location.pathname.split('/')[2]})
+
     return (
-        <Link to={'/account'}>{_.find(menu, {link: location.pathname.split('/')[2]}).title}</Link>
+        <Link to={'/account'}>{locationDescriptions ? locationDescriptions.title : 'Account'}</Link>
     )
 }
 
