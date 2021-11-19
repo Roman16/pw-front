@@ -5,7 +5,7 @@ import Sidebar from '../components/Sidebar/Sidebar'
 import ProductList from "../components/ProductList/ProductList"
 import {userActions} from "../actions/user.actions"
 import moment from "moment"
-import {useSelector, useDispatch, Provider} from "react-redux"
+import {useSelector, useDispatch} from "react-redux"
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import ErrorBar from "../components/ErrorBar/ErrorBar"
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage"
@@ -13,7 +13,7 @@ import CampaignList from "../components/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
-import { IntercomProvider, useIntercom } from 'react-use-intercom';
+import { IntercomProvider } from 'react-use-intercom';
 
 const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
@@ -168,7 +168,7 @@ const AuthorizedUser = (props) => {
         )
     } else {
         return (
-            <IntercomProvider appId={'hkyfju3m'}>
+            //-------------------------------------------
                 <Fragment>
                     <div className="main-pages">
 
@@ -300,7 +300,6 @@ const AuthorizedUser = (props) => {
                     </div>
                     <PWWindows pathname={pathname}/>
                 </Fragment>
-            </IntercomProvider>
         )
     }
 }

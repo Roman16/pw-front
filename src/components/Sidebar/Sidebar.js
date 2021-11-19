@@ -90,10 +90,18 @@ const Sidebar = () => {
     }, [history.location])
 
     useEffect(() => {
-        boot({
+        // boot({
+        //     app_id: process.env.REACT_APP_INTERCOM_ID,
+        //     name: user.user.name,
+        //     email: user.user.email,
+        //     user_hash: user.user.intercom_user_hash,
+        // })
+
+        window.Intercom("boot", {
+            app_id: process.env.REACT_APP_INTERCOM_ID,
             name: user.user.name,
             email: user.user.email,
-            user_hash: ''
+            user_hash: user.user.intercom_user_hash // HMAC using SHA-256
         })
 
         return (() => {
