@@ -169,6 +169,8 @@ const AuthorizedUser = (props) => {
     } else {
         return (
             //-------------------------------------------
+            //IntercomProvider dont work with impersonate
+            <IntercomProvider appId={process.env.REACT_APP_INTERCOM_ID}>
                 <Fragment>
                     <div className="main-pages">
 
@@ -300,6 +302,7 @@ const AuthorizedUser = (props) => {
                     </div>
                     <PWWindows pathname={pathname}/>
                 </Fragment>
+            </IntercomProvider>
         )
     }
 }

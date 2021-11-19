@@ -5,7 +5,9 @@ import moment from "moment"
 import {numberMask} from "../../../utils/numberMask"
 import {useSelector} from "react-redux"
 import {SVG} from "../../../utils/icons"
-import CustomTable from "../../../components/Table/CustomTable"
+
+const priceLandingUrl = 'https://sponsoreds.com/pricing'
+
 
 const CouponField = ({applyCoupon, setCoupon, product}) => {
     const [openedField, openField] = useState(false)
@@ -46,13 +48,13 @@ const ProductPrice = ({product}) => {
         return (<div className={'price'}>
             ---
             <br/>
-            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
+            <a href={priceLandingUrl} target={'_blank'}>How it’s calculated?</a>
         </div>)
     } else if (!product.applied_coupon || product.applied_coupon.name == null) {
         return (<div className={'price'}>
             {product.next_charge_value ? `$${numberMask(product.next_charge_value, 2)}` : '---'}
             <br/>
-            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
+            <a href={priceLandingUrl} target={'_blank'}>How it’s calculated?</a>
         </div>)
     } else if (product.applied_coupon && product.applied_coupon.amount_off) {
         return (<div className={'price'}>
@@ -64,7 +66,7 @@ const ProductPrice = ({product}) => {
                 ${numberMask(product.next_charge_value, 2)}
             </span>
             <br/>
-            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
+            <a href={priceLandingUrl} target={'_blank'}>How it’s calculated?</a>
         </div>)
     } else if (product.applied_coupon && product.applied_coupon.percent_off) {
         return (<div className={'price'}>
@@ -76,7 +78,7 @@ const ProductPrice = ({product}) => {
                 ${numberMask(product.next_charge_value, 2)}
             </span>
             <br/>
-            <Link to={'/pricing'} target={'_blank'}>How it’s calculated?</Link>
+            <a href={priceLandingUrl} target={'_blank'}>How it’s calculated?</a>
         </div>)
     } else {
         return '---'

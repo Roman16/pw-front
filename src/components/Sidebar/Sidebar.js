@@ -89,35 +89,51 @@ const Sidebar = () => {
         if (window.screen.width < 850) setTimeout(() => setCollapsed(false), 100)
     }, [history.location])
 
-    useEffect(() => {
-        // boot({
-        //     app_id: process.env.REACT_APP_INTERCOM_ID,
-        //     name: user.user.name,
-        //     email: user.user.email,
-        //     user_hash: user.user.intercom_user_hash,
-        // })
 
-        window.Intercom("boot", {
-            app_id: process.env.REACT_APP_INTERCOM_ID,
-            name: user.user.name,
-            email: user.user.email,
-            user_hash: user.user.intercom_user_hash // HMAC using SHA-256
-        })
+    useEffect(() => {
+        if (user.user.id === 2) {
+            window.Intercom("boot", {
+                app_id: process.env.REACT_APP_INTERCOM_ID,
+                name: user.user.name,
+                alignment: 'left',
+                horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
+                hide_default_launcher: true,
+                vertical_padding: 0,
+                custom_launcher_selector: '#intercom-chat-launcher',
+                email: user.user.email,
+                user_hash: user.user.intercom_user_hash,
+            })
+        } else {
+            window.Intercom("boot", {
+                app_id: process.env.REACT_APP_INTERCOM_ID,
+                name: user.user.name,
+                alignment: 'left',
+                horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
+                hide_default_launcher: true,
+                vertical_padding: 0,
+                custom_launcher_selector: '#intercom-chat-launcher'
+            })
+        }
 
         return (() => {
             chatCount = 1
-            hardShutdown()
+            window.Intercom('shutdown')
         })
     }, [])
 
-    // useEffect(() => {
-    //     const intercomApp = document.querySelector('.intercom-app')
-    //
-    //     if (intercomApp) {
-    //         if (collapsed) intercomApp.classList.add('open')
-    //         else intercomApp.classList.remove('open')
-    //     }
-    // }, [collapsed])
+    useEffect(() => {
+        if (collapsed) {
+            window.Intercom("update", {
+                app_id: process.env.REACT_APP_INTERCOM_ID,
+                horizontal_padding: devicePixelRatio === 2 ? 160 : 210
+            })
+        } else {
+            window.Intercom("update", {
+                app_id: process.env.REACT_APP_INTERCOM_ID,
+                horizontal_padding: devicePixelRatio === 2 ? 64 : 82
+            })
+        }
+    }, [collapsed])
 
 
     return (
@@ -301,29 +317,19 @@ export const SocialLinks = () => <div className="social-links">
 </div>
 
 
-const IntercomChat = () => {
-    const {hide, show} = useIntercom()
+const IntercomChat = () => <div className="intercom-chat-launcher" id={'intercom-chat-launcher'}>
+    <div className="link-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M20 2C20 0.895431 19.1046 0 18 0H7C5.89543 0 5 0.895431 5 2V4H11C13.2091 4 15 5.79086 15 8V14.2254C16.6733 15.0707 18.0285 15.7297 18.4974 15.8952C19.6896 16.3158 19.9877 15.3693 19.9877 14.8435V10.2234C19.9958 10.1501 20 10.0755 20 10V2Z"
+            />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M0 8C0 6.89543 0.895431 6 2 6H11C12.1046 6 13 6.89543 13 8V16.0714C13 17.176 12.1046 18.0714 11 18.0714H5.15215C3.36361 18.9887 1.86776 19.7297 1.38462 19.9017C0.276923 20.2961 0 19.4087 0 18.9158V16.0714V14V8ZM4 12.5714C4 13.1237 3.55228 13.5714 3 13.5714C2.44772 13.5714 2 13.1237 2 12.5714C2 12.0191 2.44772 11.5714 3 11.5714C3.55228 11.5714 4 12.0191 4 12.5714ZM6.57143 13.5714C7.12371 13.5714 7.57143 13.1237 7.57143 12.5714C7.57143 12.0191 7.12371 11.5714 6.57143 11.5714C6.01914 11.5714 5.57143 12.0191 5.57143 12.5714C5.57143 13.1237 6.01914 13.5714 6.57143 13.5714ZM11 12.5714C11 13.1237 10.5523 13.5714 10 13.5714C9.44771 13.5714 9 13.1237 9 12.5714C9 12.0191 9.44771 11.5714 10 11.5714C10.5523 11.5714 11 12.0191 11 12.5714Z"
+            />
+        </svg>
+    </div>
 
-    const onOpenIntercomChat = () => {
-        if (chatCount % 2 === 0) hide()
-        else show()
-        chatCount += 1
-    }
-
-    return (<div className="intercom-chat" onClick={onOpenIntercomChat}>
-        <div className="link-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M20 2C20 0.895431 19.1046 0 18 0H7C5.89543 0 5 0.895431 5 2V4H11C13.2091 4 15 5.79086 15 8V14.2254C16.6733 15.0707 18.0285 15.7297 18.4974 15.8952C19.6896 16.3158 19.9877 15.3693 19.9877 14.8435V10.2234C19.9958 10.1501 20 10.0755 20 10V2Z"
-                />
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M0 8C0 6.89543 0.895431 6 2 6H11C12.1046 6 13 6.89543 13 8V16.0714C13 17.176 12.1046 18.0714 11 18.0714H5.15215C3.36361 18.9887 1.86776 19.7297 1.38462 19.9017C0.276923 20.2961 0 19.4087 0 18.9158V16.0714V14V8ZM4 12.5714C4 13.1237 3.55228 13.5714 3 13.5714C2.44772 13.5714 2 13.1237 2 12.5714C2 12.0191 2.44772 11.5714 3 11.5714C3.55228 11.5714 4 12.0191 4 12.5714ZM6.57143 13.5714C7.12371 13.5714 7.57143 13.1237 7.57143 12.5714C7.57143 12.0191 7.12371 11.5714 6.57143 11.5714C6.01914 11.5714 5.57143 12.0191 5.57143 12.5714C5.57143 13.1237 6.01914 13.5714 6.57143 13.5714ZM11 12.5714C11 13.1237 10.5523 13.5714 10 13.5714C9.44771 13.5714 9 13.1237 9 12.5714C9 12.0191 9.44771 11.5714 10 11.5714C10.5523 11.5714 11 12.0191 11 12.5714Z"
-                />
-            </svg>
-        </div>
-
-        <label htmlFor="">Talk to us</label>
-    </div>)
-}
+    <label htmlFor="">Talk to us</label>
+</div>
 
 export default React.memo(Sidebar)

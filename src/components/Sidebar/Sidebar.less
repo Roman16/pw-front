@@ -347,7 +347,7 @@
 
   //   ================================================================
 
-  .intercom-chat {
+  .intercom-chat-launcher {
     min-height: 3.4285714285714284rem;
     border: 1px solid #FFFFFF;
     box-sizing: border-box;
@@ -423,7 +423,7 @@
       .visibleAnimation();
     }
 
-    .intercom-chat {
+    .intercom-chat-launcher {
       label {
         .visibleAnimation();
       }
@@ -486,7 +486,7 @@
       .hideAnimation()
     }
 
-    .intercom-chat {
+    .intercom-chat-launcher {
       label {
         .hideAnimation()
       }
@@ -790,7 +790,7 @@
       }
     }
 
-    .intercom-chat {
+    .intercom-chat-launcher {
       height: 56px;
       width: 90%;
       max-width: 300px;
@@ -818,7 +818,7 @@
     &.closed {
       height: 60px;
 
-      .current-marketplace, nav, .social-links, .intercom-chat {
+      .current-marketplace, nav, .social-links, .intercom-chat-launcher {
         display: none;
       }
     }
@@ -964,38 +964,37 @@
   }
 }
 
-//
+
 //.intercom-launcher-frame, .intercom-lightweight-app-launcher {
 //  display: none !important;
 //}
-//
-//
-//.intercom-app {
-//  position: fixed !important;
-//  left: 0 !important;
-//  z-index: 111111 !important;
-//
-//  .intercom-messenger-frame {
-//    //bottom: 10px !important;
-//    //right: 10px !important;
-//    transition: 0.3s ease-in-out !important;
-//    margin: 0 0 0 5.857142857142857rem !important;
-//  }
-//
-//  &.open {
-//    .intercom-messenger-frame {
-//      margin-left: 15.714285714285714rem !important;
-//    }
-//  }
-//
-//  @media (max-width: 850px) {
-//    .intercom-messenger-frame {
-//      z-index: 1111111111111;
-//      margin: 0 !important;
-//      bottom: 0 !important;
-//    }
-//  }
-//}
+
+
+.intercom-app {
+  position: fixed !important;
+  left: 0 !important;
+  z-index: 111111 !important;
+
+  .intercom-messenger-frame {
+    //bottom: 10px !important;
+    //right: 10px !important;
+    transition: 0.3s ease-in-out !important;
+  }
+
+  &.open {
+    .intercom-messenger-frame {
+      margin-left: 15.714285714285714rem !important;
+    }
+  }
+
+  //@media (max-width: 850px) {
+  //  .intercom-messenger-frame {
+  //    z-index: 1111111111111;
+  //    margin: 0 !important;
+  //    bottom: 0 !important;
+  //  }
+  //}
+}
 
 
 
