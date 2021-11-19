@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from "react"
-import {useDispatch, useSelector} from "react-redux"
+import React, {useEffect, useState} from "react"
+import {useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
@@ -7,22 +7,15 @@ import logo from "../../assets/img/logo/sds-sidebar-logo.svg"
 import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
-import InformationTooltip from "../Tooltip/Tooltip"
 import {history} from "../../utils/history"
-import {analyticsActions} from "../../actions/analytics.actions"
 import ToggleMarketplace from "./ToggleMarketplace"
-import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
-import useScript from "../../utils/hooks/useScript"
-import {IntercomProvider, useIntercom} from 'react-use-intercom'
+import moment from 'moment'
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
 
-let chatCount = 1
-
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
-        [automate, setAutomate] = useState(true),
         [isAdmin, setAdminStatus] = useState(false),
         [isAgencyUser, setAgencyUser] = useState(false),
         [subMenuState, setSubMenuState] = useState({
@@ -31,18 +24,11 @@ const Sidebar = () => {
             notifications: false
         })
 
-    const dispatch = useDispatch()
-
-    const {boot, update, hardShutdown} = useIntercom()
-
     const {user} = useSelector(state => ({
             user: state.user,
             notFirstEntry: state.user.notFirstEntry,
         })),
         accountLinks = user.account_links[0]
-
-    const activeMarketplace = marketplaceIdValues['ATVPDKIKX0DER']
-
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
@@ -60,22 +46,7 @@ const Sidebar = () => {
             ppc: false,
             notifications: false
         })
-
-
     }
-    const setAnalyticState = () => {
-        dispatch(analyticsActions.setMainState(undefined))
-        dispatch(analyticsActions.setLocation('products'))
-    }
-
-    const backToAdmin = () => {
-        if (localStorage.getItem('adminToken')) {
-            history.push('/admin-panel/impersonate')
-        } else {
-            history.push('/admin-panel/general')
-        }
-    }
-
 
     useEffect(() => {
         if (user.user.id === 714) setAdminStatus(true)
@@ -91,32 +62,22 @@ const Sidebar = () => {
 
 
     useEffect(() => {
-        if (user.user.id === 2) {
-            window.Intercom("boot", {
-                app_id: process.env.REACT_APP_INTERCOM_ID,
-                name: user.user.name,
-                alignment: 'left',
-                horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
-                hide_default_launcher: true,
-                vertical_padding: 0,
-                custom_launcher_selector: '#intercom-chat-launcher',
-                email: user.user.email,
-                user_hash: user.user.intercom_user_hash,
-            })
-        } else {
-            window.Intercom("boot", {
-                app_id: process.env.REACT_APP_INTERCOM_ID,
-                name: user.user.name,
-                alignment: 'left',
-                horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
-                hide_default_launcher: true,
-                vertical_padding: 0,
-                custom_launcher_selector: '#intercom-chat-launcher'
-            })
-        }
+        //IntercomProvider dont work with impersonate-->
+        window.Intercom("boot", {
+            app_id: process.env.REACT_APP_INTERCOM_ID,
+            name: user.user.name,
+            alignment: 'left',
+            horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
+            hide_default_launcher: true,
+            vertical_padding: 0,
+            custom_launcher_selector: '#intercom-chat-launcher',
+            email: user.user.email,
+            user_id: user.user.id,
+            created_at: moment(user.user.created_at).unix(),
+            user_hash: user.user.intercom_user_hash,
+        })
 
         return (() => {
-            chatCount = 1
             window.Intercom('shutdown')
         })
     }, [])
@@ -176,7 +137,6 @@ const Sidebar = () => {
                                                     collapsed && toggleSubMenu(item.key)
                                                 }
                                             }}
-                                            // disabled={item.subMenu}
                                         >
                                             <div className="link-icon"><SVG id={item.icon}/></div>
 

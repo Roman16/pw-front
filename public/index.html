@@ -62,28 +62,14 @@
 <!-- End Google Tag Manager (noscript) -->
 
 <div id="root"></div>
-<div id="my_custom_link"></div>
+
 <!-- Intercom -->
-<!--IntercomProvider dont work with impersonate-->
-
-<!--<script>-->
-<!--    window.intercomSettings = {-->
-<!--        app_id: "hkyfju3m",-->
-<!--        alignment: 'left',-->
-<!--        horizontal_padding: 82,-->
-<!--        vertical_padding: 0,-->
-
-<!--    }-->
-<!--</script>-->
-
-
 <script>
     (function () {
         var w = window
         var ic = w.Intercom
         if (typeof ic === "function") {
             ic('reattach_activator')
-            // ic('update', w.intercomSettings)
         } else {
             var d = document
             var i = function () {
