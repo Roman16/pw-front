@@ -192,6 +192,19 @@ const Subscription = () => {
         }
     }
 
+    const startFreeTrialHandler = async () => {
+        changeButton(true)
+
+        try {
+
+        } catch (e) {
+
+        }
+
+        changeButton(false)
+    }
+
+
     useEffect(() => {
         fetchSubscriptions()
 
@@ -222,6 +235,8 @@ const Subscription = () => {
                     fetching={fetching}
                     disableButton={disableButton}
                     stripeId={stripeId}
+
+                    onStartTrial={startFreeTrialHandler}
                 />
             ))}
 
