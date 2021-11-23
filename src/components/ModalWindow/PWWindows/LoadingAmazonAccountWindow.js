@@ -55,7 +55,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     if (currentService === 'optimization') requiredParts = importStatus.ppc_automate.required_parts_details
     if (currentService === 'dayparting') requiredParts = importStatus.dayparting.required_parts_details
     if (currentService === 'analytics') requiredParts = importStatus.analytics.required_parts_details
-    if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
+    // if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
+    if (currentService === 'productSettings') requiredParts = importStatus.ppc_automate.required_parts_details
     if (currentService === 'zth') requiredParts = importStatus.zth.required_parts_details
 
     const checkStatus = async () => {
