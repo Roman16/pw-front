@@ -61,18 +61,22 @@ const Subscription = () => {
         }
     }
 
-    function fetchSubscriptions() {
+    const fetchSubscriptions = async () => {
         switchFetching(true)
 
-        userService.getSubscription()
-            .then(res => {
-                switchFetching(false)
+        try {
+            const res = await userService.getSubscription()
 
-                setSubscriptions(Object.keys(res).map(productId => ({
-                    productId,
-                    ...res[productId]
-                })))
-            })
+            setSubscriptions(Object.keys(res).map(productId => ({
+                productId,
+                ...res[productId]
+            })))
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        switchFetching(false)
     }
 
     function applyCoupon(productId, planId, coupon) {

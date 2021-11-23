@@ -256,20 +256,7 @@ const ProductPrice = ({product}) => {
 const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disableButton, stripeId, user, importStatus, onSubscribe, onCancelSubscribe, onReactivateSubscribe, onStartTrial}) => {
     const renderDate = (date) => moment(date).format('MMM DD, YYYY')
 
-    if (!subscribedProduct.eligible_for_subscription) {
-        return (<>
-            <button
-                disabled
-                className={'btn default'}
-            >
-                Subscribe
-            </button>
-
-            <p>PPC Automation is only accessible for Sellers with Ad Spend more than $1,000 per month. <br/> You can
-                start by creating professionally structured PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero
-                    to Hero</Link>.</p>
-        </>)
-    } else if (!importStatus.ppc_automate.required_parts_ready) {
+    if (!importStatus.ppc_automate.required_parts_ready) {
         return <>
             <button
                 disabled
@@ -278,9 +265,24 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
                 Subscribe
             </button>
 
-            <p>PPC Automation tool is not ready to use yet. We are currently syncing data from your Amazon account with
-                our system.</p>
+            <p>PPC Automation tool is not ready to use yet. We are currently <br/> syncing data from your Amazon account
+                with our system.</p>
         </>
+    } else if (!subscribedProduct.eligible_for_subscription) {
+        return (<>
+            <button
+                disabled
+                className={'btn default'}
+            >
+                Subscribe
+            </button>
+
+            <p>
+                PPC Automation is only accessible for Sellers with Ad Spend more than $1,000 per month. <br/> You can
+                start by creating professionally structured PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero
+                to Hero</Link>.
+            </p>
+        </>)
     } else if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
         return <button
             disabled={disableButton}
