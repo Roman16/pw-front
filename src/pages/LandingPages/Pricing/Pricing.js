@@ -36,7 +36,7 @@ const Pricing = () => {
                         >
                             <SVG id={'ppc-automate-icon'}/>
                             <div>Automate Ads</div>
-                            <span>PPC Automate</span>
+                            <span>PPC Automation</span>
                         </li>
 
                         <li

@@ -174,7 +174,7 @@ const AuthorizedUser = (props) => {
                     <div className="main-container">
                         <ErrorBar/>
 
-                        {(pathname === '/ppc/optimization' ||
+                        {(pathname === '/ppc/automation' ||
                             pathname === '/ppc/report' ||
                             pathname === '/ppc/scanner' ||
                             pathname === '/ppc/optimization-loading'
@@ -198,7 +198,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute
                                         exact
-                                        path="/ppc/optimization"
+                                        path="/ppc/automation"
                                         render={() => {
                                             return (<OptimizationFormAdmin/>)
                                         }}
@@ -207,7 +207,7 @@ const AuthorizedUser = (props) => {
                                         exact
                                         path="/ppc/optimization-loading"
                                         render={() => {
-                                            return (<Redirect to={'/ppc/optimization'}/>)
+                                            return (<Redirect to={'/ppc/automation'}/>)
                                         }}
                                     />
                                     <ConnectedAmazonRoute

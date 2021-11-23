@@ -254,7 +254,34 @@ const ProductPrice = ({product}) => {
 }
 
 const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disableButton, stripeId, user, importStatus, onSubscribe, onCancelSubscribe, onReactivateSubscribe, onStartTrial}) => {
-    if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
+    const renderDate = (date) => moment(date).format('MMM DD, YYYY')
+
+    if (!subscribedProduct.eligible_for_subscription) {
+        return (<>
+            <button
+                disabled
+                className={'btn default'}
+            >
+                Subscribe
+            </button>
+
+            <p>PPC Automation is only accessible for Sellers with Ad Spend more than $1,000 per month. <br/> You can
+                start by creating professionally structured PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero
+                    to Hero</Link>.</p>
+        </>)
+    } else if (!importStatus.ppc_automate.required_parts_ready) {
+        return <>
+            <button
+                disabled
+                className={'btn default'}
+            >
+                Subscribe
+            </button>
+
+            <p>PPC Automation tool is not ready to use yet. We are currently syncing data from your Amazon account with
+                our system.</p>
+        </>
+    } else if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
         return <button
             disabled={disableButton}
             className={'btn default'}
@@ -263,11 +290,19 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
             Start Free Trial
             {disableButton && <Spin size={'small'}/>}
         </button>
+    } else if (!user.free_trial_available && subscribedProduct && subscribedProduct.stripe_status == null) {
+        return <button disabled className={'btn default'}>
+            Starting Free Trial
+            <Spin size={'small'}/>
+        </button>
     } else if (!mwsConnected || !ppcConnected) {
         return <button disabled className={'btn default'}>Subscribe</button>
     } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
-        return <button className="btn default on-subscribe" onClick={onSubscribe}
-                       disabled={disableButton || !subscribedProduct.eligible_for_subscription}>
+        return <button
+            className="btn default on-subscribe"
+            onClick={onSubscribe}
+            disabled={disableButton || !subscribedProduct.eligible_for_subscription}
+        >
             Subscribe
             {disableButton && <Spin size={'small'}/>}
         </button>
@@ -279,7 +314,7 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
 
             <p>You will have access to the software until the end of this billing cycle.</p>
         </>)
-    } else if (product.grace_period && product.grace_period.on_grace_period) {
+    } else if (product.cancelled) {
         return (<>
                 <button className={'btn default'} onClick={onReactivateSubscribe}>
                     Reactivate
@@ -287,7 +322,7 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
 
                 <p>
                     You will have access to the software until
-                    the {product.grace_period.on_grace_period_until && moment(product.grace_period.on_grace_period_until).format('MMM DD, YYYY')}.
+                    the {product.on_trial ? renderDate(product.trial_ends_at) : product.ends_at ? renderDate(product.ends_at) : renderDate(product.grace_period.on_grace_period_until)}.
                 </p>
             </>
         )

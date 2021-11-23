@@ -1,6 +1,6 @@
 export const subscriptionProducts = [
     {
-        productName: 'PPC Automate',
+        productName: 'PPC Automation',
         key: 'ppc',
     }
 ]

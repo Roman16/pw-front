@@ -27,8 +27,8 @@ const services = [
         link: '/zero-to-hero/campaign'
     },
     {
-        title: 'PPC Optimization',
-        key: 'optimization',
+        title: 'PPC Automation',
+        key: 'automation',
         description: 'A PPC automation tool powered by AI to optimize your Amazon campaigns and reach your Advertising goals',
         icon: () => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
             <mask id="mask0_21048:66604" maskUnits="userSpaceOnUse" x="0" y="0" width="22"
@@ -45,7 +45,7 @@ const services = [
             </g>
         </svg>
         ,
-        link: '/ppc/optimization'
+        link: '/ppc/automation'
     },
     {
         title: 'Analytics',

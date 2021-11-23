@@ -9,7 +9,7 @@ import {userActions} from "../../../actions/user.actions"
 
 let intervalId
 
-const StartFreeTrialWindow = ({visible}) => {
+const StartFreeTrialWindow = ({visible, startProcessing}) => {
     const [processing, setProcessing] = useState(false)
     const dispatch = useDispatch()
 
@@ -46,17 +46,24 @@ const StartFreeTrialWindow = ({visible}) => {
 
             <img src={img} alt=""/>
 
-            <h3>Hello!</h3>
+            <h3>{startProcessing ? 'Free Trial is starting!' : 'Hello!'}</h3>
 
-            <p>
-                In order to start the 14-days free trial <br/> please click this button below.
-            </p>
+            {startProcessing ?
+                <p>
+                    We're currently starting your free trial for PPC Automation tool. <br/> It may take couple of minutes to
+                    complete.
+                </p>
+                :
+                <p>
+                    In order to start the 14-days free trial <br/> please click this button below.
+                </p>}
 
-            <button className={'btn default'} onClick={handleOk} disabled={processing}>
-                Start My Free Trial
+            {startProcessing ? <div className={'start-loading'}><Spin/></div> :
+                <button className={'btn default'} onClick={handleOk} disabled={processing}>
+                    Start My Free Trial
 
-                {processing && <Spin size={'small'}/>}
-            </button>
+                    {processing && <Spin size={'small'}/>}
+                </button>}
         </ModalWindow>
     )
 }

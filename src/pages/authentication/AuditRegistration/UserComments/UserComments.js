@@ -33,7 +33,7 @@ const comments = [
         userName: 'Vasily Korobkin,',
         userRole: 'Divelux, CEO',
         userAvatar: VasilyKorobkinAvatar,
-        comment: `Finding a way into the top of page 1 results and directing major demand is an art form of <span>Profit Whales</span>. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are <span>real professionals</span> in regards not only to PPC optimization but also in the field of Amazon itself.`,
+        comment: `Finding a way into the top of page 1 results and directing major demand is an art form of <span>Profit Whales</span>. Our in-house Amazon marketing was adequate, but we needed some external knowledge to break the ice - the guys from Profit Whales are <span>real professionals</span> in regards not only to PPC Automation but also in the field of Amazon itself.`,
         caseLink: 'https://blog.profitwhales.com/studies/zero-to-hero/',
     },
     {

@@ -102,7 +102,7 @@ const ProductList = ({pathname}) => {
     }, [searchParams])
 
     useEffect(() => {
-        if (pathname === '/ppc/optimization' && selectedAll) {
+        if (pathname === '/ppc/automation' && selectedAll) {
             dispatch(productsActions.fetchProductDetails(productList[0]))
             selectAllHandler(false)
         } else if (pathname === '/ppc/scanner') {

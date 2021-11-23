@@ -86,7 +86,7 @@ const Sidebar = () => {
         if (collapsed) {
             window.Intercom("update", {
                 app_id: process.env.REACT_APP_INTERCOM_ID,
-                horizontal_padding: devicePixelRatio === 2 ? 160 : 210
+                horizontal_padding: devicePixelRatio === 2 ? 175 : 230
             })
         } else {
             window.Intercom("update", {

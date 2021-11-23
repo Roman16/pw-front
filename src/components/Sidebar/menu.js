@@ -29,14 +29,14 @@ export const mainMenu = [
     //     link: 'tableau'
     // },
     {
-        title: 'PPC Automate',
+        title: 'PPC Automation',
         key: 'ppc-automate',
         icon: 'ppc-automate-icon',
         link: 'ppc',
         subMenu: [
             {
                 title: 'Optimization Setup',
-                link: 'optimization'
+                link: 'automation'
             },
             {
                 title: 'Optimization Reports',

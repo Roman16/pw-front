@@ -46,7 +46,7 @@ const ProductFilters = ({
             <div className="row">
                 {pathname !== '/ppc/scanner' && <div className="product-selected">
                     <div className="select-switch">
-                        {pathname !== '/ppc/optimization' && <button
+                        {pathname !== '/ppc/automation' && <button
                             className={selectedAll && 'active'}
                             onClick={() => onSelectAll(true)}
                         >

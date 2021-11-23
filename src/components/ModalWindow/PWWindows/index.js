@@ -6,6 +6,7 @@ import ReportsChangesCountWindow from "./ReportsChangesCountWindow"
 import {useSelector} from "react-redux"
 import OnlyDesktopWindow from "./OnlyDesktopWindow"
 import {mobileCheck} from "../../../utils/mobileCheck"
+import SmallSpend from "./SmallSpend"
 
 const PWWindows = ({pathname}) => {
     const [visibleWindow, setVisibleWindow] = useState(null)
@@ -24,13 +25,15 @@ const PWWindows = ({pathname}) => {
     useEffect(() => {
         if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
-            (pathname.includes('/ppc/optimization' || pathname.includes('/ppc/report')) && !importStatus.ppc_automate.required_parts_ready) ||
+            (pathname.includes('/ppc/automation' || pathname.includes('/ppc/report')) && !importStatus.ppc_automate.required_parts_ready) ||
             (pathname.includes('/ppc/product-settings') && !importStatus.products_info.required_parts_ready) ||
             (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (user.user.free_trial_available) {
+        } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription) {
+            setVisibleWindow('smallSpend')
+        } else if (user.user.free_trial_available || (user.user.free_trial_available === false && subscribedProduct && subscribedProduct.stripe_status == null)) {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
@@ -61,6 +64,7 @@ const PWWindows = ({pathname}) => {
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <StartFreeTrialWindow
                 visible={visibleWindow === 'freeTrial'}
                 onClose={closeWindowHandler}
+                startProcessing={user.user.free_trial_available === false && subscribedProduct && subscribedProduct.stripe_status == null}
             />}
 
             {(!pathname.includes('/account') &&
@@ -74,9 +78,9 @@ const PWWindows = ({pathname}) => {
                 visible={visibleWindow === 'onlyDesktop'}
             />}
 
-            {/*{pathname.includes('/ppc/') && <SmallSpend*/}
-            {/*    visible={visibleWindow === 'smallSpend'}*/}
-            {/*/>}*/}
+            {pathname.includes('/ppc/') && <SmallSpend
+                visible={visibleWindow === 'smallSpend'}
+            />}
 
             <ReportsChangesCountWindow
                 visible={visibleWindow === 'newReportsCount'}

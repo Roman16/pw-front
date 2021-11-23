@@ -337,7 +337,7 @@ const ZTHLanding = () => {
                 <div className="container description">
                     <div className="col">
                         <h2>
-                            ZTH + PPC Automate is the secret sauce
+                            ZTH + PPC Automation is the secret sauce
                         </h2>
 
                         <p>

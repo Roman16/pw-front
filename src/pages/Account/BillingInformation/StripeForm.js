@@ -209,7 +209,7 @@ class StripeForm extends Component {
     }
 
     render() {
-        const {card, isNewCard, updateProcessing, onDelete, deleteProcessing} = this.props,
+        const {card, isNewCard, updateProcessing, onDelete, deleteProcessing, requiredForSubscribe} = this.props,
             {defaultCard, autofocus, expiry, card_number, cvc, paymentDetails, localProcessing, errorFields} = this.state
 
         return (<>
@@ -316,6 +316,7 @@ class StripeForm extends Component {
 
                     <Checkbox
                         checked={defaultCard}
+                        disabled={requiredForSubscribe}
                         onChange={this.changeDefaultHandler}
                     >
                         Default Payment Method
@@ -384,6 +385,7 @@ class StripeForm extends Component {
                             placeholder='Country'
                             showSearch
                             optionFilterProp="children"
+                            getPopupContainer={trigger => trigger.parentNode}
                             filterOption={(input, option) =>
                                 option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                             }
@@ -396,7 +398,7 @@ class StripeForm extends Component {
 
                     {isNewCard ? <button className="btn default" disabled={updateProcessing || localProcessing}
                                          onClick={this.handleSubmit}>
-                            Add Payment Method
+                            {requiredForSubscribe ? 'Add Card' : 'Add Payment Method'}
 
                             {(updateProcessing || localProcessing) && <Spin size={'small'}/>}
                         </button>

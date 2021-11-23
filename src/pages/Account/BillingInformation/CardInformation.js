@@ -6,7 +6,7 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
     : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
 
-const CardInformation = ({card, isNewCard, updateProcessing,deleteProcessing, onAddCard, onUpdateCard, onDelete}) => {
+const CardInformation = ({card, isNewCard, updateProcessing,deleteProcessing,requiredForSubscribe = false, onAddCard, onUpdateCard, onDelete}) => {
     return (<section>
         <StripeProvider apiKey={stripeKey}>
             <Elements>
@@ -15,6 +15,7 @@ const CardInformation = ({card, isNewCard, updateProcessing,deleteProcessing, on
                     isNewCard={isNewCard}
                     updateProcessing={updateProcessing}
                     deleteProcessing={deleteProcessing}
+                    requiredForSubscribe={requiredForSubscribe}
 
                     onAddCard={onAddCard}
                     onUpdateCard={onUpdateCard}

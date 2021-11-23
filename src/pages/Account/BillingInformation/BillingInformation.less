@@ -7,7 +7,7 @@
     bottom: 0;
   }
 
-  ul {
+  & > ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(17.857142857142858rem, 1fr));
     grid-gap: 10px;
@@ -485,7 +485,7 @@
   @media (max-width: 850px) {
     overflow: hidden;
 
-    ul {
+    & > ul {
       width: 100%;
       display: flex;
       overflow: auto;

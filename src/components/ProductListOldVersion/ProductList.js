@@ -112,7 +112,7 @@ class ProductList extends Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.props.pathname !== prevProps.pathname) {
-            if (this.props.pathname === '/ppc/optimization' && this.state.onlyHasNew) {
+            if (this.props.pathname === '/ppc/automation' && this.state.onlyHasNew) {
                 this.setState({
                     paginationParams: {
                         ...this.state.paginationParams,

@@ -31,7 +31,7 @@ const popularArticles = [
         url: 'https://intercom.help/profitwhales/en/articles/4162147-zero-to-hero-zth-campaigns-structure'
     },
     {
-        title: 'PPC Automate: Optimization Strategies',
+        title: 'PPC Automation: Optimization Strategies',
         url: 'https://intercom.help/profitwhales/en/articles/4234621-ppc-automate-optimization-strategies'
     },
     {

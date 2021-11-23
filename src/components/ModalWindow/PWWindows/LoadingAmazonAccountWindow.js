@@ -8,7 +8,7 @@ import {userService} from "../../../services/user.services"
 let intervalId = null
 
 const serviceTitle = {
-    optimization: 'PPC Automate',
+    optimization: 'PPC Automation',
     dayparting: 'Dayparting',
     analytics: 'Analytics',
     productSettings: 'Products Info',
@@ -105,7 +105,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
 
 
     useEffect(() => {
-        if (pathname.includes('/ppc/optimization') || pathname.includes('/ppc/report')) setCurrentService('optimization')
+        if (pathname.includes('/ppc/automation') || pathname.includes('/ppc/report')) setCurrentService('optimization')
         else if (pathname.includes('/ppc/dayparting')) setCurrentService('dayparting')
         else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
         else if (pathname.includes('/analytics')) setCurrentService('analytics')
