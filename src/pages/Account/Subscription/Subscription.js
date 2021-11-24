@@ -227,6 +227,7 @@ const Subscription = () => {
             await userService.startFreeTrial()
 
             fetchSubscriptions()
+            dispatch(userActions.getPersonalUserInfo())
         } catch (e) {
             console.log(e)
         }

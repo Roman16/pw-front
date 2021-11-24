@@ -11,7 +11,7 @@ const serviceTitle = {
     optimization: 'PPC Automation',
     dayparting: 'Dayparting',
     analytics: 'Analytics',
-    productSettings: 'Products Info',
+    productSettings: 'PPC Automation',
     zth: 'Zero to Hero',
 }
 
