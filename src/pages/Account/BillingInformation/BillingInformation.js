@@ -17,7 +17,7 @@ const BillingInformation = () => {
         [activeCardIndex, setActiveCardIndex] = useState(0),
         [fetchingProcessing, setFetchingProcessing] = useState(true),
         [defaultProcessing, setDefaultProcessing] = useState(false),
-        [deleteProcessing, setDeleteProcessing] = useState(false),
+        [deleteProcessing, setDeleteProcessing] = useState([]),
         [updateProcessing, setUpdateProcessing] = useState(false),
         [newCardValue, setNewCardValue] = useState({
             name: '',
@@ -58,7 +58,7 @@ const BillingInformation = () => {
     }
 
     const deleteCardHandler = async (id) => {
-        setDeleteProcessing(id)
+        setDeleteProcessing(prevState => [...prevState, id])
         try {
             await userService.deletePaymentMethod(id)
 
@@ -72,12 +72,11 @@ const BillingInformation = () => {
             }
 
             if (_.findIndex(addedCardsList, {id: id}) === activeCardIndex) setActiveCardIndex(0)
-
         } catch (e) {
             console.log(e)
         }
 
-        setDeleteProcessing(false)
+        setDeleteProcessing(prevState => [...prevState.filter(i => i !== id)])
     }
 
     const setDefaultCardHandler = async (id) => {
@@ -124,11 +123,9 @@ const BillingInformation = () => {
 
         try {
             if (isDefault && !addedCardsList[activeCardIndex].default) setDefaultCardHandler(card.stripe_token)
+
             const res = await userService.updatePaymentMethod(card)
-            setAddedCardsList(mapCards(res.map((i, index) => {
-                if (index === 0 && isDefault) i.default = true
-                return i
-            })))
+            setAddedCardsList(mapCards(res))
 
             notification.success({title: 'Completed'})
         } catch (e) {
@@ -156,6 +153,7 @@ const BillingInformation = () => {
             />
 
             <CardInformation
+                cardList={addedCardsList}
                 card={addedCardsList[activeCardIndex] ? {...addedCardsList[activeCardIndex]} : newCardValue}
                 isNewCard={addedCardsList.length === activeCardIndex}
                 updateProcessing={updateProcessing}

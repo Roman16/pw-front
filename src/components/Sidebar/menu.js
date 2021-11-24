@@ -35,11 +35,11 @@ export const mainMenu = [
         link: 'ppc',
         subMenu: [
             {
-                title: 'Optimization Setup',
+                title: 'Set up Automation',
                 link: 'automation'
             },
             {
-                title: 'Optimization Reports',
+                title: 'Automation Reports',
                 link: 'report'
             },
             {

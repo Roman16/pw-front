@@ -22,7 +22,7 @@ const AddedCards = ({cards, activeCardIndex, defaultProcessing, deleteProcessing
                                             onClick={() => onSetActive(index)}>
                 <div className="row">
                     {card.brand === 'visa' ? <VisaLogo/> : <MasterLogo/>}
-                    {(defaultProcessing === card.id || deleteProcessing === card.id) ?
+                    {(defaultProcessing === card.id || deleteProcessing.includes(card.id)) ?
                         <Spin size={'small'}/> : card.default && <IsDefaultIcon/>}
 
                     <Dropdown

@@ -299,6 +299,17 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
         </button>
     } else if (!mwsConnected || !ppcConnected) {
         return <button disabled className={'btn default'}>Subscribe</button>
+    } else if (!user.free_trial_available && !subscribedProduct.has_access) {
+        return (<>
+            <button className={'btn default'} disabled>
+                Subscribe
+            </button>
+
+            <p>
+                It looks like your trial has expired, or you didn’t renew your subscription plan. <br/>
+                Please upgrade to Pro subscription to continue using Sponsoreds Software.
+            </p>
+        </>)
     } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
         return <button
             className="btn default on-subscribe"

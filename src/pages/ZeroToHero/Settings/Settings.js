@@ -10,6 +10,7 @@ import CreateSuccessWindow from "./CreateSuccessWindow"
 import {history} from "../../../utils/history"
 import PaymentSuccessWindow from "./PaymentSuccessWindow"
 import {Link} from "react-router-dom"
+import {notification} from "../../../components/Notification"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -97,6 +98,8 @@ const Settings = (props) => {
 
     useEffect(() => {
         if (selectedTab === 'zth-products') {
+            notification.warning({description: 'Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns that weren’t created by our software to prevent the competition.'})
+
             intervalId = setInterval(() => {
                 getProductsList()
             }, 30000)
@@ -111,11 +114,6 @@ const Settings = (props) => {
 
     return (
         <div className="zth-settings">
-            {selectedTab === 'zth-products' && <div className="description">
-                Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns that
-                weren’t created by our software to prevent the competition.
-            </div>}
-
             <ul className="tabs">
                 <li
                     className={`tab ${selectedTab === 'zth-products' ? 'active' : ''}`}

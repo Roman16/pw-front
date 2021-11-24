@@ -49,6 +49,8 @@ const checkChanges = (prevState, currentState) => {
     })
 }
 
+let dataFromProps = {}
+
 class StripeForm extends Component {
     state = {
         localProcessing: false,
@@ -198,18 +200,31 @@ class StripeForm extends Component {
 
     }
 
-    componentDidUpdate() {
-        if (this.state.paymentDetails.id !== this.props.card.id) this.setState({
-            paymentDetails: {
-                ...this.props.card,
-                expiry: `${this.props.card.exp_month}/${moment(this.props.card.exp_year, 'YYYY').format('YY')}`
-            },
-            defaultCard: this.props.card.default === undefined ? true : this.props.card.default
-        })
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.paymentDetails.id !== this.props.card.id) {
+            this.setState({
+                paymentDetails: {
+                    ...this.props.card,
+                    expiry: `${this.props.card.exp_month}/${moment(this.props.card.exp_year, 'YYYY').format('YY')}`
+                },
+                defaultCard: this.props.card.default === undefined ? true : this.props.card.default
+            })
+        }
+
+        if (this.props.card.default === true || this.props.card.default === false) {
+            if (this.state.defaultCard !== this.props.card.default && this.props.card.default !== dataFromProps.default) {
+                dataFromProps = {default: this.props.card.default}
+
+                this.setState({
+                    defaultCard: this.props.card.default === undefined ? true : this.props.card.default
+                })
+            }
+        }
     }
 
+
     render() {
-        const {card, isNewCard, updateProcessing, onDelete, deleteProcessing, requiredForSubscribe} = this.props,
+        const {card, cardList, isNewCard, updateProcessing, onDelete, deleteProcessing, requiredForSubscribe} = this.props,
             {defaultCard, autofocus, expiry, card_number, cvc, paymentDetails, localProcessing, errorFields} = this.state
 
         return (<>
@@ -316,7 +331,7 @@ class StripeForm extends Component {
 
                     <Checkbox
                         checked={defaultCard}
-                        disabled={requiredForSubscribe}
+                        disabled={requiredForSubscribe || cardList.length === 0}
                         onChange={this.changeDefaultHandler}
                     >
                         Default Payment Method
@@ -414,10 +429,11 @@ class StripeForm extends Component {
                             {(updateProcessing || localProcessing) && <Spin size={'small'}/>}
                         </button>}
 
-                    {!isNewCard && <button disabled={deleteProcessing} className={'btn transparent delete-card'}
-                                           onClick={() => onDelete(card.id)}>
+                    {!isNewCard &&
+                    <button disabled={deleteProcessing.includes(card.id)} className={'btn transparent delete-card'}
+                            onClick={() => onDelete(card.id)}>
                         Delete this payment method
-                        {deleteProcessing && <Spin size={'small'}/>}
+                        {deleteProcessing.includes(card.id) && <Spin size={'small'}/>}
                     </button>}
                 </div>
             </div>

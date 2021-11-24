@@ -25,8 +25,8 @@ const ConfirmChangeProductWindow = ({visibleWindow, onClose, onChange}) => {
     >
         <h2>Are you sure you want to change the product for ZTH?</h2>
         <p>
-            Settings you've provided will be saved, but you will need to check Seed Keywords to make sure that they are
-            relevant to the new product.
+            All settings you have provided will be saved, but Seed Keywords will be cleared. You will need to enter new
+            Seed Keywords that are relevant to new selected product.
         </p>
 
         <div className="actions">
