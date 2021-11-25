@@ -81,6 +81,8 @@
       padding: 0 15px;
 
       svg {
+        width: 1rem;
+        height: 1rem;
         stroke: #fff;
         margin: 0 12px 0 0;
       }
@@ -106,12 +108,16 @@
         font-weight: 600;
         font-size: 1rem;
         color: #5B586F;
+
+        &:hover {
+          color: #312C51;
+        }
       }
     }
 
     .keywords-list {
       width: 100%;
-      height: 225px;
+      max-height: 247px;
       flex: 1;
       border: 1px solid #C9CBD4;
       box-sizing: border-box;
@@ -119,6 +125,10 @@
       display: flex;
       flex-direction: column;
       margin-top: 10px;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        max-height: 228px;
+      }
 
 
       .header {

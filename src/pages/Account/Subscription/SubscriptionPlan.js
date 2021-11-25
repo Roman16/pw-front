@@ -211,7 +211,7 @@ const CouponField = ({applyCoupon, setCoupon, product}) => {
     }
 }
 
-const ProductPrice = ({product}) => {
+export const ProductPrice = ({product}) => {
     if (product.status === 'not_connect') {
         return (<div className={'price'}>
             ---
@@ -299,6 +299,15 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
         </button>
     } else if (!mwsConnected || !ppcConnected) {
         return <button disabled className={'btn default'}>Subscribe</button>
+    } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
+        return <button
+            className="btn default on-subscribe"
+            onClick={onSubscribe}
+            disabled={disableButton}
+        >
+            Subscribe
+            {disableButton && <Spin size={'small'}/>}
+        </button>
     } else if (!user.free_trial_available && !subscribedProduct.has_access) {
         return (<>
             <button className={'btn default'} disabled>
@@ -310,15 +319,6 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
                 Please upgrade to Pro subscription to continue using Sponsoreds Software.
             </p>
         </>)
-    } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
-        return <button
-            className="btn default on-subscribe"
-            onClick={onSubscribe}
-            disabled={disableButton || !subscribedProduct.eligible_for_subscription}
-        >
-            Subscribe
-            {disableButton && <Spin size={'small'}/>}
-        </button>
     } else if (mwsConnected && ppcConnected && product.has_access && !product.cancelled) {
         return (<>
             <button className={'btn cancel'} onClick={onCancelSubscribe}>

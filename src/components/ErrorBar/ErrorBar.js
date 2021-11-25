@@ -53,7 +53,7 @@ const ErrorBar = () => {
                     position={'bottomRight'}
                     type={'custom'}
                     className={'trial-tooltip'}
-                    description={'Hey Profit Whaler, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
+                    description={'Hey there, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
                 Free Trial

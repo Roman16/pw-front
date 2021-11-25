@@ -75,13 +75,23 @@ const CreatingCampaign = () => {
             })
         } else if (step >= 2 && (budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
             setCurrentStep(1)
-            notification.error({title: 'Please enter correct value!'})
 
-            if (budget < 1 || budget > 1000000) setInvalidField(prevState => [...prevState, 'daily_budget'])
-            if (bid < 0.02 || bid > 1000) setInvalidField(prevState => [...prevState, 'default_bid'])
+            if ((budget < 1 || budget > 1000000) && (bid < 0.02 || bid > 1000)) {
+                notification.error({title: 'Please enter correct Daily Budget'})
+                setInvalidField(prevState => [...prevState, 'daily_budget', 'default_bid'])
+            } else if (budget < 1 || budget > 1000000) {
+                setInvalidField(prevState => [...prevState, 'daily_budget'])
+                notification.error({title: 'Please enter correct Daily Budget'})
+            } else if (bid < 0.02 || bid > 1000) {
+                setInvalidField(prevState => [...prevState, 'default_bid'])
+                notification.error({title: 'Please enter correct Default Bid'})
+            }
 
             setTimeout(() => {
-                document.querySelector('.error-field').scrollIntoView({block: "center", behavior: "smooth"})
+                document.querySelector('.error-field') && document.querySelector('.error-field').scrollIntoView({
+                    block: "center",
+                    behavior: "smooth"
+                })
             }, 10)
         } else if (step === 4) {
             createCampaignHandler()

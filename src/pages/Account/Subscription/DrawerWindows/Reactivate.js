@@ -1,18 +1,17 @@
-import React from 'react';
-import {Spin} from "antd";
+import React from 'react'
+import {Spin} from "antd"
 
-const Reactivate = ({date, disableReactivateButtons, onOk, onCancel}) => {
+const Reactivate = ({disableReactivateButtons, onOk, onCancel}) => {
     return (
         <div>
-            <h3 className="reactivate-title">Account reactivation</h3>
-            <p className="reactivate-text">
+            <h2>Account reactivation</h2>
+            <p>
                 This action will lead to subscription reactivation. Please <br/> confirm this action.
             </p>
 
             <div className={`actions`}>
-
                 <button
-                    className='btn white'
+                    className='btn grey'
                     onClick={onCancel}
                     disabled={disableReactivateButtons}
                 >
@@ -30,7 +29,7 @@ const Reactivate = ({date, disableReactivateButtons, onOk, onCancel}) => {
             </div>
 
         </div>
-    );
-};
+    )
+}
 
-export default Reactivate;
+export default Reactivate
