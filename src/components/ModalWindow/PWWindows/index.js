@@ -33,7 +33,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('onlyDesktop')
         } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription) {
             setVisibleWindow('smallSpend')
-        } else if (user.user.free_trial_available || (user.user.free_trial_available === false && subscribedProduct && subscribedProduct.stripe_status == null)) {
+        } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
@@ -64,7 +64,6 @@ const PWWindows = ({pathname}) => {
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <StartFreeTrialWindow
                 visible={visibleWindow === 'freeTrial'}
                 onClose={closeWindowHandler}
-                startProcessing={user.user.free_trial_available === false && subscribedProduct && subscribedProduct.stripe_status == null}
             />}
 
             {(!pathname.includes('/account') &&
