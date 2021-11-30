@@ -277,11 +277,7 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
                 Subscribe
             </button>
 
-            <p>
-                PPC Automation is only accessible for Sellers with Ad Spend more than $1,000 per month. <br/> You can
-                start by creating professionally structured PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero
-                to Hero</Link>.
-            </p>
+            <p>{subscribedProduct.ineligible_for_subscription_reason}</p>
         </>)
     } else if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
         return <button
@@ -297,9 +293,7 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
             Starting Free Trial
             <Spin size={'small'}/>
         </button>
-    } else if (!mwsConnected || !ppcConnected) {
-        return <button disabled className={'btn default'}>Subscribe</button>
-    } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
+    }  else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
         return <button
             className="btn default on-subscribe"
             onClick={onSubscribe}
