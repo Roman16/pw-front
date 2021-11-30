@@ -243,23 +243,26 @@ const OptimizationForAdmin = () => {
         prevProduct = selectedProduct
 
         try {
-            const res = await productsServices.getProductDetails(productId, source.token)
-            if (res.status === 'STOPPED') {
-                res.optimization_strategy = null
+            const {result} = await productsServices.getProductDetails(productId, source.token)
+
+            const product = result.optimization_jobs[0]
+
+            if (product.status === 'STOPPED') {
+                product.optimization_strategy = null
 
                 optimizationOptions.forEach(item => {
-                    res[item.value] = true
+                    product[item.value] = true
                 })
             }
             setProductInformationFromRequest({
-                ...res,
-                ...res.status === 'STOPPED' && defaultOptimizationVariations,
+                ...product,
+                ...product.status === 'STOPPED' && defaultOptimizationVariations,
                 product_id: productId
 
             })
             setProductInformation({
-                ...res,
-                ...res.status === 'STOPPED' && defaultOptimizationVariations,
+                ...product,
+                ...product.status === 'STOPPED' && defaultOptimizationVariations,
                 product_id: productId
             })
         } catch (e) {
@@ -331,13 +334,15 @@ const OptimizationForAdmin = () => {
     const setProductCogs = async () => {
         if (productId) {
             try {
-                const res = await productsServices.getProductDetails(productId, source.token)
+                const {result} = await productsServices.getProductDetails(productId, source.token)
+
+                const product = result.optimization_jobs[0]
 
                 setProductInformationFromRequest({
                     ...productInformationFromRequest,
                     default_variation: {
                         ...productInformationFromRequest.default_variation,
-                        cogs: res.default_variation.cogs
+                        cogs: product.default_variation.cogs
                     }
                 })
 
@@ -345,7 +350,7 @@ const OptimizationForAdmin = () => {
                     ...productInformation,
                     default_variation: {
                         ...productInformation.default_variation,
-                        cogs: res.default_variation.cogs
+                        cogs: product.default_variation.cogs
                     }
                 })
             } catch (e) {
@@ -441,10 +446,7 @@ const OptimizationForAdmin = () => {
                 optimization_strategy: null
             }
 
-            await productsServices.updateProductById({
-                ...product,
-                optimization_strategy: 'AchieveTargetACoS',
-            })
+            await productsServices.stopProductOptimization(productInformation.product_id)
 
             setProductInformationFromRequest(product)
             setProductInformation(product)
@@ -473,7 +475,6 @@ const OptimizationForAdmin = () => {
                             ...productInformation,
                             status: 'RUNNING'
                         }
-
 
                         const custom_campaigns_settings = campaignSettings.map(item => {
                                 return ({

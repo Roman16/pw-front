@@ -48,17 +48,20 @@ export const userUrls = {
 }
 
 export const productsUrls = {
-    allProducts: 'products/list',
     productsSettingsList: 'products/settings/list',
     updateSettings: 'products/settings',
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
-    productDetails: (id) => `products/${id}/details`,
     campaignsSettingList: (id) => `ppc-automation/${id}/custom-campaign-settings`,
     productCogs: 'products-data/cogs',
     productAmazonFees: 'products-data/fees',
     defaultVariation: 'products-data/variations/set-default-variation',
-    updateVariation: 'products-data/prices/overridden-price'
+    updateVariation: 'products-data/prices/overridden-price',
+
+    allProducts: 'v2/ppc-automation/products',
+    productDetails: (id) => `v2/ppc-automation/products/${id}/automation-params`,
+    stopOptimization: (id) => `v2/ppc-automation/products/${id}/automation-stop`,
+    startOptimization: (id) => `v2/ppc-automation/products/${id}/automation-start`,
 }
 
 export const reportsUrls = {

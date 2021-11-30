@@ -33,8 +33,9 @@ function fetchProducts(paginationParams) {
         dispatch(switchFetching(true))
 
         productsServices.getProducts(paginationParams)
-            .then(res => {
-                if (res.totalSize > 0 && !res.result) {
+            .then(({result}) => {
+
+                if (result.total_count > 0 && !result.products) {
                     localStorage.setItem('productsSearchParams', JSON.stringify({
                         ...JSON.parse(localStorage.getItem('productsSearchParams')),
                         page: 1,
@@ -44,17 +45,19 @@ function fetchProducts(paginationParams) {
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
                             result: [],
-                            totalSize: res.totalSize,
+                            totalSize: result.total_count,
                             fetching: false
                         }
                     })
 
                     dispatch(fetchProducts({...paginationParams, page: 1}))
-                } else if (res.totalSize > 0) {
+                } else if (result.total_count) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
-                            ...res,
+                            ...result,
+                            totalSize: result.total_count,
+                            result: result.products,
                             fetching: false
                         }
                     })
