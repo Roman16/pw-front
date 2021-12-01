@@ -71,7 +71,7 @@ const Profile = () => {
                         type="text"
                         placeholder={'First Name'}
                         name={'name'}
-                        value={userInformation.name}
+                        value={userInformation1.name}
 
                         onChange={changeInputHandler}
                     />
