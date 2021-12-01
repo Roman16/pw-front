@@ -245,7 +245,7 @@ const OptimizationForAdmin = () => {
         try {
             const {result} = await productsServices.getProductDetails(productId, source.token)
 
-            const product = result.optimization_jobs[0]
+            const product = result.optimization_jobs
 
             if (product.status === 'STOPPED') {
                 product.optimization_strategy = null
@@ -336,7 +336,7 @@ const OptimizationForAdmin = () => {
             try {
                 const {result} = await productsServices.getProductDetails(productId, source.token)
 
-                const product = result.optimization_jobs[0]
+                const product = result.optimization_jobs
 
                 setProductInformationFromRequest({
                     ...productInformationFromRequest,
