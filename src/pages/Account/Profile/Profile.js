@@ -10,7 +10,8 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
 
 const Profile = () => {
-    const [userInformation, setUserInformation] = useState({}),
+    const
+        // [userInformation, setUserInformation] = useState({}),
         [saveProcessing, setSaveProcessing] = useState(false),
         [errorFields, setErrorFields] = useState([])
 
