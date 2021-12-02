@@ -2,50 +2,25 @@ import React, {Component} from 'react'
 
 export default class ErrorBoundary extends Component {
     state = {
-        error: '',
-        errorInfo: '',
         hasError: false,
+        error: {message: '', stack: ''},
+        info: {componentStack: ''}
     }
 
-    static getDerivedStateFromError(error) {
-        console.log(error)
-
-        return {hasError: true, error}
+    static getDerivedStateFromError = error => {
+        return {hasError: true}
     }
 
-    componentDidCatch(error, errorInfo) {
-        this.setState({error, errorInfo, hasError: true})
+    componentDidCatch = (error, info) => {
+        this.setState({error, info})
     }
 
     render() {
-        const {hasError, errorInfo} = this.state
+        const {hasError, error, info} = this.state
+        const {children} = this.props
 
-        if (hasError) {
-            return (
-                <div className="card my-5">
-                    <div className="card-header">
-                        <p>
-                            There was an error in loading this page.{' '}
-                            <span
-                                style={{cursor: 'pointer', color: '#0077FF'}}
-                                onClick={() => {
-                                    window.location.reload()
-                                }}
-                            >
-            Reload this page
-          </span>{' '}
-                        </p>
-                    </div>
-                    <div className="card-body">
-                        <details className="error-details">
-                            <summary>Click for error details</summary>
-                            {errorInfo && errorInfo.componentStack.toString()}
-                        </details>
-                    </div>
-                </div>
-            )
-        } else {
-            return this.props.children
-        }
+        console.log(hasError)
+
+        return hasError ? <div><h1>error</h1></div> : children
     }
 }

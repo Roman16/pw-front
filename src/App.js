@@ -8,15 +8,16 @@ import NotificationContainer from './components/Notification/NotificationContain
 import {SVGSource} from "./utils/icons"
 import ErrorBoundary from "./pages/ReactErrorPage/ReactErrorPage"
 
-
 function App() {
     return (
         <Provider store={store}>
             <BrowserRouter>
                 <SVGSource/>
+
                 <ErrorBoundary>
                     <Routing/>
                 </ErrorBoundary>
+
             </BrowserRouter>
             <NotificationContainer/>
         </Provider>

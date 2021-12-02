@@ -10,7 +10,8 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
 
 const Profile = () => {
-    const [userInformation, setUserInformation] = useState({}),
+    const
+        // [userInformation, setUserInformation] = useState({}),
         [saveProcessing, setSaveProcessing] = useState(false),
         [errorFields, setErrorFields] = useState([])
 
@@ -47,7 +48,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        setUserInformation({...user})
+        // setUserInformation({...user})
     }, [user])
 
     return (<section className={'profile'}>
@@ -71,7 +72,7 @@ const Profile = () => {
                         type="text"
                         placeholder={'First Name'}
                         name={'name'}
-                        value={userInformation1.name}
+                        value={userInformation.name}
 
                         onChange={changeInputHandler}
                     />
