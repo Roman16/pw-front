@@ -3,7 +3,7 @@ import USAFlag from '../../../assets/img/icons/us-flag.png'
 import {Spin} from "antd"
 import sectionIcon from '../../../assets/img/account/api-connection-icon.svg'
 
-const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onReconnect}) => {
+const SellerAccount = ({account, sellerName, onDisconnect, sellerId, deleteProcessing, onReconnect}) => {
 
     const Actions = ({account, type}) => {
         if (account[`amazon_${type}`].id) {
@@ -43,7 +43,10 @@ const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onR
         } else if (account.amazon_mws.is_connected && account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS') {
             return <span style={{color: '#f0b849'}}>Verifying</span>
         } else if (account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS') {
-            return <span style={{color: '#7FD3A1'}}>Success</span>
+            return <span style={{color: '#7FD3A1'}} className={'success'}>
+                Success <br/>
+                {sellerId && <span>Seller id: {sellerId}</span>}
+            </span>
         } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED' || account.amazon_mws.status === 'REFRESH_INVALID')) {
             return <span style={{color: '#FF5256'}}>Failed</span>
         } else {
@@ -57,7 +60,10 @@ const SellerAccount = ({account, sellerName, onDisconnect, deleteProcessing, onR
         } else if (account.amazon_ppc.is_connected && account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS') {
             return <span style={{color: '#f0b849'}}>Verifying</span>
         } else if (account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS') {
-            return <span style={{color: '#7FD3A1'}}>Success</span>
+            return <span style={{color: '#7FD3A1'}} className={'success'}>
+                Success <br/>
+                {account.amazon_ppc.account_email && <span>Email: {account.amazon_ppc.account_email}</span>}
+            </span>
         } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED' || account.amazon_ppc.status === 'REFRESH_INVALID')) {
             return <span style={{color: '#FF5256'}}>Failed</span>
         } else {
