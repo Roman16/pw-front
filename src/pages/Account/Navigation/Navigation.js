@@ -38,6 +38,10 @@ const menu = [
         title: 'API Connection',
         link: 'api-connection',
     },
+    {
+        title: 'Error Page',
+        link: 'test-route',
+    },
 ]
 
 
@@ -81,10 +85,14 @@ const Navigation = () => {
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
                 <Route exact path="/account/subscription" component={Subscription}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
+
+                <Route exact path="/account/test-route" render={() => <TestComponent/>}/>
             </div>
         </div>
     )
 }
+
+const TestComponent = ({text}) => (<p>{text.test}</p>)
 
 
 const BackLink = () => {
