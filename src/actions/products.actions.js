@@ -17,7 +17,8 @@ export const productsActions = {
     updateCampaignBudget,
     showOnlyOnDayparting,
     switchFetching,
-    setProductsList
+    setProductsList,
+    changeOptimizationStatus
 }
 
 function switchFetching(state) {
@@ -194,6 +195,15 @@ function updateCampaignBudget(product) {
     return dispatch => {
         dispatch({
             type: productsConstants.CAMPAIGN_BUDGET,
+            payload: product
+        })
+    }
+}
+
+function changeOptimizationStatus(product) {
+    return dispatch => {
+        dispatch({
+            type: productsConstants.CHANGE_OPTIMIZATION_STATUS,
             payload: product
         })
     }

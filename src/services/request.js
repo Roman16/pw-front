@@ -7,6 +7,7 @@ import {history} from '../utils/history'
 import {userService} from "./user.services"
 import {defaultImportStatus} from "../reducers/user.reducer"
 import _ from 'lodash'
+import * as Sentry from "@sentry/react"
 
 const baseUrl =
     // 'http://staging.profitwhales.com';
@@ -72,6 +73,10 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
+
+                Sentry.withScope((scope) => {
+                    Sentry.captureException(error)
+                })
 
                 if (error.response && error.response.status === 401) {
                     if (error.response.data.message === 'Incorrect login or password' || history.location.pathname.includes('/confirm-email')) {

@@ -54,8 +54,17 @@ function deleteProductCogs(recordId, productId) {
     return api('delete', `${productsUrls.productCogs}?record_id=${recordId}&product_id=${productId}`,)
 }
 
-function startProductOptimization(productId, params) {
-    return api('post', `${productsUrls.startOptimization(productId)}`, params)
+function startProductOptimization(product) {
+    const data = {
+        desired_target_acos: product.optimization_strategy === 'AchieveTargetACoS' ? product.desired_target_acos : undefined,
+        optimization_strategy: product.optimization_strategy
+    }
+
+    optimizationOptions.forEach(item => {
+        data[item.value] = product[item.value] !== null ? product[item.value] : true
+    })
+
+    return api('post', `${productsUrls.startOptimization(product.id)}`, data)
 }
 
 function stopProductOptimization(productId) {

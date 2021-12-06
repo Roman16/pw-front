@@ -1,10 +1,8 @@
-import React, {Fragment, useState} from "react"
+import React, {useState} from "react"
 import './OptimizationSettings.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {Select, Spin} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faStop} from "@fortawesome/free-solid-svg-icons"
 import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 import {productsActions} from "../../../../actions/products.actions"
@@ -82,7 +80,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                 <div className="section-header">
                     <h2>Settings</h2>
 
-                    {product.status !== 'STOPPED' && <button
+                    {product.status === 'RUNNING' && <button
                         className={'btn blue'}
                         disabled={processing}
                         onClick={confirmStopOptimization}

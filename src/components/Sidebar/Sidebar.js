@@ -10,6 +10,7 @@ import '../../style/variables.less'
 import {history} from "../../utils/history"
 import ToggleMarketplace from "./ToggleMarketplace"
 import moment from 'moment'
+import * as Sentry from "@sentry/browser"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -54,6 +55,14 @@ const Sidebar = () => {
 
         if (user.user.is_agency_client) setAgencyUser(true)
         else setAgencyUser(false)
+
+
+        Sentry.configureScope(function (scope) {
+            scope.setUser({
+                id: user.user.id,
+                email: user.user.email,
+            })
+        })
     }, [user])
 
     useEffect(() => {

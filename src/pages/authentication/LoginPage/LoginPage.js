@@ -59,7 +59,11 @@ const LoginPage = (props) => {
                 } else if (!ppcConnected && mwsConnected) {
                     history.push('/connect-ppc-account')
                 } else {
-                    history.push('/home')
+                    if (props.location.search) {
+                        history.push(new URLSearchParams(props.location.search).get('redirect'))
+                    } else {
+                        history.push('/home')
+                    }
                 }
 
                 seo({title: 'Sponsoreds'})
@@ -94,6 +98,7 @@ const LoginPage = (props) => {
             history.push('/home')
         }
     }, [])
+
 
     return (
         <div className="auth-page login-page">

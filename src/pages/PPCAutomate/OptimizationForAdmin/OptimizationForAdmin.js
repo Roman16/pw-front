@@ -254,16 +254,19 @@ const OptimizationForAdmin = () => {
                     product[item.value] = true
                 })
             }
+
             setProductInformationFromRequest({
                 ...product,
                 ...product.status === 'STOPPED' && defaultOptimizationVariations,
-                product_id: productId
+                product_id: productId,
+                ...product.product
 
             })
             setProductInformation({
                 ...product,
                 ...product.status === 'STOPPED' && defaultOptimizationVariations,
-                product_id: productId
+                product_id: productId,
+                ...product.product
             })
         } catch (e) {
             console.log(e)
@@ -451,9 +454,10 @@ const OptimizationForAdmin = () => {
             setProductInformationFromRequest(product)
             setProductInformation(product)
 
-            dispatch(productsActions.updateProduct({
+            dispatch(productsActions.changeOptimizationStatus({
                 id: productInformation.product_id,
                 status: 'STOPPED',
+                optimization_indicator_state: {level: "INDICATOR_STATUS_INFORMATIONAL", state: "STOPPED_BY_USER"}
             }))
 
             notification.error({title: 'The optimization is paused'})
@@ -466,6 +470,8 @@ const OptimizationForAdmin = () => {
 
     const startOptimizationHandler = async () => {
         setSaveProcessing(true)
+
+        console.log(productInformation)
 
         if (productInformation.optimization_strategy !== null) {
             if (productInformation.default_variation && productInformation.default_variation.cogs) {
@@ -508,12 +514,14 @@ const OptimizationForAdmin = () => {
                             })
                         }
 
-                        await productsServices.updateProductById(product)
+                        await productsServices.startProductOptimization(product)
+
                         setProductInformation(product)
 
-                        dispatch(productsActions.updateProduct({
+                        dispatch(productsActions.changeOptimizationStatus({
                             id: productInformation.product_id,
                             status: 'RUNNING',
+                            optimization_indicator_state: {level: "INDICATOR_STATUS_WARNING", state: "RUNNING_WITH_NO_CHANGES_SINCE_LAUNCHED"}
                         }))
 
                         notification.start({title: productInformationFromRequest.status === 'RUNNING' ? 'Changes saved!' : 'Optimization successfully started'})
