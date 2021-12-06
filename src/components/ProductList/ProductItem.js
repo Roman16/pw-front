@@ -65,10 +65,10 @@ const ProductItem = ({
                 </div>
 
                 <div
-                    className={`open-children-list-button ${variations ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
-                    onClick={variations && switchList}
+                    className={`open-children-list-button ${variations.length > 0 ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
+                    onClick={variations.length > 0 && switchList}
                 >
-                    {variations && <SVG id='select-icon'/>}
+                    {variations.length > 0 && <SVG id='select-icon'/>}
                 </div>
 
                 {optimization_indicator_state && <div className='optimization-status'>
@@ -78,7 +78,7 @@ const ProductItem = ({
                 </div>}
             </div>
 
-            {(variations) && (openedProduct === id) && <div className='product-children-list'>
+            {variations.length > 0 && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
                     <div className={'children-product-item'}>
                         <div className="children-indicator"/>
