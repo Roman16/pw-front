@@ -249,7 +249,7 @@ const IdentifyOption = ({match}) => {
                         <p>
                             We believe that the sustainable and data-driven marketing approach based on the synergy of
                             machine and human decisions that drives superior performance on retail platforms lies in the
-                            heart of Profit Whales company, focusing our strategy to be tied to the creation of
+                            heart of Sponsoreds company, focusing our strategy to be tied to the creation of
                             long-term value for all our stakeholders.
                         </p>
 

@@ -87,7 +87,6 @@ div.ReportTable {
     display: flex;
     flex-direction: column;
     background: #fff;
-    padding-top: 1.4285714em;
 
     .custom-table {
       flex: 1;
@@ -100,14 +99,54 @@ div.ReportTable {
         color: #343C5A;
 
         .table-head {
+          height: 3.5714285714285716rem;
+          align-items: initial;
+          border-bottom: 2px solid #C9CBD4;
+
           & > div {
-            padding-left: 15px;
+            padding-left: 0.8571428571428571rem;
+            padding-right: 0.8571428571428571rem;
+            border-left: 0.5px solid #C9CBD4;
+
+            &:nth-last-child(-n+2) {
+              border: 0;
+            }
+
+            &:first-child {
+              padding-left: 1.4285714285714286rem;
+              border: 0;
+            }
+
+
+            .title {
+              font-weight: 600;
+              font-size: 1rem;
+              color: #312C51;
+            }
           }
         }
 
         .table-body {
+          color: #5B586F;
+
           .table-body__row {
             position: relative;
+            min-height: 3.5714285714285716rem;
+            align-items: initial;
+
+            .table-body__field {
+              padding: 8px 0.8571428571428571rem;
+              border-left: 0.5px solid #C9CBD4;
+
+              &:nth-last-child(-n+2) {
+                border: 0;
+              }
+
+              &:first-child {
+                padding-left: 1.4285714285714286rem;
+                border: 0;
+              }
+            }
 
             &.new-report {
               background: #F2FBF6;
@@ -130,7 +169,6 @@ div.ReportTable {
                 background: #F2FBF6;
               }
             }
-
 
             &:hover {
               background: #FAFAFF;

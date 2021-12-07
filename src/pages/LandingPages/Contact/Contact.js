@@ -99,7 +99,7 @@ export const ContactForm = () => {
                             <Checkbox
                                 onChange={({target: {checked}}) => setAgreeWithTerms(checked)}
                             >
-                                Yes, I agree to Profit Whales <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
+                                Yes, I agree to Sponsoreds <Link to={'/terms-and-conditions'} target={'_blank'}>Terms
                                 and
                                 Conditions</Link> & <Link to={'/policy'} target={'_blank'}> Privacy Policy</Link>
                             </Checkbox>

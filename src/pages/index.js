@@ -14,29 +14,19 @@ import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 
-const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
-// const Optimization = React.lazy(() => import('./PPCAutomate/Optimization/Optimization'))
 const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
-const ProductSettings = React.lazy(() => import('./PPCAutomate/ProductSettings/ProductSettings'))
-const Dashboard = React.lazy(() => import('./PPCAutomate/Dashboard/Dashboard'))
 
 const Analytics = React.lazy(() => import('./Analytics'))
 
-
 const Account = React.lazy(() => import('./Account/Navigation/Navigation'))
 
-const Information = React.lazy(() => import('./Account/Information/Information'))
-const ApiConnection = React.lazy(() => import('./Account/ApiConnection/ApiConnection'))
-const Subscription = React.lazy(() => import('./Account/Subscription/Subscription'))
 const Home = React.lazy(() => import('./Home/Home'))
-const Scanner = React.lazy(() => import('./PPCAutomate/Scanner/Scanner'))
-const ListingTracking = React.lazy(() => import('./Notifications/ListingTracking/ListingTracking'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
@@ -47,6 +37,7 @@ const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/Product
 
 
 let timerId = null
+
 
 function throttle(func, delay) {
     let timeout = null
@@ -62,10 +53,6 @@ function throttle(func, delay) {
 }
 
 const developer = process.env.REACT_APP_ENV === "developer"
-const production = process.env.REACT_APP_ENV === "production"
-
-const isSuperAdmin = !!localStorage.getItem('adminToken')
-
 
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
@@ -113,6 +100,7 @@ const AuthorizedUser = (props) => {
     const pathname = props.location.pathname
     const [loadingUserInformation, setLoadingUserInformation] = useState(true)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+
     const {user, lastStatusAction} = useSelector(state => ({
         user: state.user,
         lastStatusAction: state.user.lastUserStatusAction,
@@ -168,13 +156,12 @@ const AuthorizedUser = (props) => {
         return (
             <Fragment>
                 <div className="main-pages">
-
                     <Sidebar props={props}/>
 
                     <div className="main-container">
                         <ErrorBar/>
 
-                        {(pathname === '/ppc/optimization' ||
+                        {(pathname === '/ppc/automation' ||
                             pathname === '/ppc/report' ||
                             pathname === '/ppc/scanner' ||
                             pathname === '/ppc/optimization-loading'
@@ -198,7 +185,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
-                                        path="/ppc/optimization"
+                                        path="/ppc/automation"
                                         render={() => {
                                             return (<OptimizationFormAdmin/>)
                                         }}
@@ -271,7 +258,7 @@ const AuthorizedUser = (props) => {
                                         component={Settings}
                                     />}
                                     {/*-------------------------------------------*/}
-
+                                    <Route exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
 
 
@@ -279,7 +266,7 @@ const AuthorizedUser = (props) => {
                                         <Redirect to={'/404'}/>
                                     )}/>
 
-                                    {/*{developer && <Route exact path="/home" component={Home}/>}*/}
+
                                     {/*<ConnectedAmazonRoute exact path="/notifications/listing-tracking"*/}
                                     {/*                      component={ListingTracking}/>*/}
                                     {/*<ConnectedAmazonRoute*/}
@@ -294,7 +281,6 @@ const AuthorizedUser = (props) => {
                         </div>
                     </div>
                 </div>
-
                 <PWWindows pathname={pathname}/>
             </Fragment>
         )

@@ -1,11 +1,10 @@
 import React from "react"
 import ModalWindow from "../ModalWindow"
 import '../ModalWindow.less'
-import img from '../../../assets/img/small-spend-image.svg'
+import img from '../../../assets/img/only-desktop-img.svg'
 import {Link} from "react-router-dom"
 
 const SmallSpend = ({visible}) => {
-
     return (
         <ModalWindow
             className={'payment-notification-window small-spend-window'}
@@ -14,30 +13,16 @@ const SmallSpend = ({visible}) => {
             visible={visible}
             handleCancel={false}
         >
+            <img src={img} alt=""/>
 
-            <div className="image">
-                <img src={img} alt=""/>
-            </div>
+            <h3>Oops!</h3>
 
-            <div className={'description'}>
-                <h3>OOPS!</h3>
-
-                <p>
-                    Unfortunately, PPC Automate is only accessible for Sellers with Ad <br/>
-                    Spend more than $1,000 per month. You can start by creating <br/>
-                    professionally structured PPC campaigns with Zero to Hero for now.
-                </p>
-
-                <div className="actions">
-                    <Link to={'/zero-to-hero/campaign'} className={'btn green-btn'}>
-                        Go To Zero To Hero
-                    </Link>
-
-                    <button className={'btn white'}>
-                        Talk to our Experts
-                    </button>
-                </div>
-            </div>
+            <p>
+                Unfortunately, PPC Automation is only accessible for <br/>
+                Sellers with Ad Spend more than $1,000 per month. <br/>
+                You can start by creating professionally structured <br/>
+                PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero to Hero</Link>.
+            </p>
         </ModalWindow>
     )
 }

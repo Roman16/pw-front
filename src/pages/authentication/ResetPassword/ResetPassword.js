@@ -69,7 +69,7 @@ const ResetPassword = (props) => {
                 localStorage.setItem('token', res.access_token)
 
                 setTimeout(() => {
-                    history.push('/account/settings')
+                    history.push('/home')
                 }, 1)
             } catch (e) {
                 console.log(e)

@@ -40,13 +40,18 @@ const routers = () => {
 
                     <Route exact path={'/404'} component={NotFound}/>
 
+                    {/*<Route path={'/'} render={(props) => {*/}
+                    {/*    if (localStorage.getItem('token')) {*/}
+                    {/*        return <AuthorizedUser {...history}/>*/}
+                    {/*    } else {*/}
+                    {/*        return <Redirect*/}
+                    {/*            to={`/login?redirect=${history.location.pathname + history.location.search}`}/>*/}
+                    {/*    }*/}
+                    {/*}*/}
+                    {/*}/>*/}
                     <Route path={'/'} render={(props) => {
-                        if (localStorage.getItem('token')) {
-                            return <AuthorizedUser {...history}/>
-                        } else {
-                            return <Redirect
-                                to={`/login?redirect=${history.location.pathname + history.location.search}`}/>
-                        }
+                        return <AuthorizedUser {...history}/>
+                       
                     }
                     }/>
                 </Switch>

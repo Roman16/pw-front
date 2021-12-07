@@ -227,6 +227,7 @@ function Report() {
                 paginationParams={paginationParams}
                 columns={mainTabs[currentTab]}
                 sorterColumn={sorterColumn}
+                filters={filters[currentTab]}
                 totalSize={totalSize}
                 filteredById={filters[currentTab].length > 0 && filters[currentTab].find(item => item.filterBy === 'keyword_id')}
 

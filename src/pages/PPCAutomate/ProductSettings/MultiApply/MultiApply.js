@@ -79,7 +79,7 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
                     />
                 </div>
 
-                <button className={'btn green p15'}>
+                <button className={'btn default p15'}>
                     Apply
 
                     {submitProcessing && <Spin size={'small'}/>}

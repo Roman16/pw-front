@@ -1,11 +1,10 @@
-import React from "react";
-import ModalWindow from "../ModalWindow";
-import '../ModalWindow.less';
+import React from "react"
+import ModalWindow from "../ModalWindow"
+import '../ModalWindow.less'
 import img from '../../../assets/img/expired-subscription-image.svg'
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 
 const SubscriptionNotificationWindow = ({visible}) => {
-
     return (
         <ModalWindow
             className={'payment-notification-window'}
@@ -15,25 +14,22 @@ const SubscriptionNotificationWindow = ({visible}) => {
             handleCancel={false}
         >
 
-            <div className="image">
-                <img src={img} alt=""/>
-            </div>
+            <img src={img} alt=""/>
 
-            <div className={'description'}>
-                <h3>Oops!</h3>
+            <h3>Oops!</h3>
 
-                <p>
-                    It looks like your trial has expired, or you didn’t renew your <br/>
-                    subscription plan. Please upgrade to Pro subscription to <br/>
-                    continue using Profit Whales Software.
-                </p>
+            <p>
+                It looks like your trial has expired, or you <br/>
+                didn’t renew your subscription plan. Please <br/>
+                upgrade to Pro subscription to continue <br/>
+                using Sponsoreds Software.
+            </p>
 
-                <Link to={'/account/subscription'} className={'btn white'}>
-                    Upgrade Now
-                </Link>
-            </div>
+            <Link to={'/account/subscription'} className={'btn default'}>
+                Upgrade Now
+            </Link>
         </ModalWindow>
     )
-};
+}
 
-export default SubscriptionNotificationWindow;
+export default SubscriptionNotificationWindow

@@ -22,7 +22,7 @@ const OptimizationVariations = ({product, onUpdateField}) => {
     return (
         <section className='optimization-variations'>
             <div className="section-header">
-                <h2>What do you want to optimize?</h2>
+                <h2>What do you want to automate?</h2>
             </div>
 
             <div className="variation-list">

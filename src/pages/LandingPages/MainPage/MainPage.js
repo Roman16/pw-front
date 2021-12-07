@@ -30,7 +30,7 @@ const sliderData = [
     },
     {
         title: 'Irakli',
-        text: 'I\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. You indicate your business goal - and the software performs changes by itself. You can\'t even imagine how much time it saves me! I finally can launch new products and forgat about PPC Optimization using these crazy, unfriendly Bulk-files. That’s it. Easy and helpfull'
+        text: 'I\'ve decided to use Profit Whales Software because of its user-friendly interface and ready-made full optimization. You indicate your business goal - and the software performs changes by itself. You can\'t even imagine how much time it saves me! I finally can launch new products and forgat about PPC Automation using these crazy, unfriendly Bulk-files. That’s it. Easy and helpfull'
     },
     {
         title: 'Corina Elena Damian',
@@ -38,7 +38,7 @@ const sliderData = [
     },
     {
         title: 'Mikhail Madaliev',
-        text: 'The guys from Profit Whales are real professionals in regards not only to PPC optimization but also in the field of Amazon itself. I had a great free consultation that helped me better to understand the following aspects:\n' +
+        text: 'The guys from Profit Whales are real professionals in regards not only to PPC Automation but also in the field of Amazon itself. I had a great free consultation that helped me better to understand the following aspects:\n' +
             'I could felt solid practical experience from their representative Vitaliy and can honehstly say that they do not only intend for their business expansion but at first care about their customers providing valuable support.'
     },
     {

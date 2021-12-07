@@ -1,80 +1,118 @@
-import React from "react";
-import {NavLink, Route} from "react-router-dom";
-import './Navigation.less';
+import React, {useEffect, useState} from "react"
+import {Link, NavLink, Redirect, Route} from "react-router-dom"
+import './Navigation.less'
 
-import Information from '../Information/Information';
-import ApiConnection from '../ApiConnection/ApiConnection';
-import Subscription from '../Subscription/Subscription';
+import ApiConnection from '../ApiConnection/ApiConnection'
+import Subscription from '../Subscription/Subscription'
+import {icons} from "./icons"
+import Profile from "../Profile/Profile"
+import AccessSettings from "../AccessSettings/AccessSettings"
+import BillingHistory from "../BillingHistory/BillingHistory"
+import BillingInformation from "../BillingInformation/BillingInformation"
+import {history} from "../../../utils/history"
+import _ from 'lodash'
+import {useSelector} from "react-redux"
 
-const Navigation = (props) => {
+
+const menu = [
+    {
+        title: 'Profile',
+        link: 'profile',
+    },
+    {
+        title: 'Access Settings',
+        link: 'access-settings',
+    },
+    {
+        title: 'Billing Information',
+        link: 'billing-information',
+    },
+    {
+        title: 'Subscription',
+        link: 'subscription',
+    },
+    {
+        title: 'Billing History',
+        link: 'billing-history',
+    },
+    {
+        title: 'API Connection',
+        link: 'api-connection',
+    },
+]
+
+
+const Navigation = () => {
+    const location = history.location
+
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+
+    const {user} = useSelector(state => ({
+        user: state.user,
+    }))
+    useEffect(() => {
+        if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '14px'
+
+        return (() => {
+            if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '10.5px'
+        })
+    }, [])
+
+
+    useEffect(() => {
+        if (user.user.id === 714) {
+            setIsSuperAdmin(true)
+        } else {
+            setIsSuperAdmin(false)
+        }
+    }, [user])
+
+    let isAgencyUser = user.user.is_agency_client
+
     return (
-        <>
-            <div className="account-navigation">
-                <div className="container">
-                    <div className="cabinet-nav">
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/settings"
-                        >
-                            Account information
-                        </NavLink>
-
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/subscription"
-
-                        >
-                            Subscriptions & Billing
-                        </NavLink>
-
-                        <NavLink
-                            className="page-link"
-                            exact
-                            to="/account/api-connections"
-                        >
-                            API Connections
-                        </NavLink>
-                    </div>
-
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-1`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/settings'}
-                    />
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-2`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/subscription'}
-                    />
-
-
-                    <input
-                        type="radio"
-                        name="slideItem"
-                        id={`slide-item-3`}
-                        className="slide-toggle"
-                        checked={props.location.pathname === '/account/api-connections'}
-                    />
-
-                    <div className="slider">
-                        <div className="bar"/>
-                    </div>
-                </div>
+        <div className={'account-page'}>
+            <div className="page-title">
+                {location.pathname === '/account' ? 'Account' : <BackLink/>}
             </div>
 
-            <Route exact path="/account/settings" component={Information}/>
-            <Route exact path="/account/api-connections" component={ApiConnection}/>
-            <Route exact path="/account/subscription" component={Subscription}/>
-        </>
-    );
-};
+            <div className={`account-navigation ${location.pathname === '/account' ? 'visible' : ''} `}>
+                {menu
+                    .filter(i => (isSuperAdmin || isAgencyUser) ? i : i.link !== 'subscription')
+                    .map(i => <NavLink
+                        activeClassName={'active'}
+                        exact
+                        to={`/account/${i.link}`}
+                    >
+                        <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
+                        {i.title}
+                    </NavLink>)}
+            </div>
 
-export default React.memo(Navigation);
+            <div className="account-content">
+                <Route exact path="/account" render={() => {
+                    if (window.innerWidth > 850) return <Redirect to={'/account/profile'}/>
+                }}/>
+
+                <Route exact path="/account/profile" component={Profile}/>
+                <Route exact path="/account/access-settings" component={AccessSettings}/>
+                <Route exact path="/account/billing-history" component={BillingHistory}/>
+                <Route exact path="/account/api-connection" component={ApiConnection}/>
+                {(isSuperAdmin || isAgencyUser) && <Route exact path="/account/subscription" component={Subscription}/>}
+                <Route exact path="/account/billing-information" component={BillingInformation}/>
+            </div>
+        </div>
+    )
+}
+
+
+const BackLink = () => {
+    const location = history.location
+
+    const locationDescriptions = _.find(menu, {link: location.pathname.split('/')[2]})
+
+    return (
+        <Link to={'/account'}>{locationDescriptions ? locationDescriptions.title : 'Account'}</Link>
+    )
+}
+
+export default React.memo(Navigation)

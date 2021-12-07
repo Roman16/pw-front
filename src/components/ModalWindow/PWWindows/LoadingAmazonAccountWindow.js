@@ -8,10 +8,10 @@ import {userService} from "../../../services/user.services"
 let intervalId = null
 
 const serviceTitle = {
-    optimization: 'PPC Automate',
+    optimization: 'PPC Automation',
     dayparting: 'Dayparting',
     analytics: 'Analytics',
-    productSettings: 'Products Info',
+    productSettings: 'PPC Automation',
     zth: 'Zero to Hero',
 }
 
@@ -55,7 +55,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     if (currentService === 'optimization') requiredParts = importStatus.ppc_automate.required_parts_details
     if (currentService === 'dayparting') requiredParts = importStatus.dayparting.required_parts_details
     if (currentService === 'analytics') requiredParts = importStatus.analytics.required_parts_details
-    if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
+    // if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
+    if (currentService === 'productSettings') requiredParts = importStatus.ppc_automate.required_parts_details
     if (currentService === 'zth') requiredParts = importStatus.zth.required_parts_details
 
     const checkStatus = async () => {
@@ -85,6 +86,9 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                     }))
                 }
 
+                userService.getUserInfo()
+                    .then(user => dispatch(userActions.setInformation(user)))
+
                 clearInterval(intervalId)
             }
         }, 10000)
@@ -102,7 +106,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
 
 
     useEffect(() => {
-        if (pathname.includes('/ppc/optimization') || pathname.includes('/ppc/report')) setCurrentService('optimization')
+        if (pathname.includes('/ppc/automation') || pathname.includes('/ppc/report')) setCurrentService('optimization')
         else if (pathname.includes('/ppc/dayparting')) setCurrentService('dayparting')
         else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
         else if (pathname.includes('/analytics')) setCurrentService('analytics')
@@ -134,8 +138,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                         <div className="col">{i.title}</div>
                         <div className="col">
                             {requiredParts[i.key].part_ready ?
-                                <>Done <DoneIcon/></> :
-                                <>In Progress... <ProgressIcon/></>}
+                                <><span>Done</span> <DoneIcon/></> :
+                                <><span>In Progress...</span> <ProgressIcon/></>}
                         </div>
                     </div>))}
             </div>

@@ -28,6 +28,189 @@ optimizationOptions.forEach(item => {
     defaultOptimizationVariations[item.value] = true
 })
 
+const fakeCampaignConfiguration = [
+    {
+        "campaignId": "242934841676092",
+        "campaignName": "M4O Matcha 4 Oz (Brands)",
+        "custom_settings": {
+            "campaign_id": "242934841676092",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "8218692389796",
+        "campaignName": "M4O Matcha 4 Oz (ST Exact / Phrase)",
+        "custom_settings": {
+            "campaign_id": "8218692389796",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "205805238754209",
+        "campaignName": "M4O Matcha 4 Oz - Matcha (TPKP)",
+        "custom_settings": {
+            "campaign_id": "205805238754209",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "13396533313597",
+        "campaignName": "M4O Matcha 4 Oz (CA)",
+        "custom_settings": {
+            "campaign_id": "13396533313597",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "214011109328725",
+        "campaignName": "M4O Matcha 4 Oz - Matcha Powder (TPKP)"
+    },
+    {
+        "campaignId": "210386042690172",
+        "campaignName": "PW_EZ-QEI5-AHVA (PAT)",
+        "custom_settings": {
+            "campaign_id": "210386042690172",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "7467024606829",
+        "campaignName": "M4O Matcha 4 Oz (TPK Exact)",
+        "custom_settings": {
+            "campaign_id": "7467024606829",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "26480278379269",
+        "campaignName": "M4O Matcha 4 Oz (TPA)",
+        "custom_settings": {
+            "campaign_id": "26480278379269",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "73793861235524",
+        "campaignName": "M4O Matcha 4 Oz - Matcha Green Tea Powder (TPKP)"
+    },
+    {
+        "campaignId": "55185943184293",
+        "campaignName": "PW_EZ-QEI5-AHVA (ST Exact / Phrase)",
+        "custom_settings": {
+            "campaign_id": "55185943184293",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "77619044236271",
+        "campaignName": "M4O Matcha 4 Oz (Broad Negative)",
+        "custom_settings": {
+            "campaign_id": "77619044236271",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    },
+    {
+        "campaignId": "179329445533514",
+        "campaignName": "M4O Matcha 4 Oz (Exact Simple)",
+        "custom_settings": {
+            "campaign_id": "179329445533514",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "95421578052102",
+        "campaignName": "M4O Matcha 4 Oz - Green Matcha Powder (TPKP)"
+    },
+    {
+        "campaignId": "20218206924026",
+        "campaignName": "M4O Matcha 4 Oz (Exact Other)",
+        "custom_settings": {
+            "campaign_id": "20218206924026",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": [
+                "bid_optimization_keywords",
+                "bid_optimization_pats",
+                "pause_bleeding_keywords",
+                "pause_bleeding_pats",
+                "remove_duplicates"
+            ]
+        }
+    },
+    {
+        "campaignId": "108015054330725",
+        "campaignName": "M4O Matcha 4 Oz (Auto CTA)",
+        "custom_settings": {
+            "campaign_id": "108015054330725",
+            "dont_optimize": false,
+            "dont_use_metrics": false,
+            "optimization_parts": null
+        }
+    }
+]
+
 const OptimizationForAdmin = () => {
     const [productInformation, setProductInformation] = useState({}),
         [productInformationFromRequest, setProductInformationFromRequest] = useState(null),
@@ -41,9 +224,10 @@ const OptimizationForAdmin = () => {
 
     const dispatch = useDispatch()
 
-    const {productId, selectedProduct} = useSelector(state => ({
+    const {productId, selectedProduct, user} = useSelector(state => ({
         selectedProduct: state.products.selectedProduct,
         productId: state.products.selectedProduct.id || null,
+        user: state.user,
     }))
 
     const hasChanges = productInformationFromRequest !== null ? ((JSON.stringify(productInformationFromRequest) !== JSON.stringify(productInformation)) || (JSON.stringify(campaignSettingsFromRequest) !== JSON.stringify(campaignSettings))) : false
@@ -59,24 +243,26 @@ const OptimizationForAdmin = () => {
         prevProduct = selectedProduct
 
         try {
-            const res = await productsServices.getProductDetails(productId, source.token)
-            if (res.status === 'STOPPED') {
-                res.optimization_strategy = null
+            const {result} = await productsServices.getProductDetails(productId, source.token)
 
-                optimizationOptions.forEach(item => {
-                    res[item.value] = true
-                })
+            const product = result.optimization_jobs
+
+            if (product.status === 'STOPPED') {
+                product.optimization_strategy = null
             }
+
             setProductInformationFromRequest({
-                ...res,
-                ...res.status === 'STOPPED' && defaultOptimizationVariations,
-                product_id: productId
+                ...product,
+                ...product.status === 'STOPPED' && defaultOptimizationVariations,
+                product_id: productId,
+                ...product.product
 
             })
             setProductInformation({
-                ...res,
-                ...res.status === 'STOPPED' && defaultOptimizationVariations,
-                product_id: productId
+                ...product,
+                ...product.status === 'STOPPED' && defaultOptimizationVariations,
+                product_id: productId,
+                ...product.product
             })
         } catch (e) {
             console.log(e)
@@ -90,6 +276,10 @@ const OptimizationForAdmin = () => {
 
         try {
             const res = await productsServices.getCampaignsSettings(productInformation.id)
+
+            //====================================================
+            // res.result = fakeCampaignConfiguration //fake data
+            //====================================================
 
             campaignSettingsFromRequest = res.result.map(campaign => ({
                 ...campaign.custom_settings,
@@ -143,13 +333,15 @@ const OptimizationForAdmin = () => {
     const setProductCogs = async () => {
         if (productId) {
             try {
-                const res = await productsServices.getProductDetails(productId, source.token)
+                const {result} = await productsServices.getProductDetails(productId, source.token)
+
+                const product = result.optimization_jobs
 
                 setProductInformationFromRequest({
                     ...productInformationFromRequest,
                     default_variation: {
                         ...productInformationFromRequest.default_variation,
-                        cogs: res.default_variation.cogs
+                        cogs: product.default_variation.cogs
                     }
                 })
 
@@ -157,7 +349,7 @@ const OptimizationForAdmin = () => {
                     ...productInformation,
                     default_variation: {
                         ...productInformation.default_variation,
-                        cogs: res.default_variation.cogs
+                        cogs: product.default_variation.cogs
                     }
                 })
             } catch (e) {
@@ -235,7 +427,6 @@ const OptimizationForAdmin = () => {
         }
 
         return true
-
     }
 
     const revertInformationHandler = () => {
@@ -253,17 +444,15 @@ const OptimizationForAdmin = () => {
                 optimization_strategy: null
             }
 
-            await productsServices.updateProductById({
-                ...product,
-                optimization_strategy: 'AchieveTargetACoS',
-            })
+            await productsServices.stopProductOptimization(productInformation.product_id)
 
             setProductInformationFromRequest(product)
             setProductInformation(product)
 
-            dispatch(productsActions.updateProduct({
+            dispatch(productsActions.changeOptimizationStatus({
                 id: productInformation.product_id,
                 status: 'STOPPED',
+                optimization_indicator_state: {level: "INDICATOR_STATUS_INFORMATIONAL", state: "STOPPED_BY_USER"}
             }))
 
             notification.error({title: 'The optimization is paused'})
@@ -285,7 +474,6 @@ const OptimizationForAdmin = () => {
                             ...productInformation,
                             status: 'RUNNING'
                         }
-
 
                         const custom_campaigns_settings = campaignSettings.map(item => {
                                 return ({
@@ -319,12 +507,14 @@ const OptimizationForAdmin = () => {
                             })
                         }
 
-                        await productsServices.updateProductById(product)
+                        const startRes = await productsServices.startProductOptimization(product)
+
                         setProductInformation(product)
 
-                        dispatch(productsActions.updateProduct({
+                        dispatch(productsActions.changeOptimizationStatus({
                             id: productInformation.product_id,
                             status: 'RUNNING',
+                            optimization_indicator_state: startRes.result.optimization_jobs.optimization_indicator_state
                         }))
 
                         notification.start({title: productInformationFromRequest.status === 'RUNNING' ? 'Changes saved!' : 'Optimization successfully started'})
@@ -369,7 +559,6 @@ const OptimizationForAdmin = () => {
         }
     }, [])
 
-
     return (
         <>
             <div
@@ -395,7 +584,7 @@ const OptimizationForAdmin = () => {
                     onUpdateField={updateProductInformationHandler}
                 />
 
-                <CampaignsConfiguration
+                {user.user.is_agency_client && <CampaignsConfiguration
                     productId={productId}
                     optimizationJobId={productInformation.id}
                     isDisabled={productInformation.optimization_strategy == null}
@@ -403,7 +592,7 @@ const OptimizationForAdmin = () => {
                     loading={loadingCampaignSettings}
                     getSettings={getCampaignSettings}
                     onUpdate={updateCampaignSettingsHandler}
-                />
+                />}
 
                 <SaveChanges
                     product={productInformation}

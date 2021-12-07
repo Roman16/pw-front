@@ -59,9 +59,14 @@ const LoginPage = (props) => {
                 } else if (!ppcConnected && mwsConnected) {
                     history.push('/connect-ppc-account')
                 } else {
-                    if (userFullInformation.user.is_agency_client) history.push('/ppc/optimization')
-                    else history.push('/account/settings')
+                    if (props.location.search) {
+                        history.push(new URLSearchParams(props.location.search).get('redirect'))
+                    } else {
+                        history.push('/home')
+                    }
                 }
+
+                seo({title: 'Sponsoreds'})
 
                 dispatch(userActions.setInformation({...userFullInformation, importStatus: importStatus.result}))
             } catch (e) {
@@ -77,18 +82,23 @@ const LoginPage = (props) => {
 
 
         if (props.match.params.status === 'logout') {
+            userService.logOut()
+
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
+
             dispatch(userActions.logOut())
 
             history.push('/login')
         }
 
         if (localStorage.getItem('token')) {
-            history.push('/account/settings')
+            seo({title: 'Sponsoreds'})
+            history.push('/home')
         }
     }, [])
+
 
     return (
         <div className="auth-page login-page">

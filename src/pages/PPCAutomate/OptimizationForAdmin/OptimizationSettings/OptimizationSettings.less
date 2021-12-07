@@ -24,26 +24,27 @@
       height: 2.2857142857142856rem;
       font-size: 0.8571428571428571rem;
       font-weight: 600;
-      padding: 0 15px;
-      background: #343C5A;
+      padding: 0 1.0714285714285714rem;
+      position: relative;
 
-      &:hover {
-        background: #232B46;
+      .icon {
+        min-width: 0.7142857142857143rem;
+        width: 0.7142857142857143rem;
+        height: 0.7142857142857143rem;
+        background: #FFFFFF;
+        border-radius: 1px;
+        margin: 0 0.8571428571428571rem 0 0;
       }
 
-      &:disabled {
-        background: #C9CBD4;
-      }
-
-      & > i {
-        width: 1.4285714285714286rem;
-        height: 1.4285714285714286rem;
-        margin: 0 10px 0 0;
-        padding: 1px 0 0 0;
-
-        .ant-spin-dot-item {
-          background: #fff;
-        }
+      .ant-spin {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
   }
@@ -70,7 +71,7 @@
 
     .label {
       width: 40%;
-      min-width: 220px;
+      min-width: 240px;
       min-height: 100%;
       font-weight: 600;
       font-size: 1rem;
@@ -212,6 +213,7 @@
 
         &:hover {
           background: #FFFAFA;
+
           i {
             fill: #6959AB !important;
           }
@@ -219,6 +221,7 @@
 
         &.ant-select-dropdown-menu-item-selected {
           background: #FFFAFA;
+
           i {
             fill: #6959AB !important;
           }
@@ -288,6 +291,58 @@
       }
     }
   }
+
+  .cogs-field {
+
+    .InputCurrency {
+      input {
+        color: rgba(0, 0, 0, 0.25);
+        background-color: #f5f5f5;
+      }
+    }
+
+    .btn {
+      min-width: 2.85714286rem;
+      width: 2.85714286rem;
+      height: 2.85714286rem;
+      opacity: 0;
+      transition: .2s;
+
+      svg {
+        fill: #C9CBD4;
+      }
+
+      &:hover {
+        svg {
+          fill: #6959AB;
+        }
+      }
+    }
+
+    &:hover {
+      .btn {
+        opacity: 1;
+      }
+    }
+
+    &.disabled {
+      .btn {
+        display: none;
+      }
+
+      .InputCurrency {
+        * {
+          cursor: not-allowed;
+        }
+
+        input {
+          background: #f5f5f5;
+          color: rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+  }
+
 
   .row:nth-child(2) {
     .form-group:nth-child(1) {

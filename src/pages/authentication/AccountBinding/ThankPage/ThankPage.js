@@ -15,7 +15,7 @@ const ThankPage = () => {
 
             <img src={image} alt="" className={'image'}/>
             <h2>
-                You have successfully connected your Amazon <br/> Account with Profit Whales
+                You have successfully connected your Amazon <br/> Account with Sponsoreds
             </h2>
             <p>
                 *Please contact support if you want to access the software

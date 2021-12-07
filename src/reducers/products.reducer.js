@@ -159,6 +159,18 @@ export function products(state = initialState, action) {
                 }
             }
 
+        case productsConstants.CHANGE_OPTIMIZATION_STATUS:
+            return {
+                ...state,
+                productList: state.productList.map(item => {
+                    if (item.id === action.payload.id) {
+                        item = {...item, ...action.payload}
+                    }
+
+                    return item
+                }),
+            }
+
         default:
             return state
     }

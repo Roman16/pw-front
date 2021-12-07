@@ -10,13 +10,20 @@ import CreateSuccessWindow from "./CreateSuccessWindow"
 import {history} from "../../../utils/history"
 import PaymentSuccessWindow from "./PaymentSuccessWindow"
 import {Link} from "react-router-dom"
+import {notification} from "../../../components/Notification"
 
 const CancelToken = axios.CancelToken
 let source = null
 
 const {Search} = Input
 
-let intervalId
+let intervalId = null
+
+let pagination = {
+        page: 1,
+        pageSize: 10
+    },
+    search = ''
 
 const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
@@ -35,6 +42,7 @@ const Settings = (props) => {
 
     const changeSearchHandler = debounce(500, false, str => {
         setSearchStr(str)
+        search = str
         setPaginationOptions({
             ...paginationOptions,
             page: 1
@@ -42,7 +50,10 @@ const Settings = (props) => {
     })
 
 
-    const changePaginationHandler = (params) => setPaginationOptions(params)
+    const changePaginationHandler = (params) => {
+        pagination = params
+        setPaginationOptions(params)
+    }
 
     function changeTabHandler(tab) {
         setList([])
@@ -62,10 +73,9 @@ const Settings = (props) => {
 
         try {
             setProcessing(true)
-
             const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
-                ...paginationOptions,
-                searchStr: searchStr,
+                ...pagination,
+                searchStr: searchStr || search,
                 ungroupVariations: 0,
                 cancelToken: source.token
             })
@@ -88,6 +98,8 @@ const Settings = (props) => {
 
     useEffect(() => {
         if (selectedTab === 'zth-products') {
+            notification.warning({description: 'Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns that weren’t created by our software to prevent the competition.'})
+
             intervalId = setInterval(() => {
                 getProductsList()
             }, 30000)
@@ -100,14 +112,8 @@ const Settings = (props) => {
         return (() => clearInterval(intervalId))
     }, [])
 
-
     return (
         <div className="zth-settings">
-            {selectedTab === 'zth-products' && <div className="description">
-                Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns that
-                weren’t created by our software to prevent the competition.
-            </div>}
-
             <ul className="tabs">
                 <li
                     className={`tab ${selectedTab === 'zth-products' ? 'active' : ''}`}

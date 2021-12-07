@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Drawer, Modal} from 'antd'
+import {Modal} from 'antd'
 
 import SubscriptionPlan from './SubscriptionPlan'
 import CancelAccountWindow from './DrawerWindows/CancelAccountWindow'
@@ -11,10 +11,21 @@ import {userService} from "../../../services/user.services"
 import {userActions} from "../../../actions/user.actions"
 import {subscriptionProducts} from "../../../constans/subscription.products.name"
 import {notification} from "../../../components/Notification"
-import {history} from "../../../utils/history"
-import Billing from "../Billing/Billing"
+import CardInformation from "../BillingInformation/CardInformation"
+import ModalWindow from "../../../components/ModalWindow/ModalWindow"
+import {Elements, StripeProvider} from "react-stripe-elements"
+import ConfirmPaymentWindow from "../Billing/Windows/ConfirmPaymentWindow"
+import ConfirmSubscribeWindow from "./DrawerWindows/ConfirmSubscribeWindow"
+import _ from 'lodash'
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
+
+let subscribeDetails
+
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+
 
 const Subscription = () => {
     let interval = null
@@ -27,6 +38,12 @@ const Subscription = () => {
     const [cardsList, setCardsList] = useState(null)
     const [disableButton, changeButton] = useState(false)
     const [disableReactivateButtons, setDisableReactivateButtons] = useState(false)
+    const [visibleAddPaymentWindow, setVisibleAddPaymentWindow] = useState(false)
+    const [addCardProcessing, setAddCardProcessing] = useState(false)
+
+    const [visibleConfirmPaymentWindow, openConfirmWindow] = useState(false),
+        [userSecretKey, setKey] = useState(),
+        [visibleConfirmSubscribeWindow, setVisibleConfirmSubscribeWindow] = useState(false)
 
     const {mwsConnected, ppcConnected, stripeId, user} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
@@ -45,18 +62,34 @@ const Subscription = () => {
         selectPlan(plan)
     }
 
-    function fetchSubscriptions() {
+    const addNewCardHandler = async (card) => {
+        setAddCardProcessing(true)
+
+        try {
+            await userService.addPaymentMethod({stripe_token: card.stripe_token})
+
+            handleSubscribe(subscribeDetails, false, true)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const fetchSubscriptions = async () => {
         switchFetching(true)
 
-        userService.getSubscription()
-            .then(res => {
-                switchFetching(false)
+        try {
+            const res = await userService.getSubscription()
 
-                setSubscriptions(Object.keys(res).map(productId => ({
-                    productId,
-                    ...res[productId]
-                })))
-            })
+            setSubscriptions(Object.keys(res).map(productId => ({
+                productId,
+                ...res[productId]
+            })))
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        switchFetching(false)
     }
 
     function applyCoupon(productId, planId, coupon) {
@@ -83,10 +116,23 @@ const Subscription = () => {
             })
     }
 
-    async function handleSubscribe({plan_id, productId, coupon}) {
+    const cancelConfirmSubscribeHandler = () => {
+        setVisibleConfirmSubscribeWindow(false)
+        changeButton(false)
+        subscribeDetails = undefined
+    }
+
+    async function handleSubscribe({plan_id, productId, coupon}, force = false, withCard = false) {
         changeButton(true)
 
-        if (cardsList && cardsList.length) {
+        subscribeDetails = {plan_id, productId, coupon}
+
+        if (cardsList.length === 0 && !withCard) {
+            changeButton(false)
+            setVisibleAddPaymentWindow(true)
+        } else if (!force) {
+            setVisibleConfirmSubscribeWindow(true)
+        } else {
             try {
                 if (coupon) {
                     await userService.subscribe({
@@ -105,17 +151,27 @@ const Subscription = () => {
 
                 notification.success({title: 'We are processing your payment right now. You’ll receive a confirmation by email.'})
                 changeButton(false)
-
+                setVisibleAddPaymentWindow(false)
                 dispatch(userActions.getPersonalUserInfo())
                 fetchSubscriptions()
+
+                setVisibleConfirmSubscribeWindow(false)
+
+                subscribeDetails = undefined
             } catch (e) {
                 changeButton(false)
             }
-        } else {
-            changeButton(false)
-            history.push('/account/subscription#user-cards')
-            notification.error({title: 'Add card!'})
         }
+
+        setAddCardProcessing(false)
+    }
+
+    function handleUpdateInformation() {
+        setTimeout(() => {
+            dispatch(userActions.getPersonalUserInfo())
+            fetchSubscriptions()
+            openConfirmWindow(false)
+        }, 2000)
     }
 
     async function handleReactivateSubscription() {
@@ -194,10 +250,25 @@ const Subscription = () => {
         }
     }
 
-    useEffect(() => {
-        if (user.user.is_agency_client || user.user.id === 714) fetchSubscriptions()
+    const startFreeTrialHandler = async () => {
+        changeButton(true)
 
-        if ((ppcConnected || mwsConnected) && (user.user.is_agency_client || user.user.id === 714)) userService.updateSubscriptionStatus()
+        try {
+            await userService.startFreeTrial()
+
+            fetchSubscriptions()
+            dispatch(userActions.getPersonalUserInfo())
+        } catch (e) {
+            console.log(e)
+        }
+
+        changeButton(false)
+    }
+
+    useEffect(() => {
+        fetchSubscriptions()
+
+        if (ppcConnected || mwsConnected) userService.updateSubscriptionStatus()
 
         userService.fetchBillingInformation()
             .then(res => {
@@ -209,32 +280,44 @@ const Subscription = () => {
         }
     }, [])
 
+    useEffect(() => {
+        if (subscriptions[0]) {
+            if (subscriptions[0].incomplete_payment.has_incomplete_payment) {
+                setKey(subscriptions[0].incomplete_payment.payment_intent_id)
+                openConfirmWindow(true)
+            } else if (subscriptions[0].pending_payment && subscriptions[0].pending_payment.has_pending_payment) {
+                setKey(subscriptions[0].pending_payment.payment_intent_id)
+                openConfirmWindow(true)
+            }
+        }
+
+    }, [subscriptions])
+
     return (
         <div className="user-cabinet">
-            {(user.user.is_agency_client || user.user.id === 714) && subscriptionProducts.map((product) => (
+            {subscriptionProducts.map((product) => (
                 <SubscriptionPlan
                     key={product.key}
-                    onOpenAccountWindow={handleOpenAccountWindow}
-                    onOpenReactivateWindow={handleOpenReactivateWindow}
                     product={{...subscriptions[0], ...product}}
-                    onSubscribe={handleSubscribe}
-                    reloadData={handleUpdateSubscriptionStatus}
-                    applyCoupon={applyCoupon}
-                    getCouponStatus={getCouponStatus}
                     fetching={fetching}
                     disableButton={disableButton}
                     stripeId={stripeId}
+
+                    onStartTrial={startFreeTrialHandler}
+                    getCouponStatus={getCouponStatus}
+                    applyCoupon={applyCoupon}
+                    onSubscribe={handleSubscribe}
+                    reloadData={handleUpdateSubscriptionStatus}
+                    onOpenAccountWindow={handleOpenAccountWindow}
+                    onOpenReactivateWindow={handleOpenReactivateWindow}
+
                 />
             ))}
 
-            <Billing/>
-
-            <Modal
+            <ModalWindow
                 className="cancel-account reactivate-account"
-                placement="right"
-                closable
                 onClose={() => openAccountWindow(false)}
-                onCancel={() => openAccountWindow(false)}
+                handleCancel={() => openAccountWindow(false)}
                 visible={openedAccountWindow}
                 footer={false}
             >
@@ -244,14 +327,12 @@ const Subscription = () => {
                     disableReactivateButtons={disableReactivateButtons}
                     product={subscriptions[0] && subscriptions[0]}
                 />
-            </Modal>
+            </ModalWindow>
 
-            <Modal
+            <ModalWindow
                 className="reactivate-account"
-                closable
-                centered
                 onClose={() => openAccountWindow(false)}
-                onCancel={() => openReactivateWindow(false)}
+                handleCancel={() => openReactivateWindow(false)}
                 footer={false}
                 visible={openedReactivateWindow}
             >
@@ -261,7 +342,58 @@ const Subscription = () => {
                     disableReactivateButtons={disableReactivateButtons}
                     date={selectedPlan && selectedPlan.grace_period.on_grace_period_until}
                 />
-            </Modal>
+            </ModalWindow>
+
+            <ModalWindow
+                className="add-payment-method-window"
+                handleCancel={() => setVisibleAddPaymentWindow(false)}
+                footer={false}
+                visible={visibleAddPaymentWindow}
+            >
+                <CardInformation
+                    card={{
+                        name: '',
+                        line1: '',
+                        city: '',
+                        postal_code: '',
+                        country: undefined
+                    }}
+                    isNewCard={true}
+                    updateProcessing={addCardProcessing}
+                    deleteProcessing={false}
+                    requiredForSubscribe={true}
+
+                    onAddCard={addNewCardHandler}
+                />
+            </ModalWindow>
+
+            <ModalWindow
+                visible={visibleConfirmPaymentWindow}
+                handleCancel={() => openConfirmWindow(false)}
+                footer={null}
+                mask={true}
+                className={'confirm-payment-window'}
+            >
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
+                        <ConfirmPaymentWindow
+                            userSecretKey={userSecretKey}
+                            onClose={() => openConfirmWindow(false)}
+                            onUpdateInformation={handleUpdateInformation}
+                            paymentCards={cardsList}
+                        />
+                    </Elements>
+                </StripeProvider>
+            </ModalWindow>
+
+            <ConfirmSubscribeWindow
+                visible={visibleConfirmSubscribeWindow}
+                defaultCard={_.find(cardsList, {default: true})}
+                product={{...subscriptions[0], ...subscriptionProducts[0]}}
+
+                onSubmit={() => handleSubscribe(subscribeDetails, true, true)}
+                onCancel={cancelConfirmSubscribeHandler}
+            />
         </div>
     )
 }

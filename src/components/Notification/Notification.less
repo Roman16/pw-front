@@ -65,7 +65,9 @@
     .notification__description {
       font-weight: 500;
       font-size: 0.8571428571428571rem;
-      margin: 6px 0 0 0;
+      line-height: 1.0714285714285714rem;
+
+      margin: 3px 0 0 0;
     }
   }
 
@@ -85,35 +87,38 @@
     }
   }
 
-  .notification__title {
+  .notification__title, .notification__description {
     color: #FF5256;
   }
 }
 
 .warning-notification {
-  background: #FBB13C !important;
-  border: 1px solid #FBB13C;
+  background: #FFE3C2 !important;
+  border: 1px solid #FFAF52;
 
   i {
     svg {
-      stroke: #fff;
+      stroke:  #FFAF52;
     }
+  }
+
+  .notification__title, .notification__description {
+    color: #FFAF52;
   }
 }
 
 .success-notification {
-  background: #9CD987 !important;
-  border: 1px solid #7DD4A1;
-
-  .Toastify__toast-body > svg {
-    height: initial;
-    margin-bottom: 3px;
-  }
+  background: #CCEEDA !important;
+  border: 1px solid #7FD3A1;
 
   i {
     svg {
-      stroke: #fff;
+      stroke: #7FD3A1;
     }
+  }
+
+  .notification__title, .notification__description {
+    color: #7FD3A1;
   }
 }
 

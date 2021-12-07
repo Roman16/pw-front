@@ -97,12 +97,12 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
                 trigger="click"
                 visible={visibleFilterPopover}
             >
-                <button type={'button'} className={'btn default add-filter'} onClick={() => {
+                <button type={'button'} className={'btn blue add-filter'} onClick={() => {
                     setVisibleFilterPopover(prevState => !prevState)
                     setIndexSelectedFilter(null)
                     setEditFilter(undefined)
                 }}>
-                    <SVG id={'plus-icon'}/>
+                    <PlusButton/>
                 </button>
             </Popover>}
 
@@ -112,5 +112,18 @@ const Filters = ({columns, onChange, filters, currentTab}) => {
         </div>
     )
 }
+
+
+const PlusButton = () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="16" cy="16" r="16"/>
+    <rect width="10" height="10" transform="translate(11 11)"/>
+    <mask id="mask0_20400:68194" maskUnits="userSpaceOnUse" x="11" y="11" width="10" height="10">
+        <rect x="11" y="11" width="10" height="10" fill="#C4C4C4"/>
+    </mask>
+    <g>
+        <path d="M16 11.5V16M16 16H20.5M16 16H11.5M16 16V20.5" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+</svg>
+
 
 export default Filters

@@ -8,6 +8,7 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 
 export const userService = {
     login,
+    logOut,
     loginWithAmazon,
     sendEmailForResetPassword,
     checkResetToken,
@@ -58,6 +59,9 @@ export const userService = {
 
 function login(user) {
     return api('post', userUrls.login, user)
+}
+function logOut() {
+    return api('post', userUrls.logOut)
 }
 
 function loginWithAmazon(user) {
@@ -155,8 +159,8 @@ function updatePaymentMethod(card) {
     return api('post', userUrls.updatePaymentMethod(data.id), data)
 }
 
-function setDefaultPaymentMethod(id) {
-    return api('post', userUrls.setDefaultPaymentMethod(id))
+function setDefaultPaymentMethod(id, cancelToken) {
+    return api('post', userUrls.setDefaultPaymentMethod(id), undefined, undefined, cancelToken)
 }
 
 function deletePaymentMethod(id) {

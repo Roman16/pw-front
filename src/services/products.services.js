@@ -12,7 +12,7 @@ export const productsServices = {
     updateProductSettings,
     updateVariationSettings,
     updateProductSettingsByIdList,
-    updateProductTargetAcos,
+    stopProductOptimization,
     getCampaignsSettings,
     updateCampaignsBlacklist,
     updateProductSettingsById,
@@ -21,11 +21,17 @@ export const productsServices = {
     createProductCogs,
     updateProductCogs,
     deleteProductCogs,
-    setDefaultVariation
+    setDefaultVariation,
+
+    startProductOptimization
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
     return api('get', `${productsUrls.allProducts}?search_query=${searchStr}&page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
+}
+
+function getProductDetails(id, cancelToken) {
+    return api('get', `${productsUrls.productDetails(id)}`, false, false, cancelToken)
 }
 
 function getProductCogs(id) {
@@ -46,6 +52,23 @@ function updateProductCogs(data) {
 
 function deleteProductCogs(recordId, productId) {
     return api('delete', `${productsUrls.productCogs}?record_id=${recordId}&product_id=${productId}`,)
+}
+
+function startProductOptimization(product) {
+    const data = {
+        desired_target_acos: product.optimization_strategy === 'AchieveTargetACoS' ? product.desired_target_acos : undefined,
+        optimization_strategy: product.optimization_strategy
+    }
+
+    optimizationOptions.forEach(item => {
+        data[item.value] = product[item.value] !== null ? product[item.value] : true
+    })
+
+    return api('post', `${productsUrls.startOptimization(product.id)}`, data)
+}
+
+function stopProductOptimization(productId) {
+    return api('post', `${productsUrls.stopOptimization(productId)}`,)
 }
 
 function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {
@@ -92,10 +115,6 @@ function updateProductSettingsByIdList(params) {
 
 function updateProductTargetAcos(acos) {
     return api('post', `${productsUrls.updateSettings}`, acos)
-}
-
-function getProductDetails(id, cancelToken) {
-    return api('get', `${productsUrls.productDetails(id)}`, false, false, cancelToken)
 }
 
 function updateProductById(product) {

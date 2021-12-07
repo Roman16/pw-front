@@ -43,7 +43,7 @@ function login() {
                 } else if (!ppcConnected && mwsConnected) {
                     history.push('/connect-ppc-account')
                 } else {
-                    history.push('/account/settings')
+                    history.push('/home')
                 }
             })
     }
@@ -106,7 +106,7 @@ function setMWS(data) {
         if (data.account_links) {
             if (!data.account_links[0].amazon_ppc.is_connected) {
             } else {
-                history.push('/account/settings')
+                history.push('/home')
             }
         }
     }
@@ -191,7 +191,7 @@ function getImpersonationUserInformation() {
                 dispatch(setInformation(res))
 
                 setTimeout(() => {
-                    history.push('/account/settings')
+                    history.push('/home')
                 }, 500)
             })
     }

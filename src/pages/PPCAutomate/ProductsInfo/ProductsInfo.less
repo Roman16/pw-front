@@ -9,18 +9,19 @@
     height: max-content;
     background: #fff;
     border-radius: 4px 4px 0 0;
-    padding: 20px;
+    padding: 1.4285714285714286rem;
     display: flex;
     align-items: center;
-    min-height: 72px;
+    min-height: 5.142857142857143rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
     .form-group {
       width: 100%;
-      max-width: 370px;
+      max-width: 26.428571428571427rem;
     }
 
     .switch-block {
-      margin: 0 0 0 20px;
+      margin: 0 0 0 1.4285714285714286rem;
       display: flex;
       align-items: center;
 
@@ -34,9 +35,11 @@
   }
 
   & > .row {
+    flex: 1;
     max-width: 100%;
     display: flex;
     overflow: hidden;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   }
 
   .table-block {
@@ -61,8 +64,8 @@
       right: 10px;
       display: none;
       align-items: center;
-      background: #6D6DF6;
-      padding: 10px 20px;
+      background: #6959AB;
+      padding: 10px 1.4285714285714286rem;
       z-index: 10;
 
       &.visible {
@@ -73,6 +76,14 @@
         font-size: 1.14285714rem;
         color: #fff;
         margin: 0;
+
+        .select-all-btn {
+          font-weight: 600;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
       }
 
       form {
@@ -102,15 +113,9 @@
 
         .btn {
           height: 2.28571429rem;
-          background: #7DD4A1;
           padding: 0 1.42857143rem;
-          font-weight: 500;
           font-size: 0.85714286rem;
           position: relative;
-
-          &:hover {
-            background: #76c898;
-          }
 
           .ant-spin {
             position: absolute;
@@ -159,17 +164,14 @@
       }
 
       .table-head {
+        height: 3.57142857rem;
         border-top: 1px solid #C9CBD4;
         border-bottom: 2px solid #C9CBD4;
 
         .th {
           height: 100%;
           border-right: 1px solid #C9CBD4;
-          padding: 8px 12px;
-
-          &.checkbox-column {
-            width: 50px;
-          }
+          padding: 5px 0.8571428571428571rem;
 
           &:first-of-type {
             justify-content: center;
@@ -179,7 +181,7 @@
           }
 
           &:nth-child(2) {
-            left: 50px !important;
+            left: 4.21428571rem !important;
           }
 
           &:last-child {
@@ -231,6 +233,11 @@
           }
 
           .title {
+            font-weight: 600;
+            font-size: 1rem;
+            line-height: 1.2142857142857142rem;
+            color: #312C51;
+
             &.align-right {
               text-align: right;
             }
@@ -245,6 +252,7 @@
 
       .table-body {
         .table-body__row {
+          min-height: 5rem;
           border-bottom: 1px solid #C9CBD4;
 
           &.expand-row {
@@ -252,19 +260,24 @@
             flex-direction: column;
 
             & > div {
+              height: 5rem;
+              align-items: initial;
               padding: 0;
-              border-bottom: 1px solid #C9CBD4;
-              align-items: stretch;
+              border-bottom: 0;
 
               &:hover {
                 .table-body__field:nth-child(1),
                 .table-body__field:nth-child(2) {
-                  background: #FAFAFF;
+                  background: #fffbfb;
                 }
               }
 
               &:last-child {
                 border: 0;
+
+                .table-body__field {
+                  border-bottom: 0;
+                }
               }
             }
 
@@ -272,12 +285,15 @@
               height: inherit;
               display: flex;
               align-items: center;
+              border-bottom: 1px solid #C9CBD4;
+              color: #5B586F;
 
               &.right {
                 justify-content: flex-end;
               }
 
               &:first-of-type {
+                width: 4.21428571rem;
                 position: sticky;
                 left: 0;
                 background: #fff;
@@ -286,7 +302,7 @@
 
               &:nth-child(2) {
                 position: sticky;
-                left: 50px;
+                left: 4.21428571rem;
                 background: #fff;
                 z-index: 100;
               }
@@ -313,7 +329,7 @@
               min-height: 8px;
               border-radius: 50%;
               background: #C9CBD4;
-              margin: 0 1.7857142857142858rem;
+              margin: 0 0.8571428571428571rem 0 0.5rem;
             }
           }
 
@@ -322,7 +338,7 @@
               .table-body__field {
                 &:nth-child(1),
                 &:nth-child(2) {
-                  background: #F5F5FF;
+                  background: #FFFAFA;
                 }
               }
             }
@@ -330,7 +346,7 @@
             .table-body__field {
               &.fixed,
               &:first-child {
-                background: #F5F5FF;
+                background: #FFFAFA;
                 z-index: 11;
               }
             }
@@ -342,7 +358,7 @@
 
           &:hover {
             & > .table-body__field:nth-child(1) {
-              background: #FAFAFF;
+              background: #fffbfb;
             }
 
             .table-body__field {
@@ -373,20 +389,15 @@
                 left: initial;
               }
             }
-
-            &.checkbox-column {
-              width: 50px;
-            }
-
           }
         }
 
         .table-body__field {
           border-right: 1px solid #C9CBD4;
-          padding: 8px 12px;
+          padding: 5px 0.8571428571428571rem;
 
           font-size: 1rem;
-          color: #343C5A;
+          color: #5B586F;
 
           &:last-child {
             border-right: 0;
@@ -402,16 +413,16 @@
           }
 
           &:nth-child(2) {
-            left: 50px !important;
+            left: 4.21428571rem !important;
           }
 
 
           span.running {
-            color: #7DD4A1;
+            //color: #7DD4A1;
           }
 
           span.paused {
-            color: #EC7F5C;
+            //color: #EC7F5C;
           }
 
           .checkbox-container {
@@ -427,13 +438,15 @@
 
           .sku-asin {
             font-size: 1rem;
+            color: #5B586F;
 
             b {
+              font-weight: 600;
               margin: 0 5px 0 0;
             }
 
             a {
-              color: #6D6DF6;
+              color: #5B586F;
               font-weight: 500;
 
               &:hover {
@@ -465,6 +478,10 @@
                 width: 150px;
                 height: 2.28571429rem;
 
+                input {
+                  font-size: 1rem;
+                }
+
                 .ant-input-number-handler-wrap {
                   display: none;
                 }
@@ -495,6 +512,10 @@
               .btn {
                 .ant-spin {
                   justify-content: center;
+                }
+
+                &.transparent {
+                  margin: 0 10px;
                 }
               }
 
@@ -603,10 +624,10 @@
 
               &:hover {
                 i.edit {
-                  background: rgba(109, 109, 246, 0.05);
+                  background: rgba(255, 82, 86, 0.05);
 
                   svg {
-                    fill: #6D6DF6;
+                    fill: #FF5256;
                   }
                 }
               }
@@ -647,10 +668,10 @@
 
             &:hover {
               .edit-btn {
-                background: rgba(109, 109, 246, 0.05);
+                background: rgba(255, 82, 86, 0.05);
 
                 svg {
-                  fill: #6D6DF6;
+                  fill: #FF5256;
                 }
               }
             }
@@ -667,7 +688,7 @@
           width: 3.5714285714285716rem;
           min-width: 3.5714285714285716rem;
           height: 3.5714285714285716rem;
-          margin: 0 18px 0 0;
+          margin: 0 1.2857142857142858rem 0 0;
 
           img {
             object-fit: contain;
@@ -679,7 +700,8 @@
         .short-name {
           font-weight: 500;
           font-size: 1rem;
-          color: #6D6DF6;
+          line-height: 1.2142857142857142rem;
+          color: #5B586F;
 
           overflow: hidden;
           text-overflow: ellipsis;
@@ -715,10 +737,10 @@
           }
 
           &:hover {
-            background: rgba(109, 109, 246, 0.05);
+            background: rgba(105, 89, 171, 0.05);
 
             svg {
-              stroke: #6D6DF6;
+              stroke: #6959AB;
             }
           }
 

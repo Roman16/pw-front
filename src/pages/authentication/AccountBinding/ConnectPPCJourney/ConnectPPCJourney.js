@@ -1,20 +1,10 @@
 import React, {useState} from "react"
 import '../components/Steps.less'
-import {Steps} from "antd"
 import SuccessPage from "../components/SuccessPage/SuccessPage"
-import {SVG} from "../../../../utils/icons"
 import ConnectPpc from "../components/ConnectPpc/ConnectPpc"
 import {history} from "../../../../utils/history"
 import {useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
-
-const {Step} = Steps
-
-const customDot = (dot) => (
-    <span>
-        {dot}
-    </span>
-)
 
 const ConnectPPCJourney = () => {
     const [currentStep, setCurrentStep] = useState(4)
@@ -23,7 +13,7 @@ const ConnectPPCJourney = () => {
     }))
 
     const closeJourney = () => {
-        history.push('./account/api-connections')
+        history.push('/account/api-connections')
     }
 
     const goNextStep = () => setCurrentStep(prev => prev + 1)

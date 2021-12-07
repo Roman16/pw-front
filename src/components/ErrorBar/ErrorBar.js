@@ -53,7 +53,7 @@ const ErrorBar = () => {
                     position={'bottomRight'}
                     type={'custom'}
                     className={'trial-tooltip'}
-                    description={'Hey Profit Whaler, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
+                    description={'Hey there, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
                 Free Trial
@@ -73,7 +73,7 @@ const ErrorBar = () => {
                 <p><strong> Attention!</strong> Looks like your MWS access was revoked. Please go to your Seller Central
                     account under settings, then user permissions, reinstate access, copy your new authorization token,
                     and
-                    enter it on your Profit Whales Account page. This will then reinstate access and your account synced
+                    enter it on your Sponsoreds Account page. This will then reinstate access and your account synced
                     again.</p>
 
                 <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>

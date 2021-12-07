@@ -42,6 +42,16 @@ const Impersonations = (props) => {
         dispatch(userActions.getImpersonationUserInformation())
     }
 
+    const updateLocaleStorage = () => {
+        if (localStorage.getItem('productsSearchParams')) {
+            localStorage.setItem('productsSearchParams', JSON.stringify({
+                ...JSON.parse(localStorage.getItem('productsSearchParams')),
+                page: 1,
+            }))
+        }
+
+    }
+
     const impersonateHandler = async (e) => {
         e.preventDefault()
 
@@ -61,6 +71,8 @@ const Impersonations = (props) => {
                 localStorage.setItem('token', res.access_token)
             }
 
+            updateLocaleStorage()
+
             updateUserInformation()
         } catch (e) {
             console.log(e)
@@ -75,6 +87,8 @@ const Impersonations = (props) => {
             localStorage.removeItem('adminToken')
 
             dispatch(userActions.setInformation(res))
+
+            updateLocaleStorage()
 
             notification.success({title: 'Success!'})
         } catch (e) {

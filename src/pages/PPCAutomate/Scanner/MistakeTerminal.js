@@ -17,7 +17,7 @@ const MistakeTerminal = ({mistakeList, totalSize, page, pageSize, onChangePagina
                 <div className="actions">
                     {mistakeList.length > 0 &&
                     <button className='btn default' onClick={() => {
-                        history.push('/ppc/optimization')
+                        history.push('/ppc/automation')
                     }}>
                         Fix It
                     </button>}

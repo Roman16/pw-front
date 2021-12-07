@@ -5,175 +5,121 @@
 }
 
 .reactivate-account {
-  font-size: 0.714286rem; // 10px
-  height: fit-content;
-  padding: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  z-index: 1000000;
-  flex: initial !important;
-  font-family: Eina;
-
+  width: 95% !important;
   max-width: 42.857142857142854rem;
-  width: 100% !important;
-  border-radius: 4px;
 
   .ant-modal-content {
-    padding: 2.857142857142857rem !important;
-    width: 100%;
-
     .ant-modal-close {
       display: none;
     }
 
     .ant-modal-body {
-      padding: 0;
+      padding: 4.285714285714286rem 2.857142857142857rem;
+      display: flex;
+      flex-direction: column;
 
-      .reactivate-title {
+      h2 {
+        font-weight: 600;
         font-size: 1.4285714285714286rem;
-        letter-spacing: -0.06px;
-        color: #343C5A;
-        font-weight: 500;
-        text-align: left;
-        margin-bottom: 1rem;
+        line-height: 1.7142857142857142rem;
+        text-align: center;
+        color: #312C51;
+        margin-bottom: 1.4285714285714286rem;
       }
 
-      .reactivate-text {
-        font-size: 1rem;
-        color: #343C5A;
-        margin-bottom: 2.642857142857143rem;
-        text-align: left;
-
-        .reactivate-data {
-          color: #17175a;
-          font-weight: 600;
-        }
+      p {
+        font-size: 1.1428571428571428rem;
+        line-height: 1.4285714285714286rem;
+        text-align: center;
+        color: #5B586F;
+        margin-bottom: 2.142857142857143rem;
 
         span {
-          color: #7DD4A1;
-          font-weight: 500;
+          color: #7FD3A1;
         }
       }
 
       .actions {
-        width: max-content;
-        justify-content: flex-end;
-        margin: 0 0 0 auto;
-
-        .btn {
-          font-weight: 500;
-          height: 2.2857142857142856rem;
-          font-size: 0.8571428571428571rem;
-          position: relative;
-        }
-
-        .ant-spin {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          margin: auto;
-
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-      }
-    }
-
-    .ant-modal-footer {
-      border: none;
-      padding: 0;
-      // margin-bottom: 2.4em;
-
-      div {
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
 
-        [ant-click-animating-without-extra-node]:after {
-          -webkit-animation: none !important;
-          -moz-animation: none !important;
-          -o-animation: none !important;
-          -ms-animation: none !important;
-          animation: none !important;
+        .btn {
+          height: 3.4285714285714284rem;
+          font-size: 1.1428571428571428rem;
+          margin: 0 0.7142857142857143rem;
         }
+      }
 
-        button {
-          font-size: 1rem; // 14px
-          min-width: 8.571428571428571rem;
-          height: 2.2857142857142856rem;
-          border: none;
-          border-radius: 8px;
-          margin: 10px 15px !important;
-          padding: 0 15px;
-          animation-duration: 0s !important;
-
-          &:active {
-            box-shadow: none;
-          }
-        }
-
-        .ant-btn {
-          background: rgba(109, 109, 246, 0.1);
-          color: #363694;
-          box-shadow: none;
-          margin: 0 15px 0 0;
-
-          &:hover {
-            background: rgba(109, 109, 246, 0.3);
-            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
-          }
-        }
-
-        .ant-btn.ant-btn-primary {
-          width: max-content;
-          background: #7DD4A1 !important;
-          color: @white;
-
-          &:hover {
-            background: #5e9168 !important;
-            box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-            0px 0px 20px rgba(142, 147, 192, 0.08);
-          }
-        }
+      .btn.transparent {
+        font-size: 1.1428571428571428rem;
+        margin: 1.4285714285714286rem auto 0;
       }
     }
   }
 }
 
-.ant-modal.cancel-account {
-  .ant-modal-footer > div {
+.confirm-subscribe-window, .confirm-payment-window {
+  width: 95% !important;
+  max-width: 42.857142857142854rem;
+
+  .ant-modal-body {
+    padding: 4.285714285714286rem 1.4285714285714286rem;
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: column;
 
-    .ant-btn {
-      width: max-content;
-      background: #7DD4A1 !important;
-      color: @white;
+    h2 {
+      font-weight: 600;
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      text-align: center;
+      color: #312C51;
+      margin-bottom: 1.4285714285714286rem;
+    }
 
-      &:hover {
-        background: #5e9168 !important;
-        box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08),
-        0px 0px 20px rgba(142, 147, 192, 0.08);
+    p {
+      font-size: 1.1428571428571428rem;
+      line-height: 1.4285714285714286rem;
+      text-align: center;
+      color: #5B586F;
+      margin-bottom: 2.142857142857143rem;
+
+      .price {
+        display: inline-block;
+        font-weight: 600;
+
+        a, br, .prev-value {
+          display: none;
+        }
+      }
+
+      span {
+        font-weight: 600;
+        margin: 0 5px 0 0;
       }
     }
 
-    .ant-btn.ant-btn-primary {
-      background: rgba(109, 109, 246, 0.1) !important;
-      color: #363694;
-      box-shadow: none;
-      margin: 0 15px 0 0;
+    .actions {
+      display: flex;
+      justify-content: center;
 
-      &:hover {
-        background: rgba(109, 109, 246, 0.3) !important;
-        box-shadow: 0px 12px 16px rgba(142, 147, 192, 0.08), 0px 0px 20px rgba(142, 147, 192, 0.08);
+      .btn {
+        height: 3.4285714285714284rem;
+        font-size: 1.1428571428571428rem;
+        margin: 0 0.7142857142857143rem;
       }
     }
 
+    a {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: center;
+      color: #5B586F;
+      margin: 1.4285714285714286rem auto 0;
 
+      &:hover {
+        color: #312C51;
+      }
+    }
   }
 }

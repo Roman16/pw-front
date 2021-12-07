@@ -10,6 +10,7 @@ import '../../style/variables.less'
 import {history} from "../../utils/history"
 import ToggleMarketplace from "./ToggleMarketplace"
 import moment from 'moment'
+import * as Sentry from "@sentry/browser"
 
 const production = process.env.REACT_APP_ENV === "production"
 const devicePixelRatio = window.devicePixelRatio
@@ -54,6 +55,14 @@ const Sidebar = () => {
 
         if (user.user.is_agency_client) setAgencyUser(true)
         else setAgencyUser(false)
+
+
+        Sentry.configureScope(function (scope) {
+            scope.setUser({
+                id: user.user.id,
+                email: user.user.email,
+            })
+        })
     }, [user])
 
     useEffect(() => {
@@ -86,7 +95,7 @@ const Sidebar = () => {
         if (collapsed) {
             window.Intercom("update", {
                 app_id: process.env.REACT_APP_INTERCOM_ID,
-                horizontal_padding: devicePixelRatio === 2 ? 160 : 210
+                horizontal_padding: devicePixelRatio === 2 ? 175 : 230
             })
         } else {
             window.Intercom("update", {
@@ -121,6 +130,7 @@ const Sidebar = () => {
 
                     <ul className="top-nav-list">
                         {mainMenu
+                            // .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : (i.key === 'zth' || i.key === 'ppc-automate'))
                             .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                             .map(item => {
                                 return (
@@ -180,7 +190,7 @@ const Sidebar = () => {
                             <NavLink
                                 className="menu-link"
                                 activeClassName="active"
-                                to={`/account/settings`}
+                                to={`/account`}
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>

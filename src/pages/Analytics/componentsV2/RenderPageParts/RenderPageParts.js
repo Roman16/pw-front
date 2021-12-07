@@ -294,22 +294,28 @@ const RenderPageParts = (props) => {
 
             let parentResponse
 
+            let res
 
-            let res = await analyticsServices.fetchPageData(
-                location,
-                {
-                    ...paginationParams ? paginationParams : tableRequestParams,
-                    sorterColumn: sorterParams ? sorterParams : localSorterColumn,
-                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : productType === 'parent' ? pageParts.filter(i => i !== 'table') : pageParts,
-                    filtersWithState,
-                    activeMetrics,
-                },
-                undefined,
-                source.token
-            )
+            if (pageParts.length === 1 && pageParts[0] === 'table' && productType === 'parent') {
+                res = {
+                    table: null
+                }
+            } else {
+                res = await analyticsServices.fetchPageData(
+                    location,
+                    {
+                        ...paginationParams ? paginationParams : tableRequestParams,
+                        sorterColumn: sorterParams ? sorterParams : localSorterColumn,
+                        pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : productType === 'parent' ? pageParts.filter(i => i !== 'table') : pageParts,
+                        filtersWithState,
+                        activeMetrics,
+                    },
+                    undefined,
+                    source.token
+                )
+            }
 
             prevActiveMetrics = [...activeMetrics]
-
 
             if (productType === 'parent') {
                 parentResponse = await analyticsServices.fetchPageData(

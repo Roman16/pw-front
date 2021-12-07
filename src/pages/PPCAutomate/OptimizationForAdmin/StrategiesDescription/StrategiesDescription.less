@@ -17,8 +17,10 @@
     cursor: pointer;
 
     h2 {
-      font-size: 20px;
-      color: #363694;
+      font-weight: 600;
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      color: #312C51;
       margin: 0;
     }
 
@@ -26,7 +28,7 @@
       transform: rotate(-90deg);
 
       svg {
-        stroke: #343C5A;
+        stroke: #312C51;
       }
     }
   }
@@ -65,13 +67,13 @@
     b {
       font-size: 1rem;
       line-height: 1.2142857142857142rem;
-      color: #343C5A;
+      color: #312C51;
       margin-bottom: 2px;
     }
 
     .sales, .acos {
       font-size: 0.8571428571428571rem;
-      color: #343C5A;
+      color: #312C51;
       display: flex;
       align-items: center;
 
@@ -99,8 +101,8 @@
     p {
       font-size: 0.8571428571428571rem;
       line-height: 1rem;
-      color: #656A84;
-      margin-bottom: 1.4285714285714286rem;
+      color: #5B586F;
+      margin-bottom: 1rem;
     }
 
     .values {
@@ -115,6 +117,12 @@
         .ant-progress-inner {
           width: 3.357142857142857rem !important;
           height: 3.357142857142857rem !important;
+
+          .ant-progress-circle {
+            path:first-child {
+              opacity: .1;
+            }
+          }
         }
 
         .ant-progress-text {

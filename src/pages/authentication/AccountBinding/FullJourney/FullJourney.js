@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react"
-import {Steps} from 'antd'
-import {SVG} from "../../../../utils/icons"
 import ChooseAccount from "../components/ChooseAccount/ChooseAccount"
 import AccountName from "../components/AccountName/AccountName"
 import ConnectPpc from "../components/ConnectPpc/ConnectPpc"
@@ -14,9 +12,6 @@ import {userService} from "../../../../services/user.services"
 import {userActions} from "../../../../actions/user.actions"
 import {useDispatch, useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
-
-const {Step} = Steps
-
 
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0)

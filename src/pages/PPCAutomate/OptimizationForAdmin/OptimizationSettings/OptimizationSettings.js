@@ -1,10 +1,8 @@
-import React, {Fragment, useState} from "react"
+import React, {useState} from "react"
 import './OptimizationSettings.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {Select, Spin} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faStop} from "@fortawesome/free-solid-svg-icons"
 import {useDispatch, useSelector} from "react-redux"
 import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmActionPopup"
 import {productsActions} from "../../../../actions/products.actions"
@@ -82,15 +80,16 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                 <div className="section-header">
                     <h2>Settings</h2>
 
-                    {product.status !== 'STOPPED' && <button
-                        className={'btn default '}
+                    {product.status === 'RUNNING' && <button
+                        className={'btn blue'}
                         disabled={processing}
                         onClick={confirmStopOptimization}
                     >
-                        <i>
-                            {processing ? <Spin size={'small'}/> : <FontAwesomeIcon icon={faStop}/>}
-                        </i>
+                        <div className={'icon'}/>
+
                         Stop Optimization
+
+                        {processing && <Spin size={'small'}/>}
                     </button>}
                 </div>
 
@@ -193,7 +192,8 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Product Price</div>
 
                         <p className={'product-price'}>
-                            {product.default_variation && product.default_variation.item_price !== null && `$${product.default_variation.item_price} `}(retrieved from Amazon)</p>
+                            {product.default_variation && product.default_variation.item_price !== null && `$${product.default_variation.item_price} `}(retrieved
+                            from Amazon)</p>
                     </div>
 
                     <div className="form-group">
@@ -212,6 +212,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Overwrite Product Price</div>
 
                         <InputCurrency
+                            disabled={isDisabled}
                             value={product.default_variation && product.default_variation.item_price_from_user}
                             onChange={(value) => onUpdateField('item_price_from_user', value)}
                         />

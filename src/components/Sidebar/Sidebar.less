@@ -1,11 +1,10 @@
 @import "../../style/variables.less";
 
-@sidebarWidth: 14.285714285714286rem;
+@sidebarWidth: 15.714285714285714rem;
 
 .visibleAnimation {
   opacity: 1;
   transition: 0.2s ease-in-out;
-
 }
 
 .hideAnimation {
@@ -446,14 +445,14 @@
 
       ul {
         animation-name: showSocial;
-        animation-duration: 1.5s;
+        animation-duration: 2s;
       }
 
       @keyframes showSocial {
         0% {
           opacity: 0
         }
-        50% {
+        30% {
           flex-direction: row
         }
         100% {
@@ -595,9 +594,15 @@
         padding-left: 19px;
       }
 
+      h3 {
+        min-width: 100%;
+        .hideAnimation()
+
+      }
+
       ul {
         animation-name: hideSocial;
-        animation-duration: 1s;
+        animation-duration: 1.5s;
       }
 
       @keyframes hideSocial {
@@ -856,7 +861,6 @@
   }
 }
 
-
 .back-to-admin {
   position: fixed;
   right: 20px;
@@ -963,7 +967,6 @@
     }
   }
 }
-
 
 .intercom-messenger-frame {
   transition: 0.3s ease-in-out !important;

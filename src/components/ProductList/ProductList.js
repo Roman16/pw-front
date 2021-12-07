@@ -102,7 +102,7 @@ const ProductList = ({pathname}) => {
     }, [searchParams])
 
     useEffect(() => {
-        if (pathname === '/ppc/optimization' && selectedAll) {
+        if (pathname === '/ppc/automation' && selectedAll) {
             dispatch(productsActions.fetchProductDetails(productList[0]))
             selectAllHandler(false)
         } else if (pathname === '/ppc/scanner') {
@@ -123,6 +123,10 @@ const ProductList = ({pathname}) => {
             dispatch(productsActions.updateProduct({}))
         })
     }, [searchParams, onlyOptimization, ungroupVariations])
+
+    useEffect(() => {
+        if (productList.length === 0 && totalSize > 0) setSearchParams(prevState => ({...prevState, page: 1}))
+    }, [productList, totalSize])
 
     return (
         <Fragment>

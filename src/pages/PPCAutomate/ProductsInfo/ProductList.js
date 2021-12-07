@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 import Pagination from "../../../components/Pagination/Pagination"
 import CustomTable, {EditableField} from "../../../components/Table/CustomTable"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
@@ -161,7 +161,6 @@ const ProductList = ({
     const expandedRowRender = (props, parentIndex) => {
         const columns = [
             {
-                width: '50px',
                 render: () => ''
             },
             {
@@ -174,7 +173,7 @@ const ProductList = ({
                 }
             },
             {
-                width: '180px',
+                width: '200px',
                 render: ({sku, asin}) => <div className={'sku-asin'}>
                     <div title={sku}><b>SKU:</b>{sku}</div>
                     <div title={asin}><b>ASIN:</b>
@@ -298,7 +297,7 @@ const ProductList = ({
 
                                 return (
                                     <div
-                                        className={`table-body__field ${item.align || ''} ${item.editType ? 'editable-field' : ''}`}
+                                        className={`table-body__field ${item.align || ''} ${i === 1 ? 'with-shadow' : ''} ${item.editType ? 'editable-field' : ''}`}
                                         style={{...fieldWidth, minWidth: item.minWidth || '0'}}
                                     >
                                         {index === 1 && <div className="variation-indicator"/>}
@@ -342,7 +341,7 @@ const ProductList = ({
             title: 'SKU/ASIN',
             dataIndex: 'sku_asin',
             key: 'sku_asin',
-            width: '180px',
+            width: '200px',
             render: (text, {product: {sku, asin}}) => <div className={'sku-asin'}>
                 <div title={sku}><b>SKU:</b>{sku}</div>
                 <div title={asin}><b>ASIN:</b>
@@ -527,6 +526,10 @@ const ProductList = ({
         }
     }
 
+    useEffect(() => {
+        setSelectedRows([])
+        setSelectedAll(false)
+    }, [requestParams])
 
     return (
         <div className="row">

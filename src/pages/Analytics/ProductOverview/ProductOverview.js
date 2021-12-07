@@ -18,7 +18,6 @@ const ProductOverview = () => {
 
     const productType = queryString.parse(window.location.search).isParent === 'false' ? 'regular' : 'parent'
 
-
     useEffect(() => {
         if (_.find(filters, {filterBy: 'productView'})) {
             dispatch(analyticsActions.updateFiltersList([...filters.map(filter => {

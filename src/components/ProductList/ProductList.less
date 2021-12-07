@@ -23,6 +23,8 @@
     min-width: 0;
     padding: 0;
     transition: all .2s ease-in;
+    margin-right: 0;
+    margin-left: 0;
   }
 
   .products-filters,
@@ -63,7 +65,7 @@
           font-size: 0.8571428571428571rem;
 
           b {
-            font-weight: 500;
+            font-weight: 600;
           }
         }
 
@@ -393,37 +395,37 @@
     .optimization-status {
       position: absolute;
       display: flex;
-      right: 0.7142857142857143rem;
+      right: 1.4285714285714286rem;
       top: 0.7142857142857143rem;
 
       .custom-tooltip {
         margin: 0;
 
         .on-optimization {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #409600;
           border-radius: 50%;
         }
 
         .has-changes {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #409600;
           border-radius: 50%;
           animation: pulse 1s infinite;
         }
 
         .optimization-processing {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #FFDC3F;
           border-radius: 50%;
         }
 
         .optimization-failed {
-          width: 10px;
-          height: 10px;
+          width: 0.5rem;
+          height: 0.5rem;
           background: #EC7F5C;
           border-radius: 50%;
         }
@@ -462,8 +464,8 @@
       border-bottom: 1px solid #C9CBD4;
 
       .children-product-item {
+        min-height: 5.71428571rem;
         display: flex;
-        align-items: center;
 
 
         &:last-child {
@@ -479,17 +481,16 @@
         height: 7px;
         border-radius: 50%;
         background: #C9CBD4;
-        margin: 0 1.4285714285714286rem;
+        margin: auto 1.4285714285714286rem;
       }
 
       .children-information {
         display: flex;
+        flex: 1;
         align-items: center;
         padding: 10px 0;
         position: relative;
-        flex: 1;
         border-bottom: 1px solid #C9CBD4;
-
 
         img {
           max-width: 4.571428571428571rem;
@@ -503,7 +504,7 @@
 
         .caption {
           color: rgba(52, 60, 90);
-          font-weight: 500;
+          font-weight: 600;
           font-size: 1rem;
           color: #343C5A;
 
@@ -513,7 +514,6 @@
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           width: fit-content;
-          font-weight: 500;
         }
 
         .detail {
@@ -530,7 +530,7 @@
             }
 
             span:first-child {
-              font-weight: 500;
+              font-weight: 600;
             }
           }
         }
@@ -628,7 +628,7 @@
 
   &.closed {
     button {
-      left: -2.5rem;
+      left: -1.5714285714285714rem;
       transition: .2s;
       border-radius: 0 50% 50% 0;
 
@@ -637,7 +637,7 @@
       }
 
       &:hover {
-        left: -1.4285714285714286rem;
+        left: -10px;
         transition: .2s;
 
         .image {

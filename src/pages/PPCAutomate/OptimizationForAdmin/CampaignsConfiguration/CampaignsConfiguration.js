@@ -11,6 +11,7 @@ const {Search} = Input
 
 let requestSent = false
 
+
 export const multiSelectVariations = [
     {title: 'Bid Optimization Keywords', key: 'bid_optimization_keywords', value: 'bid_optimization_keywords'},
     {title: 'Bid Optimization PAT', key: 'bid_optimization_pats', value: 'bid_optimization_pats'},
@@ -231,8 +232,6 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
                 <CustomTable
                     loading={loading}
                     dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
-                    // dataSource={[{}, {}]}
-                    // dataSource={jobsList}
                     columns={columns}
                     emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
                 />
