@@ -23,10 +23,6 @@ const SmallSpend = ({visible}) => {
                 You can start by creating professionally structured <br/>
                 PPC campaigns with <Link to={'/zero-to-hero/campaign'}>Zero to Hero</Link>.
             </p>
-
-            <Link to={'/zero-to-hero/campaign'} className={'btn default'}>
-                Upgrade Now
-            </Link>
         </ModalWindow>
     )
 }

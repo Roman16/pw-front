@@ -249,10 +249,6 @@ const OptimizationForAdmin = () => {
 
             if (product.status === 'STOPPED') {
                 product.optimization_strategy = null
-
-                optimizationOptions.forEach(item => {
-                    product[item.value] = true
-                })
             }
 
             setProductInformationFromRequest({
@@ -431,7 +427,6 @@ const OptimizationForAdmin = () => {
         }
 
         return true
-
     }
 
     const revertInformationHandler = () => {
@@ -470,8 +465,6 @@ const OptimizationForAdmin = () => {
 
     const startOptimizationHandler = async () => {
         setSaveProcessing(true)
-
-        console.log(productInformation)
 
         if (productInformation.optimization_strategy !== null) {
             if (productInformation.default_variation && productInformation.default_variation.cogs) {
@@ -565,7 +558,6 @@ const OptimizationForAdmin = () => {
             prevProduct = {id: null}
         }
     }, [])
-
 
     return (
         <>

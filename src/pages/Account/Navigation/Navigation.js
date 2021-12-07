@@ -1,4 +1,4 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import {Link, NavLink, Redirect, Route} from "react-router-dom"
 import './Navigation.less'
 
@@ -11,6 +11,7 @@ import BillingHistory from "../BillingHistory/BillingHistory"
 import BillingInformation from "../BillingInformation/BillingInformation"
 import {history} from "../../../utils/history"
 import _ from 'lodash'
+import {useSelector} from "react-redux"
 
 
 const menu = [
@@ -38,17 +39,17 @@ const menu = [
         title: 'API Connection',
         link: 'api-connection',
     },
-    {
-        title: 'Error Page',
-        link: 'test-route',
-    },
 ]
 
 
 const Navigation = () => {
     const location = history.location
 
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
 
+    const {user} = useSelector(state => ({
+        user: state.user,
+    }))
     useEffect(() => {
         if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '14px'
 
@@ -57,6 +58,17 @@ const Navigation = () => {
         })
     }, [])
 
+
+    useEffect(() => {
+        if (user.user.id === 714) {
+            setIsSuperAdmin(true)
+        } else {
+            setIsSuperAdmin(false)
+        }
+    }, [user])
+
+    let isAgencyUser = user.user.is_agency_client
+
     return (
         <div className={'account-page'}>
             <div className="page-title">
@@ -64,14 +76,16 @@ const Navigation = () => {
             </div>
 
             <div className={`account-navigation ${location.pathname === '/account' ? 'visible' : ''} `}>
-                {menu.map(i => <NavLink
-                    activeClassName={'active'}
-                    exact
-                    to={`/account/${i.link}`}
-                >
-                    <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
-                    {i.title}
-                </NavLink>)}
+                {menu
+                    .filter(i => (isSuperAdmin || isAgencyUser) ? i : i.link !== 'subscription')
+                    .map(i => <NavLink
+                        activeClassName={'active'}
+                        exact
+                        to={`/account/${i.link}`}
+                    >
+                        <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
+                        {i.title}
+                    </NavLink>)}
             </div>
 
             <div className="account-content">
@@ -83,16 +97,12 @@ const Navigation = () => {
                 <Route exact path="/account/access-settings" component={AccessSettings}/>
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
-                <Route exact path="/account/subscription" component={Subscription}/>
+                {(isSuperAdmin || isAgencyUser) && <Route exact path="/account/subscription" component={Subscription}/>}
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
-
-                <Route exact path="/account/test-route" render={() => <TestComponent/>}/>
             </div>
         </div>
     )
 }
-
-const TestComponent = ({text}) => (<p>{text.test}</p>)
 
 
 const BackLink = () => {

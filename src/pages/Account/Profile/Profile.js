@@ -10,11 +10,12 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
 
 const Profile = () => {
-    const [userInformation, setUserInformation] = useState({}),
+    const user = useSelector(state => state.user.user)
+
+    const [userInformation, setUserInformation] = useState({...user}),
         [saveProcessing, setSaveProcessing] = useState(false),
         [errorFields, setErrorFields] = useState([])
 
-    const user = useSelector(state => state.user.user)
     const dispatch = useDispatch()
 
     const changeInputHandler = ({target: {name, value}}) => {

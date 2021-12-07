@@ -9,13 +9,16 @@ import * as Sentry from "@sentry/react";
 import { Integrations } from "@sentry/tracing";
 
 Sentry.init({
-    dsn: "https://ad337f23da9248c997a56ad98f9e634f@o1082247.ingest.sentry.io/6090437",
+    dsn: process.env.REACT_APP_SENTRY_TOKEN,
     integrations: [new Integrations.BrowserTracing()],
 
     // We recommend adjusting this value in production, or using tracesSampler
     // for finer control
     tracesSampleRate: 1.0,
 });
+
+Sentry.setTag("build_type", process.env.REACT_APP_ENV === 'production' ? 'production' : 'developer');
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
