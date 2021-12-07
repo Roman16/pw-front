@@ -507,14 +507,14 @@ const OptimizationForAdmin = () => {
                             })
                         }
 
-                        await productsServices.startProductOptimization(product)
+                        const startRes = await productsServices.startProductOptimization(product)
 
                         setProductInformation(product)
 
                         dispatch(productsActions.changeOptimizationStatus({
                             id: productInformation.product_id,
                             status: 'RUNNING',
-                            optimization_indicator_state: {level: "INDICATOR_STATUS_WARNING", state: "RUNNING_WITH_NO_CHANGES_SINCE_LAUNCHED"}
+                            optimization_indicator_state: startRes.result.optimization_jobs.optimization_indicator_state
                         }))
 
                         notification.start({title: productInformationFromRequest.status === 'RUNNING' ? 'Changes saved!' : 'Optimization successfully started'})

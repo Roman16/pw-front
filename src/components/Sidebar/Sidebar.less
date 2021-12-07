@@ -445,14 +445,14 @@
 
       ul {
         animation-name: showSocial;
-        animation-duration: 1.5s;
+        animation-duration: 2s;
       }
 
       @keyframes showSocial {
         0% {
           opacity: 0
         }
-        50% {
+        30% {
           flex-direction: row
         }
         100% {
@@ -594,9 +594,15 @@
         padding-left: 19px;
       }
 
+      h3 {
+        min-width: 100%;
+        .hideAnimation()
+
+      }
+
       ul {
         animation-name: hideSocial;
-        animation-duration: 1s;
+        animation-duration: 1.5s;
       }
 
       @keyframes hideSocial {
