@@ -90,7 +90,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                     reject(error)
                 } else if (error.response) {
-                    if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
+                    if (!error.response.data || !error.response.data.message) {
                         handlerErrors('Something wrong!')
                         reject(error)
                     } else if (typeof error.response.data === 'object' && showNotifications) {
