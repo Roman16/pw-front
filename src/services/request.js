@@ -73,7 +73,13 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
-                if (error.response && error.response.status === 401) {
+                if (!error.response) {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('adminToken')
+                    if (window.location.pathname !== '/login') {
+                        history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+                    }
+                } else if (error.response && error.response.status === 401) {
                     if (error.response.data.message === 'Incorrect login or password' || history.location.pathname.includes('/confirm-email')) {
                         reject(error)
                         handlerErrors(error.response.data.message)
@@ -90,7 +96,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                     reject(error)
                 } else if (error.response) {
-                    if (error.response.status === 500 && (!error.response.data || !error.response.data.message)) {
+                    if (!error.response.data || !error.response.data.message) {
                         handlerErrors('Something wrong!')
                         reject(error)
                     } else if (typeof error.response.data === 'object' && showNotifications) {
@@ -109,6 +115,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 } else {
                     reject(error)
                 }
+
 
                 Sentry.withScope((scope) => {
                     Sentry.captureException(error)
