@@ -73,7 +73,13 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
-                if (error.response && error.response.status === 401) {
+                if (!error.response) {
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('adminToken')
+                    if (window.location.pathname !== '/login') {
+                        history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+                    }
+                } else if (error.response && error.response.status === 401) {
                     if (error.response.data.message === 'Incorrect login or password' || history.location.pathname.includes('/confirm-email')) {
                         reject(error)
                         handlerErrors(error.response.data.message)
