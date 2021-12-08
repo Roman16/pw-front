@@ -73,11 +73,6 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
-
-                Sentry.withScope((scope) => {
-                    Sentry.captureException(error)
-                })
-
                 if (error.response && error.response.status === 401) {
                     if (error.response.data.message === 'Incorrect login or password' || history.location.pathname.includes('/confirm-email')) {
                         reject(error)
@@ -114,6 +109,10 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 } else {
                     reject(error)
                 }
+
+                Sentry.withScope((scope) => {
+                    Sentry.captureException(error)
+                })
             })
     })
 }
