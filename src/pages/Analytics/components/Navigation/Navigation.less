@@ -35,10 +35,6 @@
         cursor: pointer;
         border-bottom: 0.5px solid #C9CBD4;
 
-        svg {
-          fill: #C9CBD4;
-        }
-
         &.active {
           background: #FFFAFA;
           padding-left: 1.1428571428571428rem;
@@ -50,20 +46,19 @@
         }
 
         .switch-sub-menu {
-          width: 20px;
-          height: 20px;
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
           border-radius: 50%;
           margin: 0 -5px 0 auto;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 2px 0 0 0;
           z-index: 10;
+          padding: 3px 0 0 0;
 
           svg {
-            width: 12px;
-            height: 8px;
-            stroke: #343C5A;
+            width: 9px;
+            height: 6px;
             transition: .2s;
           }
 
@@ -72,8 +67,6 @@
           }
 
           &.opened {
-            padding: 0 0 2px 0;
-
             svg {
               transform: rotate(180deg);
             }

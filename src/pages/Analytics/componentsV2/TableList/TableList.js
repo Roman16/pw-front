@@ -238,6 +238,7 @@ const TableList = ({
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
                     revertSortingColumns={numberColumns}
+                    emptyText={'image'}
 
                     rowKey={rowKey}
                     {...showRowSelection && {rowSelection: rowSelection}}

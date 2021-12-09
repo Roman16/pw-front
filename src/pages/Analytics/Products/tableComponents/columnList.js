@@ -155,7 +155,7 @@ export const columnList = (location) =>  [
             title: 'Avg. Sale Price',
             dataIndex: 'total_sales_avg_price',
             key: 'total_sales_avg_price',
-            width: '150px',
+            width: '160px',
             sorter: true,
             filter: true,
             align: 'right',

@@ -19,7 +19,7 @@ const animationDuration = 1000,
     animationEasing = 'linear',
     isAnimationActive = false
 
-const chartColors = ['#82ca9d', '#8884d8', '#DD7703', '#4DBEE1']
+const chartColors = ['#FF5256', '#9464B9', '#FFA8AA', '#BA96F4']
 
 
 const Chart = ({
