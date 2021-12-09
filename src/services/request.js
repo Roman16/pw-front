@@ -73,7 +73,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
-                if (!error.response) {
+                if (!error.response && !('message' in error)) {
                     localStorage.removeItem('token')
                     localStorage.removeItem('adminToken')
                     if (window.location.pathname !== '/login') {
