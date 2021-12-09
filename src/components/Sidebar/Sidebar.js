@@ -273,7 +273,7 @@ export const SocialLinks = () => <div className="social-links">
         </a></li>
 
         <li><a
-            href="https://www.instagram.com/sponsoreds_com"
+            href="https://www.instagram.com/sponsoreds_com/"
             target="_blank"
             title="Instagram"
         >
