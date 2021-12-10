@@ -192,7 +192,7 @@ const Chart = ({
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="linear"
-                            strokeOpacity={0.8}
+                            strokeOpacity={0.5}
                             dataKey={`${metric}`}
                             stroke={chartColors[index]}
                             strokeWidth={1.5}
