@@ -176,7 +176,8 @@ const AuthorizedUser = (props) => {
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>
                                     {/*ANALYTICS*/}
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    {(isSuperAdmin || isAgencyUser) &&
+                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>}
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}
                                     {(isSuperAdmin || isAgencyUser) &&

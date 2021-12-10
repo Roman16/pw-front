@@ -23,7 +23,7 @@ export const multiSelectVariations = [
 ]
 
 
-const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loading, jobsList, onUpdate}) => {
+const CampaignsConfiguration = ({optimizationJobId, productInformation, isDisabled, getSettings, loading, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [hasJob, setJobState] = useState(false),
         [searchText, setSearchText] = useState()
@@ -198,7 +198,7 @@ const CampaignsConfiguration = ({optimizationJobId, isDisabled, getSettings, loa
     }, [optimizationJobId])
 
     useEffect(() => {
-        if (optimizationJobId && sectionHeightState && !requestSent) {
+        if (optimizationJobId && sectionHeightState && !requestSent && productInformation.status !== null) {
             getCampaignsSettings()
         }
     }, [sectionHeightState, optimizationJobId])

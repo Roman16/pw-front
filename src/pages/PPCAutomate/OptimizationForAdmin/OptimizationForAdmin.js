@@ -587,6 +587,7 @@ const OptimizationForAdmin = () => {
                 {user.user.is_agency_client && <CampaignsConfiguration
                     productId={productId}
                     optimizationJobId={productInformation.id}
+                    productInformation={productInformation}
                     isDisabled={productInformation.optimization_strategy == null}
                     jobsList={campaignSettings}
                     loading={loadingCampaignSettings}
