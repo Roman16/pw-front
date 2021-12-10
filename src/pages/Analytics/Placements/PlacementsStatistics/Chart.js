@@ -283,7 +283,7 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
 
 const Chart = ({processing, data = [], selectedMetric}) => {
 
-    const chartData = fakeData.map(item => {
+    const chartData = data.map(item => {
         Object.keys(item).forEach(key => {
 
             if (key !== 'eventDate') {

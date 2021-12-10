@@ -6,7 +6,8 @@ import Chart from "../../components/MainChart/Chart"
 import {useSelector} from "react-redux"
 import {Spin} from "antd"
 
-const fakeData = [{
+const fakeData = [
+    {
         "eventDate": "2021-11-10",
         "impressions": 13400,
         "impressions_7d": 13400,
@@ -333,7 +334,7 @@ const MainChart = ({activeMetrics, selectedRangeDate, location, chartData, fetch
             showDailyChart={chartState.showDailyChart}
             showOptimizationChart={false}
             activeMetrics={activeMetrics}
-            data={fakeData}
+            data={chartData}
             selectedRangeDate={selectedRangeDate}
             productOptimizationDateList={productOptimizationDateList}
         />

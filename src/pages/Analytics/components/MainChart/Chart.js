@@ -21,7 +21,6 @@ const animationDuration = 1000,
 
 const chartColors = ['#FF5256', '#9464B9', '#FFA8AA', '#BA96F4']
 
-
 const Chart = ({
                    data,
                    activeMetrics = [],
