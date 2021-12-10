@@ -1,9 +1,7 @@
-import React, {Fragment} from "react"
+import React from "react"
 import CustomSelect from "../../../../components/Select/Select"
-import {Popover, Select} from "antd"
-import {SVG} from "../../../../utils/icons"
+import {Select} from "antd"
 import {metricKeys} from "../../components/MainMetrics/metricsList"
-import {chartAreaKeys} from "./Chart"
 
 const Option = Select.Option
 
@@ -42,13 +40,7 @@ const availableMetrics = [
     // },
 ]
 
-const LegendMenu = () => {
-    return (
-        <ul className='chart-legend'>
-            {Object.values(chartAreaKeys).map(item => <li>{item}</li>)}
-        </ul>
-    )
-}
+
 
 
 const SectionHeader = ({selectedMetric, onChange}) => {
@@ -62,20 +54,6 @@ const SectionHeader = ({selectedMetric, onChange}) => {
                 <Option value={metric.key}>{metric.title}</Option>
             ))}
         </CustomSelect>
-
-        <Popover
-            content={<LegendMenu/>}
-            placement="bottomLeft"
-            trigger="click"
-            overlayClassName={'overlay-legend-popover'}
-            getPopupContainer={(node) => node.parentNode}
-        >
-            <button className={'legend-button'}>
-                <SVG id={'legend-icon'}/>
-                legend
-            </button>
-        </Popover>
-
     </div>)
 }
 

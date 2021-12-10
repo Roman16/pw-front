@@ -4,6 +4,7 @@ import SectionHeader from "./SectionHeader"
 import Chart from "./Chart"
 
 import './PlacementsStatistics.less'
+import CartLegend from "./ChartLegend"
 
 const PlacementsStatistics = ({chartData, selectedMetric, processing, onSelectMetric}) => {
     const { visibleChart} = useSelector(state => ({
@@ -18,16 +19,19 @@ const PlacementsStatistics = ({chartData, selectedMetric, processing, onSelectMe
 
     return (
         <div className={`placements-area-statistics ${visibleChart ? 'visible' : 'hidden'}`}>
-            <SectionHeader
-                selectedMetric={selectedMetric}
-                onChange={changeMetricHandler}
-            />
+            <div className="col">
+                <SectionHeader
+                    selectedMetric={selectedMetric}
+                    onChange={changeMetricHandler}
+                />
+                <Chart
+                    data={chartData}
+                    processing={processing}
+                    selectedMetric={selectedMetric}
+                />
+            </div>
 
-            <Chart
-                data={chartData}
-                processing={processing}
-                selectedMetric={selectedMetric}
-            />
+            <CartLegend/>
         </div>
     )
 }

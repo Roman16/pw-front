@@ -153,7 +153,7 @@ const Home = () => {
                     <Link
                         to={i.link}
                         className={'btn default'}
-                        disabled={isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting' || i.key === 'analytics' || i.key === 'automation')}
+                        disabled={isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting')}
                     >
                         {buttonText(i)}
                     </Link>

@@ -23,15 +23,15 @@ import tz from 'moment-timezone'
 import {round} from "../../../../utils/round"
 
 
-export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, onUpdateField) => ([
-        {
+export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, editable) => ([
+        ...editable ? [{
             title: 'Active',
             dataIndex: 'state',
             key: 'state',
             width: '65px',
             noTotal: true,
             editType: 'switch',
-        },
+        }] : [],
         {
             title: 'Campaign',
             dataIndex: 'name',
@@ -50,12 +50,22 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
                 setStateDetails(item)
             },
             redirectLink: (item) => `/analytics/ad-groups?campaignId=${item.campaignId}`,
-            render: (campaign) => (<div
+            render: (campaign, item) => editable ? (<div
                 className={'state-link'}
                 title={campaign}
             >
                 {campaign}
-            </div>)
+            </div>) : (<Link
+                className={'state-link'}
+                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                title={campaign}
+                onClick={(e) => {
+                setStateHandler('ad-groups', {
+                    name: {campaignName: item.name},
+                    campaignId: item.campaignId
+                }, e)
+                setStateDetails(item)
+            }}> {campaign}</Link>)
         },
         {
             ...statusColumn,
@@ -143,6 +153,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             noTotal: true,
             fastUpdating: true,
             editType: 'date',
+            render: (date) => date && moment(date).format('DD.MM.YYYY'),
             disableField: (date, item) => moment(date).tz('America/Los_Angeles').endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')
         },
         {
@@ -154,6 +165,7 @@ export const columnList = (setStateHandler, setStateDetails, selectedPortfolio, 
             noTotal: true,
             fastUpdating: true,
             editType: 'date',
+            render: (date) => date && moment(date).format('DD.MM.YYYY'),
         },
         {
             title: 'Campaign bidding strategy',

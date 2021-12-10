@@ -138,16 +138,20 @@
 
     .segment-filter {
       &.active {
-        color: #6D6DF6;
+        color: #6959AB;
 
         svg {
-          stroke: #6D6DF6;
+          stroke: #6959AB;
         }
       }
     }
 
     .popover-segment-filter {
       top: 53px !important;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        top: 45px !important;
+      }
 
       .ant-popover-inner-content {
         padding: 3px 0;
@@ -159,22 +163,23 @@
         margin: 0;
 
         li {
-          height: 40px;
+          height: 2.857142857142857rem;
           display: flex;
           align-items: center;
-          padding: 0 18px;
-          font-size: 12px;
+          padding: 0 1.2857142857142858rem;
+          font-size: 0.8571428571428571rem;
           color: #38454F;
           cursor: pointer;
 
 
           &:hover {
-            background: rgba(245, 245, 255, 0.45);
+            background: #FFFAFA;
           }
 
           &.active {
-            padding: 0 18px 0 14px;
-            border-left: 4px solid #6D6DF6;
+            background: #FFFAFA;
+            padding: 0 1.2857142857142858rem 0 1rem;
+            border-left: 0.2857142857142857rem solid #FF5256;
           }
         }
       }
@@ -182,7 +187,7 @@
 
     .switch-chart-visible {
       min-width: 60px;
-      height: 32px;
+      height: 2.2857142857142856rem;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -192,13 +197,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 32px;
-        height: 32px;
+        width: 2.2857142857142856rem;
+        height: 2.2857142857142856rem;
         cursor: pointer;
 
         svg {
-          width: 16px;
-          height: 9px;
+          width: 1.1428571428571428rem;
+          height: 0.6428571428571429rem;
           stroke: #656A84;
           transition: .2s;
         }
@@ -508,6 +513,7 @@
       .table-body {
         .table-body__row {
           position: relative;
+          border-bottom: 0.5px solid #C9CBD4;
 
           .edit {
             cursor: pointer;
@@ -749,7 +755,7 @@
                 &:hover {
                   i {
                     svg {
-                      fill: #6D6DF6;
+                      fill: #6959AB;
                     }
                   }
                 }
@@ -759,7 +765,7 @@
                 width: 100%;
                 display: flex;
                 align-items: center;
-                border-left: 4px solid #6D6DF6;
+                border-left: 4px solid #6959AB;
                 border-bottom: 0.5px solid #C9CBD4;
                 border-radius: 0;
                 padding-left: 8px;
@@ -789,7 +795,7 @@
                   position: absolute;
                   left: 0;
                   top: 0;
-                  background: #6D6DF6;
+                  background: #6959AB;
                   z-index: 10;
                 }
 
@@ -951,7 +957,7 @@
             }
 
             .checkbox-column {
-              background: #FAFAFF;
+              background: #fffbfb;
             }
           }
 
@@ -999,7 +1005,7 @@
 
           & > div:hover {
             .table-body__field:first-child {
-              background: #FAFAFF;
+              background: #fffbfb;
             }
           }
         }
@@ -1203,7 +1209,7 @@
       a {
         width: 100%;
         font-size: 0.8571428571428571rem;
-        color: #6D6DF6;
+        color: #6959AB;
         display: flex;
 
         &:hover {
@@ -1227,7 +1233,7 @@
 
   .see-all-link {
     font-size: 1rem;
-    color: #6D6DF6;
+    color: #6959AB;
     display: flex;
     margin: 5px 0 0 0;
 
@@ -1333,7 +1339,7 @@
 
     .clear {
       position: absolute;
-      color: #6d6df6;
+      color: #6959AB;
       z-index: 10;
       right: 20px;
       font-weight: 500;
