@@ -77,7 +77,7 @@ const PWWindows = ({pathname}) => {
                 visible={visibleWindow === 'onlyDesktop'}
             />}
 
-            {pathname.includes('/ppc/') && <SmallSpend
+            {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SmallSpend
                 visible={visibleWindow === 'smallSpend'}
             />}
 

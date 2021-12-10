@@ -116,7 +116,6 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     reject(error)
                 }
 
-
                 Sentry.withScope((scope) => {
                     Sentry.captureException(error)
                 })

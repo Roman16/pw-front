@@ -501,7 +501,7 @@ export const budgetAllocationColumn = {
     title: 'Budget Allocation',
     dataIndex: 'budget_allocation',
     key: 'budget_allocation',
-    minWidth: '170px',
+    minWidth: '180px',
     sorter: true,
     align: 'right',
     ...renderNumberField('percent')

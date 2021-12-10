@@ -118,8 +118,7 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
       }
 
       .DateInput_input::placeholder {
-        font-size: 14px;
-        font-family: 'Infra', sans-serif;
+        font-size: 1rem;
         color: @third-default-dark;
         text-align: center;
       }
@@ -389,6 +388,7 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
     .ant-calendar-footer {
       width: 100%;
     }
+
     .ant-calendar-footer-extra {
       width: 100%;
       background: #fff;
@@ -770,3 +770,7 @@ td {
 /*
 * ant datapicker end (can be delete)
 */
+
+.pw-date-picker input.ant-input.ant-input-disabled::placeholder {
+  color: rgba(0, 0, 0, 0.25) !important;
+}

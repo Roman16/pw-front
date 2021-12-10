@@ -19,8 +19,7 @@ const animationDuration = 1000,
     animationEasing = 'linear',
     isAnimationActive = false
 
-const chartColors = ['#82ca9d', '#8884d8', '#DD7703', '#4DBEE1']
-
+const chartColors = ['#FF5256', '#9464B9', '#FFA8AA', '#BA96F4']
 
 const Chart = ({
                    data,
@@ -192,12 +191,12 @@ const Chart = ({
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="linear"
-                            strokeOpacity={0.8}
+                            strokeOpacity={0.5}
                             dataKey={`${metric}`}
                             stroke={chartColors[index]}
-                            strokeWidth={2}
+                            strokeWidth={1.5}
                             activeDot={{r: 5}}
-                            dot={{r: 3}}
+                            dot={{r: 2}}
                             animationEasing={animationEasing}
                             animationDuration={animationDuration}
                             isAnimationActive={isAnimationActive}
@@ -213,10 +212,10 @@ const Chart = ({
                             strokeOpacity={0.5}
                             dataKey={`dashed_${metric}`}
                             stroke={chartColors[index]}
-                            strokeWidth={2}
+                            strokeWidth={1.5}
                             strokeDasharray="7 5"
                             activeDot={{r: 5}}
-                            dot={{r: 3}}
+                            dot={{r: 2}}
                             animationEasing={animationEasing}
                             animationDuration={animationDuration}
                             isAnimationActive={isAnimationActive}

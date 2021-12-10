@@ -60,7 +60,7 @@ const RenderPageParts = (props) => {
         showFilters = true,
         disabledRow,
         dateRange,
-        showOptions
+        showOptions,
     } = props
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
@@ -88,7 +88,8 @@ const RenderPageParts = (props) => {
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         stateInformation = useSelector(state => state.analytics.stateDetails),
-        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
+        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
+        user = useSelector(state => state.user.user)
 
     const changeSorterColumnHandler = (data) => {
         localStorage.setItem('analyticsSorterColumn', JSON.stringify({
@@ -465,6 +466,7 @@ const RenderPageParts = (props) => {
     useEffect(() => {
         prevActiveMetrics = undefined
     }, [location])
+
 
     return (
         <>

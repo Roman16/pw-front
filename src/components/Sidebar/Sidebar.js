@@ -130,8 +130,8 @@ const Sidebar = () => {
 
                     <ul className="top-nav-list">
                         {mainMenu
-                            // .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : (i.key === 'zth' || i.key === 'ppc-automate'))
-                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
+                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key !== 'analytics')
+                            // .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                             .map(item => {
                                 return (
                                     <li className={`nav-item ${subMenuState[item.key] ? 'opened' : 'closed'} ${item.subMenu ? 'has-child' : ''}`}>
@@ -273,7 +273,7 @@ export const SocialLinks = () => <div className="social-links">
         </a></li>
 
         <li><a
-            href="https://www.instagram.com/sponsoreds_com"
+            href="https://www.instagram.com/sponsoreds_com/"
             target="_blank"
             title="Instagram"
         >

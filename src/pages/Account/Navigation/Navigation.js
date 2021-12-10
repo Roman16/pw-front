@@ -45,11 +45,6 @@ const menu = [
 const Navigation = () => {
     const location = history.location
 
-    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
-
-    const {user} = useSelector(state => ({
-        user: state.user,
-    }))
     useEffect(() => {
         if (window.innerWidth <= 850) document.querySelector('html').style.fontSize = '14px'
 
@@ -58,17 +53,6 @@ const Navigation = () => {
         })
     }, [])
 
-
-    useEffect(() => {
-        if (user.user.id === 714) {
-            setIsSuperAdmin(true)
-        } else {
-            setIsSuperAdmin(false)
-        }
-    }, [user])
-
-    let isAgencyUser = user.user.is_agency_client
-
     return (
         <div className={'account-page'}>
             <div className="page-title">
@@ -76,16 +60,14 @@ const Navigation = () => {
             </div>
 
             <div className={`account-navigation ${location.pathname === '/account' ? 'visible' : ''} `}>
-                {menu
-                    .filter(i => (isSuperAdmin || isAgencyUser) ? i : i.link !== 'subscription')
-                    .map(i => <NavLink
-                        activeClassName={'active'}
-                        exact
-                        to={`/account/${i.link}`}
-                    >
-                        <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
-                        {i.title}
-                    </NavLink>)}
+                {menu.map(i => <NavLink
+                    activeClassName={'active'}
+                    exact
+                    to={`/account/${i.link}`}
+                >
+                    <i dangerouslySetInnerHTML={{__html: icons[i.link]}}/>
+                    {i.title}
+                </NavLink>)}
             </div>
 
             <div className="account-content">
@@ -97,7 +79,7 @@ const Navigation = () => {
                 <Route exact path="/account/access-settings" component={AccessSettings}/>
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
-                {(isSuperAdmin || isAgencyUser) && <Route exact path="/account/subscription" component={Subscription}/>}
+                <Route exact path="/account/subscription" component={Subscription}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>
         </div>

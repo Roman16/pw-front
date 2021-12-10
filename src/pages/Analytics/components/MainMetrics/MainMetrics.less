@@ -4,9 +4,102 @@
   .horizontal-line-icon {
     margin: 0 3px 0 0 !important;
   }
+
+  .metric-item {
+    .active-metric {
+      &.position-0 {
+        background: #FF5256;
+      }
+
+      &.position-1 {
+        background: #9464B9;
+      }
+      &.position-2 {
+        background: #FFA8AA;
+      }
+      &.position-3 {
+        background: #BA96F4;
+      }
+    }
+
+    .title-info {
+      span {
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #312C51;
+      }
+    }
+
+    .value {
+      font-weight: 600;
+      font-size: 1.7142857142857142rem;
+      line-height: 2.0714285714285716rem;
+      color: #312C51;
+    }
+
+    .metric-item__description {
+      .label {
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #312C51;
+      }
+
+      .metric-item__changes {
+        div {
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1.2142857142857142rem;
+        }
+      }
+    }
+  }
+
+  .add-metric {
+    border-radius: 4px;
+
+    .btn {
+      font-weight: 500;
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      color: #5B586F;
+
+      svg {
+        stroke: #5B586F;
+        margin: 0 1.4285714285714286rem 0 0;
+      }
+    }
+  }
 }
 
 .metrics-modal {
+  .modal-title {
+    font-weight: 600;
+    color: #312C51;
+  }
+
+  .ant-modal-footer {
+    .ant-btn {
+      background: #F3F3F3 !important;
+      font-weight: 600;
+      font-size: 12px;
+      color: #5B586F;
+
+      &:hover {
+        background: #d3d3d3 !important;
+      }
+
+      &.ant-btn-primary {
+        background: #FF5256 !important;
+        color: #fff;
+
+        &:hover {
+          background: #D44043 !important;
+          color: #fff;
+        }
+      }
+    }
+  }
+
   .ant-modal-body .hidden-list .metric-item {
     .value {
       background: initial;

@@ -183,29 +183,32 @@ const AuthorizedUser = (props) => {
                                     {(isSuperAdmin || isAgencyUser) &&
                                     <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
                                     {/*-------------------------------------------*/}
-                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                    <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/automation"
                                         render={() => {
                                             return (<OptimizationFormAdmin/>)
                                         }}
-                                    />}
-                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                    />
+
+                                    <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/optimization-loading"
                                         render={() => {
                                             return (<Redirect to={'/ppc/optimization'}/>)
                                         }}
-                                    />}
-                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                    />
+
+                                    <ConnectedAmazonRoute
                                         path="/ppc/report"
                                         component={Report}
-                                    />}
-                                    {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
+                                    />
+                                    <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/product-settings"
                                         component={ProductsInfo}
-                                    />}
+                                    />
+
                                     {(isSuperAdmin || isAgencyUser) && <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/dayparting"

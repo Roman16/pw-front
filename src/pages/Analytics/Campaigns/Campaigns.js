@@ -12,8 +12,9 @@ const Campaigns = () => {
     const location = 'campaigns'
 
     const dispatch = useDispatch()
-    const {selectedPortfolio} = useSelector(state => ({
+    const {selectedPortfolio, user} = useSelector(state => ({
         selectedPortfolio: state.analytics.mainState.portfolioId,
+        user: state.user.user
     }))
 
     const setStateHandler = (location, state, event) => {
@@ -27,17 +28,26 @@ const Campaigns = () => {
         dispatch(analyticsActions.setStateDetails(data))
     }
 
+    const isAgencyUser = user.is_agency_client,
+        isSuperAdmin = user.id === 714
+
+    const columns = columnList(setStateHandler, setStateDetails, selectedPortfolio, (isAgencyUser || isSuperAdmin)).map(i => {
+        if (!(isAgencyUser || isSuperAdmin)) i.editType = undefined
+        return i
+    })
+
     return (
         <div className={'campaigns-workplace'}>
             <RenderPageParts
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={[0, 1]}
+                fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
 
-                columns={columnList(setStateHandler, setStateDetails, selectedPortfolio)}
-                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
-                showRowSelection={true}
+                columns={columns}
+                moreActions={(isAgencyUser || isSuperAdmin) ?
+                    <OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/> : false}
+                showRowSelection={!!(isAgencyUser || isSuperAdmin)}
                 rowKey={'campaignId'}
             >
                 {successCreate => <CreateCampaignWindow onReloadList={successCreate}/>}

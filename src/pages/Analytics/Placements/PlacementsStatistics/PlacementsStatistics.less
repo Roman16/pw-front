@@ -5,13 +5,11 @@
     width: 100%;
     min-width: 87.14285714rem;
     display: flex;
-    flex-direction: column;
     position: relative;
     background: #fff;
     border-radius: 4px;
-    padding: 20px;
+    padding: 0 0 0 1.4285714285714286rem;
     box-shadow: @default-section-shadow;
-
 
     &.visible {
       height: 320px;
@@ -32,30 +30,53 @@
       .custom-select {
         width: 160px;
         height: 2.2857142857142856rem;
-        margin: 0 20px 0 0;
       }
 
-      .legend-button {
+    }
+
+    .chart-block {
+      flex: 1;
+    }
+
+    & > .col {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin: 1.4285714285714286rem 1.4285714285714286rem 1.4285714285714286rem 0;
+    }
+
+    & > .cart-legend {
+      width: 60px;
+      min-width: 60px;
+      border-left: 0.5px solid #C9CBD4;
+      padding: 1.4285714285714286rem 0 0 0;
+      display: flex;
+      justify-content: center;
+
+      & > button {
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: max-content;
         text-transform: uppercase;
         font-size: 10px;
         color: #656A84;
+        margin: 0;
+
 
         svg {
-          fill: #656A84;
-          stroke: #656A84;
-          width: 1.42857143rem;
-          height: 1.42857143rem;
+          fill: #5B586F;
+          stroke: #5B586F;
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
         }
 
         &:hover {
-          color: #6D6DF6;
+          color: #FF5256;
 
           svg {
-            fill: #6D6DF6;
-            stroke: #6D6DF6;
+            fill: #FF5256;
+            stroke: #FF5256;
           }
         }
       }
@@ -78,6 +99,7 @@
             &::before {
               content: '';
               width: 8px;
+              min-width: 8px;
               height: 8px;
               margin: 0 8px 0 0;
               border-radius: 50%;
@@ -85,35 +107,30 @@
 
             &:nth-child(1) {
               &::before {
-                background: #F0B849;
+                background: #BA96F4;
               }
             }
 
             &:nth-child(2) {
               &::before {
-                background: #EC7F5C;
+                background: #9464B9;
               }
             }
 
             &:nth-child(3) {
               &::before {
-                background: #6D6DF6;
+                background: #FF5256;
               }
             }
 
             &:nth-child(4) {
               &::before {
-                background: #71A8FA;
+                background: #FFA8AA;
               }
             }
           }
         }
       }
-
-    }
-
-    .chart-block {
-      flex: 1;
     }
 
     .chart-block {
@@ -163,7 +180,6 @@
         padding: 10px 0;
         margin: 0 0 20px 0;
         font-weight: bold;
-
       }
 
       .content {

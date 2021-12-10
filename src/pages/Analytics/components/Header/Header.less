@@ -2,12 +2,12 @@
 
 .main-pages .main-container .page > .analytics-page {
   .analytics-header {
-    height: 80px;
+    height: 5rem;
     background: #fff;
     display: flex;
     align-items: center;
-    padding: 0 20px;
-    box-shadow: @default-section-shadow;
+    padding: 0 2.857142857142857rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
 
     &.hidden {
       height: 0;
@@ -16,14 +16,23 @@
 
     .title {
       width: max-content;
-      padding-right: 20px;
+      padding-right: 37px;
       display: flex;
       align-items: center;
       cursor: pointer;
 
       svg {
-        stroke: #343C5A;
-        margin: 1px 15px 0 0;
+        width: 1.7142857142857142rem;
+        height: 1.7142857142857142rem;
+        margin: 0 0.7142857142857143rem 0 0;
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 1.7142857142857142rem;
+        line-height: 29px;
+        color: #312C51;
+        margin: 0;
       }
     }
 
@@ -31,34 +40,28 @@
       height: 66px;
 
       .title {
-        padding-right: 17px;
+        padding-right: 30px;
       }
-    }
-
-
-    h1 {
-      margin: 0;
-      font-size: 1.7142857142857142rem;
     }
 
     .nav {
       display: flex;
       flex-direction: column;
-      padding: 0 0 0 20px;
+      padding: 0 0 0 1.4285714285714286rem;
       border-left: 1px solid #C9CBD4;
 
       .steps {
         display: flex;
         align-items: center;
-        font-size: 1.1428571428571428rem;
-        line-height: 1.3571428571428572rem;
-        font-weight: 500;
-        color: #656A84;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #312C51;
         list-style: none;
         margin: 0;
 
         i {
-          margin: 0 0 0 10px;
+          margin: 0 0 0 0.35714285714285715rem;
 
           svg {
             stroke: #C9CBD4;
@@ -66,9 +69,9 @@
         }
 
         a {
-          color: #6D6DF6;
+          color: #6959AB;
           cursor: pointer;
-          margin: 0 15px 0 0;
+          margin: 0 0.7142857142857143rem 0 0;
 
           &:hover {
             text-decoration: underline;
@@ -86,9 +89,10 @@
       }
 
       .current-location {
-        font-size: 1.7142857142857142rem;
-        line-height: 2.0714285714285716rem;
-        color: #656A84;
+        font-weight: 600;
+        font-size: 1.4285714285714286rem;
+        line-height: 1.7142857142857142rem;
+        color: #312C51;
         margin: 0;
       }
     }
