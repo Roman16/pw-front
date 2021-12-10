@@ -253,14 +253,14 @@ const OptimizationForAdmin = () => {
 
             setProductInformationFromRequest({
                 ...product,
-                ...product.status === 'STOPPED' && defaultOptimizationVariations,
+                ...(product.status === 'STOPPED' || product.status == null) && defaultOptimizationVariations,
                 product_id: productId,
                 ...product.product
 
             })
             setProductInformation({
                 ...product,
-                ...product.status === 'STOPPED' && defaultOptimizationVariations,
+                ...(product.status === 'STOPPED' || product.status == null) && defaultOptimizationVariations,
                 product_id: productId,
                 ...product.product
             })
