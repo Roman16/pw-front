@@ -51,5 +51,11 @@ export const mainMenu = [
                 link: 'dayparting',
             }
         ]
+    },
+    {
+        title: 'PPC Audit',
+        key: 'scanner',
+        icon: 'scanner-icon-sidebar',
+        link: 'scanner'
     }
 ]

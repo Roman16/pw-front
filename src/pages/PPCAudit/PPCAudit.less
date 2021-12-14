@@ -1,0 +1,27 @@
+.scanner-page {
+  height: 100%;
+  display: flex;
+
+  .page-workspace {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+
+
+
+    .scanning-processing-status {
+      grid-area: processingStatus;
+    }
+
+    .problems-count {
+      grid-area: problemsCount;
+    }
+
+    &.processing {
+      grid-template-areas: 'processingStatus problemsCount';
+      grid-template-columns: 35% 1fr;
+      grid-template-rows: max-content 1fr;
+      grid-gap: 10px;
+    }
+  }
+}
