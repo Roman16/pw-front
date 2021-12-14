@@ -3,6 +3,13 @@ import {numberMask} from "../../../utils/numberMask"
 import {Spin} from "antd"
 import {SVG} from "../../../utils/icons"
 
+const roundTo = (num, digits) => {
+    const multiplicator = Math.pow(10, digits);
+    const multiplied = parseFloat((num * multiplicator).toFixed(11));
+    const res = Math.round(multiplied) / multiplicator;
+    return res;
+}
+
 const Summary = ({jobPrice, payProcessing}) => {
     const [openedRow, setOpenedRow] = useState()
 
@@ -58,16 +65,16 @@ const Summary = ({jobPrice, payProcessing}) => {
                         <SVG id='select-icon'/>
                     </button></div>
                     <div>{jobPrice.product_targetings.summary.total_entities_count}</div>
-                    <div>${numberMask(jobPrice.product_targetings.summary.total_average_price_in_cents_per_unit_rounded / 100, 4)}</div>
-                    <div>${numberMask(jobPrice.product_targetings.summary.total_price_in_cents / 100, 4)}</div>
+                    <div>${roundTo(jobPrice.product_targetings.summary.total_average_price_in_cents_per_unit_rounded / 100, 4)}</div>
+                    <div>${roundTo(jobPrice.product_targetings.summary.total_price_in_cents / 100, 4)}</div>
                 </div>
 
                 {openedRow === 'asins' && <div className="description-list">
                     {jobPrice.product_targetings.details.map(i => <div className="row">
                         <div></div>
                         <div>{i.entities_count}</div>
-                        <div>${numberMask(i.price_in_usd_cents / 100, 4)}</div>
-                        <div>${numberMask(i.sum_price_in_cents / 100, 4)}</div>
+                        <div>${roundTo(i.price_in_usd_cents / 100, 4)}</div>
+                        <div>${roundTo(i.sum_price_in_cents / 100, 4)}</div>
                     </div>)}
                 </div>}
             </div>
