@@ -130,7 +130,7 @@ const Sidebar = () => {
 
                     <ul className="top-nav-list">
                         {mainMenu
-                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key !== 'analytics')
+                            .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i)
                             // .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                             .map(item => {
                                 return (
@@ -206,6 +206,22 @@ const Sidebar = () => {
                                     Account
                                 </label>
                             </NavLink>
+                        </li>
+
+                        <li className="bottom-nav-item">
+                            <a
+                                className="menu-link"
+                                href={'https://intercom.help/sponsoreds/en/'}
+                                target={'_blank'}
+                            >
+                                <div className="link-icon">
+                                    <SVG id='help-center'/>
+                                </div>
+
+                                <label>
+                                    Help Center
+                                </label>
+                            </a>
                         </li>
 
                         {(!production || user.user.id === 714 || localStorage.getItem('adminToken')) &&
