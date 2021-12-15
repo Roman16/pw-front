@@ -6,6 +6,12 @@ import StartScanning from "./StartScanning/StartScanning"
 import ScanningProcessingStatus from "./ScanningProcessingStatus/ScanningProcessingStatus"
 import ProblemsCount from "./ProblemsCount/ProblemsCount"
 import ProblemsReport from "./ProblemsReport/ProblemsReport"
+import PartProblemsCount from "./PartProblemsCount/PartProblemsCount"
+
+export const scanningStatusEnums = {
+    PROCESSING: 'processing',
+    FINISHED: 'finished'
+}
 
 const PPCAudit = () => {
     const [productsRequestParams, setProductsRequestParams] = useState({
@@ -39,7 +45,31 @@ const PPCAudit = () => {
     const selectProductHandler = product => setSelectedProduct(product)
 
     const startScanningHandler = async () => {
-        setScanningStatus('processing')
+        setScanningStatus(scanningStatusEnums.PROCESSING)
+
+        setProducts(prevState => prevState.map(product => {
+            if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.PROCESSING
+            return product
+        }))
+
+        setTimeout(() => {
+            setScanningStatus(scanningStatusEnums.FINISHED)
+
+            setProducts(prevState => prevState.map(product => {
+                if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.FINISHED
+                return product
+            }))
+
+        }, 5000)
+    }
+
+    const stopScanningHandler = async () => {
+        setScanningStatus('')
+
+        setProducts(prevState => prevState.map(product => {
+            if (product.id === selectedProduct.id) product.scanningStatus = undefined
+            return product
+        }))
     }
 
     useEffect(() => {
@@ -66,11 +96,22 @@ const PPCAudit = () => {
                     />
                     :
                     <>
-                        <ScanningProcessingStatus/>
+                        <ScanningProcessingStatus
+                            scanningStatus={scanningStatus}
+                            onStop={stopScanningHandler}
+                        />
 
-                        <ProblemsCount/>
+                        <ProblemsCount
+                            scanningStatus={scanningStatus}
+                        />
 
-                        <ProblemsReport/>
+                        <PartProblemsCount
+                            scanningStatus={scanningStatus}
+                        />
+
+                        <ProblemsReport
+                            scanningStatus={scanningStatus}
+                        />
                     </>}
             </div>
         </div>

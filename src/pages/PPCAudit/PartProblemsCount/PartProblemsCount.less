@@ -1,0 +1,47 @@
+.scanner-page .part-problems-count {
+  min-height: 6.428571428571429rem;
+  height: max-content;
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-column-gap: 1.4285714285714286rem;
+  padding: 1.4285714285714286rem;
+  margin: 0;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    border-right: 0.5px solid #C9CBD4;
+
+    &:last-child {
+      border: 0;
+    }
+
+    p {
+      font-size: 1rem;
+      line-height: 1.2142857142857142rem;
+      color: #5B586F;
+      margin-bottom: 0.5714285714285714rem;
+    }
+
+    h4 {
+      font-weight: 600;
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      color: #5B586F;
+      margin: 0;
+    }
+  }
+
+  &.processing {
+    li {
+      border-color: #C9CBD4;
+
+      p {
+        color: #C9CBD4;
+      }
+    }
+  }
+}

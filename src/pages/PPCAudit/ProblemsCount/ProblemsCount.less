@@ -2,7 +2,6 @@
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr 1fr;
   grid-gap: 10px;
   margin: 0;
 
@@ -29,19 +28,7 @@
     }
 
     &:nth-child(3) {
-      border-top-color: #7FD3A1;
-    }
-
-    &:nth-child(4) {
-      border-top-color: #6959AB;
-    }
-
-    &:nth-child(5) {
-      border-top-color: #FFA8AA;
-    }
-
-    &:nth-child(6) {
-      border-top-color: #9464B9;
+      border-top-color: #C9CBD4;
     }
 
     p {
@@ -59,6 +46,20 @@
       text-align: center;
       color: #312C51;
       margin: 0;
+
+      img {
+        width: 1.4285714285714286rem;
+      }
+    }
+  }
+
+  &.processing {
+    li {
+      border-top-color: transparent;
+
+      p {
+        color: #C9CBD4;
+      }
     }
   }
 }

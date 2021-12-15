@@ -4,10 +4,7 @@
 
   .page-workspace {
     flex: 1;
-    overflow-y: auto;
     display: grid;
-
-
 
     .scanning-processing-status {
       grid-area: processingStatus;
@@ -16,11 +13,17 @@
     .problems-count {
       grid-area: problemsCount;
     }
+    .problems-report {
+      grid-area: problemsReport;
+    }
+    .part-problems-count {
+      grid-area: partProblemsCount;
+    }
 
-    &.processing {
-      grid-template-areas: 'processingStatus problemsCount';
-      grid-template-columns: 35% 1fr;
-      grid-template-rows: max-content 1fr;
+    &.processing, &.finished {
+      grid-template-areas: 'processingStatus problemsCount' 'partProblemsCount partProblemsCount' 'problemsReport problemsReport';
+      grid-template-columns: 43.3% 1fr;
+      grid-template-rows: max-content max-content 1fr;
       grid-gap: 10px;
     }
   }

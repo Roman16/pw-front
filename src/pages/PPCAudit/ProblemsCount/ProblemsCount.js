@@ -1,38 +1,30 @@
 import React from "react"
 import './ProblemsCount.less'
+import {scanningStatusEnums} from "../PPCAudit"
+import loaderImg from "../../../assets/img/loader.svg"
 
 const problems = [
     {
         key: 'poor_performingKeywords',
-        title: 'Poor Performing Keywords:'
+        title: 'Critical problems:'
     },
     {
         key: 'poor_performing_keywords',
-        title: 'Poor Performing Keywords:'
+        title: 'Major problems:'
     },
     {
         key: 'poor_performing_keywords',
-        title: 'Poor Performing Keywords:'
-    },
-    {
-        key: 'poor_performingKeywords',
-        title: 'Poor Performing Keywords:'
-    },
-    {
-        key: 'poor_performing_keywords',
-        title: 'Poor Performing Keywords:'
-    },
-    {
-        key: 'poor_performing_keywords',
-        title: 'Poor Performing Keywords:'
+        title: 'Minor problems:'
     },
 ]
 
-const ProblemsCount = () => {
-    return (<ul className={'problems-count'}>
+const ProblemsCount = ({scanningStatus}) => {
+    const inProcessingScanning = scanningStatus === scanningStatusEnums.PROCESSING
+
+    return (<ul className={`problems-count ${inProcessingScanning ? 'processing' : ''}`}>
         {problems.map(i => <li key={i.key}>
             <p>{i.title}</p>
-            <h3>100</h3>
+            <h3>{inProcessingScanning ? <img src={loaderImg} alt=""/> : '100'}</h3>
         </li>)}
     </ul>)
 }

@@ -2,9 +2,12 @@ import React from "react"
 import noImage from "../../../assets/img/no-image-available.svg"
 import {SVG} from "../../../utils/icons"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
+import {scanningStatusEnums} from "../PPCAudit"
+import loaderImg from '../../../assets/img/loader.svg'
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, variations, optimization_indicator_state},
+                         product: {id, asin, name, sku, image_url, variations, optimization_indicator_state, scanningStatus},
                          openedProduct,
 
                          onClick,
@@ -57,9 +60,9 @@ const ProductItem = ({
                     {variations.length > 0 && <SVG id='select-icon'/>}
                 </div>
 
-                {optimization_indicator_state && <ScanningIndicator
-                    indicatorState={optimization_indicator_state}
-                />}
+                {scanningStatus && <div className="status-indicator"><ScanningIndicator
+                    status={scanningStatus}
+                /></div>}
             </div>
 
             {variations.length > 0 && (openedProduct === id) && <div className='product-children-list'>
@@ -94,8 +97,22 @@ const ProductItem = ({
     </li>)
 }
 
-const ScanningIndicator = () => {
-    return ('')
+const ScanningIndicator = ({status}) => {
+    if (status === scanningStatusEnums.PROCESSING) return <InformationTooltip
+        type={'custom'}
+        position={'bottomRight'}
+        description={'Scanning is in progress'}
+    >
+        <img src={loaderImg} alt=""/>
+    </InformationTooltip>
+    else if (status === scanningStatusEnums.FINISHED) return <InformationTooltip
+        type={'custom'}
+        position={'bottomRight'}
+        description={'Scanning complete'}
+    >
+        <div className="indicator finished"/>
+    </InformationTooltip>
+    else return ''
 }
 
 export default ProductItem
