@@ -33,8 +33,9 @@ const stateIdValues = {
 }
 
 const dateRangeFormatting = (dateRange) => {
+    const offset =  moment.tz.zone('America/Los_Angeles').utcOffset(moment.utc()) / 60
     if (dateRange.startDate === 'lifetime') return ''
-    else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-07:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-07:00`
+    else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-0${offset}:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-0${offset}:00`
 }
 
 
