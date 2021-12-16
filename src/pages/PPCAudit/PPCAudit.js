@@ -4,13 +4,16 @@ import ProductList from "./ProductList/ProductList"
 import {productsServices} from "../../services/products.services"
 import StartScanning from "./StartScanning/StartScanning"
 import ScanningProcessingStatus from "./ScanningProcessingStatus/ScanningProcessingStatus"
-import ProblemsCount from "./ProblemsCount/ProblemsCount"
+import ProblemsLevel from "./ProblemsLevel/ProblemsLevel"
 import ProblemsReport from "./ProblemsReport/ProblemsReport"
-import PartProblemsCount from "./PartProblemsCount/PartProblemsCount"
+import ProblemsType from "./ProblemsType/ProblemsType"
+import ScanningFailed from "./ScanningFailed/ScanningFailed"
 
 export const scanningStatusEnums = {
     PROCESSING: 'processing',
-    FINISHED: 'finished'
+    FINISHED: 'finished',
+    FAILED: 'failed',
+    EXPIRED: 'expired',
 }
 
 const PPCAudit = () => {
@@ -23,7 +26,7 @@ const PPCAudit = () => {
         [products, setProducts] = useState([]),
         [productsTotalSize, setProductsTotalSize] = useState(0),
         [selectedProduct, setSelectedProduct] = useState(),
-        [scanningStatus, setScanningStatus] = useState('')
+        [scanningStatus, setScanningStatus] = useState()
 
     const getProducts = async () => {
         setProductsFetchProcessing(true)
@@ -43,6 +46,14 @@ const PPCAudit = () => {
 
     const changeProductsParamsHandler = (data) => setProductsRequestParams(prevState => ({...prevState, ...data}))
     const selectProductHandler = product => setSelectedProduct(product)
+    const resetScanningStatusHandler = () => {
+        setScanningStatus(undefined)
+
+        setProducts(prevState => prevState.map(product => {
+            if (product.id === selectedProduct.id) product.scanningStatus = undefined
+            return product
+        }))
+    }
 
     const startScanningHandler = async () => {
         setScanningStatus(scanningStatusEnums.PROCESSING)
@@ -61,6 +72,16 @@ const PPCAudit = () => {
             }))
 
         }, 5000)
+
+        setTimeout(() => {
+            setScanningStatus(scanningStatusEnums.FAILED)
+
+            setProducts(prevState => prevState.map(product => {
+                if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.FAILED
+                return product
+            }))
+
+        }, 10000)
     }
 
     const stopScanningHandler = async () => {
@@ -90,29 +111,40 @@ const PPCAudit = () => {
             />
 
             <div className={`page-workspace ${scanningStatus}`}>
-                {!scanningStatus ?
-                    <StartScanning
+                {!scanningStatus &&
+                <StartScanning
+                    onStart={startScanningHandler}
+                    product={selectedProduct}
+                />}
+
+                {(
+                    scanningStatus === scanningStatusEnums.PROCESSING ||
+                    scanningStatus === scanningStatusEnums.FINISHED
+                ) && <>
+                    <ScanningProcessingStatus
+                        product={selectedProduct}
+                        scanningStatus={scanningStatus}
+
+                        onStop={stopScanningHandler}
                         onStart={startScanningHandler}
                     />
-                    :
-                    <>
-                        <ScanningProcessingStatus
-                            scanningStatus={scanningStatus}
-                            onStop={stopScanningHandler}
-                        />
 
-                        <ProblemsCount
-                            scanningStatus={scanningStatus}
-                        />
+                    <ProblemsLevel
+                        scanningStatus={scanningStatus}
+                    />
 
-                        <PartProblemsCount
-                            scanningStatus={scanningStatus}
-                        />
+                    <ProblemsType
+                        scanningStatus={scanningStatus}
+                    />
 
-                        <ProblemsReport
-                            scanningStatus={scanningStatus}
-                        />
-                    </>}
+                    <ProblemsReport
+                        scanningStatus={scanningStatus}
+                    />
+                </>}
+
+                {scanningStatus === scanningStatusEnums.FAILED && <ScanningFailed
+                    onResetStatus={resetScanningStatusHandler}
+                />}
             </div>
         </div>
     )

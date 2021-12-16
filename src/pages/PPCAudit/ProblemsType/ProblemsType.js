@@ -1,5 +1,5 @@
 import React from "react"
-import './PartProblemsCount.less'
+import './ProblemsType.less'
 import {scanningStatusEnums} from "../PPCAudit"
 
 const problems = [
@@ -29,7 +29,7 @@ const problems = [
     },
 ]
 
-const PartProblemsCount = ({scanningStatus}) => {
+const ProblemsType = ({scanningStatus}) => {
     const inProcessingScanning = scanningStatus === scanningStatusEnums.PROCESSING
 
     return (<ul className={`part-problems-count ${inProcessingScanning ? 'processing' : ''}`}>
@@ -41,4 +41,4 @@ const PartProblemsCount = ({scanningStatus}) => {
     </ul>)
 }
 
-export default PartProblemsCount
+export default ProblemsType

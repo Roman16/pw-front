@@ -45,7 +45,8 @@ const CustomTable = ({
                          revertSortingColumns = [],
                          onUpdateField,
                          emptyTitle,
-                         emptyDescription
+                         emptyDescription,
+                         emptyComponent
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -164,7 +165,7 @@ const CustomTable = ({
 
                 <div className="table-body">
                     {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
-                        {emptyText ? emptyText === 'image' ?
+                        {emptyComponent ? emptyComponent : emptyText ? emptyText === 'image' ?
                             <EmptyData title={emptyTitle} description={emptyDescription}/> : emptyText : 'You don’t have any data yet'}
                     </div>}
 
