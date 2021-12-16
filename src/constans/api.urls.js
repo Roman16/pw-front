@@ -61,7 +61,7 @@ export const productsUrls = {
     productDetails: (id) => `v2/ppc-automation/products/${id}/automation-params`,
     stopOptimization: (id) => `v2/ppc-automation/products/${id}/automation-stop`,
     startOptimization: (id) => `v2/ppc-automation/products/${id}/automation-start`,
-    campaignsSettingList: (id) => `v2/ppc-automation/${id}/custom-campaign-settings`,
+    campaignsSettingList: (id) => `v2/ppc-automation/products/${id}/custom-campaign-settings`,
 }
 
 export const reportsUrls = {
