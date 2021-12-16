@@ -11,9 +11,9 @@ const Dollar = ({typeIcon}) => (
 )
 
 const InputCurrency = ({
-                           isError = false, value, errorText = '', type = 'number', typeIcon, ...props
+                           isError = false, value, errorText = '', type = 'number', typeIcon,onClick, ...props
                        }) => (
-    <div className="InputCurrency">
+    <div className="InputCurrency" onClick={onClick}>
         <Dollar
             typeIcon={typeIcon}
         />

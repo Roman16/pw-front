@@ -1,0 +1,132 @@
+.scanner-page .problems-report {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  .filters {
+    min-height: 5.142857142857143rem;
+    padding: 1.4285714285714286rem;
+    display: flex;
+    align-items: center;
+
+    .form-group {
+      width: 26.857142857142858rem;
+      height: 2.2857142857142856rem;
+      margin: 0 1.4285714285714286rem 0 0;
+    }
+
+    .add-filter {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #5B586F;
+      padding: 0;
+
+      i {
+        margin: 0 5px 0 0;
+
+        svg {
+          fill: #5B586F;
+        }
+      }
+    }
+  }
+
+  .table-block {
+    flex: 1;
+
+    .custom-table {
+      .load-data {
+        display: none;
+      }
+
+      .table-head {
+        height: 3.5714285714285716rem;
+        border-top: 0.5px solid #C9CBD4;
+        border-bottom: 2px solid #C9CBD4;
+        align-items: inherit;
+
+        .th {
+          border-left: 0.5px solid #C9CBD4;
+          padding: 5px 0.8571428571428571rem;
+
+          .title {
+            font-weight: 600;
+            font-size: 1rem;
+            color: #312C51;
+          }
+
+          &:first-child {
+            border: 0;
+            padding-left: 1.4285714285714286rem;
+          }
+        }
+      }
+
+      .table-body {
+        .no-data {
+          .empty-data-block {
+            p {
+              text-align: center;
+            }
+          }
+        }
+      }
+
+    }
+  }
+
+  .load-data {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1111;
+
+    img {
+      width: 2.857142857142857rem;
+      height: 2.857142857142857rem;
+    }
+  }
+
+  &.processing {
+    .filters {
+      .form-group {
+        .ant-input-suffix {
+          svg {
+            * {
+              stroke: #C9CBD4 !important;
+
+            }
+          }
+        }
+      }
+
+      .add-filter {
+        color: #C9CBD4;
+
+        i {
+          svg {
+            fill: #C9CBD4;
+          }
+        }
+      }
+    }
+
+    .table-block .custom-table .table-head {
+      .th {
+        .title {
+          color: #C9CBD4;
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
-import React from 'react';
-import {Popover} from 'antd';
-import {string} from 'prop-types';
+import React from 'react'
+import {Popover} from 'antd'
+import {string} from 'prop-types'
 
-import './Tooltips.less';
-import {SVG} from "../../utils/icons";
+import './Tooltips.less'
+import {SVG} from "../../utils/icons"
 
 const InformationTooltip = (props) => {
-    const {title, description, position, type, className} = props;
+    const {title, description, position, type, className = ''} = props
 
     return (
         <div className={`${className} custom-tooltip information-tooltip`} onClick={e => e.stopPropagation()}>
@@ -33,7 +33,7 @@ const InformationTooltip = (props) => {
             </Popover>
         </div>
     )
-};
+}
 
 //position variables
 /*-------------------*/
@@ -58,7 +58,7 @@ InformationTooltip.propTypes = {
     description: string,
     position: string,
     type: string
-};
+}
 
 InformationTooltip.defaultProps = {
     type: 'info',
@@ -67,6 +67,6 @@ InformationTooltip.defaultProps = {
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit.' +
         ' Aspernatur cumque deleniti eum illum nostrum, quibusdam saepe.',
     position: 'bottom'
-};
+}
 
-export default InformationTooltip;
+export default InformationTooltip
