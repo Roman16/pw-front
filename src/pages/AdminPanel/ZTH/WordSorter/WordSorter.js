@@ -113,13 +113,13 @@ const WordSorter = () => {
     }, [])
 
     useEffect(() => {
-        localStorage.setItem('wordSorter', JSON.stringify({
-            relevantInput: relevantInput,
-            negativeInput: negativeInput,
-            outputList: outputList,
-            negativePhrasesList: negativePhrasesList,
-            negativeExactsList: negativeExactsList
-        }))
+       if(relevantInput) localStorage.setItem('wordSorter', JSON.stringify({
+           relevantInput: relevantInput,
+           negativeInput: negativeInput,
+           outputList: outputList,
+           negativePhrasesList: negativePhrasesList,
+           negativeExactsList: negativeExactsList
+       }))
     }, [relevantInput, negativeInput, outputList, negativePhrasesList, negativeExactsList])
 
 
