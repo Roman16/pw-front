@@ -1,4 +1,4 @@
-.scanner-page {
+.main-pages .main-container .page > div.scanner-page {
   height: 100%;
   display: flex;
 
@@ -13,9 +13,11 @@
     .problems-count {
       grid-area: problemsCount;
     }
+
     .problems-report {
       grid-area: problemsReport;
     }
+
     .part-problems-count {
       grid-area: partProblemsCount;
     }
@@ -25,6 +27,28 @@
       grid-template-columns: 43.3% 1fr;
       grid-template-rows: max-content max-content 1fr;
       grid-gap: 10px;
+    }
+  }
+
+  .switch-list {
+    z-index: 20;
+
+    button {
+      left: -2.142857142857143rem;
+
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        left: -25px;
+      }
+    }
+
+    &.closed {
+      button {
+        left: -2.2857142857142856rem;
+
+        &:hover {
+          left: -1.4285714285714286rem;
+        }
+      }
     }
   }
 }

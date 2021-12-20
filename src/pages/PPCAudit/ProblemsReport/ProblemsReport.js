@@ -8,8 +8,9 @@ import loaderImg from "../../../assets/img/loader.svg"
 const columns = [
     {
         title: 'Et at erat',
-        dataIndex: 'datetime',
-        key: 'datetime',
+        dataIndex: 'object',
+        key: 'object',
+        filter: true,
     },
     {
         title: 'Et at erat',
@@ -28,11 +29,16 @@ const columns = [
     },
 ]
 
-const ProblemsReport = ({problems, scanningStatus}) => {
+const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters}) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
 
     return (<div className={`problems-report ${processing ? 'processing' : ''}`}>
-        <Filters/>
+        <Filters
+            filters={filters}
+            columns={columns}
+
+            onSetFilters={onSetFilters}
+        />
 
         <div className="table-block">
             <CustomTable

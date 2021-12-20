@@ -26,7 +26,8 @@ const PPCAudit = () => {
         [products, setProducts] = useState([]),
         [productsTotalSize, setProductsTotalSize] = useState(0),
         [selectedProduct, setSelectedProduct] = useState(),
-        [scanningStatus, setScanningStatus] = useState()
+        [scanningStatus, setScanningStatus] = useState('finished'),
+        [filters, setFilters] = useState([])
 
     const getProducts = async () => {
         setProductsFetchProcessing(true)
@@ -131,6 +132,9 @@ const PPCAudit = () => {
 
                     <ProblemsLevel
                         scanningStatus={scanningStatus}
+                        filters={filters}
+
+                        onSetFilters={setFilters}
                     />
 
                     <ProblemsType
@@ -139,6 +143,9 @@ const PPCAudit = () => {
 
                     <ProblemsReport
                         scanningStatus={scanningStatus}
+                        filters={filters}
+
+                        onSetFilters={setFilters}
                     />
                 </>}
 

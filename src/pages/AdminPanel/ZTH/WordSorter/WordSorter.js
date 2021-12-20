@@ -28,27 +28,27 @@ export const filteringNegativeExactList = (negativePhrase, arr, isIncludes = fal
 }
 
 const WordSorter = () => {
-    let paramsFromLocale
-    paramsFromLocale = localStorage.getItem('wordSorter') ? JSON.parse(localStorage.getItem('wordSorter')) : undefined
 
-    const [inputFields, setInputFields] = useState(paramsFromLocale ? paramsFromLocale.inputFields : {
-            relevant: '',
-            negative: ''
-        }),
-        [outputList, setOutputList] = useState(paramsFromLocale ? [...paramsFromLocale.outputList] : []),
-        [negativePhrasesList, setNegativePhrasesList] = useState(paramsFromLocale ? [...paramsFromLocale.negativePhrasesList] : []),
-        [negativeExactsList, setNegativeExactsList] = useState(paramsFromLocale ? [...paramsFromLocale.negativeExactsList] : []),
+    const
+        [relevantInput, setRelevantInput] = useState(''),
+        [negativeInput, setNegativeInput] = useState(''),
+        [outputList, setOutputList] = useState([]),
+        [negativePhrasesList, setNegativePhrasesList] = useState([]),
+        [negativeExactsList, setNegativeExactsList] = useState([]),
         [currentLanguage, setCurrentLanguage] = useState('en'),
         [currentMarketplace, setCurrentMarketplace] = useState('amazon.com')
 
-    const changeInputFieldHandler = (key, value) => setInputFields({...inputFields, [key]: value})
+    const changeInputFieldHandler = (key, value) => {
+        if (key === 'relevant') setRelevantInput(value)
+        else setNegativeInput(value)
+    }
 
     const addDefaultListHandler = () => {
-        const relevantList = [...new Set([...inputFields.relevant.split('\n').map(i => i.trim()).filter(i => i && i.length > 0).map(i => i.toLowerCase())])]
+        const relevantList = [...new Set([...relevantInput.split('\n').map(i => i.trim()).filter(i => i && i.length > 0).map(i => i.toLowerCase())])]
 
         setOutputList(relevantList)
 
-        inputFields.negative
+        negativeInput
             .split('\n')
             .filter(i => i && i.length > 0)
             .forEach(negativePhrase => {
@@ -58,19 +58,10 @@ const WordSorter = () => {
             })
     }
 
-    const addNegativePhraseHandler = (negativePhrase, arr, negativeList) => {
+    const addNegativePhraseHandler = (negativePhrase, arr, negativeList, outputListLocal) => {
         setNegativePhrasesList(negativeList || [...new Set([...negativePhrasesList, negativePhrase])])
 
-        // setNegativeExactsList(arr || [...negativeExactsList, ...outputList
-        //     .filter(i => !negativeExactsList.includes(i))
-        //     .filter(i => {
-        //         let re = new RegExp('(\\s|^)+' + negativePhrase + '+(\\s|$)', 'gm')
-        //         return i.search(re) !== -1
-        //     })
-        //     .map(i => i)
-        // ])
-
-        const negativeExactArr = [...negativeExactsList, ...filteringNegativeExactList(negativePhrase, [...outputList.filter(i => !negativeExactsList.includes(i))])]
+        const negativeExactArr = [...negativeExactsList, ...filteringNegativeExactList(negativePhrase, [...[...outputListLocal || outputList].filter(i => !negativeExactsList.includes(i))])]
 
         setNegativeExactsList([...negativeExactArr])
     }
@@ -90,7 +81,8 @@ const WordSorter = () => {
     }
 
     const resetAllHandler = () => {
-        setInputFields({relevant: '', negative: ''})
+        setRelevantInput('')
+        setNegativeInput('')
         setOutputList([])
         setNegativePhrasesList([])
         setNegativeExactsList([])
@@ -101,28 +93,34 @@ const WordSorter = () => {
     const copyListHandler = (list, type) => {
         if (type === 'output') {
             navigator.clipboard.writeText(list.filter(i => !negativeExactsList.includes(i)).join('\n'))
+        } else if (type === 'input') {
+            navigator.clipboard.writeText(list)
         } else {
             navigator.clipboard.writeText(list.map(i => type === 'output' ? i : i).join('\n'))
         }
     }
 
     useEffect(() => {
+        if (localStorage.getItem('wordSorter')) {
+            const paramsFromLocale = JSON.parse(localStorage.getItem('wordSorter'))
+
+            setRelevantInput(paramsFromLocale.relevantInput)
+            setNegativeInput(paramsFromLocale.negativeInput)
+            setOutputList(paramsFromLocale.outputList)
+            setNegativePhrasesList(paramsFromLocale.negativePhrasesList)
+            setNegativeExactsList(paramsFromLocale.negativeExactsList)
+        }
+    }, [])
+
+    useEffect(() => {
         localStorage.setItem('wordSorter', JSON.stringify({
-            inputFields: inputFields,
+            relevantInput: relevantInput,
+            negativeInput: negativeInput,
             outputList: outputList,
             negativePhrasesList: negativePhrasesList,
             negativeExactsList: negativeExactsList
         }))
-    }, [inputFields, outputList, negativePhrasesList, negativeExactsList])
-
-    useEffect(() => {
-        if (localStorage.getItem('wordSorter')) {
-            setInputFields(inputFields)
-            setOutputList(outputList)
-            setNegativePhrasesList(negativePhrasesList)
-            setNegativeExactsList(negativeExactsList)
-        }
-    }, [])
+    }, [relevantInput, negativeInput, outputList, negativePhrasesList, negativeExactsList])
 
 
     return (
@@ -138,8 +136,12 @@ const WordSorter = () => {
 
             <div className="work-area">
                 <Input
-                    inputFields={inputFields}
+                    inputFields={{
+                        relevant: relevantInput,
+                        negative: negativeInput
+                    }}
                     disabled={outputList.length > 0}
+                    onCopy={copyListHandler}
 
                     onChange={changeInputFieldHandler}
                     onAddKeywords={addDefaultListHandler}

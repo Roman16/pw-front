@@ -132,6 +132,7 @@ const columnTitle = {
     'calculatedTargetingType': 'Targeting Type',
     'calculatedCampaignSubType': 'Sub Type',
     'calculatedBudget': 'Budget',
+    'problemLevel': 'Problem Level'
 }
 
 
@@ -193,7 +194,7 @@ export const FilterItem = ({filter}) => {
                 {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
             </>
         )
-    } else if (filter.filterBy === 'keyword_id') {
+    } else if (filter.filterBy === 'keyword_id' || filter.filterBy === 'problemLevel') {
         return (
             <>
                 {`${columnTitle[filter.filterBy]} = ${filter.value}`}
