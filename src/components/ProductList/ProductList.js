@@ -8,6 +8,8 @@ import axios from "axios"
 import {SVG} from "../../utils/icons"
 import ProductFilters from "./ProductFilters"
 import Pagination from "../Pagination/Pagination"
+import queryString from "query-string"
+import {history} from "../../utils/history"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -18,7 +20,11 @@ const ProductList = ({pathname}) => {
     const [isOpenList, setIsOpenList] = useState(true),
         [ungroupVariations, setUngroupVariations] = useState(0),
         [openedProduct, setOpenedProduct] = useState(null),
-        [searchParams, setSearchParams] = useState(localStorage.getItem('productsSearchParams') ?
+        [searchParams, setSearchParams] = useState(queryString.parse(history.location.search).searchStr ? {
+            page: 1,
+            pageSize: 10,
+            searchStr: queryString.parse(history.location.search).searchStr || ''
+        } : localStorage.getItem('productsSearchParams') ?
             JSON.parse(localStorage.getItem('productsSearchParams')) :
             {
                 page: 1,

@@ -6,7 +6,7 @@ import {FilterItem} from "../../PPCAutomate/Report/Filters/FilterItem"
 
 const {Search} = Input
 
-const Filters = ({filters, columns, onSetFilters}) => {
+const Filters = ({filters, columns, processing, onSetFilters, onFixProblems}) => {
     const [visiblePopover, setVisiblePopover] = useState(false)
 
 
@@ -56,6 +56,10 @@ const Filters = ({filters, columns, onSetFilters}) => {
                     <span>Add Filter</span>
                 </button>
             </Popover>
+
+            {!processing && <button className="btn default fix" onClick={onFixProblems}>
+                Fix All Problems
+            </button>}
         </div>
 
         {filters.filter(item => item.type !== 'search').length > 0 && <div className="current-filters filters-list">

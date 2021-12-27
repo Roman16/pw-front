@@ -24,7 +24,10 @@ const ProductList = ({
     return (<>
         <div className={`${isOpenList ? 'product-list' : 'product-list closed'}`}>
             <Filters
+                requestParams={requestParams}
                 totalSize={totalSize}
+
+                onSearch={onChange}
             />
 
             {processing && <RouteLoader/>}

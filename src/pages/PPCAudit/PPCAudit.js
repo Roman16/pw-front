@@ -8,6 +8,7 @@ import ProblemsLevel from "./ProblemsLevel/ProblemsLevel"
 import ProblemsReport from "./ProblemsReport/ProblemsReport"
 import ProblemsType from "./ProblemsType/ProblemsType"
 import ScanningFailed from "./ScanningFailed/ScanningFailed"
+import {history} from "../../utils/history"
 
 export const scanningStatusEnums = {
     PROCESSING: 'processing',
@@ -26,7 +27,7 @@ const PPCAudit = () => {
         [products, setProducts] = useState([]),
         [productsTotalSize, setProductsTotalSize] = useState(0),
         [selectedProduct, setSelectedProduct] = useState(),
-        [scanningStatus, setScanningStatus] = useState('finished'),
+        [scanningStatus, setScanningStatus] = useState(''),
         [filters, setFilters] = useState([])
 
     const getProducts = async () => {
@@ -94,6 +95,12 @@ const PPCAudit = () => {
         }))
     }
 
+    const fixProblemsHandler = () => {
+        const searchStr = selectedProduct.sku || selectedProduct.asin || selectedProduct.name
+
+        history.push(`/ppc/automation?searchStr=${searchStr}`)
+    }
+
     useEffect(() => {
         getProducts()
     }, [productsRequestParams])
@@ -146,6 +153,7 @@ const PPCAudit = () => {
                         filters={filters}
 
                         onSetFilters={setFilters}
+                        fixProblemsHandler={fixProblemsHandler}
                     />
                 </>}
 

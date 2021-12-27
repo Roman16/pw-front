@@ -4,40 +4,70 @@ import Filters from "./Filters"
 import CustomTable from "../../../components/Table/CustomTable"
 import {scanningStatusEnums} from "../PPCAudit"
 import loaderImg from "../../../assets/img/loader.svg"
+import {history} from "../../../utils/history"
 
 const columns = [
     {
-        title: 'Et at erat',
+        title: 'Severity',
+        dataIndex: 'severity',
+        key: 'severity',
+        filter: true,
+        sorter: true,
+    },
+    {
+        title: 'Group',
+        dataIndex: 'group',
+        key: 'group',
+        filter: true,
+        sorter: true,
+    },
+    {
+        title: 'Type',
+        dataIndex: 'type',
+        key: 'type',
+        filter: true,
+        sorter: true,
+    },
+    {
+        title: 'Object',
         dataIndex: 'object',
         key: 'object',
         filter: true,
+        sorter: true,
     },
     {
-        title: 'Et at erat',
-        dataIndex: 'datetime',
-        key: 'datetime',
+        title: 'Object Type',
+        dataIndex: 'object_type',
+        key: 'object_type',
+        filter: true,
+        sorter: true,
     },
     {
-        title: 'Et at erat',
-        dataIndex: 'datetime',
-        key: 'datetime',
+        title: 'Issue',
+        dataIndex: 'issue',
+        key: 'issue',
+        filter: true,
+        sorter: true,
     },
     {
-        title: 'Et at erat',
-        dataIndex: 'datetime',
-        key: 'datetime',
+        title: 'Reason',
+        dataIndex: 'reason',
+        key: 'reason',
     },
+
 ]
 
-const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters}) => {
+const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters, fixProblemsHandler}) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
 
     return (<div className={`problems-report ${processing ? 'processing' : ''}`}>
         <Filters
             filters={filters}
             columns={columns}
+            processing={processing}
 
             onSetFilters={onSetFilters}
+            onFixProblems={fixProblemsHandler}
         />
 
         <div className="table-block">

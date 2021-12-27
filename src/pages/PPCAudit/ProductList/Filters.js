@@ -7,20 +7,21 @@ const {Search} = Input
 let timeoutId
 
 const Filters = ({
-                     totalSize
+                     totalSize,
+                     requestParams,
 
+                     onSearch
                  }) => {
 
-    // const [search, setSearch] = useState(searchStr)
-    //
-    // const changeSearchHandler = (value) => {
-    //     setSearch(value)
-    //
-    //     clearTimeout(timeoutId)
-    //     timeoutId = setTimeout(() => {
-    //         onSearch(value)
-    //     }, 500)
-    // }
+    const [search, setSearch] = useState(requestParams.searchStr)
+    const changeSearchHandler = (value) => {
+        setSearch(value)
+
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+            onSearch(value)
+        }, 500)
+    }
 
     return (
         <div className="products-filters">
@@ -28,8 +29,8 @@ const Filters = ({
                 <Search
                     className="search-field"
                     placeholder={'Search by product name, ASIN or SKU'}
-                    // onChange={e => changeSearchHandler(e.target.value)}
-                    // value={search}
+                    onChange={e => changeSearchHandler(e.target.value)}
+                    value={search}
                     data-intercom-target='search-field'
                     suffix={<SVG id={'search'}/>}
                 />
