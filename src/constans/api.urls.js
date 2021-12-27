@@ -158,7 +158,7 @@ export const analyticsUrls = {
     portfolios: 'analytics/entities/portfolios',
     campaigns: 'analytics/entities/campaigns',
     adGroups: 'analytics/entities/ad-groups',
-    adGroupDetails: id => `analytics/entities/ad-group/${id}/targeting-type`,
+    adGroupDetails: id => `analytics/entities/ad-groups/${id}/targeting-type`,
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
     bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
