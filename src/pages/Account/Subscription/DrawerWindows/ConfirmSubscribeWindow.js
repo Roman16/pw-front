@@ -1,16 +1,10 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {Link} from "react-router-dom"
 import {Spin} from "antd"
 import {ProductPrice} from "../SubscriptionPlan"
 
-const ConfirmSubscribeWindow = ({visible, onCancel,defaultCard = {last4: ''},product, onSubmit}) => {
-    const [submitProcessing, setSubmitProcessing] = useState(false)
-
-    useEffect(() => {
-        setSubmitProcessing(false)
-    }, [visible])
-
+const ConfirmSubscribeWindow = ({visible, onCancel,defaultCard = {last4: ''},product, onSubmit, submitProcessing}) => {
     return (
         <ModalWindow
             className="confirm-subscribe-window"
@@ -36,10 +30,7 @@ const ConfirmSubscribeWindow = ({visible, onCancel,defaultCard = {last4: ''},pro
                 </button>
 
                 <button
-                    onClick={() => {
-                        onSubmit()
-                        setSubmitProcessing(true)
-                    }}
+                    onClick={onSubmit}
                     disabled={submitProcessing}
                     className="btn default">
                     Proceed
