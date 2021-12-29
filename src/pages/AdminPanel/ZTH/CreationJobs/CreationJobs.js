@@ -13,6 +13,8 @@ const Option = Select.Option
 
 let timeoutId
 
+const token = localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : localStorage.getItem('token')
+
 const CreationJobs = () => {
     const [jobsList, setJobsList] = useState([]),
         [totalSize, setTotalSize] = useState(0),
@@ -74,11 +76,11 @@ const CreationJobs = () => {
     }
 
     const getZTHSearchTermReportDownloadPath = (jobId) => {
-        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-search-term-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
+        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-search-term-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}&token=${token}`
     }
 
     const getZTHProductReportDownloadPath = (jobId) => {
-        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}`
+        return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}&token=${token}`
     }
 
     const columns = [
