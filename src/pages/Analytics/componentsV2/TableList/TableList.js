@@ -15,6 +15,7 @@ import {numberColumns} from '../../components/TableList/tableColumns'
 import FastUpdateBlock from "../../components/TableList/FastUpdateBlock/FastUpdateBlock"
 import {notification} from "../../../../components/Notification"
 import moment from "moment"
+import {SVG} from "../../../../utils/icons"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -211,6 +212,14 @@ const TableList = ({
                         onChange={onChangeTableOptions}
                         selectedRangeDate={selectedRangeDate}
                     />}
+
+                    <button className={'icon-btn download-csv'}>
+                        <i>
+                            <SVG id={'download-file'}/>
+                        </i>
+
+                        download CSV
+                    </button>
 
                     {dateRange && <DateRange
                         onChange={dateRangeHandler}

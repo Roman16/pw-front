@@ -1530,8 +1530,21 @@ const files = {
 </g>
 </svg>`
         },
+        'download-file': {
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: `<svg width="20" height="20" viewBox="0 0 20 20"  xmlns="http://www.w3.org/2000/svg">
+
+<g>
+<path d="M10 1V13M10 13L6 9M10 13L14 9" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2 15C2 14.4477 1.55228 14 1 14C0.447715 14 0 14.4477 0 15H2ZM20 15C20 14.4477 19.5523 14 19 14C18.4477 14 18 14.4477 18 15H20ZM0 15V18.5H2V15H0ZM1.5 20H18.5V18H1.5V20ZM20 18.5V15H18V18.5H20ZM18.5 20C19.3284 20 20 19.3284 20 18.5H18C18 18.2239 18.2239 18 18.5 18V20ZM0 18.5C0 19.3284 0.671573 20 1.5 20V18C1.77614 18 2 18.2239 2 18.5H0Z" stroke="none"/>
+</g>
+</svg>`
+        },
     },
     allIds: [
+        'download-file',
         'scanner-icon-sidebar',
         'admin-panel-icon',
         'dayparting-icon',
