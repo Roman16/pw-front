@@ -163,6 +163,7 @@ const Subscription = () => {
             }
         }
 
+        changeButton(false)
         setAddCardProcessing(false)
     }
 
@@ -390,6 +391,7 @@ const Subscription = () => {
                 visible={visibleConfirmSubscribeWindow}
                 defaultCard={_.find(cardsList, {default: true})}
                 product={{...subscriptions[0], ...subscriptionProducts[0]}}
+                submitProcessing={disableButton}
 
                 onSubmit={() => handleSubscribe(subscribeDetails, true, true)}
                 onCancel={cancelConfirmSubscribeHandler}
