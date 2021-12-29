@@ -13,7 +13,7 @@ const Option = Select.Option
 
 let timeoutId
 
-const token = localStorage.getItem('token')
+const token = localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : localStorage.getItem('token')
 
 const CreationJobs = () => {
     const [jobsList, setJobsList] = useState([]),
