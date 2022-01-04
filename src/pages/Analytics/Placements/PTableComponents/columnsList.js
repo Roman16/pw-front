@@ -65,13 +65,13 @@ export const PColumnsList = (selectedCampaign, stateDetails, segment) => {
                         return (<InputCurrency
                             disabled
                             typeIcon={'percent'}
-                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment.find(i => i[0] === 'placementTop')[1]}
+                            value={bid_adjustment && bid_adjustment.length > 0 && (bid_adjustment.find(i => i[0] === 'placementTop') ? bid_adjustment.find(i => i[0] === 'placementTop')[1] : '')}
                         />)
                     } else if (item.placementName === 'Detail Page on-Amazon') {
                         return (<InputCurrency
                             disabled
                             typeIcon={'percent'}
-                            value={bid_adjustment && bid_adjustment.length > 0 && bid_adjustment.find(i => i[0] === 'placementProductPage')[1]}
+                            value={bid_adjustment && bid_adjustment.length > 0 && (bid_adjustment.find(i => i[0] === 'placementProductPage') ? bid_adjustment.find(i => i[0] === 'placementProductPage')[1] : '')}
                         />)
                     } else return ''
                 }
