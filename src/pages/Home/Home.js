@@ -130,7 +130,7 @@ const Home = () => {
     }, [user])
 
     const buttonText = (i) => {
-        if (isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting' || i.key === 'analytics')) return 'Coming Soon'
+        if (isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting')) return 'Coming Soon'
         else return 'Get Started'
     }
 
@@ -153,7 +153,7 @@ const Home = () => {
                     <Link
                         to={i.link}
                         className={'btn default'}
-                        disabled={isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting' || i.key === 'analytics')}
+                        disabled={isAdmin ? false : isAgencyUser ? i.key === 'zth' : (i.key === 'dayparting')}
                     >
                         {buttonText(i)}
                     </Link>
