@@ -14,207 +14,111 @@ const fakeData = [
         "eventDate": "2021-11-10",
         "Other on-Amazon": "3575",
         "Detail Page on-Amazon": "9683",
-        "Top of Search on-Amazon": "142",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "3142",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-11",
         "Other on-Amazon": "2177",
         "Detail Page on-Amazon": "8385",
-        "Top of Search on-Amazon": "159",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "3159",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-12",
         "Other on-Amazon": "1876",
         "Detail Page on-Amazon": "9123",
-        "Top of Search on-Amazon": "210",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "310",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-13",
         "Other on-Amazon": "2327",
         "Detail Page on-Amazon": "14056",
-        "Top of Search on-Amazon": "201",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "6101",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-14",
         "Other on-Amazon": "2536",
         "Detail Page on-Amazon": "17716",
-        "Top of Search on-Amazon": "2003",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "15003",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-15",
         "Other on-Amazon": "1382",
         "Detail Page on-Amazon": "8659",
-        "Top of Search on-Amazon": "176",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1176",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-16",
         "Other on-Amazon": "899",
         "Detail Page on-Amazon": "6471",
-        "Top of Search on-Amazon": "103",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1103",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-17",
         "Other on-Amazon": "985",
         "Detail Page on-Amazon": "6011",
-        "Top of Search on-Amazon": "86",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1286",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-18",
         "Other on-Amazon": "759",
         "Detail Page on-Amazon": "2523",
-        "Top of Search on-Amazon": "62",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1262",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-19",
         "Other on-Amazon": "775",
         "Detail Page on-Amazon": "2582",
-        "Top of Search on-Amazon": "70",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1170",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-20",
         "Other on-Amazon": "653",
         "Detail Page on-Amazon": "3507",
-        "Top of Search on-Amazon": "311",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "2311",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-21",
         "Other on-Amazon": "912",
         "Detail Page on-Amazon": "8862",
-        "Top of Search on-Amazon": "722",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "2722",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-22",
         "Other on-Amazon": "516",
         "Detail Page on-Amazon": "5889",
-        "Top of Search on-Amazon": "552",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "2552",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-23",
         "Other on-Amazon": "786",
         "Detail Page on-Amazon": "4002",
-        "Top of Search on-Amazon": "94",
-        "Remarketing off-Amazon": 0
+        "Top of Search on-Amazon": "1294",
+        "Remarketing off-Amazon": 2344
     }, {
         "eventDate": "2021-11-24",
         "Other on-Amazon": "749",
         "Detail Page on-Amazon": "5474",
-        "Top of Search on-Amazon": "366",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-25",
-        "Other on-Amazon": "1864",
-        "Detail Page on-Amazon": "20559",
-        "Top of Search on-Amazon": "1235",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-26",
-        "Other on-Amazon": "2118",
-        "Detail Page on-Amazon": "8172",
-        "Top of Search on-Amazon": "182",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-27",
-        "Other on-Amazon": "1119",
-        "Detail Page on-Amazon": "3926",
-        "Top of Search on-Amazon": "95",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-28",
-        "Other on-Amazon": "1394",
-        "Detail Page on-Amazon": "4453",
-        "Top of Search on-Amazon": "118",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-29",
-        "Other on-Amazon": "1264",
-        "Detail Page on-Amazon": "7528",
-        "Top of Search on-Amazon": "104",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-11-30",
-        "Other on-Amazon": "4076",
-        "Detail Page on-Amazon": "8295",
-        "Top of Search on-Amazon": "1282",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-01",
-        "Other on-Amazon": "1628",
-        "Detail Page on-Amazon": "16643",
-        "Top of Search on-Amazon": "529",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-02",
-        "Other on-Amazon": "2123",
-        "Detail Page on-Amazon": "19460",
-        "Top of Search on-Amazon": "1150",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-03",
-        "Other on-Amazon": "3413",
-        "Detail Page on-Amazon": "25077",
-        "Top of Search on-Amazon": "1379",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-04",
-        "Other on-Amazon": "2579",
-        "Detail Page on-Amazon": "18982",
-        "Top of Search on-Amazon": "710",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-05",
-        "Other on-Amazon": "3431",
-        "Detail Page on-Amazon": "23441",
-        "Top of Search on-Amazon": "774",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-06",
-        "Other on-Amazon": "5287",
-        "Detail Page on-Amazon": "18589",
-        "Top of Search on-Amazon": "554",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-07",
-        "Other on-Amazon": "8547",
-        "Detail Page on-Amazon": "19160",
-        "Top of Search on-Amazon": "459",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-08",
-        "Other on-Amazon": "11569",
-        "Detail Page on-Amazon": "141506",
-        "Top of Search on-Amazon": "599",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-09",
-        "Other on-Amazon": "10211",
-        "Detail Page on-Amazon": "22371",
-        "Top of Search on-Amazon": "724",
-        "Remarketing off-Amazon": 0
-    }, {
-        "eventDate": "2021-12-10",
-        "Other on-Amazon": "13",
-        "Detail Page on-Amazon": "76",
-        "Top of Search on-Amazon": "0",
-        "Remarketing off-Amazon": 0
-    }]
+        "Top of Search on-Amazon": "2366",
+        "Remarketing off-Amazon": 2344
+    },]
 
 
 const chartColors = [
     {
-        stroke: '#BA96F4',
-        fill: 'rgba(186,150,244,0.23)'
+        stroke: '#FF5256',
+        fill: 'rgba(255,82,86,0.23)'
     },
     {
         stroke: '#9464B9',
         fill: 'rgba(148,100,185,0.23)'
     },
     {
-        stroke: '#FF5256',
-        fill: 'rgba(255,82,86,0.23)'
+        stroke: '#FFAF52',
+        fill: 'rgba(255,175,82,0.23)'
     },
     {
-        stroke: '#FFA8AA',
-        fill: 'rgba(255,168,170,0.23)'
+        stroke: '#7FD3A1',
+        fill: 'rgba(127,211,161,0.23)'
     }
 
 ]
@@ -308,27 +212,27 @@ const Chart = ({processing, data = [], selectedMetric}) => {
             >
                 <defs>
                     <linearGradient spreadMethod="pad" id="topSearchGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor='#BA96F4' stopOpacity='0.77'/>
-                        <stop offset="50%" stopColor="#BA96F4" stopOpacity='0.2'/>
-                        <stop offset="100%" stopColor='#BA96F4' stopOpacity='0'/>
+                        <stop offset="0%" stopColor='#FF5256' stopOpacity='0.23'/>
+                        {/*<stop offset="45%" stopColor="#FF5256" stopOpacity='0.2'/>*/}
+                        <stop offset="100%" stopColor='#FF5256' stopOpacity='0'/>
                     </linearGradient>
 
                     <linearGradient id="detailPageGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#9464B9" stopOpacity='0.77'/>
-                        <stop offset="50%" stopColor="#9464B9" stopOpacity='0.2'/>
+                        <stop offset="0%" stopColor="#9464B9" stopOpacity='0.23'/>
+                        {/*<stop offset="45%" stopColor="#9464B9" stopOpacity='0.2'/>*/}
                         <stop offset="100%" stopColor="#9464B9" stopOpacity='0'/>
                     </linearGradient>
 
                     <linearGradient id="otherGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#FF5256" stopOpacity='0.77'/>
-                        <stop offset="50%" stopColor="#FF5256" stopOpacity='0.2'/>
-                        <stop offset="100%" stopColor="#FF5256" stopOpacity='0'/>
+                        <stop offset="0%" stopColor="#FFAF52" stopOpacity='0.23'/>
+                        {/*<stop offset="45%" stopColor="#FFAF52" stopOpacity='0.2'/>*/}
+                        <stop offset="100%" stopColor="#FFAF52" stopOpacity='0'/>
                     </linearGradient>
 
                     <linearGradient id="remarketingGradient" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#FFA8AA" stopOpacity='0.77'/>
-                        <stop offset="50%" stopColor="#FFA8AA" stopOpacity='0.2'/>
-                        <stop offset="100%" stopColor="#FFA8AA" stopOpacity='0'/>
+                        <stop offset="0%" stopColor="#7FD3A1" stopOpacity='0.23'/>
+                        {/*<stop offset="45%" stopColor="#7FD3A1" stopOpacity='0.2'/>*/}
+                        <stop offset="100%" stopColor="#7FD3A1" stopOpacity='0'/>
                     </linearGradient>
                 </defs>
 
