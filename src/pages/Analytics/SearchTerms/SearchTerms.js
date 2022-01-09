@@ -1,5 +1,5 @@
 import React, {useEffect, useState, memo} from 'react'
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricKeys, metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 import {STColumnsList} from "./STTableComponents/columnsList"
 import MainMetrics from "../componentsV2/MainMetrics/MainMetrics"
 import MainChart from "../componentsV2/MainChart/MainChart"
@@ -11,7 +11,6 @@ import SegmentFilter from "./STTableComponents/SegmentFilter"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import {expandedRowRender} from "./STTableComponents/expandRowRender"
 import moment from 'moment'
-import preciseDiff from "moment-precise-range-plugin"
 import _ from 'lodash'
 import queryString from "query-string"
 import {history} from "../../../utils/history"
@@ -22,7 +21,7 @@ let prevActiveMetrics = undefined,
 
 const SearchTerms = () => {
     const location = 'searchTerms',
-        availableMetrics = [...metricsKeysWithoutOrganic]
+        availableMetrics = _.filter([...metricsKeysWithoutOrganic], v => v !== metricKeys['net_ad_profit'])
 
     const dispatch = useDispatch()
 
@@ -104,7 +103,7 @@ const SearchTerms = () => {
 
     const columns = STColumnsList(localSegmentValue, setStateHandler, getTargetingsDetails, openedSearchTerms, processingRows)
 
-    const getPageData = debounce(50, false, async (pageParts,paginationParams, sorterParams) => {
+    const getPageData = debounce(50, false, async (pageParts, paginationParams, sorterParams) => {
         setOpenedSearchTerms([])
         if (paginationParams) setTableRequestParams(paginationParams)
 
@@ -302,7 +301,7 @@ const SearchTerms = () => {
 
 
     useEffect(() => {
-        if(prevActiveMetrics) {
+        if (prevActiveMetrics) {
             if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
                 if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
                     ...prevState,

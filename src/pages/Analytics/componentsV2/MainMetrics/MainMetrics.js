@@ -72,38 +72,6 @@ const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
         dispatch(analyticsActions.updateMetricsState(data))
     }
 
-    // const getMetricsStatistics = async () => {
-    //     source && source.cancel()
-    //     source = CancelToken.source()
-    //
-    //     try {
-    //         const filtersWithState = [
-    //             ...filters,
-    //             ...Object.keys(mainState).map(key => ({
-    //                 filterBy: key,
-    //                 type: 'eq',
-    //                 value: mainState[key]
-    //             })).filter(item => !!item.value),
-    //             {
-    //                 filterBy: 'datetime',
-    //                 type: 'range',
-    //                 value: selectedRangeDate
-    //             },
-    //         ]
-    //
-    //         const res = await analyticsServices.fetchMetricsDataV2({
-    //             ...selectedRangeDate,
-    //             locationKey: location,
-    //             filters: filtersWithState
-    //         }, source.token)
-    //
-    //         dispatch(analyticsActions.setMetricsData(res.response))
-    //     } catch (e) {
-    //         console.log(e)
-    //         dispatch(analyticsActions.setMetricsData({}))
-    //     }
-    // }
-
     const openModal = () => switchModal(true)
     const handleCancel = () => switchModal(false)
 
