@@ -34,7 +34,7 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
 
             const negativeExactArr = [...negativeExactsListLocal, ...filteringNegativeExactList(negativePhrase, phrasesList)]
 
-            onAddPhrase(negativePhrase, [...negativeExactArr], [...new Set([...negativeListLocal, negativePhrase])])
+            onAddPhrase(negativePhrase, [...negativeExactArr], [...new Set([...negativeListLocal, negativePhrase])], arr)
 
             searchWordShift = []
             negativeListLocal = []

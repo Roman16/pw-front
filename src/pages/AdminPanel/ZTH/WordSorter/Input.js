@@ -1,11 +1,12 @@
 import React from "react"
 
-const Input = ({inputFields, disabled, onChange, onAddKeywords}) => {
+const Input = ({inputFields, disabled, onChange,onCopy, onAddKeywords}) => {
     return (<div className="col input">
         <div className="card">
             <div className="block-header">
                 <h3>Input</h3>
                 <div className="count">{inputFields.relevant.split('\n').filter(i => i && i.length > 0).length}</div>
+                <button className="btn default" onClick={() => onCopy(inputFields.relevant, 'input')}>copy</button>
                 <button className="btn default" onClick={onAddKeywords} disabled={disabled}>add</button>
             </div>
 
@@ -22,6 +23,7 @@ const Input = ({inputFields, disabled, onChange, onAddKeywords}) => {
             <div className="block-header">
                 <h3>Negative Phrases</h3>
                 <div className="count">{inputFields.negative.split('\n').filter(i => i && i.length > 0).length}</div>
+                <button className="btn default" onClick={() => onCopy(inputFields.negative, 'input')}>copy</button>
             </div>
 
             <div className="form-group">
