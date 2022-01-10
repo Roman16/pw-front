@@ -17,17 +17,14 @@ const MetricModal = ({
                      }) => {
     return (
         <ModalWindow
-            className='metrics-modal'
+            className='add-metrics-modal'
             visible={visibleModal}
             handleOk={handleOk}
             handleCancel={handleCancel}
+            footer={false}
             okText='Confirm'
         >
-            <div className='modal-title'>
-                Add Metric
-            </div>
-
-            <div className='visible-list'>
+            <div className='added-metrics'>
                 {visibleItems.length > 0 ? visibleItems.map((key) => {
                         if (analyticsAvailableMetricsList.find(metric => metric.key === key)) {
                             return (
@@ -46,15 +43,13 @@ const MetricModal = ({
                         }
                     }
                     ) :
-                    <div className='default-visible-item'>
-                        Add new metric
-                    </div>
-                }
+                    <div className='added-placeholder-text'>
+                        Click on metrics below to add them to Quick Access
+                    </div>}
             </div>
 
-            <div className='hidden-list__title'>Hidden</div>
 
-            <div className='hidden-list'>
+            <div className='all-metrics'>
                 {hiddenItems.map((key) => {
                     return (
                         <ModalMetricItem

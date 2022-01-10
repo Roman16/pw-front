@@ -18,6 +18,7 @@
       &.position-2 {
         background: #FFAF52;
       }
+
       &.position-3 {
         background: #7FD3A1;
       }
@@ -72,55 +73,52 @@
   }
 }
 
-.metrics-modal {
-  .modal-title {
-    font-weight: 600;
-    color: #312C51;
-  }
+.add-metrics-modal {
+  width: 90% !important;
+  max-width: 89.28571428571429rem;
 
-  .ant-modal-footer {
-    .ant-btn {
-      background: #F3F3F3 !important;
-      font-weight: 600;
-      font-size: 12px;
-      color: #5B586F;
+  .ant-modal-body {
+    background: #F3F3F3;
+    padding: 0;
 
-      &:hover {
-        background: #d3d3d3 !important;
-      }
+    .metric-item {
+      background: #FFFFFF;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      padding: 0.8571428571428571rem 1.0714285714285714rem;
+      display: flex;
+      flex-direction: column;
 
-      &.ant-btn-primary {
-        background: #FF5256 !important;
-        color: #fff;
-
-        &:hover {
-          background: #D44043 !important;
-          color: #fff;
-        }
-      }
-    }
-  }
-
-  .ant-modal-body .hidden-list .metric-item {
-    .value {
-      background: initial;
-    }
-
-    &.disabled {
-      background: rgba(228, 228, 228, 0.45);
-      cursor: auto;
-
-      .add-item {
+      .action-btn {
         display: none;
       }
 
-      .value {
-        background: transparent !important;
-      }
+      .title-info {
+        display: flex;
+        align-items: center;
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #312C51;
+        margin-bottom: 0.5rem;
 
-      &:hover {
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        .information-tooltip {
+          margin-left: 5px;
+        }
       }
+    }
+
+    .added-metrics {
+      padding: 2.857142857142857rem 2.857142857142857rem 1.4285714285714286rem;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 0.7142857142857143rem;
+    }
+
+    .all-metrics {
+      background: #fff;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 0.7142857142857143rem;
     }
   }
 }

@@ -52,11 +52,11 @@ const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType
                                                        description={info}/>
                 }
 
-                {listType === 'hidden' && <div className="add-item">
+                {listType === 'hidden' && <div className="action-btn add-item">
                     <SVG id='plus-green'/>
                 </div>}
 
-                {listType === 'visible' && <div className="remove-item">
+                {listType === 'visible' && <div className="action-btn remove-item">
                     <SVG id='minus'/>
                 </div>}
             </div>
