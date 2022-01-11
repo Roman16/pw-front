@@ -13,7 +13,7 @@ import defaultProductImage from '../../../../assets/img/default-product-image.sv
 import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
-import {RenderMetricChanges} from "../MainMetrics/MetricItem"
+import {RenderMetricChanges} from "../../componentsV2/MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/tableComponents/columnList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"

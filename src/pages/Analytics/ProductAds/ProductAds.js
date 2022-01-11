@@ -1,5 +1,5 @@
 import React from "react"
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import CreateProductAdsWindow from "./CreateProductAdsWindow/CreateProductAdsWindow"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"

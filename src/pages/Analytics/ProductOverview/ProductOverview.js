@@ -4,7 +4,7 @@ import {analyticsActions} from "../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import queryString from 'query-string'
 import {columnList} from "./tableComponents/columnList"
-import {metricKeys} from "../components/MainMetrics/metricsList"
+import {metricKeys} from "../componentsV2/MainMetrics/metricsList"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 
 const ProductOverview = () => {

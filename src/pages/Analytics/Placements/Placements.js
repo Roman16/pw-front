@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import PlacementsStatistics from "./PlacementsStatistics/PlacementsStatistics"
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import queryString from "query-string"

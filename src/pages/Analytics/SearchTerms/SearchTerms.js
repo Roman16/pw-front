@@ -1,5 +1,5 @@
 import React, {useEffect, useState, memo} from 'react'
-import {metricKeys, metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricKeys, metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import {STColumnsList} from "./STTableComponents/columnsList"
 import MainMetrics from "../componentsV2/MainMetrics/MainMetrics"
 import MainChart from "../componentsV2/MainChart/MainChart"

@@ -5,7 +5,7 @@ import moment from "moment"
 import {days} from "../../components/MainChart/ChartTooltip"
 import _ from 'lodash'
 import {RenderMetricValue} from "../../components/TableList/tableColumns"
-import {analyticsAvailableMetricsList} from "../../components/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList} from "../../componentsV2/MainMetrics/metricsList"
 import {round} from "../../../../utils/round"
 
 

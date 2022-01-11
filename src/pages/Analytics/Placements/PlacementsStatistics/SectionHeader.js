@@ -1,7 +1,7 @@
 import React from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import {Select} from "antd"
-import {metricKeys} from "../../components/MainMetrics/metricsList"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const Option = Select.Option
 

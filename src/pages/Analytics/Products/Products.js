@@ -1,5 +1,5 @@
 import React from "react"
-import {metricKeys} from "../components/MainMetrics/metricsList"
+import {metricKeys} from "../componentsV2/MainMetrics/metricsList"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import {columnList} from "./tableComponents/columnList"
 
