@@ -31,7 +31,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription) {
+        } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
             setVisibleWindow('smallSpend')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
