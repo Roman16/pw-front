@@ -15,7 +15,13 @@ import {
     cpaColumn,
     cpcColumn,
     ctrColumn,
-    campaignColumn, statusColumn, renderNumberField, EditableField,
+    campaignColumn,
+    statusColumn,
+    renderNumberField,
+    EditableField,
+    adSalesSameSKUColumn,
+    adSalesOtherSKUColumn,
+    RPCColumn, RPIColumn, ICVRColumn, CPMColumn,
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 import {Switch} from "antd"
@@ -107,20 +113,27 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             align: 'right',
             ...renderNumberField()
         },
+
         impressionsColumn,
         clicksColumn,
         ctrColumn,
         adSpendColumn,
         cpcColumn,
+        CPMColumn,
+        budgetAllocationColumn,
+        adOrdersColumn,
+        cpaColumn,
+        adCvrColumn,
+        ICVRColumn,
+        adUnitsColumn,
         adSalesColumn,
         acosColumn,
-        adCvrColumn,
-        cpaColumn,
-        adOrdersColumn,
-        adUnitsColumn,
         roasColumn,
+        RPCColumn,
+        RPIColumn,
+        adSalesSameSKUColumn,
+        adSalesOtherSKUColumn,
         salesShareColumn,
-        budgetAllocationColumn,
         adProfitColumn,
     ]
 )

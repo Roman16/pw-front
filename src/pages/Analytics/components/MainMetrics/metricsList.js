@@ -31,22 +31,6 @@ export const metricKeys = {
     'returns_units': 'total_returns_quantity',
 }
 
-export const metricsKeysWithoutOrganic = Object.values(_.pickBy(metricKeys, function (value, key) {
-    return key !== 'total_orders' &&
-        key !== 'total_orders_pure' &&
-        key !== 'organic_orders' &&
-        key !== 'total_sales' &&
-        key !== 'organic_sales' &&
-        key !== 'total_units' &&
-        key !== 'total_units_pure' &&
-        key !== 'net_profit' &&
-        key !== 'gross_profit' &&
-        key !== 'avg_sale_price' &&
-        key !== 'macos' &&
-        key !== 'returns' &&
-        key !== 'returns_units'
-}))
-
 export const analyticsAvailableMetricsList = [
     {
         title: 'Total Orders',
@@ -331,3 +315,21 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     },
     //------------------------------------------------------------------------------------------------------------------
 ]
+
+export const metricsKeysWithoutOrganic = Object.values(_.pickBy(metricKeys, function (value, key) {
+    return key !== 'total_orders' &&
+        key !== 'total_orders_pure' &&
+        key !== 'organic_orders' &&
+        key !== 'total_sales' &&
+        key !== 'organic_sales' &&
+        key !== 'total_units' &&
+        key !== 'total_units_pure' &&
+        key !== 'net_profit' &&
+        key !== 'gross_profit' &&
+        key !== 'avg_sale_price' &&
+        key !== 'macos' &&
+        key !== 'returns' &&
+        key !== 'returns_units'
+}))
+
+export const totalMetrics = analyticsAvailableMetricsList.filter(i => i.key === 'impressions' || i.key ==='clicks')

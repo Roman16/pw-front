@@ -48,7 +48,8 @@ const TableList = ({
                        rowKey,
                        onUpdateField,
                        onUpdateColumn,
-                       disabledRow
+                       disabledRow,
+                       onDownloadCSV
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -213,7 +214,7 @@ const TableList = ({
                         selectedRangeDate={selectedRangeDate}
                     />}
 
-                    <button className={'icon-btn download-csv'}>
+                    <button className={'icon-btn download-csv'} onClick={onDownloadCSV}>
                         <i>
                             <SVG id={'download-file'}/>
                         </i>

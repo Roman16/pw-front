@@ -54,6 +54,22 @@
         }
       }
     }
+
+    .downward-changes {
+      color: #EC7F5C;
+
+      svg {
+        fill: #EC7F5C;
+      }
+    }
+
+    .upward-changes {
+      color: #7DD4A1;
+
+      svg {
+        fill: #7DD4A1;
+      }
+    }
   }
 
   .add-metric {
@@ -80,6 +96,7 @@
 
   .ant-modal-body {
     height: 100%;
+    min-width: 71.42857142857143rem;
     background: #fff;
     padding: 0;
     display: flex;
@@ -91,6 +108,15 @@
       line-height: 1.0714285714285714rem;
       color: #5B586F;
       margin-bottom: 0.7142857142857143rem;
+
+      display: flex;
+      align-items: center;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+        margin: 0 0.7142857142857143rem 0 0;
+      }
     }
 
     .metric-item {
@@ -164,6 +190,20 @@
           opacity: 1;
         }
       }
+
+      &.disabled {
+        background: #FAFAFA;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+        cursor: default;
+
+        * {
+          color: #C9CBD4 !important;
+        }
+
+        .action-btn {
+          display: none;
+        }
+      }
     }
 
     .added-metrics {
@@ -175,7 +215,7 @@
 
       .list {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(12.857142857142858rem, 1fr));
         grid-gap: 0.7142857142857143rem;
       }
 
@@ -256,12 +296,42 @@
       overflow-y: auto;
       background: #fff;
       padding: 1.4285714285714286rem 2.857142857142857rem;
+      position: relative;
 
       .list {
         display: grid;
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(12.857142857142858rem, 1fr));
         grid-template-rows: repeat(auto-fill, 6.142857142857143rem);
         grid-gap: 0.7142857142857143rem;
+      }
+
+      .no-result {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        svg {
+          height: 8.928571428571429rem;
+          width: inherit;
+          margin-bottom: 2.142857142857143rem;
+        }
+
+        h4 {
+          font-weight: 600;
+          font-size: 1.2857142857142858rem;
+          line-height: 1.5714285714285714rem;
+          color: #312C51;
+          margin-bottom: 10px;
+        }
+
+        p {
+          font-size: 0.8571428571428571rem;
+          line-height: 1.0714285714285714rem;
+          text-align: center;
+          color: #5B586F;
+          margin: 0;
+        }
       }
     }
 

@@ -1,33 +1,29 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsAvailableMetricsList} from "../../components/MainMetrics/metricsList"
-import MetricItem from "../../components/MainMetrics/MetricItem"
-import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
-import '../../components/MainMetrics/MainMetrics.less'
+import {analyticsAvailableMetricsList} from "./metricsList"
+import MetricItem from "./MetricItem"
+import './MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
-import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
-import MetricModal from "../../components/MainMetrics/MetricModal"
+import MetricModal from "./MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
-import {analyticsServices} from "../../../../services/analytics.services"
 import _ from 'lodash'
-import axios from "axios"
+import {availableMetrics} from './metricsList'
 
 let activeMetricIndexTurn = [0, 1]
 
 const availableMetricsCount = 12
 
-const CancelToken = axios.CancelToken
-let source = null
 let prevActivatedIndex = undefined
+
+export const AVAILABLE_METRICS_LENGTH = 12
 
 const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const dispatch = useDispatch()
 
+    allMetrics = [...analyticsAvailableMetricsList.filter(i => allMetrics.includes(i.key)).map(i => i.key)]
+
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
-        selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
-        selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false),
-        filters = useSelector(state => state.analytics.filters[location] || []),
-        mainState = useSelector(state => state.analytics.mainState)
+        selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false)
 
     const selectedMetrics = metricsState.selectedMetrics || allMetrics.slice(0, 5),
         activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
@@ -202,7 +198,7 @@ const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
                         availableMetricsCount={availableMetricsCount}
 
                         visibleItems={visibleItems}
-                        hiddenItems={hiddenItems}
+                        allMetrics={allMetrics}
                     />
                 </div>
             </>}

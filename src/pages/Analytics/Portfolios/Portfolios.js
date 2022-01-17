@@ -1,5 +1,5 @@
 import React from "react"
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricKeys, metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import CreatePortfolioWindow from "./CreatePortfolioWindow/CreatePortfolioWindow"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"
@@ -8,7 +8,12 @@ import {analyticsActions} from "../../../actions/analytics.actions"
 import {useDispatch} from "react-redux"
 
 const Portfolios = () => {
-    const availableMetrics = [...metricsKeysWithoutOrganic],
+    const availableMetrics = [
+            ...metricsKeysWithoutOrganic,
+            metricKeys['SBAdSales'],
+            metricKeys['SPAdSales'],
+            metricKeys['SDAdSales']
+        ],
         location = 'portfolios',
         dispatch = useDispatch()
 

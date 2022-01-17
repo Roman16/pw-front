@@ -12,7 +12,7 @@ import {
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
-import {analyticsAvailableMetricsList} from '../MainMetrics/metricsList'
+import {analyticsAvailableMetricsList} from '../../componentsV2/MainMetrics/metricsList'
 import _ from "lodash"
 
 const animationDuration = 1000,
