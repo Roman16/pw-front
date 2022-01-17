@@ -60,9 +60,7 @@ const WordSorter = () => {
 
     const addNegativePhraseHandler = (negativePhrase, arr, negativeList, outputListLocal) => {
         setNegativePhrasesList(negativeList || [...new Set([...negativePhrasesList, negativePhrase])])
-
-        const negativeExactArr = [...negativeExactsList, ...filteringNegativeExactList(negativePhrase, [...[...outputListLocal || outputList].filter(i => !negativeExactsList.includes(i))])]
-
+        const negativeExactArr = [...arr ? arr : negativeExactsList, ...filteringNegativeExactList(negativePhrase, [...[...outputListLocal || outputList].filter(i => !negativeExactsList.includes(i))])]
         setNegativeExactsList([...negativeExactArr])
     }
 
@@ -112,7 +110,7 @@ const WordSorter = () => {
     }, [])
 
     useEffect(() => {
-        if (relevantInput) localStorage.setItem('wordSorter', JSON.stringify({
+        if(relevantInput) localStorage.setItem('wordSorter', JSON.stringify({
             relevantInput: relevantInput,
             negativeInput: negativeInput,
             outputList: outputList,

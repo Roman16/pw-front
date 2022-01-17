@@ -29,16 +29,17 @@ const Output = ({phrasesList, negativeExactsList, language, marketplace, onAddPh
         event.preventDefault()
         event.stopPropagation()
 
+
         if (event.keyCode === 16 && searchWordShift.length > 0) {
             const negativePhrase = [...searchWordShift].join(" ")
 
-            const negativeExactArr = [...negativeExactsListLocal, ...filteringNegativeExactList(negativePhrase, phrasesList)]
+            onAddPhrase(negativePhrase, [...negativeExactsListLocal], [...new Set([...negativeListLocal, negativePhrase])], arr)
 
-            onAddPhrase(negativePhrase, [...negativeExactArr], [...new Set([...negativeListLocal, negativePhrase])], arr)
-
-            searchWordShift = []
-            negativeListLocal = []
-            negativeExactsListLocal = []
+            setTimeout(() => {
+                searchWordShift = []
+                negativeListLocal = []
+                negativeExactsListLocal = []
+            }, 1000)
         }
     }
 
