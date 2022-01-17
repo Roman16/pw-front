@@ -1,10 +1,10 @@
 import React from "react"
-import {metricKeys} from "../componentsV2/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList} from "../componentsV2/MainMetrics/metricsList"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import {columnList} from "./tableComponents/columnList"
 
 const Products = ({location}) => {
-    const availableMetrics = Object.values(metricKeys)
+    const availableMetrics = analyticsAvailableMetricsList.map(i => i.key)
 
     return (
         <div className={'products-workplace'}>

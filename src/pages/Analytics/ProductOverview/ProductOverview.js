@@ -4,7 +4,7 @@ import {analyticsActions} from "../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import queryString from 'query-string'
 import {columnList} from "./tableComponents/columnList"
-import {metricKeys} from "../componentsV2/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList, metricKeys} from "../componentsV2/MainMetrics/metricsList"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 
 const ProductOverview = () => {
@@ -12,7 +12,7 @@ const ProductOverview = () => {
     const mainState = useSelector(state => state.analytics.mainState)
     const dispatch = useDispatch()
 
-    const availableMetrics = Object.values(metricKeys)
+    const availableMetrics = analyticsAvailableMetricsList.map(i => i.key)
 
     const location = 'overview'
 

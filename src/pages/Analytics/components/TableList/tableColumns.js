@@ -19,6 +19,7 @@ import {automatePatDescription} from "../../Targetings/tableComponents/columnLis
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import CustomSelect from "../../../../components/Select/Select"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -421,6 +422,80 @@ export const adSalesColumn = {
     ...renderNumberField('currency')
 }
 
+export const adSalesSameSKUColumn = {
+    title: 'Ad Sales Same SKU',
+    dataIndex: metricKeys['adSalesSameSKU'],
+    key: metricKeys['adSalesSameSKU'],
+    minWidth: '190px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const adSalesOtherSKUColumn = {
+    title: 'Ad Sales Other SKU',
+    dataIndex: metricKeys['adSalesOtherSKU'],
+    key: metricKeys['adSalesOtherSKU'],
+    minWidth: '190px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const SBAdSalesColumn = {
+    title: 'SB Ad Sales',
+    dataIndex: metricKeys['SBAdSales'],
+    key: metricKeys['SBAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const SPAdSalesColumn = {
+    title: 'SP Ad Sales',
+    dataIndex: metricKeys['SPAdSales'],
+    key: metricKeys['SPAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const SDAdSalesColumn = {
+    title: 'SD Ad Sales',
+    dataIndex: metricKeys['SDAdSales'],
+    key: metricKeys['SDAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const RPCColumn = {
+    title: 'RPC',
+    dataIndex: metricKeys['rpc'],
+    key: metricKeys['rpc'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const RPIColumn = {
+    title: 'RPI',
+    dataIndex: metricKeys['rpi'],
+    key: metricKeys['rpi'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
 export const acosColumn = {
     title: 'ACoS',
     dataIndex: 'acos',
@@ -447,6 +522,26 @@ export const cpaColumn = {
     title: 'CPA',
     dataIndex: 'cpa',
     key: 'cpa',
+    minWidth: '100px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const ICVRColumn = {
+    title: 'Ad ICVR',
+    dataIndex: metricKeys['icvr'],
+    key: metricKeys['icvr'],
+    minWidth: '120px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('percent')
+}
+export const CPMColumn = {
+    title: 'CPM',
+    dataIndex: metricKeys['cpm'],
+    key: metricKeys['cpm'],
     minWidth: '100px',
     sorter: true,
     filter: true,

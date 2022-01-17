@@ -774,13 +774,13 @@ const files = {
             width: 6,
             height: 5,
             viewBox: [0, 0, 6, 5],
-            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#7DD4A1" d="M3 0L5.59808 4.5H0.401924L3 0Z"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg"  d="M3 0L5.59808 4.5H0.401924L3 0Z"/>'
         },
         'downward-metric-changes': {
             width: 6,
             height: 5,
             viewBox: [0, 0, 6, 5],
-            data: '<path xmlns="http://www.w3.org/2000/svg" fill="#EC7F5C" d="M3 5L5.59808 0.5H0.401924L3 5Z"/>'
+            data: '<path xmlns="http://www.w3.org/2000/svg"  d="M3 5L5.59808 0.5H0.401924L3 5Z"/>'
         },
         'slider-arrow': {
             width: 20,

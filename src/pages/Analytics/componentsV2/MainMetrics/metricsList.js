@@ -27,6 +27,18 @@ export const metricKeys = {
     'budget_allocation': 'budget_allocation',
     'returns': 'total_returns_count',
     'returns_units': 'total_returns_quantity',
+    'adSalesSameSKU': 'attributedSales30dSameSKU',
+    'adSalesOtherSKU': 'attributedSales30dOtherSKU',
+    'SBAdSales': 'attributedSales30d_sponsored_brands',
+    'SPAdSales': 'attributedSales30d_sponsored_products',
+    'SDAdSales': 'attributedSales30d_sponsored_display',
+    'rpc': 'rpc',
+    'organicRate': 'organic_rate',
+    'rpi': 'rpi',
+    'icvr': 'icvr',
+    'organicUnits': 'organic_units',
+    'cpm': 'cpm',
+    'bidCPC': 'bidMinusCPC',
 }
 
 export const analyticsAvailableMetricsList = [
@@ -111,13 +123,13 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'number',
         tabs: ['organic', 'conversions']
     },
-    // {
-    //     title: 'Organic Units',
-    //     key: metricKeys['organic_sales'],
-    //     label: 'Total',
-    //     type: 'number',
-    //tabs: ['organic', 'conversions']
-    // },
+    {
+        title: 'Organic Units',
+        key: metricKeys['organicUnits'],
+        label: 'Total',
+        type: 'number',
+        tabs: ['organic', 'conversions']
+    },
     {
         title: 'Organic Sales',
         key: metricKeys['organic_sales'],
@@ -166,21 +178,19 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'currency',
         tabs: ['ads', 'performance']
     },
-    // {
-    //     title: 'CPM',
-    //     key: metricKeys['cpc'],
-    //     info: 'This is the average amount you paid for each click on an ad.',
-    //     label: 'Average',
-    //     type: 'currency',,
-    //tabs: ['ads', 'performance']
-    // },
+    {
+        title: 'CPM',
+        key: metricKeys['cpm'],
+        label: 'Average',
+        type: 'currency',
+        tabs: ['ads', 'performance']
+    },
     // {
     //     title: 'Bid - CPC',
-    //     key: metricKeys['cpc'],
-    //     info: 'This is the average amount you paid for each click on an ad.',
+    //     key: metricKeys['bidCPC'],
     //     label: 'Average',
-    //     type: 'currency',,
-    //tabs: ['ads', 'performance']
+    //     type: 'currency',
+    //     tabs: ['ads', 'performance']
     // },
     {
         title: 'Budget Allocation',
@@ -213,14 +223,13 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'percent',
         tabs: ['ads', 'performance']
     },
-    // {
-    //     title: 'Ad ICVR',
-    //     key: metricKeys['conversion_rate'],
-    //     info: 'The Conversion Rate of a campaign is the percentage of people who clicked on an ad and then completed an action/purchase/conversion.',
-    //     label: 'Average',
-    //     type: 'percent',
-    //tabs: ['ads', 'performance']
-    // },
+    {
+        title: 'Ad ICVR',
+        key: metricKeys['icvr'],
+        label: 'Average',
+        type: 'percent',
+        tabs: ['ads', 'performance']
+    },
     {
         title: 'Ad Units',
         key: metricKeys['ad_units'],
@@ -251,82 +260,66 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'roas',
         tabs: ['ads', 'conversions', 'performance']
     },
-    // {
-    //     title: 'RPC',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions', 'performance']
-    // },
-    // {
-    //     title: 'RPI',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions', 'performance']
-    // },
-    // {
-    //     title: 'Organic Rate',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['organic', 'ads', 'conversions']
-    // },
-    // {
-    //     title: 'Ad Sales Same SKU',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
-    // {
-    //     title: 'Ad Sales Same SKU',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
-    // {
-    //     title: 'Ad Sales Other SKU',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
-    // {
-    //     title: 'SP Ad Sales',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
-    // {
-    //     title: 'SD Ad Sales',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
-    // {
-    //     title: 'SB Ad Sales',
-    //     info: 'Return On Advertising Spend, (ROAS), is a marketing metric that measures the efficacy of a digital advertising campaign. ROAS helps online businesses evaluate which methods are working and how they can improve future advertising efforts.',
-    //     key: metricKeys['roas'],
-    //     label: 'Average',
-    //     type: 'roas',
-    //tabs: ['ads', 'conversions']
-    // },
+    {
+        title: 'RPC',
+        key: metricKeys['rpc'],
+        label: 'Average',
+        type: 'currency',
+        tabs: ['ads', 'conversions', 'performance']
+    },
+    {
+        title: 'RPI',
+        key: metricKeys['rpi'],
+        label: 'Average',
+        type: 'currency',
+        tabs: ['ads', 'conversions', 'performance']
+    },
+    {
+        title: 'Organic Rate',
+        key: metricKeys['organicRate'],
+        label: 'Average',
+        type: 'roas',
+        tabs: ['organic', 'ads', 'conversions']
+    },
+    {
+        title: 'Ad Sales Same SKU',
+        key: metricKeys['adSalesSameSKU'],
+        label: 'Total',
+        type: 'currency',
+        tabs: ['ads', 'conversions']
+    },
+    {
+        title: 'Ad Sales Other SKU',
+        key: metricKeys['adSalesOtherSKU'],
+        label: 'Total',
+        type: 'currency',
+        tabs: ['ads', 'conversions']
+    },
+    {
+        title: 'SP Ad Sales',
+        key: metricKeys['SPAdSales'],
+        label: 'Total',
+        type: 'currency',
+        tabs: ['ads', 'conversions']
+    },
+    {
+        title: 'SD Ad Sales',
+        key: metricKeys['SDAdSales'],
+        label: 'Total',
+        type: 'currency',
+        tabs: ['ads', 'conversions']
+    },
+    {
+        title: 'SB Ad Sales',
+        key: metricKeys['SBAdSales'],
+        label: 'Total',
+        type: 'currency',
+        tabs: ['ads', 'conversions']
+    },
     //------------------------------------------------------------------------------------------------------------------
     {
         title: 'Sales Share',
-        key: 'sales_share',
+        key: metricKeys['sales_share'],
         label: 'Average',
         type: 'percent',
         tabs: ['total', 'ads', 'conversions', 'other']
@@ -356,20 +349,29 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
     //------------------------------------------------------------------------------------------------------------------
 ]
 
-export const metricsKeysWithoutOrganic = analyticsAvailableMetricsList.filter(({key}) => key !== metricKeys['total_orders'] &&
-    key !== metricKeys['total_orders_pure'] &&
-    key !== metricKeys['organic_orders'] &&
-    key !== metricKeys['total_sales'] &&
-    key !== metricKeys['organic_sales'] &&
-    key !== metricKeys['total_units'] &&
-    key !== metricKeys['total_units_pure'] &&
-    key !== metricKeys['net_profit'] &&
-    key !== metricKeys['gross_profit'] &&
-    key !== metricKeys['avg_sale_price'] &&
-    key !== metricKeys['macos'] &&
-    key !== metricKeys['returns'] &&
-    key !== metricKeys['returns_units'])
-    .map(i => i.key)
+export const metricsKeysWithoutOrganic = analyticsAvailableMetricsList.filter(({key}) =>
+    key === metricKeys['ad_orders'] ||
+    key === metricKeys['ad_sales'] ||
+    key === metricKeys['adSalesSameSKU'] ||
+    key === metricKeys['adSalesOtherSKU'] ||
+    key === metricKeys['ad_units'] ||
+    key === metricKeys['acos'] ||
+    key === metricKeys['conversion_rate'] ||
+    key === metricKeys['cpa'] ||
+    key === metricKeys['net_ad_profit'] ||
+    key === metricKeys['roas'] ||
+    key === metricKeys['sales_share'] ||
+    key === metricKeys['budget_allocation'] ||
+    key === metricKeys['impressions'] ||
+    key === metricKeys['clicks'] ||
+    key === metricKeys['ctr'] ||
+    key === metricKeys['cost'] ||
+    key === metricKeys['rpc'] ||
+    key === metricKeys['rpi'] ||
+    key === metricKeys['icvr'] ||
+    key === metricKeys['cpm'] ||
+    key === metricKeys['cpc']
+).map(i => i.key)
 
 
 //известные группы в нужном порядке:
@@ -423,3 +425,50 @@ export const metricsKeysWithoutOrganic = analyticsAvailableMetricsList.filter(({
 // Net Profit: Total, Conversions
 // Gross Profit: Total, Conversions
 // Net Ad Profit: Ads, Conversions
+//======================================================================================================================
+//metrics order
+// Total Orders
+// Returns
+// Total Orders Cleared
+// Total Units
+// Returned Units
+// Total Units Cleared
+// Total Sales
+// MACoS
+// Avg. Sale Price
+//
+// Organic Orders
+// Organic Units
+// Organic Sales
+//
+// Impressions
+// Clicks
+// CTR
+// Ad Spend
+// CPC
+// CPM
+// Bid - CPC
+// Budget Allocation
+//
+// Ad Orders
+// CPA
+// Ad CVR
+// Ad ICVR
+// Ad Units
+// Ad Sales
+// ACoS
+// ROAS
+// RPC
+// RPI
+// Organic Rate
+// Ad Sales Same SKU
+// Ad Sales Other SKU
+// SP Ad Sales
+// SD Ad Sales
+// SB Ad Sales
+//
+// Sales Share
+//
+// Net Profit
+// Gross Profit
+// Net Ad Profit

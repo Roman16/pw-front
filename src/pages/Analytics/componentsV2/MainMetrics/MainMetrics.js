@@ -20,6 +20,8 @@ export const AVAILABLE_METRICS_LENGTH = 12
 const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const dispatch = useDispatch()
 
+    allMetrics = [...analyticsAvailableMetricsList.filter(i => allMetrics.includes(i.key)).map(i => i.key)]
+
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false)
 

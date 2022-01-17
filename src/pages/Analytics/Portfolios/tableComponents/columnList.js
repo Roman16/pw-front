@@ -17,6 +17,12 @@ import {
     roasColumn,
     salesShareColumn,
     renderNumberField,
+    adSalesSameSKUColumn,
+    adSalesOtherSKUColumn,
+    SBAdSalesColumn,
+    SPAdSalesColumn,
+    SDAdSalesColumn,
+    RPCColumn, RPIColumn, ICVRColumn, CPMColumn,
 } from "../../components/TableList/tableColumns"
 
 
@@ -56,16 +62,24 @@ export const columnList = (setStateHandler) => ([
         ctrColumn,
         adSpendColumn,
         cpcColumn,
+        CPMColumn,
+        budgetAllocationColumn,
+        adOrdersColumn,
+        cpaColumn,
+        adCvrColumn,
+        ICVRColumn,
+        adUnitsColumn,
         adSalesColumn,
         acosColumn,
-        adCvrColumn,
-        cpaColumn,
-        adOrdersColumn,
-        adUnitsColumn,
         roasColumn,
+        RPCColumn,
+        RPIColumn,
+        adSalesSameSKUColumn,
+        adSalesOtherSKUColumn,
+        SPAdSalesColumn,
+        SDAdSalesColumn,
+        SBAdSalesColumn,
         salesShareColumn,
-        budgetAllocationColumn,
         adProfitColumn
     ]
-
 )

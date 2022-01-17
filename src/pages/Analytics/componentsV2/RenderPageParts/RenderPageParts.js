@@ -29,6 +29,11 @@ const idSelectors = {
     'products': 'productId',
 }
 
+const _baseUrl = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_API_PROD || ''
+    : process.env.REACT_APP_API_URL || ''
+
+
 export const updateResponseHandler = (res) => {
     const success = res.result.success,
         failed = res.result.failed,
@@ -233,6 +238,11 @@ const RenderPageParts = (props) => {
             console.log(e)
             failedCb()
         }
+    }
+
+    const downloadCSVHandler = () => {
+        const token = localStorage.getItem('token')
+        window.open(`${_baseUrl}/api/analytics/v2/${location}/csv?token=${token}`)
     }
 
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
@@ -508,7 +518,7 @@ const RenderPageParts = (props) => {
                 onUpdateField={updateFieldHandler}
                 onUpdateColumn={updateColumnHandler}
                 disabledRow={disabledRow}
-
+                onDownloadCSV={downloadCSVHandler}
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}
 

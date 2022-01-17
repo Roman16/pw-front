@@ -5,6 +5,7 @@ import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {metricKeys} from "./metricsList"
 
 const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
@@ -43,6 +44,14 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) =
     )
 }
 
+const metricsDifferentDiff = [
+    metricKeys['acos'],
+    metricKeys['macos'],
+    metricKeys['returns'],
+    metricKeys['returns_units'],
+    metricKeys['cpm'],
+]
+
 export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false}) => {
     if (diff != null) {
         value = +value
@@ -72,14 +81,16 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     percentRow={false}
                 />}>
                 <div className='metric-item__changes'>
-                    {(value > prevValue) && <div className='upward-changes'>
+                    {(value > prevValue) &&
+                    <div className={metricsDifferentDiff.includes(name) ? 'downward-changes' : 'upward-changes'}>
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
                         ${numberMask(diffValue, 2)}
                     </div>}
 
-                    {(value < prevValue) && <div className='downward-changes'>
+                    {(value < prevValue) &&
+                    <div className={metricsDifferentDiff.includes(name) ? 'upward-changes' : 'downward-changes'}>
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
@@ -88,40 +99,10 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
 
                     {diffValue === 0 && <div className='down-changes'>
                         <div className='horizontal-line-icon'/>
-
                         $0
                     </div>}
                 </div>
             </InformationTooltip>)
-        } else if (name === 'acos' || name === 'macos' || name === 'returns' || name === 'returns_units') {
-            return (
-                <InformationTooltip
-                    type='custom'
-                    overlayClassName={'diff-tooltip'}
-                    {...getPopupContainer && {getPopupContainer: (node) => node.parentNode}}
-                    description={<DiffTooltip
-                        currentValue={value}
-                        prevValue={prevValue}
-                        diff={diff}
-                        type={type}
-                    />}>
-                    <div className='metric-item__changes'>
-                        {(diff > 0) && <div className='downward-changes'>
-                            <i style={{transform: 'rotate(180deg)'}}>
-                                <SVG style={{transform: 'rotate(180deg)'}} id='downward-metric-changes'/>
-                            </i>
-                            {round(Math.abs(+diff * 100), 2)}%
-                        </div>}
-                        {(diff <= 0) && <div className='upward-changes'>
-                            <i style={{transform: 'rotate(180deg)'}}>
-                                <SVG id='upward-metric-changes'/>
-                            </i>
-
-                            {round(Math.abs(+diff * 100), 2)}%
-                        </div>}
-                    </div>
-                </InformationTooltip>
-            )
         } else {
             return (
                 <InformationTooltip
@@ -136,13 +117,15 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     />}>
 
                     <div className='metric-item__changes'>
-                        {(diff > 0) && <div className='upward-changes'>
+                        {(diff > 0) &&
+                        <div className={metricsDifferentDiff.includes(name) ? 'downward-changes' : 'upward-changes'}>
                             <i>
                                 <SVG id='upward-metric-changes'/>
                             </i>
                             {round(Math.abs(+diff * 100), 2)}%
                         </div>}
-                        {(diff <= 0) && <div className='downward-changes'>
+                        {(diff <= 0) &&
+                        <div className={metricsDifferentDiff.includes(name) ? 'upward-changes' : 'downward-changes'}>
                             <i>
                                 <SVG id='downward-metric-changes'/>
                             </i>
