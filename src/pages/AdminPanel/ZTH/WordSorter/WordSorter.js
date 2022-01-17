@@ -103,9 +103,8 @@ const WordSorter = () => {
     useEffect(() => {
         if (localStorage.getItem('wordSorter')) {
             const paramsFromLocale = JSON.parse(localStorage.getItem('wordSorter'))
-
-            setRelevantInput(paramsFromLocale.relevantInput)
-            setNegativeInput(paramsFromLocale.negativeInput)
+            setRelevantInput(paramsFromLocale.inputFields ? paramsFromLocale.inputFields.relevant : paramsFromLocale.relevantInput)
+            setNegativeInput(paramsFromLocale.inputFields ? paramsFromLocale.inputFields.negative : paramsFromLocale.negativeInput)
             setOutputList(paramsFromLocale.outputList)
             setNegativePhrasesList(paramsFromLocale.negativePhrasesList)
             setNegativeExactsList(paramsFromLocale.negativeExactsList)
@@ -113,7 +112,7 @@ const WordSorter = () => {
     }, [])
 
     useEffect(() => {
-        if(relevantInput) localStorage.setItem('wordSorter', JSON.stringify({
+        if (relevantInput) localStorage.setItem('wordSorter', JSON.stringify({
             relevantInput: relevantInput,
             negativeInput: negativeInput,
             outputList: outputList,
