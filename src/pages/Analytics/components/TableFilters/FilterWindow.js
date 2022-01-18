@@ -4,6 +4,7 @@ import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import {Input, Select} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const Option = Select.Option
 
@@ -171,6 +172,19 @@ const containsVariations = {
     'product_ads_count': numberVariations,
     'calculatedBid': numberVariations,
     'calculatedBudget': numberVariations,
+    [metricKeys['icvr']]: numberVariations,
+    [metricKeys['rpc']]: numberVariations,
+    [metricKeys['rpi']]: numberVariations,
+    [metricKeys['organicRate']]: numberVariations,
+    [metricKeys['organicRate']]: numberVariations,
+    [metricKeys['SPAdSales']]: numberVariations,
+    [metricKeys['SDAdSales']]: numberVariations,
+    [metricKeys['SBAdSales']]: numberVariations,
+    [metricKeys['adSalesSameSKU']]: numberVariations,
+    [metricKeys['adSalesOtherSKU']]: numberVariations,
+    [metricKeys['cpm']]: numberVariations,
+    [metricKeys['bidCPC']]: numberVariations,
+    [metricKeys['organicUnits']]: numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'state': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -431,6 +445,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'product_ads_count' ||
                     filterBy === 'campaigns_count' ||
                     filterBy === 'campaigns_count' ||
+                    filterBy === metricKeys['organicRate'] ||
+                    filterBy === metricKeys['organicUnits'] ||
                     filterBy === 'impressions') &&
                 <Input
                     disabled={!filterBy}
@@ -444,6 +460,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'sales_share' ||
                     filterBy === 'conversion_rate' ||
                     filterBy === 'macos' ||
+                    filterBy === metricKeys['icvr'] ||
                     filterBy === 'ctr' ||
                     filterBy === 'budget_allocation'
                 ) &&
@@ -473,6 +490,15 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'dailyBudget' ||
                     filterBy === 'calculatedBudget' ||
                     filterBy === 'calculatedBid' ||
+                    filterBy === metricKeys['rpc']  ||
+                    filterBy === metricKeys['rpi']  ||
+                    filterBy === metricKeys['SPAdSales']  ||
+                    filterBy === metricKeys['SDAdSales']  ||
+                    filterBy === metricKeys['SBAdSales']  ||
+                    filterBy === metricKeys['adSalesSameSKU']  ||
+                    filterBy === metricKeys['adSalesOtherSKU']  ||
+                    filterBy === metricKeys['bidCPC']  ||
+                    filterBy === metricKeys['cpm']  ||
                     filterBy === 'sales'
                 ) &&
                 <InputCurrency

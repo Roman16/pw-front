@@ -1,4 +1,4 @@
-import api from "./request"
+import api, {baseUrl} from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
@@ -22,7 +22,9 @@ export const analyticsServices = {
     exactCreate,
     bulkCreate,
     exactUpdateField,
-    bulkUpdate
+    bulkUpdate,
+
+    downloadTableCSV
 }
 
 const stateIdValues = {
@@ -37,7 +39,6 @@ const dateRangeFormatting = (dateRange) => {
     if (dateRange.startDate === 'lifetime') return ''
     else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-0${offset}:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-0${offset}:00`
 }
-
 
 const filtersHandler = (f) => {
     let filters = [...f]
@@ -178,4 +179,17 @@ function exactUpdateField(entity, data) {
 function bulkUpdate(entity, data, idList, filters) {
 
     return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
+}
+
+function downloadTableCSV(location, filtersWithState) {
+    const token = localStorage.getItem('token')
+
+    if (location === 'products' && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
+        filtersWithState = [...filtersWithState.map(i => {
+            if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
+            return {...i}
+        })]
+    }
+
+    window.open(`${baseUrl}/api/analytics/v2/${location}/csv${filtersHandler(filtersWithState)}&token=${token}`)
 }

@@ -29,11 +29,6 @@ const idSelectors = {
     'products': 'productId',
 }
 
-const _baseUrl = process.env.REACT_APP_ENV === 'production'
-    ? process.env.REACT_APP_API_PROD || ''
-    : process.env.REACT_APP_API_URL || ''
-
-
 export const updateResponseHandler = (res) => {
     const success = res.result.success,
         failed = res.result.failed,
@@ -241,8 +236,35 @@ const RenderPageParts = (props) => {
     }
 
     const downloadCSVHandler = () => {
-        const token = localStorage.getItem('token')
-        window.open(`${_baseUrl}/api/analytics/v2/${location}/csv?token=${token}`)
+        const queryParams = queryString.parse(history.location.search)
+
+        let filtersWithState = []
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+        analyticsServices.downloadTableCSV(location, filtersWithState)
     }
 
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {

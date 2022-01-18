@@ -1,6 +1,7 @@
 import React from "react"
 import moment from "moment"
 import './Filters.less'
+import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
 
 export const valueTile = {
     'keyword': 'Keyword',
@@ -132,7 +133,19 @@ const columnTitle = {
     'calculatedTargetingType': 'Targeting Type',
     'calculatedCampaignSubType': 'Sub Type',
     'calculatedBudget': 'Budget',
-    'problemLevel': 'Problem Level'
+    'problemLevel': 'Problem Level',
+    [metricKeys['icvr']]: 'Ad ICVR',
+    [metricKeys['rpc']]: 'RPC',
+    [metricKeys['rpi']]: 'RPI',
+    [metricKeys['organicRate']]: 'Organic Rate',
+    [metricKeys['SPAdSales']]: 'SP Ad Sales',
+    [metricKeys['SDAdSales']]: 'SD Ad Sales',
+    [metricKeys['SBAdSales']]: 'SB Ad Sales',
+    [metricKeys['adSalesSameSKU']]: 'Ad Sales Same SKU',
+    [metricKeys['adSalesOtherSKU']]: 'Ad Sales Other SKU',
+    [metricKeys['cpm']]: 'CPM',
+    [metricKeys['bidCPC']]: 'Bid - CPC',
+    [metricKeys['organicUnits']]: 'Organic Units',
 }
 
 
@@ -158,6 +171,18 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'acos' ||
         filter.filterBy === 'campaigns_count' ||
         filter.filterBy === 'roas' ||
+        filter.filterBy === metricKeys['icvr'] ||
+        filter.filterBy === metricKeys['rpc'] ||
+        filter.filterBy === metricKeys['rpi'] ||
+        filter.filterBy === metricKeys['organicRate'] ||
+        filter.filterBy === metricKeys['SPAdSales'] ||
+        filter.filterBy === metricKeys['SDAdSales'] ||
+        filter.filterBy === metricKeys['SBAdSales'] ||
+        filter.filterBy === metricKeys['adSalesSameSKU'] ||
+        filter.filterBy === metricKeys['adSalesOtherSKU'] ||
+        filter.filterBy === metricKeys['cpm'] ||
+        filter.filterBy === metricKeys['bidCPC'] ||
+        filter.filterBy === metricKeys['organicUnits'] ||
         filter.filterBy === 'cpa' ||
         filter.filterBy === 'cpc' ||
         filter.filterBy === 'cost' ||

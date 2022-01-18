@@ -11,8 +11,8 @@ import {
     clicksColumn,
     cpaColumn,
     cpcColumn, CPMColumn,
-    ctrColumn, ICVRColumn,
-    impressionsColumn,
+    ctrColumn, grossProfitColumn, ICVRColumn,
+    impressionsColumn, netProfitColumn,
     renderNumberField,
     RenderProduct,
     roasColumn, RPCColumn, RPIColumn,
@@ -157,25 +157,8 @@ export const columnList = (location, isParent) => [
     adSalesSameSKUColumn,
     adSalesOtherSKUColumn,
     salesShareColumn,
-    {
-        title: 'Profit',
-        dataIndex: 'organic_profit',
-        key: 'organic_profit',
-        width: '150px',
-        sorter: true,
-        filter: true,
-        align: 'right',
-        ...renderNumberField('currency')
-    },
-    {
-        title: 'Gross Profit',
-        dataIndex: 'organic_profit_gross',
-        key: 'organic_profit_gross',
-        width: '150px',
-        sorter: true,
-        filter: true,
-        align: 'right',
-        ...renderNumberField('currency')
-    },
+
+    netProfitColumn,
+    grossProfitColumn,
     adProfitColumn
 ]
