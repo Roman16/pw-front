@@ -124,9 +124,8 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
             key: metricKeys['bidCPC'],
             width: '150px',
             sorter: true,
-            noTotal: true,
             filter: true,
-            fastUpdating: true,
+            align: 'right',
             ...renderNumberField('currency')
         },
         budgetAllocationColumn,
