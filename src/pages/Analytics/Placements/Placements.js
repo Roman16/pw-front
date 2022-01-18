@@ -178,6 +178,39 @@ const Placements = () => {
         }
     })
 
+    const downloadCSVHandler = () => {
+        const queryParams = queryString.parse(history.location.search)
+
+        let filtersWithState = []
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+        analyticsServices.downloadTableCSV('placements', filtersWithState)
+    }
+
+
     const changeTableOptionsHandler = (data) => {
         localStorage.setItem('analyticsTableOptions', JSON.stringify({
             ...tableOptionsFromLocalStorage,
@@ -340,6 +373,7 @@ const Placements = () => {
                 expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
+                onDownloadCSV={downloadCSVHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
             />

@@ -299,6 +299,39 @@ const SearchTerms = () => {
         }, 300)
     }
 
+    const downloadCSVHandler = () => {
+        const queryParams = queryString.parse(history.location.search)
+
+        let filtersWithState = []
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+        analyticsServices.downloadTableCSV('search-terms', filtersWithState)
+    }
+
+
 
     useEffect(() => {
         if (prevActiveMetrics) {
@@ -357,6 +390,7 @@ const SearchTerms = () => {
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
                 localTableOptions={localTableOptions}
+                onDownloadCSV={downloadCSVHandler}
                 moreActions={<SegmentFilter
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}

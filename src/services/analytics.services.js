@@ -191,5 +191,5 @@ function downloadTableCSV(location, filtersWithState) {
         })]
     }
 
-    window.open(`${baseUrl}/api/analytics/v2/${location}/csv${filtersHandler(filtersWithState)}&token=${token}`)
+    window.open(`${baseUrl}/api/analytics/${location}/csv${filtersHandler(filtersWithState)}&token=${token}`)
 }

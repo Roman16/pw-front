@@ -125,6 +125,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
             width: '150px',
             sorter: true,
             filter: true,
+            noTotal: true,
             align: 'right',
             ...renderNumberField('currency')
         },
