@@ -257,7 +257,7 @@ const TableList = ({
                             <SVG id={'download-file'}/>
                         </i>
 
-                        download CSV
+                        download
                     </button>
 
                     {dateRange && <DateRange
