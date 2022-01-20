@@ -20,7 +20,7 @@ export const mainMenu = [
         title: 'Analytics',
         key: 'analytics',
         icon: 'analytics-icon-sidebar',
-        link: 'analytics/products'
+        link: 'analytics'
     },
     // {
     //     title: 'Tableau',
@@ -51,5 +51,11 @@ export const mainMenu = [
                 link: 'dayparting',
             }
         ]
-    }
+    },
+    // {
+    //     title: 'PPC Audit',
+    //     key: 'scanner',
+    //     icon: 'scanner-icon-sidebar',
+    //     link: 'scanner'
+    // }
 ]

@@ -80,7 +80,6 @@ const LoginPage = (props) => {
     useEffect(() => {
         seo({title: 'Login Sponsoreds'})
 
-
         if (props.match.params.status === 'logout') {
             userService.logOut()
 

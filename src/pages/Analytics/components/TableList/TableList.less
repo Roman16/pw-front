@@ -34,7 +34,7 @@
     .section-header {
       min-height: 5.142857142857143rem;
       display: grid;
-      grid-template-areas: 'filters segmentFilter createButton columns expandWorkplace tableOptions  switch date switchChartVisible' 'currentFilters currentFilters currentFilters  currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
+      grid-template-areas: 'filters segmentFilter createButton columns expandWorkplace tableOptions  switch downloadCsv date switchChartVisible' 'currentFilters currentFilters currentFilters currentFilters  currentFilters currentFilters currentFilters currentFilters currentFilters currentFilters';
       grid-template-columns: 1fr max-content max-content;
       justify-content: space-between;
       padding: 20px 0 0 0;
@@ -78,6 +78,9 @@
 
     .columns-select {
       grid-area: columns;
+    }
+    .download-csv {
+      grid-area: downloadCsv;
     }
 
     .expand-workplace {
@@ -124,6 +127,7 @@
         }
       }
     }
+
 
     .create-button {
       padding: 0 15px;
@@ -623,10 +627,18 @@
 
               .downward-changes {
                 color: #EC7F5C;
+
+                svg {
+                  fill: #EC7F5C;
+                }
               }
 
               .upward-changes {
                 color: #7DD4A1;
+
+                svg {
+                  fill: #7DD4A1;
+                }
               }
             }
 

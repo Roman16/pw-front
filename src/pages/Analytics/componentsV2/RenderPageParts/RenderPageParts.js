@@ -235,6 +235,38 @@ const RenderPageParts = (props) => {
         }
     }
 
+    const downloadCSVHandler = () => {
+        const queryParams = queryString.parse(history.location.search)
+
+        let filtersWithState = []
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+        analyticsServices.downloadTableCSV(location, filtersWithState)
+    }
+
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
         if (paginationParams) setTableRequestParams(paginationParams)
 
@@ -508,7 +540,7 @@ const RenderPageParts = (props) => {
                 onUpdateField={updateFieldHandler}
                 onUpdateColumn={updateColumnHandler}
                 disabledRow={disabledRow}
-
+                onDownloadCSV={downloadCSVHandler}
                 showRowSelection={showRowSelection}
                 rowKey={rowKey}
 

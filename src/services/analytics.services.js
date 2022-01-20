@@ -1,7 +1,8 @@
-import api from "./request"
+import api, {baseUrl} from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
+import {metricKeys} from "../pages/Analytics/componentsV2/MainMetrics/metricsList"
 
 export const analyticsServices = {
     fetchTableData,
@@ -22,7 +23,9 @@ export const analyticsServices = {
     exactCreate,
     bulkCreate,
     exactUpdateField,
-    bulkUpdate
+    bulkUpdate,
+
+    downloadTableCSV
 }
 
 const stateIdValues = {
@@ -37,7 +40,6 @@ const dateRangeFormatting = (dateRange) => {
     if (dateRange.startDate === 'lifetime') return ''
     else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-0${offset}:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-0${offset}:00`
 }
-
 
 const filtersHandler = (f) => {
     let filters = [...f]
@@ -58,7 +60,15 @@ const filtersHandler = (f) => {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'macos' || filterBy === 'ctr' || filterBy === 'ctr') {
+        } else if (filterBy === 'budget_allocation' ||
+            filterBy === 'sales_share' ||
+            filterBy === 'conversion_rate' ||
+            filterBy === 'acos' ||
+            filterBy === 'macos' ||
+            filterBy === 'ctr' ||
+            filterBy === metricKeys['icvr'] ||
+            filterBy === 'ctr'
+        ) {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)
@@ -178,4 +188,17 @@ function exactUpdateField(entity, data) {
 function bulkUpdate(entity, data, idList, filters) {
 
     return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
+}
+
+function downloadTableCSV(location, filtersWithState) {
+    const token = localStorage.getItem('token')
+
+    if (location === 'products' && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
+        filtersWithState = [...filtersWithState.map(i => {
+            if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
+            return {...i}
+        })]
+    }
+
+    window.open(`${baseUrl}/api/analytics/${location}/csv${filtersHandler(filtersWithState)}&token=${token}`)
 }

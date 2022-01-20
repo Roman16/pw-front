@@ -34,6 +34,7 @@ const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/Conn
 const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
+const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
 
 let timerId = null
@@ -181,6 +182,10 @@ const AuthorizedUser = (props) => {
                                     {/*tableau*/}
                                     {(isSuperAdmin || isAgencyUser) &&
                                     <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
+                                    {/*-------------------------------------------*/}
+
+                                    {/*ppc scanner*/}
+                                    {/*<ConnectedAmazonRoute path="/scanner" component={PPCAudit}/>*/}
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute
                                         exact

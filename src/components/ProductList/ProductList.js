@@ -8,6 +8,8 @@ import axios from "axios"
 import {SVG} from "../../utils/icons"
 import ProductFilters from "./ProductFilters"
 import Pagination from "../Pagination/Pagination"
+import queryString from "query-string"
+import {history} from "../../utils/history"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -18,7 +20,11 @@ const ProductList = ({pathname}) => {
     const [isOpenList, setIsOpenList] = useState(true),
         [ungroupVariations, setUngroupVariations] = useState(0),
         [openedProduct, setOpenedProduct] = useState(null),
-        [searchParams, setSearchParams] = useState(localStorage.getItem('productsSearchParams') ?
+        [searchParams, setSearchParams] = useState(queryString.parse(history.location.search).searchStr ? {
+            page: 1,
+            pageSize: 10,
+            searchStr: queryString.parse(history.location.search).searchStr || ''
+        } : localStorage.getItem('productsSearchParams') ?
             JSON.parse(localStorage.getItem('productsSearchParams')) :
             {
                 page: 1,
@@ -26,13 +32,15 @@ const ProductList = ({pathname}) => {
                 searchStr: ''
             })
 
-    const {selectedAll, selectedProduct, onlyOptimization, productList, totalSize, fetching} = useSelector(state => ({
+    const {selectedAll, selectedProduct, onlyOptimization, productList, totalSize, fetching, user, subscribedProduct} = useSelector(state => ({
         selectedAll: state.products.selectedAll,
         selectedProduct: state.products.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
         productList: state.products.productList,
         totalSize: state.products.totalSize,
         fetching: state.products.fetching,
+        user: state.user,
+        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]]
     }))
 
     const dispatch = useDispatch()
@@ -127,6 +135,10 @@ const ProductList = ({pathname}) => {
     useEffect(() => {
         if (productList.length === 0 && totalSize > 0) setSearchParams(prevState => ({...prevState, page: 1}))
     }, [productList, totalSize])
+
+    useEffect(() => {
+        if (!user.user.free_trial_available && subscribedProduct.has_access) getProductsList()
+    }, [user.user.free_trial_available, subscribedProduct])
 
     return (
         <Fragment>

@@ -9,7 +9,7 @@ import {defaultImportStatus} from "../reducers/user.reducer"
 import _ from 'lodash'
 import * as Sentry from "@sentry/react"
 
-const baseUrl =
+export const baseUrl =
     // 'http://staging.profitwhales.com';
     process.env.REACT_APP_ENV === 'production'
         ? process.env.REACT_APP_API_PROD || ''

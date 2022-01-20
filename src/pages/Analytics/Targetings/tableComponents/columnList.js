@@ -3,25 +3,26 @@ import {
     acosColumn,
     adCvrColumn,
     adOrdersColumn,
-    adSalesColumn,
+    adSalesColumn, adSalesOtherSKUColumn, adSalesSameSKUColumn,
     adSpendColumn,
     adUnitsColumn,
     budgetAllocationColumn,
     campaignColumn,
     clicksColumn,
     cpaColumn,
-    cpcColumn,
+    cpcColumn, CPMColumn,
     ctrColumn,
-    EditableField,
+    EditableField, ICVRColumn,
     impressionsColumn,
     keywordPTColumn,
-    matchTypeColumn,
-    roasColumn,
+    matchTypeColumn, renderNumberField,
+    roasColumn, RPCColumn, RPIColumn,
     salesShareColumn,
     statusColumn
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
 import {Switch} from "antd"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 export const automatePatDescription = {
     'Close match': 'Sponsored Products target that shows your ad to shoppers who use search terms closely related to your products.',
@@ -110,20 +111,38 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
             fastUpdating: true,
             editType: 'currency',
         },
+
         impressionsColumn,
         clicksColumn,
         ctrColumn,
         adSpendColumn,
         cpcColumn,
+        CPMColumn,
+        {
+            title: 'Bid - CPC',
+            dataIndex: metricKeys['bidCPC'],
+            key: metricKeys['bidCPC'],
+            width: '150px',
+            sorter: true,
+            filter: true,
+            noTotal: true,
+            align: 'right',
+            ...renderNumberField('currency')
+        },
+        budgetAllocationColumn,
+        adOrdersColumn,
+        cpaColumn,
+        adCvrColumn,
+        ICVRColumn,
+        adUnitsColumn,
         adSalesColumn,
         acosColumn,
-        adCvrColumn,
-        cpaColumn,
-        adOrdersColumn,
-        adUnitsColumn,
         roasColumn,
+        RPCColumn,
+        RPIColumn,
+        adSalesSameSKUColumn,
+        adSalesOtherSKUColumn,
         salesShareColumn,
-        budgetAllocationColumn
     ]
 )
 

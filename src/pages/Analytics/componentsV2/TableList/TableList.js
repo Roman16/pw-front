@@ -3,7 +3,6 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {useDispatch, useSelector} from "react-redux"
 import _ from 'lodash'
-import '../../components/TableList/TableList.less'
 import TableFilters from "../../components/TableFilters/TableFilters"
 import DateRange from "../../components/DateRange/DateRange"
 import ColumnsSelect from "../../components/TableList/ColumnsSelect"
@@ -13,11 +12,51 @@ import ExpandWorkplace from "../../components/TableList/ExpandWorkplace"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {numberColumns} from '../../components/TableList/tableColumns'
 import FastUpdateBlock from "../../components/TableList/FastUpdateBlock/FastUpdateBlock"
-import {notification} from "../../../../components/Notification"
 import moment from "moment"
+import {SVG} from "../../../../utils/icons"
+
+import '../../components/TableList/TableList.less'
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
+}
+
+const metricsOrder = {
+    'campaigns': [
+        "name",
+        "state",
+        "advertisingType",
+        "calculatedTargetingType",
+        "calculatedCampaignSubType",
+        "calculatedBudget",
+        "portfolioId",
+        "startDate",
+        "endDate",
+        "bidding_strategy",
+        "impressions",
+        "clicks",
+        "ctr",
+        "cost",
+        "cpc",
+        "cpm",
+        "budget_allocation",
+        "attributedConversions30d",
+        "cpa",
+        "conversion_rate",
+        "icvr",
+        "attributedUnitsOrdered30d",
+        "attributedSales30d",
+        "acos",
+        "roas",
+        "rpi",
+        "rpc",
+
+        "sales_share",
+        "ad_profit",
+
+        "attributedSales30dSameSKU",
+        "attributedSales30dOtherSKU",
+    ]
 }
 
 const TableList = ({
@@ -47,7 +86,8 @@ const TableList = ({
                        rowKey,
                        onUpdateField,
                        onUpdateColumn,
-                       disabledRow
+                       disabledRow,
+                       onDownloadCSV
                    }) => {
 
     const [selectedRows, setSelectedRows] = useState([]),
@@ -212,6 +252,14 @@ const TableList = ({
                         selectedRangeDate={selectedRangeDate}
                     />}
 
+                    <button className={'icon-btn download-csv'} onClick={onDownloadCSV}>
+                        <i>
+                            <SVG id={'download-file'}/>
+                        </i>
+
+                        download
+                    </button>
+
                     {dateRange && <DateRange
                         onChange={dateRangeHandler}
                         selectedRangeDate={selectedRangeDate}
@@ -232,7 +280,12 @@ const TableList = ({
                         }
                     }}
                     sorterColumn={localSorterColumn}
-                    columns={columns.filter(column => !localColumnBlackList.includes(column.key))}
+
+                    columns={columns
+                        .filter(column => !localColumnBlackList.includes(column.key))
+                        // .sort((firstColumn, secondColumn) => metricsOrder[location] ? metricsOrder[location].findIndex(i => i === firstColumn.key) - metricsOrder[location].findIndex(i => i === secondColumn.key) : true)
+                    }
+
                     fixedColumns={fixedColumns}
                     expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
                     openedRow={openedRow}

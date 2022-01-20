@@ -2,7 +2,7 @@ import React from "react"
 import MainChart from "../../components/MainChart/MainChart"
 import ProductList from './ProductsList/ProductsList'
 import MainMetrics from "../../components/MainMetrics/MainMetrics"
-import {metricKeys} from "../../components/MainMetrics/metricsList"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const Products = ({location}) => {
     const availableMetrics = Object.values(metricKeys)

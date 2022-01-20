@@ -14,6 +14,7 @@ import {SVG} from "../../../utils/icons"
 import moment from 'moment'
 import {expiresFormat} from "../../../utils/expiresFormat"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import {notification} from "../../../components/Notification"
 
 const {Option} = Select
 
@@ -170,28 +171,24 @@ class StripeForm extends Component {
 
                     const res = await this.props.stripe.createPaymentMethod('card', {billing_details})
 
-                    onAddCard({
-                        ...paymentDetails,
-                        stripe_token: res.paymentMethod.id
-                    }, defaultCard)
+                    if (res.error) {
+                        notification.error({title: res.error.message})
+                    } else if (res.paymentMethod) {
+                        onAddCard({
+                            ...paymentDetails,
+                            stripe_token: res.paymentMethod.id
+                        }, defaultCard)
 
-                    this.setState({
-                        card_number: false,
-                        expiry: false,
-                        cvc: false,
-                    })
-
-                    // .then(() => {
-                    //     this.props.stripe.handleCardAction(
-                    //         'pi_1FjttzJzUVfwvcYwq2nWSUuy_secret_BhymwhXpe6qEVMhvBRFmv8eze'
-                    //     ).then(res => {
-                    //         console.log(res)
-                    //     })
-                    // })
+                        this.setState({
+                            card_number: false,
+                            expiry: false,
+                            cvc: false,
+                        })
+                    }
                 }
             }
         } catch (e) {
-            console.log(e)
+            // console.log(e)
         }
 
         this.setState({

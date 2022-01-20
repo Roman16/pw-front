@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import PlacementsStatistics from "./PlacementsStatistics/PlacementsStatistics"
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../actions/analytics.actions"
 import queryString from "query-string"
@@ -178,6 +178,39 @@ const Placements = () => {
         }
     })
 
+    const downloadCSVHandler = () => {
+        const queryParams = queryString.parse(history.location.search)
+
+        let filtersWithState = []
+
+        if (Object.keys(queryParams).length !== 0) {
+            filtersWithState = [
+                ...filters,
+                ...Object.keys(queryParams).map(key => ({
+                    filterBy: key,
+                    type: 'eq',
+                    value: queryParams[key]
+                })).filter(item => !!item.value),
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        } else {
+            filtersWithState = [
+                ...filters,
+                {
+                    filterBy: 'datetime',
+                    type: 'range',
+                    value: selectedRangeDate
+                },
+            ]
+        }
+        analyticsServices.downloadTableCSV('placements', filtersWithState)
+    }
+
+
     const changeTableOptionsHandler = (data) => {
         localStorage.setItem('analyticsTableOptions', JSON.stringify({
             ...tableOptionsFromLocalStorage,
@@ -340,6 +373,7 @@ const Placements = () => {
                 expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
+                onDownloadCSV={downloadCSVHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
                 onChangeTableOptions={changeTableOptionsHandler}
             />

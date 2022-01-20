@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useState} from "react"
 import '../../components/MainChart/MainChart.less'
 import '../../../PPCAutomate/Dashboard/MainChart/MainChart.less'
 import ChartHeader from "../../components/MainChart/ChartHeader"

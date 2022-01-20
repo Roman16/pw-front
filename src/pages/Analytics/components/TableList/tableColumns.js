@@ -13,12 +13,13 @@ import defaultProductImage from '../../../../assets/img/default-product-image.sv
 import {valueTile} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {amazonDefaultImageUrls} from "../../../../components/ProductList/ProductItem"
 import noImage from "../../../../assets/img/no-image-available.svg"
-import {RenderMetricChanges} from "../MainMetrics/MetricItem"
+import {RenderMetricChanges} from "../../componentsV2/MainMetrics/MetricItem"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 import {automatePatDescription} from "../../Targetings/tableComponents/columnList"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import CustomSelect from "../../../../components/Select/Select"
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -61,19 +62,19 @@ export const numberColumns = [
     'organic_profit'
 ]
 
-export const RenderMetricValue = ({number, type}) => {
+export const RenderMetricValue = ({number, type, id}) => {
     switch (type) {
         case 'number':
             return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
         case 'percent':
-            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
+            return ((number !== null && number !== undefined ? `${round(+number * 100, id === metricKeys['icvr'] ? 4 : 2)}%` : '-'))
 
         case 'roas':
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : `$${numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : '-'))
     }
 }
 
@@ -81,7 +82,7 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
     return ({
         render: (number, item, array, dataIndex) => {
             return (<div className={'metric-value'}>
-                <RenderMetricValue number={number} type={type}/>
+                <RenderMetricValue number={number} type={type} id={dataIndex}/>
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}
@@ -421,6 +422,80 @@ export const adSalesColumn = {
     ...renderNumberField('currency')
 }
 
+export const adSalesSameSKUColumn = {
+    title: 'Ad Sales Same SKU',
+    dataIndex: metricKeys['adSalesSameSKU'],
+    key: metricKeys['adSalesSameSKU'],
+    minWidth: '190px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const adSalesOtherSKUColumn = {
+    title: 'Ad Sales Other SKU',
+    dataIndex: metricKeys['adSalesOtherSKU'],
+    key: metricKeys['adSalesOtherSKU'],
+    minWidth: '190px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const SBAdSalesColumn = {
+    title: 'SB Ad Sales',
+    dataIndex: metricKeys['SBAdSales'],
+    key: metricKeys['SBAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
+export const SPAdSalesColumn = {
+    title: 'SP Ad Sales',
+    dataIndex: metricKeys['SPAdSales'],
+    key: metricKeys['SPAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const SDAdSalesColumn = {
+    title: 'SD Ad Sales',
+    dataIndex: metricKeys['SDAdSales'],
+    key: metricKeys['SDAdSales'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const RPCColumn = {
+    title: 'RPC',
+    dataIndex: metricKeys['rpc'],
+    key: metricKeys['rpc'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const RPIColumn = {
+    title: 'RPI',
+    dataIndex: metricKeys['rpi'],
+    key: metricKeys['rpi'],
+    minWidth: '150px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+
 export const acosColumn = {
     title: 'ACoS',
     dataIndex: 'acos',
@@ -447,6 +522,26 @@ export const cpaColumn = {
     title: 'CPA',
     dataIndex: 'cpa',
     key: 'cpa',
+    minWidth: '100px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('currency')
+}
+export const ICVRColumn = {
+    title: 'Ad ICVR',
+    dataIndex: metricKeys['icvr'],
+    key: metricKeys['icvr'],
+    minWidth: '120px',
+    sorter: true,
+    filter: true,
+    align: 'right',
+    ...renderNumberField('percent')
+}
+export const CPMColumn = {
+    title: 'CPM',
+    dataIndex: metricKeys['cpm'],
+    key: metricKeys['cpm'],
     minWidth: '100px',
     sorter: true,
     filter: true,
@@ -558,6 +653,14 @@ export const matchTypeColumn = {
     noTotal: true,
     filter: true,
     render: (type) => valueTile[type] || type
+}
+export const returnedUnitsColumn = {
+    title: 'Returned Units',
+    dataIndex: 'total_returns_quantity',
+    key: 'total_returns_quantity',
+    width: '200px',
+    sorter: true,
+    filter: true,
 }
 
 export const adGroupColumn = {

@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsAvailableMetricsList} from "./metricsList"
-import MetricItem from "./MetricItem"
+import {analyticsAvailableMetricsList} from "../../componentsV2/MainMetrics/metricsList"
+import MetricItem from "../../componentsV2/MainMetrics/MetricItem"
 import AddMetric from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetric"
-import './MainMetrics.less'
+import '../../componentsV2/MainMetrics/MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
 import AddMetricModal from "../../../PPCAutomate/Dashboard/Metrics/AddMetric/AddMetricModal"
-import MetricModal from "./MetricModal"
+import MetricModal from "../../componentsV2/MainMetrics/MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import _ from 'lodash'

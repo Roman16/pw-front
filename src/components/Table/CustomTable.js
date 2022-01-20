@@ -45,7 +45,8 @@ const CustomTable = ({
                          revertSortingColumns = [],
                          onUpdateField,
                          emptyTitle,
-                         emptyDescription
+                         emptyDescription,
+                         emptyComponent
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -156,7 +157,7 @@ const CustomTable = ({
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                 }}
                             >
-                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(totalDataSource[item.key], item, columnIndex) : item.render(totalDataSource[item.key], item, columnIndex) : totalDataSource[item.key])}
+                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(totalDataSource[item.key], item, columnIndex) : item.render(totalDataSource[item.key], item, columnIndex, item.key) : totalDataSource[item.key])}
                             </div>
                         )
                     })}
@@ -164,7 +165,7 @@ const CustomTable = ({
 
                 <div className="table-body">
                     {(!loading && (!dataSource || dataSource.length === 0)) && <div className="no-data">
-                        {emptyText ? emptyText === 'image' ?
+                        {emptyComponent ? emptyComponent : emptyText ? emptyText === 'image' ?
                             <EmptyData title={emptyTitle} description={emptyDescription}/> : emptyText : 'You don’t have any data yet'}
                     </div>}
 

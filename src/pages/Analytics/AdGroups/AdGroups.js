@@ -1,5 +1,5 @@
 import React from "react"
-import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
+import {metricsKeysWithoutOrganic} from "../componentsV2/MainMetrics/metricsList"
 import CreateAdGroupWindow from "./CreateAdGroupWindow/CreateAdGroupWindow"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import {useDispatch, useSelector} from "react-redux"

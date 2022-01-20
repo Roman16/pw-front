@@ -5,9 +5,6 @@ import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
-import {metricKeys} from "./metricsList"
-import {Popover} from "antd"
 
 const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
@@ -52,7 +49,15 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
         prevValue = +prevValue
         diff = +diff
 
-        if (name === 'profit' || name === metricKeys['net_profit'] || name === metricKeys['gross_profit'] || name === metricKeys['net_ad_profit'] || name === 'organic_sales' || name === 'total_sales' || name === 'ad_sales') {
+        if (diff === 0 || round(Math.abs(+diff * 100), 2) === 0) {
+            return (
+                <div className='metric-item__changes'>
+                    <div className='down-changes'>
+                        0%
+                    </div>
+                </div>
+            )
+        } else if (type === 'currency') {
             const diffValue = Math.abs(value - prevValue)
 
             return (<InformationTooltip
@@ -88,15 +93,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     </div>}
                 </div>
             </InformationTooltip>)
-        } else if (diff === 0 || round(Math.abs(+diff * 100), 2) === 0) {
-            return (
-                <div className='metric-item__changes'>
-                    <div className='down-changes'>
-                        0%
-                    </div>
-                </div>
-            )
-        } else if (name === 'cpc' || name === 'acos' || name === 'cpa' || name === 'macos' || name === 'returns' || name === 'returns_units') {
+        } else if (name === 'acos' || name === 'macos' || name === 'returns' || name === 'returns_units') {
             return (
                 <InformationTooltip
                     type='custom'
@@ -224,12 +221,6 @@ const MetricItem = ({
 
             <div className="title-info">
                 <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
-                {/*{key === 'profit' || key === 'ad_profit' ?*/}
-                {/*    !hasMargin &&*/}
-                {/*    <Tooltip type='warning' description={<ProfitTooltipDescription/>}/>*/}
-                {/*    :*/}
-                {/*    info && <Tooltip description={info}/>*/}
-                {/*} */}
 
                 {info && <Tooltip description={info}/>}
 

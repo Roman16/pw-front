@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {Link} from "react-router-dom"
 import {Spin} from "antd"

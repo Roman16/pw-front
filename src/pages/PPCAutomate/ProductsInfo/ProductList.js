@@ -254,14 +254,14 @@ const ProductList = ({
                 width: '175px',
                 render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
             },
-            {
+            ...(isAdmin || isAgencyClient) ? [{
                 width: '160px',
                 render: (item, parent) => (parent[DESIRED_ACOS] ? `${parent[DESIRED_ACOS]}%` : '-')
-            },
-            {
+            }] : [],
+            ...(isAdmin || isAgencyClient) ? [{
                 width: '170px',
                 render: (item, parent) => (parent[BREAK_EVEN_ACOS] ? `${parent[BREAK_EVEN_ACOS]}%` : '-')
-            },
+            }] : [],
             {
                 width: '100px',
                 render: () => ''
@@ -445,22 +445,22 @@ const ProductList = ({
             editType: 'currency',
             render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
         },
-        {
+        ...(isAdmin || isAgencyClient) ? [{
             title: () => (<span>Desired ACoS</span>),
             dataIndex: DESIRED_ACOS,
             key: DESIRED_ACOS,
             width: '160px',
             editType: 'percent',
             render: (value) => value ? `${value}%` : '-'
-        },
-        {
+        }] : [],
+        ...(isAdmin || isAgencyClient) ? [{
             title: () => (<span>Break-even ACoS</span>),
             dataIndex: BREAK_EVEN_ACOS,
             key: BREAK_EVEN_ACOS,
             width: '170px',
             editType: 'percent',
             render: (value) => value ? `${value}%` : '-'
-        },
+        }] : [],
         {
             title: 'Total Changes',
             dataIndex: TOTAL_CHANGES,
