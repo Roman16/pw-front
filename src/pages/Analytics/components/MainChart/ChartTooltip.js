@@ -20,9 +20,9 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
     const getChartValue = (payload, key, metric) => {
         if (payload[key] !== null) {
             if (metric.type === 'percent') {
-                return round(+payload[key], key === metricKeys['icvr'] || key === `${metricKeys['icvr']}_7d`? 4 : 2) + '%'
+                return round(+payload[key], key === metricKeys['icvr'] || key === `${metricKeys['icvr']}_7d` ? 4 : 2) + '%'
             } else if (metric.type === 'currency') {
-                return '$' + numberMask(payload[key], key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 4 : 2)
+                return '$' + numberMask(payload[key], key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 4 : 2, null, key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 2 : undefined)
             } else if (metric.type === 'roas') {
                 return payload[key] !== null && `${round(payload[key], 2)}x`
             } else {

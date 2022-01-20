@@ -74,7 +74,7 @@ export const RenderMetricValue = ({number, type, id}) => {
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2)}` : `$${numberMask(number, id === metricKeys['rpi'] ? 4 : 2)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : `$${numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : '-'))
     }
 }
 

@@ -158,12 +158,12 @@ const RenderMetricValue = ({value, type, id}) => {
         const number = +value
         if (type === 'currency') {
             if (id === metricKeys['rpi']) {
-                return `$${numberMask(number, 4)}`
+                return `$${numberMask(number, 4, null, 2)}`
             } else {
                 return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
             }
         } else if (type === 'percent') {
-            return (`${round(number * 100, metricKeys['icvr'] ? 4 : 2)}%`)
+            return (`${round(number * 100, id === metricKeys['icvr'] ? 4 : 2)}%`)
         } else if (type === 'number') {
             return (numberMask(number))
         } else if (type === 'roas') {
