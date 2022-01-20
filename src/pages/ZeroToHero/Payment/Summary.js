@@ -3,7 +3,7 @@ import {numberMask} from "../../../utils/numberMask"
 import {Spin} from "antd"
 import {SVG} from "../../../utils/icons"
 
-const roundTo = (num, digits) => {
+export const roundTo = (num, digits, minFix) => {
     const multiplicator = Math.pow(10, digits);
     const multiplied = parseFloat((num * multiplicator).toFixed(11));
     const res = Math.round(multiplied) / multiplicator;

@@ -62,19 +62,19 @@ export const numberColumns = [
     'organic_profit'
 ]
 
-export const RenderMetricValue = ({number, type}) => {
+export const RenderMetricValue = ({number, type, id}) => {
     switch (type) {
         case 'number':
             return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
 
         case 'percent':
-            return ((number !== null && number !== undefined ? `${round(+number * 100, 2)}%` : '-'))
+            return ((number !== null && number !== undefined ? `${round(+number * 100, id === metricKeys['icvr'] ? 4 : 2)}%` : '-'))
 
         case 'roas':
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), 2)}` : `$${numberMask(number, 2)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2)}` : `$${numberMask(number, id === metricKeys['rpi'] ? 4 : 2)}` : '-'))
     }
 }
 
@@ -82,7 +82,7 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
     return ({
         render: (number, item, array, dataIndex) => {
             return (<div className={'metric-value'}>
-                <RenderMetricValue number={number} type={type}/>
+                <RenderMetricValue number={number} type={type} id={dataIndex}/>
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}
@@ -653,6 +653,14 @@ export const matchTypeColumn = {
     noTotal: true,
     filter: true,
     render: (type) => valueTile[type] || type
+}
+export const returnedUnitsColumn = {
+    title: 'Returned Units',
+    dataIndex: 'total_returns_quantity',
+    key: 'total_returns_quantity',
+    width: '200px',
+    sorter: true,
+    filter: true,
 }
 
 export const adGroupColumn = {

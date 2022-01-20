@@ -88,6 +88,16 @@ export const columnList = (location, isParent) => [
         ...renderNumberField()
     },
     {
+        title: 'Returned Units',
+        dataIndex: 'total_returns_quantity',
+        key: 'total_returns_quantity',
+        width: '180px',
+        sorter: true,
+        filter: true,
+        align: 'right',
+        ...renderNumberField()
+    },
+    {
         title: 'Total Units Cleared',
         dataIndex: 'total_ordered_quantity_cleared',
         key: 'total_ordered_quantity_cleared',

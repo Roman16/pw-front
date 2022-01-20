@@ -6,8 +6,9 @@ import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {metricKeys} from "./metricsList"
+import {roundTo} from "../../../ZeroToHero/Payment/Summary"
 
-const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
+const DiffTooltip = ({currentValue, diff, type, prevValue, name, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
 
     return (
@@ -17,11 +18,13 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) =
                 {+prevValue === 0 ? '0' : <RenderMetricValue
                     value={prevValue}
                     type={type}
+                    id={name}
                 />}
                 {`  to  `}
                 <b><RenderMetricValue
                     value={currentValue}
                     type={type}
+                    id={name}
                 /></b>
             </p>
 
@@ -31,6 +34,7 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) =
                 <RenderMetricValue
                     value={diffValue}
                     type={type}
+                    id={name}
                 />
 
                 {`  or  `}
@@ -38,6 +42,7 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) =
                 <RenderMetricValue
                     value={Math.abs(diff)}
                     type={'percent'}
+                    id={name}
                 />)
             </p>}
         </Fragment>
@@ -78,6 +83,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     prevValue={prevValue}
                     diff={diff}
                     type={type}
+                    name={name}
                     percentRow={false}
                 />}>
                 <div className='metric-item__changes'>
@@ -86,7 +92,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, 2)}
+                        ${numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}
                     </div>}
 
                     {(value < prevValue) &&
@@ -94,7 +100,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, 2)}
+                        ${numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}
                     </div>}
 
                     {diffValue === 0 && <div className='down-changes'>
@@ -113,6 +119,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         currentValue={value}
                         prevValue={prevValue}
                         diff={diff}
+                        name={name}
                         type={type}
                     />}>
 
@@ -146,13 +153,17 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
     }
 }
 
-const RenderMetricValue = ({value, type}) => {
+const RenderMetricValue = ({value, type, id}) => {
     if (value != null && !isNaN(value)) {
         const number = +value
         if (type === 'currency') {
-            return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
+            if (id === metricKeys['rpi']) {
+                return `$${numberMask(number, 4)}`
+            } else {
+                return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
+            }
         } else if (type === 'percent') {
-            return (`${round(number * 100, 2)}%`)
+            return (`${round(number * 100, metricKeys['icvr'] ? 4 : 2)}%`)
         } else if (type === 'number') {
             return (numberMask(number))
         } else if (type === 'roas') {
@@ -214,6 +225,7 @@ const MetricItem = ({
 
             <div className="value">
                 <RenderMetricValue
+                    id={key}
                     value={value}
                     type={type}
                 />

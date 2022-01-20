@@ -2,6 +2,7 @@ import api, {baseUrl} from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
+import {metricKeys} from "../pages/Analytics/componentsV2/MainMetrics/metricsList"
 
 export const analyticsServices = {
     fetchTableData,
@@ -59,7 +60,15 @@ const filtersHandler = (f) => {
             parameters.push(`&${filterBy}:contains=${value}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        } else if (filterBy === 'budget_allocation' || filterBy === 'sales_share' || filterBy === 'conversion_rate' || filterBy === 'acos' || filterBy === 'macos' || filterBy === 'ctr' || filterBy === 'ctr') {
+        } else if (filterBy === 'budget_allocation' ||
+            filterBy === 'sales_share' ||
+            filterBy === 'conversion_rate' ||
+            filterBy === 'acos' ||
+            filterBy === 'macos' ||
+            filterBy === 'ctr' ||
+            filterBy === metricKeys['icvr'] ||
+            filterBy === 'ctr'
+        ) {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)

@@ -12,8 +12,9 @@ import {
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
-import {analyticsAvailableMetricsList} from '../../componentsV2/MainMetrics/metricsList'
+import {analyticsAvailableMetricsList, metricKeys} from '../../componentsV2/MainMetrics/metricsList'
 import _ from "lodash"
+import {round} from "../../../../utils/round"
 
 const animationDuration = 1000,
     animationEasing = 'linear',
@@ -58,7 +59,6 @@ const Chart = ({
             return event
         })])
     }, [data])
-
 
     return (
         <div className='main-chart-container'>
@@ -111,6 +111,7 @@ const Chart = ({
                             orientation={!!((index) % 2) ? 'right' : 'left'}
                             stroke={chartColors[index]}
                             axisLine={false}
+                            type="number"
                         />
                     ))}
 
