@@ -33,6 +33,19 @@ export const saveGoogleSpreadsheet = (apiResponse) => {
     XLSX.writeFile(workbook, workbookFilename)
 }
 
+export const saveSpreadsheet = (res) => {
+    // generate XLSX workbook
+    const workbook = XLSX.utils.book_new()
+    res.sheets.forEach(x => {
+        const sheet = XLSX.utils.json_to_sheet(x.jsonData, {skipHeader: true})
+        XLSX.utils.book_append_sheet(workbook, sheet, x.name)
+    })
+
+// save workbook to user file system
+    const workbookFilename = `${res.name}.xlsx`
+    XLSX.writeFile(workbook, workbookFilename)
+}
+
 
 const saveAsExcel = (doc, type) => {
     const staticData = {
