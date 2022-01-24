@@ -15,9 +15,9 @@ const STReportAnalyzer = () => {
     const changeUploadHandler = (name) => ({target: {files}}) => {
         const file = files.item(files.length - 1)
 
-        file && setInputFiles({
+         setInputFiles({
             ...inputFiles,
-            [name]: file
+            [name]: file || undefined
         })
     }
 
@@ -72,7 +72,7 @@ const STReportAnalyzer = () => {
 
         <button
             className="btn default"
-            disabled={processing || !inputFiles.searchTermReport || !inputFiles.advertisedProductReport}
+            disabled={processing || !inputFiles.searchTermReport}
             onClick={submitHandler}
         >
             {processing ? 'Analyzing Search Term Report, please wait...' : 'Analyze'}
