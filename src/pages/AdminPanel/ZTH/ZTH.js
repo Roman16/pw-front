@@ -1,16 +1,16 @@
 import React from "react"
-import {Link, NavLink, Route} from "react-router-dom"
+import {NavLink, Route} from "react-router-dom"
 import {history} from "../../../utils/history"
 import './ZTH.less'
 import ConvertSemanticCore from "./ConvertSemanticCore/ConvertSemanticCore"
 import Jobs from "./Jobs/Jobs"
 import TokenBlock from "./TokenBlock/TokenBlock"
-import {SVG} from "../../../utils/icons"
 import AsinsSorter from "./AsinsSorter/AsinsSorter"
 import Templates from "./Templates/Templates"
 import CreationJobs from "./CreationJobs/CreationJobs"
 import CreateSemanticCore from "./CreateSemanticCore/CreateSemanticCore"
 import WordSorter from "./WordSorter/WordSorter"
+import STReportAnalyzer from "./STReportAnalyzer/STReportAnalyzer"
 
 const ZTH = () => {
     if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
@@ -51,6 +51,10 @@ const ZTH = () => {
                 <NavLink to={`/admin-panel/zth/word-sorter`}>
                     WordSorter
                 </NavLink>
+
+                <NavLink to={`/admin-panel/zth/st-report-analyzer`}>
+                    ST Report Analyzer
+                </NavLink>
             </div>
 
             <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
@@ -60,6 +64,7 @@ const ZTH = () => {
             <Route path="/admin-panel/zth/templates" component={Templates}/>
             <Route path="/admin-panel/zth/creation-jobs" component={CreationJobs}/>
             <Route path="/admin-panel/zth/create" component={CreateSemanticCore}/>
+            <Route path="/admin-panel/zth/st-report-analyzer" component={STReportAnalyzer}/>
         </section>
     )
 }

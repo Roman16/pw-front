@@ -39,7 +39,8 @@ export const adminServices = {
     downloadReport,
     fetchCreateParams,
     fetchReportFileSize,
-    createZTH
+    createZTH,
+    analyzeSTReport
 
 }
 
@@ -242,6 +243,10 @@ function fetchReportFileSize() {
 
 function createZTH(data) {
     return zthRequest('post', `${adminUrls.createSemantic}`, data, 'multipart/form-data')
+}
+
+function analyzeSTReport(data) {
+    return zthRequest('post', `${adminUrls.analyzeReport}`, data, 'multipart/form-data')
 }
 
 //
