@@ -85,20 +85,20 @@ const services = [
         </svg>,
         link: '/analytics/products/regular'
     },
-    {
-        title: 'PPC Audit',
-        key: 'scanner',
-        description: 'Get the in-depth scanning of your PPC campaigns.',
-        icon: () => <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g>
-                <path d="M6 3C6.55228 3 7 2.55228 7 2C7 1.44772 6.55228 1 6 1V3ZM15 13C15 12.4477 14.5523 12 14 12C13.4477 12 13 12.4477 13 13H15ZM13 18H2V20H13V18ZM2 18V3H0V18H2ZM2 3H6V1H2V3ZM13 13V18H15V13H13ZM2 18H2H0C0 19.1046 0.89543 20 2 20V18ZM13 20C14.1046 20 15 19.1046 15 18H13V20ZM2 3V3V1C0.895431 1 0 1.89543 0 3H2Z" fill="#6959AB"/>
-                <path d="M5 10.5C4.44772 10.5 4 10.9477 4 11.5C4 12.0523 4.44772 12.5 5 12.5V10.5ZM10 12.5C10.5523 12.5 11 12.0523 11 11.5C11 10.9477 10.5523 10.5 10 10.5V12.5ZM5 12.5H10V10.5H5V12.5Z" fill="#6959AB"/>
-                <path d="M5 14C4.44772 14 4 14.4477 4 15C4 15.5523 4.44772 16 5 16V14ZM10 16C10.5523 16 11 15.5523 11 15C11 14.4477 10.5523 14 10 14V16ZM5 16H10V14H5V16Z" fill="#6959AB"/>
-                <path d="M15 8.06476C16.0337 7.37283 16.7143 6.19446 16.7143 4.85714C16.7143 2.7269 14.9874 1 12.8571 1C10.7269 1 9 2.7269 9 4.85714C9 6.98738 10.7269 8.71429 12.8571 8.71429C13.6501 8.71429 14.3871 8.47503 15 8.06476ZM15 8.06476L18.4286 13" stroke="#6959AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </g>
-        </svg>,
-        link: '/scanner'
-    },
+    // {
+    //     title: 'PPC Audit',
+    //     key: 'scanner',
+    //     description: 'Get the in-depth scanning of your PPC campaigns.',
+    //     icon: () => <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    //         <g>
+    //             <path d="M6 3C6.55228 3 7 2.55228 7 2C7 1.44772 6.55228 1 6 1V3ZM15 13C15 12.4477 14.5523 12 14 12C13.4477 12 13 12.4477 13 13H15ZM13 18H2V20H13V18ZM2 18V3H0V18H2ZM2 3H6V1H2V3ZM13 13V18H15V13H13ZM2 18H2H0C0 19.1046 0.89543 20 2 20V18ZM13 20C14.1046 20 15 19.1046 15 18H13V20ZM2 3V3V1C0.895431 1 0 1.89543 0 3H2Z" fill="#6959AB"/>
+    //             <path d="M5 10.5C4.44772 10.5 4 10.9477 4 11.5C4 12.0523 4.44772 12.5 5 12.5V10.5ZM10 12.5C10.5523 12.5 11 12.0523 11 11.5C11 10.9477 10.5523 10.5 10 10.5V12.5ZM5 12.5H10V10.5H5V12.5Z" fill="#6959AB"/>
+    //             <path d="M5 14C4.44772 14 4 14.4477 4 15C4 15.5523 4.44772 16 5 16V14ZM10 16C10.5523 16 11 15.5523 11 15C11 14.4477 10.5523 14 10 14V16ZM5 16H10V14H5V16Z" fill="#6959AB"/>
+    //             <path d="M15 8.06476C16.0337 7.37283 16.7143 6.19446 16.7143 4.85714C16.7143 2.7269 14.9874 1 12.8571 1C10.7269 1 9 2.7269 9 4.85714C9 6.98738 10.7269 8.71429 12.8571 8.71429C13.6501 8.71429 14.3871 8.47503 15 8.06476ZM15 8.06476L18.4286 13" stroke="#6959AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    //         </g>
+    //     </svg>,
+    //     link: '/scanner'
+    // },
     {
         title: 'Dayparting',
         key: 'dayparting',
