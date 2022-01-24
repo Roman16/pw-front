@@ -5,22 +5,45 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
 import {analyticsAvailableMetricsList} from "../../componentsV2/MainMetrics/metricsList"
 import {tabs} from "../../componentsV2/MainMetrics/MetricModal"
+import {EmptyData, NoFoundData} from "../../../../components/Table/CustomTable"
 
 const {Search} = Input
 
 const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
     const [visible, setVisible] = useState(false),
         [activeTab, setActiveTab] = useState('all'),
-        [columnsState, setColumnsState] = useState(columns)
+        [columnsState, setColumnsState] = useState(columns),
+        [searchStr, setSearchStr] = useState('')
 
 
     const changeTabHandler = (tab) => {
         setActiveTab(tab)
+        setSearchStr('')
     }
 
     const onSearch = (value) => {
-        // setColumnsState(columns.filter(column => column.title.toLowerCase().includes(value.toLowerCase())))
+        setSearchStr(value)
     }
+
+    const columnsBySearch = columnsState
+        .filter(i => {
+            if (activeTab === 'all') return true
+            else {
+                const column = _.find(analyticsAvailableMetricsList, {key: i.key})
+                return column ? column.tabs.includes(activeTab) : false
+            }
+
+        })
+        .filter(i => {
+            if (searchStr) {
+                const metricName = i.title
+
+                const searchTermWords = searchStr.toLowerCase().split(' ')
+                const metricNameWords = metricName.toLowerCase().split(' ')
+
+                return searchTermWords.every(searchTermWord => metricNameWords.some(metricWord => metricWord.includes(searchTermWord)))
+            } else return true
+        })
 
     return (
         <>
@@ -37,16 +60,21 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
                 className={'order-columns-window'}
                 destroyOnClose={true}
                 visible={visible}
-                onClose={() => setVisible(false)}
+                handleCancel={() => setVisible(false)}
             >
                 <div className="row">
                     <ul className={'tabs'}>
-                        {tabs.map(i => <li
-                            onClick={() => changeTabHandler(i)}
-                            className={activeTab === i && 'active'}
-                        >
-                            {i}
-                        </li>)}
+                        {tabs
+                            .filter(i => i === 'all' || columns.some(column => {
+                                const colDes = _.find(analyticsAvailableMetricsList, {key: column.key})
+                                return colDes ? colDes.tabs.includes(i) : false
+                            }))
+                            .map(i => <li
+                                onClick={() => changeTabHandler(i)}
+                                className={activeTab === i && 'active'}
+                            >
+                                {i}
+                            </li>)}
                     </ul>
 
                     <div className={'col'}>
@@ -60,6 +88,7 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
                             <Search
                                 className="search-field"
                                 placeholder={'Search'}
+                                value={searchStr}
                                 onChange={e => onSearch(e.target.value)}
                                 data-intercom-target='search-field'
                                 suffix={<SVG id={'search'}/>}
@@ -71,15 +100,23 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
                         </div>
 
                         <div className="columns-list">
-                            {columnsState.map(column => (
-                                <Checkbox
-                                    disabled={column.locked}
-                                    checked={!columnsBlackList.find(key => key === column.key)}
-                                    // onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
-                                >
-                                    {column.title}
-                                </Checkbox>
-                            ))}
+                            {columnsBySearch.length === 0 ?
+                                <NoFoundData
+                                    title={'No results found'}
+                                    description={`We can’t find any item matching your search. <br/> Please try adjusting your search.`}
+                                />
+                                :
+                                columnsBySearch.map(column => (
+                                    <Checkbox
+                                        disabled={column.locked}
+                                        checked={!columnsBlackList.find(key => key === column.key)}
+                                        // onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
+                                    >
+                                        {column.title}
+
+                                        <MoveIcon/>
+                                    </Checkbox>
+                                ))}
                         </div>
                     </div>
                 </div>
@@ -101,5 +138,19 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
         </>
     )
 }
+
+const MoveIcon = () => <i>
+    <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <g>
+            <circle cx="5.5" cy="1.5" r="1.5"/>
+            <circle cx="5.5" cy="8.5" r="1.5"/>
+            <circle cx="5.5" cy="15.5" r="1.5"/>
+            <circle cx="12.5" cy="1.5" r="1.5"/>
+            <circle cx="12.5" cy="8.5" r="1.5"/>
+            <circle cx="12.5" cy="15.5" r="1.5"/>
+        </g>
+    </svg>
+</i>
+
 
 export default React.memo(ColumnsSelect)
