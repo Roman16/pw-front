@@ -1581,14 +1581,10 @@
         .item {
           display: flex;
           align-items: center;
+          min-height: 2.142857142857143rem;
           height: 2.142857142857143rem;
           padding: 0 1.4285714285714286rem;
           position: relative;
-
-          &:active {
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-
-          }
 
           &.moved {
             background: rgba(255, 255, 255, 0.7);
@@ -1621,6 +1617,24 @@
               svg {
                 fill: #C4C4C4;
               }
+            }
+          }
+
+          &:active {
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
+            i {
+              svg {
+                fill: #6959AB;
+              }
+            }
+          }
+
+          &.disabled {
+            margin-bottom: 10px;
+
+            &:active {
+              box-shadow: none;
             }
           }
         }

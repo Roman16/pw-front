@@ -10,7 +10,7 @@ import DraggableList from 'react-draggable-list'
 
 const {Search} = Input
 
-const ColumnsSelect = ({columns,columnsOrder, columnsBlackList, onChangeBlackList, onChangeColumnsOrder}) => {
+const ColumnsSelect = ({columns, columnsOrder, columnsBlackList, onChangeBlackList, onChangeColumnsOrder}) => {
     const [visible, setVisible] = useState(false)
 
     const closeHandler = () => {
@@ -83,11 +83,22 @@ const WindowContent = ({columns, columnsOrder, columnsBlackList, onChangeBlackLi
         else setLocalBlackList([...columns.filter(i => !i.locked).map(i => i.key)])
     }
 
+    const setNewOrder = (list) => {
+        setColumnsState([...columns.filter(i => i.locked), ...list])
+    }
+
+    const resetSettings = () => {
+        setLocalBlackList([])
+        setColumnsState([...columns])
+    }
+
     const applyChangesHandler = () => {
         onChangeBlackList(localBlackList)
         onChangeColumnsOrder(columnsState.map(i => i.key))
         onClose()
     }
+
+
 
     const columnsBySearch = columnsState
         .filter(i => {
@@ -163,22 +174,48 @@ const WindowContent = ({columns, columnsOrder, columnsBlackList, onChangeBlackLi
                             description={`We can’t find any item matching your search. <br/> Please try adjusting your search.`}
                         />
                         :
-                        <DraggableList
-                            itemKey="key"
-                            template={props => <ColumnItem {...props}
-                                                           localBlackList={localBlackList}
-                                                           onChange={changeVisibleColumnHandler}/>}
-                            list={columnsBySearch}
-                            onMoveEnd={newOrder => setColumnsState(newOrder)}
-                            container={() => _container.current}
-                        />
+                        searchStr || activeTab !== 'all' ?
+                            columnsBySearch.map(item => <div className={`item disabled`}>
+                                <Checkbox
+                                    disabled={item.locked}
+                                    checked={!localBlackList.find(key => key === item.key)}
+                                    onChange={(e) => changeVisibleColumnHandler(e.target.checked, item.key)}
+                                >
+                                    {item.title}
+                                </Checkbox>
+                            </div>)
+                            :
+                            <>
+                                {columnsBySearch
+                                    .filter(i => i.locked)
+                                    .map(item => <div className={`item disabled`}>
+                                        <Checkbox
+                                            disabled={true}
+                                            checked={true}
+                                        >
+                                            {item.title}
+                                        </Checkbox>
+                                    </div>)}
+
+                                <DraggableList
+                                    disabled={true}
+                                    itemKey="key"
+                                    template={props => <ColumnItem {...props}
+                                                                   localBlackList={localBlackList}
+                                                                   onChange={changeVisibleColumnHandler}/>}
+                                    list={columnsBySearch.filter(i => !i.locked)}
+
+                                    onMoveEnd={setNewOrder}
+                                    container={() => _container.current}
+                                />
+                            </>
                     }
                 </div>
             </div>
         </div>
 
         <div className="actions">
-            <button className="btn transparent">
+            <button className="btn transparent" onClick={resetSettings}>
                 Reset to default
             </button>
 

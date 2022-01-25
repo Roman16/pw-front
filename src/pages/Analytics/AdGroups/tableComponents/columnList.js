@@ -66,7 +66,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
         },
         ...selectedCampaign ? [] : [{
             ...campaignColumn,
-            locked: true,
+            locked: false,
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
                 className={'state-link'}
@@ -79,14 +79,14 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
                 {campaign}
             </Link>)
         }],
-        {...statusColumn, locked: true},
+        {...statusColumn, locked: false},
         {
             title: 'Default bid',
             dataIndex: 'defaultBid',
             key: 'defaultBid',
             width: '130px',
             sorter: true,
-            locked: true,
+            locked: false,
             noTotal: true,
             filter: true,
             fastUpdating: true,
