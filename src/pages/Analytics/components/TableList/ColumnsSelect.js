@@ -1,19 +1,64 @@
-import React, {useState} from "react"
-import {Checkbox, Input, Popover, Spin} from "antd"
+import React, {useRef, useState} from "react"
+import {Checkbox, Input} from "antd"
 import {SVG} from "../../../../utils/icons"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
 import {analyticsAvailableMetricsList} from "../../componentsV2/MainMetrics/metricsList"
 import {tabs} from "../../componentsV2/MainMetrics/MetricModal"
-import {EmptyData, NoFoundData} from "../../../../components/Table/CustomTable"
+import {NoFoundData} from "../../../../components/Table/CustomTable"
+import DraggableList from 'react-draggable-list'
 
 const {Search} = Input
 
-const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
-    const [visible, setVisible] = useState(false),
-        [activeTab, setActiveTab] = useState('all'),
-        [columnsState, setColumnsState] = useState(columns),
-        [searchStr, setSearchStr] = useState('')
+const ColumnsSelect = ({columns,columnsOrder, columnsBlackList, onChangeBlackList, onChangeColumnsOrder}) => {
+    const [visible, setVisible] = useState(false)
+
+    const closeHandler = () => {
+        setVisible(false)
+    }
+
+    return (
+        <>
+            <button className={'columns-select icon-btn'} onClick={() => setVisible(true)}>
+                <i className={'btn icon'}>
+                    <SVG id={'table-columns'}/>
+                </i>
+                columns
+            </button>
+
+            <ModalWindow
+                footer={false}
+                className={'order-columns-window'}
+                destroyOnClose={true}
+                visible={visible}
+                handleCancel={() => setVisible(false)}
+            >
+                <WindowContent
+                    columns={columns}
+                    columnsOrder={columnsOrder}
+                    columnsBlackList={columnsBlackList}
+
+                    onChangeBlackList={onChangeBlackList}
+                    onChangeColumnsOrder={onChangeColumnsOrder}
+
+                    onClose={closeHandler}
+                />
+            </ModalWindow>
+        </>
+    )
+}
+
+
+const WindowContent = ({columns, columnsOrder, columnsBlackList, onChangeBlackList, onChangeColumnsOrder, onClose}) => {
+
+    const [activeTab, setActiveTab] = useState('all'),
+        [columnsState, setColumnsState] = useState([...columnsOrder.map(i => ({
+            ..._.find(columns, {key: i})
+        }))]),
+        [searchStr, setSearchStr] = useState(''),
+        [localBlackList, setLocalBlackList] = useState([...columnsBlackList])
+
+    const _container = useRef(null)
 
 
     const changeTabHandler = (tab) => {
@@ -25,6 +70,25 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
         setSearchStr(value)
     }
 
+    const changeVisibleColumnHandler = (checked, key) => {
+        if (checked) {
+            setLocalBlackList(prevState => [...prevState.filter(i => i !== key)])
+        } else {
+            setLocalBlackList(prevState => [...prevState, key])
+        }
+    }
+
+    const changeAllHandler = (key) => {
+        if (key === 'select') setLocalBlackList([])
+        else setLocalBlackList([...columns.filter(i => !i.locked).map(i => i.key)])
+    }
+
+    const applyChangesHandler = () => {
+        onChangeBlackList(localBlackList)
+        onChangeColumnsOrder(columnsState.map(i => i.key))
+        onClose()
+    }
+
     const columnsBySearch = columnsState
         .filter(i => {
             if (activeTab === 'all') return true
@@ -32,7 +96,6 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
                 const column = _.find(analyticsAvailableMetricsList, {key: i.key})
                 return column ? column.tabs.includes(activeTab) : false
             }
-
         })
         .filter(i => {
             if (searchStr) {
@@ -45,99 +108,114 @@ const ColumnsSelect = ({columns, columnsBlackList, onChangeBlackList}) => {
             } else return true
         })
 
-    return (
-        <>
-            <button className={'columns-select icon-btn'} onClick={() => setVisible(true)}>
-                <i className={'btn icon'}>
-                    <SVG id={'table-columns'}/>
-                </i>
-                columns
+
+    return (<>
+        <div className="row">
+            <ul className={'tabs'}>
+                {tabs
+                    .filter(i => i === 'all' || columns.some(column => {
+                        const colDes = _.find(analyticsAvailableMetricsList, {key: column.key})
+                        return colDes ? colDes.tabs.includes(i) : false
+                    }))
+                    .map(i => <li
+                        onClick={() => changeTabHandler(i)}
+                        className={activeTab === i && 'active'}
+                    >
+                        {i}
+                    </li>)}
+            </ul>
+
+            <div className={'col'}>
+                <h3>Available metrics</h3>
+                <p>
+                    You can reorder metrics using Drag and Drop!
+                    Drag and Drop can only be used in "All" category and without any search filters
+                </p>
+
+                <div className="form-group">
+                    <Search
+                        className="search-field"
+                        placeholder={'Search'}
+                        value={searchStr}
+                        onChange={e => onSearch(e.target.value)}
+                        data-intercom-target='search-field'
+                        suffix={<SVG id={'search'}/>}
+                    />
+
+
+                    {localBlackList.length > 0 ?
+                        <button className="btn transparent" onClick={() => changeAllHandler('select')}>
+                            Select all
+                        </button>
+                        :
+                        <button className="btn transparent" onClick={() => changeAllHandler('deselect')}>
+                            Deselect all
+                        </button>}
+                </div>
+
+                <div
+                    ref={_container}
+                    className="columns-list">
+
+                    {columnsBySearch.length === 0 ?
+                        <NoFoundData
+                            title={'No results found'}
+                            description={`We can’t find any item matching your search. <br/> Please try adjusting your search.`}
+                        />
+                        :
+                        <DraggableList
+                            itemKey="key"
+                            template={props => <ColumnItem {...props}
+                                                           localBlackList={localBlackList}
+                                                           onChange={changeVisibleColumnHandler}/>}
+                            list={columnsBySearch}
+                            onMoveEnd={newOrder => setColumnsState(newOrder)}
+                            container={() => _container.current}
+                        />
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div className="actions">
+            <button className="btn transparent">
+                Reset to default
             </button>
 
+            <button className="btn white" onClick={onClose}>
+                Cancel
+            </button>
 
-            <ModalWindow
-                footer={false}
-                className={'order-columns-window'}
-                destroyOnClose={true}
-                visible={visible}
-                handleCancel={() => setVisible(false)}
-            >
-                <div className="row">
-                    <ul className={'tabs'}>
-                        {tabs
-                            .filter(i => i === 'all' || columns.some(column => {
-                                const colDes = _.find(analyticsAvailableMetricsList, {key: column.key})
-                                return colDes ? colDes.tabs.includes(i) : false
-                            }))
-                            .map(i => <li
-                                onClick={() => changeTabHandler(i)}
-                                className={activeTab === i && 'active'}
-                            >
-                                {i}
-                            </li>)}
-                    </ul>
-
-                    <div className={'col'}>
-                        <h3>Available metrics</h3>
-                        <p>
-                            You can reorder metrics using Drag and Drop!
-                            Drag and Drop can only be used in "All" category and without any search filters
-                        </p>
-
-                        <div className="form-group">
-                            <Search
-                                className="search-field"
-                                placeholder={'Search'}
-                                value={searchStr}
-                                onChange={e => onSearch(e.target.value)}
-                                data-intercom-target='search-field'
-                                suffix={<SVG id={'search'}/>}
-                            />
-
-                            <button className="btn transparent">
-                                Select all
-                            </button>
-                        </div>
-
-                        <div className="columns-list">
-                            {columnsBySearch.length === 0 ?
-                                <NoFoundData
-                                    title={'No results found'}
-                                    description={`We can’t find any item matching your search. <br/> Please try adjusting your search.`}
-                                />
-                                :
-                                columnsBySearch.map(column => (
-                                    <Checkbox
-                                        disabled={column.locked}
-                                        checked={!columnsBlackList.find(key => key === column.key)}
-                                        // onChange={(e) => changeColumnHandler(e.target.checked, column.key)}
-                                    >
-                                        {column.title}
-
-                                        <MoveIcon/>
-                                    </Checkbox>
-                                ))}
-                        </div>
-                    </div>
-                </div>
-
-                <div className="actions">
-                    <button className="btn transparent">
-                        Reset to default
-                    </button>
-
-                    <button className="btn white">
-                        Cancel
-                    </button>
-
-                    <button className="btn default">
-                        Apply
-                    </button>
-                </div>
-            </ModalWindow>
-        </>
-    )
+            <button className="btn default" onClick={applyChangesHandler}>
+                Apply
+            </button>
+        </div>
+    </>)
 }
+
+const ColumnItem = ({item, itemSelected, dragHandleProps, localBlackList, onChange}) => {
+    const scale = itemSelected * 0.05 + 1
+    const dragged = itemSelected !== 0
+
+    return (<div
+        className={`item ${dragged ? 'moved' : ''} `}
+        {...dragHandleProps}
+        style={{
+            transform: `scale(${scale})`,
+        }}>
+
+        <Checkbox
+            disabled={item.locked}
+            checked={!localBlackList.find(key => key === item.key)}
+            onChange={(e) => onChange(e.target.checked, item.key)}
+        >
+            {item.title}
+
+            <MoveIcon/>
+        </Checkbox>
+    </div>)
+}
+
 
 const MoveIcon = () => <i>
     <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
