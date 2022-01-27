@@ -7,7 +7,7 @@ import loaderImg from '../../../assets/img/loader.svg'
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, variations, optimization_indicator_state, scanningStatus},
+                         product: {id, asin, name, sku, image_url, variations, ppc_audit_indicator_state},
                          openedProduct,
 
                          onClick,
@@ -60,8 +60,8 @@ const ProductItem = ({
                     {variations.length > 0 && <SVG id='select-icon'/>}
                 </div>
 
-                {scanningStatus && <div className="status-indicator"><ScanningIndicator
-                    status={scanningStatus}
+                {ppc_audit_indicator_state && <div className="status-indicator"><ScanningIndicator
+                    status={ppc_audit_indicator_state}
                 /></div>}
             </div>
 
@@ -98,28 +98,30 @@ const ProductItem = ({
 }
 
 const ScanningIndicator = ({status}) => {
-    if (status === scanningStatusEnums.PROCESSING) return <InformationTooltip
+    const state = status.state
+
+    if (state === scanningStatusEnums.PROCESSING) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning is in progress'}
     >
         <img src={loaderImg} alt=""/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FINISHED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FINISHED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning complete'}
     >
         <div className="indicator finished"/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FAILED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FAILED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning failed'}
     >
         <div className="indicator failed"/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FAILED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FAILED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning has expired'}

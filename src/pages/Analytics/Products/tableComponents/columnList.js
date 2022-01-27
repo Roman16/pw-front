@@ -60,8 +60,8 @@ export const columnList = (location) => [
     },
     {
         title: 'Returns',
-        dataIndex: 'total_returns_quantity',
-        key: 'total_returns_quantity',
+        dataIndex: 'total_returns_count',
+        key: 'total_returns_count',
         width: '150px',
         sorter: true,
         filter: true,

@@ -22,6 +22,7 @@ export const productsServices = {
     updateProductCogs,
     deleteProductCogs,
     setDefaultVariation,
+    getActualCogs,
 
     startProductOptimization
 }
@@ -142,4 +143,8 @@ function updateCampaignsBlacklist(id, data) {
 
 function setDefaultVariation(data) {
     return api('post', `${productsUrls.defaultVariation}`, data)
+}
+
+function getActualCogs(productId) {
+    return api('get', `${productsUrls.actualCogs}?product_id=${productId}`)
 }

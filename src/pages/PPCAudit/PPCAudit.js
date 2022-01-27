@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import './PPCAudit.less'
 import ProductList from "./ProductList/ProductList"
-import {productsServices} from "../../services/products.services"
 import StartScanning from "./StartScanning/StartScanning"
 import ScanningProcessingStatus from "./ScanningProcessingStatus/ScanningProcessingStatus"
 import ProblemsLevel from "./ProblemsLevel/ProblemsLevel"
@@ -9,24 +8,42 @@ import ProblemsReport from "./ProblemsReport/ProblemsReport"
 import ProblemsType from "./ProblemsType/ProblemsType"
 import ScanningFailed from "./ScanningFailed/ScanningFailed"
 import {history} from "../../utils/history"
+import {ppcAuditServices} from "../../services/ppc.audit.services"
+import {productsServices} from "../../services/products.services"
+import StrategiesDescription from "../PPCAutomate/OptimizationForAdmin/StrategiesDescription/StrategiesDescription"
 
 export const scanningStatusEnums = {
-    PROCESSING: 'processing',
+    PROCESSING: 'PENDING',
+    PROGRESS: 'IN_PROGRESS',
     FINISHED: 'finished',
     FAILED: 'failed',
     EXPIRED: 'expired',
+    STOPPED: 'stopped',
+}
+
+let timeoutId
+
+function getKeyByValue(value) {
+    if (value) {
+        return Object.keys(scanningStatusEnums).find(key => scanningStatusEnums[key] === value)
+    } else return ''
 }
 
 const PPCAudit = () => {
-    const [productsRequestParams, setProductsRequestParams] = useState({
+    const
+        [visibleDrawer, setVisibleDrawer] = useState(false),
+        [productsRequestParams, setProductsRequestParams] = useState({
             page: 1,
             pageSize: 10,
             searchStr: ''
         }),
         [productsFetchProcessing, setProductsFetchProcessing] = useState(true),
         [products, setProducts] = useState([]),
+        [startRequestProcessing, setStartRequestProcessing] = useState(false),
         [productsTotalSize, setProductsTotalSize] = useState(0),
-        [selectedProduct, setSelectedProduct] = useState(),
+        [selectedProduct, setSelectedProduct] = useState({
+            id: undefined
+        }),
         [scanningStatus, setScanningStatus] = useState(''),
         [filters, setFilters] = useState([])
 
@@ -34,20 +51,48 @@ const PPCAudit = () => {
         setProductsFetchProcessing(true)
 
         try {
-            const {result} = await productsServices.getProducts(productsRequestParams)
+            const {result} = await ppcAuditServices.getProducts(productsRequestParams)
 
             setProducts(result.products)
             setProductsTotalSize(result.total_count)
             if (result.products.length > 0) setSelectedProduct(result.products[0])
         } catch (e) {
-
+            console.log(e)
         }
 
         setProductsFetchProcessing(false)
     }
 
+    const getActualCogs = async () => {
+        if (selectedProduct.id) {
+            try {
+                const res = await productsServices.getActualCogs(selectedProduct.id)
+                if (res.result.length === 0) {
+                    setSelectedProduct(prevState => ({...prevState, cogs_value: undefined}))
+                } else {
+                    setSelectedProduct(prevState => ({...prevState, ...res.result}))
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
+
     const changeProductsParamsHandler = (data) => setProductsRequestParams(prevState => ({...prevState, ...data}))
-    const selectProductHandler = product => setSelectedProduct(product)
+    const selectProductHandler = product => {
+        setSelectedProduct(product)
+        clearTimeout(timeoutId)
+
+        if (product.ppc_audit_indicator_state) {
+            if (product.ppc_audit_indicator_state.state === scanningStatusEnums.PROCESSING) {
+                setScanningStatus(scanningStatusEnums.PROCESSING)
+
+                getAuditDetails(product.id)
+            }
+        } else {
+            setScanningStatus(undefined)
+        }
+    }
     const resetScanningStatusHandler = () => {
         setScanningStatus(undefined)
 
@@ -57,44 +102,70 @@ const PPCAudit = () => {
         }))
     }
 
-    const startScanningHandler = async () => {
-        setScanningStatus(scanningStatusEnums.PROCESSING)
+    const startScanningHandler = async (data) => {
+        setStartRequestProcessing(true)
 
-        setProducts(prevState => prevState.map(product => {
-            if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.PROCESSING
-            return product
-        }))
-
-        setTimeout(() => {
-            setScanningStatus(scanningStatusEnums.FINISHED)
+        try {
+            const res = await ppcAuditServices.startScanning({
+                id: selectedProduct.id,
+                ...data
+            })
 
             setProducts(prevState => prevState.map(product => {
-                if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.FINISHED
+                if (product.id === selectedProduct.id) product.ppc_audit_indicator_state = {state: scanningStatusEnums.PROCESSING}
                 return product
             }))
 
-        }, 5000)
 
-        setTimeout(() => {
-            setScanningStatus(scanningStatusEnums.FAILED)
+            setScanningStatus(scanningStatusEnums.PROCESSING)
+        } catch (e) {
+            console.log(e)
+        }
 
-            setProducts(prevState => prevState.map(product => {
-                if (product.id === selectedProduct.id) product.scanningStatus = scanningStatusEnums.FAILED
-                return product
-            }))
-
-        }, 10000)
+        setStartRequestProcessing(false)
     }
 
     const stopScanningHandler = async () => {
-        setScanningStatus('')
 
-        setProducts(prevState => prevState.map(product => {
-            if (product.id === selectedProduct.id) product.scanningStatus = undefined
-            return product
-        }))
+        try {
+            const res = await ppcAuditServices.stopScanning(selectedProduct.id)
+            console.log(res)
+            clearTimeout(timeoutId)
+
+            setProducts(prevState => prevState.map(product => {
+                if (product.id === selectedProduct.id) product.ppc_audit_indicator_state = {state: scanningStatusEnums.STOPPED}
+                return product
+            }))
+
+            setScanningStatus(undefined)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
+    const getAuditIssues = async () => {
+        try {
+            const res = await ppcAuditServices.getAuditIssues(selectedProduct.id)
+            setScanningStatus(scanningStatusEnums.FINISHED)
+            console.log(res)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const getAuditDetails = async (id) => {
+        try {
+            const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id)
+
+            if (ppc_audit_job.status === scanningStatusEnums.PROCESSING || ppc_audit_job.status === scanningStatusEnums.PROGRESS) {
+                timeoutId = setTimeout(() => getAuditDetails(id), 5000)
+            } else {
+                getAuditIssues()
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
     const fixProblemsHandler = () => {
         const searchStr = selectedProduct.sku || selectedProduct.asin || selectedProduct.name
 
@@ -104,6 +175,21 @@ const PPCAudit = () => {
     useEffect(() => {
         getProducts()
     }, [productsRequestParams])
+
+    useEffect(() => {
+        getActualCogs()
+    }, [selectedProduct.id])
+
+    useEffect(() => {
+        // if(selectedProduct.ppc_audit_indicator_state) {
+        //     if ( selectedProduct.ppc_audit_indicator_state.state === scanningStatusEnums.PROCESSING) {
+        //         setScanningStatus(scanningStatusEnums.PROCESSING)
+        //
+        //         getAuditDetails()
+        //     }
+        //
+        // }
+    }, [selectedProduct])
 
     return (
         <div className="scanner-page">
@@ -118,11 +204,15 @@ const PPCAudit = () => {
                 onSelectProduct={selectProductHandler}
             />
 
-            <div className={`page-workspace ${scanningStatus}`}>
+            <div className={`page-workspace ${getKeyByValue(scanningStatus).toLowerCase()}`}>
                 {!scanningStatus &&
                 <StartScanning
-                    onStart={startScanningHandler}
                     product={selectedProduct}
+                    startProcessing={startRequestProcessing}
+
+                    onUpdateCogs={getActualCogs}
+                    onStart={startScanningHandler}
+                    onOpenStrategyDescription={() => setVisibleDrawer(true)}
                 />}
 
                 {(
@@ -160,6 +250,12 @@ const PPCAudit = () => {
                 {scanningStatus === scanningStatusEnums.FAILED && <ScanningFailed
                     onResetStatus={resetScanningStatusHandler}
                 />}
+
+
+                <StrategiesDescription
+                    visible={visibleDrawer}
+                    onClose={() => setVisibleDrawer(false)}
+                />
             </div>
         </div>
     )

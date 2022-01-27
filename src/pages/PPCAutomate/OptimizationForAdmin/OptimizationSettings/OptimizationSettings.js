@@ -11,7 +11,7 @@ import CogsWindow from "./CogsWindow"
 
 const Option = Select.Option
 
-const strategies = [
+export const strategies = [
     {
         name: 'ACoS Targeting',
         key: 'AchieveTargetACoS',

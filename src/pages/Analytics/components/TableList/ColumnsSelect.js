@@ -98,8 +98,6 @@ const WindowContent = ({columns, columnsOrder, columnsBlackList, onChangeBlackLi
         onClose()
     }
 
-
-
     const columnsBySearch = columnsState
         .filter(i => {
             if (activeTab === 'all') return true
