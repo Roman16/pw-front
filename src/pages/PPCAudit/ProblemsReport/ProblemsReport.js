@@ -69,6 +69,7 @@ const ProblemsReport = ({
                             paginationParams,
                             filters,
                             sorterColumn,
+                            requestProcessing,
 
                             scanningStatus,
                             onSetFilters,
@@ -77,6 +78,28 @@ const ProblemsReport = ({
                             onSetSorterColumn
                         }) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
+
+    const changeSorterColumnHandler = (col) => {
+        if (sorterColumn.column === col) {
+            if (sorterColumn.type === 'asc') {
+                onSetSorterColumn({
+                    column: col,
+                    type: 'desc'
+                })
+            } else if (sorterColumn.type === 'desc') {
+                onSetSorterColumn({
+                    column: null,
+                    type: 'asc'
+
+                })
+            }
+        } else {
+            onSetSorterColumn({
+                column: col,
+                type: 'asc'
+            })
+        }
+    }
 
     return (<div className={`problems-report ${processing ? 'processing' : ''}`}>
         <Filters
@@ -90,14 +113,15 @@ const ProblemsReport = ({
 
         <div className="table-block">
             <CustomTable
-                onChangeSorter={onSetSorterColumn}
-                loading={processing}
+                loading={processing || requestProcessing}
                 dataSource={data.issues}
                 sorterColumn={sorterColumn}
                 emptyComponent={<NoTableData/>}
 
                 columns={columns}
-                // rowClassName={(item) => !item.viewed && 'new-report'}
+                rowClassName={(item) => item.severity ? item.severity.toLowerCase() : ''}
+
+                onChangeSorter={changeSorterColumnHandler}
             />
 
             <Pagination
@@ -112,7 +136,7 @@ const ProblemsReport = ({
             />
         </div>
 
-        {processing && <div className="load-data"><img src={loaderImg} alt=""/></div>}
+        {(processing) && <div className="load-data"><img src={loaderImg} alt=""/></div>}
     </div>)
 }
 

@@ -41,7 +41,7 @@ const dateRangeFormatting = (dateRange) => {
     else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-0${offset}:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-0${offset}:00`
 }
 
-const filtersHandler = (f) => {
+export const filtersHandler = (f) => {
     let filters = [...f]
     const parameters = []
 

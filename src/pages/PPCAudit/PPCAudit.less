@@ -5,6 +5,7 @@
   .page-workspace {
     flex: 1;
     display: grid;
+    position: relative;
 
     .scanning-processing-status {
       grid-area: processingStatus;
@@ -27,6 +28,17 @@
       grid-template-columns: 43.3% 1fr;
       grid-template-rows: max-content max-content 1fr;
       grid-gap: 10px;
+    }
+
+    .route-loader {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 11111;
+      background: rgba(105, 89, 171, 0.1);
+      border-radius: 4px;
     }
   }
 

@@ -6,6 +6,7 @@
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden;
 
   .filters {
     min-height: 5.142857142857143rem;
@@ -30,6 +31,10 @@
       width: 26.857142857142858rem;
       height: 2.2857142857142856rem;
       margin: 0 1.4285714285714286rem 0 0;
+
+      svg {
+        stroke: #5B586F;
+      }
     }
 
     .add-filter {
@@ -95,12 +100,8 @@
     .custom-table {
       height: calc(100% - 3.57142857rem);
 
-      .load-data {
-        display: none;
-      }
-
       .table-head {
-        height: 3.5714285714285716rem;
+        min-height: 3.5714285714285716rem;
         border-top: 0.5px solid #C9CBD4;
         border-bottom: 2px solid #C9CBD4;
         align-items: inherit;
@@ -125,6 +126,7 @@
       .table-body {
         .table-body__row {
           min-height: 3.5714285714285716rem;
+          position: relative;
 
           .table-body__field {
             padding: 5px 0.8571428571428571rem;
@@ -139,6 +141,35 @@
               justify-content: flex-start;
             }
           }
+
+          &::before {
+            content: '';
+            width: 0.2857142857142857rem;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+          }
+
+
+          &.critical {
+            &::before {
+              background: #FF5256;
+            }
+          }
+
+          &.major {
+            &::before {
+              background: #FFAF52;
+            }
+          }
+
+          &.minor {
+            &::before {
+              background: #C9CBD4;
+            }
+          }
+
         }
 
         .no-data {
@@ -209,6 +240,14 @@
       .th {
         .title {
           color: #C9CBD4;
+        }
+      }
+    }
+
+    .table-block {
+      .custom-table {
+        .load-data {
+          display: none;
         }
       }
     }

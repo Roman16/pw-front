@@ -41,6 +41,7 @@ const PPCAudit = () => {
         [products, setProducts] = useState([]),
         [startRequestProcessing, setStartRequestProcessing] = useState(false),
         [stopRequestProcessing, setStopRequestProcessing] = useState(false),
+        [getIssuesProcessing, setGetIssuesProcessing] = useState(false),
         [productsTotalSize, setProductsTotalSize] = useState(0),
         [selectedProduct, setSelectedProduct] = useState({
             id: undefined
@@ -53,7 +54,10 @@ const PPCAudit = () => {
             page: 1,
             pageSize: 10
         }),
-        [sorterColumn, setSorterColumn] = useState(),
+        [sorterColumn, setSorterColumn] = useState({
+            column: undefined,
+            type: undefined
+        }),
         [auditIssues, setAuditIssues] = useState({
             issues: [],
         })
@@ -92,14 +96,29 @@ const PPCAudit = () => {
     const changeProductsParamsHandler = (data) => setProductsRequestParams(prevState => ({...prevState, ...data}))
 
     const selectProductHandler = product => {
+        if (product.ppc_audit_indicator_state) {
+            const state = product.ppc_audit_indicator_state.state
+
+            if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS || state === scanningStatusEnums.FINISHED || state === scanningStatusEnums.EXPIRED) {
+                setScanningStatus(scanningStatusEnums.PROCESSING)
+            } else if (state === scanningStatusEnums.FAILED) {
+                setScanningStatus(scanningStatusEnums.FAILED)
+
+            }
+        } else setScanningStatus(undefined)
+
         setSelectedProduct(product)
         setAuditIssues({issues: []})
-        setSorterColumn(undefined)
+        setSorterColumn({
+            column: undefined,
+            type: 'asc'
+        })
         setFilters([])
 
         clearTimeout(timeoutId)
 
         getAuditDetails(product.id)
+
     }
 
     const resetScanningStatusHandler = () => {
@@ -115,7 +134,7 @@ const PPCAudit = () => {
         setStartRequestProcessing(true)
 
         try {
-            const res = await ppcAuditServices.startScanning({
+            await ppcAuditServices.startScanning({
                 id: selectedProduct.id,
                 ...data
             })
@@ -125,6 +144,7 @@ const PPCAudit = () => {
                 return product
             }))
 
+            getAuditDetails()
 
             setScanningStatus(scanningStatusEnums.PROCESSING)
         } catch (e) {
@@ -155,11 +175,14 @@ const PPCAudit = () => {
     }
 
     const getAuditIssues = async (id) => {
+        setGetIssuesProcessing(true)
+
         try {
             const res = await ppcAuditServices.getAuditIssues({
                 id: id || selectedProduct.id,
                 ...issuesRequestParams,
-                sorterColumn
+                sorterColumn,
+                filters,
             })
 
             setAuditIssues(res.result)
@@ -168,6 +191,7 @@ const PPCAudit = () => {
         } catch (e) {
             console.log(e)
         }
+        setGetIssuesProcessing(false)
     }
 
     const getAuditDetails = async (id) => {
@@ -183,7 +207,7 @@ const PPCAudit = () => {
             if (ppc_audit_job.status === scanningStatusEnums.PROCESSING || ppc_audit_job.status === scanningStatusEnums.PROGRESS) {
                 setScanningStatus(scanningStatusEnums.PROCESSING)
                 timeoutId = setTimeout(() => getAuditDetails(id), 5000)
-            } else if (ppc_audit_job.status === scanningStatusEnums.FINISHED) {
+            } else if (ppc_audit_job.status === scanningStatusEnums.FINISHED || ppc_audit_job.status === scanningStatusEnums.EXPIRED) {
                 setScanningStatus(scanningStatusEnums.PROCESSING)
 
                 setSelectedProduct(prevState => ({
@@ -220,6 +244,7 @@ const PPCAudit = () => {
     useEffect(() => {
         scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
     }, [filters, sorterColumn, issuesRequestParams])
+
 
     return (
         <div className="scanner-page">
@@ -278,6 +303,7 @@ const PPCAudit = () => {
                         data={auditIssues}
                         paginationParams={issuesRequestParams}
                         sorterColumn={sorterColumn}
+                        requestProcessing={getIssuesProcessing}
 
                         onSetFilters={setFilters}
                         onSetSorterColumn={setSorterColumn}

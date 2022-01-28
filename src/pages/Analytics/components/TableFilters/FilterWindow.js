@@ -257,15 +257,15 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Archived', key: 'archived', value: 'archived'},
         ],
         'severity': [
-            {title: 'Critical', key: 'critical', value: 'critical'},
-            {title: 'Major', key: 'major', value: 'major'},
-            {title: 'Minor', key: 'minor', value: 'minor'},
+            {title: 'Critical', key: 'Critical', value: 'Critical'},
+            {title: 'Major', key: 'Major', value: 'Major'},
+            {title: 'Minor', key: 'Minor', value: 'Minor'},
         ],
         'group': [
-            {title: 'Critical', key: 'PoorPerformingTargetings', value: 'PoorPerformingTargetings'},
-            {title: 'Major', key: 'DuplicateTargetings', value: 'DuplicateTargetings'},
-            {title: 'Minor', key: 'PoorSemanticCore', value: 'PoorSemanticCore'},
-            {title: 'Minor', key: 'TargetingsHarvesting', value: 'TargetingsHarvesting'},
+            {title: 'Poor Performing Targetings', key: 'PoorPerformingTargetings', value: 'PoorPerformingTargetings'},
+            {title: 'Duplicate Targetings', key: 'DuplicateTargetings', value: 'DuplicateTargetings'},
+            {title: 'Poor Semantic Core', key: 'PoorSemanticCore', value: 'PoorSemanticCore'},
+            {title: 'Targetings Harvesting', key: 'TargetingsHarvesting', value: 'TargetingsHarvesting'},
         ],
         'calculatedTargetingMatchType': [
             ...locationKey === 'targetings' ? [

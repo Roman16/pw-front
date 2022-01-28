@@ -2,36 +2,58 @@ import React from "react"
 import './ProblemsLevel.less'
 import {scanningStatusEnums} from "../PPCAudit"
 import loaderImg from "../../../assets/img/loader.svg"
+import _ from 'lodash'
 
 const problems = [
     {
         key: 'critical_severity_issues_count',
-        title: 'Critical problems'
+        title: 'Critical problems',
+        filterKey: 'Critical'
     },
     {
         key: 'major_severity_issues_count',
-        title: 'Major problems'
+        title: 'Major problems',
+        filterKey: 'Major'
     },
     {
         key: 'minor_severity_issues_count',
-        title: 'Minor problems'
+        title: 'Minor problems',
+        filterKey: 'Minor'
     },
 ]
 
-const ProblemsLevel = ({scanningStatus,product, filters, onSetFilters}) => {
+const ProblemsLevel = ({scanningStatus, product, filters, onSetFilters}) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
 
+    const currentFilter = _.find(filters, {filterBy: 'severity'})
+
     const addFilterHandler = (title, key) => {
-        onSetFilters([...filters, {
-            filterBy: 'problemLevel',
-            type: {key: 'except'},
-            value: key,
-        }])
+        if (currentFilter) {
+            onSetFilters([...filters.map((filter) => {
+                    if (filter.filterBy === 'severity') filter = {
+                        ...filter,
+                        value: [...filter.value, _.find(problems, {key: key}).filterKey]
+                    }
+
+                    return filter
+                }),
+            ])
+        } else {
+            onSetFilters([
+                ...filters,
+                {
+                    filterBy: 'severity',
+                    type: {label: 'Is one of', key: 'one_of'},
+                    value: [_.find(problems, {key: key}).filterKey],
+                }
+            ])
+        }
     }
 
     return (<ul className={`problems-count ${processing ? 'processing' : ''}`}>
         {problems.map(i => <li key={i.key}>
-            {!processing && <FilterButton onClick={() => addFilterHandler(i.title, i.key)}/>}
+            {!processing && !(currentFilter && currentFilter.value.includes(i.filterKey)) &&
+            <FilterButton onClick={() => addFilterHandler(i.title, i.key)}/>}
             <p>{i.title}:</p>
             <h3>{processing ? <img src={loaderImg} alt=""/> : product[i.key]}</h3>
         </li>)}

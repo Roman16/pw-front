@@ -63,9 +63,13 @@ export const valueTile = {
     'Product Collection': 'Product Collection',
     'Video': 'Video',
 //
-    'critical':'Critical',
-    'major': 'Major',
-    'minor': 'Minor'
+    'Critical':'Critical',
+    'Major': 'Major',
+    'Minor': 'Minor',
+    'PoorPerformingTargetings': 'Poor Performing Targetings',
+    'DuplicateTargetings': 'Duplicate Targetings',
+    'PoorSemanticCore': 'Poor Semantic Core',
+    'TargetingsHarvesting': 'Targetings Harvesting',
 }
 
 const numberMark = {
@@ -151,7 +155,8 @@ const columnTitle = {
     [metricKeys['bidCPC']]: 'Bid - CPC',
     [metricKeys['organicUnits']]: 'Organic Units',
 
-    'severity': 'Severity'
+    'severity': 'Severity',
+    'group': 'Group',
 }
 
 

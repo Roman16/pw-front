@@ -50,7 +50,7 @@ const Filters = ({
                 </div>
 
                 {/*<div className="active-only">*/}
-                {/*    <label htmlFor="">Scanned only</label>*/}
+                {/*    <label htmlFor="">Audited only</label>*/}
                 {/*    <Switch*/}
                 {/*        // checked={onlyOptimization}*/}
                 {/*        // onChange={onShowOnlyOnOptimization}*/}

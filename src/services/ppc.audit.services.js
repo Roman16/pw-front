@@ -1,5 +1,6 @@
 import api from "./request"
 import {ppcAuditUrls} from "../constans/api.urls"
+import {filtersHandler} from "./analytics.services"
 
 export const ppcAuditServices = {
     getProducts,
@@ -13,8 +14,8 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization,  cancelT
     return api('get', `${ppcAuditUrls.products}?search_query=${searchStr}&page=${page}&size=${pageSize}&only_under_optimization=${onlyOptimization ? 1 : 0}`, null, null, cancelToken)
 }
 
-function getAuditIssues({id, page, pageSize, sorterColumn}) {
-    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}`)
+function getAuditIssues({id, page, pageSize, sorterColumn, filters}) {
+    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
 }
 
 function getAuditDetails(id) {
