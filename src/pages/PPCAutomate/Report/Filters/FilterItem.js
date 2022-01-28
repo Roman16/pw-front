@@ -61,7 +61,11 @@ export const valueTile = {
     'Audiences': 'Audiences',
     'Product Targeting': 'Product Targeting',
     'Product Collection': 'Product Collection',
-    'Video': 'Video'
+    'Video': 'Video',
+//
+    'critical':'Critical',
+    'major': 'Major',
+    'minor': 'Minor'
 }
 
 const numberMark = {
@@ -146,6 +150,8 @@ const columnTitle = {
     [metricKeys['cpm']]: 'CPM',
     [metricKeys['bidCPC']]: 'Bid - CPC',
     [metricKeys['organicUnits']]: 'Organic Units',
+
+    'severity': 'Severity'
 }
 
 

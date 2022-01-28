@@ -187,6 +187,8 @@ const containsVariations = {
     [metricKeys['organicUnits']]: numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'severity': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'group': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'state': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'bidding_strategy': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'object_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -253,6 +255,17 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Enabled', key: 'enabled', value: 'enabled'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'severity': [
+            {title: 'Critical', key: 'critical', value: 'critical'},
+            {title: 'Major', key: 'major', value: 'major'},
+            {title: 'Minor', key: 'minor', value: 'minor'},
+        ],
+        'group': [
+            {title: 'Critical', key: 'PoorPerformingTargetings', value: 'PoorPerformingTargetings'},
+            {title: 'Major', key: 'DuplicateTargetings', value: 'DuplicateTargetings'},
+            {title: 'Minor', key: 'PoorSemanticCore', value: 'PoorSemanticCore'},
+            {title: 'Minor', key: 'TargetingsHarvesting', value: 'TargetingsHarvesting'},
         ],
         'calculatedTargetingMatchType': [
             ...locationKey === 'targetings' ? [

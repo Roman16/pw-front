@@ -100,7 +100,7 @@ const ProductItem = ({
 const ScanningIndicator = ({status}) => {
     const state = status.state
 
-    if (state === scanningStatusEnums.PROCESSING) return <InformationTooltip
+    if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning is in progress'}

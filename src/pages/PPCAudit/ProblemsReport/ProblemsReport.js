@@ -5,6 +5,7 @@ import CustomTable from "../../../components/Table/CustomTable"
 import {scanningStatusEnums} from "../PPCAudit"
 import loaderImg from "../../../assets/img/loader.svg"
 import {history} from "../../../utils/history"
+import Pagination from "../../../components/Pagination/Pagination"
 
 const columns = [
     {
@@ -25,39 +26,50 @@ const columns = [
         title: 'Type',
         dataIndex: 'type',
         key: 'type',
-        filter: true,
-        sorter: true,
+        // filter: true,
+        // sorter: true,
     },
     {
         title: 'Object',
         dataIndex: 'object',
         key: 'object',
-        filter: true,
-        sorter: true,
+        // filter: true,
+        // sorter: true,
     },
     {
         title: 'Object Type',
         dataIndex: 'object_type',
         key: 'object_type',
-        filter: true,
-        sorter: true,
+        // filter: true,
+        // sorter: true,
     },
     {
         title: 'Issue',
         dataIndex: 'issue',
         key: 'issue',
-        filter: true,
-        sorter: true,
+        // filter: true,
+        // sorter: true,
     },
     {
         title: 'Reason',
-        dataIndex: 'reason',
-        key: 'reason',
+        dataIndex: 'issue_explain',
+        key: 'issue_explain',
     },
 
 ]
 
-const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters, fixProblemsHandler}) => {
+const ProblemsReport = ({
+                            data,
+                            paginationParams,
+                            filters,
+                            sorterColumn,
+
+                            scanningStatus,
+                            onSetFilters,
+                            fixProblemsHandler,
+                            onChangePagination,
+                            onSetSorterColumn
+                        }) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
 
     return (<div className={`problems-report ${processing ? 'processing' : ''}`}>
@@ -72,14 +84,25 @@ const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters, fixPro
 
         <div className="table-block">
             <CustomTable
-                // onChangeSorter={sortChangeHandler}
+                onChangeSorter={onSetSorterColumn}
                 loading={processing}
-                dataSource={[]}
-                // sorterColumn={sorterColumn}
+                dataSource={data.issues}
+                sorterColumn={sorterColumn}
                 emptyComponent={<NoTableData/>}
 
                 columns={columns}
-                rowClassName={(item) => !item.viewed && 'new-report'}
+                // rowClassName={(item) => !item.viewed && 'new-report'}
+            />
+
+            <Pagination
+                onChange={onChangePagination}
+                page={paginationParams.page}
+                pageSizeOptions={[10, 25, 50]}
+                pageSize={paginationParams.pageSize}
+                totalSize={data.total_count}
+                listLength={data.issues}
+                processing={processing}
+                disabled={processing}
             />
         </div>
 

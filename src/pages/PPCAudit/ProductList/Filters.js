@@ -19,7 +19,7 @@ const Filters = ({
 
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
-            onSearch(value)
+            onSearch({searchStr: value})
         }, 500)
     }
 

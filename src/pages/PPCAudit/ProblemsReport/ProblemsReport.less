@@ -91,6 +91,8 @@
     flex: 1;
 
     .custom-table {
+      height: calc(100% - 3.57142857rem);
+
       .load-data {
         display: none;
       }
@@ -129,6 +131,16 @@
       }
 
     }
+
+    .pw-pagination {
+      padding: 0 1.4285714285714286rem;
+
+      &.disabled {
+        svg {
+          stroke: #C9CBD4 !important;
+        }
+      }
+    }
   }
 
   .load-data {
@@ -140,7 +152,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 11;
+    z-index: 1111;
 
     img {
       width: 2.857142857142857rem;

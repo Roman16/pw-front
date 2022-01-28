@@ -5,35 +5,35 @@ import loaderImg from "../../../assets/img/loader.svg"
 
 const problems = [
     {
-        key: 'poor_performing_keywords',
+        key: 'critical_severity_issues_count',
         title: 'Critical problems'
     },
     {
-        key: 'poor_performing_keywords',
+        key: 'major_severity_issues_count',
         title: 'Major problems'
     },
     {
-        key: 'poor_performing_keywords',
+        key: 'minor_severity_issues_count',
         title: 'Minor problems'
     },
 ]
 
-const ProblemsLevel = ({scanningStatus, filters, onSetFilters}) => {
+const ProblemsLevel = ({scanningStatus,product, filters, onSetFilters}) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
 
-    const addFilterHandler = (filter) => {
+    const addFilterHandler = (title, key) => {
         onSetFilters([...filters, {
             filterBy: 'problemLevel',
             type: {key: 'except'},
-            value: filter,
+            value: key,
         }])
     }
 
     return (<ul className={`problems-count ${processing ? 'processing' : ''}`}>
         {problems.map(i => <li key={i.key}>
-            {!processing && <FilterButton onClick={() => addFilterHandler(i.title)}/>}
+            {!processing && <FilterButton onClick={() => addFilterHandler(i.title, i.key)}/>}
             <p>{i.title}:</p>
-            <h3>{processing ? <img src={loaderImg} alt=""/> : '100'}</h3>
+            <h3>{processing ? <img src={loaderImg} alt=""/> : product[i.key]}</h3>
         </li>)}
     </ul>)
 }
