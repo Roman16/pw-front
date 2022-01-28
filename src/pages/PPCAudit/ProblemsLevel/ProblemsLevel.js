@@ -28,26 +28,13 @@ const ProblemsLevel = ({scanningStatus, product, filters, onSetFilters}) => {
     const currentFilter = _.find(filters, {filterBy: 'severity'})
 
     const addFilterHandler = (title, key) => {
-        if (currentFilter) {
-            onSetFilters([...filters.map((filter) => {
-                    if (filter.filterBy === 'severity') filter = {
-                        ...filter,
-                        value: [...filter.value, _.find(problems, {key: key}).filterKey]
-                    }
-
-                    return filter
-                }),
-            ])
-        } else {
-            onSetFilters([
-                ...filters,
-                {
-                    filterBy: 'severity',
-                    type: {label: 'Is one of', key: 'one_of'},
-                    value: [_.find(problems, {key: key}).filterKey],
-                }
-            ])
-        }
+        onSetFilters([
+            {
+                filterBy: 'severity',
+                type: {label: 'Is one of', key: 'one_of'},
+                value: [_.find(problems, {key: key}).filterKey],
+            }
+        ])
     }
 
     return (<ul className={`problems-count ${processing ? 'processing' : ''}`}>

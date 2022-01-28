@@ -126,7 +126,7 @@ const ScanningIndicator = ({status}) => {
         position={'bottomRight'}
         description={'Scanning has expired'}
     >
-        <div className="indicator expired"/>
+        <div className="indicator complete"/>
     </InformationTooltip>
     else if (state === scanningStatusEnums.STOPPED) return <InformationTooltip
         type={'custom'}

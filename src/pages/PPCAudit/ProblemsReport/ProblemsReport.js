@@ -131,17 +131,18 @@ const ProblemsReport = ({
 
                 onChangeSorter={changeSorterColumnHandler}
             />
-
             <Pagination
-                onChange={onChangePagination}
                 page={paginationParams.page}
-                pageSizeOptions={[10, 25, 50]}
+                pageSizeOptions={[10, 30, 50]}
                 pageSize={paginationParams.pageSize}
-                totalSize={data.total_count}
-                listLength={data.issues.length}
-                processing={processing}
+                totalSize={+data.total_count}
+                listLength={data.issues && data.issues.length}
+                processing={processing || requestProcessing}
                 disabled={processing}
+
+                onChange={onChangePagination}
             />
+
         </div>
 
         {(processing) && <div className="load-data"><img src={loaderImg} alt=""/></div>}

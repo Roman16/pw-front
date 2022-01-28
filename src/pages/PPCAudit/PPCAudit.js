@@ -55,8 +55,8 @@ const PPCAudit = () => {
             pageSize: 10
         }),
         [sorterColumn, setSorterColumn] = useState({
-            column: undefined,
-            type: undefined
+            column: 'severity',
+            type: 'asc'
         }),
         [auditIssues, setAuditIssues] = useState({
             issues: [],
@@ -65,10 +65,14 @@ const PPCAudit = () => {
     const resetIssuesSettings = () => {
         setAuditIssues({issues: []})
         setSorterColumn({
-            column: undefined,
+            column: 'severity',
             type: 'asc'
         })
         setFilters([])
+        setIssuesRequestParams({
+            page: 1,
+            pageSize: 10
+        })
     }
 
     const getProducts = async () => {
@@ -198,6 +202,11 @@ const PPCAudit = () => {
             setAuditIssues(res.result)
 
             setScanningStatus(scanningStatusEnums.FINISHED)
+
+            setProducts(prevState => prevState.map(product => {
+                if (product.id === (id || selectedProduct.id)) product.ppc_audit_indicator_state = {state: scanningStatusEnums.FINISHED}
+                return product
+            }))
         } catch (e) {
             console.log(e)
         }
@@ -213,7 +222,6 @@ const PPCAudit = () => {
                 return product
             }))
 
-
             if (ppc_audit_job.status === scanningStatusEnums.PROCESSING || ppc_audit_job.status === scanningStatusEnums.PROGRESS) {
                 setScanningStatus(scanningStatusEnums.PROCESSING)
                 timeoutId = setTimeout(() => getAuditDetails(id), 5000)
@@ -226,9 +234,14 @@ const PPCAudit = () => {
                     id: ppc_audit_job.product_id
                 }))
 
-                getAuditIssues(ppc_audit_job.product_id)
+                getAuditIssues(id)
             } else if (ppc_audit_job.status === scanningStatusEnums.FAILED) {
                 setScanningStatus(scanningStatusEnums.FAILED)
+
+                setProducts(prevState => prevState.map(product => {
+                    if (product.id === id) product.ppc_audit_indicator_state = {state: scanningStatusEnums.FAILED}
+                    return product
+                }))
             } else {
                 setScanningStatus(undefined)
             }
@@ -242,6 +255,16 @@ const PPCAudit = () => {
         const searchStr = selectedProduct.sku || selectedProduct.asin || selectedProduct.name
 
         history.push(`/ppc/automation?searchStr=${searchStr}`)
+    }
+
+
+    const addFiltersHandler = (filters) => {
+            setIssuesRequestParams(prevState => ({
+                ...prevState,
+                page: 1
+            }))
+
+            setFilters(filters)
     }
 
     useEffect(() => {
@@ -302,7 +325,7 @@ const PPCAudit = () => {
                         scanningStatus={scanningStatus}
                         filters={filters}
 
-                        onSetFilters={setFilters}
+                        onSetFilters={addFiltersHandler}
                     />
 
                     <ProblemsType
@@ -319,13 +342,7 @@ const PPCAudit = () => {
                         sorterColumn={sorterColumn}
                         requestProcessing={getIssuesProcessing}
 
-                        onSetFilters={(filters) => {
-                            setIssuesRequestParams(prevState => ({
-                                ...prevState,
-                                page: 1
-                            }))
-                            setFilters(filters)
-                        }}
+                        onSetFilters={addFiltersHandler}
                         onSetSorterColumn={(data) => {
                             setIssuesRequestParams(prevState => ({
                                 ...prevState,
