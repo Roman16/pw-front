@@ -6,6 +6,8 @@ import {scanningStatusEnums} from "../PPCAudit"
 import loaderImg from "../../../assets/img/loader.svg"
 import {history} from "../../../utils/history"
 import Pagination from "../../../components/Pagination/Pagination"
+import {issuesTypeEnums} from "../../PPCAutomate/Report/Filters/FilterItem"
+import _ from 'lodash'
 
 const columns = [
     {
@@ -14,6 +16,7 @@ const columns = [
         key: 'severity',
         filter: true,
         sorter: true,
+        minWidth: '150px',
     },
     {
         title: 'Group',
@@ -21,6 +24,7 @@ const columns = [
         key: 'group',
         filter: true,
         sorter: true,
+        minWidth: '150px',
         render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -29,7 +33,8 @@ const columns = [
         key: 'issueType',
         filter: true,
         sorter: true,
-        render: (text, item) => item.type ? item.type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
+        minWidth: '150px',
+        render: (text, item) => item.type ? _.find(issuesTypeEnums, {key: item.type}) ? _.find(issuesTypeEnums, {key: item.type}).title : item.type : ''
     },
     {
         title: 'Object',
@@ -37,6 +42,7 @@ const columns = [
         key: 'object',
         filter: true,
         sorter: true,
+        minWidth: '200px',
         render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -45,6 +51,7 @@ const columns = [
         key: 'issueObjectType',
         filter: true,
         sorter: true,
+        minWidth: '150px',
         render: (text, item) => item.object_type ? item.object_type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -53,12 +60,14 @@ const columns = [
         key: 'issue',
         // filter: true,
         // sorter: true,
+        minWidth: '150px',
         render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
     },
     {
         title: 'Reason',
         dataIndex: 'issue_explain',
         key: 'issue_explain',
+        minWidth: '150px',
         render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
     },
 
