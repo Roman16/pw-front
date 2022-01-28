@@ -63,13 +63,20 @@ export const valueTile = {
     'Product Collection': 'Product Collection',
     'Video': 'Video',
 //
-    'Critical':'Critical',
+    'Critical': 'Critical',
     'Major': 'Major',
     'Minor': 'Minor',
     'PoorPerformingTargetings': 'Poor Performing Targetings',
     'DuplicateTargetings': 'Duplicate Targetings',
     'PoorSemanticCore': 'Poor Semantic Core',
     'TargetingsHarvesting': 'Targetings Harvesting',
+    'AllCampaigns': 'All Campaigns',
+    'Campaign': 'Campaign',
+    'AdGroup': 'Ad Group',
+    'ProductAd': 'Product Ad',
+    'Keyword': 'Keyword',
+    'ProductTargeting': 'Product Targeting',
+    'CustomerSearchTerm': 'Customer Search Term',
 }
 
 const numberMark = {
@@ -157,6 +164,7 @@ const columnTitle = {
 
     'severity': 'Severity',
     'group': 'Group',
+    'issueObjectType': 'Object Type'
 }
 
 

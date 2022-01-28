@@ -10,12 +10,20 @@ export const ppcAuditServices = {
     stopScanning,
 }
 
-function getProducts({pageSize, page, searchStr = '', onlyOptimization,  cancelToken}) {
+const columnsKey = {
+    issueObjectType: 'object_type',
+    issueType: 'type',
+}
+
+function getProducts({pageSize, page, searchStr = '', onlyOptimization, cancelToken}) {
     return api('get', `${ppcAuditUrls.products}?search_query=${searchStr}&page=${page}&size=${pageSize}&only_under_optimization=${onlyOptimization ? 1 : 0}`, null, null, cancelToken)
 }
 
 function getAuditIssues({id, page, pageSize, sorterColumn, filters}) {
-    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters)}`)
+    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler(filters.map(filter => {
+        if (columnsKey[filter.filterBy]) filter.filterBy = columnsKey[filter.filterBy]
+        return filter
+    }))}`)
 }
 
 function getAuditDetails(id) {

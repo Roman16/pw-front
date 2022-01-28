@@ -4,28 +4,20 @@ import {scanningStatusEnums} from "../PPCAudit"
 
 const problems = [
     {
-        key: '',
-        title: 'Poor Performing Keywords:'
+        key: 'poor_performing_targetings_issues_count',
+        title: 'Poor Performing Targetings:'
     },
     {
-        key: '',
-        title: 'Poor Performing PATs:'
-    },
-    {
-        key: '',
-        title: 'No Keywords:'
-    },
-    {
-        key: '',
-        title: 'No PATs:'
+        key: 'duplicate_targetings_issues_count',
+        title: 'Duplicate Targetings:'
     },
     {
         key: 'poor_semantic_core_issues_count',
         title: 'Poor Semantic Core:'
     },
     {
-        key: '',
-        title: 'No Black Box:'
+        key: 'targetings_harvesting_issues_count',
+        title: 'Targetings Harvesting:'
     },
 ]
 

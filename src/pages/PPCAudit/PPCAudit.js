@@ -62,6 +62,15 @@ const PPCAudit = () => {
             issues: [],
         })
 
+    const resetIssuesSettings = () => {
+        setAuditIssues({issues: []})
+        setSorterColumn({
+            column: undefined,
+            type: 'asc'
+        })
+        setFilters([])
+    }
+
     const getProducts = async () => {
         setProductsFetchProcessing(true)
 
@@ -108,12 +117,8 @@ const PPCAudit = () => {
         } else setScanningStatus(undefined)
 
         setSelectedProduct(product)
-        setAuditIssues({issues: []})
-        setSorterColumn({
-            column: undefined,
-            type: 'asc'
-        })
-        setFilters([])
+
+        resetIssuesSettings()
 
         clearTimeout(timeoutId)
 
@@ -139,14 +144,17 @@ const PPCAudit = () => {
                 ...data
             })
 
+            setScanningStatus(scanningStatusEnums.PROCESSING)
+
             setProducts(prevState => prevState.map(product => {
                 if (product.id === selectedProduct.id) product.ppc_audit_indicator_state = {state: scanningStatusEnums.PROCESSING}
                 return product
             }))
 
+            resetIssuesSettings()
+
             getAuditDetails()
 
-            setScanningStatus(scanningStatusEnums.PROCESSING)
         } catch (e) {
             console.log(e)
         }
@@ -196,7 +204,7 @@ const PPCAudit = () => {
 
     const getAuditDetails = async (id) => {
         try {
-            const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id)
+            const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id || selectedProduct.id)
 
             setProducts(prevState => prevState.map(product => {
                 if (product.id === id) product.ppc_audit_indicator_state = {state: ppc_audit_job.status}
@@ -227,6 +235,7 @@ const PPCAudit = () => {
             console.log(e)
         }
     }
+
     const fixProblemsHandler = () => {
         const searchStr = selectedProduct.sku || selectedProduct.asin || selectedProduct.name
 
@@ -281,6 +290,9 @@ const PPCAudit = () => {
 
                         onStop={stopScanningHandler}
                         onStart={startScanningHandler}
+                        onUpdateCogs={getActualCogs}
+                        onOpenStrategyDescription={() => setVisibleDrawer(true)}
+
                     />
 
                     <ProblemsLevel

@@ -25,27 +25,27 @@ const columns = [
     },
     {
         title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        // filter: true,
-        // sorter: true,
-        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
+        dataIndex: 'issueType',
+        key: 'issueType',
+        filter: true,
+        sorter: true,
+        render: (text, item) => item.type ? item.type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Object',
         dataIndex: 'object',
         key: 'object',
-        // filter: true,
-        // sorter: true,
+        filter: true,
+        sorter: true,
         render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Object Type',
-        dataIndex: 'object_type',
-        key: 'object_type',
-        // filter: true,
-        // sorter: true,
-        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
+        dataIndex: 'issueObjectType',
+        key: 'issueObjectType',
+        filter: true,
+        sorter: true,
+        render: (text, item) => item.object_type ? item.object_type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Issue',
