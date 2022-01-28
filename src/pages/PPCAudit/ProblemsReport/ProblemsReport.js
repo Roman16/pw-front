@@ -8,6 +8,7 @@ import {history} from "../../../utils/history"
 import Pagination from "../../../components/Pagination/Pagination"
 import {issuesTypeEnums} from "../../PPCAutomate/Report/Filters/FilterItem"
 import _ from 'lodash'
+import TitleInfo from "../../../components/Table/renders/TitleInfo"
 
 const columns = [
     {
@@ -16,7 +17,7 @@ const columns = [
         key: 'severity',
         filter: true,
         sorter: true,
-        minWidth: '150px',
+        width: '120px',
     },
     {
         title: 'Group',
@@ -24,7 +25,7 @@ const columns = [
         key: 'group',
         filter: true,
         sorter: true,
-        minWidth: '150px',
+        width: '150px',
         render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -33,7 +34,7 @@ const columns = [
         key: 'issueType',
         filter: true,
         sorter: true,
-        minWidth: '150px',
+        width: '230px',
         render: (text, item) => item.type ? _.find(issuesTypeEnums, {key: item.type}) ? _.find(issuesTypeEnums, {key: item.type}).title : item.type : ''
     },
     {
@@ -42,7 +43,7 @@ const columns = [
         key: 'object',
         filter: true,
         sorter: true,
-        minWidth: '200px',
+        width: '200px',
         render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -51,7 +52,7 @@ const columns = [
         key: 'issueObjectType',
         filter: true,
         sorter: true,
-        minWidth: '150px',
+        width: '200px',
         render: (text, item) => item.object_type ? item.object_type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
@@ -61,16 +62,14 @@ const columns = [
         // filter: true,
         // sorter: true,
         minWidth: '150px',
-        render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
-    },
-    {
-        title: 'Reason',
-        dataIndex: 'issue_explain',
-        key: 'issue_explain',
-        minWidth: '150px',
-        render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
-    },
+        render: (text, item) => <div className={'issues-details'}>
+            <span dangerouslySetInnerHTML={{__html: text}}/>
 
+            <TitleInfo
+                info={item.issue_explain} position="left" type="info"
+            />
+        </div>
+    },
 ]
 
 const ProblemsReport = ({
@@ -138,7 +137,7 @@ const ProblemsReport = ({
                 page={paginationParams.page}
                 pageSizeOptions={[10, 25, 50]}
                 pageSize={paginationParams.pageSize}
-                totalSize={+data.total_count}
+                totalSize={data.total_count}
                 listLength={data.issues.length}
                 processing={processing}
                 disabled={processing}

@@ -83,7 +83,7 @@ const StartScanning = ({
                 className="btn default"
                 onClick={() => onStart({
                     optimization_strategy: optimizationStrategy,
-                    ...optimizationStrategy === 'AchieveTargetACoS' && {target_acos: targetAcos}
+                    ...optimizationStrategy === 'AchieveTargetACoS' && {target_acos: targetAcos / 100}
                 })}
                 disabled={!product.cogs_value || !optimizationStrategy || (optimizationStrategy === 'AchieveTargetACoS' && !targetAcos) || startProcessing}
             >

@@ -110,6 +110,8 @@ const PPCAudit = () => {
 
             if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS || state === scanningStatusEnums.FINISHED || state === scanningStatusEnums.EXPIRED) {
                 setScanningStatus(scanningStatusEnums.PROCESSING)
+            } else if(state === scanningStatusEnums.STOPPED ) {
+                setScanningStatus(undefined)
             } else if (state === scanningStatusEnums.FAILED) {
                 setScanningStatus(scanningStatusEnums.FAILED)
 
@@ -317,8 +319,20 @@ const PPCAudit = () => {
                         sorterColumn={sorterColumn}
                         requestProcessing={getIssuesProcessing}
 
-                        onSetFilters={setFilters}
-                        onSetSorterColumn={setSorterColumn}
+                        onSetFilters={(filters) => {
+                            setIssuesRequestParams(prevState => ({
+                                ...prevState,
+                                page: 1
+                            }))
+                            setFilters(filters)
+                        }}
+                        onSetSorterColumn={(data) => {
+                            setIssuesRequestParams(prevState => ({
+                                ...prevState,
+                                page: 1
+                            }))
+                            setSorterColumn(data)
+                        }}
                         fixProblemsHandler={fixProblemsHandler}
                         onChangePagination={setIssuesRequestParams}
                     />
