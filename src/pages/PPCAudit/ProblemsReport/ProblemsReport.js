@@ -21,6 +21,7 @@ const columns = [
         key: 'group',
         filter: true,
         sorter: true,
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Type',
@@ -28,6 +29,7 @@ const columns = [
         key: 'type',
         // filter: true,
         // sorter: true,
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Object',
@@ -35,6 +37,7 @@ const columns = [
         key: 'object',
         // filter: true,
         // sorter: true,
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Object Type',
@@ -42,6 +45,7 @@ const columns = [
         key: 'object_type',
         // filter: true,
         // sorter: true,
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Issue',
@@ -49,11 +53,13 @@ const columns = [
         key: 'issue',
         // filter: true,
         // sorter: true,
+        render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
     },
     {
         title: 'Reason',
         dataIndex: 'issue_explain',
         key: 'issue_explain',
+        render: text => <span dangerouslySetInnerHTML={{__html: text}}/>
     },
 
 ]
@@ -99,8 +105,8 @@ const ProblemsReport = ({
                 page={paginationParams.page}
                 pageSizeOptions={[10, 25, 50]}
                 pageSize={paginationParams.pageSize}
-                totalSize={data.total_count}
-                listLength={data.issues}
+                totalSize={+data.total_count}
+                listLength={data.issues.length}
                 processing={processing}
                 disabled={processing}
             />

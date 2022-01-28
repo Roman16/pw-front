@@ -13,6 +13,7 @@ const serviceTitle = {
     analytics: 'Analytics',
     productSettings: 'PPC Automation',
     zth: 'Zero to Hero',
+    scanner: 'PPC Audit',
 }
 
 const importTypes = [
@@ -111,6 +112,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
         else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
         else if (pathname.includes('/analytics')) setCurrentService('analytics')
         else if (pathname.includes('/zero-to-hero')) setCurrentService('zth')
+        else if (pathname.includes('/scanner')) setCurrentService('scanner')
     }, [pathname])
 
     return (

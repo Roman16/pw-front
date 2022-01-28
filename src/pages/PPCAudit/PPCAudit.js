@@ -45,6 +45,7 @@ const PPCAudit = () => {
         [selectedProduct, setSelectedProduct] = useState({
             id: undefined
         }),
+
         [scanningStatus, setScanningStatus] = useState(''),
 
         [filters, setFilters] = useState([]),
@@ -53,7 +54,9 @@ const PPCAudit = () => {
             pageSize: 10
         }),
         [sorterColumn, setSorterColumn] = useState(),
-        [auditIssues, setAuditIssues] = useState([])
+        [auditIssues, setAuditIssues] = useState({
+            issues: [],
+        })
 
     const getProducts = async () => {
         setProductsFetchProcessing(true)
@@ -90,22 +93,15 @@ const PPCAudit = () => {
 
     const selectProductHandler = product => {
         setSelectedProduct(product)
+        setAuditIssues({issues: []})
+        setSorterColumn(undefined)
+        setFilters([])
+
         clearTimeout(timeoutId)
 
-        if (product.ppc_audit_indicator_state) {
-            const state = product.ppc_audit_indicator_state.state
-
-            if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS) {
-                setScanningStatus(scanningStatusEnums.PROCESSING)
-
-                getAuditDetails(product.id)
-            } else if (state === scanningStatusEnums.FAILED) {
-                setScanningStatus(scanningStatusEnums.FAILED)
-            }
-        } else {
-            setScanningStatus(undefined)
-        }
+        getAuditDetails(product.id)
     }
+
     const resetScanningStatusHandler = () => {
         setScanningStatus(undefined)
 
@@ -158,15 +154,17 @@ const PPCAudit = () => {
         setStopRequestProcessing(false)
     }
 
-    const getAuditIssues = async () => {
+    const getAuditIssues = async (id) => {
         try {
             const res = await ppcAuditServices.getAuditIssues({
-                id: selectedProduct.id, ...issuesRequestParams,
+                id: id || selectedProduct.id,
+                ...issuesRequestParams,
                 sorterColumn
             })
-            setScanningStatus(scanningStatusEnums.FINISHED)
 
-            setAuditIssues(res)
+            setAuditIssues(res.result)
+
+            setScanningStatus(scanningStatusEnums.FINISHED)
         } catch (e) {
             console.log(e)
         }
@@ -176,16 +174,32 @@ const PPCAudit = () => {
         try {
             const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id)
 
+            setProducts(prevState => prevState.map(product => {
+                if (product.id === id) product.ppc_audit_indicator_state = {state: ppc_audit_job.status}
+                return product
+            }))
+
+
             if (ppc_audit_job.status === scanningStatusEnums.PROCESSING || ppc_audit_job.status === scanningStatusEnums.PROGRESS) {
+                setScanningStatus(scanningStatusEnums.PROCESSING)
                 timeoutId = setTimeout(() => getAuditDetails(id), 5000)
-            } else {
+            } else if (ppc_audit_job.status === scanningStatusEnums.FINISHED) {
+                setScanningStatus(scanningStatusEnums.PROCESSING)
+
                 setSelectedProduct(prevState => ({
                     ...prevState,
-                    ...ppc_audit_job
+                    ...ppc_audit_job,
+                    id: ppc_audit_job.product_id
                 }))
-                getAuditIssues()
+
+                getAuditIssues(ppc_audit_job.product_id)
+            } else if (ppc_audit_job.status === scanningStatusEnums.FAILED) {
+                setScanningStatus(scanningStatusEnums.FAILED)
+            } else {
+                setScanningStatus(undefined)
             }
         } catch (e) {
+            setScanningStatus(undefined)
             console.log(e)
         }
     }
@@ -202,6 +216,10 @@ const PPCAudit = () => {
     useEffect(() => {
         getActualCogs()
     }, [selectedProduct.id])
+
+    useEffect(() => {
+        scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
+    }, [filters, sorterColumn, issuesRequestParams])
 
     return (
         <div className="scanner-page">
