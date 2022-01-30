@@ -101,7 +101,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
     }
 
     useEffect(() => {
-        if (productId) {
+        if (productId && visible) {
             productsServices.getProductCogs(productId)
                 .then(res => {
                     let currentCogs = moment('01-01-2000', 'DD-MM-YYYY')
@@ -119,7 +119,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
                 })
         }
         setActiveIndex(undefined)
-    }, [productId])
+    }, [productId, visible])
 
     useEffect(() => {
         hasChanges = JSON.stringify(cogsList) !== JSON.stringify(cogsFromApi)

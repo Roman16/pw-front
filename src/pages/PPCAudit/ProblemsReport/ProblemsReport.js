@@ -61,7 +61,7 @@ const columns = [
         key: 'issue',
         // filter: true,
         // sorter: true,
-        minWidth: '150px',
+        minWidth: '250px',
         render: (text, item) => <div className={'issues-details'}>
             <span dangerouslySetInnerHTML={{__html: text}}/>
 

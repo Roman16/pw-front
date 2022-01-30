@@ -97,8 +97,13 @@
     flex: 1;
     overflow: hidden;
 
+
     .custom-table {
       height: calc(100% - 3.57142857rem);
+
+      .table-overflow {
+        height: 100%;
+      }
 
       .table-head {
         min-height: 3.5714285714285716rem;
@@ -237,7 +242,6 @@
       }
 
 
-
       .add-filter {
         color: #C9CBD4;
 
@@ -248,9 +252,11 @@
         }
       }
     }
+
     .sorter-buttons {
       display: none !important;
     }
+
     .table-block .custom-table .table-head {
       .th {
         .title {

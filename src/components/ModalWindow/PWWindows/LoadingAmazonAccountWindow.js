@@ -113,7 +113,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
         else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
         else if (pathname.includes('/analytics')) setCurrentService('analytics')
         else if (pathname.includes('/zero-to-hero')) setCurrentService('zth')
-        else if (pathname.includes('/scanner')) setCurrentService('scanner')
+        else if (pathname.includes('/ppc-audit')) setCurrentService('scanner')
     }, [pathname])
 
     return (

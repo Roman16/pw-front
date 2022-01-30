@@ -97,7 +97,7 @@ const services = [
                 <path d="M15 8.06476C16.0337 7.37283 16.7143 6.19446 16.7143 4.85714C16.7143 2.7269 14.9874 1 12.8571 1C10.7269 1 9 2.7269 9 4.85714C9 6.98738 10.7269 8.71429 12.8571 8.71429C13.6501 8.71429 14.3871 8.47503 15 8.06476ZM15 8.06476L18.4286 13" stroke="#6959AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </g>
         </svg>,
-        link: '/scanner'
+        link: '/ppc-audit'
     },
     {
         title: 'Dayparting',

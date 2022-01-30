@@ -145,6 +145,6 @@ function setDefaultVariation(data) {
     return api('post', `${productsUrls.defaultVariation}`, data)
 }
 
-function getActualCogs(productId) {
-    return api('get', `${productsUrls.actualCogs}?product_id=${productId}`)
+function getActualCogs(productId, cancelToken) {
+    return api('get', `${productsUrls.actualCogs}?product_id=${productId}`, undefined, undefined, cancelToken)
 }

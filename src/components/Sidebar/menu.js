@@ -56,6 +56,6 @@ export const mainMenu = [
         title: 'PPC Audit',
         key: 'scanner',
         icon: 'scanner-icon-sidebar',
-        link: 'scanner'
+        link: 'ppc-audit'
     }
 ]

@@ -11,14 +11,22 @@ import {history} from "../../utils/history"
 import {ppcAuditServices} from "../../services/ppc.audit.services"
 import {productsServices} from "../../services/products.services"
 import StrategiesDescription from "../PPCAutomate/OptimizationForAdmin/StrategiesDescription/StrategiesDescription"
+import axios from "axios"
+
+const CancelToken = axios.CancelToken
+let detailsSource = null
+let issuesSource = null
+let actualCogsSource = null
 
 export const scanningStatusEnums = {
     PROCESSING: 'PENDING',
     PROGRESS: 'IN_PROGRESS',
     FINISHED: 'DONE',
-    FAILED: 'FAILED',
     EXPIRED: 'EXPIRED',
     STOPPED: 'CANCELLED_BY_USER',
+    FAILED: 'FAILED',
+    SYSTEM_FAILED: 'SYSTEM_FAILED'
+
 }
 
 let timeoutId
@@ -91,10 +99,50 @@ const PPCAudit = () => {
         setProductsFetchProcessing(false)
     }
 
-    const getActualCogs = async () => {
-        if (selectedProduct.id) {
+    const selectProductHandler = product => {
+        if (product.ppc_audit_indicator_state) {
+            const state = product.ppc_audit_indicator_state.state
+
+            if (state === scanningStatusEnums.PROCESSING ||
+                state === scanningStatusEnums.PROGRESS ||
+                state === scanningStatusEnums.FINISHED ||
+                state === scanningStatusEnums.EXPIRED ||
+                state === scanningStatusEnums.SYSTEM_FAILED) {
+                setScanningStatus(scanningStatusEnums.PROCESSING)
+            } else if (state === scanningStatusEnums.STOPPED) {
+                setScanningStatus(undefined)
+            } else if (state === scanningStatusEnums.FAILED) {
+                setScanningStatus(scanningStatusEnums.FAILED)
+            }
+        } else setScanningStatus(undefined)
+
+        if (product.id !== selectedProduct.id) {
+            setSelectedProduct(product)
+        } else {
+            setSelectedProduct(prevState => ({
+                ...prevState,
+                ...product
+            }))
+        }
+
+
+        getActualCogs(product.id)
+
+        resetIssuesSettings()
+
+        clearTimeout(timeoutId)
+
+        getAuditDetails(product.id)
+    }
+
+
+    const getActualCogs = async (id) => {
+        actualCogsSource && actualCogsSource.cancel()
+        actualCogsSource = CancelToken.source()
+
+        if (id) {
             try {
-                const res = await productsServices.getActualCogs(selectedProduct.id)
+                const res = await productsServices.getActualCogs(id, actualCogsSource.token)
                 if (res.result.length === 0) {
                     setSelectedProduct(prevState => ({...prevState, cogs_value: undefined}))
                 } else {
@@ -107,30 +155,6 @@ const PPCAudit = () => {
     }
 
     const changeProductsParamsHandler = (data) => setProductsRequestParams(prevState => ({...prevState, ...data}))
-
-    const selectProductHandler = product => {
-        if (product.ppc_audit_indicator_state) {
-            const state = product.ppc_audit_indicator_state.state
-
-            if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS || state === scanningStatusEnums.FINISHED || state === scanningStatusEnums.EXPIRED) {
-                setScanningStatus(scanningStatusEnums.PROCESSING)
-            } else if(state === scanningStatusEnums.STOPPED ) {
-                setScanningStatus(undefined)
-            } else if (state === scanningStatusEnums.FAILED) {
-                setScanningStatus(scanningStatusEnums.FAILED)
-
-            }
-        } else setScanningStatus(undefined)
-
-        setSelectedProduct(product)
-
-        resetIssuesSettings()
-
-        clearTimeout(timeoutId)
-
-        getAuditDetails(product.id)
-
-    }
 
     const resetScanningStatusHandler = () => {
         setScanningStatus(undefined)
@@ -159,7 +183,7 @@ const PPCAudit = () => {
 
             resetIssuesSettings()
 
-            getAuditDetails()
+            getAuditDetails(selectedProduct.id)
 
         } catch (e) {
             console.log(e)
@@ -191,13 +215,16 @@ const PPCAudit = () => {
     const getAuditIssues = async (id) => {
         setGetIssuesProcessing(true)
 
+        issuesSource && issuesSource.cancel()
+        issuesSource = CancelToken.source()
+
         try {
             const res = await ppcAuditServices.getAuditIssues({
                 id: id || selectedProduct.id,
                 ...issuesRequestParams,
                 sorterColumn,
                 filters,
-            })
+            }, issuesSource.token)
 
             setAuditIssues(res.result)
 
@@ -214,36 +241,43 @@ const PPCAudit = () => {
     }
 
     const getAuditDetails = async (id) => {
+        detailsSource && detailsSource.cancel()
+        detailsSource = CancelToken.source()
+
         try {
-            const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id || selectedProduct.id)
+            const {result: {ppc_audit_job}} = await ppcAuditServices.getAuditDetails(id || selectedProduct.id, detailsSource.token)
 
-            setProducts(prevState => prevState.map(product => {
-                if (product.id === id) product.ppc_audit_indicator_state = {state: ppc_audit_job.status}
-                return product
-            }))
-
-            if (ppc_audit_job.status === scanningStatusEnums.PROCESSING || ppc_audit_job.status === scanningStatusEnums.PROGRESS) {
-                setScanningStatus(scanningStatusEnums.PROCESSING)
-                timeoutId = setTimeout(() => getAuditDetails(id), 5000)
-            } else if (ppc_audit_job.status === scanningStatusEnums.FINISHED || ppc_audit_job.status === scanningStatusEnums.EXPIRED) {
-                setScanningStatus(scanningStatusEnums.PROCESSING)
-
-                setSelectedProduct(prevState => ({
-                    ...prevState,
-                    ...ppc_audit_job,
-                    id: ppc_audit_job.product_id
-                }))
-
-                getAuditIssues(id)
-            } else if (ppc_audit_job.status === scanningStatusEnums.FAILED) {
-                setScanningStatus(scanningStatusEnums.FAILED)
-
+            if (ppc_audit_job.id) {
                 setProducts(prevState => prevState.map(product => {
-                    if (product.id === id) product.ppc_audit_indicator_state = {state: scanningStatusEnums.FAILED}
+                    if (product.id === (id || selectedProduct.id)) product.ppc_audit_indicator_state = {state: ppc_audit_job.status}
                     return product
                 }))
-            } else {
-                setScanningStatus(undefined)
+
+                if (ppc_audit_job.status === scanningStatusEnums.PROCESSING ||
+                    ppc_audit_job.status === scanningStatusEnums.PROGRESS ||
+                    ppc_audit_job.status === scanningStatusEnums.SYSTEM_FAILED) {
+                    setScanningStatus(scanningStatusEnums.PROCESSING)
+                    timeoutId = setTimeout(() => getAuditDetails(id), 5000)
+                } else if (ppc_audit_job.status === scanningStatusEnums.FINISHED || ppc_audit_job.status === scanningStatusEnums.EXPIRED) {
+                    setScanningStatus(scanningStatusEnums.PROCESSING)
+
+                    setSelectedProduct(prevState => ({
+                        ...prevState,
+                        ...ppc_audit_job,
+                        id: ppc_audit_job.product_id
+                    }))
+
+                    getAuditIssues(id)
+                } else if (ppc_audit_job.status === scanningStatusEnums.FAILED) {
+                    setScanningStatus(scanningStatusEnums.FAILED)
+
+                    setProducts(prevState => prevState.map(product => {
+                        if (product.id === (id || selectedProduct.id)) product.ppc_audit_indicator_state = {state: scanningStatusEnums.FAILED}
+                        return product
+                    }))
+                } else {
+                    setScanningStatus(undefined)
+                }
             }
         } catch (e) {
             setScanningStatus(undefined)
@@ -257,23 +291,18 @@ const PPCAudit = () => {
         history.push(`/ppc/automation?searchStr=${searchStr}`)
     }
 
-
     const addFiltersHandler = (filters) => {
-            setIssuesRequestParams(prevState => ({
-                ...prevState,
-                page: 1
-            }))
+        setIssuesRequestParams(prevState => ({
+            ...prevState,
+            page: 1
+        }))
 
-            setFilters(filters)
+        setFilters(filters)
     }
 
     useEffect(() => {
         getProducts()
     }, [productsRequestParams])
-
-    useEffect(() => {
-        getActualCogs()
-    }, [selectedProduct.id])
 
     useEffect(() => {
         scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
@@ -358,7 +387,6 @@ const PPCAudit = () => {
                 {scanningStatus === scanningStatusEnums.FAILED && <ScanningFailed
                     onResetStatus={resetScanningStatusHandler}
                 />}
-
 
                 <StrategiesDescription
                     visible={visibleDrawer}
