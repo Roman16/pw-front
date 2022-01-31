@@ -66,6 +66,7 @@ const columns = [
             <span dangerouslySetInnerHTML={{__html: text}}/>
 
             <TitleInfo
+                overlayClassName={'issues-details-tooltip'}
                 info={item.issue_explain} position="left" type="info"
             />
         </div>
