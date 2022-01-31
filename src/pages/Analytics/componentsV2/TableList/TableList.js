@@ -56,10 +56,10 @@ const TableList = ({
         [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
-    const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
+    // const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
 
     const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {})
-    const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
+    // const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
 
     const dispatch = useDispatch()
 
@@ -135,13 +135,13 @@ const TableList = ({
         })
     }
 
-    const onChangeColumnsOrder = (list) => {
-        setColumnsOrder({
-            ...columnsOrder,
-            [location]: list
-        })
-
-    }
+    // const onChangeColumnsOrder = (list) => {
+    //     setColumnsOrder({
+    //         ...columnsOrder,
+    //         [location]: list
+    //     })
+    //
+    // }
 
 
     const paginationChangeHandler = (params) => {
@@ -155,9 +155,9 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
-    useEffect(() => {
-        localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
-    }, [columnsOrder])
+    // useEffect(() => {
+    //     localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
+    // }, [columnsOrder])
 
 
     const selectAllRows = () => {
@@ -218,12 +218,8 @@ const TableList = ({
 
                     {columnSelect && <ColumnsSelect
                         columns={columns}
-                        defaultColumnsList={columns}
                         columnsBlackList={localColumnBlackList}
-                        columnsOrder={columnsOrder[location] || columns.map(i => i.key)}
-
                         onChangeBlackList={changeBlackListHandler}
-                        onChangeColumnsOrder={onChangeColumnsOrder}
                     />}
 
                     <ExpandWorkplace/>
@@ -265,7 +261,7 @@ const TableList = ({
 
                     columns={columns
                         .filter(column => !localColumnBlackList.includes(column.key))
-                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.key) - columnsOrder[location].findIndex(i => i === secondColumn.key) : true)
+                        // .sort((firstColumn, secondColumn) => metricsOrder[location] ? metricsOrder[location].findIndex(i => i === firstColumn.key) - metricsOrder[location].findIndex(i => i === secondColumn.key) : true)
                     }
 
                     fixedColumns={fixedColumns}
