@@ -9,7 +9,7 @@ import {Spin} from "antd"
 const ScanningProcessingStatus = ({scanningStatus, stopProcessing, product, onStop, onStart, onUpdateCogs, onOpenStrategyDescription}) => {
     const [visibleWindow, setVisibleWindow] = useState(false)
 
-    const isExpired = product.performed_at ? +moment().diff(moment(product.performed_at) , 'days')> 7 : false
+    const isExpired = product.performed_at ? moment().diff(moment(product.performed_at) , 'days')> 7 : false
 
     if (scanningStatus === scanningStatusEnums.PROCESSING) {
         return (<div className={'scanning-processing-status'}>
