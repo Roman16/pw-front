@@ -308,6 +308,12 @@ const PPCAudit = () => {
         scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
     }, [filters, sorterColumn, issuesRequestParams])
 
+    useEffect(() => {
+        return(() => {
+            clearTimeout(timeoutId)
+        })
+    }, [])
+
     return (
         <div className="scanner-page">
             <ProductList

@@ -107,7 +107,7 @@ const ScanningIndicator = ({status}) => {
     >
         <img src={loaderImg} alt=""/>
     </InformationTooltip>
-    else if (state === scanningStatusEnums.FINISHED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FINISHED || state === scanningStatusEnums.EXPIRED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning complete'}
@@ -120,13 +120,6 @@ const ScanningIndicator = ({status}) => {
         description={'Scanning failed'}
     >
         <div className="indicator failed"/>
-    </InformationTooltip>
-    else if (state === scanningStatusEnums.EXPIRED) return <InformationTooltip
-        type={'custom'}
-        position={'bottomRight'}
-        description={'Scanning has expired'}
-    >
-        <div className="indicator complete"/>
     </InformationTooltip>
     else if (state === scanningStatusEnums.STOPPED) return <InformationTooltip
         type={'custom'}
