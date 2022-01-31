@@ -185,7 +185,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     {/*ppc scanner*/}
-                                    {/*<ConnectedAmazonRoute path="/scanner" component={PPCAudit}/>*/}
+                                    <ConnectedAmazonRoute path="/ppc-audit" component={PPCAudit}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute
                                         exact

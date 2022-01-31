@@ -9,7 +9,7 @@ import {AVAILABLE_METRICS_LENGTH} from "./MainMetrics"
 
 const Search = Input.Search
 
-const tabs = [
+export const tabs = [
     'all',
     'total',
     'organic',

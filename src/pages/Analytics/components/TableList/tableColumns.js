@@ -649,7 +649,7 @@ export const matchTypeColumn = {
     key: 'calculatedTargetingMatchType',
     width: '200px',
     sorter: true,
-    locked: true,
+    locked: false,
     noTotal: true,
     filter: true,
     render: (type) => valueTile[type] || type

@@ -41,6 +41,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
             key: 'state',
             width: '65px',
             noTotal: true,
+            locked: true,
             editType: 'switch',
         }] : [],
         {
@@ -55,7 +56,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
         },
         ...!selectedCampaign ? [{
             ...campaignColumn,
-            locked: true,
+            locked: false,
             noTotal: true,
             width: '250px',
             render: (campaign, item) => (<Link
@@ -77,7 +78,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
             width: '250px',
             sorter: true,
             filter: true,
-            locked: true,
+            locked: false,
             noTotal: true,
             render: (adGroup, item) => (
                 <Link
@@ -98,7 +99,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup, e
         matchTypeColumn,
         {
             ...statusColumn,
-            locked: true,
+            locked: false,
         },
         {
             title: 'Bid',

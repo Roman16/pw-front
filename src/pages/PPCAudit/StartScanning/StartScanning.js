@@ -2,33 +2,94 @@ import React, {useState} from "react"
 import './StartScanning.less'
 import img from '../../../assets/img/scanner/start-scanning-img.svg'
 import InputCurrency from "../../../components/Inputs/InputCurrency"
-import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import CogsWindow from "../../PPCAutomate/OptimizationForAdmin/OptimizationSettings/CogsWindow"
+import CustomSelect from "../../../components/Select/Select"
+import {SVG} from "../../../utils/icons"
+import {strategies} from "../../PPCAutomate/OptimizationForAdmin/OptimizationSettings/OptimizationSettings"
+import {Select, Spin} from "antd"
 
-const StartScanning = ({onStart, product}) => {
-    const [visibleCogsWindow, setVisibleCogsWindow] = useState(false)
+const Option = Select.Option
+
+
+const StartScanning = ({
+                           product,
+                           startProcessing,
+                           onStart,
+                           onUpdateCogs,
+                           onOpenStrategyDescription
+                       }) => {
+
+    const [visibleCogsWindow, setVisibleCogsWindow] = useState(false),
+        [optimizationStrategy, setOptimizationStrategy] = useState(),
+        [targetAcos, setTargetAcos] = useState()
 
     return (<>
         <div className="start-scanning-section">
             <img src={img} alt=""/>
             <h2>Start scanning</h2>
             <p>
-                Enter your COGS Lorem ipsum dolor sit amet, <br/> consectetur adipiscing elit.
+                Enter product information that will help PPC Audit <br/> to better analyze your Advertising performance
             </p>
 
-            <div className="form-group">
+            <div className="form-group cogs">
                 <label htmlFor="">
-                    Enter COGS <InformationTooltip/>
+                    Enter COGS
                 </label>
 
                 <InputCurrency
                     disabled
+                    value={product.cogs_value}
                     onClick={() => setVisibleCogsWindow(true)}
                 />
             </div>
 
-            <button className="btn default" onClick={onStart}>
+            <div className="form-group">
+                <label htmlFor="">
+                    Choose Advertising goal
+
+                    <span onClick={onOpenStrategyDescription}>Read more</span>
+                </label>
+
+                <CustomSelect
+                    getPopupContainer={trigger => trigger}
+                    value={optimizationStrategy}
+                    onChange={(value) => setOptimizationStrategy(value)}
+                >
+                    {strategies.map(item => (
+                        <Option value={item.key}>
+                            <i style={{fill: `${item.fill}`}}>
+                                <SVG id={item.icon}/>
+                            </i>
+
+                            {item.name}
+                        </Option>
+                    ))}
+                </CustomSelect>
+            </div>
+
+            {optimizationStrategy === 'AchieveTargetACoS' && <div className="form-group">
+                <label htmlFor="">
+                    Enter your target ACoS
+                </label>
+
+                <InputCurrency
+                    value={targetAcos}
+                    typeIcon={'percent'}
+                    onChange={(value) => setTargetAcos(value)}
+                />
+            </div>}
+
+            <button
+                className="btn default"
+                onClick={() => onStart({
+                    optimization_strategy: optimizationStrategy,
+                    ...optimizationStrategy === 'AchieveTargetACoS' && {target_acos: targetAcos / 100}
+                })}
+                disabled={!product.cogs_value || !optimizationStrategy || (optimizationStrategy === 'AchieveTargetACoS' && !targetAcos) || startProcessing}
+            >
                 Start scanning
+
+                {startProcessing && <Spin size={'small'}/>}
             </button>
 
             <p className="rescan-description">
@@ -39,10 +100,8 @@ const StartScanning = ({onStart, product}) => {
         <CogsWindow
             visible={visibleCogsWindow}
             productId={product && product.id}
-            // productId={product.product_id}
             product={product}
-            onSetCogs={() => {
-            }}
+            onSetCogs={() => onUpdateCogs(product.id)}
             setCurrentCogs={() => {
             }}
             onClose={() => {

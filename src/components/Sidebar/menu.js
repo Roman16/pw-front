@@ -52,10 +52,10 @@ export const mainMenu = [
             }
         ]
     },
-    // {
-    //     title: 'PPC Audit',
-    //     key: 'scanner',
-    //     icon: 'scanner-icon-sidebar',
-    //     link: 'scanner'
-    // }
+    {
+        title: 'PPC Audit',
+        key: 'scanner',
+        icon: 'scanner-icon-sidebar',
+        link: 'ppc-audit'
+    }
 ]

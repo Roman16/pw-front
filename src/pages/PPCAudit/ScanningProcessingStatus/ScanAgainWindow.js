@@ -3,7 +3,7 @@ import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import StartScanning from "../StartScanning/StartScanning"
 import {SVG} from "../../../utils/icons"
 
-const ScanAgainWindow = ({visible = true, product, onClose, onStart}) => {
+const ScanAgainWindow = ({visible = true, product, onClose, onStart, onUpdateCogs, onOpenStrategyDescription}) => {
 
     return (<ModalWindow
         visible={visible}
@@ -19,6 +19,8 @@ const ScanAgainWindow = ({visible = true, product, onClose, onStart}) => {
         <StartScanning
             product={product}
             onStart={onStart}
+            onUpdateCogs={onUpdateCogs}
+            onOpenStrategyDescription={onOpenStrategyDescription}
         />
     </ModalWindow>)
 }

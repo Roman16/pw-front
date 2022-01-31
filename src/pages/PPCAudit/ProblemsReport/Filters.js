@@ -7,35 +7,46 @@ import {FilterItem} from "../../PPCAutomate/Report/Filters/FilterItem"
 const {Search} = Input
 
 const Filters = ({filters, columns, processing, onSetFilters, onFixProblems}) => {
-    const [visiblePopover, setVisiblePopover] = useState(false)
+    const [visiblePopover, setVisiblePopover] = useState(false),
+        [editFilter, setEditFilter] = useState(),
+        [indexSelectedFilter, setIndexSelectedFilter] = useState()
 
 
     const addFilterHandler = (filter) => {
-        onSetFilters([...filters, filter])
+        if (indexSelectedFilter != null) {
+            onSetFilters([...filters.map((item, index) => {
+                if (index === indexSelectedFilter) {
+                    item = filter
+                }
+
+                return item
+            })])
+        } else {
+            onSetFilters([...filters, filter])
+        }
+
+        setVisiblePopover(false)
+        setIndexSelectedFilter(null)
+        setEditFilter(undefined)
+    }
+
+    const removeFilterHandler = (index) => onSetFilters([...filters.filter((item, itemIndex) => itemIndex !== index)])
+
+    const editFilterHandler = (filter, index) => {
+        setIndexSelectedFilter(index)
+        setEditFilter(filter)
     }
 
     const resetHandler = () => onSetFilters([])
 
     return (<div className="filters">
         <div className="row">
-            <div className="form-group">
-                <Search
-                    className="search-field"
-                    placeholder={`Search`}
-                    // onChange={e => setSearchValue(e.target.value)}
-                    // onPressEnter={searchHandler}
-                    // onBlur={searchHandler}
-                    // value={searchValue}
-                    suffix={<SearchIcon/>}
-                />
-            </div>
-
             <Popover
                 content={<FilterWindow
                     filters={filters}
                     columns={columns}
                     onClose={() => setVisiblePopover(false)}
-                    // editFilter={editFilter}
+                    editFilter={editFilter}
                     onAddFilter={(filter) => {
                         addFilterHandler(filter)
                         setVisiblePopover(false)
@@ -68,8 +79,8 @@ const Filters = ({filters, columns, processing, onSetFilters, onFixProblems}) =>
                     content={<FilterWindow
                         filters={filters}
                         columns={columns}
-                        // onClose={() => setIndexSelectedFilter(null)}
-                        // editFilter={editFilter}
+                        onClose={() => setIndexSelectedFilter(null)}
+                        editFilter={editFilter}
                         // locationKey={locationKey}
                         onAddFilter={(filter) => {
                             addFilterHandler(filter)
@@ -80,11 +91,11 @@ const Filters = ({filters, columns, processing, onSetFilters, onFixProblems}) =>
                     placement="bottomLeft"
                     overlayClassName={'filter-popover analytics-filter-popover'}
                     trigger="click"
-                    // visible={indexSelectedFilter === index}
+                    visible={indexSelectedFilter === index}
                 >
                     <div
                         className="filter-item"
-                        // onClick={() => editFilterHandler(filter, index)}
+                        onClick={() => editFilterHandler(filter, index)}
                     >
                         <FilterItem
                             filter={filter}
@@ -92,7 +103,7 @@ const Filters = ({filters, columns, processing, onSetFilters, onFixProblems}) =>
 
                         <i className={'icon'} onClick={(e) => {
                             e.stopPropagation()
-                            // removeFilterHandler(index)
+                            removeFilterHandler(index)
                         }}>
                             <SVG id={'remove-filter-icon'}/>
                         </i>

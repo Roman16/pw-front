@@ -7,7 +7,7 @@ import loaderImg from '../../../assets/img/loader.svg'
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const ProductItem = ({
-                         product: {id, asin, name, sku, image_url, variations, optimization_indicator_state, scanningStatus},
+                         product: {id, asin, name, sku, image_url, variations, ppc_audit_indicator_state},
                          openedProduct,
 
                          onClick,
@@ -60,8 +60,8 @@ const ProductItem = ({
                     {variations.length > 0 && <SVG id='select-icon'/>}
                 </div>
 
-                {scanningStatus && <div className="status-indicator"><ScanningIndicator
-                    status={scanningStatus}
+                {ppc_audit_indicator_state && <div className="status-indicator"><ScanningIndicator
+                    status={ppc_audit_indicator_state}
                 /></div>}
             </div>
 
@@ -98,31 +98,33 @@ const ProductItem = ({
 }
 
 const ScanningIndicator = ({status}) => {
-    if (status === scanningStatusEnums.PROCESSING) return <InformationTooltip
+    const state = status.state
+
+    if (state === scanningStatusEnums.PROCESSING || state === scanningStatusEnums.PROGRESS || state === scanningStatusEnums.SYSTEM_FAILED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning is in progress'}
     >
         <img src={loaderImg} alt=""/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FINISHED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FINISHED || state === scanningStatusEnums.EXPIRED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning complete'}
     >
         <div className="indicator finished"/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FAILED) return <InformationTooltip
+    else if (state === scanningStatusEnums.FAILED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning failed'}
     >
         <div className="indicator failed"/>
     </InformationTooltip>
-    else if (status === scanningStatusEnums.FAILED) return <InformationTooltip
+    else if (state === scanningStatusEnums.STOPPED) return <InformationTooltip
         type={'custom'}
         position={'bottomRight'}
-        description={'Scanning has expired'}
+        description={'Scanning canceled by user'}
     >
         <div className="indicator expired"/>
     </InformationTooltip>

@@ -79,6 +79,7 @@
     .columns-select {
       grid-area: columns;
     }
+
     .download-csv {
       grid-area: downloadCsv;
     }
@@ -1427,6 +1428,266 @@
     object-fit: contain;
     background: url(https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif) no-repeat center;
     background-size: 60%;
+  }
+}
+
+.order-columns-window {
+  width: 90% !important;
+  height: 90vh;
+  max-width: 43.857142857142854rem;
+  max-height: 49.285714285714285rem;
+
+  .ant-modal-body {
+    height: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+
+    & > .row {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    ul {
+      width: 12rem;
+      list-style: none;
+      margin: 0;
+      border-right: 0.5px solid #C9CBD4;
+      padding: 4px 0;
+
+      li {
+        height: 3.5714285714285716rem;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 1.4285714285714286rem;
+        border-bottom: 0.5px solid #C9CBD4;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #312C51;
+        text-transform: capitalize;
+        position: relative;
+
+        &:hover {
+          background: #FFFAFA;
+        }
+
+        &.active {
+          background: #FFFAFA;
+
+          &::before {
+            content: '';
+            width: 0.2857142857142857rem;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #FF5256;
+          }
+        }
+      }
+    }
+
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      h3 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.2857142857142858rem;
+        line-height: 1.5714285714285714rem;
+        color: #312C51;
+        margin: 1.4285714285714286rem 0 0.5714285714285714rem 1.4285714285714286rem;
+      }
+
+      p {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #5B586F;
+        margin: 0 0 1.4285714285714286rem;
+        padding: 0 1.4285714285714286rem;
+      }
+
+      .form-group {
+        display: flex;
+        align-items: center;
+        margin: 0 1.4285714285714286rem;
+        padding: 0 0 0.8571428571428571rem;
+        border-bottom: 0.5px solid #C9CBD4;
+
+        .search-field {
+          flex: 1;
+        }
+
+        .btn {
+          width: 7.142857142857143rem;
+          height: max-content;
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 1.2142857142857142rem;
+          color: #6959AB;
+          margin: 0 1.4285714285714286rem;
+
+          &:hover {
+            color: #5B586F;
+          }
+        }
+      }
+
+      .columns-list {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 0.8571428571428571rem 0 0.7142857142857143rem;
+        overflow: auto;
+        overflow-x: hidden;
+
+        .no-found-data-block {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+
+          svg {
+            width: 178px;
+            height: inherit;
+            margin-bottom: 30px;
+          }
+
+          h4 {
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 22px;
+            text-align: center;
+            color: #312C51;
+            margin-bottom: 10px;
+          }
+
+          p {
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 15px;
+            text-align: center;
+            color: #5B586F;
+            margin: 0;
+          }
+        }
+
+        .item {
+          display: flex;
+          align-items: center;
+          min-height: 2.142857142857143rem;
+          height: 2.142857142857143rem;
+          padding: 0 1.4285714285714286rem;
+          position: relative;
+
+          &.moved {
+            background: rgba(255, 255, 255, 0.7);
+
+            i {
+              cursor: grabbing;
+            }
+          }
+
+          i {
+            margin: 0 0 0 auto;
+            position: absolute;
+            right: 1.4285714285714286rem;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            cursor: grab;
+
+            svg {
+              width: 1.2857142857142858rem;
+              height: 1.2857142857142858rem;
+              fill: transparent;
+            }
+          }
+
+
+          &:hover {
+            i {
+              svg {
+                fill: #C4C4C4;
+              }
+            }
+          }
+
+          &:active {
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
+            i {
+              svg {
+                fill: #6959AB;
+              }
+            }
+          }
+
+          &.disabled {
+            margin-bottom: 10px;
+
+            &:active {
+              box-shadow: none;
+            }
+          }
+        }
+
+        .ant-checkbox-wrapper {
+          margin-bottom: 1.4285714285714286rem;
+          margin-left: 0;
+
+          .ant-checkbox {
+            width: 1.2857142857142858rem;
+            height: 1.2857142857142858rem;
+          }
+
+          span:last-child {
+            font-weight: 500;
+            font-size: 0.8571428571428571rem;
+            line-height: 1.0714285714285714rem;
+            color: #5B586F;
+            padding: 0 0 0 10px;
+          }
+
+
+          &:last-child {
+            margin: 0;
+          }
+
+          &.ant-checkbox-wrapper-disabled {
+            span {
+              color: #C9CBD4;
+            }
+
+            i {
+              display: none;
+            }
+          }
+
+
+        }
+      }
+    }
+
+    .actions {
+      height: 4.285714285714286rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 1.4285714285714286rem;
+      border-top: 0.5px solid #C9CBD4;
+
+      .btn {
+        margin: 0 0 0 1.4285714285714286rem;
+      }
+    }
   }
 }
 

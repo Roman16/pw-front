@@ -56,6 +56,7 @@ export const productsUrls = {
     productAmazonFees: 'products-data/fees',
     defaultVariation: 'products-data/variations/set-default-variation',
     updateVariation: 'products-data/prices/overridden-price',
+    actualCogs: 'products-data/cogs/actual',
 
     allProducts: 'v2/ppc-automation/products',
     productDetails: (id) => `v2/ppc-automation/products/${id}/automation-params`,
@@ -170,4 +171,14 @@ export const analyticsUrls = {
 
 export const tableauUrls = {
     token: 'tableau/trusted-ticket-urls'
+}
+
+export const ppcAuditUrls = {
+    products: 'ppc-audit/products',
+    issues: id => `ppc-audit/products/${id}/last-audit-issues`,
+    details: id => `ppc-audit/products/${id}/last-audit-details`,
+    cogs: 'ppc-audit/products',
+    startScanning: id => `ppc-audit/products/${id}/request-audit`,
+    stopScanning: id => `ppc-audit/products/${id}/cancel-audit`
+
 }

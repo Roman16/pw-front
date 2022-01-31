@@ -21,44 +21,6 @@ String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
-const metricsOrder = {
-    'campaigns': [
-        "name",
-        "state",
-        "advertisingType",
-        "calculatedTargetingType",
-        "calculatedCampaignSubType",
-        "calculatedBudget",
-        "portfolioId",
-        "startDate",
-        "endDate",
-        "bidding_strategy",
-        "impressions",
-        "clicks",
-        "ctr",
-        "cost",
-        "cpc",
-        "cpm",
-        "budget_allocation",
-        "attributedConversions30d",
-        "cpa",
-        "conversion_rate",
-        "icvr",
-        "attributedUnitsOrdered30d",
-        "attributedSales30d",
-        "acos",
-        "roas",
-        "rpi",
-        "rpc",
-
-        "sales_share",
-        "ad_profit",
-
-        "attributedSales30dSameSKU",
-        "attributedSales30dOtherSKU",
-    ]
-}
-
 const TableList = ({
                        columns,
                        location,
@@ -94,8 +56,10 @@ const TableList = ({
         [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
+    const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
 
     const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {})
+    const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
 
     const dispatch = useDispatch()
 
@@ -171,6 +135,15 @@ const TableList = ({
         })
     }
 
+    const onChangeColumnsOrder = (list) => {
+        setColumnsOrder({
+            ...columnsOrder,
+            [location]: list
+        })
+
+    }
+
+
     const paginationChangeHandler = (params) => {
         onChange({
             ...tableRequestParams,
@@ -181,6 +154,11 @@ const TableList = ({
     useEffect(() => {
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
+
+    useEffect(() => {
+        localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
+    }, [columnsOrder])
+
 
     const selectAllRows = () => {
         setSelectedAllRows(true)
@@ -240,8 +218,12 @@ const TableList = ({
 
                     {columnSelect && <ColumnsSelect
                         columns={columns}
+                        defaultColumnsList={columns}
                         columnsBlackList={localColumnBlackList}
+                        columnsOrder={columnsOrder[location] || columns.map(i => i.key)}
+
                         onChangeBlackList={changeBlackListHandler}
+                        onChangeColumnsOrder={onChangeColumnsOrder}
                     />}
 
                     <ExpandWorkplace/>
@@ -283,7 +265,7 @@ const TableList = ({
 
                     columns={columns
                         .filter(column => !localColumnBlackList.includes(column.key))
-                        // .sort((firstColumn, secondColumn) => metricsOrder[location] ? metricsOrder[location].findIndex(i => i === firstColumn.key) - metricsOrder[location].findIndex(i => i === secondColumn.key) : true)
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.key) - columnsOrder[location].findIndex(i => i === secondColumn.key) : true)
                     }
 
                     fixedColumns={fixedColumns}

@@ -62,6 +62,7 @@ const TableList = ({
                    }) => {
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList')),
+        columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder')),
         sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') && JSON.parse(localStorage.getItem('analyticsSorterColumn')),
         tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') && JSON.parse(localStorage.getItem('analyticsTableOptions')),
         pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
@@ -70,6 +71,7 @@ const TableList = ({
     const [tableData, setTableData] = useState([]),
         [fetchingStatus, setFetchingStatus] = useState(false),
         [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {}),
+        [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {}),
         [sorterColumn, setSorterColumn] = useState(sorterColumnFromLocalStorage ? sorterColumnFromLocalStorage : {}),
         [tableOptions, setTableOptions] = useState(tableOptionsFromLocalStorage ? tableOptionsFromLocalStorage : {}),
         [paginationParams, setPaginationParams] = useState({
@@ -152,6 +154,14 @@ const TableList = ({
             ...columnsBlackList,
             [location]: list
         })
+    }
+
+    const onChangeColumnsOrder = (list) => {
+        setColumnsOrder({
+            ...columnsOrder,
+            [location]: list
+        })
+
     }
 
     const paginationChangeHandler = (params) => {
@@ -328,6 +338,10 @@ const TableList = ({
     }, [columnsBlackList])
 
     useEffect(() => {
+        localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
+    }, [columnsOrder])
+
+    useEffect(() => {
         localStorage.setItem('analyticsSorterColumn', JSON.stringify(sorterColumn))
     }, [sorterColumn])
 
@@ -379,6 +393,7 @@ const TableList = ({
                     columns={columns}
                     columnsBlackList={localColumnBlackList}
                     onChangeBlackList={changeBlackListHandler}
+                    onChangeColumnsOrder={onChangeColumnsOrder}
                 />}
 
                 <ExpandWorkplace/>

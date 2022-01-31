@@ -19,7 +19,7 @@ const Filters = ({
 
         clearTimeout(timeoutId)
         timeoutId = setTimeout(() => {
-            onSearch(value)
+            onSearch({searchStr: value})
         }, 500)
     }
 
@@ -49,13 +49,13 @@ const Filters = ({
                     </span>
                 </div>
 
-                <div className="active-only">
-                    <label htmlFor="">Scanned only</label>
-                    <Switch
-                        // checked={onlyOptimization}
-                        // onChange={onShowOnlyOnOptimization}
-                    />
-                </div>
+                {/*<div className="active-only">*/}
+                {/*    <label htmlFor="">Audited only</label>*/}
+                {/*    <Switch*/}
+                {/*        // checked={onlyOptimization}*/}
+                {/*        // onChange={onShowOnlyOnOptimization}*/}
+                {/*    />*/}
+                {/*</div>*/}
             </div>
         </div>
     )

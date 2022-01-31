@@ -2,6 +2,7 @@ import React from "react"
 import moment from "moment"
 import './Filters.less'
 import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
+import _ from 'lodash'
 
 export const valueTile = {
     'keyword': 'Keyword',
@@ -61,8 +62,104 @@ export const valueTile = {
     'Audiences': 'Audiences',
     'Product Targeting': 'Product Targeting',
     'Product Collection': 'Product Collection',
-    'Video': 'Video'
+    'Video': 'Video',
+//
+    'Critical': 'Critical',
+    'Major': 'Major',
+    'Minor': 'Minor',
+    'PoorPerformingTargetings': 'Poor Performing Targetings',
+    'DuplicateTargetings': 'Duplicate Targetings',
+    'PoorSemanticCore': 'Poor Semantic Core',
+    'TargetingsHarvesting': 'Targetings Harvesting',
+    'AllCampaigns': 'All Campaigns',
+    'Campaign': 'Campaign',
+    'AdGroup': 'Ad Group',
+    'ProductAd': 'Product Ad',
+    'Keyword': 'Keyword',
+    'ProductTargeting': 'Product Targeting',
+    'CustomerSearchTerm': 'Customer Search Term',
 }
+
+export const issuesTypeEnums = [
+    {
+        title: 'Ad Group Does Not Have All Negatives',
+        key: 'AdGroupDoesNotHaveAllNegatives',
+        value: 'AdGroupDoesNotHaveAllNegatives'
+    },
+    {title: 'Ad Group With Foreign Products', key: 'AdGroupWithForeignProducts', value: 'AdGroupWithForeignProducts'},
+    {title: 'Average ASIN PTs', key: 'AverageASINPTs', value: 'AverageASINPTs'},
+    {title: 'Average Broad Keywords', key: 'AverageBroadKeywords', value: 'AverageBroadKeywords'},
+    {title: 'Average Keywords', key: 'AverageKeywords', value: 'AverageKeywords'},
+    {title: 'Average Long Tail Keywords', key: 'AverageLongTailKeywords', value: 'AverageLongTailKeywords'},
+    {
+        title: 'Found Ad Groups With Foreign Products',
+        key: 'FoundAdGroupsWithForeignProducts',
+        value: 'FoundAdGroupsWithForeignProducts'
+    },
+    {title: 'Low ASIN PTs', key: 'LowASINPTs', value: 'LowASINPTs'},
+    {title: 'Low Broad Keywords', key: 'LowBroadKeywords', value: 'LowBroadKeywords'},
+    {title: 'Low Keywords', key: 'LowKeywords', value: 'LowKeywords'},
+    {title: 'Low Long Tail Keywords', key: 'LowLongTailKeywords', value: 'LowLongTailKeywords'},
+    {title: 'No ASIN PTs', key: 'NoASINPTs', value: 'NoASINPTs'},
+    {title: 'No Auto Campaigns', key: 'NoAutoCampaigns', value: 'NoAutoCampaigns'},
+    {title: 'No Brand Keywords', key: 'NoBrandKeywords', value: 'NoBrandKeywords'},
+    {title: 'No Broad Keywords', key: 'NoBroadKeywords', value: 'NoBroadKeywords'},
+    {title: 'No Category PTs', key: 'NoCategoryPTs', value: 'NoCategoryPTs'},
+    {title: 'No Keywords', key: 'NoKeywords', value: 'NoKeywords'},
+    {title: 'No Long Tail Keywords', key: 'NoLongTailKeywords', value: 'NoLongTailKeywords'},
+    {title: 'Obsolete Auto Campaign', key: 'ObsoleteAutoCampaign', value: 'ObsoleteAutoCampaign'},
+    {title: 'Should Change Keyword Bid ACoS', key: 'ShouldChangeKeywordBidACoS', value: 'ShouldChangeKeywordBidACoS'},
+    {
+        title: 'Should Change Keyword Bid Impressions',
+        key: 'ShouldChangeKeywordBidImpressions',
+        value: 'ShouldChangeKeywordBidImpressions'
+    },
+    {title: 'Should Change PT Bid ACoS', key: 'ShouldChangePTBidACoS', value: 'ShouldChangePTBidACoS'},
+    {
+        title: 'Should Change PT Bid Impressions',
+        key: 'ShouldChangePTBidImpressions',
+        value: 'ShouldChangePTBidImpressions'
+    },
+    {title: 'Should Create Keyword From CST', key: 'ShouldCreateKeywordFromCST', value: 'ShouldCreateKeywordFromCST'},
+    {
+        title: 'Should Create Negative Keyword From CST High ACoS',
+        key: 'ShouldCreateNegativeKeywordFromCSTHighACoS',
+        value: 'ShouldCreateNegativeKeywordFromCSTHighACoS'
+    },
+    {
+        title: 'Should Create Negative Keyword From CST No Sales',
+        key: 'ShouldCreateNegativeKeywordFromCSTNoSales',
+        value: 'ShouldCreateNegativeKeywordFromCSTNoSales'
+    },
+    {
+        title: 'Should Create Negative PT From CST High ACoS',
+        key: 'ShouldCreateNegativePTFromCSTHighACoS',
+        value: 'ShouldCreateNegativePTFromCSTHighACoS'
+    },
+    {
+        title: 'Should Create Negative PT From CST No Sales',
+        key: 'ShouldCreateNegativePTFromCSTNoSales',
+        value: 'ShouldCreateNegativePTFromCSTNoSales'
+    },
+    {title: 'Should Create PT From CST', key: 'ShouldCreatePTFromCST', value: 'ShouldCreatePTFromCST'},
+    {
+        title: 'Should Pause Keyword Duplicate From Customer Search Term',
+        key: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm',
+        value: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm'
+    },
+    {title: 'Should Pause Keyword Duplicate', key: 'ShouldPauseKeywordDuplicate', value: 'ShouldPauseKeywordDuplicate'},
+    {
+        title: 'Should Pause Keyword Duplicate Of PT',
+        key: 'ShouldPauseKeywordDuplicateOfPT',
+        value: 'ShouldPauseKeywordDuplicateOfPT'
+    },
+    {title: 'Should Pause Keyword High ACoS', key: 'ShouldPauseKeywordHighACoS', value: 'ShouldPauseKeywordHighACoS'},
+    {title: 'Should Pause Keyword No Sales', key: 'ShouldPauseKeywordNoSales', value: 'ShouldPauseKeywordNoSales'},
+    {title: 'Should Pause PT Duplicate', key: 'ShouldPausePTDuplicate', value: 'ShouldPausePTDuplicate'},
+    {title: 'Should Pause PT High ACoS', key: 'ShouldPausePTHighACoS', value: 'ShouldPausePTHighACoS'},
+    {title: 'Should Pause PT No Sales', key: 'ShouldPausePTNoSales', value: 'ShouldPausePTNoSales'},
+    {title: 'Too Much Broad Keywords', key: 'TooMuchBroadKeywords', value: 'TooMuchBroadKeywords'},
+]
 
 const numberMark = {
     'gt': '>',
@@ -146,6 +243,11 @@ const columnTitle = {
     [metricKeys['cpm']]: 'CPM',
     [metricKeys['bidCPC']]: 'Bid - CPC',
     [metricKeys['organicUnits']]: 'Organic Units',
+
+    'severity': 'Severity',
+    'group': 'Group',
+    'issueObjectType': 'Object Type',
+    'issueType': 'Type',
 }
 
 
@@ -154,6 +256,13 @@ export const FilterItem = ({filter}) => {
         return (
             <>
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}
+            </>
+        )
+    } else if (filter.filterBy === 'issueType') {
+        return (
+            <>
+                Type is one
+                of: {filter.value.map(item => _.find(issuesTypeEnums, {key: item}).title).join(', ')}
             </>
         )
     } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName' || filter.filterBy === 'adGroupName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {

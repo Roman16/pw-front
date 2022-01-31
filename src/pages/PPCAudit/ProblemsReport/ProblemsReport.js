@@ -5,6 +5,10 @@ import CustomTable from "../../../components/Table/CustomTable"
 import {scanningStatusEnums} from "../PPCAudit"
 import loaderImg from "../../../assets/img/loader.svg"
 import {history} from "../../../utils/history"
+import Pagination from "../../../components/Pagination/Pagination"
+import {issuesTypeEnums} from "../../PPCAutomate/Report/Filters/FilterItem"
+import _ from 'lodash'
+import TitleInfo from "../../../components/Table/renders/TitleInfo"
 
 const columns = [
     {
@@ -13,6 +17,7 @@ const columns = [
         key: 'severity',
         filter: true,
         sorter: true,
+        width: '120px',
     },
     {
         title: 'Group',
@@ -20,13 +25,17 @@ const columns = [
         key: 'group',
         filter: true,
         sorter: true,
+        width: '150px',
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
+        dataIndex: 'issueType',
+        key: 'issueType',
         filter: true,
         sorter: true,
+        width: '230px',
+        render: (text, item) => item.type ? _.find(issuesTypeEnums, {key: item.type}) ? _.find(issuesTypeEnums, {key: item.type}).title : item.type : ''
     },
     {
         title: 'Object',
@@ -34,31 +43,71 @@ const columns = [
         key: 'object',
         filter: true,
         sorter: true,
+        width: '200px',
+        render: text => text ? text.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Object Type',
-        dataIndex: 'object_type',
-        key: 'object_type',
+        dataIndex: 'issueObjectType',
+        key: 'issueObjectType',
         filter: true,
         sorter: true,
+        width: '200px',
+        render: (text, item) => item.object_type ? item.object_type.replace(/([a-z])([A-Z])/g, '$1 $2') : ''
     },
     {
         title: 'Issue',
         dataIndex: 'issue',
         key: 'issue',
-        filter: true,
-        sorter: true,
-    },
-    {
-        title: 'Reason',
-        dataIndex: 'reason',
-        key: 'reason',
-    },
+        // filter: true,
+        // sorter: true,
+        minWidth: '250px',
+        render: (text, item) => <div className={'issues-details'}>
+            <span dangerouslySetInnerHTML={{__html: text}}/>
 
+            <TitleInfo
+                info={item.issue_explain} position="left" type="info"
+            />
+        </div>
+    },
 ]
 
-const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters, fixProblemsHandler}) => {
+const ProblemsReport = ({
+                            data,
+                            paginationParams,
+                            filters,
+                            sorterColumn,
+                            requestProcessing,
+
+                            scanningStatus,
+                            onSetFilters,
+                            fixProblemsHandler,
+                            onChangePagination,
+                            onSetSorterColumn
+                        }) => {
     const processing = scanningStatus === scanningStatusEnums.PROCESSING
+
+    const changeSorterColumnHandler = (col) => {
+        if (sorterColumn.column === col) {
+            if (sorterColumn.type === 'asc') {
+                onSetSorterColumn({
+                    column: col,
+                    type: 'desc'
+                })
+            } else if (sorterColumn.type === 'desc') {
+                onSetSorterColumn({
+                    column: null,
+                    type: 'asc'
+
+                })
+            }
+        } else {
+            onSetSorterColumn({
+                column: col,
+                type: 'asc'
+            })
+        }
+    }
 
     return (<div className={`problems-report ${processing ? 'processing' : ''}`}>
         <Filters
@@ -72,18 +121,31 @@ const ProblemsReport = ({problems, filters, scanningStatus, onSetFilters, fixPro
 
         <div className="table-block">
             <CustomTable
-                // onChangeSorter={sortChangeHandler}
-                loading={processing}
-                dataSource={[]}
-                // sorterColumn={sorterColumn}
+                loading={processing || requestProcessing}
+                dataSource={data.issues}
+                sorterColumn={sorterColumn}
                 emptyComponent={<NoTableData/>}
 
                 columns={columns}
-                rowClassName={(item) => !item.viewed && 'new-report'}
+                rowClassName={(item) => item.severity ? item.severity.toLowerCase() : ''}
+
+                onChangeSorter={changeSorterColumnHandler}
             />
+            <Pagination
+                page={paginationParams.page}
+                pageSizeOptions={[10, 30, 50]}
+                pageSize={paginationParams.pageSize}
+                totalSize={+data.total_count}
+                listLength={data.issues && data.issues.length}
+                processing={processing || requestProcessing}
+                disabled={processing}
+
+                onChange={onChangePagination}
+            />
+
         </div>
 
-        {processing && <div className="load-data"><img src={loaderImg} alt=""/></div>}
+        {(processing) && <div className="load-data"><img src={loaderImg} alt=""/></div>}
     </div>)
 }
 

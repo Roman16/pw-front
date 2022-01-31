@@ -31,6 +31,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
         //     key: 'state',
         //     width: '65px',
         //     noTotal: true,
+        //     locked: true,
         //     render: (state) => <div className="switch-block">
         //         <Switch
         //             disabled={state === 'archived'}
@@ -52,10 +53,13 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
                 setState={setStateHandler}
             />
         },
-        skuAsinColumn,
+        {
+            ...skuAsinColumn,
+            locked: false,
+        },
         ...!selectedCampaign ? [{
             ...campaignColumn,
-            locked: true,
+            locked: false,
             width: '250px',
             render: (campaign, item) => (<Link
                 to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
@@ -71,7 +75,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
         }] : [],
         ...!selectedAdGroup ? [{
             ...adGroupColumn,
-            locked: true,
+            locked: false,
             width: '250px',
             render: (adGroup, item) => (
                 <Link
@@ -92,7 +96,7 @@ export const columnList = (setStateHandler, selectedCampaign, selectedAdGroup) =
         }] : [],
         {
             ...statusColumn,
-            locked: true,
+            locked: false,
         },
         impressionsColumn,
         clicksColumn,
