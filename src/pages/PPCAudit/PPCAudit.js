@@ -76,11 +76,8 @@ const PPCAudit = () => {
 
     const resetIssuesSettings = () => {
         setFilters([])
-
         setAuditIssues({issues: []})
-
         setSorterColumn({column: 'severity', type: 'asc'})
-
         setIssuesRequestParams({page: 1, pageSize: issuesRequestParams.pageSize})
     }
 
@@ -101,10 +98,7 @@ const PPCAudit = () => {
     }
 
     const selectProductHandler = product => {
-        resetIssuesSettings()
-        clearTimeout(timeoutId)
-
-        if (product.ppc_audit_indicator_state) {
+        if (product.ppc_audit_indicator_state !== null) {
             const state = product.ppc_audit_indicator_state.state
 
             if (state === scanningStatusEnums.PROCESSING ||
@@ -118,7 +112,9 @@ const PPCAudit = () => {
             } else if (state === scanningStatusEnums.FAILED) {
                 setScanningStatus(scanningStatusEnums.FAILED)
             }
-        } else setScanningStatus(undefined)
+        } else {
+            setScanningStatus(undefined)
+        }
 
         if (product.id !== selectedProduct.id) {
             setSelectedProduct(product)
@@ -128,6 +124,9 @@ const PPCAudit = () => {
                 ...product
             }))
         }
+
+        resetIssuesSettings()
+        clearTimeout(timeoutId)
 
         getActualCogs(product.id)
         getAuditDetails(product.id, 1, [], {column: 'severity', type: 'asc'})
@@ -277,6 +276,8 @@ const PPCAudit = () => {
                 } else {
                     setScanningStatus(undefined)
                 }
+            } else {
+                setScanningStatus(undefined)
             }
         } catch (e) {
             setScanningStatus(undefined)
