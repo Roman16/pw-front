@@ -20,7 +20,7 @@ function getProducts({pageSize, page, searchStr = '', onlyOptimization, cancelTo
 }
 
 function getAuditIssues({id, page, pageSize, sorterColumn, filters}, cancelToken) {
-    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}${filtersHandler([...filters.map(filter => {
+    return api('get', `${ppcAuditUrls.issues(id)}?size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${columnsKey[sorterColumn.column] || sorterColumn.column}` : ''}${filtersHandler([...filters.map(filter => {
         if (columnsKey[filter.filterBy]) filter = {...filter, filterBy: columnsKey[filter.filterBy]}
         return filter
     })])}`, undefined, undefined, cancelToken)

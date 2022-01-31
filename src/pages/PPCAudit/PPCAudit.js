@@ -12,6 +12,7 @@ import {ppcAuditServices} from "../../services/ppc.audit.services"
 import {productsServices} from "../../services/products.services"
 import StrategiesDescription from "../PPCAutomate/OptimizationForAdmin/StrategiesDescription/StrategiesDescription"
 import axios from "axios"
+import {useSelector} from "react-redux"
 
 const CancelToken = axios.CancelToken
 let detailsSource = null
@@ -70,17 +71,17 @@ const PPCAudit = () => {
             issues: [],
         })
 
+    const importStatus = useSelector(state => state.user.importStatus)
+
+
     const resetIssuesSettings = () => {
-        setAuditIssues({issues: []})
-        setSorterColumn({
-            column: 'severity',
-            type: 'asc'
-        })
         setFilters([])
-        setIssuesRequestParams({
-            page: 1,
-            pageSize: 10
-        })
+
+        setAuditIssues({issues: []})
+
+        setSorterColumn({column: 'severity', type: 'asc'})
+
+        setIssuesRequestParams({page: 1, pageSize: issuesRequestParams.pageSize})
     }
 
     const getProducts = async () => {
@@ -100,6 +101,9 @@ const PPCAudit = () => {
     }
 
     const selectProductHandler = product => {
+        resetIssuesSettings()
+        clearTimeout(timeoutId)
+
         if (product.ppc_audit_indicator_state) {
             const state = product.ppc_audit_indicator_state.state
 
@@ -125,14 +129,8 @@ const PPCAudit = () => {
             }))
         }
 
-
         getActualCogs(product.id)
-
-        resetIssuesSettings()
-
-        clearTimeout(timeoutId)
-
-        getAuditDetails(product.id)
+        getAuditDetails(product.id, 1, [], {column: 'severity', type: 'asc'})
     }
 
 
@@ -212,7 +210,7 @@ const PPCAudit = () => {
         setStopRequestProcessing(false)
     }
 
-    const getAuditIssues = async (id) => {
+    const getAuditIssues = async (id, page, filter, sort) => {
         setGetIssuesProcessing(true)
 
         issuesSource && issuesSource.cancel()
@@ -221,9 +219,10 @@ const PPCAudit = () => {
         try {
             const res = await ppcAuditServices.getAuditIssues({
                 id: id || selectedProduct.id,
-                ...issuesRequestParams,
-                sorterColumn,
-                filters,
+                pageSize: issuesRequestParams.pageSize,
+                page: page || issuesRequestParams.page,
+                sorterColumn: sort || sorterColumn,
+                filters: filter || filters,
             }, issuesSource.token)
 
             setAuditIssues(res.result)
@@ -240,7 +239,7 @@ const PPCAudit = () => {
         setGetIssuesProcessing(false)
     }
 
-    const getAuditDetails = async (id) => {
+    const getAuditDetails = async (id, page, filters, sorter) => {
         detailsSource && detailsSource.cancel()
         detailsSource = CancelToken.source()
 
@@ -267,7 +266,7 @@ const PPCAudit = () => {
                         id: ppc_audit_job.product_id
                     }))
 
-                    getAuditIssues(id)
+                    getAuditIssues(id, page, filters, sorter)
                 } else if (ppc_audit_job.status === scanningStatusEnums.FAILED) {
                     setScanningStatus(scanningStatusEnums.FAILED)
 
@@ -301,13 +300,12 @@ const PPCAudit = () => {
     }
 
     useEffect(() => {
-        getProducts()
-    }, [productsRequestParams])
+        if (importStatus.ppc_audit && importStatus.ppc_audit.required_parts_ready) getProducts()
+    }, [productsRequestParams, importStatus])
 
     useEffect(() => {
         scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
     }, [filters, sorterColumn, issuesRequestParams])
-
 
     return (
         <div className="scanner-page">

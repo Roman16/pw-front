@@ -101,7 +101,7 @@ const StartScanning = ({
             visible={visibleCogsWindow}
             productId={product && product.id}
             product={product}
-            onSetCogs={onUpdateCogs}
+            onSetCogs={() => onUpdateCogs(product.id)}
             setCurrentCogs={() => {
             }}
             onClose={() => {
