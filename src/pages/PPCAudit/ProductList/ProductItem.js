@@ -104,6 +104,7 @@ const ScanningIndicator = ({status}) => {
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning is in progress'}
+        overlayClassName={'scanning-status-tooltip'}
     >
         <img src={loaderImg} alt=""/>
     </InformationTooltip>
@@ -111,6 +112,7 @@ const ScanningIndicator = ({status}) => {
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning complete'}
+        overlayClassName={'scanning-status-tooltip'}
     >
         <div className="indicator finished"/>
     </InformationTooltip>
@@ -118,6 +120,7 @@ const ScanningIndicator = ({status}) => {
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning failed'}
+        overlayClassName={'scanning-status-tooltip'}
     >
         <div className="indicator failed"/>
     </InformationTooltip>
@@ -125,6 +128,7 @@ const ScanningIndicator = ({status}) => {
         type={'custom'}
         position={'bottomRight'}
         description={'Scanning canceled by user'}
+        overlayClassName={'scanning-status-tooltip'}
     >
         <div className="indicator expired"/>
     </InformationTooltip>
