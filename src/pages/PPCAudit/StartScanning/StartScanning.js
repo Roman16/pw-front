@@ -16,7 +16,8 @@ const StartScanning = ({
                            startProcessing,
                            onStart,
                            onUpdateCogs,
-                           onOpenStrategyDescription
+                           onOpenStrategyDescription,
+                           loadingProducts
                        }) => {
 
     const [visibleCogsWindow, setVisibleCogsWindow] = useState(false),
@@ -31,7 +32,7 @@ const StartScanning = ({
                 Enter product information that will help PPC Audit <br/> to better analyze your Advertising performance
             </p>
 
-            <div className="form-group cogs">
+            <div className={`form-group cogs ${loadingProducts ? 'disabled' : ''}`}>
                 <label htmlFor="">
                     Enter COGS
                 </label>
@@ -39,7 +40,7 @@ const StartScanning = ({
                 <InputCurrency
                     disabled
                     value={product.cogs_value}
-                    onClick={() => setVisibleCogsWindow(true)}
+                    onClick={() => !loadingProducts && setVisibleCogsWindow(true)}
                 />
             </div>
 
@@ -54,6 +55,7 @@ const StartScanning = ({
                     getPopupContainer={trigger => trigger}
                     value={optimizationStrategy}
                     onChange={(value) => setOptimizationStrategy(value)}
+                    disabled={loadingProducts}
                 >
                     {strategies.map(item => (
                         <Option value={item.key}>
@@ -73,6 +75,7 @@ const StartScanning = ({
                 </label>
 
                 <InputCurrency
+                    disabled={loadingProducts}
                     value={targetAcos}
                     typeIcon={'percent'}
                     onChange={(value) => setTargetAcos(value)}
@@ -85,7 +88,7 @@ const StartScanning = ({
                     optimization_strategy: optimizationStrategy,
                     ...optimizationStrategy === 'AchieveTargetACoS' && {target_acos: targetAcos / 100}
                 })}
-                disabled={!product.cogs_value || !optimizationStrategy || (optimizationStrategy === 'AchieveTargetACoS' && !targetAcos) || startProcessing}
+                disabled={!product.cogs_value || !optimizationStrategy || (optimizationStrategy === 'AchieveTargetACoS' && !targetAcos) || startProcessing || loadingProducts}
             >
                 Start scanning
 
