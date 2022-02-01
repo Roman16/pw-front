@@ -71,9 +71,6 @@ const PPCAudit = () => {
             issues: [],
         })
 
-    const importStatus = useSelector(state => state.user.importStatus)
-
-
     const resetIssuesSettings = () => {
         setFilters([])
         setAuditIssues({issues: []})
@@ -83,6 +80,8 @@ const PPCAudit = () => {
 
     const getProducts = async () => {
         setProductsFetchProcessing(true)
+        setScanningStatus(undefined)
+        setSelectedProduct({})
 
         try {
             const {result} = await ppcAuditServices.getProducts(productsRequestParams)
@@ -301,8 +300,8 @@ const PPCAudit = () => {
     }
 
     useEffect(() => {
-        if (importStatus.ppc_audit && importStatus.ppc_audit.required_parts_ready) getProducts()
-    }, [productsRequestParams, importStatus])
+         getProducts()
+    }, [productsRequestParams])
 
     useEffect(() => {
         scanningStatus === scanningStatusEnums.FINISHED && getAuditIssues()
@@ -332,6 +331,7 @@ const PPCAudit = () => {
                 <StartScanning
                     product={selectedProduct}
                     startProcessing={startRequestProcessing}
+                    loadingProducts={productsFetchProcessing}
 
                     onUpdateCogs={getActualCogs}
                     onStart={startScanningHandler}

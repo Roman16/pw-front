@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {useDispatch} from "react-redux"
 import ModalWindow from "../ModalWindow"
 import {userActions} from "../../../actions/user.actions"
@@ -50,6 +50,7 @@ const importTypes = [
 const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastName, productList}) => {
     const [currentService, setCurrentService] = useState('')
     const dispatch = useDispatch()
+    const prevVisibleRef = useRef();
 
     let requiredParts = {}
 
@@ -71,6 +72,10 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     }
 
     useEffect(() => {
+        if (prevVisibleRef.current && !visible) document.location.reload()
+
+        prevVisibleRef.current = visible;
+
         visible && checkStatus()
 
         intervalId = setInterval(() => {
@@ -105,7 +110,6 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
             if (e.key === 'importStatus') checkStatus()
         })
     }, [])
-
 
     useEffect(() => {
         if (pathname.includes('/ppc/automation') || pathname.includes('/ppc/report')) setCurrentService('optimization')
