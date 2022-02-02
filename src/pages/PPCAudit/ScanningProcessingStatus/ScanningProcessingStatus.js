@@ -42,7 +42,7 @@ const ScanningProcessingStatus = ({scanningStatus, stopProcessing, product, onSt
                         </p>}
                 </div>
 
-                <button className={'btn grey'} onClick={() => setVisibleWindow(true)}>Scan again</button>
+                <button className={'btn default'} onClick={() => setVisibleWindow(true)}>Scan again</button>
             </div>
 
             <ScanAgainWindow
