@@ -1,17 +1,33 @@
 import {
-    acosColumn, adCvrColumn, adOrdersColumn,
-    adSalesColumn,
-    adSpendColumn, adUnitsColumn, budgetAllocationColumn,
-    clicksColumn, cpaColumn,
+    acosColumn,
+    adCvrColumn,
+    adOrdersColumn,
+    adSalesColumn, adSalesOtherSKUColumn, adSalesSameSKUColumn,
+    adSpendColumn,
+    adUnitsColumn,
+    budgetAllocationColumn,
+    clicksColumn,
+    cpaColumn,
     cpcColumn,
+    CPMColumn,
     ctrColumn,
-    impressionsColumn, keywordPTColumn, matchTypeColumn, roasColumn, salesShareColumn, statusColumn
+    ICVRColumn,
+    impressionsColumn,
+    keywordPTColumn,
+    matchTypeColumn,
+    roasColumn,
+    RPCColumn,
+    RPIColumn,
+    salesShareColumn,
+    statusColumn
 } from "../../components/TableList/tableColumns"
 import React from "react"
 import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-export const expandedRowRender = (props, showTargetingsColumns, setStateHandler, columnsBlackList) => {
+const location = 'searchTerms'
+
+export const expandedRowRender = (props, showTargetingsColumns, setStateHandler, columnsBlackList, columnsOrder) => {
     const columns = [
         {
             width: '400px',
@@ -66,20 +82,27 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
                 width: '150px',
                 render: (bid) => <InputCurrency disabled value={bid} type={'text'}/>
             }] : [],
+
         impressionsColumn,
         clicksColumn,
         ctrColumn,
         adSpendColumn,
         cpcColumn,
+        CPMColumn,
+        budgetAllocationColumn,
+        adOrdersColumn,
+        cpaColumn,
+        adCvrColumn,
+        ICVRColumn,
+        adUnitsColumn,
         adSalesColumn,
         acosColumn,
-        adCvrColumn,
-        cpaColumn,
-        adOrdersColumn,
-        adUnitsColumn,
         roasColumn,
+        RPCColumn,
+        RPIColumn,
+        adSalesSameSKUColumn,
+        adSalesOtherSKUColumn,
         salesShareColumn,
-        budgetAllocationColumn,
     ]
 
 
@@ -87,19 +110,20 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
         props.targetingsData && props.targetingsData.map(target => (
                 <div>
                     {columns
-                        .filter(column => !columnsBlackList.includes(column.key))
+                        .filter(column => !columnsBlackList.includes(column.dataIndex))
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                         .map((item, index) => {
-                            const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
-                            return (
-                                <div
-                                    className={`table-body__field ${item.align || ''}`}
-                                    style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                                >
-                                    {item.render && item.render(target[item.dataIndex], target)}
-                                </div>
-                            )
-                        }
-                    )}
+                                const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
+                                return (
+                                    <div
+                                        className={`table-body__field ${item.align || ''}`}
+                                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                    >
+                                        {item.render && item.render(target[item.dataIndex], target)}
+                                    </div>
+                                )
+                            }
+                        )}
                 </div>
             )
         )

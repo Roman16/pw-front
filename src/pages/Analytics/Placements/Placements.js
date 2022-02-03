@@ -370,7 +370,7 @@ const Placements = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails) : undefined}
+                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList, columnsOrder) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails, columnsOrder) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onDownloadCSV={downloadCSVHandler}

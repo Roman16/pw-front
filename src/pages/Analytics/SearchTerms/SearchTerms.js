@@ -396,7 +396,7 @@ const SearchTerms = () => {
                     onChange={changeSegmentHandler}
                 />}
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue === 'targetings'}
-                expandedRowRender={(props, columnsBlackList) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList)}
+                expandedRowRender={(props, columnsBlackList, columnsOrder) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList, columnsOrder)}
 
                 onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}

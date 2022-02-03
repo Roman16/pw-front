@@ -37,7 +37,6 @@ const getColumns = (selectedCampaign, stateDetails, segment) => ([
             width: '250px',
             sorter: false,
             noTotal: true,
-            locked: true,
             render: (text, item) => {
                 if (segment !== 'none') text = item.bidding_strategy_segmented && item.bidding_strategy_segmented[0]
 
@@ -55,7 +54,6 @@ const getColumns = (selectedCampaign, stateDetails, segment) => ([
             key: 'bid_adjustment',
             width: '150px',
             sorter: false,
-            locked: true,
             noTotal: true,
             render: (bid_adjustment, item) => {
                 if (segment !== 'none') bid_adjustment = item.bid_adjustment_segmented && item.bid_adjustment_segmented[0]
@@ -98,4 +96,7 @@ const getColumns = (selectedCampaign, stateDetails, segment) => ([
     {...salesShareColumn, sorter: false},
 ])
 
-export const PColumnsList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})
+export const PColumnsList = (...args) => ({
+    columnsWithFilters: getColumns(...args),
+    allColumns: getColumns(true, {advertisingType: 'SponsoredDisplay'})
+})

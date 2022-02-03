@@ -46,7 +46,6 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
     ...(segment === 'targetings' || openedSearchTerms.length > 0) ? [
         {
             ...campaignColumn,
-            locked: true,
             noTotal: true,
             filter: false,
             sorter: false,
@@ -60,17 +59,15 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
             width: '250px',
             sorter: false,
             filter: false,
-            locked: true,
             noTotal: true,
             render: () => ''
         },
         {
-            ...matchTypeColumn, filter: false, render: () => '', sorter: false,
+            ...matchTypeColumn, filter: false, render: () => '', sorter: false,locked:false
         },
         {
             ...statusColumn,
             filter: false,
-            locked: true,
             sorter: false,
             render: () => ''
         },
@@ -108,4 +105,4 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
     salesShareColumn,
 ])
 
-export const STColumnsList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})
+export const STColumnsList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns('targetings')})

@@ -187,7 +187,7 @@ const TableList = ({
     useEffect(() => {
         deselectAllRows()
     }, [filters, tableRequestParams, localSorterColumn])
-
+    console.log(columnsOrder)
     return (
         <section className={'list-section'}>
             <div className={'table-section'}>
@@ -269,7 +269,7 @@ const TableList = ({
                     }
 
                     fixedColumns={fixedColumns}
-                    expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
+                    expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList, columnsOrder) : undefined}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
                     revertSortingColumns={numberColumns}
