@@ -2,12 +2,13 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
 
-const localStorageVersion = '21_6'
+const localStorageVersion = '22_1'
 
 if (!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
     localStorage.removeItem('analyticsMetricsState')
     localStorage.removeItem('analyticsFiltersList')
     localStorage.removeItem('analyticsChartState')
+    localStorage.removeItem('analyticsColumnsOrder')
     localStorage.setItem('analyticsLocalStorageVersion', localStorageVersion)
 }
 

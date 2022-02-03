@@ -187,7 +187,7 @@ const TableList = ({
     useEffect(() => {
         deselectAllRows()
     }, [filters, tableRequestParams, localSorterColumn])
-    console.log(columnsOrder)
+
     return (
         <section className={'list-section'}>
             <div className={'table-section'}>
@@ -265,7 +265,7 @@ const TableList = ({
 
                     columns={columns.columnsWithFilters
                         .filter(column => !localColumnBlackList.includes(column.key))
-                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.key) - columnsOrder[location].findIndex(i => i === secondColumn.key) : true)
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                     }
 
                     fixedColumns={fixedColumns}

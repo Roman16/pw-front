@@ -44,6 +44,7 @@ const getColumns = (location, isParent) => [
         width: '150px',
         sorter: true,
         noTotal: true,
+        locked: !isParent,
         filter: true,
         ...renderNumberField('number', false)
     },
@@ -54,6 +55,7 @@ const getColumns = (location, isParent) => [
         width: '150px',
         sorter: true,
         filter: true,
+        locked: !isParent,
         align: 'right',
         ...renderNumberField()
     },
