@@ -79,20 +79,33 @@ const Payment = (props) => {
                 if (res.error) {
                     notification.error({title: res.error.message})
                 } else if (res.paymentMethod) {
-                    await zthServices.payBatch({
-                        jobs_ids: [props.batchId],
-                        payment_token: res.paymentMethod.id
-                    })
+                    setTimeout(() => {
+                        zthServices.payBatch({
+                            jobs_ids: [props.batchId],
+                            payment_token: res.paymentMethod.id
+                        })
+                            .then(() => {
+                                history.push('/zero-to-hero/settings/payment-success')
+                            })
+                            .catch(e => {
+                                console.log(e)
+                            })
 
-
-                    history.push('/zero-to-hero/settings/payment-success')
+                    }, 1500)
                 }
             } else {
-                await zthServices.payBatch({
-                    jobs_ids: [props.batchId],
-                    payment_token: cardsList[selectedCard].id
-                })
-                history.push('/zero-to-hero/settings/payment-success')
+                setTimeout(async () => {
+                    await zthServices.payBatch({
+                        jobs_ids: [props.batchId],
+                        payment_token: cardsList[selectedCard].id
+                    })
+                        .then(() => {
+                            history.push('/zero-to-hero/settings/payment-success')
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
+                }, 1500)
             }
         } catch ({response: {data}}) {
             if (data.error_code === 'authentication_required') {
