@@ -26,7 +26,7 @@ import {
 } from "../../components/TableList/tableColumns"
 
 
-export const columnList = (setStateHandler) => ([
+const getColumns = (setStateHandler) => ([
         {
             title: 'Portfolio',
             dataIndex: 'portfolioName',
@@ -83,3 +83,5 @@ export const columnList = (setStateHandler) => ([
         adProfitColumn
     ]
 )
+
+export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})

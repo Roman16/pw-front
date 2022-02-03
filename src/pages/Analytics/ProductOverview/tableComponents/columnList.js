@@ -21,7 +21,7 @@ import {
 } from "../../components/TableList/tableColumns"
 import './ProductMetrics.less'
 
-export const columnList = (location, isParent) => [
+const getColumns = (location, isParent) => [
     ...isParent ? [
         {
             title: 'Product',
@@ -172,3 +172,5 @@ export const columnList = (location, isParent) => [
     grossProfitColumn,
     adProfitColumn
 ]
+
+export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})

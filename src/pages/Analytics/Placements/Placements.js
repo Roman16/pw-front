@@ -125,7 +125,7 @@ const Placements = () => {
                                     item.segmentData = item.advertisingType_segmented.map((key, index) => {
                                         const targetObj = {advertisingType: key}
 
-                                        columns.forEach(column => {
+                                        columns.columnsWithFilters.forEach(column => {
                                             targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
                                         })
 

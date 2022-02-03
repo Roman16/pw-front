@@ -23,7 +23,7 @@ import {
 } from "../../components/TableList/tableColumns"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
-export const columnList = (location) => [
+const getColumns = (location) => [
     {
         title: 'Product',
         dataIndex: 'product_name_sku_asin',
@@ -205,5 +205,7 @@ export const columnList = (location) => [
     grossProfitColumn,
     adProfitColumn
 ]
+
+export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})
 
 

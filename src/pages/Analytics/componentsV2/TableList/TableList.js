@@ -208,7 +208,7 @@ const TableList = ({
                     />}
 
                     {showFilters && <TableFilters
-                        columns={columns}
+                        columns={columns.columnsWithFilters}
                         filters={filters}
                         locationKey={location}
                         searchField={searchField}
@@ -217,10 +217,10 @@ const TableList = ({
                     {moreActions}
 
                     {columnSelect && <ColumnsSelect
-                        columns={columns}
-                        defaultColumnsList={columns}
+                        columns={columns.allColumns}
+                        defaultColumnsList={columns.allColumns}
                         columnsBlackList={localColumnBlackList}
-                        columnsOrder={columnsOrder[location] || columns.map(i => i.key)}
+                        columnsOrder={columnsOrder[location] || columns.allColumns.map(i => i.key)}
 
                         onChangeBlackList={changeBlackListHandler}
                         onChangeColumnsOrder={onChangeColumnsOrder}
@@ -257,13 +257,13 @@ const TableList = ({
                     {...showTotal && {
                         totalDataSource: {
                             ..._.mapValues(metricsData, (value) => (+value.value)),
-                            ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+                            ...{[showRowSelection ? columns.columnsWithFilters[1].dataIndex : columns.columnsWithFilters[0].dataIndex]: `Total: ${tableData.total_count}`}
 
                         }
                     }}
                     sorterColumn={localSorterColumn}
 
-                    columns={columns
+                    columns={columns.columnsWithFilters
                         .filter(column => !localColumnBlackList.includes(column.key))
                         .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.key) - columnsOrder[location].findIndex(i => i === secondColumn.key) : true)
                     }

@@ -168,7 +168,7 @@ const SearchTerms = () => {
                                 item.targetingsData = item.targetingId.map((target, index) => {
                                     const targetObj = {targetingId: target}
 
-                                    columns.forEach(column => {
+                                    columns.columnsWithFilters.forEach(column => {
                                         targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
                                     })
 
