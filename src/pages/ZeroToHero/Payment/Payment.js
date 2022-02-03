@@ -94,8 +94,8 @@ const Payment = (props) => {
                     }, 1500)
                 }
             } else {
-                setTimeout(async () => {
-                    await zthServices.payBatch({
+                setTimeout(() => {
+                    zthServices.payBatch({
                         jobs_ids: [props.batchId],
                         payment_token: cardsList[selectedCard].id
                     })
