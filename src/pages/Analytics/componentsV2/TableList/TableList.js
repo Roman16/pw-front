@@ -220,7 +220,7 @@ const TableList = ({
                         columns={columns.allColumns}
                         defaultColumnsList={columns.allColumns}
                         columnsBlackList={localColumnBlackList}
-                        columnsOrder={columnsOrder[location] || columns.allColumns.map(i => i.key)}
+                        columnsOrder={columnsOrder[location] || columns.allColumns.map(i => i.dataIndex)}
 
                         onChangeBlackList={changeBlackListHandler}
                         onChangeColumnsOrder={onChangeColumnsOrder}
@@ -264,7 +264,7 @@ const TableList = ({
                     sorterColumn={localSorterColumn}
 
                     columns={columns.columnsWithFilters
-                        .filter(column => !localColumnBlackList.includes(column.key))
+                        .filter(column => !localColumnBlackList.includes(column.dataIndex))
                         .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                     }
 

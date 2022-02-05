@@ -20,7 +20,7 @@ const {Option} = Select
 
 const CardNumberElementStyles = {
     base: {
-        color: '#5B586F',
+        color: '#46435C',
         fontWeight: '300',
         fontSize: window.devicePixelRatio === 2 ? '12px' : '14px',
         height: '32px',
