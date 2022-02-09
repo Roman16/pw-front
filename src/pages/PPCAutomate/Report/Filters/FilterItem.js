@@ -248,6 +248,7 @@ const columnTitle = {
     'group': 'Group',
     'issueObjectType': 'Object Type',
     'issueType': 'Type',
+    'total_returns_count': 'Returns',
 }
 
 
@@ -322,6 +323,7 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'calculatedBid' ||
         filter.filterBy === 'calculatedBudget' ||
         filter.filterBy === 'product_ads_count' ||
+        filter.filterBy === 'total_returns_count' ||
         filter.filterBy === 'profit') {
         return (
             <>

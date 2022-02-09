@@ -172,6 +172,7 @@ const containsVariations = {
     'product_ads_count': numberVariations,
     'calculatedBid': numberVariations,
     'calculatedBudget': numberVariations,
+    'total_returns_count': numberVariations,
     [metricKeys['icvr']]: numberVariations,
     [metricKeys['rpc']]: numberVariations,
     [metricKeys['rpi']]: numberVariations,
@@ -509,6 +510,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'product_ads_count' ||
                     filterBy === 'campaigns_count' ||
                     filterBy === 'campaigns_count' ||
+                    filterBy === 'total_returns_count' ||
                     filterBy === metricKeys['organicRate'] ||
                     filterBy === metricKeys['organicUnits'] ||
                     filterBy === 'impressions') &&
