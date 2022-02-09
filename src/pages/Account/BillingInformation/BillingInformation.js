@@ -7,6 +7,7 @@ import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import _ from 'lodash'
 import axios from "axios"
 import {notification} from "../../../components/Notification"
+import {toast} from 'react-toastify'
 
 
 const CancelToken = axios.CancelToken
@@ -137,6 +138,15 @@ const BillingInformation = () => {
 
     useEffect(() => {
         getPaymentMethodList()
+
+        notification.info({
+            title: 'We’re sorry!',
+            description: 'We do not accept Pioneer cards yet, but our team works on this issue. Until we deal with the problem, please, do not enter the Pioneer card number because the payment will not be completed.'
+        })
+
+        return (() => {
+            toast.dismiss()
+        })
     }, [])
 
     return (
