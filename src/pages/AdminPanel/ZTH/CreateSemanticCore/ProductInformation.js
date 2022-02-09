@@ -63,7 +63,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                     <label htmlFor="">Brand name and alises:</label>
 
                     <ExcelTable
-                        data={semanticData.productInformation.brandNames.length > 0 ? semanticData.productInformation.brandNames.map(i => ({text: i})) : [{text: ''}]}
+                        data={semanticData.productInformation.brandNames?.length > 0 ? semanticData.productInformation.brandNames.map(i => ({text: i})) : [{text: ''}]}
                         columns={brandNamesColumns}
                         onChange={(data) => changeTableHandler(data, 'brandNames', 'productInformation')}
                     />
@@ -119,7 +119,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             {semanticData.zeroToHero.createTCACampaign && <div className="form-group w-25">
                 <label htmlFor="">Add additional Top Competitors ASINs:</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.additionalTopCompetitorASINs.length > 0 ? semanticData.zeroToHero.additionalTopCompetitorASINs.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.additionalTopCompetitorASINs?.length > 0 ? semanticData.zeroToHero.additionalTopCompetitorASINs.map(i => ({text: i})) : [{text: ''}]}
                     columns={TCAColumns}
                     onChange={(data) => changeTableHandler(data, 'additionalTopCompetitorASINs')}
                 />
@@ -135,7 +135,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             {semanticData.zeroToHero.createTPKPCampaign && <div className="form-group w-25">
                 <label htmlFor="">Keywords for TPKP campaign:</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.keywordsForTPKPCampaign.length > 0 ? semanticData.zeroToHero.keywordsForTPKPCampaign.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.keywordsForTPKPCampaign?.length > 0 ? semanticData.zeroToHero.keywordsForTPKPCampaign.map(i => ({text: i})) : [{text: ''}]}
                     columns={TPKPColumns}
                     onChange={(data) => changeTableHandler(data, 'keywordsForTPKPCampaign')}
                 />
@@ -152,7 +152,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             {semanticData.zeroToHero.createDefenseCampaign && <div className="form-group w-25">
                 <label htmlFor="">ASINs to Defend (create PATs in Defense ASINs campaign):</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.asinsForDefenseCampaign.length > 0 ? semanticData.zeroToHero.asinsForDefenseCampaign.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.asinsForDefenseCampaign?.length > 0 ? semanticData.zeroToHero.asinsForDefenseCampaign.map(i => ({text: i})) : [{text: ''}]}
                     columns={defenseColumns}
                     onChange={(data) => changeTableHandler(data, 'asinsForDefenseCampaign')}
                 />
@@ -176,7 +176,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             <div className="form-group w-50">
                 <label htmlFor="">Keywords to search on Amazon for Suggested ASINs (SA campaigns):</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.length > 0 ? semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.keywordsToSearchForSuggestedASINs?.length > 0 ? semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.map(i => ({text: i})) : [{text: ''}]}
                     columns={keywordsToSearchForSuggestedASINsColumns}
                     onChange={(data) => changeTableHandler(data, 'keywordsToSearchForSuggestedASINs')}
                 />
@@ -188,7 +188,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                     href="https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden"
                     target="_blank">https://www.amazon.com/gp/bestsellers/lawn-garden/553966/ref=pd_zg_hrsr_lawn-garden</a>):</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.categoryLinksToParseASINsFrom.length > 0 ? semanticData.zeroToHero.categoryLinksToParseASINsFrom.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.categoryLinksToParseASINsFrom?.length > 0 ? semanticData.zeroToHero.categoryLinksToParseASINsFrom.map(i => ({text: i})) : [{text: ''}]}
                     columns={categoryLinksToParseASINsFromColumns}
                     onChange={(data) => changeTableHandler(data, 'categoryLinksToParseASINsFrom')}
                 />

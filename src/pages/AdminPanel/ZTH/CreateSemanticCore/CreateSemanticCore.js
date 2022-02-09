@@ -123,6 +123,7 @@ const CreateSemanticCore = () => {
             reader.readAsText(file, 'UTF-8')
             reader.onload = (event) => {
                 const ips = JSON.parse((event.target).result)
+                console.log(ips)
                 setSemanticData({...semanticData, ...ips})
 
                 setLoading(false)
