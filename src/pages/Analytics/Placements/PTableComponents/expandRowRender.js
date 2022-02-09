@@ -69,7 +69,7 @@ export const expandedRowRender = (props, columnsBlackList, selectedCampaign, sta
                 <div>
                     {columns
                         .filter(column => !columnsBlackList.includes(column.key))
-                        // .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                         .map((item, index) => {
                                 const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
                                 return (

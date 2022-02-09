@@ -56,10 +56,10 @@ const TableList = ({
         [selectedAllRows, setSelectedAllRows] = useState(false)
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
-    // const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
+    const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
 
     const [columnsBlackList, setColumnsBlackList] = useState(columnsBlackListFromLocalStorage ? columnsBlackListFromLocalStorage : {})
-    // const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
+    const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
 
     const dispatch = useDispatch()
 
@@ -135,13 +135,13 @@ const TableList = ({
         })
     }
 
-    // const onChangeColumnsOrder = (list) => {
-    //     setColumnsOrder({
-    //         ...columnsOrder,
-    //         [location]: list
-    //     })
-    //
-    // }
+    const onChangeColumnsOrder = (list) => {
+        setColumnsOrder({
+            ...columnsOrder,
+            [location]: list
+        })
+
+    }
 
 
     const paginationChangeHandler = (params) => {
@@ -155,9 +155,9 @@ const TableList = ({
         localStorage.setItem('analyticsColumnsBlackList', JSON.stringify(columnsBlackList))
     }, [columnsBlackList])
 
-    // useEffect(() => {
-    //     localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
-    // }, [columnsOrder])
+    useEffect(() => {
+        localStorage.setItem('analyticsColumnsOrder', JSON.stringify(columnsOrder))
+    }, [columnsOrder])
 
 
     const selectAllRows = () => {
@@ -197,7 +197,7 @@ const TableList = ({
                         location={location}
                         selectedRows={selectedRows}
                         selectedAll={selectedAllRows}
-                        columns={columns.columnsWithFilters}
+                        columns={columns}
 
                         onClose={() => {
                             setSelectedAllRows(false)
@@ -217,9 +217,13 @@ const TableList = ({
                     {moreActions}
 
                     {columnSelect && <ColumnsSelect
-                        columns={columns.columnsWithFilters}
+                        columns={columns.allColumns}
+                        defaultColumnsList={columns.allColumns}
                         columnsBlackList={localColumnBlackList}
+                        columnsOrder={columnsOrder[location] || columns.allColumns.map(i => i.dataIndex)}
+
                         onChangeBlackList={changeBlackListHandler}
+                        onChangeColumnsOrder={onChangeColumnsOrder}
                     />}
 
                     <ExpandWorkplace/>
@@ -253,19 +257,19 @@ const TableList = ({
                     {...showTotal && {
                         totalDataSource: {
                             ..._.mapValues(metricsData, (value) => (+value.value)),
-                            ...{[showRowSelection ? columns.columnsWithFilters[1]?.dataIndex : columns.columnsWithFilters[0]?.dataIndex]: `Total: ${tableData.total_count}`}
+                            ...{[showRowSelection ? columns.columnsWithFilters[1].dataIndex : columns.columnsWithFilters[0].dataIndex]: `Total: ${tableData.total_count}`}
 
                         }
                     }}
                     sorterColumn={localSorterColumn}
 
                     columns={columns.columnsWithFilters
-                        .filter(column => !localColumnBlackList.includes(column.key))
-                        // .sort((firstColumn, secondColumn) => metricsOrder[location] ? metricsOrder[location].findIndex(i => i === firstColumn.key) - metricsOrder[location].findIndex(i => i === secondColumn.key) : true)
+                        .filter(column => !localColumnBlackList.includes(column.dataIndex))
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                     }
 
                     fixedColumns={fixedColumns}
-                    expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList) : undefined}
+                    expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList, columnsOrder) : undefined}
                     openedRow={openedRow}
                     onChangeSorter={sortChangeHandler}
                     revertSortingColumns={numberColumns}
