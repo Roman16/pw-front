@@ -25,7 +25,9 @@ import React from "react"
 import {Link} from "react-router-dom"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
-export const expandedRowRender = (props, showTargetingsColumns, setStateHandler, columnsBlackList) => {
+const location = 'searchTerms'
+
+export const expandedRowRender = (props, showTargetingsColumns, setStateHandler, columnsBlackList, columnsOrder) => {
     const columns = [
         {
             width: '400px',
@@ -80,6 +82,7 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
                 width: '150px',
                 render: (bid) => <InputCurrency disabled value={bid} type={'text'}/>
             }] : [],
+
         impressionsColumn,
         clicksColumn,
         ctrColumn,
@@ -107,19 +110,20 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
         props.targetingsData && props.targetingsData.map(target => (
                 <div>
                     {columns
-                        .filter(column => !columnsBlackList.includes(column.key))
+                        .filter(column => !columnsBlackList.includes(column.dataIndex))
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                         .map((item, index) => {
-                            const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
-                            return (
-                                <div
-                                    className={`table-body__field ${item.align || ''}`}
-                                    style={{...fieldWidth, minWidth: item.minWidth || '0'}}
-                                >
-                                    {item.render && item.render(target[item.dataIndex], target)}
-                                </div>
-                            )
-                        }
-                    )}
+                                const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
+                                return (
+                                    <div
+                                        className={`table-body__field ${item.align || ''}`}
+                                        style={{...fieldWidth, minWidth: item.minWidth || '0'}}
+                                    >
+                                        {item.render && item.render(target[item.dataIndex], target)}
+                                    </div>
+                                )
+                            }
+                        )}
                 </div>
             )
         )

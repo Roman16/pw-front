@@ -168,7 +168,7 @@ const SearchTerms = () => {
                                 item.targetingsData = item.targetingId.map((target, index) => {
                                     const targetObj = {targetingId: target}
 
-                                    columns.forEach(column => {
+                                    columns.columnsWithFilters.forEach(column => {
                                         targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
                                     })
 
@@ -396,7 +396,7 @@ const SearchTerms = () => {
                     onChange={changeSegmentHandler}
                 />}
                 openedRow={(row) => openedSearchTerms.includes(row.queryCRC64) || localSegmentValue === 'targetings'}
-                expandedRowRender={(props, columnsBlackList) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList)}
+                expandedRowRender={(props, columnsBlackList, columnsOrder) => expandedRowRender(props, openedSearchTerms.length > 0 || localSegmentValue === 'targetings', setStateHandler, columnsBlackList, columnsOrder)}
 
                 onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}

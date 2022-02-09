@@ -31,7 +31,9 @@ const Campaigns = () => {
     const isAgencyUser = user.is_agency_client,
         isSuperAdmin = user.id === 714
 
-    const columns = columnList(setStateHandler, setStateDetails, selectedPortfolio, (isAgencyUser || isSuperAdmin)).map(i => {
+    let columns = columnList(setStateHandler, setStateDetails, selectedPortfolio, (isAgencyUser || isSuperAdmin))
+
+    columns.columnsWithFilters = columns.columnsWithFilters.map(i => {
         if (!(isAgencyUser || isSuperAdmin)) i.editType = undefined
         return i
     })

@@ -26,7 +26,8 @@ import {
 import {Link} from "react-router-dom"
 import {Switch} from "antd"
 
-export const columnList = (setStateHandler, selectedCampaign) => ([
+export const columnList = (setStateHandler, selectedCampaign) => {
+    const columns = [
         // {
         //     title: 'Active',
         //     dataIndex: 'state',
@@ -64,7 +65,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
                 </Link>
             )
         },
-        ...selectedCampaign ? [] : [{
+        {
             ...campaignColumn,
             locked: false,
             render: (campaign, item) => (<Link
@@ -78,7 +79,7 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
             >
                 {campaign}
             </Link>)
-        }],
+        },
         {...statusColumn, locked: false},
         {
             title: 'Default bid',
@@ -136,4 +137,10 @@ export const columnList = (setStateHandler, selectedCampaign) => ([
         salesShareColumn,
         adProfitColumn,
     ]
-)
+
+    if (selectedCampaign) {
+        return ({columnsWithFilters: columns.filter(i => i.key !== 'campaignName'), allColumns: columns})
+    } else {
+        return ({columnsWithFilters: columns, allColumns: columns})
+    }
+}

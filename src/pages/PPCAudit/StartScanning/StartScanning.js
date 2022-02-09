@@ -32,7 +32,7 @@ const StartScanning = ({
                 Enter product information that will help PPC Audit <br/> to better analyze your Advertising performance
             </p>
 
-            <div className={`form-group cogs ${loadingProducts ? 'disabled' : ''}`}>
+            <div className={`form-group cogs ${(loadingProducts || !product.id) ? 'disabled' : ''}`}>
                 <label htmlFor="">
                     Enter COGS
                 </label>
@@ -40,7 +40,7 @@ const StartScanning = ({
                 <InputCurrency
                     disabled
                     value={product.cogs_value}
-                    onClick={() => !loadingProducts && setVisibleCogsWindow(true)}
+                    onClick={() => (!loadingProducts || product.id) && setVisibleCogsWindow(true)}
                 />
             </div>
 
@@ -55,7 +55,7 @@ const StartScanning = ({
                     getPopupContainer={trigger => trigger}
                     value={optimizationStrategy}
                     onChange={(value) => setOptimizationStrategy(value)}
-                    disabled={loadingProducts}
+                    disabled={loadingProducts || !product.id}
                 >
                     {strategies.map(item => (
                         <Option value={item.key}>

@@ -125,7 +125,7 @@ const Placements = () => {
                                     item.segmentData = item.advertisingType_segmented.map((key, index) => {
                                         const targetObj = {advertisingType: key}
 
-                                        columns.forEach(column => {
+                                        columns.columnsWithFilters.forEach(column => {
                                             targetObj[column.dataIndex] = item[`${column.dataIndex}_segmented`] ? item[`${column.dataIndex}_segmented`][index] : item[`${column.dataIndex}`] ? item[`${column.dataIndex}`][index] : null
                                         })
 
@@ -370,7 +370,7 @@ const Placements = () => {
                     segment={localSegmentValue}
                     onChange={changeSegmentHandler}
                 />}
-                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails) : undefined}
+                expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList, columnsOrder) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails, columnsOrder) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onDownloadCSV={downloadCSVHandler}

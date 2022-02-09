@@ -78,7 +78,7 @@ const Chart = ({
                         <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
                         <feOffset dx="2" dy="10" result="offsetblur"/>
                         <feComponentTransfer>
-                            <feFuncA type="linear" slope="0.5"/>
+                            <feFuncA type="linear" slope="0.3"/>
                         </feComponentTransfer>
                         <feMerge>
                             <feMergeNode/>

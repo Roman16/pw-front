@@ -30,7 +30,9 @@ const Targetings = () => {
     const isAgencyUser = user.is_agency_client,
         isSuperAdmin = user.id === 714
 
-    const columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, (isAgencyUser || isSuperAdmin)).map(i => {
+    let columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, (isAgencyUser || isSuperAdmin))
+
+    columns.columnsWithFilters = columns.columnsWithFilters.map(i => {
         if (!(isAgencyUser || isSuperAdmin)) i.editType = undefined
         return i
     })
@@ -45,7 +47,8 @@ const Targetings = () => {
                 fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
 
                 columns={columns}
-                moreActions={(isAgencyUser || isSuperAdmin) ? <OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/> : false}
+                moreActions={(isAgencyUser || isSuperAdmin) ?
+                    <OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/> : false}
                 showRowSelection={!!(isAgencyUser || isSuperAdmin)}
                 rowKey={'targetingId'}
             >

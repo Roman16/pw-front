@@ -17,14 +17,14 @@ import {
 import React from "react"
 
 
-const advertisingOrder = ['SponsoredProducts', 'SponsoredBrands'],
-    advertisingTitle = {
-        SponsoredProducts: 'Sponsored Products',
-        SponsoredBrands: 'Sponsored Brands',
-    }
+const advertisingTitle = {
+    SponsoredProducts: 'Sponsored Products',
+    SponsoredBrands: 'Sponsored Brands',
+}
 
+const location = 'placements'
 
-export const expandedRowRender = (props, columnsBlackList, selectedCampaign, stateDetails) => {
+export const expandedRowRender = (props, columnsBlackList, selectedCampaign, stateDetails, columnsOrder) => {
     const columns = [
         {
             width: '250px',
@@ -34,9 +34,11 @@ export const expandedRowRender = (props, columnsBlackList, selectedCampaign, sta
         ...(selectedCampaign && stateDetails.advertisingType !== 'SponsoredBrands') ? [
             {
                 width: '250px',
+                dataIndex: 'bidding_strategy'
             },
             {
                 width: '150px',
+                dataIndex: 'bid_adjustment'
             }
         ] : [],
         impressionsColumn,
@@ -67,6 +69,7 @@ export const expandedRowRender = (props, columnsBlackList, selectedCampaign, sta
                 <div>
                     {columns
                         .filter(column => !columnsBlackList.includes(column.key))
+                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
                         .map((item, index) => {
                                 const fieldWidth = item.width ? ({width: item.width}) : {flex: 1}
                                 return (

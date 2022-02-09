@@ -8,6 +8,104 @@ import OnlyDesktopWindow from "./OnlyDesktopWindow"
 import {mobileCheck} from "../../../utils/mobileCheck"
 import SmallSpend from "./SmallSpend"
 
+// const importStatus = {
+//     "zth": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             }
+//         },
+//         "required_parts_ready": true,
+//         "optional_parts_details": {"sp": {"total_types_count": 29, "ready_types_count": 29, "part_ready": true}},
+//         "optional_parts_ready": true
+//     },
+//     "ppc_audit": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             }, "products_fees": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true}
+//         },
+//         "required_parts_ready": true
+//     },
+//     "ppc_automate": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             },
+//             "products_fees": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true},
+//             "sp": {"total_types_count": 29, "ready_types_count": 29, "part_ready": true},
+//             "sd": {"total_types_count": 13, "ready_types_count": 13, "part_ready": true},
+//             "sb": {"total_types_count": 16, "ready_types_count": 16, "part_ready": true},
+//             "orders": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true},
+//             "returns": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true}
+//         },
+//         "required_parts_ready": true,
+//         "optional_parts_details": {
+//             "orders": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true},
+//             "returns": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true}
+//         },
+//         "optional_parts_ready": true
+//     },
+//     "analytics": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             },
+//             "sp": {"total_types_count": 29, "ready_types_count": 29, "part_ready": true},
+//             "sd": {"total_types_count": 13, "ready_types_count": 13, "part_ready": true},
+//             "sb": {"total_types_count": 16, "ready_types_count": 16, "part_ready": true},
+//             "orders": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true},
+//             "returns": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true}
+//         },
+//         "required_parts_ready": false,
+//         "optional_parts_details": {
+//             "orders": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true},
+//             "returns": {"total_types_count": 1, "ready_types_count": 1, "part_ready": true}
+//         },
+//         "optional_parts_ready": true
+//     },
+//     "dayparting": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             },
+//             "sp": {"total_types_count": 29, "ready_types_count": 29, "part_ready": true},
+//             "sd": {"total_types_count": 13, "ready_types_count": 13, "part_ready": true},
+//             "sb": {"total_types_count": 16, "ready_types_count": 16, "part_ready": true},
+//             "orders": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true},
+//             "returns": {"total_types_count": 2, "ready_types_count": 2, "part_ready": true}
+//         }, "required_parts_ready": true
+//     },
+//     "products_info": {
+//         "required_parts_details": {
+//             "products": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             }
+//         },
+//         "required_parts_ready": true,
+//         "optional_parts_details": {
+//             "products_fees": {
+//                 "total_types_count": 1,
+//                 "ready_types_count": 1,
+//                 "part_ready": true
+//             }
+//         },
+//         "optional_parts_ready": true
+//     }
+// }
+
 const PWWindows = ({pathname}) => {
     const [visibleWindow, setVisibleWindow] = useState(null)
 
