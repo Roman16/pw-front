@@ -360,7 +360,7 @@ const Placements = () => {
                     ...pageData.table,
                     response: Object.values(chartAreaKeys).map(key => _.find(pageData.table.response, {placementName: key})).filter(i => !!i)
                 }}
-                columns={columns}
+                columns={columns.columnsWithFilters}
                 fixedColumns={[0]}
                 location={location}
                 metricsData={pageData.metrics}

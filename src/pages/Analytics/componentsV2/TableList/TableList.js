@@ -197,7 +197,7 @@ const TableList = ({
                         location={location}
                         selectedRows={selectedRows}
                         selectedAll={selectedAllRows}
-                        columns={columns}
+                        columns={columns.columnsWithFilters}
 
                         onClose={() => {
                             setSelectedAllRows(false)
@@ -208,7 +208,7 @@ const TableList = ({
                     />}
 
                     {showFilters && <TableFilters
-                        columns={columns}
+                        columns={columns.columnsWithFilters}
                         filters={filters}
                         locationKey={location}
                         searchField={searchField}
@@ -217,7 +217,7 @@ const TableList = ({
                     {moreActions}
 
                     {columnSelect && <ColumnsSelect
-                        columns={columns}
+                        columns={columns.columnsWithFilters}
                         columnsBlackList={localColumnBlackList}
                         onChangeBlackList={changeBlackListHandler}
                     />}
@@ -253,13 +253,13 @@ const TableList = ({
                     {...showTotal && {
                         totalDataSource: {
                             ..._.mapValues(metricsData, (value) => (+value.value)),
-                            ...{[showRowSelection ? columns[1].dataIndex : columns[0].dataIndex]: `Total: ${tableData.total_count}`}
+                            ...{[showRowSelection ? columns.columnsWithFilters[1]?.dataIndex : columns.columnsWithFilters[0]?.dataIndex]: `Total: ${tableData.total_count}`}
 
                         }
                     }}
                     sorterColumn={localSorterColumn}
 
-                    columns={columns
+                    columns={columns.columnsWithFilters
                         .filter(column => !localColumnBlackList.includes(column.key))
                         // .sort((firstColumn, secondColumn) => metricsOrder[location] ? metricsOrder[location].findIndex(i => i === firstColumn.key) - metricsOrder[location].findIndex(i => i === secondColumn.key) : true)
                     }
