@@ -8,6 +8,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {analyticsServices} from "../../../../services/analytics.services"
 import queryString from "query-string"
 import {Link} from "react-router-dom"
+import AttributionWindow from "./AttributionWindow"
 
 let newState = undefined
 
@@ -202,6 +203,8 @@ const Header = ({location}) => {
                     {locationDescription && (locationDescription.headerTitle || locationDescription.title)}
                 </h4>
             </div>
+
+            <AttributionWindow/>
         </section>
     )
 }
