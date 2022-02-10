@@ -204,7 +204,7 @@ export function analytics(state = initialState, action) {
 
         case analyticsConstants.SET_ATTRIBUTION_WINDOW:
             localStorage.setItem('attributionWindow', action.payload)
-            console.log(action)
+
             return {
                 ...state,
                 attributionWindow: action.payload
