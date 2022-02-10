@@ -107,7 +107,8 @@ import SmallSpend from "./SmallSpend"
 // }
 
 const PWWindows = ({pathname}) => {
-    const [visibleWindow, setVisibleWindow] = useState(null)
+    const [visibleWindow, setVisibleWindow] = useState(null),
+        [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true)
 
     const {user, productList, subscribedProduct, importStatus} = useSelector(state => ({
         user: state.user,
@@ -120,6 +121,11 @@ const PWWindows = ({pathname}) => {
         setVisibleWindow(null)
     }
 
+    const closeSmallSpendWindowHandler = () => {
+        setVisibleSmallSpendWindow(false)
+        setVisibleWindow('freeTrial')
+    }
+
     useEffect(() => {
         if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
@@ -130,7 +136,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
+        } else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
             setVisibleWindow('smallSpend')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
@@ -178,6 +184,7 @@ const PWWindows = ({pathname}) => {
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SmallSpend
                 visible={visibleWindow === 'smallSpend'}
+                onClose={closeSmallSpendWindowHandler}
             />}
 
             <ReportsChangesCountWindow
