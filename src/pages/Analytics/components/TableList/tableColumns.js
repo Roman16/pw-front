@@ -29,12 +29,12 @@ export const numberColumns = [
     'ctr',
     'cost',
     'cpc',
-    'attributedSales30d',
+    'attributedSales',
     'acos',
     'conversion_rate',
     'cpa',
-    'attributedConversions30d',
-    'attributedUnitsOrdered30d',
+    'attributedConversions',
+    'attributedUnitsOrdered',
     'roas',
     'sales_share',
     'budget_allocation',
@@ -413,8 +413,8 @@ export const cpcColumn = {
 
 export const adSalesColumn = {
     title: 'Ad Sales',
-    dataIndex: 'attributedSales30d',
-    key: 'attributedSales30d',
+    dataIndex: 'attributedSales',
+    key: 'attributedSales',
     minWidth: '150px',
     sorter: true,
     filter: true,
@@ -551,8 +551,8 @@ export const CPMColumn = {
 
 export const adOrdersColumn = {
     title: 'Ad Orders',
-    dataIndex: 'attributedConversions30d',
-    key: 'attributedConversions30d',
+    dataIndex: 'attributedConversions',
+    key: 'attributedConversions',
     minWidth: '130px',
     sorter: true,
     filter: true,
@@ -562,8 +562,8 @@ export const adOrdersColumn = {
 
 export const adUnitsColumn = {
     title: 'Ad Units',
-    dataIndex: 'attributedUnitsOrdered30d',
-    key: 'attributedUnitsOrdered30d',
+    dataIndex: 'attributedUnitsOrdered',
+    key: 'attributedUnitsOrdered',
     minWidth: '130px',
     sorter: true,
     filter: true,

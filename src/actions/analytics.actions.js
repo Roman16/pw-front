@@ -15,7 +15,8 @@ export const analyticsActions = {
     setStateDetails,
     setSortingColumn,
     setVisibleCreateWindow,
-    setPortfolioList
+    setPortfolioList,
+    setAttributionWindow
 }
 
 function setMainState(state) {
@@ -131,6 +132,14 @@ function setVisibleCreateWindow(window) {
         dispatch({
             type: analyticsConstants.SET_VISIBLE_CREATION_WINDOWS,
             payload: window
+        })
+    }
+}
+function setAttributionWindow(value) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_ATTRIBUTION_WINDOW,
+            payload: value
         })
     }
 }

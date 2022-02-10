@@ -143,7 +143,7 @@ const containsVariations = {
     'ad_profit': numberVariations,
     'budget_allocation': numberVariations,
     'ordered_quantity': numberVariations,
-    'attributedConversions30d': numberVariations,
+    'attributedConversions': numberVariations,
     'organic_sales': numberVariations,
     'total_ordered_quantity': numberVariations,
     'sales_share': numberVariations,
@@ -163,8 +163,8 @@ const containsVariations = {
     'cost': numberVariations,
     'roas': numberVariations,
     'defaultBid': numberVariations,
-    'attributedUnitsOrdered30d': numberVariations,
-    'attributedSales30d': numberVariations,
+    'attributedUnitsOrdered': numberVariations,
+    'attributedSales': numberVariations,
     'total_sales_avg_price': numberVariations,
     'total_profit_gross': numberVariations,
     'total_profit': numberVariations,
@@ -503,8 +503,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'total_ordered_quantity_cleared' ||
                     filterBy === 'organic_orders_count' ||
                     filterBy === 'total_returns_quantity' ||
-                    filterBy === 'attributedConversions30d' ||
-                    filterBy === 'attributedUnitsOrdered30d' ||
+                    filterBy === 'attributedConversions' ||
+                    filterBy === 'attributedUnitsOrdered' ||
                     filterBy === 'roas' ||
                     filterBy === 'targetings_count' ||
                     filterBy === 'product_ads_count' ||
@@ -552,7 +552,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'total_sales_avg_price' ||
                     filterBy === 'total_profit' ||
                     filterBy === 'total_profit_gross' ||
-                    filterBy === 'attributedSales30d' ||
+                    filterBy === 'attributedSales' ||
                     filterBy === 'dailyBudget' ||
                     filterBy === 'calculatedBudget' ||
                     filterBy === 'calculatedBid' ||

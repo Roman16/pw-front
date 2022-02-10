@@ -150,7 +150,9 @@ function fetchPageData(location, params, idList, cancelToken) {
         })]
     }
 
-    return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
+    const attributionWindow = localStorage.getItem('attributionWindow') || '30'
+
+    return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&attribution_window=${+attributionWindow}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
 }
 
 function fetchPortfoliosForCampaign() {

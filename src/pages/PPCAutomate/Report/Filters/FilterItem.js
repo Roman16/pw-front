@@ -198,9 +198,9 @@ const columnTitle = {
     'dailyBudget': 'Budget',
     'targetingType': 'Type',
     'budget_allocation': 'Budget Allocation',
-    'attributedUnitsOrdered30d': 'Ad Units',
-    'attributedSales30d': 'Ad Sales',
-    'attributedConversions30d': 'Ad Orders',
+    'attributedUnitsOrdered': 'Ad Units',
+    'attributedSales': 'Ad Sales',
+    'attributedConversions': 'Ad Orders',
     'bidding_strategy': 'Campaign bidding strategy',
     'campaignName': 'Campaign',
     'defaultBid': 'Default bid',
@@ -301,9 +301,9 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'total_ordered_quantity_cleared' ||
         filter.filterBy === 'total_orders_count' ||
         filter.filterBy === 'conversion_rate' ||
-        filter.filterBy === 'attributedUnitsOrdered30d' ||
-        filter.filterBy === 'attributedConversions30d' ||
-        filter.filterBy === 'attributedSales30d' ||
+        filter.filterBy === 'attributedUnitsOrdered' ||
+        filter.filterBy === 'attributedConversions' ||
+        filter.filterBy === 'attributedSales' ||
         filter.filterBy === 'budget_allocation' ||
         filter.filterBy === 'dailyBudget' ||
         filter.filterBy === 'macos' ||
