@@ -197,7 +197,7 @@ const TableList = ({
                         location={location}
                         selectedRows={selectedRows}
                         selectedAll={selectedAllRows}
-                        columns={columns}
+                        columns={columns.columnsWithFilters}
 
                         onClose={() => {
                             setSelectedAllRows(false)
