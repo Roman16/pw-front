@@ -108,7 +108,8 @@ import SmallSpend from "./SmallSpend"
 
 const PWWindows = ({pathname}) => {
     const [visibleWindow, setVisibleWindow] = useState(null),
-        [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true)
+        [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true),
+        [visibleNewChangesWindow, setVisibleNewChangesWindow] = useState(true)
 
     const {user, productList, subscribedProduct, importStatus} = useSelector(state => ({
         user: state.user,
@@ -119,6 +120,11 @@ const PWWindows = ({pathname}) => {
 
     const closeWindowHandler = () => {
         setVisibleWindow(null)
+    }
+
+    const closeNewChangesHandler = () => {
+        setVisibleWindow(null)
+        setVisibleNewChangesWindow(false)
     }
 
     const closeSmallSpendWindowHandler = () => {
@@ -142,7 +148,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
-        } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
+        } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount')
         } else {
             setVisibleWindow(null)
@@ -189,7 +195,7 @@ const PWWindows = ({pathname}) => {
 
             <ReportsChangesCountWindow
                 visible={visibleWindow === 'newReportsCount'}
-                onClose={closeWindowHandler}
+                onClose={closeNewChangesHandler}
                 changesCount={user.notifications.ppc_optimization.count_from_last_login}
             />
         </>

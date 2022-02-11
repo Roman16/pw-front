@@ -4,13 +4,13 @@ import {history} from "../../../utils/history";
 
 const ReportsChangesCountWindow = ({visible, onClose, changesCount}) => {
     function handleOk() {
-        onClose();
-
         if (window.location.pathname === '/ppc/report') {
             window.location.reload()
         } else {
             history.push('/ppc/report');
         }
+
+        onClose();
     }
 
     return (

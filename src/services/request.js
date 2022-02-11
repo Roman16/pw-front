@@ -105,9 +105,9 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
                             }
-                        } else if(error.response.status === 429) {
+                        } else if (error.response.status === 429) {
                             handlerErrors('This request is throttled, please try again later')
-                        } else if ( error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
+                        } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && error.response.statusText === "Forbidden")) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
@@ -118,9 +118,13 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     reject(error)
                 }
 
-                Sentry.withScope((scope) => {
-                    Sentry.captureException(error)
-                })
+                if (axios.isCancel(error)) {
+                    console.log('Request canceled')
+                } else {
+                    Sentry.withScope((scope) => {
+                        Sentry.captureException(error)
+                    })
+                }
             })
     })
 }
