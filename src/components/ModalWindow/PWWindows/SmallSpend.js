@@ -4,7 +4,7 @@ import '../ModalWindow.less'
 import img from '../../../assets/img/small-spend-img.png'
 import {Checkbox} from "antd"
 
-const SmallSpend = ({visible, onClose}) => {
+const SmallSpend = ({visible, onSubmit, onCancel = false, btnText = 'Get Started'}) => {
 
     const [userAccept, setUserAccept] = useState(false)
 
@@ -14,7 +14,7 @@ const SmallSpend = ({visible, onClose}) => {
             footer={null}
             container={true}
             visible={visible}
-            handleCancel={false}
+            handleCancel={onCancel}
         >
             <img src={img} alt=""/>
             <h3>Attention!</h3>
@@ -37,10 +37,9 @@ const SmallSpend = ({visible, onClose}) => {
                 I’ve read and accept the terms
             </Checkbox>
 
-            <button className="btn default" disabled={!userAccept} onClick={userAccept && onClose}>
-                Get Started
+            <button className="btn default" disabled={!userAccept} onClick={userAccept && onSubmit}>
+                {btnText}
             </button>
-
         </ModalWindow>
     )
 }

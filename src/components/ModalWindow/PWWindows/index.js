@@ -129,7 +129,6 @@ const PWWindows = ({pathname}) => {
 
     const closeSmallSpendWindowHandler = () => {
         setVisibleSmallSpendWindow(false)
-        setVisibleWindow('freeTrial')
     }
 
     useEffect(() => {
@@ -142,7 +141,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
+        } else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.has_access && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
             setVisibleWindow('smallSpend')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
@@ -153,7 +152,7 @@ const PWWindows = ({pathname}) => {
         } else {
             setVisibleWindow(null)
         }
-    }, [user, pathname, importStatus])
+    }, [user, pathname, importStatus, visibleSmallSpendWindow])
 
     return (
         <>
@@ -190,7 +189,7 @@ const PWWindows = ({pathname}) => {
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SmallSpend
                 visible={visibleWindow === 'smallSpend'}
-                onClose={closeSmallSpendWindowHandler}
+                onSubmit={closeSmallSpendWindowHandler}
             />}
 
             <ReportsChangesCountWindow
