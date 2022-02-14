@@ -68,6 +68,7 @@ const Header = ({location}) => {
         }
     }, [history.location])
 
+    console.log(location.pathname)
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
@@ -204,7 +205,8 @@ const Header = ({location}) => {
                 </h4>
             </div>
 
-            <AttributionWindow/>
+            {(location.pathname !== '/analytics/negative-targetings' && location.pathname !== '/analytics/campaign-settings' && location.pathname !== '/analytics/portfolio-settings') &&
+            <AttributionWindow/>}
         </section>
     )
 }

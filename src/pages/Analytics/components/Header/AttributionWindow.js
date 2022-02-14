@@ -26,7 +26,7 @@ const AttributionWindow = () => {
                 Attribution window
 
                 <InformationTooltip
-                    description={'Sponsored Brands metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for Sponsored Brands for other windows.'}/>
+                    description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
             </label>
 
             <CustomSelect
