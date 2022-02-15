@@ -4,6 +4,13 @@ import {SVG} from "../../../utils/icons"
 import {Spin} from "antd"
 import {Link} from "react-router-dom"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import CardForm from "./CardForm"
+import {Elements, StripeProvider} from "react-stripe-elements"
+
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
+
 
 const RegistrationForm = ({user, processing, failedFields, onChange, onSubmit}) => {
     const [openedPassword, setOpenedPassword] = useState([])
@@ -110,6 +117,12 @@ const RegistrationForm = ({user, processing, failedFields, onChange, onSubmit}) 
                     <SVG id={openedPassword.includes('confirm-password') ? 'eye-opened' : 'eye-closed'}/>
                 </div>}
         </diw>
+
+        <StripeProvider apiKey={stripeKey}>
+            <Elements>
+                <CardForm/>
+            </Elements>
+        </StripeProvider>
 
         <button className="sds-btn default submit" disabled={processing}>
             Sign up

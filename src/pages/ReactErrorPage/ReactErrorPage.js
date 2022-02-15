@@ -59,7 +59,7 @@ export default class ErrorBoundary extends Component {
         try {
             const res = await userService.getIndexHtml()
 
-            if (res.data && this.getMeta(res.data) !== this.getMeta()) {
+            if (res.data && this.getMeta(res.data) !== this.getMeta() && window.location.host === 'localhost:3000') {
                 document.location.reload()
             }
         } catch (e) {
