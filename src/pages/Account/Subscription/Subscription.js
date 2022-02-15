@@ -17,6 +17,7 @@ import {Elements, StripeProvider} from "react-stripe-elements"
 import ConfirmPaymentWindow from "../Billing/Windows/ConfirmPaymentWindow"
 import ConfirmSubscribeWindow from "./DrawerWindows/ConfirmSubscribeWindow"
 import _ from 'lodash'
+import SmallSpend from "../../../components/ModalWindow/PWWindows/SmallSpend"
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
@@ -26,6 +27,8 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
     : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
 
+
+let afterSmallSpendAction
 
 const Subscription = () => {
     let interval = null
@@ -40,16 +43,18 @@ const Subscription = () => {
     const [disableReactivateButtons, setDisableReactivateButtons] = useState(false)
     const [visibleAddPaymentWindow, setVisibleAddPaymentWindow] = useState(false)
     const [addCardProcessing, setAddCardProcessing] = useState(false)
+    const [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(false)
 
     const [visibleConfirmPaymentWindow, openConfirmWindow] = useState(false),
         [userSecretKey, setKey] = useState(),
         [visibleConfirmSubscribeWindow, setVisibleConfirmSubscribeWindow] = useState(false)
 
-    const {mwsConnected, ppcConnected, stripeId, user} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, stripeId, user, subscribedProduct} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
         stripeId: state.user.user.stripe_id,
         user: state.user,
+        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
     }))
 
     function handleOpenAccountWindow(plan) {
@@ -57,9 +62,14 @@ const Subscription = () => {
         selectPlan(plan)
     }
 
-    function handleOpenReactivateWindow(plan) {
-        openReactivateWindow(true)
-        selectPlan(plan)
+    function handleOpenReactivateWindow(plan, force = false) {
+        if (!subscribedProduct.eligible_for_subscription && !force) {
+            afterSmallSpendAction = 'reactivate'
+            setVisibleSmallSpendWindow(true)
+        } else {
+            openReactivateWindow(true)
+            selectPlan(plan)
+        }
     }
 
     const addNewCardHandler = async (card) => {
@@ -127,7 +137,10 @@ const Subscription = () => {
 
         subscribeDetails = {plan_id, productId, coupon}
 
-        if (cardsList.length === 0 && !withCard) {
+        if (!subscribedProduct.eligible_for_subscription && !force) {
+            afterSmallSpendAction = 'subscribe'
+            setVisibleSmallSpendWindow(true)
+        } else if (cardsList.length === 0 && !withCard) {
             changeButton(false)
             setVisibleAddPaymentWindow(true)
         } else if (!force) {
@@ -251,19 +264,35 @@ const Subscription = () => {
         }
     }
 
-    const startFreeTrialHandler = async () => {
+    const startFreeTrialHandler = async ({force = false}) => {
         changeButton(true)
 
-        try {
-            await userService.startFreeTrial()
+        if (!subscribedProduct.eligible_for_subscription && !force) {
+            afterSmallSpendAction = 'freeTrial'
+            setVisibleSmallSpendWindow(true)
+        } else {
+            try {
+                await userService.startFreeTrial()
 
-            fetchSubscriptions()
-            dispatch(userActions.getPersonalUserInfo())
-        } catch (e) {
-            console.log(e)
+                fetchSubscriptions()
+                dispatch(userActions.getPersonalUserInfo())
+            } catch (e) {
+                console.log(e)
+            }
         }
 
         changeButton(false)
+    }
+
+    const confirmSmallSpendWindow = () => {
+        if (afterSmallSpendAction === 'freeTrial') startFreeTrialHandler({force: true})
+        if (afterSmallSpendAction === 'subscribe') handleSubscribe(subscribeDetails, true)
+        if (afterSmallSpendAction === 'reactivate') handleOpenReactivateWindow(selectedPlan, true)
+    }
+
+    const cancelSmallSpendWindow = () => {
+        changeButton(false)
+        setVisibleSmallSpendWindow(false)
     }
 
     useEffect(() => {
@@ -303,6 +332,7 @@ const Subscription = () => {
                     fetching={fetching}
                     disableButton={disableButton}
                     stripeId={stripeId}
+                    subscribedProduct={subscribedProduct}
 
                     onStartTrial={startFreeTrialHandler}
                     getCouponStatus={getCouponStatus}
@@ -395,6 +425,13 @@ const Subscription = () => {
 
                 onSubmit={() => handleSubscribe(subscribeDetails, true, true)}
                 onCancel={cancelConfirmSubscribeHandler}
+            />
+
+            <SmallSpend
+                visible={visibleSmallSpendWindow}
+                onCancel={cancelSmallSpendWindow}
+                onSubmit={confirmSmallSpendWindow}
+                btnText={afterSmallSpendAction === 'freeTrial' ? 'Start Free Trial' : afterSmallSpendAction === 'reactivate' ? 'Reactivate' : 'Subscribe'}
             />
         </div>
     )

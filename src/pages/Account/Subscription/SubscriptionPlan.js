@@ -19,14 +19,14 @@ const SubscriptionPlan = ({
                               fetching,
                               getCouponStatus,
                               disableButton,
-                              onStartTrial
+                              onStartTrial,
+                              subscribedProduct
                           }) => {
 
-    const {mwsConnected, ppcConnected, sellerId, subscribedProduct, user, importStatus} = useSelector(state => ({
+    const {mwsConnected, ppcConnected, sellerId, user, importStatus} = useSelector(state => ({
         mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
         ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
         sellerId: state.user.default_accounts.amazon_mws.seller_id,
-        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
         user: state.user.user,
         importStatus: state.user.importStatus,
     }))
@@ -268,40 +268,52 @@ const Actions = ({mwsConnected, ppcConnected, product, subscribedProduct, disabl
             <p>PPC Automation tool is not ready to use yet. We are currently <br/> syncing data from your Amazon account
                 with our system.</p>
         </>
-    } else if (!subscribedProduct.eligible_for_subscription) {
-        return (<>
+    }
+    // else if (!subscribedProduct.eligible_for_subscription) {
+    //     return (<>
+    //         <button
+    //             disabled
+    //             className={'btn default'}
+    //         >
+    //             Subscribe
+    //         </button>
+    //
+    //         <p>{subscribedProduct.ineligible_for_subscription_reason}</p>
+    //     </>)
+    // }
+    else if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
+        return <>
             <button
-                disabled
+                disabled={disableButton}
                 className={'btn default'}
+                onClick={onStartTrial}
             >
-                Subscribe
+                Start Free Trial
+                {disableButton && <Spin size={'small'}/>}
             </button>
 
-            <p>{subscribedProduct.ineligible_for_subscription_reason}</p>
-        </>)
-    } else if (user.free_trial_available && importStatus.ppc_automate.required_parts_ready) {
-        return <button
-            disabled={disableButton}
-            className={'btn default'}
-            onClick={onStartTrial}
-        >
-            Start Free Trial
-            {disableButton && <Spin size={'small'}/>}
-        </button>
+            {subscribedProduct.ineligible_for_subscription_reason &&
+            <p>{subscribedProduct.ineligible_for_subscription_reason}</p>}
+        </>
     } else if (!user.free_trial_available && subscribedProduct && subscribedProduct.stripe_status == null) {
         return <button disabled className={'btn default'}>
             Starting Free Trial
             <Spin size={'small'}/>
         </button>
-    }  else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
-        return <button
-            className="btn default on-subscribe"
-            onClick={onSubscribe}
-            disabled={disableButton}
-        >
-            Subscribe
-            {disableButton && <Spin size={'small'}/>}
-        </button>
+    } else if (mwsConnected && ppcConnected && !product.has_access && stripeId) {
+        return <>
+            <button
+                className="btn default on-subscribe"
+                onClick={onSubscribe}
+                disabled={disableButton}
+            >
+                Subscribe
+                {disableButton && <Spin size={'small'}/>}
+            </button>
+
+            {subscribedProduct.ineligible_for_subscription_reason &&
+            <p>{subscribedProduct.ineligible_for_subscription_reason}</p>}
+        </>
     } else if (!user.free_trial_available && !subscribedProduct.has_access) {
         return (<>
             <button className={'btn default'} disabled>

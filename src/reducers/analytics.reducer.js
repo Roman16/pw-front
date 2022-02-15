@@ -72,7 +72,8 @@ const initialState = {
         startDate: moment().add(-29, 'days').toISOString(),
         endDate: moment().toISOString()
     },
-    portfolioList: []
+    portfolioList: [],
+    attributionWindow: localStorage.getItem('attributionWindow') || '30'
 }
 
 
@@ -201,6 +202,13 @@ export function analytics(state = initialState, action) {
                 portfolioList: action.payload
             }
 
+        case analyticsConstants.SET_ATTRIBUTION_WINDOW:
+            localStorage.setItem('attributionWindow', action.payload)
+
+            return {
+                ...state,
+                attributionWindow: action.payload
+            }
 
         default:
             return state

@@ -89,7 +89,8 @@ const RenderPageParts = (props) => {
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         stateInformation = useSelector(state => state.analytics.stateDetails),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
-        user = useSelector(state => state.user.user)
+        user = useSelector(state => state.user.user),
+        attributionWindow = useSelector(state => state.analytics.attributionWindow)
 
     const changeSorterColumnHandler = (data) => {
         localStorage.setItem('analyticsSorterColumn', JSON.stringify({
@@ -493,12 +494,11 @@ const RenderPageParts = (props) => {
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
-    }, [selectedRangeDate, filters, history.location.search])
+    }, [selectedRangeDate, filters, history.location.search, attributionWindow])
 
     useEffect(() => {
         prevActiveMetrics = undefined
     }, [location])
-
 
     return (
         <>

@@ -265,7 +265,9 @@ const TableList = ({
 
                     columns={columns.columnsWithFilters
                         .filter(column => !localColumnBlackList.includes(column.dataIndex))
-                        .sort((firstColumn, secondColumn) => columnsOrder[location] ? columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true)
+                        .sort((firstColumn, secondColumn) => {
+                            return columnsOrder[location] ? secondColumn.title === 'Active' ? 9999 : columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true
+                        })
                     }
 
                     fixedColumns={fixedColumns}

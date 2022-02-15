@@ -53,7 +53,8 @@ const SearchTerms = () => {
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
         mainState = useSelector(state => state.analytics.mainState),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
-        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
+        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
+        attributionWindow = useSelector(state => state.analytics.attributionWindow)
 
 
     const setStateHandler = (location, state, event) => {
@@ -332,7 +333,6 @@ const SearchTerms = () => {
     }
 
 
-
     useEffect(() => {
         if (prevActiveMetrics) {
             if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
@@ -357,7 +357,7 @@ const SearchTerms = () => {
 
     useEffect(() => {
         setTimeout(getPageData(['metrics', 'table', 'chart'], {...tableRequestParams, page: 1}), 100)
-    }, [selectedRangeDate, filters])
+    }, [selectedRangeDate, filters, attributionWindow])
 
     useEffect(() => {
         return () => prevActiveMetrics = undefined

@@ -58,7 +58,8 @@ const Placements = () => {
         mainState = useSelector(state => state.analytics.mainState),
         stateDetails = useSelector(state => state.analytics.stateDetails),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
-        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2)
+        activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
+        attributionWindow = useSelector(state => state.analytics.attributionWindow)
 
     const columns = PColumnsList(!!mainState.campaignId, stateDetails, localSegmentValue)
 
@@ -294,7 +295,7 @@ const Placements = () => {
 
 
     useEffect(() => {
-        if(prevActiveMetrics) {
+        if (prevActiveMetrics) {
             if (JSON.stringify(prevActiveMetrics) !== JSON.stringify(activeMetrics.filter(item => item !== null))) {
                 if (activeMetrics.filter(item => item !== null).length === 0) setPageData(prevState => ({
                     ...prevState,
@@ -321,7 +322,7 @@ const Placements = () => {
 
     useEffect(() => {
         getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
-    }, [selectedRangeDate, filters])
+    }, [selectedRangeDate, filters, attributionWindow])
 
     useEffect(() => {
         return () => prevActiveMetrics = undefined

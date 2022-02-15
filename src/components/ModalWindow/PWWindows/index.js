@@ -107,7 +107,9 @@ import SmallSpend from "./SmallSpend"
 // }
 
 const PWWindows = ({pathname}) => {
-    const [visibleWindow, setVisibleWindow] = useState(null)
+    const [visibleWindow, setVisibleWindow] = useState(null),
+        [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true),
+        [visibleNewChangesWindow, setVisibleNewChangesWindow] = useState(true)
 
     const {user, productList, subscribedProduct, importStatus} = useSelector(state => ({
         user: state.user,
@@ -120,6 +122,15 @@ const PWWindows = ({pathname}) => {
         setVisibleWindow(null)
     }
 
+    const closeNewChangesHandler = () => {
+        setVisibleWindow(null)
+        setVisibleNewChangesWindow(false)
+    }
+
+    const closeSmallSpendWindowHandler = () => {
+        setVisibleSmallSpendWindow(false)
+    }
+
     useEffect(() => {
         if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
@@ -130,18 +141,18 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (subscribedProduct && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
+        } else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.has_access && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
             setVisibleWindow('smallSpend')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
         } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
             setVisibleWindow('expiredSubscription')
-        } else if (user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
+        } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
             setVisibleWindow('newReportsCount')
         } else {
             setVisibleWindow(null)
         }
-    }, [user, pathname, importStatus])
+    }, [user, pathname, importStatus, visibleSmallSpendWindow])
 
     return (
         <>
@@ -178,11 +189,12 @@ const PWWindows = ({pathname}) => {
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SmallSpend
                 visible={visibleWindow === 'smallSpend'}
+                onSubmit={closeSmallSpendWindowHandler}
             />}
 
             <ReportsChangesCountWindow
                 visible={visibleWindow === 'newReportsCount'}
-                onClose={closeWindowHandler}
+                onClose={closeNewChangesHandler}
                 changesCount={user.notifications.ppc_optimization.count_from_last_login}
             />
         </>

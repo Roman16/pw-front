@@ -1,4 +1,4 @@
-import api from './request'
+import api, {baseUrl} from './request'
 import axios from 'axios'
 import {userUrls} from '../constans/api.urls'
 
@@ -54,12 +54,15 @@ export const userService = {
     sendGrowthAccelerationForm,
 
     getRegistrationTokens,
-    checkImportStatus
+    checkImportStatus,
+
+    getIndexHtml
 }
 
 function login(user) {
     return api('post', userUrls.login, user)
 }
+
 function logOut() {
     return api('post', userUrls.logOut)
 }
@@ -246,11 +249,17 @@ function sendCustomerSatisfactionSurveyForm(data) {
 function sendGrowthAccelerationForm(data) {
     return api('post', `${userUrls.growthAccelerationForm}`, data)
 }
+
 function getRegistrationTokens() {
     return api('get', `${userUrls.registrationTokens}`)
 }
+
 function checkImportStatus() {
     return api('get', `${userUrls.importStatus}`)
+}
+
+function getIndexHtml() {
+    return axios.get(`${baseUrl}/index.html`)
 }
 
 
