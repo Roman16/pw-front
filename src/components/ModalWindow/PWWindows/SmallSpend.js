@@ -27,7 +27,7 @@ const SmallSpend = ({visible, onSubmit, onCancel = false, btnText = 'Get Started
             <p>
                 1. The appropriate amount of information regarding the <br/> user must be entered into the system.
                 <br/>
-                2. Your campaign budget must exceed $500.
+                2. Your campaign budget must exceed $1000.
             </p>
 
             <Checkbox
