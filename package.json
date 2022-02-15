@@ -12,6 +12,8 @@
     "@sentry/react": "^6.15.0",
     "@sentry/tracing": "^6.15.0",
     "@simonwep/selection-js": "^1.4.1",
+    "@stripe/react-stripe-js": "^1.7.0",
+    "@stripe/stripe-js": "^1.22.0",
     "antd": "^3.23.6",
     "autoprefixer": "^9.8.4",
     "axios": "^0.19.0",
