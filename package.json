@@ -54,7 +54,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build -p",
+    "build": "react-app-rewired build -p && REACTBUILDVERSION=$(date +%Y-%m-%d)-$(date +%T) && sed -i -- 's/%REACTBUILDVERSION%/'$REACTBUILDVERSION'/g' build/index.html && echo React Build Version = $REACTBUILDVERSION",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
   },

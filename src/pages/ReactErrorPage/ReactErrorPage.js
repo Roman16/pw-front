@@ -4,6 +4,7 @@ import img from '../../assets/img/icons/react-error-img.svg'
 import {SocialLinks} from "../../components/Sidebar/Sidebar"
 import './ReactErrorPage.less'
 import {history} from "../../utils/history"
+import {userService} from "../../services/user.services"
 
 export default class ErrorBoundary extends Component {
     state = {
@@ -34,9 +35,46 @@ export default class ErrorBoundary extends Component {
         this.setState({hasError: false}, () => history.push('/home'))
     }
 
+    createElementFromHTML = (htmlString) => {
+        const div = document.createElement('div')
+        div.innerHTML = htmlString.trim()
+
+        // Change this to div.childNodes to support multiple top-level nodes.
+        return div
+    }
+
+    getMeta = (htmlString = '') => {
+        const html = this.createElementFromHTML(htmlString)
+
+        const metas = htmlString ? [...html.getElementsByTagName('meta')] : [...document.getElementsByTagName('meta')]
+        const metaVersion = metas.find(i => i.getAttribute('build-version'))
+
+        if (metaVersion) {
+            return metaVersion.getAttribute('build-version')
+        }
+
+        return false
+    }
+
+    getServerBuildVersion = async () => {
+        try {
+            const res = await userService.getIndexHtml()
+
+            if (res.data && this.getMeta(res.data) !== this.getMeta()) {
+                document.location.reload()
+            }
+        } catch (e) {
+
+        }
+    }
+
     render() {
         const {hasError, error, info} = this.state
         const {children} = this.props
+
+        if (hasError) {
+            this.getServerBuildVersion()
+        }
 
         return hasError ? <ErrorTemplate
             onGoBack={this.goBackHandler}
