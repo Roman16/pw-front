@@ -12,8 +12,8 @@ const ScanningProcessingStatus = ({scanningStatus, stopProcessing, product, onSt
     const isExpired = product.performed_at ? moment().diff(moment(product.performed_at), 'days') > 7 : false
 
 
-    const restartHandler = () => {
-        onStart()
+    const restartHandler = (props) => {
+        onStart(props)
         setVisibleWindow(false)
     }
 
