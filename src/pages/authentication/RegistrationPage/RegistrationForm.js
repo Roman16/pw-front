@@ -325,7 +325,7 @@ class RegistrationForm extends Component {
 
                 <div className={'lock-description'}>
                     <SVG id='lock'/>
-                    this is a secure 128-bit ssl <br/> encrypted payment
+                    this is a secure 128-bit <br/> ssl encrypted
                 </div>
             </div>
 
