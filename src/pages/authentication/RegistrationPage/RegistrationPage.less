@@ -20,6 +20,74 @@
         }
       }
 
+      .form-group {
+        &.error-field {
+          .StripeElement {
+            border-color: #FF5256;
+          }
+        }
+      }
+
+
+      .StripeElement {
+        flex: 1 1;
+        height: 3.42857143rem;
+        min-height: 3.42857143rem;
+        max-height: 3.42857143rem;
+        border-radius: 4px;
+        border: 1px solid #c9cbd4;
+        color: #46435c;
+        padding: 1rem 0 10px 1.07142857rem;
+        transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+        &:hover {
+          border-color: #46435c !important;
+        }
+      }
+
+      .payment-logo {
+        display: flex;
+        margin: -10px 0 1.42857143rem 0;
+
+        img {
+          height: 1.42857143rem;
+          width: auto;
+          margin: 0 10px 0 0;
+
+          &:last-child {
+            margin: 0 0 0 auto;
+          }
+        }
+      }
+
+      .row {
+        display: flex;
+        margin-bottom: 1.42857143rem;
+
+        .form-group {
+          width: 35%;
+          margin: 0 10px 0 0;
+        }
+
+        .lock-description {
+          display: flex;
+          align-items: center;
+          font-size: .85714286rem;
+          line-height: 1.07142857rem;
+          color: #46435c;
+          margin: 0 0 0 20px;
+
+          svg {
+            width: 1rem;
+            min-width: 1rem;
+            height: 1rem;
+            margin: 0 8px 0 0;
+            fill: #46435c;
+          }
+        }
+      }
+
+
       @media (max-width: 800px) {
         p {
           br {
