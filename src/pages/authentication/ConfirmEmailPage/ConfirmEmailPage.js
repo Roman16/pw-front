@@ -6,19 +6,18 @@ import {userService} from "../../../services/user.services"
 import {notification} from "../../../components/Notification"
 import {Spin} from "antd"
 import PageDescription from "../LoginPage/PageDescription"
-import {Link} from "react-router-dom"
 
 let intervalId = null
 
 
 const ConfirmEmailPage = (props) => {
     const [confirmStatus, setConfirmStatus] = useState(null),
-        [disableResend, setDisableResend] = useState(false),
-        [disabledTimer, setDisabledTimer] = useState(60)
+        [disabledTimer, setDisabledTimer] = useState(localStorage.getItem('confirmEmailTimer') ? +localStorage.getItem('confirmEmailTimer') : 0)
 
     const onResend = async (e) => {
         e.preventDefault()
-        setDisableResend(true)
+        setDisabledTimer(59)
+        startTimer(true)
 
         try {
             const res = await userService.resendConfirmEmail()
@@ -32,28 +31,34 @@ const ConfirmEmailPage = (props) => {
             } else {
                 setConfirmStatus('dont-confirm')
             }
+        } catch (e) {
+            console.log(e)
+            setDisabledTimer(0)
+            clearInterval(intervalId)
+        }
+    }
 
+    const startTimer = (force) => {
+        if (disabledTimer !== 0 || force) {
             intervalId = setInterval(() => {
                 setDisabledTimer((prevCount) => {
                     return prevCount - 1
                 })
             }, 1000)
-
-            setDisableResend(false)
-        } catch (e) {
-            setDisableResend(false)
-            setDisabledTimer(60)
         }
     }
 
+    const goToLogin = () => {
+        localStorage.removeItem('token')
+        history.push('/login')
+    }
 
     useEffect(() => {
         if (disabledTimer === 0) {
             clearInterval(intervalId)
-
-            setDisableResend(false)
-            setDisabledTimer(60)
         }
+
+        localStorage.setItem('confirmEmailTimer', disabledTimer)
     }, [disabledTimer])
 
     useEffect(() => {
@@ -74,6 +79,14 @@ const ConfirmEmailPage = (props) => {
         } else {
             setConfirmStatus('dont-confirm')
         }
+
+        startTimer()
+
+        return (() => {
+            clearInterval(intervalId)
+
+            localStorage.removeItem('confirmEmailTimer')
+        })
     }, [])
 
     return (
@@ -94,11 +107,14 @@ const ConfirmEmailPage = (props) => {
 
                         <button
                             className='sds-btn default submit'
-                            disabled={disableResend}
+                            disabled={disabledTimer !== 0}
                         >
                             Resend
-                            {disableResend && <Spin size={'small'}/>}
                         </button>
+
+                        <p className={`timer ${disabledTimer === 0 ? 'hide' : ''}`}>
+                            Retry after: 00:<span>{disabledTimer < 10 ? `0${disabledTimer}` : disabledTimer}</span>
+                        </p>
                     </>}
 
                     {confirmStatus === 'error' && <>
@@ -112,14 +128,20 @@ const ConfirmEmailPage = (props) => {
 
                         <button
                             className='sds-btn default submit'
-                            disabled={disableResend}
+                            disabled={disabledTimer !== 0}
                         >
                             Resend
-                            {disableResend && <Spin size={'small'}/>}
                         </button>
+
+                        <p className={`timer ${disabledTimer === 0 ? 'hide' : ''}`}>
+                            Retry after: 00:<span>{disabledTimer < 10 ? `0${disabledTimer}` : disabledTimer}</span>
+                        </p>
                     </>}
 
-                    <p className={'sign-up'}>Already have an account? <Link to={'/login'}>Sign in</Link></p>
+                    <p className={'sign-up'}>
+                        Already have an account?
+                        <span onClick={goToLogin} className={'sign-in-link'}>Sign in</span>
+                    </p>
                 </form>
                 <PageDescription/>
             </div>

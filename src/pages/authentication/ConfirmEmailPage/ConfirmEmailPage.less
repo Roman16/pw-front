@@ -42,6 +42,20 @@
         margin: 0 auto;
       }
 
+      .timer {
+        margin: 0.7142857142857143rem 0 0 0;
+        font-size: 12px;
+        color: #353A3E;
+
+        span {
+          color: #6959AB;
+        }
+
+        &.hide {
+          opacity: 0;
+        }
+      }
+
       .sign-up {
         margin: auto auto 0;
         font-weight: 500;
@@ -50,9 +64,10 @@
         text-align: center;
         color: #46435C;
 
-        a {
+        .sign-in-link {
           color: #6959AB;
           padding: 0 3px;
+          cursor: pointer;
 
           &:hover {
             text-decoration: underline;
