@@ -329,6 +329,11 @@ class RegistrationForm extends Component {
                 </div>
             </div>
 
+            <p className={'card-description'}>
+                Newcomer, you can disconnect your credit card from the Sponsoreds account at any time. No payment will
+                be charged prior to the end of the trial period or until you purchase one of our products.
+            </p>
+
             <button className="sds-btn default submit" disabled={processing}>
                 Sign up
 
