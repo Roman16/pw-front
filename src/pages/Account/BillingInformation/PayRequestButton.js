@@ -46,7 +46,7 @@ class PaymentRequestForm extends React.Component {
                     },
                 }}
             />
-        ) : null;
+        ) : 'Payment buttons not available';
     }
 }
 export default injectStripe(PaymentRequestForm);
