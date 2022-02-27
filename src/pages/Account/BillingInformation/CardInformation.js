@@ -11,20 +11,20 @@ const CardInformation = ({card, cardList, isNewCard, updateProcessing, deletePro
     return (<section>
         <StripeProvider apiKey={stripeKey}>
             <Elements>
-                {/*<StripeForm*/}
-                {/*    card={card}*/}
-                {/*    cardList={cardList}*/}
-                {/*    isNewCard={isNewCard}*/}
-                {/*    updateProcessing={updateProcessing}*/}
-                {/*    deleteProcessing={deleteProcessing}*/}
-                {/*    requiredForSubscribe={requiredForSubscribe}*/}
+                <StripeForm
+                    card={card}
+                    cardList={cardList}
+                    isNewCard={isNewCard}
+                    updateProcessing={updateProcessing}
+                    deleteProcessing={deleteProcessing}
+                    requiredForSubscribe={requiredForSubscribe}
 
-                {/*    onAddCard={onAddCard}*/}
-                {/*    onUpdateCard={onUpdateCard}*/}
-                {/*    onDelete={onDelete}*/}
-                {/*/>*/}
+                    onAddCard={onAddCard}
+                    onUpdateCard={onUpdateCard}
+                    onDelete={onDelete}
+                />
 
-                <PaymentRequestForm/>
+                {/*<PaymentRequestForm/>*/}
             </Elements>
         </StripeProvider>
     </section>)
