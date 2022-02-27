@@ -21,21 +21,6 @@ import Cookies from "js-cookie"
 import {userActions} from "../../../actions/user.actions"
 import {seo} from "../../../utils/seo"
 import {history} from "../../../utils/history"
-import {connect} from "react-redux/lib/alternate-renderers"
-
-
-const CardNumberElementStyles = {
-    base: {
-        color: '#46435C',
-        fontWeight: '300',
-        fontSize: window.devicePixelRatio === 2 ? '12px' : '14px',
-        height: '48px',
-        '::placeholder': {
-            color: 'rgba(101, 106, 132, 0.4)',
-        },
-    }
-}
-
 
 class RegistrationForm extends Component {
     state = {
@@ -89,61 +74,39 @@ class RegistrationForm extends Component {
     submitHandler = async (e) => {
         e.preventDefault()
 
-        const billing_details = {}
 
-        const {user, expiry, card_number, cvc} = this.state,
-            {name} = user
+        const {user} = this.state
 
 
-        if (Object.values(user).some(i => !i) || user.password.length < 6 || user.password !== user.confirmPassword || !expiry || !card_number || !cvc) {
+        if (Object.values(user).some(i => !i) || user.password.length < 6 || user.password !== user.confirmPassword) {
             if (!user.name) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'name']}))
             if (!user.last_name) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'last_name']}))
             if (!user.email) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'email']}))
             if (user.password.length < 6) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'password']}))
             if (user.password !== user.confirmPassword) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'confirmPassword']}))
-            if (!expiry) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'expiry']}))
-            if (!card_number) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'card_number']}))
-            if (!cvc) this.setState(prevState => ({failedFields: [...prevState.failedFields, 'cvc']}))
         } else {
             this.setState({processing: true})
 
             try {
-                if (name) {
-                    billing_details.name = name
-                }
                 const urlParams = new URLSearchParams(this.props.location.search)
 
-                const resStripe = await this.props.stripe.createPaymentMethod('card', {billing_details})
+                const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
 
-                if (resStripe.error) {
-                    notification.error({title: resStripe.error.message})
-                } else if (resStripe.paymentMethod) {
-                    const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
+                const res = await userService.regist({
+                    ...user,
+                    ...this.props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+                    ...ref ? {referral_code: ref} : {},
+                    ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
+                })
 
-                    const res = await userService.regist({
-                        ...user,
-                        stripe_token: resStripe.paymentMethod.id,
-                        ...this.props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
-                        ...ref ? {referral_code: ref} : {},
-                        ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
-                    })
+                this.props.setUser(user)
 
-                    this.props.setUser(user)
+                localStorage.setItem('token', res.access_token)
+                localStorage.removeItem('refId')
 
-                    localStorage.setItem('token', res.access_token)
-                    localStorage.removeItem('refId')
+                seo({title: 'Sponsoreds'})
 
-                    seo({title: 'Sponsoreds'})
-
-                    history.push('/confirm-email')
-
-
-                    this.setState({
-                        card_number: false,
-                        expiry: false,
-                        cvc: false,
-                    })
-                }
+                history.push('/confirm-email')
             } catch (e) {
                 console.log(e)
             }
@@ -153,7 +116,7 @@ class RegistrationForm extends Component {
     }
 
     render() {
-        const {autofocus, expiry, card_number, cvc, user, openedPassword, failedFields, processing} = this.state
+        const {user, openedPassword, failedFields, processing} = this.state
 
 
         return (<form onSubmit={this.submitHandler}>
@@ -253,86 +216,6 @@ class RegistrationForm extends Component {
                         <SVG id={openedPassword.includes('confirmPassword') ? 'eye-opened' : 'eye-closed'}/>
                     </div>}
             </diw>
-
-
-            <div
-                className={`form-group ${failedFields.includes('card_number') ? 'error-field' : ''}`}>
-                <CardNumberElement
-                    placeholder='Credit card'
-                    style={CardNumberElementStyles}
-                    onChange={(element) => this.stripeElementChange(element, 'card_number')}
-                />
-
-                {failedFields.includes('card_number') && <div className={'input-suffix'}><InformationTooltip
-                    type={'custom'}
-                    description={'Required field'}
-                >
-                    <SVG id={'failed-field'}/>
-                </InformationTooltip></div>}
-            </div>
-
-            <div className="payment-logo">
-                <img src={visaLogo} alt=""/>
-                <img src={masterLogo} alt=""/>
-                <img src={americanExpressLogo} alt=""/>
-                <img src={discoverLogo} alt=""/>
-                <img src={stripeLogo} alt=""/>
-            </div>
-
-
-            <div
-                className={`form-group ${failedFields.includes('expiry') ? 'error-field' : ''}`}>
-                <CardExpiryElement
-                    style={CardNumberElementStyles}
-                    placeholder={'Expiry'}
-
-                    ref={(instance) => {
-                        (autofocus && card_number && instance && !expiry) && instance._element.focus()
-                    }}
-                    onChange={(element) => this.stripeElementChange(element, 'expiry')}
-                    onBlur={this.handleBlurCardElement}
-                />
-
-                {failedFields.includes('expiry') && <div className={'input-suffix'}><InformationTooltip
-                    type={'custom'}
-                    description={'Required field'}
-                >
-                    <SVG id={'failed-field'}/>
-                </InformationTooltip></div>}
-            </div>
-
-            <div className="row">
-                <div
-                    className={`form-group card-container__cvc ${failedFields.includes('cvc') ? 'error-field' : ''}`}>
-
-                    <CardCvcElement
-                        placeholder={'CVC'}
-                        style={CardNumberElementStyles}
-                        ref={(instance) => {
-                            (autofocus && expiry && instance && !cvc) && instance._element.focus()
-                        }}
-                        onChange={(element) => this.stripeElementChange(element, 'cvc')}
-                        onBlur={this.handleBlurCardElement}
-                    />
-
-                    {failedFields.includes('cvc') && <div className={'input-suffix'}><InformationTooltip
-                        type={'custom'}
-                        description={'Required field'}
-                    >
-                        <SVG id={'failed-field'}/>
-                    </InformationTooltip></div>}
-                </div>
-
-                <div className={'lock-description'}>
-                    <SVG id='lock'/>
-                    this is a secure 128-bit <br/> ssl encrypted
-                </div>
-            </div>
-
-            <p className={'card-description'}>
-                Newcomer, you can disconnect your credit card from the Sponsoreds account at any time. No payment will
-                be charged prior to the end of the trial period or until you purchase one of our products.
-            </p>
 
             <button className="sds-btn default submit" disabled={processing}>
                 Sign up
