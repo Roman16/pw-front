@@ -132,13 +132,14 @@ const ProductList = ({pathname}) => {
         })
     }, [searchParams, onlyOptimization, ungroupVariations])
 
+
     useEffect(() => {
         if (productList.length === 0 && totalSize > 0) setSearchParams(prevState => ({...prevState, page: 1}))
     }, [productList, totalSize])
 
     useEffect(() => {
         if (!user.user.free_trial_available && subscribedProduct.has_access) getProductsList()
-    }, [user.user.free_trial_available, subscribedProduct])
+    }, [user.user.free_trial_available, subscribedProduct.has_access])
 
     return (
         <Fragment>
