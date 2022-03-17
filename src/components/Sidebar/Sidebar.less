@@ -21,6 +21,8 @@
   padding: 0 0 1.4285714285714286rem;
   transition: .3s ease-in-out;
   z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   .sidebar-header {
     display: flex;
@@ -512,7 +514,7 @@
           position: relative;
 
           .sub-menu {
-            position: absolute;
+            position: fixed;
             left: 5.14285714rem;
             transition: 0s !important;
 
@@ -536,13 +538,13 @@
               min-width: 13.571428571428571rem;
               width: max-content;
               max-height: max-content;
-              top: 0;
               left: 5.14285714rem;
               background: #2A254B;
               z-index: 10001111110;
               border-radius: 0 8px 8px 0;
               overflow: initial;
               padding: 0 0 8px;
+              margin: -3.2857142857142856rem 0 0 0;
 
               &::before {
                 opacity: 1;
@@ -943,7 +945,7 @@
         align-items: center;
 
         font-weight: 600;
-        font-size: 12px;
+        font-size: 0.8571428571428571rem;
         color: #FFFFFF;
         padding: 10px 0 10px 1.4285714285714286rem;
 

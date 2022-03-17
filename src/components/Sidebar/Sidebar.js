@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import {useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
@@ -24,6 +24,8 @@ const Sidebar = () => {
             ppc: false,
             notifications: false
         })
+
+    const parentLink = useRef(null);
 
     const {user} = useSelector(state => ({
             user: state.user,
@@ -134,7 +136,7 @@ const Sidebar = () => {
                             // .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i.key === 'zth')
                             .map(item => {
                                 return (
-                                    <li className={`nav-item ${subMenuState[item.key] ? 'opened' : 'closed'} ${item.subMenu ? 'has-child' : ''}`}>
+                                    <li className={`nav-item ${subMenuState[item.key] ? 'opened' : 'closed'} ${item.subMenu ? 'has-child' : ''}`} ref={parentLink}>
                                         <NavLink
                                             className={`menu-link ${item.subMenu ? 'has-child' : ''}`}
                                             activeClassName="active"
@@ -156,7 +158,9 @@ const Sidebar = () => {
                                         </NavLink>
 
                                         {item.subMenu &&
-                                        <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
+                                        <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`} onClick={() => {
+                                            console.log(parentLink)
+                                        }}>
                                             <h4>{item.title}</h4>
 
                                             {item.subMenu && item.subMenu
