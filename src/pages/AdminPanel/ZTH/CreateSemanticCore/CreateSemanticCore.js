@@ -86,7 +86,7 @@ const CreateSemanticCore = () => {
 
 
     const downloadInputParams = () => {
-        dataSaveService.saveInputParameters([getInputParameters()])
+        dataSaveService.saveInputParameters(getInputParameters())
     }
 
     const createZeroToHeroHandler = async () => {
