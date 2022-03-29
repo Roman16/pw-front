@@ -22,7 +22,6 @@ const RegistrationPage = (props) => {
 
     const setUser = (user) => {
         dispatch(userActions.setInformation({user: {email: user.email}}))
-
     }
 
     useEffect(() => {

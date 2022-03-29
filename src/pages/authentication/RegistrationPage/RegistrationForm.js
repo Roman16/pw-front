@@ -95,6 +95,7 @@ class RegistrationForm extends Component {
                 const res = await userService.regist({
                     ...user,
                     ...this.props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+                    ...this.props.agency_token ? {agency_token: this.props.agency_token} : {},
                     ...ref ? {referral_code: ref} : {},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })

@@ -11,72 +11,85 @@ import {userActions} from "../../../actions/user.actions"
 import img from "../../../assets/img/page-login/description-img.svg"
 import logo from "../../../assets/img/logo/sponsoreds-by-pw-logo.svg"
 import logoMob from "../../../assets/img/logo/sponsoreds-by-pw-logo-mob.svg"
+import {Elements, StripeProvider} from "react-stripe-elements"
+
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
 
 const AgencyRegistrationPage = (props) => {
-    const [user, setUser] = useState({
-            name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        }),
-        [processing, setProcessing] = useState(false),
-        [failedFields, setFailedFields] = useState([])
-
+    // const [user, setUser] = useState({
+    //         name: '',
+    //         last_name: '',
+    //         email: '',
+    //         password: '',
+    //         confirmPassword: '',
+    //     }),
+    //     [processing, setProcessing] = useState(false),
+    //     [failedFields, setFailedFields] = useState([])
+    //
     const dispatch = useDispatch()
+    //
+    //
+    // const changeUserHandler = (value) => {
+    //     setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
+    //     setUser({...user, ...value})
+    // }
+    //
+    // const registrationHandler = async (e) => {
+    //     e.preventDefault()
+    //
+    //     if (Object.values(user).some(i => !i) || user.password.length < 6 || user.password !== user.confirmPassword) {
+    //         if (!user.name) setFailedFields(prevState => [...prevState, 'name'])
+    //         if (!user.last_name) setFailedFields(prevState => [...prevState, 'last_name'])
+    //         if (!user.email) setFailedFields(prevState => [...prevState, 'email'])
+    //         if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
+    //         if (user.password !== user.confirmPassword) setFailedFields(prevState => [...prevState, 'confirmPassword'])
+    //     } else {
+    //         try {
+    //             setProcessing(true)
+    //
+    //             const res = await userService.regist({
+    //                 ...user,
+    //                 agency_token: props.match.params.token,
+    //                 ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
+    //                 ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
+    //             })
+    //
+    //             dispatch(userActions.setInformation({user: {email: user.email}}))
+    //
+    //             localStorage.setItem('token', res.access_token)
+    //
+    //             // window.dataLayer.push({'event': 'Registration',})
+    //
+    //             history.push('/confirm-email')
+    //         } catch (e) {
+    //             console.log(e)
+    //         }
+    //
+    //         setProcessing(false)
+    //     }
+    // }
 
-
-    const changeUserHandler = (value) => {
-        setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
-        setUser({...user, ...value})
+    const setUser = (user) => {
+        dispatch(userActions.setInformation({user: {email: user.email}}))
     }
 
-    const registrationHandler = async (e) => {
-        e.preventDefault()
-
-        if (Object.values(user).some(i => !i) || user.password.length < 6 || user.password !== user.confirmPassword) {
-            if (!user.name) setFailedFields(prevState => [...prevState, 'name'])
-            if (!user.last_name) setFailedFields(prevState => [...prevState, 'last_name'])
-            if (!user.email) setFailedFields(prevState => [...prevState, 'email'])
-            if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
-            if (user.password !== user.confirmPassword) setFailedFields(prevState => [...prevState, 'confirmPassword'])
-        } else {
-            try {
-                setProcessing(true)
-
-                const res = await userService.regist({
-                    ...user,
-                    agency_token: props.match.params.token,
-                    ...props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
-                    ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
-                })
-
-                dispatch(userActions.setInformation({user: {email: user.email}}))
-
-                localStorage.setItem('token', res.access_token)
-
-                // window.dataLayer.push({'event': 'Registration',})
-
-                history.push('/confirm-email')
-            } catch (e) {
-                console.log(e)
-            }
-
-            setProcessing(false)
-        }
-    }
 
     return (
         <div className="auth-page registration-page agency-registration">
             <div className="container">
-                <RegistrationForm
-                    user={user}
-                    failedFields={failedFields}
-                    processing={processing}
 
-                    onChange={changeUserHandler}
-                    onSubmit={registrationHandler}
-                />
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
+                        <RegistrationForm
+                            {...props}
+                            agency_token={props.match.params.token}
+                            setUser={setUser}
+                        />
+                    </Elements>
+                </StripeProvider>
+
 
                 <div className="page-description">
                     <a href="https://sponsoreds.com" className={'logo'}>
