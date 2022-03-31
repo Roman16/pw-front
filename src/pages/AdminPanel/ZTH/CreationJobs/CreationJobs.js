@@ -83,6 +83,7 @@ const CreationJobs = () => {
         return `${_baseUrl}zero-to-hero/creation-jobs/${jobId}/download-product-report?X-PW-Agency-ZTH-API-Token=${getZTHToken()}&token=${token}`
     }
 
+
     const columns = [
         {
             title: 'ID',
@@ -117,13 +118,7 @@ const CreationJobs = () => {
             dataIndex: 'status',
             key: 'status',
             width: '110px',
-            render: status => (<>
-                    {status === 'DONE' && <span style={{color: 'green'}}>DONE</span>}
-                    {(status === 'ERROR' || status === 'FAILED') && <span style={{color: 'red'}}>{status}</span>}
-                    {status === 'IN_PROGRESS' && <span style={{color: 'blue'}}>IN PROGRESS</span>}
-                    {status === 'PENDING' && <span style={{color: 'orange'}}>PENDING</span>}
-                </>
-            )
+            render: status => <JobStatus status={status}/>
         },
         {
             title: 'Google Spreadsheet URL',
@@ -196,10 +191,12 @@ const CreationJobs = () => {
                     >
                         <Option value={''}>No Filter</Option>
                         <Option value={'PENDING'}>PENDING</Option>
+                        <Option value={'CREATED'}>CREATED</Option>
                         <Option value={'IN_PROGRESS'}>IN PROGRESS</Option>
                         <Option value={'DONE'}>DONE</Option>
                         <Option value={'FAILED'}>FAILED</Option>
                         <Option value={'ERROR'}>ERROR</Option>
+                        <Option value={'CANCELED'}>CANCELED</Option>
                     </CustomSelect>
                 </div>
             </div>
@@ -226,6 +223,20 @@ const CreationJobs = () => {
             />
         </section>
     )
+}
+
+export const JobStatus = ({status}) => {
+    if (status === 'DONE') {
+        return <span style={{color: 'green'}}>DONE</span>
+    } else if (status === 'ERROR' || status === 'FAILED' || status === 'CANCELED') {
+        return <span style={{color: 'red'}}>{status}</span>
+    } else if (status === 'IN_PROGRESS') {
+        return <span style={{color: 'blue'}}>IN PROGRESS</span>
+    } else if (status === 'PENDING' || status === 'CREATED') {
+        return <span style={{color: 'orange'}}>{status}</span>
+    } else {
+        return status
+    }
 }
 
 export default CreationJobs
