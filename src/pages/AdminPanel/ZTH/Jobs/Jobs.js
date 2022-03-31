@@ -150,12 +150,10 @@ const Jobs = () => {
                     >
                         <Option value={''}>No Filter</Option>
                         <Option value={'PENDING'}>PENDING</Option>
-                        <Option value={'CREATED'}>CREATED</Option>
                         <Option value={'IN_PROGRESS'}>IN PROGRESS</Option>
                         <Option value={'DONE'}>DONE</Option>
                         <Option value={'FAILED'}>FAILED</Option>
                         <Option value={'ERROR'}>ERROR</Option>
-                        <Option value={'CANCELED'}>CANCELED</Option>
                     </CustomSelect>
                 </div>
             </div>
