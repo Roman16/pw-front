@@ -7,6 +7,7 @@ import {Input, Select} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {saveInputParameters} from "../../../../utils/saveFile"
 import CustomSelect from "../../../../components/Select/Select"
+import {JobStatus} from "../CreationJobs/CreationJobs"
 
 const Option = Select.Option
 
@@ -62,13 +63,7 @@ const columns = [
         dataIndex: 'status',
         key: 'status',
         width: '110px',
-        render: status => (<>
-                {status === 'DONE' && <span style={{color: 'green'}}>DONE</span>}
-                {(status === 'ERROR' || status === 'FAILED') && <span style={{color: 'red'}}>{status}</span>}
-                {status === 'IN_PROGRESS' && <span style={{color: 'blue'}}>IN PROGRESS</span>}
-                {status === 'PENDING' && <span style={{color: 'orange'}}>PENDING</span>}
-            </>
-        )
+        render: status => <JobStatus status={status}/>
     },
     {
         title: 'SC URL',
@@ -148,18 +143,18 @@ const Jobs = () => {
                 </div>
 
                 <div className="form-group">
-                  <CustomSelect
-                      placeholder={'Filter by status'}
-                      getPopupContainer={trigger => trigger}
-                      onChange={(value) => setRequestParams(prevState => ({...prevState, status: value}))}
-                  >
-                      <Option value={''}>No Filter</Option>
-                      <Option value={'PENDING'}>PENDING</Option>
-                      <Option value={'IN_PROGRESS'}>IN PROGRESS</Option>
-                      <Option value={'DONE'}>DONE</Option>
-                      <Option value={'FAILED'}>FAILED</Option>
-                      <Option value={'ERROR'}>ERROR</Option>
-                  </CustomSelect>
+                    <CustomSelect
+                        placeholder={'Filter by status'}
+                        getPopupContainer={trigger => trigger}
+                        onChange={(value) => setRequestParams(prevState => ({...prevState, status: value}))}
+                    >
+                        <Option value={''}>No Filter</Option>
+                        <Option value={'PENDING'}>PENDING</Option>
+                        <Option value={'IN_PROGRESS'}>IN PROGRESS</Option>
+                        <Option value={'DONE'}>DONE</Option>
+                        <Option value={'FAILED'}>FAILED</Option>
+                        <Option value={'ERROR'}>ERROR</Option>
+                    </CustomSelect>
                 </div>
             </div>
 
