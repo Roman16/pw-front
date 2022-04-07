@@ -80,7 +80,7 @@ function updateProductSettings(parameters) {
     return api('post', `${productsUrls.updateSettings}/${parameters.id}`, {
         'product_margin_value': parameters.product_margin_value,
         'item_price': parameters.item_price,
-        'item_price_from_user': parameters.item_price_from_user,
+        'item_price_from_user': parameters.item_price_from_user || null,
         'min_bid_manual_campaign': parameters.min_bid_manual_campaign,
         'max_bid_manual_campaign': parameters.max_bid_manual_campaign,
         'min_bid_auto_campaign': parameters.min_bid_auto_campaign,
@@ -96,13 +96,13 @@ function updateProductSettings(parameters) {
 function updateVariationSettings(variation) {
     return api('post', `${productsUrls.updateVariation}`, {
         product_id: variation.id,
-        item_price_from_user: variation.item_price_from_user
+        item_price_from_user: variation.item_price_from_user || null
     })
 }
 
 function updateProductSettingsById(parameters) {
     return api('post', `${productsUrls.updateSettings}/${parameters.product_id}`, {
-        'item_price_from_user': parameters.item_price_from_user,
+        'item_price_from_user': parameters.item_price_from_user || null,
         'min_bid_manual_campaign': parameters.min_bid_manual_campaign,
         'max_bid_manual_campaign': parameters.max_bid_manual_campaign,
         'min_bid_auto_campaign': parameters.min_bid_auto_campaign,

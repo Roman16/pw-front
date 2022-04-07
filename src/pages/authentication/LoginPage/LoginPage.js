@@ -20,6 +20,9 @@ const LoginPage = (props) => {
 
     const dispatch = useDispatch()
 
+    const urlParams = new URLSearchParams(props.location.search)
+
+
     const changeUserHandler = (value) => {
         setFailedFields(failedFields.filter(i => i !== Object.keys(value)[0]))
         setUser({...user, ...value})
@@ -91,6 +94,9 @@ const LoginPage = (props) => {
 
             history.push('/login')
         }
+
+        if (urlParams.get('ref')) localStorage.setItem('refId', urlParams.get('ref'))
+
 
         if (localStorage.getItem('token')) {
             seo({title: 'Sponsoreds'})

@@ -195,6 +195,7 @@ const ProductList = ({
                 width: '170px',
                 key: PRICE_FROM_USER,
                 editType: 'currency',
+                saveValidation: () =>  false,
                 render: (item) => getValue(item, PRICE_FROM_USER)
             },
             {
@@ -311,6 +312,7 @@ const ProductList = ({
                                                 value={productVariation[item.key]}
                                                 column={item.dataIndex}
                                                 columnInfo={item}
+                                                columnParams={item}
                                                 onUpdateField={(item, column, value, success, error) => onUpdateField(item, column, value, success, error, openedProduct)}
                                                 render={() => item.render(productVariation, props, index, item.dataIndex)}
                                             /> : item.render(productVariation, props, index, item.dataIndex)}
@@ -368,6 +370,7 @@ const ProductList = ({
             key: PRICE_FROM_USER,
             width: '170px',
             editType: (item) => item.product.variations ? false : 'currency',
+            saveValidation: () =>  false,
             render: (index, item) => getValue(item, PRICE_FROM_USER, true)
         },
         {

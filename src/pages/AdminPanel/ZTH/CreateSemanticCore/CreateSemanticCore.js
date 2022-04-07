@@ -93,6 +93,7 @@ const CreateSemanticCore = () => {
         const requestData = new FormData()
 
         const ips = JSON.stringify([getInputParameters()])
+
         requestData.set(
             'inputParameters',
             new Blob([ips], {type: 'application/json'})
