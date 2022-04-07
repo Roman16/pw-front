@@ -9,7 +9,6 @@ import './DrawerWindows/Reactivate.less'
 import {useSelector, useDispatch} from "react-redux"
 import {userService} from "../../../services/user.services"
 import {userActions} from "../../../actions/user.actions"
-import {subscriptionProducts} from "../../../constans/subscription.products.name"
 import {notification} from "../../../components/Notification"
 import CardInformation from "../BillingInformation/CardInformation"
 import ModalWindow from "../../../components/ModalWindow/ModalWindow"
@@ -325,25 +324,25 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            {subscriptionProducts.map((product) => (
-                <SubscriptionPlan
-                    key={product.key}
-                    product={{...subscriptions[0], ...product}}
-                    fetching={fetching}
-                    disableButton={disableButton}
-                    stripeId={stripeId}
-                    subscribedProduct={subscribedProduct}
+            {/*{subscriptionProducts.map((product) => (*/}
+            {/*    <SubscriptionPlan*/}
+            {/*        key={product.key}*/}
+            {/*        product={{...subscriptions[0], ...product}}*/}
+            {/*        fetching={fetching}*/}
+            {/*        disableButton={disableButton}*/}
+            {/*        stripeId={stripeId}*/}
+            {/*        subscribedProduct={subscribedProduct}*/}
 
-                    onStartTrial={startFreeTrialHandler}
-                    getCouponStatus={getCouponStatus}
-                    applyCoupon={applyCoupon}
-                    onSubscribe={handleSubscribe}
-                    reloadData={handleUpdateSubscriptionStatus}
-                    onOpenAccountWindow={handleOpenAccountWindow}
-                    onOpenReactivateWindow={handleOpenReactivateWindow}
+            {/*        onStartTrial={startFreeTrialHandler}*/}
+            {/*        getCouponStatus={getCouponStatus}*/}
+            {/*        applyCoupon={applyCoupon}*/}
+            {/*        onSubscribe={handleSubscribe}*/}
+            {/*        reloadData={handleUpdateSubscriptionStatus}*/}
+            {/*        onOpenAccountWindow={handleOpenAccountWindow}*/}
+            {/*        onOpenReactivateWindow={handleOpenReactivateWindow}*/}
 
-                />
-            ))}
+            {/*    />*/}
+            {/*))}*/}
 
             <ModalWindow
                 className="cancel-account reactivate-account"
@@ -420,7 +419,7 @@ const Subscription = () => {
             <ConfirmSubscribeWindow
                 visible={visibleConfirmSubscribeWindow}
                 defaultCard={_.find(cardsList, {default: true})}
-                product={{...subscriptions[0], ...subscriptionProducts[0]}}
+                product={{...subscriptions[0]}}
                 submitProcessing={disableButton}
 
                 onSubmit={() => handleSubscribe(subscribeDetails, true, true)}

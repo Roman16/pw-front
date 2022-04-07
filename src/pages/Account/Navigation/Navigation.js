@@ -10,8 +10,9 @@ import AccessSettings from "../AccessSettings/AccessSettings"
 import BillingHistory from "../BillingHistory/BillingHistory"
 import BillingInformation from "../BillingInformation/BillingInformation"
 import {history} from "../../../utils/history"
+import {Subscriptions} from '../Subscriptions/Subscriptions'
+
 import _ from 'lodash'
-import {useSelector} from "react-redux"
 
 
 const menu = [
@@ -29,7 +30,7 @@ const menu = [
     },
     {
         title: 'Subscription',
-        link: 'subscription',
+        link: 'subscriptions',
     },
     {
         title: 'Billing History',
@@ -80,6 +81,7 @@ const Navigation = () => {
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
                 <Route exact path="/account/subscription" component={Subscription}/>
+                <Route exact path="/account/subscriptions" component={Subscriptions}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>
         </div>

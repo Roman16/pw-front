@@ -32,14 +32,13 @@ export const userService = {
     addPaymentMethod,
     setDefaultPaymentMethod,
     deletePaymentMethod,
-    reactivateSubscription,
-    cancelSubscription,
-    subscribe,
+    // reactivateSubscription,
+    // subscribe,
     confirmPayment,
-    updateSubscriptionStatus,
-    applyCoupon,
-    getSubscription,
-    getCouponStatus,
+    // updateSubscriptionStatus,
+    // applyCoupon,
+    // getSubscription,
+    // getCouponStatus,
     ebookOnSubscribe,
     onSubscribe,
     sendContacts,
@@ -56,7 +55,12 @@ export const userService = {
     getRegistrationTokens,
     checkImportStatus,
 
-    getIndexHtml
+    getIndexHtml,
+
+    getSubscriptionsState,
+    cancelSubscription,
+    getActivateInfo,
+    getCouponInfo
 }
 
 function login(user) {
@@ -185,32 +189,46 @@ function startFreeTrial() {
 
 //-------------------------------------
 //-------------subscription---------
-function getSubscription() {
-    return api('get', userUrls.subscriptionList)
-}
+// function getSubscription() {
+//     return api('get', userUrls.subscriptionList)
+// }
+//
+// function subscribe(data) {
+//     return api('post', userUrls.subscribe(data.subscription_id), data)
+// }
+//
+// function reactivateSubscription(data) {
+//     return api('post', userUrls.reactivate(data.subscription_id), data)
+// }
+//
 
-function subscribe(data) {
-    return api('post', userUrls.subscribe(data.subscription_id), data)
-}
+//
+// function updateSubscriptionStatus() {
+//     return api('post', userUrls.updateStatus)
+// }
+//
+// function applyCoupon(id, planId, coupon) {
+//     return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`)
+// }
+//
+// function getCouponStatus(coupon) {
+//     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
+// }
 
-function reactivateSubscription(data) {
-    return api('post', userUrls.reactivate(data.subscription_id), data)
+function getSubscriptionsState(scope) {
+    return api('get', `${userUrls.subscriptionState}?scopes[]=${scope}`)
 }
 
 function cancelSubscription(data) {
-    return api('post', userUrls.cancel(data.subscription_id), data)
+    return api('post', userUrls.cancelSubscription, data)
 }
 
-function updateSubscriptionStatus() {
-    return api('post', userUrls.updateStatus)
+function getActivateInfo(scope) {
+    return api('get', `${userUrls.activateInfo}?scopes[]=${scope}`)
 }
 
-function applyCoupon(id, planId, coupon) {
-    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`)
-}
-
-function getCouponStatus(coupon) {
-    return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
+function getCouponInfo(coupon) {
+    return api('get', `${userUrls.couponInfo}?coupon=${coupon}`)
 }
 
 function toggleMarketplace(id) {
