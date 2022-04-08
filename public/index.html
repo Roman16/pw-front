@@ -22,13 +22,13 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 
     <!--    tapfiliate-->
+    <script src="https://script.tapfiliate.com/tapfiliate.js" type="text/javascript" async></script>
     <script type="text/javascript">
-        (function (t, a, p) {
-            t.TapfiliateObject = a
-            t[a] = t[a] || function () {
-                (t[a].q = t[a].q || []).push(arguments)
-            }
-        })(window, 'tap')
+        (function(t,a,p){t.TapfiliateObject=a;t[a]=t[a]||function(){
+            (t[a].q=t[a].q||[]).push(arguments)}})(window,'tap');
+
+        tap('create', '28848-c4e877', { integration: "stripe" });
+        tap('detect');
     </script>
     <!--   /tapfiliate -->
 
@@ -49,7 +49,6 @@
     <!-- End Google Tag Manager -->
 
 
-    <script src="https://script.tapfiliate.com/tapfiliate.js" type="text/javascript" async></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script type="text/javascript" defer src="https://a.plerdy.com/public/js/click/main.js"></script>
 
