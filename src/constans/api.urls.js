@@ -30,6 +30,7 @@ export const userUrls = {
     cancelSubscription: 'user/account/subscription/v2/cancel',
     activateInfo: 'user/account/subscription/v2/activate/info',
     couponInfo: 'user/account/subscription/v2/coupon/check',
+    activateSubscription: 'user/account/subscription/v2/activate',
 
 
     subscriptionList: `user/account/subscription/list`,

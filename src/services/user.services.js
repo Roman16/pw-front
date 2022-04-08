@@ -60,7 +60,8 @@ export const userService = {
     getSubscriptionsState,
     cancelSubscription,
     getActivateInfo,
-    getCouponInfo
+    getCouponInfo,
+    activateSubscription
 }
 
 function login(user) {
@@ -219,6 +220,9 @@ function getSubscriptionsState(scope) {
     return api('get', `${userUrls.subscriptionState}?scopes[]=${scope}`)
 }
 
+function activateSubscription(data) {
+    return api('post', userUrls.activateSubscription, data)
+}
 function cancelSubscription(data) {
     return api('post', userUrls.cancelSubscription, data)
 }
