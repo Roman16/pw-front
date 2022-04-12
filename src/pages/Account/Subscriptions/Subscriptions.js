@@ -2,18 +2,26 @@ import React, {useEffect, useState} from "react"
 import {subscriptionPlans} from "../../../constans/subscription.plans"
 import './Subscriptions.less'
 import {userService} from "../../../services/user.services"
-import {CancelSubscriptionWindow} from "./modalWindows/CancelSubscriptionWindow"
+import {CancelSubscription, ActivateSubscription} from "./modalWindows"
 import {Spin} from "antd"
+import {SubscriptionPlan} from './SubscriptionPlan'
+
+import {Link} from "react-router-dom"
 
 const Subscriptions = () => {
-    const [subscriptionsState, setSubscriptionsState] = useState({
+    const
+        [scope, setScope] = useState('America'),
+
+        [subscriptionsState, setSubscriptionsState] = useState({
             active_subscription_type: null,
         }),
         [loadStateProcessing, setLoadStateProcessing] = useState(true),
         [activateProcessing, setActivateProcessing] = useState(false),
+        [selectedPlan, setSelectedPlan] = useState(),
 
-        [scope, setScope] = useState('America'),
         [visibleCancelSubscriptionsWindow, setVisibleCancelSubscriptionsWindow] = useState(false),
+        [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
+
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
 
     const getSubscriptionsState = async () => {
@@ -48,12 +56,14 @@ const Subscriptions = () => {
         setLoadStateProcessing(false)
     }
 
-    const subscribeHandler = async (type) => {
+    const subscribeHandler = async () => {
         setActivateProcessing(true)
         try {
-            const res = await userService.activateSubscription({scope, type})
+            const res = await userService.activateSubscription({scope, type: selectedPlan})
 
             getSubscriptionsState()
+            setSelectedPlan(undefined)
+            setVisibleActivateSubscriptionsWindow(false)
         } catch (e) {
             console.log(e)
         }
@@ -90,48 +100,69 @@ const Subscriptions = () => {
         }
     }
 
+    const selectPlanHandler = (plan) => {
+        setVisibleActivateSubscriptionsWindow(true)
+
+        setSelectedPlan(plan)
+    }
+
     useEffect(() => {
         getSubscriptionsState()
     }, [])
 
-    console.log(subscriptionsState)
 
     return (<>
         <section className={'subscriptions-page'}>
+            <h1>Subscription</h1>
+            <p className="page-description">
+                This is a prepaid plan, and you are paying for the next 30 days of using it. To view your invoices,
+                <Link to={'/account/billing-history'}>see billing history</Link>
+            </p>
+
             <ul className="plans">
-                {subscriptionPlans.map(plan => <li>
-                    <h3>{plan.name}</h3>
+                {subscriptionPlans.map(plan => <SubscriptionPlan
+                    plan={plan}
+                    loadStateProcessing={loadStateProcessing}
+                    subscriptionsState={subscriptionsState}
+                    processingCancelSubscription={processingCancelSubscription}
+                    activateProcessing={activateProcessing}
 
-                    {!loadStateProcessing ? <>
-                        <h4>- ${subscriptionsState.subscriptions[plan.key].upcoming_invoice.amount}</h4>
-
-                        {subscriptionsState.active_subscription_type === plan.key ?
-                            <button
-                                disabled={processingCancelSubscription}
-                                className="btn grey" onClick={() => setVisibleCancelSubscriptionsWindow(true)}
-                            >
-                                Cancel subscription
-                            </button>
-                            :
-                            <button
-                                disabled={activateProcessing}
-                                className="btn default"
-                                onClick={() => subscribeHandler(plan.key)}
-                            >
-                                {subscriptionsState.trial.can_start_trial ? 'Start  Free Trial' : subscriptionsState.active_subscription_type ? 'Switch' : 'Subscribe'}
-                            </button>
-                        }
-                    </> : <Spin/>}
-                </li>)}
+                    onSelect={selectPlanHandler}
+                    onCloseCancelWindow={setVisibleCancelSubscriptionsWindow}
+                />)}
             </ul>
+
+            {subscriptionsState.active_subscription_type && <div className="coupon-block">
+                <p>Enter coupon</p>
+
+                <div className="form-group">
+                    <input type="text" placeholder={'Your coupon'}/>
+                </div>
+
+                <button className="btn default">
+                    Apply
+                </button>
+            </div>}
         </section>
 
-        <CancelSubscriptionWindow
+        <CancelSubscription
             visible={visibleCancelSubscriptionsWindow}
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
             onCancelSubscription={cancelSubscriptionHandler}
         />
+
+        {selectedPlan &&
+        <ActivateSubscription
+            visible={visibleActivateSubscriptionsWindow}
+            plan={selectedPlan}
+            state={subscriptionsState}
+            scope={scope}
+            processing={activateProcessing}
+
+            onClose={() => !activateProcessing && setVisibleActivateSubscriptionsWindow(false)}
+            onActivate={subscribeHandler}
+        />}
     </>)
 }
 

@@ -12,6 +12,7 @@ const BillingHistory = React.lazy(() => import('../BillingHistory/BillingHistory
 const ApiConnection = React.lazy(() => import('../ApiConnection/ApiConnection'))
 const BillingInformation = React.lazy(() => import('../BillingInformation/BillingInformation'))
 const Subscriptions = React.lazy(() => import('../Subscriptions/Subscriptions'))
+const Subscription = React.lazy(() => import('../Subscription/Subscription'))
 
 
 const menu = [
@@ -80,6 +81,7 @@ const Navigation = () => {
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
                 <Route exact path="/account/subscriptions" component={Subscriptions}/>
+                <Route exact path="/account/subscription" component={Subscription}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>
         </div>

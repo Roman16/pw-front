@@ -29,6 +29,13 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 
 let afterSmallSpendAction
 
+const subscriptionProducts = [
+    {
+        name: 'PPC Automation',
+        key: 'optimization',
+    }
+]
+
 const Subscription = () => {
     let interval = null
     const dispatch = useDispatch()
@@ -324,25 +331,25 @@ const Subscription = () => {
 
     return (
         <div className="user-cabinet">
-            {/*{subscriptionProducts.map((product) => (*/}
-            {/*    <SubscriptionPlan*/}
-            {/*        key={product.key}*/}
-            {/*        product={{...subscriptions[0], ...product}}*/}
-            {/*        fetching={fetching}*/}
-            {/*        disableButton={disableButton}*/}
-            {/*        stripeId={stripeId}*/}
-            {/*        subscribedProduct={subscribedProduct}*/}
+            {subscriptionProducts.map((product) => (
+                <SubscriptionPlan
+                    key={product.key}
+                    product={{...subscriptions[0], ...product}}
+                    fetching={fetching}
+                    disableButton={disableButton}
+                    stripeId={stripeId}
+                    subscribedProduct={subscribedProduct}
 
-            {/*        onStartTrial={startFreeTrialHandler}*/}
-            {/*        getCouponStatus={getCouponStatus}*/}
-            {/*        applyCoupon={applyCoupon}*/}
-            {/*        onSubscribe={handleSubscribe}*/}
-            {/*        reloadData={handleUpdateSubscriptionStatus}*/}
-            {/*        onOpenAccountWindow={handleOpenAccountWindow}*/}
-            {/*        onOpenReactivateWindow={handleOpenReactivateWindow}*/}
+                    onStartTrial={startFreeTrialHandler}
+                    getCouponStatus={getCouponStatus}
+                    applyCoupon={applyCoupon}
+                    onSubscribe={handleSubscribe}
+                    reloadData={handleUpdateSubscriptionStatus}
+                    onOpenAccountWindow={handleOpenAccountWindow}
+                    onOpenReactivateWindow={handleOpenReactivateWindow}
 
-            {/*    />*/}
-            {/*))}*/}
+                />
+            ))}
 
             <ModalWindow
                 className="cancel-account reactivate-account"

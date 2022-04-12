@@ -32,13 +32,13 @@ export const userService = {
     addPaymentMethod,
     setDefaultPaymentMethod,
     deletePaymentMethod,
-    // reactivateSubscription,
-    // subscribe,
+    reactivateSubscription,
+    subscribe,
     confirmPayment,
-    // updateSubscriptionStatus,
-    // applyCoupon,
-    // getSubscription,
-    // getCouponStatus,
+    updateSubscriptionStatus,
+    applyCoupon,
+    getSubscription,
+    getCouponStatus,
     ebookOnSubscribe,
     onSubscribe,
     sendContacts,
@@ -190,31 +190,31 @@ function startFreeTrial() {
 
 //-------------------------------------
 //-------------subscription---------
-// function getSubscription() {
-//     return api('get', userUrls.subscriptionList)
-// }
-//
-// function subscribe(data) {
-//     return api('post', userUrls.subscribe(data.subscription_id), data)
-// }
-//
-// function reactivateSubscription(data) {
-//     return api('post', userUrls.reactivate(data.subscription_id), data)
-// }
-//
+function getSubscription() {
+    return api('get', userUrls.subscriptionList)
+}
 
-//
-// function updateSubscriptionStatus() {
-//     return api('post', userUrls.updateStatus)
-// }
-//
-// function applyCoupon(id, planId, coupon) {
-//     return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`)
-// }
-//
-// function getCouponStatus(coupon) {
-//     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
-// }
+function subscribe(data) {
+    return api('post', userUrls.subscribe(data.subscription_id), data)
+}
+
+function reactivateSubscription(data) {
+    return api('post', userUrls.reactivate(data.subscription_id), data)
+}
+
+
+
+function updateSubscriptionStatus() {
+    return api('post', userUrls.updateStatus)
+}
+
+function applyCoupon(id, planId, coupon) {
+    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`)
+}
+
+function getCouponStatus(coupon) {
+    return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
+}
 
 function getSubscriptionsState(scope) {
     return api('get', `${userUrls.subscriptionState}?scopes[]=${scope}`)
