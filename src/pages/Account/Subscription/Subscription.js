@@ -31,8 +31,8 @@ let afterSmallSpendAction
 
 const subscriptionProducts = [
     {
-        name: 'PPC Automation',
-        key: 'optimization',
+        productName: 'PPC Automation',
+        key: 'ppc',
     }
 ]
 

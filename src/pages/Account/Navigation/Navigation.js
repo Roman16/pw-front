@@ -30,7 +30,7 @@ const menu = [
     },
     {
         title: 'Subscription',
-        link: 'subscriptions',
+        link: 'subscription',
     },
     {
         title: 'Billing History',
