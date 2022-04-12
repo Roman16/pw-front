@@ -2,16 +2,17 @@ import React, {useEffect, useState} from "react"
 import {Link, NavLink, Redirect, Route} from "react-router-dom"
 import './Navigation.less'
 
-import ApiConnection from '../ApiConnection/ApiConnection'
-import Subscription from '../Subscription/Subscription'
 import {icons} from "./icons"
-import Profile from "../Profile/Profile"
-import AccessSettings from "../AccessSettings/AccessSettings"
-import BillingHistory from "../BillingHistory/BillingHistory"
-import BillingInformation from "../BillingInformation/BillingInformation"
 import {history} from "../../../utils/history"
 import _ from 'lodash'
-import {useSelector} from "react-redux"
+
+const Profile = React.lazy(() => import('../Profile/Profile'))
+const AccessSettings = React.lazy(() => import('../AccessSettings/AccessSettings'))
+const BillingHistory = React.lazy(() => import('../BillingHistory/BillingHistory'))
+const ApiConnection = React.lazy(() => import('../ApiConnection/ApiConnection'))
+const BillingInformation = React.lazy(() => import('../BillingInformation/BillingInformation'))
+const Subscriptions = React.lazy(() => import('../Subscriptions/Subscriptions'))
+const Subscription = React.lazy(() => import('../Subscription/Subscription'))
 
 
 const menu = [
@@ -29,7 +30,7 @@ const menu = [
     },
     {
         title: 'Subscription',
-        link: 'subscription',
+        link: 'subscriptions',
     },
     {
         title: 'Billing History',
@@ -79,6 +80,7 @@ const Navigation = () => {
                 <Route exact path="/account/access-settings" component={AccessSettings}/>
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connection" component={ApiConnection}/>
+                <Route exact path="/account/subscriptions" component={Subscriptions}/>
                 <Route exact path="/account/subscription" component={Subscription}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>

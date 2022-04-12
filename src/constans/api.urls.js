@@ -26,10 +26,16 @@ export const userUrls = {
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
     //subscription
+    subscriptionState: 'user/account/subscription/v2/state',
+    cancelSubscription: 'user/account/subscription/v2/cancel',
+    activateInfo: 'user/account/subscription/v2/activate/info',
+    couponInfo: 'user/account/subscription/v2/coupon/check',
+    activateSubscription: 'user/account/subscription/v2/activate',
+
+
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
-    cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
     updateStatus: 'user/account/subscription/all/update-preview',
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
