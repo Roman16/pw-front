@@ -1,22 +1,22 @@
-import React, {Fragment, useEffect} from "react";
-import {Modal} from "antd";
+import React, {Fragment, useEffect} from "react"
+import {Modal} from "antd"
 
-import './ModalWindow.less';
+import './ModalWindow.less'
 
 const ModalWindow = (props) => {
-    const {visible, handleOk, handleCancel, className, okText, mask, footer, container, destroyOnClose} = props;
+    const {visible, handleOk, handleCancel, className, okText, mask, footer, container, destroyOnClose, wrapClassName = ''} = props
 
     useEffect(() => {
         if (container) {
             document.querySelector('.sidebar-header .burger').addEventListener('click', () => {
                 setTimeout(() => {
                     if (document.querySelector('.custom-modal-wrap')) {
-                        document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`;
+                        document.querySelector('.custom-modal-wrap').style.left = `${document.querySelector('.sidebar').clientWidth}px`
                     }
                 }, 400)
             })
         }
-    }, []);
+    }, [])
 
 
     if (container) {
@@ -43,7 +43,7 @@ const ModalWindow = (props) => {
             <Modal
                 {...props}
                 className={`${className} custom-modal-window`}
-                wrapClassName={'over-modal-wrap'}
+                wrapClassName={`${wrapClassName} over-modal-wrap`}
                 visible={visible}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -60,6 +60,6 @@ const ModalWindow = (props) => {
         )
 
     }
-};
+}
 
-export default ModalWindow;
+export default ModalWindow

@@ -132,8 +132,8 @@ const AuthorizedUser = (props) => {
         setLoadingUserInformation(true)
 
         userService.getUserInfo()
-            .then(res => {
-                dispatch(userActions.setInformation(res))
+            .then(({result}) => {
+                dispatch(userActions.setInformation(result))
                 setLoadingUserInformation(false)
             })
     }, [])

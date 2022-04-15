@@ -86,7 +86,7 @@ const Impersonations = (props) => {
             const res = await userService.getUserInfo()
             localStorage.removeItem('adminToken')
 
-            dispatch(userActions.setInformation(res))
+            dispatch(userActions.setInformation(res.result))
 
             updateLocaleStorage()
 

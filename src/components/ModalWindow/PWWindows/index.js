@@ -111,11 +111,11 @@ const PWWindows = ({pathname}) => {
         [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true),
         [visibleNewChangesWindow, setVisibleNewChangesWindow] = useState(true)
 
-    const {user, productList, subscribedProduct, importStatus} = useSelector(state => ({
+    const {user, productList, importStatus, access} = useSelector(state => ({
         user: state.user,
-        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]],
         productList: state.products.productList || [],
-        importStatus: state.user.importStatus
+        importStatus: state.user.importStatus,
+        access: state.user.access.data,
     }))
 
     const closeWindowHandler = () => {
@@ -141,13 +141,15 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
-        } else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.has_access && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
-            setVisibleWindow('smallSpend')
-        } else if (user.user.free_trial_available) {
+        } else if ((!access.analytics && pathname.includes('/analytics')) || (!access.optimization && pathname.includes('/ppc/'))) {
+            setVisibleWindow('notAccess')
+        }
+        // else if (subscribedProduct && visibleSmallSpendWindow && !subscribedProduct.has_access && !subscribedProduct.eligible_for_subscription && !user.user.is_agency_client) {
+        //     setVisibleWindow('smallSpend')
+        // }
+        else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')
-        } else if (!user.user.free_trial_available && !subscribedProduct.has_access) {
-            setVisibleWindow('expiredSubscription')
-        } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0 && subscribedProduct.has_access) {
+        } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0) {
             setVisibleWindow('newReportsCount')
         } else {
             setVisibleWindow(null)
@@ -167,7 +169,7 @@ const PWWindows = ({pathname}) => {
             />}
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow
-                visible={visibleWindow === 'expiredSubscription'}
+                visible={visibleWindow === 'notAccess'}
                 onClose={closeWindowHandler}
             />}
 

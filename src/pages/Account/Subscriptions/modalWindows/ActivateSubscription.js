@@ -11,6 +11,7 @@ export const ActivateSubscription = ({
                                          state,
                                          scope,
                                          processing,
+                                         activateType,
 
                                          onClose,
                                          onActivate
@@ -31,7 +32,7 @@ export const ActivateSubscription = ({
 
 
     const windowContent = () => {
-        if (!state.active_subscription_type && state.trial.can_start_trial) {
+        if (activateType === 'trial') {
             return (<div className={'free-trial'}>
                 <div className="window-header">
                     <h2>Your 14-day free trial starts now</h2>
@@ -80,7 +81,7 @@ export const ActivateSubscription = ({
                 </div>
             </div>)
             // } else if (state.active_subscription_type) {
-        } else if (true) {
+        } else if (activateType === 'switch') {
             return (<div className={'switch-subscription'}>
                 <div className="window-header">
                     <h2>Are you sure you want to switch plan?</h2>

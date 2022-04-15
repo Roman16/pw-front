@@ -12,7 +12,6 @@ const BillingHistory = React.lazy(() => import('../BillingHistory/BillingHistory
 const ApiConnection = React.lazy(() => import('../ApiConnection/ApiConnection'))
 const BillingInformation = React.lazy(() => import('../BillingInformation/BillingInformation'))
 const Subscriptions = React.lazy(() => import('../Subscriptions/Subscriptions'))
-const Subscription = React.lazy(() => import('../Subscription/Subscription'))
 
 
 const menu = [
@@ -30,7 +29,7 @@ const menu = [
     },
     {
         title: 'Subscription',
-        link: 'subscription',
+        link: 'subscriptions',
     },
     {
         title: 'Billing History',
@@ -38,7 +37,7 @@ const menu = [
     },
     {
         title: 'API Connection',
-        link: 'api-connection',
+        link: 'api-connections',
     },
 ]
 
@@ -79,9 +78,8 @@ const Navigation = () => {
                 <Route exact path="/account/profile" component={Profile}/>
                 <Route exact path="/account/access-settings" component={AccessSettings}/>
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
-                <Route exact path="/account/api-connection" component={ApiConnection}/>
+                <Route exact path="/account/api-connections" component={ApiConnection}/>
                 <Route exact path="/account/subscriptions" component={Subscriptions}/>
-                <Route exact path="/account/subscription" component={Subscription}/>
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>
         </div>

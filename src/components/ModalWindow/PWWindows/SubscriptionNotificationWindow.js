@@ -25,7 +25,7 @@ const SubscriptionNotificationWindow = ({visible}) => {
                 using Sponsoreds Software.
             </p>
 
-            <Link to={'/account/subscription'} className={'btn default'}>
+            <Link to={'/account/subscriptions'} className={'btn default'}>
                 Upgrade Now
             </Link>
         </ModalWindow>

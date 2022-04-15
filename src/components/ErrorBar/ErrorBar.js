@@ -4,9 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
 import {userActions} from "../../actions/user.actions";
-import moment from "moment";
 import InformationTooltip from "../Tooltip/Tooltip";
-import {Popover} from "antd";
 
 // const accountLinks = {
 //     amazon_mws: {
@@ -19,16 +17,15 @@ import {Popover} from "antd";
 
 let intervalId = null;
 
+
 const ErrorBar = () => {
     const dispatch = useDispatch();
 
-    const {accountLinks, trialEndsDate, onTrial} = useSelector(state => ({
-        accountLinks: state.user.account_links[0],
-        trialEndsDate: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].trial_ends_at,
-        onTrial: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]] && state.user.subscriptions[Object.keys(state.user.subscriptions)[0]].on_trial,
-    }));
 
-    const freeTrialDays = Math.round(moment(trialEndsDate).diff(moment(new Date()), 'hours') / 24);
+    const accountLinks = useSelector(state => state.user.account_links[0])
+    const trialLeftDays = useSelector(state => state.user.trial.data.trial_left_days)
+    const onTrial = useSelector(state => state.user.trial.data.trial_active)
+
 
 
     useEffect(() => {
@@ -57,7 +54,7 @@ const ErrorBar = () => {
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
                 Free Trial
-                <span> {freeTrialDays >= 0 ? ` ${freeTrialDays} ` : 0} </span>
+                <span> {trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span>
                 Days Left
             </div>}
 

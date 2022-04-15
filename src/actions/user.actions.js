@@ -30,7 +30,10 @@ export const userActions = {
 function login() {
     return dispatch => {
         userService.getUserInfo()
-            .then(userFullInformation => {
+            .then(({result}) => {
+
+                const userFullInformation = result
+
                 dispatch(setInformation(userFullInformation))
 
                 const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
@@ -120,7 +123,9 @@ function unsetAccount(type) {
 
 function getUserInfo() {
     return dispatch => {
-        userService.getUserInfo().then(res => {
+        userService.getUserInfo().then(({result}) => {
+            const res = result
+
             const user = store.getState().user.user || null
 
             if (user && (user.id !== res.user.id)) {
@@ -154,8 +159,8 @@ function getUserInfo() {
 function getPersonalUserInfo() {
     return dispatch => {
         userService.getUserInfo()
-            .then(res => {
-                dispatch(setInformation(res))
+            .then(({result}) => {
+                dispatch(setInformation(result))
             })
     }
 }
@@ -164,8 +169,8 @@ function getPersonalUserInfo() {
 function getAuthorizedUserInfo() {
     return dispatch => {
         userService.getUserInfo()
-            .then(res => {
-                dispatch(setInformation(res))
+            .then(({result}) => {
+                dispatch(setInformation(result))
             })
     }
 }
@@ -173,7 +178,8 @@ function getAuthorizedUserInfo() {
 function getImpersonationUserInformation() {
     return dispatch => {
         userService.getUserInfo()
-            .then(res => {
+            .then(({result}) => {
+                const res = result
                 const user = store.getState().user.user || null
 
                 if (user && (user.id !== res.user.id)) {

@@ -2,11 +2,13 @@ import React, {useEffect, useState} from "react"
 import {subscriptionPlans} from "../../../constans/subscription.plans"
 import './Subscriptions.less'
 import {userService} from "../../../services/user.services"
-import {CancelSubscription, ActivateSubscription} from "./modalWindows"
-import {Spin} from "antd"
+import {CancelSubscription, ActivateSubscription, ConnectAmazonAccount} from "./modalWindows"
 import {SubscriptionPlan} from './SubscriptionPlan'
 
 import {Link} from "react-router-dom"
+import {useSelector} from "react-redux"
+
+let timerId
 
 const Subscriptions = () => {
     const
@@ -14,15 +16,31 @@ const Subscriptions = () => {
 
         [subscriptionsState, setSubscriptionsState] = useState({
             active_subscription_type: null,
+            subscriptions: {
+                optimization: {},
+                analytics: {},
+                full: {},
+            }
+        }),
+        [activationInfo, setActivateInfo] = useState({
+            optimization: {},
+            analytics: {},
+            full: {},
         }),
         [loadStateProcessing, setLoadStateProcessing] = useState(true),
         [activateProcessing, setActivateProcessing] = useState(false),
         [selectedPlan, setSelectedPlan] = useState(),
+        [activateType, setActivateType] = useState(),
+        [couponDetails, setCouponDetails] = useState(),
 
         [visibleCancelSubscriptionsWindow, setVisibleCancelSubscriptionsWindow] = useState(false),
         [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
 
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
+
+    const user = useSelector(state => state.user)
+
+    const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
 
     const getSubscriptionsState = async () => {
         setLoadStateProcessing(true)
@@ -33,23 +51,8 @@ const Subscriptions = () => {
             const currentState = state.result[scope].data,
                 currentInfo = info.result[scope].data
 
-            setSubscriptionsState({
-                ...currentState,
-                subscriptions: {
-                    analytics: {
-                        ...currentState.subscriptions.analytics,
-                        upcoming_invoice: currentState.subscriptions.analytics.upcoming_invoice || currentInfo.analytics.next_invoice
-                    },
-                    full: {
-                        ...currentState.subscriptions.full,
-                        upcoming_invoice: currentState.subscriptions.full.upcoming_invoice || currentInfo.full.next_invoice
-                    },
-                    optimization: {
-                        ...currentState.subscriptions.optimization,
-                        upcoming_invoice: currentState.subscriptions.optimization.upcoming_invoice || currentInfo.optimization.next_invoice
-                    },
-                }
-            })
+            setSubscriptionsState(currentState)
+            setActivateInfo(currentInfo)
         } catch (e) {
             console.log(e)
         }
@@ -70,15 +73,6 @@ const Subscriptions = () => {
         setActivateProcessing(false)
     }
 
-    const getActivateInfo = async () => {
-        try {
-            const {result} = userService.getActivateInfo(scope)
-            console.log(result)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     const cancelSubscriptionHandler = async () => {
         setProcessingCancelSubscription(true)
 
@@ -94,20 +88,29 @@ const Subscriptions = () => {
     const getCouponInfo = async (coupon) => {
         try {
             const {result} = userService.getCouponInfo(coupon)
-
+            setCouponDetails(result)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const selectPlanHandler = (plan) => {
-        setVisibleActivateSubscriptionsWindow(true)
+    const changeCouponHandler = ({target: {value}}) => {
+        clearTimeout(timerId)
+        timerId = setTimeout(() => {
+            getCouponInfo(value)
+        }, 500)
+    }
 
+    const selectPlanHandler = (plan, type) => {
+        setActivateType(type)
+        setVisibleActivateSubscriptionsWindow(true)
         setSelectedPlan(plan)
     }
 
     useEffect(() => {
-        getSubscriptionsState()
+        if(user.account_links[0].amazon_mws.is_connected === true || user.account_links[0].amazon_ppc.is_connected === true) {
+            getSubscriptionsState()
+        }
     }, [])
 
 
@@ -121,9 +124,11 @@ const Subscriptions = () => {
 
             <ul className="plans">
                 {subscriptionPlans.map(plan => <SubscriptionPlan
+                    amazonIsConnected={amazonIsConnected}
                     plan={plan}
                     loadStateProcessing={loadStateProcessing}
                     subscriptionsState={subscriptionsState}
+                    activationInfo={activationInfo}
                     processingCancelSubscription={processingCancelSubscription}
                     activateProcessing={activateProcessing}
 
@@ -136,7 +141,11 @@ const Subscriptions = () => {
                 <p>Enter coupon</p>
 
                 <div className="form-group">
-                    <input type="text" placeholder={'Your coupon'}/>
+                    <input
+                        type="text"
+                        placeholder={'Your coupon'}
+                        onChange={changeCouponHandler}
+                    />
                 </div>
 
                 <button className="btn default">
@@ -156,6 +165,7 @@ const Subscriptions = () => {
         <ActivateSubscription
             visible={visibleActivateSubscriptionsWindow}
             plan={selectedPlan}
+            activateType={activateType}
             state={subscriptionsState}
             scope={scope}
             processing={activateProcessing}
@@ -163,6 +173,10 @@ const Subscriptions = () => {
             onClose={() => !activateProcessing && setVisibleActivateSubscriptionsWindow(false)}
             onActivate={subscribeHandler}
         />}
+
+        <ConnectAmazonAccount
+            visible={!amazonIsConnected}
+        />
     </>)
 }
 

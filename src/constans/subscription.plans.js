@@ -6,7 +6,6 @@ export const subscriptionPlans = [
             'In-depth PPC campaigns automation',
             'Goal-driven algorithms',
             'Smart bid optimization',
-            'Dayparting tool',
             'Keywords harvesting and optimization',
             'Product Targeting (PAT) bid optimization',
         ]
@@ -28,6 +27,9 @@ export const subscriptionPlans = [
         params: [
             'All features related to PPC automation',
             'All features of Analytics subscription',
+            'Full-fledged solution to drive better business decisions',
+            'Simple way to set up, run and analyze your PPC tests',
+            'Optimal combo for skyrocketing your Amazon sales',
         ]
     },
 

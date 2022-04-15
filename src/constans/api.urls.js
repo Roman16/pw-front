@@ -11,7 +11,7 @@ export const userUrls = {
     mws: 'user/account/auth/mws/tokens',
     deleteMws: 'user/account/auth/mws/delete',
     deleteLwa: 'user/account/auth/lwa/delete',
-    allInfo: 'user/status',
+    allInfo: 'user/status/v2',
     personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',

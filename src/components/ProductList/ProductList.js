@@ -32,15 +32,13 @@ const ProductList = ({pathname}) => {
                 searchStr: ''
             })
 
-    const {selectedAll, selectedProduct, onlyOptimization, productList, totalSize, fetching, user, subscribedProduct} = useSelector(state => ({
+    const {selectedAll, selectedProduct, onlyOptimization, productList, totalSize, fetching} = useSelector(state => ({
         selectedAll: state.products.selectedAll,
         selectedProduct: state.products.selectedProduct,
         onlyOptimization: state.products.onlyOptimization,
         productList: state.products.productList,
         totalSize: state.products.totalSize,
         fetching: state.products.fetching,
-        user: state.user,
-        subscribedProduct: state.user.subscriptions[Object.keys(state.user.subscriptions)[0]]
     }))
 
     const dispatch = useDispatch()
@@ -138,8 +136,8 @@ const ProductList = ({pathname}) => {
     }, [productList, totalSize])
 
     useEffect(() => {
-        if (!user.user.free_trial_available && subscribedProduct.has_access) getProductsList()
-    }, [user.user.free_trial_available, subscribedProduct.has_access])
+        getProductsList()
+    }, [])
 
     return (
         <Fragment>
