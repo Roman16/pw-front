@@ -67,7 +67,7 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">PRICE</div>
-                        <div className="value">Starting on {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} <br/> <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} /month</b></div>
+                        <div className="value">Starting on {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} <br/> <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'} /month</b></div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -97,7 +97,7 @@ export const ActivateSubscription = ({
                     <h2>Are you sure you want to switch plan?</h2>
                     <p>
                         We’re about to
-                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'}</b> from
                         your default method
                         payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>.
                         Are you
@@ -130,7 +130,7 @@ export const ActivateSubscription = ({
                     <div className="row">
                         <div className="label">PRICE</div>
                         <div className="value">
-                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} per
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'} per
                                 month</b></div>
                     </div>
                     <div className="row">
@@ -163,7 +163,7 @@ export const ActivateSubscription = ({
                     <h2>Do you want to subscribe?</h2>
                     <p>
                         We’re about to
-                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'}</b> from
                         your default method
                         payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>.
                         Are you
@@ -179,7 +179,7 @@ export const ActivateSubscription = ({
                     <div className="row">
                         <div className="label">PRICE</div>
                         <div className="value">
-                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} per
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'} per
                                 month</b></div>
                     </div>
                     <div className="row">

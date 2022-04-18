@@ -27,7 +27,7 @@ export const CancelSubscription = ({
 
     return (
         <ModalWindow
-            className="cancel-account reactivate-account"
+            className="cancel-account-window"
             handleCancel={onClose}
             visible={visible}
             footer={false}
@@ -38,7 +38,7 @@ export const CancelSubscription = ({
                 <p>
                     Stay with Sponsoreds and save <b>30%</b> for the next three months. <br/>
                     {/*<span>You’ll save:</span> ${numberMask(subscriptionPrice * 0.3 * 3, 2)} that you can invest back in*/}
-                    <span>You’ll save:</span> <b>${numberMask(saveCount() * 0.3 * 3, 2)}</b> that you can invest back in
+                    <span>You’ll save:</span> <b>0</b> that you can invest back in
                     Amazon Advertising.
                 </p>
 

@@ -151,7 +151,7 @@ export const SubscriptionPlan = ({
 
             {!amazonIsConnected ? <DefaultPriceTemplate plan={plan}/> : !loadStateProcessing ? <>
                 <div className={'price'}>
-                    <b>${isActivePlan ? planDetails.upcoming_invoice.payment.total_actual : activateDetails.next_invoice.payment.total_actual}</b>/ month
+                    <b>${isActivePlan ? planDetails.upcoming_invoice.payment.total_actual / 100 : activateDetails.next_invoice.payment.total_actual / 100}</b>/ month
                 </div>
 
                 {actionButton()}
@@ -180,7 +180,7 @@ export const SubscriptionPlan = ({
                 </div>
                 <div className="row">
                     <div className="label">Price</div>
-                    <div className="value">{planDetails.upcoming_invoice.payment.total_actual && '$'+numberMask(planDetails.upcoming_invoice.payment.total_actual, 2)}</div>
+                    <div className="value">{planDetails.upcoming_invoice.payment.total_actual && '$'+numberMask(planDetails.upcoming_invoice.payment.total_actual / 100, 2)}</div>
                 </div>
                 <div className="row">
                     <div className="label">Last 30-days Ad Spend</div>

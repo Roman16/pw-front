@@ -180,7 +180,6 @@
   }
 }
 
-
 .connect-amazon-account-window-wrap {
   width: 100%;
   position: absolute;
@@ -488,6 +487,60 @@
 
     .delete-card {
       display: none;
+    }
+  }
+}
+
+.cancel-account-window {
+  width: 95% !important;
+  max-width: 42.857142857142854rem;
+
+  .ant-modal-content {
+    .ant-modal-close {
+      display: none;
+    }
+
+    .ant-modal-body {
+      padding: 4.285714285714286rem 2.857142857142857rem;
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        font-weight: 600;
+        font-size: 1.4285714285714286rem;
+        line-height: 1.7142857142857142rem;
+        text-align: center;
+        color: #312C51;
+        margin-bottom: 1.4285714285714286rem;
+      }
+
+      p {
+        font-size: 1.1428571428571428rem;
+        line-height: 1.4285714285714286rem;
+        text-align: center;
+        color: #46435C;
+        margin-bottom: 2.142857142857143rem;
+
+        span {
+          color: #7FD3A1;
+        }
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+
+        .btn {
+          height: 3.4285714285714284rem;
+          font-size: 1.1428571428571428rem;
+          margin: 0 0.7142857142857143rem;
+        }
+      }
+
+      .btn.transparent {
+        font-size: 1.1428571428571428rem;
+        margin: 1.4285714285714286rem auto 0;
+      }
     }
   }
 }
