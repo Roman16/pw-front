@@ -5,7 +5,8 @@ import _ from 'lodash'
 import {userService} from "../../../../services/user.services"
 import {Spin} from "antd"
 import {numberMask} from "../../../../utils/numberMask"
-
+import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
+import moment from 'moment'
 export const ActivateSubscription = ({
                                          visible,
                                          plan,
@@ -18,7 +19,11 @@ export const ActivateSubscription = ({
                                          onActivate
                                      }) => {
 
-    const [activateInfo, setActivateInfo] = useState(),
+    const [activateInfo, setActivateInfo] = useState({
+            analytics: {},
+            full: {},
+            optimization: {}
+        }),
         [fetchProcessing, setFetchProcessing] = useState(true)
 
     const planName = _.find(subscriptionPlans, {key: plan}).name
@@ -27,7 +32,7 @@ export const ActivateSubscription = ({
         setFetchProcessing(true)
 
         try {
-            const {result} = userService.getActivateInfo(scope)
+            const {result} = await userService.getActivateInfo(scope)
 
             setActivateInfo(result[scope].data)
         } catch (e) {
@@ -35,7 +40,7 @@ export const ActivateSubscription = ({
         }
         setFetchProcessing(false)
     }
-
+    console.log(activateInfo)
 
     const windowContent = () => {
         if (activateType === 'trial') {
@@ -62,7 +67,7 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">PRICE</div>
-                        <div className="value">Starting on 09 Apr 2022 <br/> <b>$59.00 /month</b></div>
+                        <div className="value">Starting on {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} <br/> <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} /month</b></div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -92,9 +97,10 @@ export const ActivateSubscription = ({
                     <h2>Are you sure you want to switch plan?</h2>
                     <p>
                         We’re about to
-                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'}</b> from
                         your default method
-                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>. Are you
+                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>.
+                        Are you
                         sure you want to continue?
                     </p>
 
@@ -124,12 +130,12 @@ export const ActivateSubscription = ({
                     <div className="row">
                         <div className="label">PRICE</div>
                         <div className="value">
-                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}  per
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} per
                                 month</b></div>
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
-                        <div className="value"><b>09 Apr 2022</b></div>
+                        <div className="value"><b>{!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b></div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -157,9 +163,10 @@ export const ActivateSubscription = ({
                     <h2>Do you want to subscribe?</h2>
                     <p>
                         We’re about to
-                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'}</b> from
                         your default method
-                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>. Are you
+                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>.
+                        Are you
                         sure you want to continue?
                     </p>
                 </div>
@@ -172,12 +179,12 @@ export const ActivateSubscription = ({
                     <div className="row">
                         <div className="label">PRICE</div>
                         <div className="value">
-                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}  per
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual, 2)}` : '-'} per
                                 month</b></div>
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
-                        <div className="value"><b>09 Apr 2022</b></div>
+                        <div className="value"><b>{!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b></div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -215,6 +222,8 @@ export const ActivateSubscription = ({
             <CloseWindowButton onClick={onClose}/>
 
             {windowContent()}
+
+            {fetchProcessing && <RouteLoader/>}
 
         </ModalWindow>
     )
