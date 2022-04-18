@@ -115,7 +115,7 @@ const Subscriptions = () => {
         setSelectedPlan(plan)
         setActivateType(type)
 
-        if (subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice.payment.card_last_4 === null) {
+        if (activationInfo[subscriptionsState.active_subscription_type].next_invoice.payment.card_last_4 === null) {
             setVisibleAddPaymentMethodWindow(true)
         } else {
             setVisibleActivateSubscriptionsWindow(true)
