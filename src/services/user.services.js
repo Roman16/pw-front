@@ -61,6 +61,7 @@ export const userService = {
     cancelSubscription,
     getActivateInfo,
     getCouponInfo,
+    activateCoupon,
     activateSubscription
 }
 
@@ -233,6 +234,10 @@ function getActivateInfo(scope) {
 
 function getCouponInfo(coupon) {
     return api('get', `${userUrls.couponInfo}?coupon=${coupon}`)
+}
+
+function activateCoupon({coupon, scope}) {
+    return api('get', `${userUrls.couponActivate}?coupon=${coupon}&scope=${scope}`)
 }
 
 function toggleMarketplace(id) {

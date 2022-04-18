@@ -1,6 +1,7 @@
 import React from "react"
 import {Spin} from "antd"
 import moment from 'moment'
+import {numberMask} from "../../../utils/numberMask"
 
 const defaultPrice = {
     optimization: {
@@ -23,6 +24,7 @@ export const SubscriptionPlan = ({
                                      activateProcessing,
                                      activationInfo,
                                      amazonIsConnected,
+                                     adSpend,
 
                                      onSelect,
                                      onCloseCancelWindow
@@ -137,7 +139,7 @@ export const SubscriptionPlan = ({
         }
     }
 
-    return (<li className={isActivePlan && 'active-plan'}>
+    return (<li className={`${isActivePlan ? 'active-plan': ''} activated-${activeSubscriptionType}-plan`}>
         {plan.key === 'full' && <div className="popular-label">most popular</div>}
         {isActivePlan && <ActivePlanLabel/>}
         <div className="col">
@@ -178,11 +180,11 @@ export const SubscriptionPlan = ({
                 </div>
                 <div className="row">
                     <div className="label">Price</div>
-                    <div className="value">{planDetails.upcoming_invoice.payment.total_actual}</div>
+                    <div className="value">{planDetails.upcoming_invoice.payment.total_actual && '$'+numberMask(planDetails.upcoming_invoice.payment.total_actual, 2)}</div>
                 </div>
                 <div className="row">
                     <div className="label">Last 30-days Ad Spend</div>
-                    <div className="value"></div>
+                    <div className="value">${numberMask(adSpend, 2)}</div>
                 </div>
                 <div className="row">
                     <div className="label">Coupon</div>
@@ -217,7 +219,7 @@ const CheckIcon = () => <svg width="13" height="10" viewBox="0 0 13 10" fill="no
 </svg>
 
 const PlusIcon = () => <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.5 1V5.5M5.5 5.5H10M5.5 5.5H1M5.5 5.5V10" stroke="#FF5256" stroke-width="2" stroke-linecap="round"
+    <path d="M5.5 1V5.5M5.5 5.5H10M5.5 5.5H1M5.5 5.5V10"  stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round"/>
 </svg>
 
@@ -251,7 +253,7 @@ const planIcon = {
 </svg>`,
     full: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g>
-<path d="M8 18.5L5 17.5L1.5 12.5L4.5 13.5L5 12L3.5 7L7.5 11L10 2L12.5 11L16.5 7L15 12L15.5 13.5L18.5 12.5L15 17.5L12 18.5" stroke="#FF5256" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8 18.5L5 17.5L1.5 12.5L4.5 13.5L5 12L3.5 7L7.5 11L10 2L12.5 11L16.5 7L15 12L15.5 13.5L18.5 12.5L15 17.5L12 18.5"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>`,
 }

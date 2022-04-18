@@ -4,6 +4,7 @@ import {subscriptionPlans} from "../../../../constans/subscription.plans"
 import _ from 'lodash'
 import {userService} from "../../../../services/user.services"
 import {Spin} from "antd"
+import {numberMask} from "../../../../utils/numberMask"
 
 export const ActivateSubscription = ({
                                          visible,
@@ -17,17 +18,22 @@ export const ActivateSubscription = ({
                                          onActivate
                                      }) => {
 
-    const [activateInfo, setActivateInfo] = useState()
+    const [activateInfo, setActivateInfo] = useState(),
+        [fetchProcessing, setFetchProcessing] = useState(true)
 
     const planName = _.find(subscriptionPlans, {key: plan}).name
 
     const getActivateInfo = async () => {
+        setFetchProcessing(true)
+
         try {
             const {result} = userService.getActivateInfo(scope)
-            console.log(result)
+
+            setActivateInfo(result[scope].data)
         } catch (e) {
             console.log(e)
         }
+        setFetchProcessing(false)
     }
 
 
@@ -80,13 +86,15 @@ export const ActivateSubscription = ({
                     </button>
                 </div>
             </div>)
-            // } else if (state.active_subscription_type) {
         } else if (activateType === 'switch') {
             return (<div className={'switch-subscription'}>
                 <div className="window-header">
                     <h2>Are you sure you want to switch plan?</h2>
                     <p>
-                        We’re about to charge <b>$59.00</b> from your default method payment <b>**** 1234</b>. Are you
+                        We’re about to
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        your default method
+                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>. Are you
                         sure you want to continue?
                     </p>
 
@@ -115,7 +123,9 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">PRICE</div>
-                        <div className="value"><b>$59 per month</b></div>
+                        <div className="value">
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}  per
+                                month</b></div>
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
@@ -146,7 +156,11 @@ export const ActivateSubscription = ({
                 <div className="window-header">
                     <h2>Do you want to subscribe?</h2>
                     <p>
-                        We’re about to charge <b>$59.00</b> from your default method payment <b>**** 1234</b>. Are you sure you want to continue?
+                        We’re about to
+                        charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}</b> from
+                        your default method
+                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>. Are you
+                        sure you want to continue?
                     </p>
                 </div>
 
@@ -157,7 +171,9 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">PRICE</div>
-                        <div className="value"><b>$59 per month</b></div>
+                        <div className="value">
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].upcoming_invoice.payment.total_actual, 2)}` : '-'}  per
+                                month</b></div>
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>

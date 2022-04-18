@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react"
 import {subscriptionPlans} from "../../../constans/subscription.plans"
 import './Subscriptions.less'
+import './modalWindows/modalWindows.less'
 import {userService} from "../../../services/user.services"
 import {CancelSubscription, ActivateSubscription, ConnectAmazonAccount} from "./modalWindows"
 import {SubscriptionPlan} from './SubscriptionPlan'
 
 import {Link} from "react-router-dom"
 import {useSelector} from "react-redux"
+import {PageHeader} from "./PageHeader"
+import {CouponField} from "./CouponField"
+import {notification} from "../../../components/Notification"
+import {AddPaymentMethod} from "./modalWindows/AddPaymentMethod"
 
-let timerId
 
 const Subscriptions = () => {
     const
@@ -29,12 +33,15 @@ const Subscriptions = () => {
         }),
         [loadStateProcessing, setLoadStateProcessing] = useState(true),
         [activateProcessing, setActivateProcessing] = useState(false),
+        [activateCouponProcessing, setActivateCouponProcessing] = useState(false),
+        [addPaymentMethodProcessing, setAddPaymentMethodProcessing] = useState(false),
         [selectedPlan, setSelectedPlan] = useState(),
         [activateType, setActivateType] = useState(),
         [couponDetails, setCouponDetails] = useState(),
 
         [visibleCancelSubscriptionsWindow, setVisibleCancelSubscriptionsWindow] = useState(false),
         [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
+        [visibleAddPaymentMethodWindow, setVisibleAddPaymentMethodWindow] = useState(false),
 
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
 
@@ -53,6 +60,10 @@ const Subscriptions = () => {
 
             setSubscriptionsState(currentState)
             setActivateInfo(currentInfo)
+            setVisibleActivateSubscriptionsWindow(false)
+            setActivateProcessing(false)
+
+            setSelectedPlan(undefined)
         } catch (e) {
             console.log(e)
         }
@@ -65,12 +76,9 @@ const Subscriptions = () => {
             const res = await userService.activateSubscription({scope, type: selectedPlan})
 
             getSubscriptionsState()
-            setSelectedPlan(undefined)
-            setVisibleActivateSubscriptionsWindow(false)
         } catch (e) {
             console.log(e)
         }
-        setActivateProcessing(false)
     }
 
     const cancelSubscriptionHandler = async () => {
@@ -86,35 +94,72 @@ const Subscriptions = () => {
     }
 
     const getCouponInfo = async (coupon) => {
+        setActivateCouponProcessing(true)
+
         try {
-            const {result} = userService.getCouponInfo(coupon)
-            setCouponDetails(result)
+            const {result} = await userService.getCouponInfo(coupon)
+
+            if (!result.valid) {
+                notification.error({title: 'Coupon is not valid'})
+            } else {
+                await userService.activateCoupon({coupon, scope})
+                getSubscriptionsState()
+            }
+        } catch (e) {
+            console.log(e)
+        }
+        setActivateCouponProcessing(false)
+    }
+
+    const selectPlanHandler = (plan, type) => {
+        setSelectedPlan(plan)
+        setActivateType(type)
+
+        if (subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice.payment.card_last_4 === null) {
+            setVisibleAddPaymentMethodWindow(true)
+        } else {
+            setVisibleActivateSubscriptionsWindow(true)
+        }
+    }
+
+    const addPaymentMethodHandler = async (card) => {
+        setAddPaymentMethodProcessing(true)
+
+        try {
+            const res = await userService.addPaymentMethod({stripe_token: card.stripe_token})
+
+            setSubscriptionsState({
+                ...subscriptionsState,
+                subscriptions: {
+                    ...subscriptionsState.subscriptions,
+                    [subscriptionsState.active_subscription_type]: {
+                        ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type],
+                        upcoming_invoice: {
+                            ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice,
+                            payment: {
+                                ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice.payment,
+                                card_last_4: res[0].last4
+                            }
+                        }
+                    }
+                }
+            })
+            setVisibleAddPaymentMethodWindow(false)
+
+            setVisibleActivateSubscriptionsWindow(true)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const changeCouponHandler = ({target: {value}}) => {
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            getCouponInfo(value)
-        }, 500)
-    }
-
-    const selectPlanHandler = (plan, type) => {
-        setActivateType(type)
-        setVisibleActivateSubscriptionsWindow(true)
-        setSelectedPlan(plan)
-    }
-
     useEffect(() => {
-        if(user.account_links[0].amazon_mws.is_connected === true || user.account_links[0].amazon_ppc.is_connected === true) {
-            getSubscriptionsState()
-        }
+        amazonIsConnected && getSubscriptionsState()
     }, [])
 
 
     return (<>
+        {amazonIsConnected && <PageHeader user={user}/>}
+
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
             <p className="page-description">
@@ -131,6 +176,7 @@ const Subscriptions = () => {
                     activationInfo={activationInfo}
                     processingCancelSubscription={processingCancelSubscription}
                     activateProcessing={activateProcessing}
+                    adSpend={user.ad_spend}
 
                     onSelect={selectPlanHandler}
                     onCloseCancelWindow={setVisibleCancelSubscriptionsWindow}
@@ -140,17 +186,12 @@ const Subscriptions = () => {
             {subscriptionsState.active_subscription_type && <div className="coupon-block">
                 <p>Enter coupon</p>
 
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder={'Your coupon'}
-                        onChange={changeCouponHandler}
-                    />
-                </div>
+                <CouponField
+                    placeholder={'Your coupon'}
+                    processing={activateCouponProcessing}
 
-                <button className="btn default">
-                    Apply
-                </button>
+                    onApply={getCouponInfo}
+                />
             </div>}
         </section>
 
@@ -159,6 +200,14 @@ const Subscriptions = () => {
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
             onCancelSubscription={cancelSubscriptionHandler}
+        />
+
+        <AddPaymentMethod
+            visible={visibleAddPaymentMethodWindow}
+            processing={addPaymentMethodProcessing}
+
+            onClose={() => setVisibleAddPaymentMethodWindow(false)}
+            onAddCard={addPaymentMethodHandler}
         />
 
         {selectedPlan &&
