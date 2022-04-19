@@ -23,7 +23,7 @@ export const SubscriptionPlan = ({
                                      processingCancelSubscription,
                                      activateProcessing,
                                      activationInfo,
-                                     amazonIsConnected,
+                                     disabledPage,
                                      adSpend,
 
                                      onSelect,
@@ -63,7 +63,7 @@ export const SubscriptionPlan = ({
                     className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
                     onClick={() => onSelect(plan.key, 'trial')}
                 >
-                    Start trial
+                    Start Free Trial
                 </button>
             } else if (activateDetails.expected_action === 'switch_trial') {
                 return <button
@@ -73,7 +73,7 @@ export const SubscriptionPlan = ({
                 >
                     Switch trial
                 </button>
-            } else if (activateDetails.expected_action === 'resume_subscription') {
+            } else if (activateDetails.expected_action === 'resume_subscription' && activeSubscriptionType === null) {
                 return <button
                     disabled={activateProcessing}
                     className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
@@ -81,65 +81,27 @@ export const SubscriptionPlan = ({
                 >
                     resume
                 </button>
-            } else if (activateDetails.expected_action === 'schedule_subscription') {
-                if (activeSubscriptionType === 'full') {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'switch')}
-                    >
-                        switch (downgrade)
-                    </button>
-                } else if (activeSubscriptionType === null) {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'subscribe')}
-                    >
-                        subscribe
-                    </button>
-                } else if (activeSubscriptionType === 'analytics' || activeSubscriptionType === 'optimization') {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'switch')}
-                    >
-                        switch
-                    </button>
-                } else {
-                    return ''
-                }
-            } else if (activateDetails.expected_action === 'create_subscription') {
-                if (activeSubscriptionType === null) {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'subscribe')}
-                    >
-                        subscribe
-                    </button>
-                } else if (activeSubscriptionType === 'full') {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'switch')}
-                    >
-                        switch (downgrade)
-                    </button>
-                } else if (activeSubscriptionType === 'analytics' || activeSubscriptionType === 'optimization') {
-                    return <button
-                        disabled={activateProcessing}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        onClick={() => onSelect(plan.key, 'switch')}
-                    >
-                        {plan.key === 'full' ? 'switch (upgrade)' : 'switch'}
-                    </button>
-                } else return ''
+            } else if (activeSubscriptionType === null) {
+                return <button
+                    disabled={activateProcessing}
+                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                    onClick={() => onSelect(plan.key, 'subscribe')}
+                >
+                    subscribe
+                </button>
+            } else {
+                return <button
+                    disabled={activateProcessing}
+                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                    onClick={() => onSelect(plan.key, 'switch')}
+                >
+                    Switch plan
+                </button>
             }
         }
     }
 
-    return (<li className={`${isActivePlan ? 'active-plan': ''} activated-${activeSubscriptionType}-plan`}>
+    return (<li className={`${isActivePlan ? 'active-plan' : ''} activated-${activeSubscriptionType}-plan`}>
         {plan.key === 'full' && <div className="popular-label">most popular</div>}
         {isActivePlan && <ActivePlanLabel/>}
         <div className="col">
@@ -149,10 +111,17 @@ export const SubscriptionPlan = ({
                 {plan.name}
             </h3>
 
-            {!amazonIsConnected ? <DefaultPriceTemplate plan={plan}/> : !loadStateProcessing ? <>
-                <div className={'price'}>
-                    <b>${isActivePlan ? planDetails.upcoming_invoice.payment.total_actual / 100 : activateDetails.next_invoice.payment.total_actual / 100}</b>/ month
-                </div>
+
+            {disabledPage ? <DefaultPriceTemplate plan={plan}/> : !loadStateProcessing ? <>
+                <Price
+                    activeSubscriptionType={activeSubscriptionType}
+                    isActivePlan={isActivePlan}
+                    plan={plan}
+                    planDetails={planDetails}
+                    activateDetails={activateDetails}
+                    disabledPage={disabledPage}
+                    activationInfo={activationInfo}
+                />
 
                 {actionButton()}
             </> : <Spin/>}
@@ -180,7 +149,8 @@ export const SubscriptionPlan = ({
                 </div>
                 <div className="row">
                     <div className="label">Price</div>
-                    <div className="value">{planDetails.upcoming_invoice.payment.total_actual && '$'+numberMask(planDetails.upcoming_invoice.payment.total_actual / 100, 2)}</div>
+                    <div
+                        className="value">{planDetails.upcoming_invoice.payment.total_actual && '$' + numberMask(planDetails.upcoming_invoice.payment.total_actual / 100, 2)}</div>
                 </div>
                 <div className="row">
                     <div className="label">Last 30-days Ad Spend</div>
@@ -193,6 +163,27 @@ export const SubscriptionPlan = ({
             </div>
         </div>}
     </li>)
+}
+
+const Price = ({activeSubscriptionType, isActivePlan, plan, planDetails, activateDetails, activationInfo}) => {
+    const sumPrice = () => {
+        if (activeSubscriptionType === null) {
+            return (activationInfo.analytics.next_invoice.payment.total_actual + activationInfo.optimization.next_invoice.payment.total_actual) / 100
+        } else {
+            if (activeSubscriptionType === 'analytics') {
+                return (planDetails.upcoming_invoice.payment.total_actual + activationInfo.optimization.next_invoice.payment.total_actual) / 100
+            } else {
+                return (planDetails.upcoming_invoice.payment.total_actual + activationInfo.analytics.next_invoice.payment.total_actual) / 100
+            }
+        }
+    }
+
+    return <div className={'price'}>
+        {plan.key === 'full' && <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
+
+        <b>${isActivePlan ? planDetails.upcoming_invoice.payment.total_actual / 100 : activateDetails.next_invoice.payment.total_actual / 100}</b>/
+        month
+    </div>
 }
 
 const DefaultPriceTemplate = ({plan}) => {
@@ -219,7 +210,7 @@ const CheckIcon = () => <svg width="13" height="10" viewBox="0 0 13 10" fill="no
 </svg>
 
 const PlusIcon = () => <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.5 1V5.5M5.5 5.5H10M5.5 5.5H1M5.5 5.5V10"  stroke-width="2" stroke-linecap="round"
+    <path d="M5.5 1V5.5M5.5 5.5H10M5.5 5.5H1M5.5 5.5V10" stroke-width="2" stroke-linecap="round"
           stroke-linejoin="round"/>
 </svg>
 

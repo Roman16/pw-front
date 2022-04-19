@@ -115,7 +115,7 @@ const PWWindows = ({pathname}) => {
         user: state.user,
         productList: state.products.productList || [],
         importStatus: state.user.importStatus,
-        access: state.user.access.data,
+        access: state.user.subscription.access,
     }))
 
     const closeWindowHandler = () => {

@@ -6,6 +6,7 @@ export const defaultImportStatus = {
     ppc_automate: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
     products_info: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
     zth: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
+    subscription: {required_parts_ready: true, required_parts_details: {sp: {}}},
 }
 
 const initialState = {

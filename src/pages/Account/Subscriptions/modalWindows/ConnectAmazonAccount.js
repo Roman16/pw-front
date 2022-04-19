@@ -6,8 +6,10 @@ export const ConnectAmazonAccount = ({visible}) => {
     const accountContentBlock = document.querySelector('.account-content')
 
     useEffect(() => {
-        if(visible) accountContentBlock.style.overflow = 'hidden'
-        else accountContentBlock.style.overflow = 'auto'
+        if(accountContentBlock) {
+            if(visible) accountContentBlock.style.overflow = 'hidden'
+            else accountContentBlock.style.overflow = 'auto'
+        }
     }, [visible])
 
     return (

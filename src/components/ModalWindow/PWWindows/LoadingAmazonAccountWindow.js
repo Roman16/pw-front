@@ -14,6 +14,7 @@ const serviceTitle = {
     productSettings: 'PPC Automation',
     zth: 'Zero to Hero',
     scanner: 'PPC Audit',
+    subscription: 'Subscription',
 }
 
 const importTypes = [
@@ -47,7 +48,7 @@ const importTypes = [
     },
 ]
 
-const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastName, productList}) => {
+const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastName, productList, container = false}) => {
     const [currentService, setCurrentService] = useState('')
     const dispatch = useDispatch()
     const prevVisibleRef = useRef();
@@ -61,6 +62,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     if (currentService === 'productSettings') requiredParts = importStatus.ppc_automate.required_parts_details
     if (currentService === 'zth') requiredParts = importStatus.zth.required_parts_details
     if (currentService === 'scanner') requiredParts = importStatus.ppc_audit ? importStatus.ppc_audit.required_parts_details : false
+    if (currentService === 'subscription') requiredParts = importStatus.subscription ? importStatus.subscription.required_parts_details : false
 
     const checkStatus = async () => {
         try {
@@ -118,14 +120,24 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
         else if (pathname.includes('/analytics')) setCurrentService('analytics')
         else if (pathname.includes('/zero-to-hero')) setCurrentService('zth')
         else if (pathname.includes('/ppc-audit')) setCurrentService('scanner')
+        else if (pathname.includes('/account/subscriptions')) setCurrentService('subscription')
     }, [pathname])
 
     return (
         <ModalWindow
             className={'amazon-loading-window'}
+            wrapClassName="import-status-window-wrap"
             visible={visible}
             okText={'Check it now'}
-            container={true}
+            container={!container}
+            getContainer={container}
+            maskStyle={container && {
+                width: '100%',
+                right: 'inherit',
+                left: 'inherit',
+                top: '0',
+                zIndex: '11'
+            }}
         >
             <h2>Welcome {firstName} {lastName}!</h2>
 

@@ -11,7 +11,7 @@ export const userUrls = {
     mws: 'user/account/auth/mws/tokens',
     deleteMws: 'user/account/auth/mws/delete',
     deleteLwa: 'user/account/auth/lwa/delete',
-    allInfo: 'user/status/v2',
+    allInfo: 'user/status',
     personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
     changePassword: 'user/account/personal/change-password',
@@ -26,12 +26,12 @@ export const userUrls = {
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
     //subscription
-    subscriptionState: 'user/account/subscription/v2/state',
-    cancelSubscription: 'user/account/subscription/v2/cancel',
-    activateInfo: 'user/account/subscription/v2/activate/info',
-    couponInfo: 'user/account/subscription/v2/coupon/check',
-    couponActivate: 'user/account/subscription/v2/coupon/apply',
-    activateSubscription: 'user/account/subscription/v2/activate',
+    subscriptionState: 'user/account/subscription/state',
+    cancelSubscription: 'user/account/subscription/cancel',
+    activateInfo: 'user/account/subscription/activate/info',
+    couponInfo: 'user/account/subscription/coupon/check',
+    couponActivate: 'user/account/subscription/coupon/apply',
+    activateSubscription: 'user/account/subscription/activate',
 
 
     subscriptionList: `user/account/subscription/list`,

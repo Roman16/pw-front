@@ -21,12 +21,9 @@ let intervalId = null;
 const ErrorBar = () => {
     const dispatch = useDispatch();
 
-
     const accountLinks = useSelector(state => state.user.account_links[0])
-    const trialLeftDays = useSelector(state => state.user.trial.data.trial_left_days)
-    const onTrial = useSelector(state => state.user.trial.data.trial_active)
-
-
+    const trialLeftDays = useSelector(state => state.user.subscription.trial.trial_left_days)
+    const onTrial = useSelector(state => state.user.subscription.trial.trial_active)
 
     useEffect(() => {
         intervalId = setInterval(() => {
@@ -36,7 +33,6 @@ const ErrorBar = () => {
                 clearInterval(intervalId);
             }
         }, 60000);
-
 
         return (() => {
             clearInterval(intervalId);

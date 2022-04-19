@@ -12,6 +12,9 @@ import {PageHeader} from "./PageHeader"
 import {CouponField} from "./CouponField"
 import {notification} from "../../../components/Notification"
 import {AddPaymentMethod} from "./modalWindows/AddPaymentMethod"
+import LoadingAmazonAccount from "../../../components/ModalWindow/PWWindows/LoadingAmazonAccountWindow"
+import ModalWindow from "../../../components/ModalWindow/ModalWindow"
+import _ from "lodash"
 
 
 const Subscriptions = () => {
@@ -24,6 +27,9 @@ const Subscriptions = () => {
                 optimization: {},
                 analytics: {},
                 full: {},
+            },
+            trial: {
+                can_start_trial: false
             }
         }),
         [activationInfo, setActivateInfo] = useState({
@@ -46,8 +52,11 @@ const Subscriptions = () => {
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
 
     const user = useSelector(state => state.user)
+    const importStatus = useSelector(state => state.user.importStatus)
 
     const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
+
+    const disabledPage = !amazonIsConnected || !importStatus.subscription.required_parts_details
 
     const getSubscriptionsState = async () => {
         setLoadStateProcessing(true)
@@ -85,7 +94,9 @@ const Subscriptions = () => {
         setProcessingCancelSubscription(true)
 
         try {
-            userService.cancelSubscription({scope})
+            await userService.cancelSubscription({scope})
+            setVisibleCancelSubscriptionsWindow(false)
+            getSubscriptionsState()
         } catch (e) {
 
         }
@@ -115,7 +126,7 @@ const Subscriptions = () => {
         setSelectedPlan(plan)
         setActivateType(type)
 
-        if (activationInfo[subscriptionsState.active_subscription_type].next_invoice.payment.card_last_4 === null) {
+        if (activationInfo[plan].next_invoice.payment.card_last_4 === null) {
             setVisibleAddPaymentMethodWindow(true)
         } else {
             setVisibleActivateSubscriptionsWindow(true)
@@ -162,14 +173,13 @@ const Subscriptions = () => {
 
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
-            <p className="page-description">
-                This is a prepaid plan, and you are paying for the next 30 days of using it. To view your invoices,
-                <Link to={'/account/billing-history'}>see billing history</Link>
-            </p>
+
+
+            <PageDescription state={subscriptionsState}/>
 
             <ul className="plans">
                 {subscriptionPlans.map(plan => <SubscriptionPlan
-                    amazonIsConnected={amazonIsConnected}
+                    disabledPage={disabledPage}
                     plan={plan}
                     loadStateProcessing={loadStateProcessing}
                     subscriptionsState={subscriptionsState}
@@ -197,6 +207,7 @@ const Subscriptions = () => {
 
         <CancelSubscription
             visible={visibleCancelSubscriptionsWindow}
+            state={subscriptionsState}
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
             onCancelSubscription={cancelSubscriptionHandler}
@@ -218,6 +229,7 @@ const Subscriptions = () => {
             state={subscriptionsState}
             scope={scope}
             processing={activateProcessing}
+            adSpend={user.ad_spend}
 
             onClose={() => !activateProcessing && setVisibleActivateSubscriptionsWindow(false)}
             onActivate={subscribeHandler}
@@ -226,8 +238,55 @@ const Subscriptions = () => {
         <ConnectAmazonAccount
             visible={!amazonIsConnected}
         />
+
+        <LoadingAmazonAccount
+            pathname={'/account/subscriptions'}
+            visible={!importStatus.subscription.required_parts_ready}
+            importStatus={importStatus}
+            lastName={user.user.last_name}
+            firstName={user.user.name}
+            productList={[]}
+            container={() => document.querySelector('.account-content')}
+        />
     </>)
 }
 
 export default Subscriptions
+
+
+const PageDescription = ({state}) => {
+    const planName = _.find(subscriptionPlans, {key: state.active_subscription_type})?.name
+
+    if (state.active_subscription_type === null && state.trial.can_start_trial) {
+        return <p className="page-description">
+            All subscription plans come with 14-day FREE TRIAL with FULL access to PPC Automation and Analytics
+            tools. <br/> You only select a plan that will be active after Free Trial ends. No credit card required to
+            start your Free Trial.
+        </p>
+    } else if (state.active_subscription_type) {
+        if (state.active_subscription_type === 'optimization') {
+            return <p className="page-description">
+                You are currently on a {planName} plan that renews automatically each month unless canceled. On this
+                plan you are missing out on Analytics features we provide. We suggest switching to Combo plan to grow
+                your business with full suite of tools we have to offer. To view your invoices, see <Link
+                to={'/account/billing-history'}>billing history</Link>.
+            </p>
+        } else if (state.active_subscription_type === 'analytics') {
+            return <p className="page-description">
+                You are currently on a {planName} plan that renews automatically each month unless canceled. On this
+                plan you are missing out on PPC Automation features we provide. We suggest switching to Combo plan to
+                grow your business with full suite of tools we have to offer. To view your invoices, see <Link
+                to={'/account/billing-history'}>billing history</Link>.
+            </p>
+        } else {
+            return <p className="page-description">
+                You are currently on a {planName} plan that renews automatically each month unless canceled. To view
+                your invoices, see <Link to={'/account/billing-history'}>billing history</Link>.
+            </p>
+        }
+    } else {
+        return ''
+    }
+
+}
 

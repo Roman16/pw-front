@@ -7,6 +7,7 @@ import {Spin} from "antd"
 import {numberMask} from "../../../../utils/numberMask"
 import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 import moment from 'moment'
+
 export const ActivateSubscription = ({
                                          visible,
                                          plan,
@@ -14,6 +15,7 @@ export const ActivateSubscription = ({
                                          scope,
                                          processing,
                                          activateType,
+                                         adSpend,
 
                                          onClose,
                                          onActivate
@@ -40,19 +42,19 @@ export const ActivateSubscription = ({
         }
         setFetchProcessing(false)
     }
-    console.log(activateInfo)
 
     const windowContent = () => {
         if (activateType === 'trial') {
             return (<div className={'free-trial'}>
                 <div className="window-header">
-                    <h2>Your 14-day free trial starts now</h2>
+                    <h2>You are starting 14-day Free Trial</h2>
                     <p>
-                        14-day free trial includes both PPC Automation and Analytics tools. After free trial period
-                        expires
-                        <b> {planName}</b> plan automatically renews for <b>$60.00
-                        /month</b> starting from 09 Apr 2022 unless you
-                        cancel it.
+                        14-day Free Trial includes full access to PPC Automation and Analytics tools. After Free Trial
+                        period expires, <b> {planName}</b> plan will renew automatically for
+                        ${!fetchProcessing ? numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2) : 0} /
+                        month* starting
+                        from {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
+                        you cancel it.
                     </p>
                 </div>
 
@@ -66,8 +68,16 @@ export const ActivateSubscription = ({
                         <div className="value"><b>14 days free</b></div>
                     </div>
                     <div className="row">
+                        <div className="label">AD SPEND</div>
+                        <div className="value"><b>${numberMask(adSpend, 2)}</b></div>
+                    </div>
+                    <div className="row">
                         <div className="label">PRICE</div>
-                        <div className="value">Starting on {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} <br/> <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'} /month</b></div>
+                        <div className="value">Starting
+                            on {!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}
+                            <br/>
+                            <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'} /month*</b>
+                        </div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -82,7 +92,7 @@ export const ActivateSubscription = ({
 
 
                 <div className="window-actions">
-                    <p>You will not be charged during your Free trial period.</p>
+                    <p>You will not be charged during your Free trial period</p>
 
                     <button className="btn default" onClick={onActivate} disabled={processing}>
                         Get Started
@@ -135,7 +145,9 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
-                        <div className="value"><b>{!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b></div>
+                        <div className="value">
+                            <b>{!fetchProcessing && (activateInfo[plan].next_invoice.immediate ? moment().format('DD MMM YYYY') : moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY'))}</b>
+                        </div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
@@ -165,7 +177,7 @@ export const ActivateSubscription = ({
                         We’re about to
                         charge <b>{!fetchProcessing ? `$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}` : '-'}</b> from
                         your default method
-                        payment <b>**** {state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.card_last_4}</b>.
+                        payment <b>**** {!fetchProcessing && activateInfo[plan].next_invoice.payment.card_last_4}</b>.
                         Are you
                         sure you want to continue?
                     </p>
@@ -184,7 +196,9 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
-                        <div className="value"><b>{!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b></div>
+                        <div className="value">
+                            <b>{!fetchProcessing && moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b>
+                        </div>
                     </div>
                     <div className="row with-field">
                         <div className="label">COUPON</div>
