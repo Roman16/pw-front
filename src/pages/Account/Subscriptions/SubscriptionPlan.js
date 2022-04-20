@@ -32,7 +32,8 @@ export const SubscriptionPlan = ({
 
     const activeSubscriptionType = subscriptionsState.active_subscription_type,
         planDetails = subscriptionsState.subscriptions[plan.key],
-        activateDetails = activationInfo[plan.key]
+        activateDetails = activationInfo[plan.key],
+        activePlanDetails = subscriptionsState.subscriptions[activeSubscriptionType]
 
     const isActivePlan = activeSubscriptionType === plan.key
 
@@ -87,7 +88,7 @@ export const SubscriptionPlan = ({
                     className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
                     onClick={() => onSelect(plan.key, 'subscribe')}
                 >
-                    subscribe
+                    Subscribe
                 </button>
             } else {
                 return <button
@@ -121,6 +122,7 @@ export const SubscriptionPlan = ({
                     activateDetails={activateDetails}
                     disabledPage={disabledPage}
                     activationInfo={activationInfo}
+                    activePlanDetails={activePlanDetails}
                 />
 
                 {actionButton()}
@@ -165,15 +167,16 @@ export const SubscriptionPlan = ({
     </li>)
 }
 
-const Price = ({activeSubscriptionType, isActivePlan, plan, planDetails, activateDetails, activationInfo}) => {
+const Price = ({activeSubscriptionType, isActivePlan, plan, planDetails, activateDetails, activationInfo, activePlanDetails}) => {
+
     const sumPrice = () => {
         if (activeSubscriptionType === null) {
-            return (activationInfo.analytics.next_invoice.payment.total_actual + activationInfo.optimization.next_invoice.payment.total_actual) / 100
+            return (activationInfo.analytics.next_invoice.payment.subtotal + activationInfo.optimization.next_invoice.payment.subtotal) / 100
         } else {
             if (activeSubscriptionType === 'analytics') {
-                return (planDetails.upcoming_invoice.payment.total_actual + activationInfo.optimization.next_invoice.payment.total_actual) / 100
+                return (activePlanDetails.upcoming_invoice.payment.subtotal + activationInfo.optimization.next_invoice.payment.subtotal) / 100
             } else {
-                return (planDetails.upcoming_invoice.payment.total_actual + activationInfo.analytics.next_invoice.payment.total_actual) / 100
+                return (activePlanDetails.upcoming_invoice.payment.subtotal + activationInfo.analytics.next_invoice.payment.subtotal) / 100
             }
         }
     }
@@ -181,7 +184,7 @@ const Price = ({activeSubscriptionType, isActivePlan, plan, planDetails, activat
     return <div className={'price'}>
         {plan.key === 'full' && <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
 
-        <b>${isActivePlan ? planDetails.upcoming_invoice.payment.total_actual / 100 : activateDetails.next_invoice.payment.total_actual / 100}</b>/
+        <b>${isActivePlan ? planDetails.upcoming_invoice.payment.subtotal / 100 : activateDetails.next_invoice.payment.subtotal / 100}</b>/
         month
     </div>
 }

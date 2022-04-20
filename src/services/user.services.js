@@ -228,8 +228,8 @@ function cancelSubscription(data) {
     return api('post', userUrls.cancelSubscription, data)
 }
 
-function getActivateInfo(scope) {
-    return api('get', `${userUrls.activateInfo}?scopes[]=${scope}`)
+function getActivateInfo({scope, coupon}) {
+    return api('get', `${userUrls.activateInfo}?scopes[]=${scope}${coupon ? `&coupon=${coupon}` : ''}`)
 }
 
 function getCouponInfo(coupon) {

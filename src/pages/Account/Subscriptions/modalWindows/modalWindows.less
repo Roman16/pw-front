@@ -1,4 +1,3 @@
-
 //-----------------------------------------------------------------------------------------------------------------------------
 //modal windows
 
@@ -71,6 +70,7 @@
       }
 
       .col {
+        flex: 1;
         display: flex;
         flex-direction: column;
 
@@ -102,11 +102,14 @@
       margin: 0 0 1.4285714285714286rem;
 
       &.with-field {
-        align-items: center;
+        .label {
+          margin-top: 0.5714285714285714rem;
+
+        }
       }
 
       .label {
-        width: 20%;
+        width: 23%;
         text-align: right;
         font-size: 0.8571428571428571rem;
         color: #353A3E;
@@ -114,6 +117,7 @@
       }
 
       .value {
+        flex: 1;
         font-size: 0.8571428571428571rem;
         line-height: 1.0714285714285714rem;
         color: #312C51;
@@ -121,10 +125,42 @@
         b {
           font-size: 1.1428571428571428rem;
           line-height: 1.4285714285714286rem;
+
+          display: flex;
         }
 
-        &.form-group {
+        .old-price {
+          color: #C9CBD4;
           display: flex;
+          margin: 0 5px 0 0;
+          font-size: 1rem;
+
+          b {
+            font-size: 1rem;
+            margin: 0;
+            text-decoration: line-through;
+          }
+        }
+
+        p {
+          margin: 0;
+
+          a {
+            color: #6959AB;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .coupon-field {
+          display: flex;
+          flex-direction: column;
+
+          .row {
+            margin: 0;
+          }
 
           input {
             width: 11.428571428571429rem;
@@ -134,6 +170,49 @@
 
           .btn {
             height: 2.2857142857142856rem;
+            padding: 0 1.5714285714285714rem;
+
+            background: #F3F3F3;
+            color: #46435C;
+
+            &:hover {
+              background: #d3d3d3;
+            }
+          }
+
+          .coupon-details {
+            font-size: 0.8571428571428571rem;
+            display: flex;
+            align-items: center;
+
+            b {
+              font-size: 0.8571428571428571rem;
+              color: #7FD3A1;
+              margin: 0 3px 0 0;
+            }
+          }
+        }
+
+        &.trial-price {
+          display: flex;
+          flex-direction: column;
+
+          & > b {
+            margin: 3px 0;
+          }
+        }
+
+        &.payment-method {
+          display: flex;
+          flex-direction: column;
+
+          a {
+            color: #6959AB;
+            margin: 3px 0 0 0;
+
+            &:hover {
+              text-decoration: underline;
+            }
           }
         }
       }
@@ -176,6 +255,14 @@
       line-height: 1.0714285714285714rem;
       color: #353A3E;
       text-align: right;
+
+      a {
+        color: #6959AB;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

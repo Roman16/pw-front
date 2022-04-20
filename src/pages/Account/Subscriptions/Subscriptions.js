@@ -56,19 +56,20 @@ const Subscriptions = () => {
 
     const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
 
-    const disabledPage = !amazonIsConnected || !importStatus.subscription.required_parts_details
+    const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true)
 
     const getSubscriptionsState = async () => {
         setLoadStateProcessing(true)
 
         try {
-            const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo(scope)])
+            const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
 
             const currentState = state.result[scope].data,
                 currentInfo = info.result[scope].data
 
             setSubscriptionsState(currentState)
             setActivateInfo(currentInfo)
+
             setVisibleActivateSubscriptionsWindow(false)
             setActivateProcessing(false)
 
@@ -79,10 +80,11 @@ const Subscriptions = () => {
         setLoadStateProcessing(false)
     }
 
-    const subscribeHandler = async () => {
+    const subscribeHandler = async (coupon) => {
         setActivateProcessing(true)
+        console.log(coupon)
         try {
-            const res = await userService.activateSubscription({scope, type: selectedPlan})
+            const res = await userService.activateSubscription({scope, type: selectedPlan, coupon})
 
             getSubscriptionsState()
         } catch (e) {
@@ -126,11 +128,11 @@ const Subscriptions = () => {
         setSelectedPlan(plan)
         setActivateType(type)
 
-        if (activationInfo[plan].next_invoice.payment.card_last_4 === null) {
-            setVisibleAddPaymentMethodWindow(true)
-        } else {
-            setVisibleActivateSubscriptionsWindow(true)
-        }
+        // if (activationInfo[plan].next_invoice.payment.card_last_4 === null) {
+        //     setVisibleAddPaymentMethodWindow(true)
+        // } else {
+        setVisibleActivateSubscriptionsWindow(true)
+        // }
     }
 
     const addPaymentMethodHandler = async (card) => {
@@ -163,6 +165,11 @@ const Subscriptions = () => {
         }
     }
 
+    const closeActivateWindowHandler = () => {
+        !activateProcessing && setVisibleActivateSubscriptionsWindow(false)
+        setSelectedPlan(undefined)
+    }
+
     useEffect(() => {
         amazonIsConnected && getSubscriptionsState()
     }, [])
@@ -174,8 +181,7 @@ const Subscriptions = () => {
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
 
-
-            <PageDescription state={subscriptionsState}/>
+            <PageDescription state={subscriptionsState} disabledPage={disabledPage}/>
 
             <ul className="plans">
                 {subscriptionPlans.map(plan => <SubscriptionPlan
@@ -227,11 +233,12 @@ const Subscriptions = () => {
             plan={selectedPlan}
             activateType={activateType}
             state={subscriptionsState}
+            info={activationInfo}
             scope={scope}
             processing={activateProcessing}
             adSpend={user.ad_spend}
 
-            onClose={() => !activateProcessing && setVisibleActivateSubscriptionsWindow(false)}
+            onClose={closeActivateWindowHandler}
             onActivate={subscribeHandler}
         />}
 
@@ -241,7 +248,7 @@ const Subscriptions = () => {
 
         <LoadingAmazonAccount
             pathname={'/account/subscriptions'}
-            visible={!importStatus.subscription.required_parts_ready}
+            visible={!importStatus.subscription?.required_parts_ready}
             importStatus={importStatus}
             lastName={user.user.last_name}
             firstName={user.user.name}
@@ -254,33 +261,45 @@ const Subscriptions = () => {
 export default Subscriptions
 
 
-const PageDescription = ({state}) => {
+const PageDescription = ({state, disabledPage}) => {
     const planName = _.find(subscriptionPlans, {key: state.active_subscription_type})?.name
 
-    if (state.active_subscription_type === null && state.trial.can_start_trial) {
+    if (disabledPage) {
+        return <p className="page-description">
+            This is a prepaid plan, and you are paying
+            for the next 30 days of using it. To view your invoices, see <Link
+            to={'/account/billing-history'}>billing history</Link>.
+        </p>
+    } else if (state.active_subscription_type === null && state.trial.can_start_trial) {
         return <p className="page-description">
             All subscription plans come with 14-day FREE TRIAL with FULL access to PPC Automation and Analytics
             tools. <br/> You only select a plan that will be active after Free Trial ends. No credit card required to
             start your Free Trial.
+        </p>
+    } else if (state.active_subscription_type === null && !state.trial.can_start_trial) {
+        return <p className="page-description">
+            Select subscription plan that suits you the best. All plans are prepaid, and you are paying for the next
+            month of using it. <br/> To view your invoices, see <Link
+            to={'/account/billing-history'}>billing history</Link>.
         </p>
     } else if (state.active_subscription_type) {
         if (state.active_subscription_type === 'optimization') {
             return <p className="page-description">
                 You are currently on a {planName} plan that renews automatically each month unless canceled. On this
                 plan you are missing out on Analytics features we provide. We suggest switching to Combo plan to grow
-                your business with full suite of tools we have to offer. To view your invoices, see <Link
+                your business with full suite of tools we have to offer. <br/> To view your invoices, see <Link
                 to={'/account/billing-history'}>billing history</Link>.
             </p>
         } else if (state.active_subscription_type === 'analytics') {
             return <p className="page-description">
                 You are currently on a {planName} plan that renews automatically each month unless canceled. On this
                 plan you are missing out on PPC Automation features we provide. We suggest switching to Combo plan to
-                grow your business with full suite of tools we have to offer. To view your invoices, see <Link
+                grow your business with full suite of tools we have to offer. <br/> To view your invoices, see <Link
                 to={'/account/billing-history'}>billing history</Link>.
             </p>
         } else {
             return <p className="page-description">
-                You are currently on a {planName} plan that renews automatically each month unless canceled. To view
+                You are currently on a {planName} plan that renews automatically each month unless canceled. <br/> To view
                 your invoices, see <Link to={'/account/billing-history'}>billing history</Link>.
             </p>
         }
