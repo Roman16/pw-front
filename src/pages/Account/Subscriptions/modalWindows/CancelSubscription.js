@@ -20,7 +20,7 @@ export const CancelSubscription = ({
     const keepSubscriptionHandler = () => {
         setActionType('keep')
 
-        if (state.subscriptions[state.active_subscription_type].coupon) {
+        if (state.subscriptions[state.active_subscription_type].coupon || state.trial.trial_active) {
             onClose()
         } else {
             onKeepSubscription()
@@ -38,17 +38,20 @@ export const CancelSubscription = ({
                 <div className="cancel">
                     <h2>Are you sure you want to cancel Subscription?</h2>
 
-                    {state.subscriptions[state.active_subscription_type].coupon ? <p>
+                    {state.trial.trial_active ? <p>You will have access to the software until the end of Free
+                        Trial.</p> : state.subscriptions[state.active_subscription_type].coupon ? <p>
                             If you decide to cancel, you will have access to the software untill the end of this billing
                             cycle: <b>{moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}</b>.
                         </p> :
                         <p>
-                            Stay with Sponsoreds and get <b>30%</b> discount for your subscription for the next three
-                            months. <span>You will
-                            save:</span>
-                            <b>${numberMask(state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.total_actual / 100 * 0.3 * 3, 2)}</b> that
-                            you can invest
-                            back into your Amazon business.
+                            Stay with Sponsoreds and get 30% discount for your subscription for the next three
+                            months. <br/> <span>You will save:</span>
+                            <b> ${numberMask(state.subscriptions[state.active_subscription_type].upcoming_invoice.payment.total_actual / 100 * 0.3 * 3, 2)}</b> that
+                            you can invest <br/> back into your Amazon business.
+                            <br/>
+                            <br/>
+                            If you decide to cancel, you will have access to the software untill the end of this billing
+                            cycle: {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
                         </p>}
 
 

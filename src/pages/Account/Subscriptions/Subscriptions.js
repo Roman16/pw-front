@@ -7,7 +7,7 @@ import {CancelSubscription, ActivateSubscription, ConnectAmazonAccount} from "./
 import {SubscriptionPlan} from './SubscriptionPlan'
 
 import {Link} from "react-router-dom"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {PageHeader} from "./PageHeader"
 import {CouponField} from "./CouponField"
 import {notification} from "../../../components/Notification"
@@ -15,9 +15,12 @@ import {AddPaymentMethod} from "./modalWindows/AddPaymentMethod"
 import LoadingAmazonAccount from "../../../components/ModalWindow/PWWindows/LoadingAmazonAccountWindow"
 import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
+import {userActions} from "../../../actions/user.actions"
 
 
 const Subscriptions = () => {
+    const dispatch = useDispatch()
+
     const
         [scope, setScope] = useState('America'),
 
@@ -82,11 +85,12 @@ const Subscriptions = () => {
 
     const subscribeHandler = async (coupon) => {
         setActivateProcessing(true)
-        console.log(coupon)
+
         try {
             const res = await userService.activateSubscription({scope, type: selectedPlan, coupon})
 
             getSubscriptionsState()
+            dispatch(userActions.getPersonalUserInfo())
         } catch (e) {
             console.log(e)
         }
@@ -128,11 +132,7 @@ const Subscriptions = () => {
         setSelectedPlan(plan)
         setActivateType(type)
 
-        // if (activationInfo[plan].next_invoice.payment.card_last_4 === null) {
-        //     setVisibleAddPaymentMethodWindow(true)
-        // } else {
         setVisibleActivateSubscriptionsWindow(true)
-        // }
     }
 
     const addPaymentMethodHandler = async (card) => {
@@ -181,7 +181,12 @@ const Subscriptions = () => {
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
 
-            <PageDescription state={subscriptionsState} disabledPage={disabledPage}/>
+            <PageDescription
+                state={subscriptionsState}
+
+                activationInfo={activationInfo}
+                disabledPage={disabledPage}
+            />
 
             <ul className="plans">
                 {subscriptionPlans.map(plan => <SubscriptionPlan
@@ -214,17 +219,10 @@ const Subscriptions = () => {
         <CancelSubscription
             visible={visibleCancelSubscriptionsWindow}
             state={subscriptionsState}
+            disableReactivateButtons={processingCancelSubscription}
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
             onCancelSubscription={cancelSubscriptionHandler}
-        />
-
-        <AddPaymentMethod
-            visible={visibleAddPaymentMethodWindow}
-            processing={addPaymentMethodProcessing}
-
-            onClose={() => setVisibleAddPaymentMethodWindow(false)}
-            onAddCard={addPaymentMethodHandler}
         />
 
         {selectedPlan &&
@@ -261,7 +259,7 @@ const Subscriptions = () => {
 export default Subscriptions
 
 
-const PageDescription = ({state, disabledPage}) => {
+const PageDescription = ({state, activationInfo, disabledPage}) => {
     const planName = _.find(subscriptionPlans, {key: state.active_subscription_type})?.name
 
     if (disabledPage) {
@@ -276,6 +274,19 @@ const PageDescription = ({state, disabledPage}) => {
             tools. <br/> You only select a plan that will be active after Free Trial ends. No credit card required to
             start your Free Trial.
         </p>
+    } else if (state.active_subscription_type === null && [activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
+        return <p className="page-description">
+            You are currently on a [имя плана] plan that ends in [колво оставшихся дней подписки] days. You have
+            canceled your subscription and will lose access to the software when current billing period ends. Renew your
+            subscription to keep using software after current billing period. To view your invoices, see <Link
+            to={'/account/billing-history'}>billing history</Link>.
+        </p>
+    } else if (state.active_subscription_type === null && !state.trial.can_start_trial && [state.subscriptions['optimization'], state.subscriptions['analytics'], state.subscriptions['full']].some(i => i.status === 'trialing_canceled')) {
+        return <p className="page-description">
+            You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. You have
+            canceled your {} subscription plan, thus you will lose access to the software when
+            Free Trial ends. You can renew your subscription that will be active after Free Trial at any time.
+        </p>
     } else if (state.active_subscription_type === null && !state.trial.can_start_trial) {
         return <p className="page-description">
             Select subscription plan that suits you the best. All plans are prepaid, and you are paying for the next
@@ -283,7 +294,14 @@ const PageDescription = ({state, disabledPage}) => {
             to={'/account/billing-history'}>billing history</Link>.
         </p>
     } else if (state.active_subscription_type) {
-        if (state.active_subscription_type === 'optimization') {
+        if (state.trial.trial_active) {
+            return <p className="page-description">
+                You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. After Free
+                Trial ends, you will be set to the {planName} subscription plan, renewing automatically each month
+                unless canceled. You can change your subscription plan that will be active after Free Trial without any
+                drawbacks.
+            </p>
+        } else if (state.active_subscription_type === 'optimization') {
             return <p className="page-description">
                 You are currently on a {planName} plan that renews automatically each month unless canceled. On this
                 plan you are missing out on Analytics features we provide. We suggest switching to Combo plan to grow
@@ -299,7 +317,8 @@ const PageDescription = ({state, disabledPage}) => {
             </p>
         } else {
             return <p className="page-description">
-                You are currently on a {planName} plan that renews automatically each month unless canceled. <br/> To view
+                You are currently on a {planName} plan that renews automatically each month unless canceled. <br/> To
+                view
                 your invoices, see <Link to={'/account/billing-history'}>billing history</Link>.
             </p>
         }

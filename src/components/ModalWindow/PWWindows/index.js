@@ -143,7 +143,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('onlyDesktop')
         } else if ((!access.analytics && pathname.includes('/analytics')) || (!access.optimization && pathname.includes('/ppc/'))) {
             setVisibleWindow('notAccess')
-        } else if (visibleSmallSpendWindow && user.ad_spend < 1000 && !user.user.is_agency_client && (!access.analytics || !access.optimization)) {
+        } else if (visibleSmallSpendWindow && user.ad_spend < 1000 && !user.user.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
             setVisibleWindow('smallSpend')
         } else if (user.user.free_trial_available) {
             setVisibleWindow('freeTrial')

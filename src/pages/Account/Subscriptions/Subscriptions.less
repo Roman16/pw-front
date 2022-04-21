@@ -182,7 +182,7 @@
       }
 
       .active-subscription-details {
-        border-top: 1px solid #6959AB;
+        border-top: 1px solid #C9CBD4;
         padding: 1.4285714285714286rem 1.4285714285714286rem 0;
         margin: 2.142857142857143rem 0 0 0;
 
@@ -212,7 +212,9 @@
 
             &:first-child {
               .value {
-                text-transform: capitalize;
+                span {
+                  text-transform: capitalize;
+                }
               }
             }
 
@@ -292,6 +294,10 @@
 
         .col {
           min-height: calc(15rem - 2px);
+        }
+
+        .active-subscription-details {
+          border-color: #6959AB;
         }
 
         .plan-details {

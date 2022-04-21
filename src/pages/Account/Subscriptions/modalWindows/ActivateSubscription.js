@@ -33,7 +33,7 @@ export const ActivateSubscription = ({
         [couponInfo, setCouponInfo] = useState(undefined)
 
     const planName = _.find(subscriptionPlans, {key: plan}).name,
-        activePlanName = _.find(subscriptionPlans, {key: state.active_subscription_type}).name,
+        activePlanName = state.active_subscription_type ? _.find(subscriptionPlans, {key: state.active_subscription_type}).name : '',
         activePlanDetails = state.subscriptions[state.active_subscription_type]
 
     const getActivateInfo = async () => {
@@ -133,7 +133,7 @@ export const ActivateSubscription = ({
                     <p>You will not be charged during your Free trial period</p>
 
                     <button className="btn default" onClick={activateHandler} disabled={processing}>
-                        Get Started
+                        Start
 
                         {processing && <Spin size={'small'}/>}
                     </button>
@@ -149,6 +149,8 @@ export const ActivateSubscription = ({
                         month*</b> starting
                         from {moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
                         you cancel it.
+                        <br/>
+                        Do you wish to continue?
                     </p>
 
                     <div className="rebate">
@@ -158,7 +160,9 @@ export const ActivateSubscription = ({
                             <h4> {plan === 'full' ? 'Subscription rebate' : `${activePlanName} access`} </h4>
 
                             {plan === 'full' ? <p>
-                                You will get a rebate for <b>$[rebate amount]</b> for unused days for your subscriptions
+                                You will get a rebate
+                                for <b> ${numberMask(activateInfo[plan].next_invoice.payment.rebate / 100, 2)}</b> for
+                                unused days for your subscriptions
                                 you
                                 have activated before. This rebate amount will be subtracted from the cost for your
                                 Combo plan. If rebate amount is higher than your current Combo plan cost, the remaining
@@ -218,6 +222,91 @@ export const ActivateSubscription = ({
                         Can't start subscription. <Link to={'/account/billing-information'}>Add default payment method
                         first</Link>
                     </p>}
+
+                    <button className="btn default" onClick={activateHandler}
+                            disabled={processing || !activateInfo[plan].next_invoice.payment.card_last_4}>
+                        Confirm
+
+                        {processing && <Spin size={'small'}/>}
+                    </button>
+                </div>
+            </div>)
+        } else if (activateType === 'switchTrial') {
+            return (<div className={'switch-subscription'}>
+                <div className="window-header">
+                    <h2>You are switching to {planName} plan</h2>
+                    <p>
+                        You are switching to <b>{planName}</b> plan that will renew automatically
+                        for <b> ${numberMask(activateInfo[plan].next_invoice.payment.subtotal / 100, 2)} /
+                        month*</b> starting
+                        from {moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
+                        you cancel it.
+                        <br/>
+                        Do you wish to continue?
+                    </p>
+
+                    <div className="rebate">
+                        <InfoIcon/>
+
+                        <div className="col">
+                            <h4>Free Trial period</h4>
+
+                            <p>
+                                You are still on the Free Trial and will have full access to PPC Automation and
+                                Analytics tools until the end of Free Trial. Plan you are switching to will only become
+                                active after Free Trial ends.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="subscription-details">
+                    <div className="row">
+                        <div className="label">PLAN</div>
+                        <div className="value"><b>{planName}</b></div>
+                    </div>
+                    <div className="row">
+                        <div className="label">TRIAL</div>
+                        <div className="value"><b>{state.trial.trial_left_days} days</b></div>
+                    </div>
+                    <div className="row">
+                        <div className="label">AD SPEND</div>
+                        <div className="value"><b>${numberMask(adSpend, 2)}</b></div>
+                    </div>
+
+                    <PriceRow
+                        couponInfo={couponInfo}
+                        plan={plan}
+                        activateInfo={activateInfo}
+                    />
+
+                    <PaymentMethodRow
+                        data={activateInfo[plan]}
+                    />
+
+                    <div className="row">
+                        <div className="label">NEXT PAYMENT</div>
+                        <div className="value">
+                            <b>{moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b>
+                        </div>
+                    </div>
+                    <div className="row with-field">
+                        <div className="label">COUPON</div>
+                        <div className="value form-group">
+                            <CouponField
+                                placeholder={'Enter coupon'}
+                                processing={applyCouponProcessing}
+                                couponInfo={couponInfo}
+
+                                onApply={applyCouponHandler}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div className="window-actions">
+                   <p>You will not be charged during your Free trial period</p>
 
                     <button className="btn default" onClick={activateHandler}
                             disabled={processing || !activateInfo[plan].next_invoice.payment.card_last_4}>

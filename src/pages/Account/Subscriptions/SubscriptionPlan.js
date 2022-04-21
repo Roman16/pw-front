@@ -66,21 +66,29 @@ export const SubscriptionPlan = ({
                 >
                     Start Free Trial
                 </button>
-            } else if (activateDetails.expected_action === 'switch_trial') {
-                return <button
-                    disabled={activateProcessing}
-                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                    onClick={() => onSelect(plan.key, 'switch')}
-                >
-                    Switch trial
-                </button>
-            } else if (activateDetails.expected_action === 'resume_subscription' && activeSubscriptionType === null) {
+            } else if ((activateDetails.expected_action === 'resume_subscription' || planDetails.status === 'trialing_canceled') && activeSubscriptionType === null) {
                 return <button
                     disabled={activateProcessing}
                     className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
                     onClick={() => onSelect(plan.key, 'resume')}
                 >
-                    resume
+                    Resume
+                </button>
+            } else if (activateDetails.expected_action === 'switch_trial' || activateDetails.expected_action === 'resume_trial') {
+                return <button
+                    disabled={activateProcessing}
+                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                    onClick={() => onSelect(plan.key, 'switchTrial')}
+                >
+                    Switch plan
+                </button>
+            } else if (activeSubscriptionType === null && [activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
+                return <button
+                    disabled={activateProcessing}
+                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                    onClick={() => onSelect(plan.key, 'switch')}
+                >
+                    Switch plan
                 </button>
             } else if (activeSubscriptionType === null) {
                 return <button
@@ -136,34 +144,13 @@ export const SubscriptionPlan = ({
             </li>)}
         </ul>
 
-        {isActivePlan && <div className="active-subscription-details">
-            <h4>About my Subscription:</h4>
-
-            <div className="details">
-                <div className="row">
-                    <div className="label">Status</div>
-                    <div className="value">{planDetails.status}</div>
-                </div>
-                <div className="row">
-                    <div className="label">Next invoice date</div>
-                    <div
-                        className="value">{moment(planDetails.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}</div>
-                </div>
-                <div className="row">
-                    <div className="label">Price</div>
-                    <div
-                        className="value">{planDetails.upcoming_invoice.payment.total_actual && '$' + numberMask(planDetails.upcoming_invoice.payment.total_actual / 100, 2)}</div>
-                </div>
-                <div className="row">
-                    <div className="label">Last 30-days Ad Spend</div>
-                    <div className="value">${numberMask(adSpend, 2)}</div>
-                </div>
-                <div className="row">
-                    <div className="label">Coupon</div>
-                    <div className="value">{planDetails.coupon === null ? 'Not used' : planDetails.coupon}</div>
-                </div>
-            </div>
-        </div>}
+        {(isActivePlan || planDetails.status === 'trialing_canceled') && <ActivePlanDetails
+            planDetails={planDetails}
+            subscriptionsState={subscriptionsState}
+            adSpend={adSpend}
+            activationInfo={activationInfo}
+            plan={plan}
+        />}
     </li>)
 }
 
@@ -187,6 +174,75 @@ const Price = ({activeSubscriptionType, isActivePlan, plan, planDetails, activat
         <b>${isActivePlan ? planDetails.upcoming_invoice.payment.subtotal / 100 : activateDetails.next_invoice.payment.subtotal / 100}</b>/
         month
     </div>
+}
+
+const ActivePlanDetails = ({planDetails, subscriptionsState, adSpend, activationInfo, plan}) => {
+
+    if (planDetails.status === 'trialing_canceled') {
+        return (<div className="active-subscription-details">
+            <h4>About my Subscription:</h4>
+
+            <div className="details">
+                <div className="row">
+                    <div className="label">Status</div>
+                    <div className="value"><span style={{color: '#FF5256'}}>Canceled</span>,
+                        Trial {subscriptionsState.trial.trial_left_days} days left
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="label">Next invoice date</div>
+                    <div
+                        className="value">N/A
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="label">Price</div>
+                    <div
+                        className="value"> $ {numberMask(activationInfo[plan.key].next_invoice?.payment.total_actual / 100, 2)}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Last 30-days Ad Spend</div>
+                    <div className="value">${numberMask(adSpend, 2)}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Coupon</div>
+                    <div className="value">{planDetails.coupon === null ? 'Not used' : planDetails.coupon}</div>
+                </div>
+            </div>
+        </div>)
+    } else {
+        return (<div className="active-subscription-details">
+            <h4>About my Subscription:</h4>
+
+            <div className="details">
+                <div className="row">
+                    <div className="label">Status</div>
+                    <div
+                        className="value">{planDetails.status === 'trialing' ? `Trialing, ${subscriptionsState.trial.trial_left_days} days left` :
+                        <span>planDetails.status</span>}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Next invoice date</div>
+                    <div
+                        className="value">{moment(planDetails.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Price</div>
+                    <div
+                        className="value">{planDetails.upcoming_invoice.payment.total_actual && '$' + numberMask(planDetails.upcoming_invoice.payment.total_actual / 100, 2)}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Last 30-days Ad Spend</div>
+                    <div className="value">${numberMask(adSpend, 2)}</div>
+                </div>
+                <div className="row">
+                    <div className="label">Coupon</div>
+                    <div className="value">{planDetails.coupon === null ? 'Not used' : planDetails.coupon}</div>
+                </div>
+            </div>
+        </div>)
+
+    }
 }
 
 const DefaultPriceTemplate = ({plan}) => {
