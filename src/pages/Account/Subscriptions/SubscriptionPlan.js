@@ -175,7 +175,7 @@ const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subs
         subscriptionsStateActivePlan = subscriptionsState.subscriptions[subscriptionsState.active_subscription_type]
 
     const sumPrice = () => {
-        if (activeSubscriptionType === null) {
+        if (activeSubscriptionType === null || activeSubscriptionType === 'full') {
             return (activationInfo.analytics.next_invoice.payment.subtotal + activationInfo.optimization.next_invoice.payment.subtotal) / 100
         } else {
             if (activeSubscriptionType === 'analytics') {
@@ -234,7 +234,6 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
         </div>
     </div>)
 }
-
 
 const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsStateCurrentPlan}) => {
     const total = activateInfoCurrentPlan.next_invoice?.payment.total,
