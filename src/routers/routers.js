@@ -5,12 +5,11 @@ import RouteLoader from "../components/RouteLoader/RouteLoader"
 import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
-const NotFound = React.lazy(() => import('../pages/LandingPages/NotFound/NotFound'))
+const NotFound = React.lazy(() => import('../pages/404/404'))
 
 const LoginPage = React.lazy(() => import('../pages/authentication/LoginPage/LoginPage'))
 const RegistrationPage = React.lazy(() => import('../pages/authentication/RegistrationPage/RegistrationPage'))
 const AgencyRegistrationPage = React.lazy(() => import('../pages/authentication/AgencyRegistration/AgencyRegistration'))
-const AuditRegistration = React.lazy(() => import('../pages/authentication/AuditRegistration/AuditRegistration'))
 const ConfirmEmailPage = React.lazy(() => import('../pages/authentication/ConfirmEmailPage/ConfirmEmailPage'))
 const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPassword/ResetPassword'))
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'))

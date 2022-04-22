@@ -34,7 +34,8 @@ export const ActivateSubscription = ({
 
     const planName = _.find(subscriptionPlans, {key: plan}).name,
         activePlanName = state.active_subscription_type ? _.find(subscriptionPlans, {key: state.active_subscription_type}).name : '',
-        activePlanDetails = state.subscriptions[state.active_subscription_type]
+        activateInfoSelectedPlan = activateInfo[plan]
+
 
     const getActivateInfo = async () => {
         setFetchProcessing(true)
@@ -81,9 +82,9 @@ export const ActivateSubscription = ({
                     <p>
                         14-day Free Trial includes full access to PPC Automation and Analytics tools. After Free Trial
                         period expires, <b> {planName}</b> plan will renew automatically for
-                        <b> ${numberMask(activateInfo[plan].next_invoice.payment.subtotal / 100, 2)} /
+                        <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} /
                             month*</b> starting
-                        from {moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
+                        from {moment(activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')} unless
                         you cancel it.
                     </p>
                 </div>
@@ -105,13 +106,12 @@ export const ActivateSubscription = ({
 
                     <PriceRow
                         couponInfo={couponInfo}
-                        plan={plan}
-                        activateInfo={activateInfo}
+                        activateInfoSelectedPlan={activateInfoSelectedPlan}
                         trial={true}
                     />
 
                     <PaymentMethodRow
-                        data={activateInfo[plan]}
+                        data={activateInfoSelectedPlan}
                     />
 
                     <div className="row with-field">
@@ -145,11 +145,10 @@ export const ActivateSubscription = ({
                     <h2>You are switching to {planName} plan</h2>
                     <p>
                         You are switching to <b>{planName}</b> plan that will renew automatically
-                        for <b> ${numberMask(activateInfo[plan].next_invoice.payment.subtotal / 100, 2)} /
-                        month*</b> starting
-                        from {moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
-                        you cancel it.
-                        <br/>
+                        for <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} /
+                        month* </b>starting
+                        from {moment(activateInfoSelectedPlan.next_invoice.immediate ? moment() : activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')} unless
+                        you cancel it. <br/>
                         Do you wish to continue?
                     </p>
 
@@ -161,16 +160,14 @@ export const ActivateSubscription = ({
 
                             {plan === 'full' ? <p>
                                 You will get a rebate
-                                for <b> ${numberMask(activateInfo[plan].next_invoice.payment.rebate / 100, 2)}</b> for
-                                unused days for your subscriptions
-                                you
-                                have activated before. This rebate amount will be subtracted from the cost for your
-                                Combo plan. If rebate amount is higher than your current Combo plan cost, the remaining
-                                amount will be carried forward for your next recurring payments.
+                                for <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.rebate / 100, 2)} </b>
+                                for unused days for your subscriptions you have activated before. This rebate amount
+                                will be subtracted from the cost for your Combo plan. If rebate amount is higher than
+                                your current Combo plan cost, the remaining amount will be carried forward for your next
+                                recurring payments.
                             </p> : <p>
-                                You will retain access to all features provided by already
-                                purchased <b>{activePlanName}</b> plan
-                                until <b>{moment(activePlanDetails.period_end_date).format('DD MMM YYYY')}</b>.
+                                You will retain access to all features provided by already purchased subscription plans
+                                until the end their billing periods.
                             </p>}
                         </div>
                     </div>
@@ -188,18 +185,17 @@ export const ActivateSubscription = ({
 
                     <PriceRow
                         couponInfo={couponInfo}
-                        plan={plan}
-                        activateInfo={activateInfo}
+                        activateInfoSelectedPlan={activateInfoSelectedPlan}
                     />
 
                     <PaymentMethodRow
-                        data={activateInfo[plan]}
+                        data={activateInfoSelectedPlan}
                     />
 
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
                         <div className="value">
-                            <b>{moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b>
+                            <b>{moment(activateInfoSelectedPlan.next_invoice.immediate ? moment() : activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')}</b>
                         </div>
                     </div>
                     <div className="row with-field">
@@ -216,15 +212,17 @@ export const ActivateSubscription = ({
                     </div>
                 </div>
 
-
                 <div className="window-actions">
-                    {!activateInfo[plan].next_invoice.payment.card_last_4 && <p>
-                        Can't start subscription. <Link to={'/account/billing-information'}>Add default payment method
-                        first</Link>
+                    {!activateInfoSelectedPlan.next_invoice.payment.card_last_4 && <p>
+                        Can't start subscription.
+                        <Link to={'/account/billing-information'}>Add default payment method first</Link>
                     </p>}
 
-                    <button className="btn default" onClick={activateHandler}
-                            disabled={processing || !activateInfo[plan].next_invoice.payment.card_last_4}>
+                    <button
+                        className="btn default"
+                        onClick={activateHandler}
+                        disabled={processing || !activateInfoSelectedPlan.next_invoice.payment.card_last_4}
+                    >
                         Confirm
 
                         {processing && <Spin size={'small'}/>}
@@ -237,9 +235,9 @@ export const ActivateSubscription = ({
                     <h2>You are switching to {planName} plan</h2>
                     <p>
                         You are switching to <b>{planName}</b> plan that will renew automatically
-                        for <b> ${numberMask(activateInfo[plan].next_invoice.payment.subtotal / 100, 2)} /
+                        for <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} /
                         month*</b> starting
-                        from {moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')} unless
+                        from {moment(activateInfoSelectedPlan.next_invoice.immediate ? moment() : activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')} unless
                         you cancel it.
                         <br/>
                         Do you wish to continue?
@@ -276,18 +274,17 @@ export const ActivateSubscription = ({
 
                     <PriceRow
                         couponInfo={couponInfo}
-                        plan={plan}
-                        activateInfo={activateInfo}
+                        activateInfoSelectedPlan={activateInfoSelectedPlan}
                     />
 
                     <PaymentMethodRow
-                        data={activateInfo[plan]}
+                        data={activateInfoSelectedPlan}
                     />
 
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
                         <div className="value">
-                            <b>{moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b>
+                            <b>{moment(activateInfoSelectedPlan.next_invoice.immediate ? moment() : activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')}</b>
                         </div>
                     </div>
                     <div className="row with-field">
@@ -306,10 +303,10 @@ export const ActivateSubscription = ({
 
 
                 <div className="window-actions">
-                   <p>You will not be charged during your Free trial period</p>
+                    <p>You will not be charged during your Free trial period</p>
 
                     <button className="btn default" onClick={activateHandler}
-                            disabled={processing || !activateInfo[plan].next_invoice.payment.card_last_4}>
+                            disabled={processing || !activateInfoSelectedPlan.next_invoice.payment.card_last_4}>
                         Confirm
 
                         {processing && <Spin size={'small'}/>}
@@ -322,10 +319,10 @@ export const ActivateSubscription = ({
                     <h2>You are starting {planName} plan</h2>
                     <p>
                         You are subscribing to <b>{planName}</b> plan that will renew automatically
-                        for <b> ${numberMask(activateInfo[plan].next_invoice.payment.subtotal / 100, 2)} /
+                        for <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} /
                         month*</b> starting from today unless you cancel it. We are about to charge the first payment
                         equal
-                        to <b> ${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}</b> from
+                        to <b> ${numberMask(getTotalActual(activateInfoSelectedPlan.next_invoice.payment) / 100, 2)}</b> from
                         your default payment method.
                         <br/>
                         Are you sure you want to continue?
@@ -345,18 +342,17 @@ export const ActivateSubscription = ({
 
                     <PriceRow
                         couponInfo={couponInfo}
-                        plan={plan}
-                        activateInfo={activateInfo}
+                        activateInfoSelectedPlan={activateInfoSelectedPlan}
                     />
 
                     <PaymentMethodRow
-                        data={activateInfo[plan]}
+                        data={activateInfoSelectedPlan}
                     />
 
                     <div className="row">
                         <div className="label">NEXT PAYMENT</div>
                         <div className="value">
-                            <b>{moment(activateInfo[plan].next_invoice.immediate ? moment() : activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</b>
+                            <b>{moment(activateInfoSelectedPlan.next_invoice.immediate ? moment() : activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')}</b>
                         </div>
                     </div>
                     <div className="row with-field">
@@ -374,13 +370,13 @@ export const ActivateSubscription = ({
                 </div>
 
                 <div className="window-actions">
-                    {!activateInfo[plan].next_invoice.payment.card_last_4 && <p>
+                    {!activateInfoSelectedPlan.next_invoice.payment.card_last_4 && <p>
                         Can't start subscription. <Link to={'/account/billing-information'}>Add default payment method
                         first</Link>
                     </p>}
 
                     <button className="btn default" onClick={activateHandler}
-                            disabled={processing || !activateInfo[plan].next_invoice.payment.card_last_4}>
+                            disabled={processing || !activateInfoSelectedPlan.next_invoice.payment.card_last_4}>
                         Confirm
 
                         {processing && <Spin size={'small'}/>}
@@ -412,23 +408,36 @@ export const ActivateSubscription = ({
 }
 
 
-const PriceRow = ({couponInfo, activateInfo, plan, trial = false}) => <div className="row">
-    <div className="label">PRICE</div>
-    <div className="value">
-        {trial && <p>Starting on {moment(activateInfo[plan].next_invoice.date).format('DD MMM YYYY')}</p>}
-        <b>
-            {couponInfo && <span
-                className="old-price">$ <b>{`${numberMask(activateInfo[plan].next_invoice.payment.subtotal_actual / 100, 2)}`}</b></span>}
-            {`$${numberMask(activateInfo[plan].next_invoice.payment.total_actual / 100, 2)}`} /
-            month*
-        </b>
-        <p>
-            * subscription price is based on your 30-day ad spend and it may differ on your billing
-            date if ad spend changes drastically.
-            <a target={'_blank'} href="https://sponsoreds.com/pricing"> Learn more</a>
-        </p>
+const PriceRow = ({couponInfo, activateInfoSelectedPlan, trial = false}) => {
+    const
+        total = activateInfoSelectedPlan.next_invoice.payment.total,
+        subtotal = activateInfoSelectedPlan.next_invoice.payment.subtotal,
+        rebate = activateInfoSelectedPlan.next_invoice.payment.rebate || 0,
+        balance = activateInfoSelectedPlan.next_invoice.payment.balance
+
+    return <div className="row">
+        <div className="label">PRICE</div>
+        <div className="value">
+            {trial && <p>Starting on {moment(activateInfoSelectedPlan.next_invoice.date).format('DD MMM YYYY')}</p>}
+            <b>
+                {couponInfo && <span className="old-price">
+                    $ <b>{`${numberMask(getTotalActual({total: subtotal, rebate, balance}) / 100, 2)}`}</b>
+                </span>}
+
+                {`$${numberMask(getTotalActual({total, rebate, balance}) / 100, 2)}`} /
+                month*
+            </b>
+            <p>
+                * subscription price is based on your 30-day ad spend and it may differ on your billing
+                date if ad spend changes drastically.
+                <a target={'_blank'} href="https://sponsoreds.com/pricing"> Learn more</a>
+            </p>
+        </div>
     </div>
-</div>
+}
+
+
+export const getTotalActual = ({total = 0, rebate = 0, balance = 0}) => Math.max(total - rebate - balance, 0)
 
 const PaymentMethodRow = ({data}) => <div className="row">
     <div className="label">PAYMENT METHOD</div>

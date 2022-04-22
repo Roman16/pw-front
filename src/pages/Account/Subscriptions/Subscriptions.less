@@ -157,6 +157,7 @@
         flex-direction: column;
         border-top: 1px solid #C9CBD4;
         padding: 2.142857142857143rem 1.4285714285714286rem 0;
+        margin-bottom: 2.14285714rem;
 
 
         li {
@@ -172,7 +173,7 @@
             width: 0.7142857142857143rem;
             min-width: 0.7142857142857143rem;
             margin: 5px 5px 0 0;
-            stroke: #FF5256;
+            stroke: #7FD3A1;
           }
 
           &:last-child {
@@ -184,7 +185,7 @@
       .active-subscription-details {
         border-top: 1px solid #C9CBD4;
         padding: 1.4285714285714286rem 1.4285714285714286rem 0;
-        margin: 2.142857142857143rem 0 0 0;
+        margin: auto 0 0 0;
 
         h4 {
           font-weight: 600;
@@ -250,6 +251,13 @@
 
         .plan-details {
           border-top: 1px solid #FF5256;
+
+          li:nth-child(1),
+          li:nth-child(2) {
+            svg {
+              stroke: #FF5256;
+            }
+          }
         }
       }
 
@@ -298,13 +306,17 @@
 
         .active-subscription-details {
           border-color: #6959AB;
+          margin-bottom: -2px;
         }
 
         .plan-details {
           border-color: #6959AB;
 
-          li svg {
-            stroke: #6959AB;
+          li:nth-child(1),
+          li:nth-child(2) {
+            svg {
+              stroke: #6959AB;
+            }
           }
         }
       }

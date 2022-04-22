@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {SocialLinks} from "../../../components/Sidebar/Sidebar"
-import './NotFound.less'
+import {SocialLinks} from "../../components/Sidebar/Sidebar"
+import './404.less'
 
 const NotFound = () => (
     <section className="not-found-page">
@@ -27,5 +27,4 @@ const NotFound = () => (
         </div>
     </section>
 )
-
 export default NotFound

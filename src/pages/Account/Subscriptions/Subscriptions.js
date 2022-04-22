@@ -16,6 +16,7 @@ import LoadingAmazonAccount from "../../../components/ModalWindow/PWWindows/Load
 import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
 import {userActions} from "../../../actions/user.actions"
+import {PageDescription} from "./PageDescription"
 
 
 const Subscriptions = () => {
@@ -75,6 +76,7 @@ const Subscriptions = () => {
 
             setVisibleActivateSubscriptionsWindow(false)
             setActivateProcessing(false)
+            setVisibleCancelSubscriptionsWindow(false)
 
             setSelectedPlan(undefined)
         } catch (e) {
@@ -101,7 +103,6 @@ const Subscriptions = () => {
 
         try {
             await userService.cancelSubscription({scope})
-            setVisibleCancelSubscriptionsWindow(false)
             getSubscriptionsState()
         } catch (e) {
 
@@ -200,7 +201,7 @@ const Subscriptions = () => {
                     adSpend={user.ad_spend}
 
                     onSelect={selectPlanHandler}
-                    onCloseCancelWindow={setVisibleCancelSubscriptionsWindow}
+                    onSetVisibleCancelWindow={setVisibleCancelSubscriptionsWindow}
                 />)}
             </ul>
 
@@ -259,72 +260,4 @@ const Subscriptions = () => {
 export default Subscriptions
 
 
-const PageDescription = ({state, activationInfo, disabledPage}) => {
-    const planName = _.find(subscriptionPlans, {key: state.active_subscription_type})?.name
-
-    if (disabledPage) {
-        return <p className="page-description">
-            This is a prepaid plan, and you are paying
-            for the next 30 days of using it. To view your invoices, see <Link
-            to={'/account/billing-history'}>billing history</Link>.
-        </p>
-    } else if (state.active_subscription_type === null && state.trial.can_start_trial) {
-        return <p className="page-description">
-            All subscription plans come with 14-day FREE TRIAL with FULL access to PPC Automation and Analytics
-            tools. <br/> You only select a plan that will be active after Free Trial ends. No credit card required to
-            start your Free Trial.
-        </p>
-    } else if (state.active_subscription_type === null && [activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
-        return <p className="page-description">
-            You are currently on a [имя плана] plan that ends in [колво оставшихся дней подписки] days. You have
-            canceled your subscription and will lose access to the software when current billing period ends. Renew your
-            subscription to keep using software after current billing period. To view your invoices, see <Link
-            to={'/account/billing-history'}>billing history</Link>.
-        </p>
-    } else if (state.active_subscription_type === null && !state.trial.can_start_trial && [state.subscriptions['optimization'], state.subscriptions['analytics'], state.subscriptions['full']].some(i => i.status === 'trialing_canceled')) {
-        return <p className="page-description">
-            You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. You have
-            canceled your {} subscription plan, thus you will lose access to the software when
-            Free Trial ends. You can renew your subscription that will be active after Free Trial at any time.
-        </p>
-    } else if (state.active_subscription_type === null && !state.trial.can_start_trial) {
-        return <p className="page-description">
-            Select subscription plan that suits you the best. All plans are prepaid, and you are paying for the next
-            month of using it. <br/> To view your invoices, see <Link
-            to={'/account/billing-history'}>billing history</Link>.
-        </p>
-    } else if (state.active_subscription_type) {
-        if (state.trial.trial_active) {
-            return <p className="page-description">
-                You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. After Free
-                Trial ends, you will be set to the {planName} subscription plan, renewing automatically each month
-                unless canceled. You can change your subscription plan that will be active after Free Trial without any
-                drawbacks.
-            </p>
-        } else if (state.active_subscription_type === 'optimization') {
-            return <p className="page-description">
-                You are currently on a {planName} plan that renews automatically each month unless canceled. On this
-                plan you are missing out on Analytics features we provide. We suggest switching to Combo plan to grow
-                your business with full suite of tools we have to offer. <br/> To view your invoices, see <Link
-                to={'/account/billing-history'}>billing history</Link>.
-            </p>
-        } else if (state.active_subscription_type === 'analytics') {
-            return <p className="page-description">
-                You are currently on a {planName} plan that renews automatically each month unless canceled. On this
-                plan you are missing out on PPC Automation features we provide. We suggest switching to Combo plan to
-                grow your business with full suite of tools we have to offer. <br/> To view your invoices, see <Link
-                to={'/account/billing-history'}>billing history</Link>.
-            </p>
-        } else {
-            return <p className="page-description">
-                You are currently on a {planName} plan that renews automatically each month unless canceled. <br/> To
-                view
-                your invoices, see <Link to={'/account/billing-history'}>billing history</Link>.
-            </p>
-        }
-    } else {
-        return ''
-    }
-
-}
 
