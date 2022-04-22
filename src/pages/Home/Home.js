@@ -5,7 +5,7 @@ import {useSelector} from "react-redux"
 
 const services = [
     {
-        title: 'Zero-to-Hero',
+        title: 'Zero to Hero',
         key: 'zth',
         description: 'An AI-powered tool to create highly effective Amazon campaigns in a matter of minutes',
         icon: () => <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">

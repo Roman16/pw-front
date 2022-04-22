@@ -21,7 +21,7 @@ const StartScanning = ({
                        }) => {
 
     const [visibleCogsWindow, setVisibleCogsWindow] = useState(false),
-        [optimizationStrategy, setOptimizationStrategy] = useState(),
+        [optimizationStrategy, setOptimizationStrategy] = useState('AchieveTargetACoS'),
         [targetAcos, setTargetAcos] = useState()
 
     return (<>
@@ -44,30 +44,30 @@ const StartScanning = ({
                 />
             </div>
 
-            <div className="form-group">
-                <label htmlFor="">
-                    Choose Advertising goal
+            {/*<div className="form-group">*/}
+            {/*    <label htmlFor="">*/}
+            {/*        Choose Advertising goal*/}
 
-                    <span onClick={onOpenStrategyDescription}>Read more</span>
-                </label>
+            {/*        <span onClick={onOpenStrategyDescription}>Read more</span>*/}
+            {/*    </label>*/}
 
-                <CustomSelect
-                    getPopupContainer={trigger => trigger}
-                    value={optimizationStrategy}
-                    onChange={(value) => setOptimizationStrategy(value)}
-                    disabled={loadingProducts || !product.id}
-                >
-                    {strategies.map(item => (
-                        <Option value={item.key}>
-                            <i style={{fill: `${item.fill}`}}>
-                                <SVG id={item.icon}/>
-                            </i>
+            {/*    <CustomSelect*/}
+            {/*        getPopupContainer={trigger => trigger}*/}
+            {/*        value={optimizationStrategy}*/}
+            {/*        onChange={(value) => setOptimizationStrategy(value)}*/}
+            {/*        disabled={loadingProducts || !product.id}*/}
+            {/*    >*/}
+            {/*        {strategies.map(item => (*/}
+            {/*            <Option value={item.key}>*/}
+            {/*                <i style={{fill: `${item.fill}`}}>*/}
+            {/*                    <SVG id={item.icon}/>*/}
+            {/*                </i>*/}
 
-                            {item.name}
-                        </Option>
-                    ))}
-                </CustomSelect>
-            </div>
+            {/*                {item.name}*/}
+            {/*            </Option>*/}
+            {/*        ))}*/}
+            {/*    </CustomSelect>*/}
+            {/*</div>*/}
 
             {optimizationStrategy === 'AchieveTargetACoS' && <div className="form-group">
                 <label htmlFor="">

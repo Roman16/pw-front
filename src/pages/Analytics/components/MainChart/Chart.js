@@ -192,10 +192,10 @@ const Chart = ({
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="linear"
-                            strokeOpacity={0.5}
+                            strokeOpacity={0.75}
                             dataKey={`${metric}`}
                             stroke={chartColors[index]}
-                            strokeWidth={1.5}
+                            strokeWidth={2}
                             activeDot={{r: 5}}
                             dot={{r: 2}}
                             animationEasing={animationEasing}
@@ -210,10 +210,10 @@ const Chart = ({
                         showDailyChart && <Line
                             yAxisId={`YAxis-${index}`}
                             type="linear"
-                            strokeOpacity={0.5}
+                            strokeOpacity={0.75}
                             dataKey={`dashed_${metric}`}
                             stroke={chartColors[index]}
-                            strokeWidth={1.5}
+                            strokeWidth={2}
                             strokeDasharray="7 5"
                             activeDot={{r: 5}}
                             dot={{r: 2}}

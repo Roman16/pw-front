@@ -55,6 +55,8 @@ const metricsDifferentDiff = [
     metricKeys['returns'],
     metricKeys['returns_units'],
     metricKeys['cpm'],
+    metricKeys['cpa'],
+    metricKeys['cpc'],
 ]
 
 export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false}) => {
