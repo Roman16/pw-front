@@ -30,7 +30,7 @@ export const CouponField = ({placeholder, processing, couponInfo, onApply}) => {
     )
 }
 
-const CouponDetails = ({coupon}) => {
+export const CouponDetails = ({coupon}) => {
     if (coupon.duration === 'once') {
         return (<div className="coupon-details">
             {coupon.percent_off ? <b>{coupon.percent_off}%</b> :

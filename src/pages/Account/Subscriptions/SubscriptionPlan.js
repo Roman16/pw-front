@@ -4,6 +4,7 @@ import moment from 'moment'
 import {numberMask} from "../../../utils/numberMask"
 import {SVG} from "../../../utils/icons"
 import {getTotalActual} from "./modalWindows"
+import {CouponDetails} from "./CouponField"
 
 const defaultPrice = {
     optimization: {
@@ -98,77 +99,90 @@ const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activat
     const activateDetailsCurrentPlan = activationInfo[plan.key],
         subscriptionsStateActivePlan = subscriptionsState.subscriptions[activeSubscriptionType]
 
-    if (activeSubscriptionType === plan.key) {
-        if (subscriptionsStateActivePlan.status === 'incomplete' || subscriptionsStateActivePlan.status === 'past_due') {
-            return <button
-                disabled={processingCancelSubscription}
-                className="btn grey"
-            >
-                retry last payment
-            </button>
-
-        } else if (subscriptionsStateActivePlan.status === 'trialing' || subscriptionsStateActivePlan.status === 'recurring' || subscriptionsStateActivePlan.status === 'scheduled') {
-            return <button
-                disabled={processingCancelSubscription}
-                className="btn grey" onClick={() => onSetVisibleCancelWindow(true)}
-            >
-                Cancel
-            </button>
+    if (activeSubscriptionType) {
+        if (activeSubscriptionType === plan.key) {
+            if (subscriptionsStateActivePlan.status === 'incomplete' ||
+                subscriptionsStateActivePlan.status === 'past_due') {
+                return <button
+                    disabled={processingCancelSubscription}
+                    className="btn grey"
+                >
+                    retry last payment
+                </button>
+            } else if (subscriptionsStateActivePlan.status === 'trialing' ||
+                subscriptionsStateActivePlan.status === 'recurring' ||
+                subscriptionsStateActivePlan.status === 'scheduled') {
+                return <Button
+                    processing={processingCancelSubscription}
+                    buttonText={'Cancel'}
+                    onClick={() => onSetVisibleCancelWindow(true)}
+                />
+            } else {
+                return ''
+            }
+        } else if (activateDetailsCurrentPlan.expected_action === 'switch_trial') {
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Switch plan'}
+                planKey={plan.key}
+                onClick={() => onSelect(plan.key, 'switchTrial')}
+            />
         } else {
-            return ''
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Switch plan'}
+                planKey={plan.key}
+                onClick={() => onSelect(plan.key, 'switch')}
+            />
         }
     } else {
-        if (activateDetailsCurrentPlan.expected_action === 'start_trial') {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                onClick={() => onSelect(plan.key, 'trial')}
-            >
-                Start Free Trial
-            </button>
-        } else if ((activateDetailsCurrentPlan.expected_action === 'resume_subscription' || subscriptionsStateActivePlan?.status === 'trialing_canceled') && activeSubscriptionType === null) {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+        if (activateDetailsCurrentPlan.expected_action === 'resume_subscription') {
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Resume'}
+                planKey={plan.key}
                 onClick={() => onSelect(plan.key, 'resume')}
-            >
-                Resume
-            </button>
-        } else if (activateDetailsCurrentPlan.expected_action === 'switch_trial' || activateDetailsCurrentPlan.expected_action === 'resume_trial') {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                onClick={() => onSelect(plan.key, 'switchTrial')}
-            >
-                Switch plan
-            </button>
-        } else if (activeSubscriptionType === null && [activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+            />
+        } else if (activateDetailsCurrentPlan.expected_action === 'resume_trial') {
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Resume'}
+                planKey={plan.key}
+                onClick={() => onSelect(plan.key, 'resumeTrial')}
+            />
+        } else if (activateDetailsCurrentPlan.expected_action === 'start_trial') {
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Start Free Trial'}
+                planKey={plan.key}
+                onClick={() => onSelect(plan.key, 'trial')}
+            />
+        } else if ([activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Switch plan'}
+                planKey={plan.key}
                 onClick={() => onSelect(plan.key, 'switch')}
-            >
-                Switch plan
-            </button>
-        } else if (activeSubscriptionType === null) {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                onClick={() => onSelect(plan.key, 'subscribe')}
-            >
-                Subscribe
-            </button>
+            />
         } else {
-            return <button
-                disabled={activateProcessing}
-                className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                onClick={() => onSelect(plan.key, 'switch')}
-            >
-                Switch plan
-            </button>
+            return <Button
+                processing={activateProcessing}
+                buttonText={'Subscribe'}
+                planKey={plan.key}
+                onClick={() => onSelect(plan.key, 'subscribe')}
+            />
         }
     }
 }
+
+const Button = ({processing, planKey, onClick, buttonText}) => <button
+    disabled={processing}
+    className={`btn ${buttonText === 'Cancel' ? 'grey' : planKey === 'full' ? 'default' : 'blue'}`}
+    onClick={onClick}
+>
+    {buttonText}
+</button>
+
 
 const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subscriptionsState}) => {
     const activateDetailsCurrentPlan = activationInfo[plan.key],
@@ -186,8 +200,11 @@ const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subs
         }
     }
 
-    return <div className={'price'}>
+    return <div className={`price ${subscriptionsStateActivePlan?.coupon ? 'discount' : ''}`}>
         {plan.key === 'full' && <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
+
+        {subscriptionsStateActivePlan?.coupon && plan.key !== 'full' &&
+        <b className={'old-price'}>$<span>{isActivePlan ? subscriptionsStateActivePlan.upcoming_invoice.payment.subtotal / 100 : activateDetailsCurrentPlan.next_invoice.payment.subtotal / 100}</span></b>}
 
         <b>
             ${isActivePlan ? subscriptionsStateActivePlan.upcoming_invoice.payment.total / 100 : activateDetailsCurrentPlan.next_invoice.payment.total / 100}
@@ -196,7 +213,6 @@ const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subs
 }
 
 const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurrentPlan}) => {
-
     return (<div className="active-subscription-details">
         <h4>About my Subscription:</h4>
 
@@ -225,10 +241,14 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
                 <div className="label">Last 30-days Ad Spend</div>
                 <div className="value">${numberMask(adSpend, 2)}</div>
             </div>
-            <div className="row">
+            <div className="row coupon-row">
                 <div className="label">Coupon</div>
                 <div className="value">
-                    {subscriptionsStateCurrentPlan.coupon === null ? 'Not used' : subscriptionsStateCurrentPlan.coupon}
+                    {subscriptionsStateCurrentPlan.coupon === null ? 'Not used' :
+                        <>
+                            <b>{subscriptionsStateCurrentPlan.coupon.name}</b>
+                            <CouponDetails coupon={subscriptionsStateCurrentPlan.coupon}/>
+                        </>}
                 </div>
             </div>
         </div>
@@ -239,7 +259,7 @@ const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsSta
     const total = activateInfoCurrentPlan.next_invoice?.payment.total,
         rebate = activateInfoCurrentPlan.next_invoice?.payment.rebate || 0,
         balance = activateInfoCurrentPlan.next_invoice?.payment.balance
-    
+
     return (<div className="active-subscription-details">
         <h4>About my Subscription:</h4>
 
@@ -247,7 +267,8 @@ const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsSta
             <div className="row">
                 <div className="label">Status</div>
                 <div className="value">
-                    <span style={{color: '#FF5256'}}>Canceled</span>, ends in {subscriptionsStateCurrentPlan.days_before_period_end_date} days
+                    <span style={{color: '#FF5256'}}>Canceled</span>, ends
+                    in {subscriptionsStateCurrentPlan.days_before_period_end_date} days
                 </div>
             </div>
             <div className="row">
@@ -270,7 +291,7 @@ const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsSta
             <div className="row">
                 <div className="label">Coupon</div>
                 <div className="value">
-                   ---
+                    ---
                 </div>
             </div>
         </div>

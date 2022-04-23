@@ -34,7 +34,7 @@ export const CancelSubscription = ({
         } else if (state.subscriptions[state.active_subscription_type].coupon) {
             return <p>
                 If you decide to cancel, you will have access to the software untill the end of this billing
-                cycle: <b> {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}</b>.
+                cycle: {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
             </p>
         } else {
             return <p>
@@ -45,7 +45,7 @@ export const CancelSubscription = ({
                 <br/>
                 <br/>
                 If you decide to cancel, you will have access to the software untill the end of this billing
-                cycle: <b> {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}</b>.
+                cycle: {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
             </p>
         }
     }

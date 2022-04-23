@@ -236,8 +236,8 @@ function getCouponInfo(coupon) {
     return api('get', `${userUrls.couponInfo}?coupon=${coupon}`)
 }
 
-function activateCoupon({coupon, scope}) {
-    return api('get', `${userUrls.couponActivate}?coupon=${coupon}&scope=${scope}`)
+function activateCoupon(data) {
+    return api('post', `${userUrls.couponActivate}`, data)
 }
 
 function toggleMarketplace(id) {

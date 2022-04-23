@@ -44,14 +44,11 @@ const Subscriptions = () => {
         [loadStateProcessing, setLoadStateProcessing] = useState(true),
         [activateProcessing, setActivateProcessing] = useState(false),
         [activateCouponProcessing, setActivateCouponProcessing] = useState(false),
-        [addPaymentMethodProcessing, setAddPaymentMethodProcessing] = useState(false),
         [selectedPlan, setSelectedPlan] = useState(),
         [activateType, setActivateType] = useState(),
-        [couponDetails, setCouponDetails] = useState(),
 
         [visibleCancelSubscriptionsWindow, setVisibleCancelSubscriptionsWindow] = useState(false),
         [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
-        [visibleAddPaymentMethodWindow, setVisibleAddPaymentMethodWindow] = useState(false),
 
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
 
@@ -66,7 +63,10 @@ const Subscriptions = () => {
         setLoadStateProcessing(true)
 
         try {
-            const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
+            // const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
+
+            const state = await userService.getSubscriptionsState(scope)
+            const info = await userService.getActivateInfo({scope, coupon: state.result[scope].data.subscriptions[state.result[scope].data.active_subscription_type]?.coupon?.code})
 
             const currentState = state.result[scope].data,
                 currentInfo = info.result[scope].data
@@ -74,11 +74,7 @@ const Subscriptions = () => {
             setSubscriptionsState(currentState)
             setActivateInfo(currentInfo)
 
-            setVisibleActivateSubscriptionsWindow(false)
             setActivateProcessing(false)
-            setVisibleCancelSubscriptionsWindow(false)
-
-            setSelectedPlan(undefined)
         } catch (e) {
             console.log(e)
         }
@@ -89,10 +85,12 @@ const Subscriptions = () => {
         setActivateProcessing(true)
 
         try {
-            const res = await userService.activateSubscription({scope, type: selectedPlan, coupon})
+            await userService.activateSubscription({scope, type: selectedPlan, coupon})
 
             getSubscriptionsState()
             dispatch(userActions.getPersonalUserInfo())
+            setVisibleActivateSubscriptionsWindow(false)
+            setSelectedPlan(undefined)
         } catch (e) {
             console.log(e)
         }
@@ -104,8 +102,9 @@ const Subscriptions = () => {
         try {
             await userService.cancelSubscription({scope})
             getSubscriptionsState()
+            setVisibleCancelSubscriptionsWindow(false)
         } catch (e) {
-
+            console.log(e)
         }
 
         setProcessingCancelSubscription(false)
@@ -120,7 +119,8 @@ const Subscriptions = () => {
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({coupon, scope})
+                await userService.activateCoupon({coupon, scope, type: subscriptionsState.active_subscription_type})
+                notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
             }
         } catch (e) {
@@ -134,36 +134,6 @@ const Subscriptions = () => {
         setActivateType(type)
 
         setVisibleActivateSubscriptionsWindow(true)
-    }
-
-    const addPaymentMethodHandler = async (card) => {
-        setAddPaymentMethodProcessing(true)
-
-        try {
-            const res = await userService.addPaymentMethod({stripe_token: card.stripe_token})
-
-            setSubscriptionsState({
-                ...subscriptionsState,
-                subscriptions: {
-                    ...subscriptionsState.subscriptions,
-                    [subscriptionsState.active_subscription_type]: {
-                        ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type],
-                        upcoming_invoice: {
-                            ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice,
-                            payment: {
-                                ...subscriptionsState.subscriptions[subscriptionsState.active_subscription_type].upcoming_invoice.payment,
-                                card_last_4: res[0].last4
-                            }
-                        }
-                    }
-                }
-            })
-            setVisibleAddPaymentMethodWindow(false)
-
-            setVisibleActivateSubscriptionsWindow(true)
-        } catch (e) {
-            console.log(e)
-        }
     }
 
     const closeActivateWindowHandler = () => {
