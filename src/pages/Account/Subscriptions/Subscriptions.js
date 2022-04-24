@@ -17,6 +17,7 @@ import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
 import {userActions} from "../../../actions/user.actions"
 import {PageDescription} from "./PageDescription"
+import {SomethingWrong} from "./modalWindows/SomethingWrong"
 
 
 const Subscriptions = () => {
@@ -49,6 +50,7 @@ const Subscriptions = () => {
 
         [visibleCancelSubscriptionsWindow, setVisibleCancelSubscriptionsWindow] = useState(false),
         [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
+        [visibleSomethingWrongWindow, setVisibleSomethingWrongWindow] = useState(false),
 
         [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
 
@@ -57,26 +59,45 @@ const Subscriptions = () => {
 
     const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
 
-    const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true)
+    const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true) || visibleSomethingWrongWindow
 
     const getSubscriptionsState = async () => {
         setLoadStateProcessing(true)
+
+        const openErrorWindow = () => {
+            setVisibleSomethingWrongWindow(true)
+            setLoadStateProcessing(false)
+        }
 
         try {
             // const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
 
             const state = await userService.getSubscriptionsState(scope)
-            const info = await userService.getActivateInfo({scope, coupon: state.result[scope].data.subscriptions[state.result[scope].data.active_subscription_type]?.coupon?.code})
 
-            const currentState = state.result[scope].data,
-                currentInfo = info.result[scope].data
 
-            setSubscriptionsState(currentState)
-            setActivateInfo(currentInfo)
+            if (state.result[scope].error) {
+                openErrorWindow()
+            } else {
+                const info = await userService.getActivateInfo({
+                    scope,
+                    coupon: state.result[scope].data.subscriptions[state.result[scope].data.active_subscription_type]?.coupon?.code
+                })
 
-            setActivateProcessing(false)
+                if (info.result[scope].error) {
+                    openErrorWindow()
+                } else {
+                    const currentState = state.result[scope].data,
+                        currentInfo = info.result[scope].data
+
+                    setSubscriptionsState(currentState)
+                    setActivateInfo(currentInfo)
+
+                    setActivateProcessing(false)
+                }
+            }
         } catch (e) {
             console.log(e)
+            openErrorWindow()
         }
         setLoadStateProcessing(false)
     }
@@ -85,7 +106,11 @@ const Subscriptions = () => {
         setActivateProcessing(true)
 
         try {
-            await userService.activateSubscription({scope, type: selectedPlan, coupon})
+            await userService.activateSubscription({
+                scope,
+                type: selectedPlan,
+                coupon: coupon || subscriptionsState.subscriptions[subscriptionsState.active_subscription_type]?.coupon?.code || undefined
+            })
 
             getSubscriptionsState()
             dispatch(userActions.getPersonalUserInfo())
@@ -213,6 +238,10 @@ const Subscriptions = () => {
 
         <ConnectAmazonAccount
             visible={!amazonIsConnected}
+        />
+
+        <SomethingWrong
+            visible={visibleSomethingWrongWindow}
         />
 
         <LoadingAmazonAccount

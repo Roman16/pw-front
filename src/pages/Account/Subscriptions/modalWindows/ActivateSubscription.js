@@ -41,7 +41,7 @@ export const ActivateSubscription = ({
         setFetchProcessing(true)
 
         try {
-            const {result} = await userService.getActivateInfo({scope})
+            const {result} = await userService.getActivateInfo({scope, coupon: state.subscriptions[state.active_subscription_type]?.coupon?.code})
 
             setActivateInfo(result[scope].data)
         } catch (e) {

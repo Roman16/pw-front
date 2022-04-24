@@ -256,9 +256,9 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
 }
 
 const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsStateCurrentPlan}) => {
-    const total = activateInfoCurrentPlan.next_invoice?.payment.total,
-        rebate = activateInfoCurrentPlan.next_invoice?.payment.rebate || 0,
-        balance = activateInfoCurrentPlan.next_invoice?.payment.balance
+    const total = activateInfoCurrentPlan?.next_invoice?.payment.total,
+        rebate = activateInfoCurrentPlan?.next_invoice?.payment.rebate || 0,
+        balance = activateInfoCurrentPlan?.next_invoice?.payment.balance
 
     return (<div className="active-subscription-details">
         <h4>About my Subscription:</h4>
