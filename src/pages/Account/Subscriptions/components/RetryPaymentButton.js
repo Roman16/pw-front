@@ -13,12 +13,12 @@ class RetryPaymentButton extends Component {
             clickedBtn: true
         })
 
-        const defaultCard = this.state.upcoming_invoice.payment.card_last_4
+        // const defaultCard = this.state.upcoming_invoice.payment.card_last_4
 
         this.props.stripe.confirmCardPayment(
-            this.props.userSecretKey,
+            this.props.state.incomplete_payment.client_secret,
             {
-                payment_method: defaultCard.id
+                payment_method: this.props.state.incomplete_payment.payment_method_id
             }
         )
             .then((res) => {
@@ -27,14 +27,12 @@ class RetryPaymentButton extends Component {
                 } else {
                     this.props.onUpdateInformation()
                 }
-                this.props.onClose()
                 this.setState({
                     clickedBtn: false
                 })
             })
             .catch(e => {
                 console.log(e)
-                this.props.onClose()
                 this.setState({
                     clickedBtn: false
                 })
@@ -46,29 +44,30 @@ class RetryPaymentButton extends Component {
         const {clickedBtn} = this.state,
             {planKey, state} = this.props
 
+        return (
+            <button
+                disabled={clickedBtn}
+                className={`btn ${planKey === 'full' ? 'default' : 'blue'}`}
+                onClick={this.handleConfirm}
+            >
+                Retry Payment
+            </button>
+        )
 
-        if (state.upcoming_invoice.payment.card_last_4) {
-            return (
-                <button
-                    disabled={clickedBtn}
-                    className={`btn ${planKey === 'full' ? 'default' : 'blue'}`}
-                    onClick={this.handleConfirm}
-                >
-                    Retry Payment
-                </button>
-            )
-        } else {
-            return (
-                <Link
-                    to={'/account/billing-information'}
-                    className={`btn ${planKey === 'full' ? 'default' : 'blue'}`}
-                    onClick={this.handleConfirm}
-                >
-                    Retry Payment
-                </Link>
-            )
 
-        }
+        // if (state.upcoming_invoice.payment.card_last_4) {
+        // } else {
+        //     return (
+        //         <Link
+        //             to={'/account/billing-information'}
+        //             className={`btn ${planKey === 'full' ? 'default' : 'blue'}`}
+        //             onClick={this.handleConfirm}
+        //         >
+        //             Retry Payment
+        //         </Link>
+        //     )
+        //
+        // }
     }
 }
 

@@ -117,8 +117,13 @@ const Subscriptions = () => {
             setVisibleActivateSubscriptionsWindow(false)
             setSelectedPlan(undefined)
         } catch (e) {
-            console.log(e)
+            if (e.response.data.result?.payment_intent_id) {
+
+            }
         }
+    }
+
+    const retryPaymentHandler = async (state) => {
     }
 
     const cancelSubscriptionHandler = async () => {
@@ -152,10 +157,6 @@ const Subscriptions = () => {
             console.log(e)
         }
         setActivateCouponProcessing(false)
-    }
-
-    const retryPaymentHandler = (data) => {
-
     }
 
     const selectPlanHandler = (plan, type) => {
