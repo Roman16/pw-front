@@ -1,10 +1,11 @@
 import React from "react"
 import {Spin} from "antd"
 import moment from 'moment'
-import {numberMask} from "../../../utils/numberMask"
-import {SVG} from "../../../utils/icons"
-import {getTotalActual} from "./modalWindows"
+import {numberMask} from "../../../../utils/numberMask"
+import {SVG} from "../../../../utils/icons"
+import {getTotalActual} from "../modalWindows"
 import {CouponDetails} from "./CouponField"
+import RetryPaymentButton from "./RetryPaymentButton"
 
 const defaultPrice = {
     optimization: {
@@ -30,7 +31,8 @@ export const SubscriptionPlan = ({
                                      processingCancelSubscription,
 
                                      onSelect,
-                                     onSetVisibleCancelWindow
+                                     onSetVisibleCancelWindow,
+                                     onRetryPayment
                                  }) => {
 
     const activeSubscriptionType = subscriptionsState.active_subscription_type,
@@ -69,6 +71,7 @@ export const SubscriptionPlan = ({
 
                     onSelect={onSelect}
                     onSetVisibleCancelWindow={onSetVisibleCancelWindow}
+                    onRetryPayment={onRetryPayment}
                 />
             </> : <Spin/>}
         </div>
@@ -95,7 +98,7 @@ export const SubscriptionPlan = ({
     </li>)
 }
 
-const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activationInfo, activateProcessing, processingCancelSubscription, onSelect, onSetVisibleCancelWindow}) => {
+const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activationInfo, activateProcessing, processingCancelSubscription, onSelect, onSetVisibleCancelWindow, onRetryPayment}) => {
     const activateDetailsCurrentPlan = activationInfo[plan.key],
         subscriptionsStateActivePlan = subscriptionsState.subscriptions[activeSubscriptionType]
 
@@ -103,12 +106,19 @@ const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activat
         if (activeSubscriptionType === plan.key) {
             if (subscriptionsStateActivePlan.status === 'incomplete' ||
                 subscriptionsStateActivePlan.status === 'past_due') {
-                return <button
-                    disabled={processingCancelSubscription}
-                    className="btn grey"
-                >
-                    retry last payment
-                </button>
+                return <div className="action-buttons">
+                    <RetryPaymentButton
+                        planKey={plan.key}
+                        state={subscriptionsStateActivePlan}
+                    />
+
+                    <Button
+                        processing={processingCancelSubscription}
+                        buttonText={'Cancel'}
+                        onClick={() => onSetVisibleCancelWindow(true)}
+                    />
+
+                </div>
             } else if (subscriptionsStateActivePlan.status === 'trialing' ||
                 subscriptionsStateActivePlan.status === 'recurring' ||
                 subscriptionsStateActivePlan.status === 'scheduled') {
@@ -213,6 +223,21 @@ const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subs
 }
 
 const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurrentPlan}) => {
+
+    const incompletePayment = subscriptionsStateCurrentPlan.status === 'incomplete' || subscriptionsStateCurrentPlan.status === 'past_due'
+
+    const statusValue = () => {
+        if (subscriptionsStateCurrentPlan.status === 'trialing') {
+            return `Trialing, ${subscriptionsState.trial.trial_left_days} days left`
+        } else if (incompletePayment) {
+            return <span className="incomplete-payment">
+                Waiting for payment
+            </span>
+        } else {
+            return <span>{subscriptionsStateCurrentPlan.status}</span>
+        }
+    }
+
     return (<div className="active-subscription-details">
         <h4>About my Subscription:</h4>
 
@@ -220,14 +245,13 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
             <div className="row">
                 <div className="label">Status</div>
                 <div className="value">
-                    {subscriptionsStateCurrentPlan.status === 'trialing' ? `Trialing, ${subscriptionsState.trial.trial_left_days} days left` :
-                        <span>{subscriptionsStateCurrentPlan.status}</span>}
+                    {statusValue()}
                 </div>
             </div>
             <div className="row">
                 <div className="label">Next invoice date</div>
                 <div className="value">
-                    {moment(subscriptionsStateCurrentPlan.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}
+                    {incompletePayment ? 'N/A' : moment(subscriptionsStateCurrentPlan.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}
                 </div>
             </div>
             <div className="row">
@@ -316,7 +340,6 @@ const DefaultPriceTemplate = ({plan}) => {
         </>
     )
 }
-
 
 const ActivePlanLabel = () => <div className="active-label">
     <svg width="64" height="64" viewBox="0 0 64 64" fill="none"

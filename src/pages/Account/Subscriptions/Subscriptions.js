@@ -4,19 +4,19 @@ import './Subscriptions.less'
 import './modalWindows/modalWindows.less'
 import {userService} from "../../../services/user.services"
 import {CancelSubscription, ActivateSubscription, ConnectAmazonAccount} from "./modalWindows"
-import {SubscriptionPlan} from './SubscriptionPlan'
+import {SubscriptionPlan} from './components/SubscriptionPlan'
 
 import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
-import {PageHeader} from "./PageHeader"
-import {CouponField} from "./CouponField"
+import {PageHeader} from "./components/PageHeader"
+import {CouponField} from "./components/CouponField"
 import {notification} from "../../../components/Notification"
 import {AddPaymentMethod} from "./modalWindows/AddPaymentMethod"
 import LoadingAmazonAccount from "../../../components/ModalWindow/PWWindows/LoadingAmazonAccountWindow"
 import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import _ from "lodash"
 import {userActions} from "../../../actions/user.actions"
-import {PageDescription} from "./PageDescription"
+import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
 
 
@@ -154,6 +154,10 @@ const Subscriptions = () => {
         setActivateCouponProcessing(false)
     }
 
+    const retryPaymentHandler = (data) => {
+
+    }
+
     const selectPlanHandler = (plan, type) => {
         setSelectedPlan(plan)
         setActivateType(type)
@@ -197,6 +201,7 @@ const Subscriptions = () => {
 
                     onSelect={selectPlanHandler}
                     onSetVisibleCancelWindow={setVisibleCancelSubscriptionsWindow}
+                    onRetryPayment={retryPaymentHandler}
                 />)}
             </ul>
 

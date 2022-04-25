@@ -1,5 +1,5 @@
 import _ from "lodash"
-import {subscriptionPlans} from "../../../constans/subscription.plans"
+import {subscriptionPlans} from "../../../../constans/subscription.plans"
 import {Link} from "react-router-dom"
 import React from "react"
 
@@ -28,7 +28,8 @@ export const PageDescription = ({state, activationInfo, disabledPage}) => {
         } else if (!state.trial.can_start_trial && [activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i?.expected_action === 'resume_trial')) {
             return <p className="page-description">
                 You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. Free
-                Trial ends in <b> {state.trial.trial_left_days || 0} </b> days. You have canceled your subscription plan,
+                Trial ends in <b> {state.trial.trial_left_days || 0} </b> days. You have canceled your subscription
+                plan,
                 thus you will lose access to the software when Free Trial ends. You can renew your subscription that
                 will be active after Free Trial at any time.
             </p>
@@ -40,7 +41,15 @@ export const PageDescription = ({state, activationInfo, disabledPage}) => {
             </p>
         } else return ''
     } else if (state.active_subscription_type) {
-        if (state.trial.trial_active) {
+        if (state.subscriptions[state.active_subscription_type].status === 'incomplete' || state.subscriptions[state.active_subscription_type].status === 'past_due') {
+            return <p className="page-description">
+                There is a problem with your current subscription and you may lose access to the software, check details
+                in <b>About my subscription</b> block.
+                <br/>
+                You are currently on a {planName} plan that renews automatically each month unless canceled. To view
+                your invoices, <Link to={'/account/billing-history'}>see billing history</Link>.
+            </p>
+        } else if (state.trial.trial_active) {
             return <p className="page-description">
                 You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. After
                 Free Trial ends, you will be set to the {planName} subscription plan, renewing

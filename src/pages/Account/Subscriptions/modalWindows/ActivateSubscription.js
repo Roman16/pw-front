@@ -8,7 +8,7 @@ import {numberMask} from "../../../../utils/numberMask"
 import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 import moment from 'moment'
 import {Link} from "react-router-dom"
-import {CouponField} from "../CouponField"
+import {CouponField} from "../components/CouponField"
 import {notification} from "../../../../components/Notification"
 
 export const ActivateSubscription = ({
