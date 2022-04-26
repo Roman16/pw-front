@@ -235,7 +235,7 @@ const Subscriptions = (props) => {
         </section>
 
         <CancelSubscription
-            plan={selectedPlan}
+            plan={selectedPlan || subscriptionState.active_subscription_type}
             visible={visibleCancelSubscriptionsWindow}
             subscriptionState={subscriptionState}
             disableReactivateButtons={processingCancelSubscription}
