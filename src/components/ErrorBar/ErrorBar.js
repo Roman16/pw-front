@@ -22,7 +22,7 @@ const ErrorBar = () => {
     const dispatch = useDispatch();
 
     const accountLinks = useSelector(state => state.user.account_links[0])
-    const trialLeftDays = useSelector(state => state.user.subscription.trial.trial_left_days)
+    const trialLeftDays = useSelector(state => state.user.subscription.trial.days_before_trial_end_date)
     const onTrial = useSelector(state => state.user.subscription.trial.trial_active)
 
     useEffect(() => {

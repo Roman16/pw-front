@@ -5,9 +5,7 @@ import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import {getTotalActual} from "../modalWindows"
 import {CouponDetails} from "./CouponField"
-import RetryPaymentButton from "./RetryPaymentButton"
-import {Elements, StripeProvider} from "react-stripe-elements"
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import {Link} from "react-router-dom"
 
 const defaultPrice = {
     optimization: {
@@ -22,101 +20,108 @@ const defaultPrice = {
     },
 }
 
-const stripeKey = process.env.REACT_APP_ENV === 'production'
-    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
-    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
-
-
 export const SubscriptionPlan = ({
                                      plan,
                                      loadStateProcessing,
-                                     subscriptionsState,
+                                     subscriptionState,
                                      activateProcessing,
-                                     activationInfo,
                                      disabledPage,
                                      adSpend,
                                      processingCancelSubscription,
+                                     retryProcessing,
 
                                      onSelect,
                                      onSetVisibleCancelWindow,
                                      onRetryPayment,
                                  }) => {
 
-    const activeSubscriptionType = subscriptionsState.active_subscription_type,
-        subscriptionsStateCurrentPlan = subscriptionsState.subscriptions[plan.key]
+    const activeSubscriptionType = subscriptionState.active_subscription_type,
+        subscriptionStateCurrentPlan = subscriptionState.subscriptions[plan.key]
 
     const isActivePlan = activeSubscriptionType === plan.key
 
-    return (<li className={`${isActivePlan ? 'active-plan' : ''} activated-${activeSubscriptionType}-plan`}>
-        {plan.key === 'full' && <div className="popular-label">most popular</div>}
-        {isActivePlan && <ActivePlanLabel/>}
-        <div className="col">
-            <h3>
-                <i><SVG id={`${plan.key}-plan-icon`}/></i>
+    const hasIncomplete = [subscriptionState.subscriptions['optimization'], subscriptionState.subscriptions['analytics'], subscriptionState.subscriptions['full']].some(i => i?.status === 'incomplete' || i?.status === 'past_due')
 
-                {plan.name}
-            </h3>
+    return (
+        <li className={`${(isActivePlan || subscriptionStateCurrentPlan.status === 'incomplete') ? 'active-plan' : ''} activated-${activeSubscriptionType}-plan ${hasIncomplete ? 'incomplete' : ''}`}>
+            {plan.key === 'full' && <div className="popular-label">most popular</div>}
+            {(isActivePlan || subscriptionStateCurrentPlan.status === 'incomplete') && <ActivePlanLabel/>}
+            <div className="col">
+                <h3>
+                    <i><SVG id={`${plan.key}-plan-icon`}/></i>
+
+                    {plan.name}
+                </h3>
 
 
-            {disabledPage ? <DefaultPriceTemplate plan={plan}/> : !loadStateProcessing ? <>
-                <Price
-                    isActivePlan={isActivePlan}
-                    plan={plan}
-                    activeSubscriptionType={activeSubscriptionType}
-                    activationInfo={activationInfo}
-                    subscriptionsState={subscriptionsState}
-                />
+                {disabledPage ? <DefaultPriceTemplate plan={plan}/> : !loadStateProcessing ? <>
+                    <Price
+                        plan={plan}
+                        isActivePlan={isActivePlan}
+                        subscriptionState={subscriptionState}
+                    />
 
-                <ActionButton
-                    plan={plan}
-                    subscriptionsState={subscriptionsState}
-                    activationInfo={activationInfo}
-                    activeSubscriptionType={activeSubscriptionType}
+                    <ActionButton
+                        plan={plan}
+                        subscriptionState={subscriptionState}
+                        activeSubscriptionType={activeSubscriptionType}
 
-                    activateProcessing={activateProcessing}
-                    processingCancelSubscription={processingCancelSubscription}
+                        activateProcessing={activateProcessing}
+                        processingCancelSubscription={processingCancelSubscription}
+                        retryProcessing={retryProcessing}
 
-                    onSelect={onSelect}
-                    onSetVisibleCancelWindow={onSetVisibleCancelWindow}
-                    onRetryPayment={onRetryPayment}
-                />
-            </> : <Spin/>}
-        </div>
+                        onSelect={onSelect}
+                        onSetVisibleCancelWindow={onSetVisibleCancelWindow}
+                        onRetryPayment={onRetryPayment}
+                    />
+                </> : <Spin/>}
+            </div>
 
-        <ul className={'plan-details'}>
-            {plan.params.map((i, index) => <li>
-                {(plan.key === 'full' && (index === 0 || index === 1)) ? <SVG id={'plus-plan-icon'}/> :
-                    <SVG id={'check-icon'}/>}
-                {(plan.key === 'full' && (index === 0 || index === 1)) ? <b>{i}</b> : i}
-            </li>)}
-        </ul>
+            <ul className={'plan-details'}>
+                {plan.params.map((i, index) => <li>
+                    {(plan.key === 'full' && (index === 0 || index === 1)) ? <SVG id={'plus-plan-icon'}/> :
+                        <SVG id={'check-icon'}/>}
+                    {(plan.key === 'full' && (index === 0 || index === 1)) ? <b>{i}</b> : i}
+                </li>)}
+            </ul>
 
-        {(isActivePlan) && <ActivePlanDetails
-            subscriptionsState={subscriptionsState}
-            subscriptionsStateCurrentPlan={subscriptionsStateCurrentPlan}
-            adSpend={adSpend}
-        />}
+            {(isActivePlan) && <ActivePlanDetails
+                subscriptionState={subscriptionState}
+                subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
+                adSpend={adSpend}
+            />}
 
-        {(subscriptionsStateCurrentPlan.status === 'on_grace_period' ||
-            subscriptionsStateCurrentPlan.status === 'incomplete' ||
-            subscriptionsStateCurrentPlan.status === 'past_due') &&
-        <CanceledPlanDetails
-            adSpend={adSpend}
-            activateInfoCurrentPlan={activationInfo[plan.key]}
-            subscriptionsStateCurrentPlan={subscriptionsStateCurrentPlan}
-        />}
-    </li>)
+            {(subscriptionStateCurrentPlan.status === 'on_grace_period' ||
+                subscriptionStateCurrentPlan.status === 'incomplete' ||
+                subscriptionStateCurrentPlan.status === 'past_due') &&
+            <CanceledPlanDetails
+                adSpend={adSpend}
+                subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
+            />}
+        </li>)
 }
 
-const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activationInfo, activateProcessing, processingCancelSubscription, onSelect, onSetVisibleCancelWindow, onRetryPayment}) => {
-    const activateDetailsCurrentPlan = activationInfo[plan.key],
-        subscriptionsStateActivePlan = subscriptionsState.subscriptions[activeSubscriptionType]
+const ActionButton = ({
+                          plan,
+                          subscriptionState,
+                          activeSubscriptionType,
+                          retryProcessing,
+                          activateProcessing,
+                          processingCancelSubscription,
+                          onSelect,
+                          onSetVisibleCancelWindow,
+                          onRetryPayment
+                      }) => {
+
+    const subscriptionStateCurrentPlan = subscriptionState.subscriptions[plan.key],
+        subscriptionStateActivePlan = subscriptionState.subscriptions[activeSubscriptionType],
+        subscriptions = subscriptionState.subscriptions
 
     if (activeSubscriptionType) {
         if (activeSubscriptionType === plan.key) {
-            if (subscriptionsStateActivePlan.status === 'trialing' ||
-                subscriptionsStateActivePlan.status === 'recurring' ||
-                subscriptionsStateActivePlan.status === 'scheduled') {
+            if (subscriptionStateActivePlan.status === 'trialing' ||
+                subscriptionStateActivePlan.status === 'recurring' ||
+                subscriptionStateActivePlan.status === 'scheduled') {
                 return <Button
                     processing={processingCancelSubscription}
                     buttonText={'Cancel'}
@@ -125,7 +130,7 @@ const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activat
             } else {
                 return ''
             }
-        } else if (activateDetailsCurrentPlan.expected_action === 'switch_trial') {
+        } else if (subscriptionStateCurrentPlan.expected_action === 'switch_trial') {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Switch plan'}
@@ -141,40 +146,73 @@ const ActionButton = ({plan, subscriptionsState, activeSubscriptionType, activat
             />
         }
     } else {
-        if (subscriptionsState.subscriptions[plan.key].status === 'incomplete' ||
-            subscriptionsState.subscriptions[plan.key].status === 'past_due') {
-            return <div className="action-buttons">
-                <StripeProvider apiKey={stripeKey}>
-                    <Elements>
-                        <RetryPaymentButton
-                            planKey={plan.key}
-                            state={subscriptionsState.subscriptions[plan.key]}
-                        />
-                    </Elements>
-                </StripeProvider>
-            </div>
-        } else if (activateDetailsCurrentPlan.expected_action === 'resume_subscription') {
+        if (subscriptionStateCurrentPlan.status === 'incomplete' ||
+            subscriptionStateCurrentPlan.status === 'past_due') {
+            if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_action') {
+                return <div className="action-buttons">
+                    <Button
+                        processing={retryProcessing}
+                        buttonText={'Retry Payment'}
+                        planKey={plan.key}
+                        onClick={() => onRetryPayment(subscriptionStateCurrentPlan.incomplete_payment)}
+                    />
+
+                    <Button
+                        processing={processingCancelSubscription}
+                        buttonText={'Cancel'}
+                        onClick={() => {
+                            onSelect(plan.key, 'cancel')
+                            onSetVisibleCancelWindow(true)
+                        }}
+                    />
+                </div>
+            } else if (subscriptionStateCurrentPlan.incomplete_payment.payment_method_id === null) {
+                return <div className="action-buttons">
+                    <Link
+                        to={'/account/billing-information'}
+                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                    >
+                        Retry Payment
+                    </Link>
+                    <Button
+                        processing={processingCancelSubscription}
+                        buttonText={'Cancel'}
+                        onClick={() => {
+                            onSelect(plan.key, 'cancel')
+                            onSetVisibleCancelWindow(true)
+                        }}
+                    />
+                </div>
+            } else {
+                return <button
+                    id={'intercom-chat-launcher'}
+                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                >
+                    Help Center
+                </button>
+            }
+        } else if (subscriptionStateCurrentPlan.expected_action === 'resume_subscription') {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Resume'}
                 planKey={plan.key}
                 onClick={() => onSelect(plan.key, 'resume')}
             />
-        } else if (activateDetailsCurrentPlan.expected_action === 'resume_trial') {
+        } else if (subscriptionStateCurrentPlan.expected_action === 'resume_trial') {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Resume'}
                 planKey={plan.key}
                 onClick={() => onSelect(plan.key, 'resumeTrial')}
             />
-        } else if (activateDetailsCurrentPlan.expected_action === 'start_trial') {
+        } else if (subscriptionStateCurrentPlan.expected_action === 'start_trial') {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Start Free Trial'}
                 planKey={plan.key}
                 onClick={() => onSelect(plan.key, 'trial')}
             />
-        } else if ([activationInfo['optimization'], activationInfo['analytics'], activationInfo['full']].some(i => i.expected_action === 'resume_subscription')) {
+        } else if ([subscriptions['optimization'], subscriptions['analytics'], subscriptions['full']].some(i => i?.expected_action === 'resume_subscription')) {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Switch plan'}
@@ -201,41 +239,31 @@ const Button = ({processing, planKey, onClick, buttonText}) => <button
 </button>
 
 
-const Price = ({isActivePlan, plan, activeSubscriptionType, activationInfo, subscriptionsState}) => {
-    const activateDetailsCurrentPlan = activationInfo[plan.key],
-        subscriptionsStateActivePlan = subscriptionsState.subscriptions[subscriptionsState.active_subscription_type]
+const Price = ({isActivePlan, plan, subscriptionState}) => {
+    const subscriptionsStateCurrentPlan = subscriptionState.subscriptions[plan.key]
 
     const sumPrice = () => {
-        if (activeSubscriptionType === null || activeSubscriptionType === 'full') {
-            return (activationInfo.analytics.next_invoice.payment.subtotal + activationInfo.optimization.next_invoice.payment.subtotal) / 100
-        } else {
-            if (activeSubscriptionType === 'analytics') {
-                return (subscriptionsStateActivePlan.upcoming_invoice.payment.subtotal + activationInfo.optimization.next_invoice.payment.subtotal) / 100
-            } else {
-                return (subscriptionsStateActivePlan.upcoming_invoice.payment.subtotal + activationInfo.analytics.next_invoice.payment.subtotal) / 100
-            }
-        }
+        return (subscriptionState.subscriptions.analytics.next_invoice.payment.subtotal + subscriptionState.subscriptions.optimization.next_invoice.payment.subtotal) / 100
     }
 
-    return <div className={`price ${subscriptionsStateActivePlan?.coupon ? 'discount' : ''}`}>
+    return <div className={`price ${(subscriptionsStateCurrentPlan?.coupon && isActivePlan) ? 'discount' : ''}`}>
         {plan.key === 'full' && <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
 
-        {subscriptionsStateActivePlan?.coupon && plan.key !== 'full' &&
-        <b className={'old-price'}>$<span>{isActivePlan ? subscriptionsStateActivePlan.upcoming_invoice.payment.subtotal / 100 : activateDetailsCurrentPlan.next_invoice.payment.subtotal / 100}</span></b>}
+        {(subscriptionsStateCurrentPlan.coupon && isActivePlan && plan.key !== 'full') &&
+        <b className={'old-price'}>$<span>{subscriptionsStateCurrentPlan.next_invoice.payment.subtotal / 100}</span></b>}
 
         <b>
-            ${isActivePlan ? subscriptionsStateActivePlan.upcoming_invoice.payment.total / 100 : activateDetailsCurrentPlan.next_invoice.payment.total / 100}
+            ${subscriptionsStateCurrentPlan.next_invoice.payment.total / 100}
         </b>/ month
     </div>
 }
 
-const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurrentPlan}) => {
-
+const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrentPlan}) => {
     const statusValue = () => {
-        if (subscriptionsStateCurrentPlan.status === 'trialing') {
-            return `Trialing, ${subscriptionsState.trial.trial_left_days} days left`
+        if (subscriptionStateCurrentPlan.status === 'trialing') {
+            return `Trialing, ${subscriptionState.trial.days_before_trial_end_date} days left`
         } else {
-            return <span>{subscriptionsStateCurrentPlan.status}</span>
+            return <span>{subscriptionStateCurrentPlan.status}</span>
         }
     }
 
@@ -252,13 +280,13 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
             <div className="row">
                 <div className="label">Next invoice date</div>
                 <div className="value">
-                    {moment(subscriptionsStateCurrentPlan.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}
+                    {moment(subscriptionStateCurrentPlan.upcoming_invoice.next_payment_attempt_date).format('MMM DD, YYYY')}
                 </div>
             </div>
             <div className="row">
                 <div className="label">Price</div>
                 <div className="value">
-                    ${numberMask(getTotalActual(subscriptionsStateCurrentPlan.upcoming_invoice.payment) / 100, 2)}
+                    ${numberMask(getTotalActual(subscriptionStateCurrentPlan.upcoming_invoice.payment) / 100, 2)}
                 </div>
             </div>
 
@@ -269,10 +297,10 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
             <div className="row coupon-row">
                 <div className="label">Coupon</div>
                 <div className="value">
-                    {subscriptionsStateCurrentPlan.coupon === null ? 'Not used' :
+                    {subscriptionStateCurrentPlan.coupon === null ? 'Not used' :
                         <>
-                            <b>{subscriptionsStateCurrentPlan.coupon.name}</b>
-                            <CouponDetails coupon={subscriptionsStateCurrentPlan.coupon}/>
+                            <b>{subscriptionStateCurrentPlan.coupon.name}</b>
+                            <CouponDetails coupon={subscriptionStateCurrentPlan.coupon}/>
                         </>}
                 </div>
             </div>
@@ -280,13 +308,12 @@ const ActivePlanDetails = ({subscriptionsState, adSpend, subscriptionsStateCurre
     </div>)
 }
 
-const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsStateCurrentPlan}) => {
-    const total = activateInfoCurrentPlan?.next_invoice?.payment.total,
-        rebate = activateInfoCurrentPlan?.next_invoice?.payment.rebate || 0,
-        balance = activateInfoCurrentPlan?.next_invoice?.payment.balance
+const CanceledPlanDetails = ({adSpend, subscriptionStateCurrentPlan}) => {
+    const total = subscriptionStateCurrentPlan?.next_invoice?.payment.total,
+        rebate = subscriptionStateCurrentPlan?.next_invoice?.payment.rebate || 0,
+        balance = subscriptionStateCurrentPlan?.next_invoice?.payment.balance
 
-    const incompletePayment = subscriptionsStateCurrentPlan.status === 'incomplete' || subscriptionsStateCurrentPlan.status === 'past_due'
-
+    const incompletePayment = subscriptionStateCurrentPlan.status === 'incomplete' || subscriptionStateCurrentPlan.status === 'past_due'
 
     return (<div className="active-subscription-details">
         <h4>About my Subscription:</h4>
@@ -298,7 +325,7 @@ const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsSta
                     {incompletePayment ? <span className="incomplete-payment">
                     Waiting for payment
                     </span> : <>  <span style={{color: '#FF5256'}}>Canceled</span>, ends
-                        in {subscriptionsStateCurrentPlan.days_before_period_end_date} days</>}
+                        in {subscriptionStateCurrentPlan.days_before_period_end_date} days</>}
                 </div>
             </div>
             <div className="row">
@@ -318,10 +345,14 @@ const CanceledPlanDetails = ({adSpend, activateInfoCurrentPlan, subscriptionsSta
                 <div className="label">Last 30-days Ad Spend</div>
                 <div className="value">${numberMask(adSpend, 2)}</div>
             </div>
-            <div className="row">
+            <div className="row coupon-row">
                 <div className="label">Coupon</div>
                 <div className="value">
-                    ---
+                    {subscriptionStateCurrentPlan.coupon === null ? '---' :
+                        <>
+                            <b>{subscriptionStateCurrentPlan.coupon.name}</b>
+                            <CouponDetails coupon={subscriptionStateCurrentPlan.coupon}/>
+                        </>}
                 </div>
             </div>
         </div>

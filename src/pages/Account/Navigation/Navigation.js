@@ -5,6 +5,7 @@ import './Navigation.less'
 import {icons} from "./icons"
 import {history} from "../../../utils/history"
 import _ from 'lodash'
+import {Elements, StripeProvider} from "react-stripe-elements"
 
 const Profile = React.lazy(() => import('../Profile/Profile'))
 const AccessSettings = React.lazy(() => import('../AccessSettings/AccessSettings'))
@@ -12,6 +13,10 @@ const BillingHistory = React.lazy(() => import('../BillingHistory/BillingHistory
 const ApiConnection = React.lazy(() => import('../ApiConnection/ApiConnection'))
 const BillingInformation = React.lazy(() => import('../BillingInformation/BillingInformation'))
 const Subscriptions = React.lazy(() => import('../Subscriptions/Subscriptions'))
+
+const stripeKey = process.env.REACT_APP_ENV === 'production'
+    ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
+    : process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_TEST || 'pk_test_TYooMQauvdEDq54NiTphI7jx'
 
 
 const menu = [
@@ -29,7 +34,7 @@ const menu = [
     },
     {
         title: 'Subscription',
-        link: 'subscriptions',
+        link: 'subscription',
     },
     {
         title: 'Billing History',
@@ -79,7 +84,12 @@ const Navigation = () => {
                 <Route exact path="/account/access-settings" component={AccessSettings}/>
                 <Route exact path="/account/billing-history" component={BillingHistory}/>
                 <Route exact path="/account/api-connections" component={ApiConnection}/>
-                <Route exact path="/account/subscriptions" component={Subscriptions}/>
+                <StripeProvider apiKey={stripeKey}>
+                    <Elements>
+                        <Route exact path="/account/subscription" component={Subscriptions}/>
+                    </Elements>
+                </StripeProvider>
+
                 <Route exact path="/account/billing-information" component={BillingInformation}/>
             </div>
         </div>

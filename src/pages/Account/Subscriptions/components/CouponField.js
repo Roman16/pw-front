@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {Spin} from "antd"
 
 export const CouponField = ({placeholder, processing, couponInfo, onApply}) => {
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState(couponInfo?.code || '')
 
 
     return (
@@ -11,6 +11,7 @@ export const CouponField = ({placeholder, processing, couponInfo, onApply}) => {
 
                 <div className="form-group">
                     <input
+                        value={value}
                         type="text"
                         placeholder={placeholder}
                         onChange={({target: {value}}) => setValue(value)}

@@ -14,36 +14,59 @@ import {notification} from "../../../../components/Notification"
 export const ActivateSubscription = ({
                                          visible,
                                          plan,
-                                         state,
+                                         subscriptionState,
                                          scope,
                                          processing,
                                          activateType,
                                          adSpend,
-                                         info,
 
                                          onClose,
                                          onActivate
                                      }) => {
 
     const [activateInfo, setActivateInfo] = useState({
-            ...info
+            ...subscriptionState.subscriptions
         }),
         [fetchProcessing, setFetchProcessing] = useState(true),
         [applyCouponProcessing, setApplyCouponProcessing] = useState(false),
         [couponInfo, setCouponInfo] = useState(undefined)
 
+    const subscriptionsArr = [activateInfo.optimization, activateInfo.analytics, activateInfo.full]
+
     const planName = _.find(subscriptionPlans, {key: plan}).name,
-        activePlanName = state.active_subscription_type ? _.find(subscriptionPlans, {key: state.active_subscription_type}).name : '',
+        activePlanName = subscriptionsArr.some(i => i?.status === 'on_grace_period') ? _.find(subscriptionPlans, {key: subscriptionsArr.find(i => i.status === 'on_grace_period').subscription_type}).name : subscriptionState.active_subscription_type ? _.find(subscriptionPlans, {key: subscriptionState.active_subscription_type}).name : '',
         activateInfoSelectedPlan = activateInfo[plan]
 
+
+    const setActivateData = (result) => {
+        setActivateInfo({
+            optimization: {
+                ...subscriptionState.subscriptions.optimization,
+                next_invoice: result.optimization?.next_invoice || subscriptionState.subscriptions.optimization.next_invoice
+            },
+            analytics: {
+                ...subscriptionState.subscriptions.analytics,
+                next_invoice: result.analytics?.next_invoice || subscriptionState.subscriptions.analytics.next_invoice
+            },
+            full: {
+                ...subscriptionState.subscriptions.full,
+                next_invoice: result.full?.next_invoice || subscriptionState.subscriptions.full.next_invoice
+            },
+        })
+
+    }
 
     const getActivateInfo = async () => {
         setFetchProcessing(true)
 
         try {
-            const {result} = await userService.getActivateInfo({scope, coupon: state.subscriptions[state.active_subscription_type]?.coupon?.code})
+            const {result} = await userService.getActivateInfo({
+                scope,
+                coupon: activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid ? activateInfo[subscriptionState.activeSubscriptionType].coupon.code : activateInfoSelectedPlan?.coupon?.valid ? activateInfoSelectedPlan?.coupon.code : undefined
+            })
 
-            setActivateInfo(result[scope].data)
+            setActivateData(result[scope].data)
+
         } catch (e) {
             console.log(e)
         }
@@ -60,8 +83,7 @@ export const ActivateSubscription = ({
             } else {
                 const {result} = await userService.getActivateInfo({scope, coupon: value})
                 setCouponInfo(couponRes.result)
-
-                setActivateInfo(result[scope].data)
+                setActivateData(result[scope].data)
             }
         } catch (e) {
             console.log(e)
@@ -73,6 +95,17 @@ export const ActivateSubscription = ({
     const activateHandler = () => {
         onActivate(couponInfo?.code)
     }
+
+
+    useEffect(() => {
+        if (visible) {
+            if (activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid) {
+                setCouponInfo(activateInfo[subscriptionState.activeSubscriptionType].coupon)
+            } else if (activateInfoSelectedPlan.coupon?.valid) {
+                setCouponInfo(activateInfoSelectedPlan.coupon)
+            }
+        }
+    }, [visible])
 
     const windowContent = () => {
         if (activateType === 'trial') {
@@ -266,7 +299,8 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">TRIAL</div>
-                        <div className="value"><b>{state.trial.trial_left_days} days</b></div>
+                        <div className="value"><b>{subscriptionState.trial.days_before_trial_end_date || 0} days</b>
+                        </div>
                     </div>
                     <div className="row">
                         <div className="label">AD SPEND</div>
@@ -351,7 +385,8 @@ export const ActivateSubscription = ({
                     </div>
                     <div className="row">
                         <div className="label">TRIAL</div>
-                        <div className="value"><b>{state.trial.trial_left_days || 0} days</b></div>
+                        <div className="value"><b>{subscriptionState.trial.days_before_trial_end_date || 0} days</b>
+                        </div>
                     </div>
                     <div className="row">
                         <div className="label">AD SPEND</div>
@@ -474,14 +509,15 @@ export const ActivateSubscription = ({
                 <div className="window-header">
                     <h2>You are starting {planName} plan</h2>
                     <p>
-                        You are subscribing to <b>{planName}</b> plan that will renew automatically
-                        for <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} /
-                        month*</b> starting from today unless you cancel it. We are about to charge the first payment
-                        equal
-                        to <b> ${numberMask(getTotalActual(activateInfoSelectedPlan.next_invoice.payment) / 100, 2)}</b> from
-                        your default payment method.
+                        You are subscribing to <b>{planName}</b> plan that will renew automatically for
+                        <b> ${numberMask(activateInfoSelectedPlan.next_invoice.payment.subtotal / 100, 2)} / month* </b>
+                        starting from <b>today</b> unless you cancel it. We are about to charge the first payment equal
+                        to
+                        <b> ${numberMask(getTotalActual(activateInfoSelectedPlan.next_invoice.payment) / 100, 2)} </b>
+                        from your default payment method.
+
                         <br/>
-                        Are you sure you want to continue?
+                        Do you wish to continue?
                     </p>
 
                 </div>
@@ -584,14 +620,12 @@ const PriceRow = ({couponInfo, activateInfoSelectedPlan, trial = false}) => {
                 month*
             </b>
             <p>
-                * subscription price is based on your 30-day ad spend and it may differ on your billing
-                date if ad spend changes drastically.
-                <a target={'_blank'} href="https://sponsoreds.com/pricing"> Learn more</a>
+                * subscription price is based on your 30-day ad spend and it may differ on your next billing date if ad
+                spend changes drastically. <a target={'_blank'} href="https://sponsoreds.com/pricing"> Learn more</a>
             </p>
         </div>
     </div>
 }
-
 
 export const getTotalActual = ({total = 0, rebate = 0, balance = 0}) => Math.max(total - rebate - balance, 0)
 
@@ -602,7 +636,6 @@ const PaymentMethodRow = ({data}) => <div className="row">
         <b>**** {data.next_invoice.payment.card_last_4}</b> : <><b>No card added</b>
             <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
 </div>
-
 
 const CloseWindowButton = ({onClick}) => <button className="btn icon close-button" onClick={onClick}>
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

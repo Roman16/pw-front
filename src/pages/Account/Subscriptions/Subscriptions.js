@@ -6,27 +6,24 @@ import {userService} from "../../../services/user.services"
 import {CancelSubscription, ActivateSubscription, ConnectAmazonAccount} from "./modalWindows"
 import {SubscriptionPlan} from './components/SubscriptionPlan'
 
-import {Link} from "react-router-dom"
 import {useDispatch, useSelector} from "react-redux"
 import {PageHeader} from "./components/PageHeader"
 import {CouponField} from "./components/CouponField"
 import {notification} from "../../../components/Notification"
-import {AddPaymentMethod} from "./modalWindows/AddPaymentMethod"
 import LoadingAmazonAccount from "../../../components/ModalWindow/PWWindows/LoadingAmazonAccountWindow"
-import ModalWindow from "../../../components/ModalWindow/ModalWindow"
-import _ from "lodash"
 import {userActions} from "../../../actions/user.actions"
 import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
+import {injectStripe} from "react-stripe-elements"
 
 
-const Subscriptions = () => {
+const Subscriptions = (props) => {
     const dispatch = useDispatch()
 
     const
         [scope, setScope] = useState('America'),
 
-        [subscriptionsState, setSubscriptionsState] = useState({
+        [subscriptionState, setSubscriptionState] = useState({
             active_subscription_type: null,
             subscriptions: {
                 optimization: {},
@@ -37,13 +34,9 @@ const Subscriptions = () => {
                 can_start_trial: false
             }
         }),
-        [activationInfo, setActivateInfo] = useState({
-            optimization: {},
-            analytics: {},
-            full: {},
-        }),
         [loadStateProcessing, setLoadStateProcessing] = useState(true),
         [activateProcessing, setActivateProcessing] = useState(false),
+        [retryProcessing, setRetryProcessing] = useState(false),
         [activateCouponProcessing, setActivateCouponProcessing] = useState(false),
         [selectedPlan, setSelectedPlan] = useState(),
         [activateType, setActivateType] = useState(),
@@ -70,30 +63,31 @@ const Subscriptions = () => {
         }
 
         try {
-            // const [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
-
-            const state = await userService.getSubscriptionsState(scope)
+            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
 
 
-            if (state.result[scope].error) {
+            if (state.result[scope].error || info.result[scope].error) {
                 openErrorWindow()
             } else {
-                const info = await userService.getActivateInfo({
-                    scope,
-                    coupon: state.result[scope].data.subscriptions[state.result[scope].data.active_subscription_type]?.coupon?.code
+                state = state.result[scope].data
+                info = info.result[scope].data
+
+                setSubscriptionState({
+                    ...state,
+                    subscriptions: {
+                        optimization: {...state.subscriptions.optimization, ...info.optimization},
+                        analytics: {...state.subscriptions.analytics, ...info.analytics},
+                        full: {...state.subscriptions.full, ...info.full},
+                        ...state.active_subscription_type ? {
+                            [state.active_subscription_type]: {
+                                ...state.subscriptions[state.active_subscription_type],
+                                next_invoice: state.subscriptions[state.active_subscription_type].upcoming_invoice,
+                                subscription_type: state.active_subscription_type
+                            }
+                        } : {}
+                    }
                 })
-
-                if (info.result[scope].error) {
-                    openErrorWindow()
-                } else {
-                    const currentState = state.result[scope].data,
-                        currentInfo = info.result[scope].data
-
-                    setSubscriptionsState(currentState)
-                    setActivateInfo(currentInfo)
-
-                    setActivateProcessing(false)
-                }
+                setActivateProcessing(false)
             }
         } catch (e) {
             console.log(e)
@@ -109,7 +103,7 @@ const Subscriptions = () => {
             await userService.activateSubscription({
                 scope,
                 type: selectedPlan,
-                coupon: coupon || subscriptionsState.subscriptions[subscriptionsState.active_subscription_type]?.coupon?.code || undefined
+                coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
             })
 
             getSubscriptionsState()
@@ -117,13 +111,36 @@ const Subscriptions = () => {
             setVisibleActivateSubscriptionsWindow(false)
             setSelectedPlan(undefined)
         } catch (e) {
-            if (e.response.data.result?.payment_intent_id) {
+            setVisibleActivateSubscriptionsWindow(false)
 
+            if (e.response.data.result?.status === 'requires_action') {
+                retryPaymentHandler(e.response.data.result)
             }
         }
     }
 
     const retryPaymentHandler = async (state) => {
+        setRetryProcessing(true)
+
+        try {
+            const res = await props.stripe.confirmCardPayment(state.client_secret, {payment_method: state.payment_method_id})
+
+            if (res.error) {
+                notification.error({title: res.error.message})
+            } else {
+                getSubscriptionsState()
+
+                setVisibleActivateSubscriptionsWindow(false)
+                setSelectedPlan(undefined)
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        setActivateProcessing(false)
+
+        setRetryProcessing(false)
     }
 
     const cancelSubscriptionHandler = async () => {
@@ -149,7 +166,7 @@ const Subscriptions = () => {
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({coupon, scope, type: subscriptionsState.active_subscription_type})
+                await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type})
                 notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
             }
@@ -163,7 +180,7 @@ const Subscriptions = () => {
         setSelectedPlan(plan)
         setActivateType(type)
 
-        setVisibleActivateSubscriptionsWindow(true)
+        if (type !== 'cancel') setVisibleActivateSubscriptionsWindow(true)
     }
 
     const closeActivateWindowHandler = () => {
@@ -175,7 +192,6 @@ const Subscriptions = () => {
         amazonIsConnected && getSubscriptionsState()
     }, [])
 
-
     return (<>
         {amazonIsConnected && <PageHeader user={user}/>}
 
@@ -183,22 +199,22 @@ const Subscriptions = () => {
             <h1>Subscription</h1>
 
             <PageDescription
-                state={subscriptionsState}
+                subscriptionState={subscriptionState}
 
-                activationInfo={activationInfo}
                 disabledPage={disabledPage}
             />
 
             <ul className="plans">
                 {subscriptionPlans.map(plan => <SubscriptionPlan
-                    disabledPage={disabledPage}
                     plan={plan}
+                    subscriptionState={subscriptionState}
+                    disabledPage={disabledPage}
+                    adSpend={user.ad_spend}
+
                     loadStateProcessing={loadStateProcessing}
-                    subscriptionsState={subscriptionsState}
-                    activationInfo={activationInfo}
+                    retryProcessing={retryProcessing}
                     processingCancelSubscription={processingCancelSubscription}
                     activateProcessing={activateProcessing}
-                    adSpend={user.ad_spend}
 
                     onSelect={selectPlanHandler}
                     onSetVisibleCancelWindow={setVisibleCancelSubscriptionsWindow}
@@ -206,7 +222,7 @@ const Subscriptions = () => {
                 />)}
             </ul>
 
-            {subscriptionsState.active_subscription_type && <div className="coupon-block">
+            {subscriptionState.active_subscription_type && <div className="coupon-block">
                 <p>Enter coupon</p>
 
                 <CouponField
@@ -219,8 +235,9 @@ const Subscriptions = () => {
         </section>
 
         <CancelSubscription
+            plan={selectedPlan}
             visible={visibleCancelSubscriptionsWindow}
-            state={subscriptionsState}
+            subscriptionState={subscriptionState}
             disableReactivateButtons={processingCancelSubscription}
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
@@ -232,8 +249,7 @@ const Subscriptions = () => {
             visible={visibleActivateSubscriptionsWindow}
             plan={selectedPlan}
             activateType={activateType}
-            state={subscriptionsState}
-            info={activationInfo}
+            subscriptionState={subscriptionState}
             scope={scope}
             processing={activateProcessing}
             adSpend={user.ad_spend}
@@ -251,7 +267,7 @@ const Subscriptions = () => {
         />
 
         <LoadingAmazonAccount
-            pathname={'/account/subscriptions'}
+            pathname={'/account/subscription'}
             visible={!importStatus.subscription?.required_parts_ready}
             importStatus={importStatus}
             lastName={user.user.last_name}
@@ -262,7 +278,7 @@ const Subscriptions = () => {
     </>)
 }
 
-export default Subscriptions
+export default injectStripe(Subscriptions)
 
 
 

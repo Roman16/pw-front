@@ -149,9 +149,11 @@
 
       .action-buttons {
         display: flex;
+        flex-direction: column;
 
         .btn {
-          margin: 0 10px;
+          width: 100%;
+          margin: 0 0 10px;
         }
       }
 
@@ -369,6 +371,19 @@
           .popular-label {
             left: 0;
           }
+        }
+      }
+
+      &.incomplete {
+        .col {
+          min-height: 18.571428571428573rem;
+        }
+
+        &.active-plan {
+          .col {
+            min-height: calc(18.571428571428573rem - 2px);
+          }
+
         }
       }
     }

@@ -8,12 +8,14 @@ import {getTotalActual} from "./ActivateSubscription"
 
 export const CancelSubscription = ({
                                        visible,
-                                       state,
-                                       onClose,
+                                       subscriptionState,
+                                       activationInfo,
+                                       disableReactivateButtons,
+                                       plan,
 
+                                       onClose,
                                        onCancelSubscription,
                                        onKeepSubscription,
-                                       disableReactivateButtons,
                                    }) => {
     const [actionType, setActionType] = useState(null)
 
@@ -21,31 +23,34 @@ export const CancelSubscription = ({
     const keepSubscriptionHandler = () => {
         setActionType('keep')
 
-        if (state.subscriptions[state.active_subscription_type].coupon || state.trial.trial_active) {
+        if (subscriptionState.subscriptions[subscriptionState.active_subscription_type].coupon || subscriptionState.trial.trial_active) {
             onClose()
         } else {
             onKeepSubscription()
         }
     }
 
+
     const windowDescription = () => {
-        if (state.trial.trial_active) {
+        if (subscriptionState.trial.trial_active) {
             return <p>You will have access to the software until the end of Free Trial.</p>
-        } else if (state.subscriptions[state.active_subscription_type].coupon) {
+        } else if (subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon) {
             return <p>
                 If you decide to cancel, you will have access to the software untill the end of this billing
-                cycle: {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
+                cycle: {moment(subscriptionState.subscriptions[subscriptionState.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
             </p>
         } else {
+            const upcomingInvoice = (subscriptionState.subscriptions[plan].status === 'incomplete' || subscriptionState.subscriptions[plan].status === 'past_due') ? activationInfo[plan].next_invoice : subscriptionState.subscriptions[subscriptionState.active_subscription_type].upcoming_invoice
+
             return <p>
                 Stay with Sponsoreds and get 30% discount for your subscription for the next three months. <br/>
                 <span>You will save:</span>
-                <b> ${numberMask(getTotalActual(state.subscriptions[state.active_subscription_type].upcoming_invoice.payment)  / 100 * 0.3 * 3, 2)} </b>
+                <b> ${numberMask(getTotalActual(upcomingInvoice.payment) / 100 * 0.3 * 3, 2)} </b>
                 that you can invest back into your Amazon business.
                 <br/>
                 <br/>
                 If you decide to cancel, you will have access to the software untill the end of this billing
-                cycle: {moment(state.subscriptions[state.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
+                cycle: {moment(upcomingInvoice.next_payment_attempt_date).format('DD MMM YYYY')}.
             </p>
         }
     }
