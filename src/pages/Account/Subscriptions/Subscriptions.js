@@ -130,8 +130,6 @@ const Subscriptions = (props) => {
             if (res.error) {
                 notification.error({title: res.error.message})
             } else {
-                getSubscriptionsState()
-
                 setVisibleActivateSubscriptionsWindow(false)
                 setSelectedPlan(undefined)
             }
@@ -139,9 +137,9 @@ const Subscriptions = (props) => {
         } catch (e) {
             console.log(e)
         }
+        getSubscriptionsState()
 
         setActivateProcessing(false)
-
         setRetryProcessing(false)
     }
 
