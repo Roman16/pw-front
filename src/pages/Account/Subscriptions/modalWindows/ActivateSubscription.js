@@ -341,7 +341,7 @@ export const ActivateSubscription = ({
                     <p>You will not be charged during your Free trial period</p>
 
                     <button className="btn default" onClick={activateHandler}
-                            disabled={processing || !activateInfoSelectedPlan.next_invoice.payment.card_last_4}>
+                            disabled={processing}>
                         Confirm
 
                         {processing && <Spin size={'small'}/>}

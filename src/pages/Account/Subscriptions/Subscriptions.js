@@ -16,6 +16,8 @@ import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
 import {injectStripe} from "react-stripe-elements"
 
+const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
+
 
 const Subscriptions = (props) => {
     const dispatch = useDispatch()
@@ -238,10 +240,11 @@ const Subscriptions = (props) => {
             plan={selectedPlan || subscriptionState.active_subscription_type}
             visible={visibleCancelSubscriptionsWindow}
             subscriptionState={subscriptionState}
-            disableReactivateButtons={processingCancelSubscription}
+            disableReactivateButtons={processingCancelSubscription || activateCouponProcessing}
 
             onClose={() => setVisibleCancelSubscriptionsWindow(false)}
             onCancelSubscription={cancelSubscriptionHandler}
+            onKeepSubscription={() => getCouponInfo(cancelCoupon)}
         />
 
         {selectedPlan &&

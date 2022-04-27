@@ -39,11 +39,10 @@ export const CancelSubscription = ({
                 cycle: {moment(subscriptionState.subscriptions[subscriptionState.active_subscription_type].upcoming_invoice.next_payment_attempt_date).format('DD MMM YYYY')}.
             </p>
         } else {
-
             return <p>
                 Stay with Sponsoreds and get 30% discount for your subscription for the next three months. <br/>
                 <span>You will save:</span>
-                <b> ${numberMask(getTotalActual(subscriptionState.subscriptions[plan].next_invoice.payment) / 100 * 0.3 * 3, 2)} </b>
+                <b> ${numberMask(subscriptionState.subscriptions[plan].next_invoice.payment.subtotal / 100 * 0.3 * 3, 2)} </b>
                 that you can invest back into your Amazon business.
                 <br/>
                 <br/>
