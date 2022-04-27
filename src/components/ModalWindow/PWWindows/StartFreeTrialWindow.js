@@ -11,7 +11,7 @@ const StartFreeTrialWindow = ({visible}) => {
     const [processing, setProcessing] = useState(false)
 
     const handleOk = async () => {
-        history.push('/account/subscription')
+        history.push('/account/subscriptions')
     }
 
     useEffect(() => {

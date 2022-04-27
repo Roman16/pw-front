@@ -267,7 +267,7 @@ const Subscriptions = (props) => {
         />
 
         <LoadingAmazonAccount
-            pathname={'/account/subscription'}
+            pathname={'/account/subscriptions'}
             visible={!importStatus.subscription?.required_parts_ready}
             importStatus={importStatus}
             lastName={user.user.last_name}

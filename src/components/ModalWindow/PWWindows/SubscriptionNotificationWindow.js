@@ -25,7 +25,7 @@ const SubscriptionNotificationWindow = ({visible}) => {
                 feature of Sponsoreds Software.
             </p>
 
-            <Link to={'/account/subscription'} className={'btn default'}>
+            <Link to={'/account/subscriptions'} className={'btn default'}>
                 See Subscription Plans
             </Link>
         </ModalWindow>

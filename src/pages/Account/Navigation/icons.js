@@ -21,7 +21,7 @@ export const icons = {
         '<path d="M3.2002 8.80078H9.37162M3.2002 11.2289H7.05734" stroke="#312C51" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>\n' +
         '</g>\n' +
         '</svg>\n',
-    'subscription': '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+    'subscriptions': '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
         '<mask id="mask0_20457:62702"  maskUnits="userSpaceOnUse" x="0" y="0" width="16" height="16">\n' +
         '<rect width="16" height="16" fill="#C4C4C4"/>\n' +
         '</mask>\n' +

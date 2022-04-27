@@ -33,8 +33,8 @@ const menu = [
         link: 'billing-information',
     },
     {
-        title: 'Subscription',
-        link: 'subscription',
+        title: 'Subscriptions',
+        link: 'subscriptions',
     },
     {
         title: 'Billing History',
@@ -86,7 +86,7 @@ const Navigation = () => {
                 <Route exact path="/account/api-connections" component={ApiConnection}/>
                 <StripeProvider apiKey={stripeKey}>
                     <Elements>
-                        <Route exact path="/account/subscription" component={Subscriptions}/>
+                        <Route exact path="/account/subscriptions" component={Subscriptions}/>
                     </Elements>
                 </StripeProvider>
 
