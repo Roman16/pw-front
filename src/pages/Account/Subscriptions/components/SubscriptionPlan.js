@@ -140,16 +140,14 @@ const ActionButton = ({
                             }}
                         />
                     </div>
-                } else if(subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_payment_method' && subscriptionStateCurrentPlan.incomplete_payment.error_code === "payment_intent_authentication_failure") {
+                } else if (subscriptionStateCurrentPlan.next_invoice.payment.card_last_4 === null) {
                     return <div className="action-buttons">
-                        <Button
-                            processing={retryProcessing}
-                            processingSpin
-                            buttonText={'Retry Payment'}
-                            planKey={plan.key}
-                            onClick={() => onRetryPayment(undefined)}
-                        />
-
+                        <Link
+                            to={'/account/billing-information'}
+                            className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                        >
+                            Retry Payment
+                        </Link>
                         <Button
                             processing={processingCancelSubscription}
                             buttonText={'Cancel'}
@@ -159,14 +157,16 @@ const ActionButton = ({
                             }}
                         />
                     </div>
-                } else if (subscriptionStateCurrentPlan.next_invoice.payment.card_last_4 === null) {
+                } else if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_payment_method' && subscriptionStateCurrentPlan.incomplete_payment.error_code === "payment_intent_authentication_failure") {
                     return <div className="action-buttons">
-                        <Link
-                            to={'/account/billing-information'}
-                            className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                        >
-                            Retry Payment
-                        </Link>
+                        <Button
+                            processing={retryProcessing}
+                            processingSpin
+                            buttonText={'Retry Payment'}
+                            planKey={plan.key}
+                            onClick={() => onRetryPayment(undefined)}
+                        />
+
                         <Button
                             processing={processingCancelSubscription}
                             buttonText={'Cancel'}
@@ -261,7 +261,7 @@ const ActionButton = ({
     }
 }
 
-const Button = ({processing, processingSpin,planKey, onClick, buttonText}) => <button
+const Button = ({processing, processingSpin, planKey, onClick, buttonText}) => <button
     disabled={processing}
     className={`btn ${buttonText === 'Cancel' ? 'grey' : planKey === 'full' ? 'default' : 'blue'}`}
     onClick={onClick}
