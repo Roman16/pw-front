@@ -98,7 +98,7 @@ const Subscriptions = (props) => {
             console.log(e)
             openErrorWindow()
         }
-
+        setActivateProcessing(false)
         setLoadStateProcessing(false)
     }
 
@@ -116,6 +116,7 @@ const Subscriptions = (props) => {
             dispatch(userActions.getPersonalUserInfo())
             setVisibleActivateSubscriptionsWindow(false)
             setSelectedPlan(undefined)
+            setActivateProcessing(false)
         } catch (e) {
             setVisibleActivateSubscriptionsWindow(false)
 
@@ -125,7 +126,6 @@ const Subscriptions = (props) => {
         }
 
         setRetryProcessing(false)
-        setActivateProcessing(false)
     }
 
     const retryPaymentHandler = async (state) => {

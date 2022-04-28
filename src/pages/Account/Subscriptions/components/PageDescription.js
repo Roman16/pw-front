@@ -47,8 +47,8 @@ export const PageDescription = ({subscriptionState, disabledPage}) => {
                 There is a problem with your current subscription and you may lose access to the software, check details
                 in <b>About my subscription</b> block.
                 <br/>
-                You are currently on a {planName} plan that renews automatically each month unless canceled. To view
-                your invoices, <Link to={'/account/billing-history'}>see billing history</Link>.
+                You are currently on a {planName} plan that renews automatically each month unless canceled. <br/>
+                To view your invoices, <Link to={'/account/billing-history'}>see billing history</Link>.
             </p>
         } else if (subscriptionState.trial.trial_active) {
             return <p className="page-description">
