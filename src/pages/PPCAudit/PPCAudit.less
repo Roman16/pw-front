@@ -3,10 +3,10 @@
   display: flex;
 
   .page-workspace {
-    min-width: 900px;
     flex: 1;
     display: grid;
     position: relative;
+    overflow: auto;
 
     .scanning-processing-status {
       grid-area: processingStatus;
@@ -29,6 +29,7 @@
       grid-template-columns: 43.3% 1fr;
       grid-template-rows: max-content max-content 1fr;
       grid-gap: 10px;
+      min-width: 900px;
     }
 
     .route-loader {

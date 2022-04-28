@@ -43,7 +43,7 @@ export const SubscriptionPlan = ({
     const hasIncomplete = [subscriptionState.subscriptions['optimization'], subscriptionState.subscriptions['analytics'], subscriptionState.subscriptions['full']].some(i => i?.status === 'incomplete' || i?.status === 'past_due')
 
     return (
-        <li className={`${(isActivePlan || subscriptionStateCurrentPlan.status === 'incomplete') ? 'active-plan' : ''} activated-${activeSubscriptionType}-plan ${hasIncomplete ? 'incomplete' : ''}`}>
+        <li className={`${isActivePlan ? 'active-plan' : ''} activated-${activeSubscriptionType}-plan ${hasIncomplete ? 'incomplete' : ''}`}>
             {plan.key === 'full' && <div className="popular-label">most popular</div>}
             {(isActivePlan || subscriptionStateCurrentPlan.status === 'incomplete') && <ActivePlanLabel/>}
             <div className="col">
@@ -85,19 +85,18 @@ export const SubscriptionPlan = ({
                 </li>)}
             </ul>
 
-            {(isActivePlan) && <ActivePlanDetails
-                subscriptionState={subscriptionState}
-                subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
-                adSpend={adSpend}
-            />}
 
             {(subscriptionStateCurrentPlan.status === 'on_grace_period' ||
                 subscriptionStateCurrentPlan.status === 'incomplete' ||
-                subscriptionStateCurrentPlan.status === 'past_due') &&
-            <CanceledPlanDetails
-                adSpend={adSpend}
-                subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
-            />}
+                subscriptionStateCurrentPlan.status === 'past_due') ?
+                <CanceledPlanDetails
+                    adSpend={adSpend}
+                    subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
+                /> : (isActivePlan) ? <ActivePlanDetails
+                    subscriptionState={subscriptionState}
+                    subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
+                    adSpend={adSpend}
+                /> : ''}
         </li>)
 }
 
@@ -119,7 +118,84 @@ const ActionButton = ({
 
     if (activeSubscriptionType) {
         if (activeSubscriptionType === plan.key) {
-            if (subscriptionStateActivePlan.status === 'trialing' ||
+            if (subscriptionStateCurrentPlan.status === 'incomplete' ||
+                subscriptionStateCurrentPlan.status === 'past_due') {
+                if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_action') {
+                    return <div className="action-buttons">
+                        <Button
+                            processing={retryProcessing}
+                            processingSpin
+                            buttonText={'Retry Payment'}
+                            planKey={plan.key}
+
+                            onClick={() => onRetryPayment(subscriptionStateCurrentPlan.incomplete_payment)}
+                        />
+
+                        <Button
+                            processing={processingCancelSubscription}
+                            buttonText={'Cancel'}
+                            onClick={() => {
+                                onSelect(plan.key, 'cancel')
+                                onSetVisibleCancelWindow(true)
+                            }}
+                        />
+                    </div>
+                } else if(subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_payment_method' && subscriptionStateCurrentPlan.incomplete_payment.error_code === "payment_intent_authentication_failure") {
+                    return <div className="action-buttons">
+                        <Button
+                            processing={retryProcessing}
+                            processingSpin
+                            buttonText={'Retry Payment'}
+                            planKey={plan.key}
+                            onClick={() => onRetryPayment(undefined)}
+                        />
+
+                        <Button
+                            processing={processingCancelSubscription}
+                            buttonText={'Cancel'}
+                            onClick={() => {
+                                onSelect(plan.key, 'cancel')
+                                onSetVisibleCancelWindow(true)
+                            }}
+                        />
+                    </div>
+                } else if (subscriptionStateCurrentPlan.next_invoice.payment.card_last_4 === null) {
+                    return <div className="action-buttons">
+                        <Link
+                            to={'/account/billing-information'}
+                            className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                        >
+                            Retry Payment
+                        </Link>
+                        <Button
+                            processing={processingCancelSubscription}
+                            buttonText={'Cancel'}
+                            onClick={() => {
+                                onSelect(plan.key, 'cancel')
+                                onSetVisibleCancelWindow(true)
+                            }}
+                        />
+                    </div>
+                } else {
+                    return <div className="action-buttons">
+                        <button
+                            id={'intercom-chat-launcher'}
+                            className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
+                        >
+                            Help Center
+                        </button>
+
+                        <Button
+                            processing={processingCancelSubscription}
+                            buttonText={'Cancel'}
+                            onClick={() => {
+                                onSelect(plan.key, 'cancel')
+                                onSetVisibleCancelWindow(true)
+                            }}
+                        />
+                    </div>
+                }
+            } else if (subscriptionStateActivePlan.status === 'trialing' ||
                 subscriptionStateActivePlan.status === 'recurring' ||
                 subscriptionStateActivePlan.status === 'scheduled') {
                 return <Button
@@ -146,52 +222,7 @@ const ActionButton = ({
             />
         }
     } else {
-        if (subscriptionStateCurrentPlan.status === 'incomplete' ||
-            subscriptionStateCurrentPlan.status === 'past_due') {
-            if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_action') {
-                return <div className="action-buttons">
-                    <Button
-                        processing={retryProcessing}
-                        buttonText={'Retry Payment'}
-                        planKey={plan.key}
-                        onClick={() => onRetryPayment(subscriptionStateCurrentPlan.incomplete_payment)}
-                    />
-
-                    <Button
-                        processing={processingCancelSubscription}
-                        buttonText={'Cancel'}
-                        onClick={() => {
-                            onSelect(plan.key, 'cancel')
-                            onSetVisibleCancelWindow(true)
-                        }}
-                    />
-                </div>
-            } else if (subscriptionStateCurrentPlan.incomplete_payment.payment_method_id === null) {
-                return <div className="action-buttons">
-                    <Link
-                        to={'/account/billing-information'}
-                        className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                    >
-                        Retry Payment
-                    </Link>
-                    <Button
-                        processing={processingCancelSubscription}
-                        buttonText={'Cancel'}
-                        onClick={() => {
-                            onSelect(plan.key, 'cancel')
-                            onSetVisibleCancelWindow(true)
-                        }}
-                    />
-                </div>
-            } else {
-                return <button
-                    id={'intercom-chat-launcher'}
-                    className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                >
-                    Help Center
-                </button>
-            }
-        } else if (subscriptionStateCurrentPlan.expected_action === 'resume_subscription') {
+        if (subscriptionStateCurrentPlan.expected_action === 'resume_subscription') {
             return <Button
                 processing={activateProcessing}
                 buttonText={'Resume'}
@@ -230,12 +261,14 @@ const ActionButton = ({
     }
 }
 
-const Button = ({processing, planKey, onClick, buttonText}) => <button
+const Button = ({processing, processingSpin,planKey, onClick, buttonText}) => <button
     disabled={processing}
     className={`btn ${buttonText === 'Cancel' ? 'grey' : planKey === 'full' ? 'default' : 'blue'}`}
     onClick={onClick}
 >
     {buttonText}
+
+    {processing && processingSpin && <Spin size={'small'}/>}
 </button>
 
 

@@ -70,6 +70,9 @@ const Subscriptions = (props) => {
 
             if (state.result[scope].error || info.result[scope].error) {
                 openErrorWindow()
+            } else if ([state.result[scope].data.subscriptions.analytics, state.result[scope].data.subscriptions.optimization, state.result[scope].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing')) {
+                getSubscriptionsState()
+                return
             } else {
                 state = state.result[scope].data
                 info = info.result[scope].data
@@ -80,7 +83,7 @@ const Subscriptions = (props) => {
                         optimization: {...state.subscriptions.optimization, ...info.optimization},
                         analytics: {...state.subscriptions.analytics, ...info.analytics},
                         full: {...state.subscriptions.full, ...info.full},
-                        ...state.active_subscription_type ? {
+                        ...(state.active_subscription_type ) ? {
                             [state.active_subscription_type]: {
                                 ...state.subscriptions[state.active_subscription_type],
                                 next_invoice: state.subscriptions[state.active_subscription_type].upcoming_invoice,
@@ -95,16 +98,17 @@ const Subscriptions = (props) => {
             console.log(e)
             openErrorWindow()
         }
+
         setLoadStateProcessing(false)
     }
 
-    const subscribeHandler = async (coupon) => {
+    const subscribeHandler = async (coupon, plan) => {
         setActivateProcessing(true)
 
         try {
             await userService.activateSubscription({
                 scope,
-                type: selectedPlan,
+                type: plan || selectedPlan,
                 coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
             })
 
@@ -119,28 +123,35 @@ const Subscriptions = (props) => {
                 retryPaymentHandler(e.response.data.result)
             }
         }
+
+        setRetryProcessing(false)
+        setActivateProcessing(false)
     }
 
     const retryPaymentHandler = async (state) => {
         setRetryProcessing(true)
 
-        try {
-            const res = await props.stripe.confirmCardPayment(state.client_secret, {payment_method: state.payment_method_id})
+        if(state) {
+            try {
+                const res = await props.stripe.confirmCardPayment(state.client_secret, {payment_method: state.payment_method_id})
 
-            if (res.error) {
-                notification.error({title: res.error.message})
-            } else {
-                setVisibleActivateSubscriptionsWindow(false)
-                setSelectedPlan(undefined)
+                if (res.error) {
+                    notification.error({title: res.error.message})
+                } else {
+                    setVisibleActivateSubscriptionsWindow(false)
+                    setSelectedPlan(undefined)
+                }
+
+            } catch (e) {
+                console.log(e)
             }
 
-        } catch (e) {
-            console.log(e)
-        }
-        getSubscriptionsState()
+            getSubscriptionsState()
 
-        setActivateProcessing(false)
-        setRetryProcessing(false)
+            setActivateProcessing(false)
+        } else {
+            subscribeHandler(undefined, subscriptionState.active_subscription_type)
+        }
     }
 
     const cancelSubscriptionHandler = async () => {
