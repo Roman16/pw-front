@@ -15,6 +15,7 @@ import {userActions} from "../../../actions/user.actions"
 import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
 import {injectStripe} from "react-stripe-elements"
+import {history} from "../../../utils/history"
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
@@ -70,7 +71,7 @@ const Subscriptions = (props) => {
 
             if (state.result[scope].error || info.result[scope].error) {
                 openErrorWindow()
-            } else if ([state.result[scope].data.subscriptions.analytics, state.result[scope].data.subscriptions.optimization, state.result[scope].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing')) {
+            } else if ([state.result[scope].data.subscriptions.analytics, state.result[scope].data.subscriptions.optimization, state.result[scope].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing' || i?.incomplete_payment?.status === 'succeeded')) {
                 getSubscriptionsState()
                 return
             } else {
@@ -83,7 +84,7 @@ const Subscriptions = (props) => {
                         optimization: {...state.subscriptions.optimization, ...info.optimization},
                         analytics: {...state.subscriptions.analytics, ...info.analytics},
                         full: {...state.subscriptions.full, ...info.full},
-                        ...(state.active_subscription_type ) ? {
+                        ...(state.active_subscription_type) ? {
                             [state.active_subscription_type]: {
                                 ...state.subscriptions[state.active_subscription_type],
                                 next_invoice: state.subscriptions[state.active_subscription_type].upcoming_invoice,
@@ -100,6 +101,7 @@ const Subscriptions = (props) => {
         }
         setActivateProcessing(false)
         setLoadStateProcessing(false)
+        setRetryProcessing(false)
     }
 
     const subscribeHandler = async (coupon, plan) => {
@@ -122,6 +124,8 @@ const Subscriptions = (props) => {
 
             if (e.response.data.result?.status === 'requires_action') {
                 retryPaymentHandler(e.response.data.result)
+            } else {
+                setActivateProcessing(false)
             }
         }
 
@@ -131,26 +135,34 @@ const Subscriptions = (props) => {
     const retryPaymentHandler = async (state) => {
         setRetryProcessing(true)
 
-        if(state) {
+        if (state.status === 'requires_payment_method' && state.error_code === null && subscriptionState.subscriptions[subscriptionState.active_subscription_type].next_invoice?.payment?.card_last_4 === null) {
+            history.push('/account/billing-information')
+            notification.error({title: 'Add card first'})
+        } else if (state.status === 'requires_action') {
             try {
-                const res = await props.stripe.confirmCardPayment(state.client_secret, {payment_method: state.payment_method_id})
+                const res = await props.stripe.confirmCardPayment(state.client_secret)
 
                 if (res.error) {
                     notification.error({title: res.error.message})
-                } else {
-                    setVisibleActivateSubscriptionsWindow(false)
-                    setSelectedPlan(undefined)
                 }
-
             } catch (e) {
                 console.log(e)
             }
 
             getSubscriptionsState()
-
-            setActivateProcessing(false)
         } else {
-            subscribeHandler(undefined, subscriptionState.active_subscription_type)
+            try {
+                const res = await userService.retryPayment({
+                    type: subscriptionState.active_subscription_type,
+                    scope
+                })
+
+                retryPaymentHandler(res.result)
+            } catch (e) {
+                if (e.response.data.result?.status === 'requires_action') {
+                    retryPaymentHandler(e.response.data.result)
+                }
+            }
         }
     }
 

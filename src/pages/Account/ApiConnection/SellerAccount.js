@@ -3,7 +3,7 @@ import USAFlag from '../../../assets/img/icons/us-flag.png'
 import {Spin} from "antd"
 import sectionIcon from '../../../assets/img/account/api-connection-icon.svg'
 
-const SellerAccount = ({account, sellerName, onDisconnect, sellerId, deleteProcessing, onReconnect}) => {
+const SellerAccount = ({account, sellerName, onDisconnect, accountName, sellerId, deleteProcessing, onReconnect}) => {
 
     const Actions = ({account, type}) => {
         if (account[`amazon_${type}`].id) {
@@ -81,7 +81,7 @@ const SellerAccount = ({account, sellerName, onDisconnect, sellerId, deleteProce
                         <img src={sectionIcon} alt="" className={'icon'}/>
 
                         <div className="section-description">
-                            <h3>Seller Name: <span>{sellerName}<img src={USAFlag} alt=""/></span></h3>
+                            <h3>{accountName ? 'Account alias' : 'Seller id'}: <span>{accountName || sellerId}<img src={USAFlag} alt=""/></span></h3>
                             <p>Here you can see current status of MWS Authorization and Advertising API. </p>
                         </div>
                     </div>

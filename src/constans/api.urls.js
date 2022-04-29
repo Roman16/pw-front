@@ -32,6 +32,7 @@ export const userUrls = {
     couponInfo: 'user/account/subscription/coupon/check',
     couponActivate: 'user/account/subscription/coupon/apply',
     activateSubscription: 'user/account/subscription/activate',
+    retryPayment: 'user/account/subscription/payment/retry',
 
 
     subscriptionList: `user/account/subscription/list`,

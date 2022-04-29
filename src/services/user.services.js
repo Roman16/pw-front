@@ -62,7 +62,8 @@ export const userService = {
     getActivateInfo,
     getCouponInfo,
     activateCoupon,
-    activateSubscription
+    activateSubscription,
+    retryPayment
 }
 
 function login(user) {
@@ -224,6 +225,11 @@ function getSubscriptionsState(scope) {
 function activateSubscription(data) {
     return api('post', userUrls.activateSubscription, data)
 }
+
+function retryPayment(data) {
+    return api('post', userUrls.retryPayment, data)
+}
+
 function cancelSubscription(data) {
     return api('post', userUrls.cancelSubscription, data)
 }
