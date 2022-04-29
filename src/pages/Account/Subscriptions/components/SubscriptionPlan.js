@@ -5,7 +5,6 @@ import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import {getTotalActual} from "../modalWindows"
 import {CouponDetails} from "./CouponField"
-import {Link} from "react-router-dom"
 
 const defaultPrice = {
     optimization: {
@@ -139,63 +138,6 @@ const ActionButton = ({
                         }}
                     />
                 </div>
-
-                // if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_action') {
-                // } else if (subscriptionStateCurrentPlan.next_invoice.payment.card_last_4 === null) {
-                //     return <div className="action-buttons">
-                //         <Link
-                //             to={'/account/billing-information'}
-                //             className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                //         >
-                //             Retry Payment
-                //         </Link>
-                //         <Button
-                //             processing={processingCancelSubscription}
-                //             buttonText={'Cancel'}
-                //             onClick={() => {
-                //                 onSelect(plan.key, 'cancel')
-                //                 onSetVisibleCancelWindow(true)
-                //             }}
-                //         />
-                //     </div>
-                // } else if (subscriptionStateCurrentPlan.incomplete_payment.status === 'requires_payment_method' && subscriptionStateCurrentPlan.incomplete_payment.error_code === "payment_intent_authentication_failure") {
-                //     return <div className="action-buttons">
-                //         <Button
-                //             processing={retryProcessing}
-                //             processingSpin
-                //             buttonText={'Retry Payment'}
-                //             planKey={plan.key}
-                //             onClick={() => onRetryPayment(undefined)}
-                //         />
-                //
-                //         <Button
-                //             processing={processingCancelSubscription}
-                //             buttonText={'Cancel'}
-                //             onClick={() => {
-                //                 onSelect(plan.key, 'cancel')
-                //                 onSetVisibleCancelWindow(true)
-                //             }}
-                //         />
-                //     </div>
-                // } else {
-                //     return <div className="action-buttons">
-                //         <button
-                //             id={'intercom-chat-launcher'}
-                //             className={`btn ${plan.key === 'full' ? 'default' : 'blue'}`}
-                //         >
-                //             Help Center
-                //         </button>
-                //
-                //         <Button
-                //             processing={processingCancelSubscription}
-                //             buttonText={'Cancel'}
-                //             onClick={() => {
-                //                 onSelect(plan.key, 'cancel')
-                //                 onSetVisibleCancelWindow(true)
-                //             }}
-                //         />
-                //     </div>
-                // }
             } else if (subscriptionStateActivePlan.status === 'trialing' ||
                 subscriptionStateActivePlan.status === 'recurring' ||
                 subscriptionStateActivePlan.status === 'scheduled') {

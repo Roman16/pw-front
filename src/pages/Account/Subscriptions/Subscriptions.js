@@ -133,33 +133,33 @@ const Subscriptions = (props) => {
     }
 
     const retryPaymentHandler = async (state) => {
-        setRetryProcessing(true)
+        if (state) {
+            setRetryProcessing(true)
 
-        if (state.status === 'requires_payment_method' && state.error_code === null && subscriptionState.subscriptions[subscriptionState.active_subscription_type].next_invoice?.payment?.card_last_4 === null) {
-            history.push('/account/billing-information')
-            notification.error({title: 'Add card first'})
-        } else if (state.status === 'requires_action') {
-            try {
-                const res = await props.stripe.confirmCardPayment(state.client_secret)
+            if (state.status === 'requires_payment_method' && state.error_code === null && subscriptionState.subscriptions[subscriptionState.active_subscription_type].next_invoice?.payment?.card_last_4 === null) {
+                history.push('/account/billing-information')
+                notification.error({title: 'Add card first'})
+            } else if (state.status === 'requires_action') {
+                try {
+                    const res = await props.stripe.confirmCardPayment(state.client_secret)
 
-                if (res.error) {
-                    notification.error({title: res.error.message})
+                    if (res.error) {
+                        notification.error({title: res.error.message})
+                    }
+                } catch (e) {
+                    console.log(e)
                 }
-            } catch (e) {
-                console.log(e)
-            }
 
-            getSubscriptionsState()
-        } else {
-            try {
-                const res = await userService.retryPayment({
-                    type: subscriptionState.active_subscription_type,
-                    scope
-                })
+                getSubscriptionsState()
+            } else {
+                try {
+                    const res = await userService.retryPayment({
+                        type: subscriptionState.active_subscription_type,
+                        scope
+                    })
 
-                retryPaymentHandler(res.result)
-            } catch (e) {
-                if (e.response.data.result?.status === 'requires_action') {
+                    retryPaymentHandler(res.result)
+                } catch (e) {
                     retryPaymentHandler(e.response.data.result)
                 }
             }
