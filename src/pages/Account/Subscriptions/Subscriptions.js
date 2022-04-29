@@ -160,7 +160,9 @@ const Subscriptions = (props) => {
 
                     retryPaymentHandler(res.result)
                 } catch (e) {
-                    retryPaymentHandler(e.response.data.result)
+                    if (e.response.data.result.status === 'requires_action') {
+                        retryPaymentHandler(e.response.data.result)
+                    }
                 }
             }
         }
