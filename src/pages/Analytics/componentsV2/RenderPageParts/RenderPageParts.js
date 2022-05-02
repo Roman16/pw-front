@@ -405,11 +405,7 @@ const RenderPageParts = (props) => {
     const getPreviousPeriodData = async (idList, paginationParams) => {
 
         if (location === 'overview') {
-            if (productType === 'parent') {
-                location = 'products'
-            } else {
-                location = 'products-parents'
-            }
+            location = 'products'
         }
 
         const queryParams = queryString.parse(history.location.search)
