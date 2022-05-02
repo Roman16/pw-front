@@ -59,6 +59,7 @@ const Subscriptions = (props) => {
 
     const getSubscriptionsState = async () => {
         setLoadStateProcessing(true)
+        setVisibleActivateSubscriptionsWindow(false)
 
         const openErrorWindow = () => {
             setVisibleSomethingWrongWindow(true)
@@ -120,12 +121,11 @@ const Subscriptions = (props) => {
             setSelectedPlan(undefined)
             setActivateProcessing(false)
         } catch (e) {
-            setVisibleActivateSubscriptionsWindow(false)
-
             if (e.response.data.result?.status === 'requires_action') {
                 retryPaymentHandler(e.response.data.result)
             } else {
                 setActivateProcessing(false)
+                setVisibleActivateSubscriptionsWindow(false)
             }
         }
 
