@@ -194,10 +194,12 @@ const Subscriptions = (props) => {
                 await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type})
                 notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
+                setVisibleCancelSubscriptionsWindow(false)
             }
         } catch (e) {
             console.log(e)
         }
+
         setActivateCouponProcessing(false)
     }
 
