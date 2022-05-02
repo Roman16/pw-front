@@ -406,9 +406,9 @@ const RenderPageParts = (props) => {
 
         if (location === 'overview') {
             if (productType === 'parent') {
-                location = 'products-parents'
-            } else {
                 location = 'products'
+            } else {
+                location = 'products-parents'
             }
         }
 
