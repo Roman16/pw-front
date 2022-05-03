@@ -68,8 +68,6 @@ const Header = ({location}) => {
         }
     }, [history.location])
 
-    console.log(location.pathname)
-
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>

@@ -403,8 +403,7 @@ const RenderPageParts = (props) => {
     })
 
     const getPreviousPeriodData = async (idList, paginationParams) => {
-
-        if (location === 'overview') {
+        if (history.location.pathname === '/analytics/overview' && location === 'products-parents') {
             location = 'products'
         }
 
@@ -441,6 +440,7 @@ const RenderPageParts = (props) => {
                 //         value: queryParams.productId
                 //     })
                 // }
+
 
                 const res = await analyticsServices.fetchPageData(location, {
                     sorterColumn: localSorterColumn,
