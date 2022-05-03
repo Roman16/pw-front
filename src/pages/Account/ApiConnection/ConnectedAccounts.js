@@ -2,12 +2,12 @@ import React from "react"
 import USFlag from '../../../assets/img/icons/us-flag.png'
 import {history} from "../../../utils/history"
 
-const ConnectedAccounts = ({sellerName, accountLinks}) => {
+const ConnectedAccounts = ({accountLinks, accountName, sellerId}) => {
     return (<ul>
         {(accountLinks[0].amazon_mws.is_connected === true || accountLinks[0].amazon_ppc.is_connected === true) &&
         <li className={'active'}>
             <div className="card-header">
-                <span title={sellerName}>{sellerName}</span>
+                <span title={accountName || sellerId}>{accountName || sellerId}</span>
 
                 {accountLinks.some(i => i.amazon_mws.is_connected === false || i.amazon_ppc.is_connected === false) &&
                 <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">

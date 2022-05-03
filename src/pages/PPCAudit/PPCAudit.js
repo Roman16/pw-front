@@ -300,7 +300,7 @@ const PPCAudit = () => {
     }
 
     useEffect(() => {
-         getProducts()
+        getProducts()
     }, [productsRequestParams])
 
     useEffect(() => {
@@ -308,7 +308,7 @@ const PPCAudit = () => {
     }, [filters, sorterColumn, issuesRequestParams])
 
     useEffect(() => {
-        return(() => {
+        return (() => {
             clearTimeout(timeoutId)
         })
     }, [])

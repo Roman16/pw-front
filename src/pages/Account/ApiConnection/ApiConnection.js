@@ -76,8 +76,9 @@ const ApiConnection = () => {
         <Fragment>
             <div className="api-connection">
                 <ConnectedAccounts
-                    sellerName={user.user.name}
                     accountLinks={user.account_links}
+                    accountName={user.default_accounts.amazon_mws.account_name}
+                    sellerId={user.default_accounts.amazon_mws.seller_id}
                 />
 
                 {(user.account_links[0].amazon_mws.is_connected === true || user.account_links[0].amazon_ppc.is_connected === true) &&
@@ -88,6 +89,8 @@ const ApiConnection = () => {
                                 key={`account_${index}`}
                                 sellerName={user.user.name}
                                 account={account}
+
+                                accountName={user.default_accounts.amazon_mws.account_name}
                                 sellerId={user.default_accounts.amazon_mws.seller_id}
                                 onDisconnect={disconnectHandler}
                                 onReconnect={reconnectHandler}
