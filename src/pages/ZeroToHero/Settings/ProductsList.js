@@ -9,9 +9,13 @@ import {useDispatch} from "react-redux"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
 import noImage from '../../../assets/img/no-image-available.svg'
+import {Spin} from "antd"
 
 
-const ProductItem = ({product, openedProduct, onOpenVariations}) => {
+const DEV = process.env.REACT_APP_ENV !== 'production'
+
+
+const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) => {
     return (
         <div className='product-block'>
             <div className="image">
@@ -135,7 +139,9 @@ const jobStatus = ({job}) => {
     }
 }
 
-const jobActions = ({job}) => {
+const jobActions = (item, onDeleteJob, deleteProcessing) => {
+    const {job} = item
+
     if (job) {
         const status = job.status
 
@@ -163,6 +169,14 @@ const jobActions = ({job}) => {
                             onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
                         Pay & Upload
                     </button>
+
+                    <button className={'sds-btn grey'}
+                            disabled={deleteProcessing}
+                            onClick={() => onDeleteJob(job.id)}>
+                        Delete
+
+                        {deleteProcessing && <Spin size={'small'}/>}
+                    </button>
                 </div>
             )
         } else if (job.status === 'PAYMENT_IN_PROGRESS') {
@@ -185,7 +199,7 @@ const jobActions = ({job}) => {
 
 }
 
-const ProductsList = ({productsList, selectedTab, paginationOptions, processing, totalSize, onChangePagination}) => {
+const ProductsList = ({productsList, selectedTab, paginationOptions, processing, deleteProcessing, totalSize, onChangePagination, onDeleteJob}) => {
     const [openedProduct, setOpenedProduct] = useState(null)
 
     const openProductVariationsHandler = (id) => {
@@ -361,7 +375,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 dataIndex: 'problems',
                 key: 'problems',
                 minWidth: '200px',
-                render: (status, item) => (jobActions(item))
+                render: (status, item) => (jobActions(item, onDeleteJob, deleteProcessing))
             },
         ],
         'other-products': [

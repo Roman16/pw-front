@@ -29,6 +29,7 @@ const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
         [productsList, setList] = useState([]),
         [processing, setProcessing] = useState(false),
+        [deleteProcessing, setDeleteProcessing] = useState(false),
         [searchStr, setSearchStr] = useState(''),
         [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
@@ -53,6 +54,18 @@ const Settings = (props) => {
     const changePaginationHandler = (params) => {
         pagination = params
         setPaginationOptions(params)
+    }
+
+    const onDeleteJob = async (id) => {
+        setDeleteProcessing(true)
+
+        try {
+            await zthServices.deleteCreatedJob(id)
+            console.log(id)
+        } catch (e) {
+
+        }
+        setDeleteProcessing(false)
     }
 
     function changeTabHandler(tab) {
@@ -155,9 +168,12 @@ const Settings = (props) => {
                 productsList={productsList}
                 selectedTab={selectedTab}
                 processing={processing}
+                deleteProcessing={deleteProcessing}
                 paginationOptions={paginationOptions}
                 totalSize={totalSize}
+
                 onChangePagination={changePaginationHandler}
+                onDeleteJob={onDeleteJob}
             />
 
             <CreateSuccessWindow

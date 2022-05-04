@@ -15,7 +15,7 @@ const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPass
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'))
 const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'))
 
-const developer = process.env.REACT_APP_ENV === "developer"
+const developer = process.env.REACT_APP_ENV === "development"
 
 
 const routers = () => {
