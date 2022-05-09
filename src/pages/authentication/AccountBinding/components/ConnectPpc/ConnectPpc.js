@@ -8,23 +8,32 @@ import {userActions} from "../../../../../actions/user.actions"
 import {notification} from "../../../../../components/Notification"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {Checkbox} from "antd"
+import {userService} from "../../../../../services/user.services"
 
 
 let intervalId
 
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const [pageStatus, setPageStatus] = useState('connect'),
+        [connectLink, setConnectLink] = useState(''),
         [disabledConnect, setDisabledConnect] = useState(true)
+
     const dispatch = useDispatch()
 
-    const {ppcLink} = useSelector(state => ({
-        ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
-    }))
+
+    const getConnectLink = async () => {
+        try {
+           const res =  await userService.getPPCConnectLink()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
 
     const openConnectLink = () => {
         setPageStatus('getting-token')
 
-        const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570})
+        const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
 
         let timer = setInterval(() => {
             if (win.closed) {
@@ -66,6 +75,8 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const tryAgain = () => setPageStatus('connect')
 
     useEffect(() => {
+        getConnectLink()
+
         return (() => {
             window.removeEventListener('message', () => {
             })

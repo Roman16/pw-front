@@ -63,7 +63,9 @@ export const userService = {
     getCouponInfo,
     activateCoupon,
     activateSubscription,
-    retryPayment
+    retryPayment,
+
+    getPPCConnectLink
 }
 
 function login(user) {
@@ -289,6 +291,10 @@ function getRegistrationTokens() {
 
 function checkImportStatus() {
     return api('get', `${userUrls.importStatus}`)
+}
+
+function getPPCConnectLink() {
+    return api('get', `${userUrls.PPCConnectLink}`)
 }
 
 function getIndexHtml() {
