@@ -61,10 +61,11 @@ const Settings = (props) => {
 
         try {
             await zthServices.deleteCreatedJob(id)
-            console.log(id)
+            getProductsList()
         } catch (e) {
-
+            console.log(e)
         }
+
         setDeleteProcessing(false)
     }
 

@@ -52,7 +52,7 @@ function deleteIncompleteBatch(id) {
 }
 
 function deleteCreatedJob(id) {
-    return api('post', `${zthUrls.deleteIncompleteBatch(id)}`, null, false)
+    return api('delete', `${zthUrls.deleteCreatedJob(id)}`, null, false)
 }
 
 function payBatch(data) {

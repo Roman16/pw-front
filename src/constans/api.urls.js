@@ -153,6 +153,7 @@ export const zthUrls = {
     incompleteJobs: 'v2/zero-to-hero/available-slots-info',
 
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
+    deleteCreatedJob: (id) => `v2/zero-to-hero/products-jobs/${id}`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
 }
