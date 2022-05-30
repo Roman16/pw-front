@@ -167,7 +167,6 @@ const Sidebar = () => {
                                             <h4>{item.title}</h4>
 
                                             {item.subMenu && item.subMenu
-                                                .filter(i => isAdmin || isAgencyUser ? i : i.link !== 'dayparting')
                                                 .map(subItem => (
                                                     <li className="automate-item">
                                                         <NavLink
