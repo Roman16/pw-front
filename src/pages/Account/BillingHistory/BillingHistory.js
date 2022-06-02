@@ -141,7 +141,7 @@ const EyeIcon = () => <svg width="20" height="13" viewBox="0 0 20 13" fill="none
 const DownloadIcon = () => <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
     <mask id="mask0_20958:65800" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
-        <rect x="0.5" y="0.5" width="19" height="19" fill="#C4C4C4" stroke="#353A3E"/>
+        <rect x="0.5" y="0.5" width="19" height="19" fill="#C4C4C4" stroke="#312C51"/>
     </mask>
     <g>
         <path d="M10 1V13M10 13L6 9M10 13L14 9"  stroke-width="2" stroke-linecap="round"

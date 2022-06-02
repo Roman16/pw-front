@@ -291,7 +291,7 @@ const Subscriptions = (props) => {
         />
 
         <SomethingWrong
-            visible={visibleSomethingWrongWindow}
+            visible={importStatus.subscription?.required_parts_ready && visibleSomethingWrongWindow}
         />
 
         <LoadingAmazonAccount

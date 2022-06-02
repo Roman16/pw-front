@@ -254,7 +254,7 @@ const Navigation = ({location}) => {
 
 
 const SubMenuArrow = () => <svg width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 4.5L4.5 1L1 4.5" stroke="#353A3E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M8 4.5L4.5 1L1 4.5" stroke="#312C51" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
 

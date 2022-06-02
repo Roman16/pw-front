@@ -3,9 +3,9 @@
 <rect width="256" height="214" fill="#C4C4C4"/>
 </mask>
 <g mask="url(#mask0_21069:66297)">
-<rect opacity="0.04" x="-3" y="145.062" width="156.725" height="153.675" rx="48" transform="rotate(-77.5909 -3 145.062)" fill="#353A3E"/>
-<rect opacity="0.04" x="192.645" y="159.462" width="79.0082" height="77.4706" rx="26" transform="rotate(-116.817 192.645 159.462)" fill="#353A3E"/>
-<rect opacity="0.04" x="183.377" y="46.7227" width="34.2926" height="33.6252" rx="12" transform="rotate(-102.422 183.377 46.7227)" fill="#353A3E"/>
+<rect opacity="0.04" x="-3" y="145.062" width="156.725" height="153.675" rx="48" transform="rotate(-77.5909 -3 145.062)" fill="#312C51"/>
+<rect opacity="0.04" x="192.645" y="159.462" width="79.0082" height="77.4706" rx="26" transform="rotate(-116.817 192.645 159.462)" fill="#312C51"/>
+<rect opacity="0.04" x="183.377" y="46.7227" width="34.2926" height="33.6252" rx="12" transform="rotate(-102.422 183.377 46.7227)" fill="#312C51"/>
 <path d="M6 176L177 176" stroke="#DEDFE4" stroke-width="3" stroke-linecap="round"/>
 <path d="M189 176H236" stroke="#DEDFE4" stroke-width="3" stroke-linecap="round"/>
 <path fill-rule="evenodd" clip-rule="evenodd" d="M205.454 130.637C204.35 130.637 203.454 131.532 203.454 132.637V161.182C203.454 168.914 209.722 175.182 217.454 175.182H223.09C230.822 175.182 237.09 168.914 237.09 161.182V158.954H242.727C245.213 158.954 247.227 156.94 247.227 154.454V140C247.227 137.515 245.213 135.5 242.727 135.5H237.09V132.637C237.09 131.532 236.195 130.637 235.09 130.637H205.454ZM237.09 138.5V155.954H242.727C243.556 155.954 244.227 155.283 244.227 154.454V140C244.227 139.171 243.556 138.5 242.727 138.5H237.09Z" fill="#FF6C70"/>
