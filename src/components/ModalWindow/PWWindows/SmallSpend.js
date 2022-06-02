@@ -17,7 +17,7 @@ const SmallSpend = ({visible, onSubmit, onCancel = false, btnText = 'Get Started
             handleCancel={onCancel}
         >
             <img src={img} alt=""/>
-            <h3>Attention!</h3>
+            <h3>Important Information</h3>
 
             <p>
                 To make your advertising campaign efficient and <br/>
@@ -27,7 +27,7 @@ const SmallSpend = ({visible, onSubmit, onCancel = false, btnText = 'Get Started
             <p>
                 1. The appropriate amount of information regarding the <br/> user must be entered into the system.
                 <br/>
-                2. Your campaign budget must exceed $1000.
+                2. Your campaign budget must exceed $500.
             </p>
 
             <Checkbox

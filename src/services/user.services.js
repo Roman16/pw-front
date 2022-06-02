@@ -33,7 +33,6 @@ export const userService = {
     setDefaultPaymentMethod,
     deletePaymentMethod,
     reactivateSubscription,
-    cancelSubscription,
     subscribe,
     confirmPayment,
     updateSubscriptionStatus,
@@ -56,7 +55,15 @@ export const userService = {
     getRegistrationTokens,
     checkImportStatus,
 
-    getIndexHtml
+    getIndexHtml,
+
+    getSubscriptionsState,
+    cancelSubscription,
+    getActivateInfo,
+    getCouponInfo,
+    activateCoupon,
+    activateSubscription,
+    retryPayment
 }
 
 function login(user) {
@@ -197,9 +204,7 @@ function reactivateSubscription(data) {
     return api('post', userUrls.reactivate(data.subscription_id), data)
 }
 
-function cancelSubscription(data) {
-    return api('post', userUrls.cancel(data.subscription_id), data)
-}
+
 
 function updateSubscriptionStatus() {
     return api('post', userUrls.updateStatus)
@@ -211,6 +216,34 @@ function applyCoupon(id, planId, coupon) {
 
 function getCouponStatus(coupon) {
     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`)
+}
+
+function getSubscriptionsState(scope) {
+    return api('get', `${userUrls.subscriptionState}?scopes[]=${scope}`)
+}
+
+function activateSubscription(data) {
+    return api('post', userUrls.activateSubscription, data)
+}
+
+function retryPayment(data) {
+    return api('post', userUrls.retryPayment, data)
+}
+
+function cancelSubscription(data) {
+    return api('post', userUrls.cancelSubscription, data)
+}
+
+function getActivateInfo({scope, coupon}) {
+    return api('get', `${userUrls.activateInfo}?scopes[]=${scope}${coupon ? `&coupon=${coupon}` : ''}`)
+}
+
+function getCouponInfo(coupon) {
+    return api('get', `${userUrls.couponInfo}?coupon=${coupon}`)
+}
+
+function activateCoupon(data) {
+    return api('post', `${userUrls.couponActivate}`, data)
 }
 
 function toggleMarketplace(id) {

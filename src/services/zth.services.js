@@ -12,6 +12,7 @@ export const zthServices = {
     getVariationsEligibilityStatus,
     fetchBatchInformation,
     checkIncompleteJobs,
+    deleteCreatedJob,
 
     createFreeBatch,
     checkBatchById,
@@ -48,6 +49,10 @@ function checkBatchById(id) {
 
 function deleteIncompleteBatch(id) {
     return api('post', `${zthUrls.deleteIncompleteBatch(id)}`, null, false)
+}
+
+function deleteCreatedJob(id) {
+    return api('delete', `${zthUrls.deleteCreatedJob(id)}`, null, false)
 }
 
 function payBatch(data) {

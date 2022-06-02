@@ -50,7 +50,8 @@ const LoginPage = (props) => {
 
                 const importStatus = await userService.checkImportStatus()
 
-                const userFullInformation = await userService.getUserInfo()
+                let userFullInformation = await userService.getUserInfo()
+                userFullInformation = userFullInformation.result
 
                 const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
                     ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected

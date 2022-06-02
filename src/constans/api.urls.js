@@ -26,10 +26,18 @@ export const userUrls = {
     //company
     companyInformation: (id) => `user/account/payment/method/${id}/metadata`,
     //subscription
+    subscriptionState: 'user/account/subscription/state',
+    cancelSubscription: 'user/account/subscription/cancel',
+    activateInfo: 'user/account/subscription/activate/info',
+    couponInfo: 'user/account/subscription/coupon/check',
+    couponActivate: 'user/account/subscription/coupon/apply',
+    activateSubscription: 'user/account/subscription/activate',
+    retryPayment: 'user/account/subscription/payment/retry',
+
+
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,
-    cancel: (subscriptionId) => `user/account/subscription/${subscriptionId}/cancel`,
     updateStatus: 'user/account/subscription/all/update-preview',
     coupon: (subscriptionId) => `user/account/subscription/${subscriptionId}/update`,
     couponStatus: 'user/account/subscription/check-coupon',
@@ -145,6 +153,7 @@ export const zthUrls = {
     incompleteJobs: 'v2/zero-to-hero/available-slots-info',
 
     deleteIncompleteBatch: (batchId) => `zero-to-hero/batch/${batchId}/delete`,
+    deleteCreatedJob: (id) => `v2/zero-to-hero/products-jobs/${id}`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
 }

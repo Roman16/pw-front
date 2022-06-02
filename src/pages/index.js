@@ -53,7 +53,7 @@ function throttle(func, delay) {
     }
 }
 
-const developer = process.env.REACT_APP_ENV === "developer"
+const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
 
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
@@ -213,7 +213,7 @@ const AuthorizedUser = (props) => {
                                         component={ProductsInfo}
                                     />
 
-                                  <ConnectedAmazonRoute
+                                     <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/dayparting"
                                         component={Dayparting}

@@ -9,7 +9,6 @@ import './DrawerWindows/Reactivate.less'
 import {useSelector, useDispatch} from "react-redux"
 import {userService} from "../../../services/user.services"
 import {userActions} from "../../../actions/user.actions"
-import {subscriptionProducts} from "../../../constans/subscription.products.name"
 import {notification} from "../../../components/Notification"
 import CardInformation from "../BillingInformation/CardInformation"
 import ModalWindow from "../../../components/ModalWindow/ModalWindow"
@@ -29,6 +28,13 @@ const stripeKey = process.env.REACT_APP_ENV === 'production'
 
 
 let afterSmallSpendAction
+
+const subscriptionProducts = [
+    {
+        productName: 'PPC Automation',
+        key: 'ppc',
+    }
+]
 
 const Subscription = () => {
     let interval = null
@@ -420,7 +426,7 @@ const Subscription = () => {
             <ConfirmSubscribeWindow
                 visible={visibleConfirmSubscribeWindow}
                 defaultCard={_.find(cardsList, {default: true})}
-                product={{...subscriptions[0], ...subscriptionProducts[0]}}
+                product={{...subscriptions[0]}}
                 submitProcessing={disableButton}
 
                 onSubmit={() => handleSubscribe(subscribeDetails, true, true)}
