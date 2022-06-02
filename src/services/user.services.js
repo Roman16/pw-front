@@ -65,7 +65,11 @@ export const userService = {
     activateSubscription,
     retryPayment,
 
-    getPPCConnectLink
+    getPPCConnectLink,
+    getMWSConnectLink,
+    getAmazonRegionAccounts,
+    createAmazonRegionAccount,
+    attachAmazonAds
 }
 
 function login(user) {
@@ -293,8 +297,21 @@ function checkImportStatus() {
     return api('get', `${userUrls.importStatus}`)
 }
 
-function getPPCConnectLink() {
-    return api('get', `${userUrls.PPCConnectLink}`)
+function getPPCConnectLink({callbackUrl, regionId}) {
+    return api('get', `${userUrls.PPCConnectLink}?amazon_region_account_id=${regionId}&callback_redirect_uri=${callbackUrl}`)
+}
+function getMWSConnectLink() {
+    return api('get', `${userUrls.MWSConnectLink}`)
+}
+function getAmazonRegionAccounts() {
+    return api('get', `${userUrls.amazonRegionAccounts}`)
+}
+
+function createAmazonRegionAccount(data) {
+    return api('post', `${userUrls.amazonRegionAccounts}`, data)
+}
+function attachAmazonAds(data) {
+    return api('post', `${userUrls.adsCredentials}`, data)
 }
 
 function getIndexHtml() {

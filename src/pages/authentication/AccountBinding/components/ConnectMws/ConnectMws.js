@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 import CustomSelect from "../../../../../components/Select/Select"
 import {Input, Select} from "antd"
@@ -8,18 +8,41 @@ import loader from '../../../../../assets/img/loader.svg'
 import {SVG} from "../../../../../utils/icons"
 import {useSelector} from "react-redux"
 import {popupCenter} from "../../../../../utils/newWindow"
+import {userService} from "../../../../../services/user.services"
 
 const Option = Select.Option
 
 const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus, onClose, tryAgainMws, onCancel}) => {
+    const [connectLink, setConnectLink] = useState(''),
+        [processing, setProcessing] = useState(true)
 
-    const {mwsLink} = useSelector(state => ({
-        mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
-    }))
+    // const {mwsLink} = useSelector(state => ({
+    //     mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
+    // }))
 
     const getCredentialsHandler = () => {
-        popupCenter({url: mwsLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
+        popupCenter({url: connectLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
     }
+
+
+    const getConnectLink = async () => {
+        setProcessing(true)
+
+        try {
+            const {result} = await userService.getMWSConnectLink()
+
+            setConnectLink(result.connection_link)
+        } catch (e) {
+            console.log(e)
+        }
+
+        setProcessing(false)
+    }
+
+    useEffect(() => {
+        getConnectLink()
+    }, [])
+
 
     if (connectMwsStatus === 'connect') {
         return (
@@ -46,7 +69,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                         <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
                     </CustomSelect>
 
-                    <button className='btn default' onClick={getCredentialsHandler}>
+                    <button disabled={processing} className='btn default' onClick={getCredentialsHandler}>
                         Get Credentials
                     </button>
                 </div>
@@ -59,7 +82,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                         <Input
                             type="text"
                             placeholder="e.g. A1BCDE23F4GHIJ"
-                            name={'merchant_id'}
+                            name={'seller_id'}
                             onChange={onChangeInput}
                         />
                     </div>
@@ -81,7 +104,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                             Back
                         </button>}
 
-                        <button disabled={!fields.merchant_id || !fields.mws_auth_token} className="btn default next"
+                        <button disabled={!fields.seller_id || !fields.mws_auth_token} className="btn default next"
                                 onClick={onConnectMws}>
                             Next
                             <SVG id={'right-white-arrow'}/>

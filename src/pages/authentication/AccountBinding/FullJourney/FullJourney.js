@@ -16,11 +16,10 @@ import Navigations from "../components/Navigations/Navigations"
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(4)
     const [fields, setFields] = useState({
-        account_name: '',
-        account_region: 'north_america',
-        account_type: 'seller_account',
+        account_alias: '',
+        region_type: 'NORTH_AMERICA',
         mws_auth_token: '',
-        merchant_id: ''
+        seller_id: ''
     })
     const {mwsId, userEmail, mwsConnected, ppcConnected} = useSelector(state => ({
         mwsId: state.user.account_links[0].amazon_mws.id,
@@ -54,7 +53,7 @@ const FullJourney = () => {
         setConnectMwsStatus('processing')
 
         try {
-            const res = await userService.setMWS({
+            const res = await userService.createAmazonRegionAccount({
                 ...fields,
                 ...mwsId && {id: mwsId}
             })
@@ -106,7 +105,7 @@ const FullJourney = () => {
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
-                    accountName={fields.account_name}
+                    accountName={fields.account_alias}
                     onCancel={closeJourney}
                 />}
 

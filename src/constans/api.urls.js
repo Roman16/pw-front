@@ -34,7 +34,11 @@ export const userUrls = {
     activateSubscription: 'user/account/subscription/activate',
     retryPayment: 'user/account/subscription/payment/retry',
 
-    PPCConnectLink: 'user/account/amazon-region-accounts/mws-connect-link',
+    PPCConnectLink: 'user/account/amazon-region-accounts/amazon-ads-api-connect-link',
+    MWSConnectLink: 'user/account/amazon-region-accounts/mws-connect-link',
+    amazonRegionAccounts: 'user/account/amazon-region-accounts',
+    adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
+
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
     reactivate: (subscriptionId) => `user/account/subscription/${subscriptionId}/resume`,

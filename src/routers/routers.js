@@ -3,6 +3,7 @@ import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import {history} from '../utils/history'
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
+import PpcProcessing from "../pages/authentication/AccountBinding/components/PpcProcessing/PpcProcessing"
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 const NotFound = React.lazy(() => import('../pages/404/404'))
@@ -39,6 +40,8 @@ const routers = () => {
 
                     <Route exact path={'/404'} component={NotFound}/>
 
+                    <Route exact path={'/ads-callback'} component={PpcProcessing}/>
+
                     {/*<Route path={'/'} render={(props) => {*/}
                     {/*    if (localStorage.getItem('token')) {*/}
                     {/*        return <AuthorizedUser {...history}/>*/}
@@ -50,7 +53,7 @@ const routers = () => {
                     {/*}/>*/}
                     <Route path={'/'} render={(props) => {
                         return <AuthorizedUser {...history}/>
-                       
+
                     }
                     }/>
                 </Switch>
