@@ -58,14 +58,14 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
 
                 const urlParams = new URLSearchParams(windowLocation.search)
                 const code = urlParams.get('code'),
-                    scope = urlParams.get('scope'),
-                    state = urlParams.get('state')
+                    scope = urlParams.get('scope')
 
                 try {
                     const res = userService.attachAmazonAds({
                         amazon_region_account_id: amazonRegionAccountId,
                         code,
-                        scope
+                        scope,
+                        callback_redirect_uri: `${window.location.origin}/ads-callback`
                     })
 
                     // setPageStatus('syncing-data')

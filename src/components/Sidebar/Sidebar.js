@@ -8,9 +8,10 @@ import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import {history} from "../../utils/history"
-import ToggleMarketplace from "./ToggleMarketplace"
+import CurrentMarketplace from "./Marketplaces/CurrentMarketplace"
 import moment from 'moment'
 import * as Sentry from "@sentry/browser"
+import AvailableMarketplaces from "./Marketplaces/AvailableMarketplaces"
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
@@ -20,6 +21,7 @@ const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [isAdmin, setAdminStatus] = useState(false),
         [isAgencyUser, setAgencyUser] = useState(false),
+        [visibleMarketplacesWindow, setVisibleMarketplacesWindow] = useState(false),
         [subMenuState, setSubMenuState] = useState({
             zth: false,
             ppc: false,
@@ -52,6 +54,12 @@ const Sidebar = () => {
         })
     }
 
+
+    const toggleMarketplacesWindow = () => {
+        setVisibleMarketplacesWindow(prevState => !prevState)
+    }
+
+
     useEffect(() => {
         if (user.user.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
@@ -71,6 +79,7 @@ const Sidebar = () => {
     useEffect(() => {
         if (window.screen.width < 850) setTimeout(() => setCollapsed(false), 100)
     }, [history.location])
+
 
 
     useEffect(() => {
@@ -124,7 +133,9 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                <ToggleMarketplace
+                <CurrentMarketplace
+                    onToggle={toggleMarketplacesWindow}
+                    active={visibleMarketplacesWindow}
                     user={user}
                 />
 
@@ -262,6 +273,11 @@ const Sidebar = () => {
                     </ul>
                 </nav>
             </div>
+
+            <AvailableMarketplaces
+                visible={visibleMarketplacesWindow}
+                collapsed={collapsed}
+            />
         </>
     )
 }
