@@ -59,6 +59,12 @@ const Sidebar = () => {
         setVisibleMarketplacesWindow(prevState => !prevState)
     }
 
+    const setMarketplaceHandler = (marketplace) => {
+        localStorage.setItem('marketplace', marketplace)
+
+        window.location.reload()
+    }
+
 
     useEffect(() => {
         if (user.user.id === 714) setAdminStatus(true)
@@ -79,7 +85,6 @@ const Sidebar = () => {
     useEffect(() => {
         if (window.screen.width < 850) setTimeout(() => setCollapsed(false), 100)
     }, [history.location])
-
 
 
     useEffect(() => {
@@ -277,6 +282,8 @@ const Sidebar = () => {
             <AvailableMarketplaces
                 visible={visibleMarketplacesWindow}
                 collapsed={collapsed}
+
+                onSet={setMarketplaceHandler}
             />
         </>
     )

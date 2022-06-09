@@ -1,4 +1,5 @@
 import React from "react"
+import usFlag from "../../../assets/img/icons/us-flag.png"
 
 const AvailableMarketplaces = ({visible, collapsed}) => {
     return (<div
@@ -14,6 +15,34 @@ const AvailableMarketplaces = ({visible, collapsed}) => {
         </div>
 
         <h3>MY ACCOUNTS</h3>
+
+        <ul>
+            <li>
+                <div className="account-name">
+                    account 1
+
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9.5 7.5L6 4L2.5 7.5" stroke="white" stroke-width="1.8" stroke-linecap="round"
+                              stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <ul className={'marketplaces'}>
+                    <li>
+                        <div className="status"/>
+                        <img src={usFlag} alt=""/> US
+                    </li>
+                    <li>
+                        <div className="status"/>
+                        <img src={usFlag} alt=""/> US
+                    </li>
+                    <li>
+                        <div className="status"/>
+                        <img src={usFlag} alt=""/> US
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
         <h3>SHARED WITH ME</h3>
 
         <button className="btn transparent">

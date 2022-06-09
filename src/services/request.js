@@ -31,8 +31,25 @@ function handlerErrors(error) {
     }
 }
 
+const urlGenerator = ({url, withDefaultUrl, withMarketplace}) => {
+    if (withDefaultUrl) {
+        if (withMarketplace) {
+            const marketplace = localStorage.getItem('marketplace')
 
-const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true) => {
+            if (url.includes('?')) {
+                return `${baseUrl}/api/${url.split('?')[0]}?marketplace=${marketplace}&${url.split('?')[1]}`
+            } else {
+                return `${baseUrl}/api/${url}?marketplace=${marketplace}`
+            }
+        } else {
+            return `${baseUrl}/api/${url}`
+        }
+    } else {
+        return url
+    }
+}
+
+const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true, withMarketplace = true) => {
     loadProgressBar()
 
     const token = localStorage.getItem('token'),
@@ -43,7 +60,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: withDefaultUrl ? `${baseUrl}/api/${url}` : url,
+            url: urlGenerator({url, withDefaultUrl, withMarketplace}),
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
