@@ -75,7 +75,7 @@ const Filters = ({
                 <div className="form-group">
                     <Search
                         className="search-field"
-                        placeholder={'Search by campaign name, ASIN or SKU'}
+                        placeholder={'Search by campaign name'}
                         onChange={e => onSearch(e.target.value)}
                         data-intercom-target='search-field'
                         suffix={<SVG id={'search'}/>}
