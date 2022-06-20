@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
@@ -8,10 +8,11 @@ import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import {history} from "../../utils/history"
-import CurrentMarketplace from "./Marketplaces/CurrentMarketplace"
+import CurrentMarketplace from "./ConnectedRegions/CurrentMarketplace"
 import moment from 'moment'
 import * as Sentry from "@sentry/browser"
-import AvailableMarketplaces from "./Marketplaces/AvailableMarketplaces"
+import AvailableMarketplaces from "./ConnectedRegions/ConnectedRegions"
+import {userActions} from "../../actions/user.actions"
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
@@ -30,10 +31,13 @@ const Sidebar = () => {
 
     const parentLink = useRef(null)
 
-    const {user} = useSelector(state => ({
-            user: state.user,
-            notFirstEntry: state.user.notFirstEntry,
-        })),
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user),
+        amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
+
         accountLinks = user.account_links[0]
 
     const className = getClassNames(collapsed ? "open" : "closed")
@@ -59,9 +63,8 @@ const Sidebar = () => {
         setVisibleMarketplacesWindow(prevState => !prevState)
     }
 
-    const setMarketplaceHandler = (marketplace) => {
-        localStorage.setItem('marketplace', marketplace)
-
+    const setMarketplaceHandler = (data) => {
+        dispatch(userActions.setActiveRegion(data))
         window.location.reload()
     }
 
@@ -282,6 +285,9 @@ const Sidebar = () => {
             <AvailableMarketplaces
                 visible={visibleMarketplacesWindow}
                 collapsed={collapsed}
+                regions={amazonRegionAccounts}
+                activeRegion={activeRegion}
+                activeMarketplace={activeMarketplace}
 
                 onSet={setMarketplaceHandler}
             />

@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
 
 const FullJourney = () => {
-    const [currentStep, setCurrentStep] = useState(4)
+    const [currentStep, setCurrentStep] = useState(0)
     const [fields, setFields] = useState({
         account_alias: '',
         region_type: 'NORTH_AMERICA',
@@ -96,9 +96,12 @@ const FullJourney = () => {
                 />}
 
                 {currentStep === 1 && <SelectRegion
+                    region={fields.region_type}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onCancel={closeJourney}
+                    onChangeInput={changeInputHandler}
+
                 />}
 
                 {currentStep === 2 && <AccountName

@@ -109,7 +109,7 @@ function confirmEmail({token}) {
 }
 
 function getUserInfo() {
-    return api('get', userUrls.allInfo, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', userUrls.allInfo)
 }
 
 function setMWS(data) {

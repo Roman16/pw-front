@@ -34,12 +34,14 @@ function handlerErrors(error) {
 const urlGenerator = ({url, withDefaultUrl, withMarketplace}) => {
     if (withDefaultUrl) {
         if (withMarketplace) {
-            const marketplace = localStorage.getItem('marketplace')
+            const marketplace = JSON.parse(localStorage.getItem('activeMarketplace'))
 
-            if (url.includes('?')) {
-                return `${baseUrl}/api/${url.split('?')[0]}?marketplace=${marketplace}&${url.split('?')[1]}`
-            } else {
-                return `${baseUrl}/api/${url}?marketplace=${marketplace}`
+            if(marketplace) {
+                if (url.includes('?')) {
+                    return `${baseUrl}/api/${url.split('?')[0]}?amazon_region_account_marketplace_id=${marketplace.id}&${url.split('?')[1]}`
+                } else {
+                    return `${baseUrl}/api/${url}?amazon_region_account_marketplace_id=${marketplace.id}`
+                }
             }
         } else {
             return `${baseUrl}/api/${url}`
@@ -104,6 +106,9 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     } else {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
+                        localStorage.removeItem('activeRegion')
+                        localStorage.removeItem('activeMarketplace')
+
                         if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
                         }

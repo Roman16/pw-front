@@ -52,8 +52,7 @@ const routers = () => {
                     {/*}*/}
                     {/*}/>*/}
                     <Route path={'/'} render={(props) => {
-                        return <AuthorizedUser {...history}/>
-
+                            return <AuthorizedUser {...history}/>
                     }
                     }/>
                 </Switch>
