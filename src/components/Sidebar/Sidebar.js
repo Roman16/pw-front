@@ -18,6 +18,8 @@ const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
 
+
+
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [isAdmin, setAdminStatus] = useState(false),
@@ -28,6 +30,10 @@ const Sidebar = () => {
             ppc: false,
             notifications: false
         })
+
+    const wrapperRef = useRef(null)
+
+
 
     const parentLink = useRef(null)
 
@@ -124,6 +130,22 @@ const Sidebar = () => {
             })
         }
     }, [collapsed])
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !document.querySelector('.sidebar .current-marketplace').contains(event.target)) {
+                setVisibleMarketplacesWindow(false)
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [wrapperRef])
+
 
 
     return (
@@ -283,6 +305,7 @@ const Sidebar = () => {
             </div>
 
             <AvailableMarketplaces
+                popupRef={wrapperRef}
                 visible={visibleMarketplacesWindow}
                 collapsed={collapsed}
                 regions={amazonRegionAccounts}

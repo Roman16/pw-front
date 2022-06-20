@@ -14,7 +14,7 @@ import {useDispatch, useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
 
 const FullJourney = () => {
-    const [currentStep, setCurrentStep] = useState(0)
+    const [currentStep, setCurrentStep] = useState(4)
     const [fields, setFields] = useState({
         account_alias: '',
         region_type: 'NORTH_AMERICA',

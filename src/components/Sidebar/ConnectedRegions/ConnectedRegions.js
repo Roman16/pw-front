@@ -1,18 +1,30 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import usFlag from "../../../assets/img/icons/us-flag.png"
 
-const ConnectedRegions = ({visible, collapsed, regions, onSet, activeMarketplace, activeRegion}) => {
-    const [openedRegions, setOpenedRegions] = useState([])
+const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeMarketplace, activeRegion}) => {
+    const [openedRegions, setOpenedRegions] = useState([]),
+        [localRegions, setLocalRegions] = useState([...regions])
 
     const openRegionHandler = (index) => {
-        if(openedRegions.includes(index)) setOpenedRegions(openedRegions.filter(i => i !== index))
+        if (openedRegions.includes(index)) setOpenedRegions(openedRegions.filter(i => i !== index))
         else setOpenedRegions([...openedRegions, index])
     }
 
+    const regionsSearchHandler = ({target: {value}}) => {
+        value = value.trim().toLowerCase()
+
+        setLocalRegions([...regions.filter(region => region.account_alias.toLowerCase().includes(value) || region.amazon_region_account_marketplaces.some(marketplace => marketplace.marketplace_id.toLowerCase().includes(value)))])
+    }
+
+    useEffect(() => {
+        setLocalRegions([...regions])
+    }, [regions])
+
     return (<div
+        ref={popupRef}
         className={`available-marketplaces ${visible ? 'visible' : ''} ${collapsed && visible ? 'with-sidebar' : ''}`}>
         <div className="form-group search">
-            <input type="text" placeholder={'Search'}/>
+            <input type="text" placeholder={'Search'} onChange={regionsSearchHandler}/>
 
             <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -23,14 +35,15 @@ const ConnectedRegions = ({visible, collapsed, regions, onSet, activeMarketplace
 
         <h3>MY ACCOUNTS</h3>
 
-        <ul className={'regions'}>
-            {regions.map((region, index) =>
-                <li className={`${openedRegions.includes(index) ? 'opened' : ''} ${activeRegion.id === region.id ? 'active' : ''}`}>
+        {localRegions.length === 0 ? <h4>No accounts found</h4> : <ul className={'regions'}>
+            {localRegions.map((region, index) =>
+                <li className={`${openedRegions.includes(index) ? 'opened' : ''} ${activeRegion && activeRegion.id === region.id ? 'active' : ''}`}>
                     <div className="account-name" onClick={() => openRegionHandler(index)}>
                         {region.account_alias || region.region_type.replace(/_/g, ' ')}
 
                         <i className={'arrow'}>
-                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
                                 <path d="M9.5 7.5L6 4L2.5 7.5" stroke="white" stroke-width="1.8" stroke-linecap="round"
                                       stroke-linejoin="round"/>
                             </svg>
@@ -39,7 +52,8 @@ const ConnectedRegions = ({visible, collapsed, regions, onSet, activeMarketplace
 
                     <ul className={'marketplaces'}>
                         {region.amazon_region_account_marketplaces.map(marketplace => (
-                            <li onClick={() => onSet({marketplace, region})} className={activeMarketplace.id === marketplace.id && 'active'}>
+                            <li onClick={() => onSet({marketplace, region})}
+                                className={activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
                                 <div className="status"/>
                                 <img src={usFlag} alt=""/>
                                 {marketplace.marketplace_id}
@@ -48,7 +62,8 @@ const ConnectedRegions = ({visible, collapsed, regions, onSet, activeMarketplace
                     </ul>
                 </li>
             )}
-        </ul>
+        </ul>}
+
 
         {/*<h3>SHARED WITH ME</h3>*/}
 

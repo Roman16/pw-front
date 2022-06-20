@@ -68,10 +68,9 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         callback_redirect_uri: `${window.location.origin}/ads-callback`
                     })
 
-                    // setPageStatus('syncing-data')
-                    // onGoNextStep()
-                    // win.close()
-                    // clearInterval(timer)
+                    onGoNextStep()
+                    win.close()
+                    clearInterval(timer)
 
                     console.log(res)
 

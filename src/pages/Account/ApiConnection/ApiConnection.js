@@ -17,9 +17,8 @@ const ApiConnection = () => {
 
     const dispatch = useDispatch()
 
-    const {user} = useSelector(state => ({
-        user: state.user
-    }))
+    const user = useSelector(state => state.user),
+        connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
 
     useEffect(() => {
         dispatch(userActions.getPersonalUserInfo())
@@ -76,15 +75,13 @@ const ApiConnection = () => {
         <Fragment>
             <div className="api-connection">
                 <ConnectedAccounts
-                    accountLinks={user.account_links}
-                    accountName={user.default_accounts.amazon_mws.account_name}
-                    sellerId={user.default_accounts.amazon_mws.seller_id}
+                   accounts={connectedAmazonAccounts}
                 />
 
                 {(user.account_links[0].amazon_mws.is_connected === true || user.account_links[0].amazon_ppc.is_connected === true) &&
                 <div className="api-connection-block">
                     <div className={'connections-list'}>
-                        {user.account_links.map((account, index) => (
+                        {connectedAmazonAccounts.map((account, index) => (
                             <SellerAccount
                                 key={`account_${index}`}
                                 sellerName={user.user.name}
