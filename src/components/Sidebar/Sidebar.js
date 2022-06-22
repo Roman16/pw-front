@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
@@ -8,30 +8,42 @@ import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import {history} from "../../utils/history"
-import ToggleMarketplace from "./ToggleMarketplace"
+import CurrentMarketplace from "./ConnectedRegions/CurrentMarketplace"
 import moment from 'moment'
 import * as Sentry from "@sentry/browser"
+import AvailableMarketplaces from "./ConnectedRegions/ConnectedRegions"
+import {userActions} from "../../actions/user.actions"
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
 
+
+
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [isAdmin, setAdminStatus] = useState(false),
         [isAgencyUser, setAgencyUser] = useState(false),
+        [visibleMarketplacesWindow, setVisibleMarketplacesWindow] = useState(false),
         [subMenuState, setSubMenuState] = useState({
             zth: false,
             ppc: false,
             notifications: false
         })
 
+    const wrapperRef = useRef(null)
+
+
+
     const parentLink = useRef(null)
 
-    const {user} = useSelector(state => ({
-            user: state.user,
-            notFirstEntry: state.user.notFirstEntry,
-        })),
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user),
+        amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
+
         accountLinks = user.account_links[0]
 
     const className = getClassNames(collapsed ? "open" : "closed")
@@ -51,6 +63,17 @@ const Sidebar = () => {
             notifications: false
         })
     }
+
+
+    const toggleMarketplacesWindow = () => {
+        setVisibleMarketplacesWindow(prevState => !prevState)
+    }
+
+    const setMarketplaceHandler = (data) => {
+        dispatch(userActions.setActiveRegion(data))
+        window.location.reload()
+    }
+
 
     useEffect(() => {
         if (user.user.id === 714) setAdminStatus(true)
@@ -108,6 +131,22 @@ const Sidebar = () => {
         }
     }, [collapsed])
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !document.querySelector('.sidebar .current-marketplace').contains(event.target)) {
+                setVisibleMarketplacesWindow(false)
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [wrapperRef])
+
+
 
     return (
         <>
@@ -124,7 +163,9 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                <ToggleMarketplace
+                <CurrentMarketplace
+                    onToggle={toggleMarketplacesWindow}
+                    active={visibleMarketplacesWindow}
                     user={user}
                 />
 
@@ -261,6 +302,17 @@ const Sidebar = () => {
                     </ul>
                 </nav>
             </div>
+
+            <AvailableMarketplaces
+                popupRef={wrapperRef}
+                visible={visibleMarketplacesWindow}
+                collapsed={collapsed}
+                regions={amazonRegionAccounts}
+                activeRegion={activeRegion}
+                activeMarketplace={activeMarketplace}
+
+                onSet={setMarketplaceHandler}
+            />
         </>
     )
 }

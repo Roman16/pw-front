@@ -31,8 +31,27 @@ function handlerErrors(error) {
     }
 }
 
+const urlGenerator = ({url, withDefaultUrl, withMarketplace}) => {
+    if (withDefaultUrl) {
+        if (withMarketplace) {
+            const marketplace = JSON.parse(localStorage.getItem('activeMarketplace'))
 
-const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true) => {
+            if(marketplace) {
+                if (url.includes('?')) {
+                    return `${baseUrl}/api/${url.split('?')[0]}?amazon_region_account_marketplace_id=${marketplace.id}&${url.split('?')[1]}`
+                } else {
+                    return `${baseUrl}/api/${url}?amazon_region_account_marketplace_id=${marketplace.id}`
+                }
+            }
+        } else {
+            return `${baseUrl}/api/${url}`
+        }
+    } else {
+        return url
+    }
+}
+
+const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true, withMarketplace = true) => {
     loadProgressBar()
 
     const token = localStorage.getItem('token'),
@@ -43,7 +62,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: withDefaultUrl ? `${baseUrl}/api/${url}` : url,
+            url: urlGenerator({url, withDefaultUrl, withMarketplace}),
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
@@ -87,6 +106,9 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     } else {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
+                        localStorage.removeItem('activeRegion')
+                        localStorage.removeItem('activeMarketplace')
+
                         if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
                         }

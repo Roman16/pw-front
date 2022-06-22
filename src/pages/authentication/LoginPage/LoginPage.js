@@ -50,29 +50,15 @@ const LoginPage = (props) => {
 
                 const importStatus = await userService.checkImportStatus()
 
-                let userFullInformation = await userService.getUserInfo()
-                userFullInformation = userFullInformation.result
-
-                const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
-                    ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
-
-                if (!mwsConnected && !ppcConnected) {
-                    history.push('/connect-amazon-account')
-                } else if (!mwsConnected && ppcConnected) {
-                    history.push('/connect-mws-account')
-                } else if (!ppcConnected && mwsConnected) {
-                    history.push('/connect-ppc-account')
+                if (props.location.search) {
+                    history.push(new URLSearchParams(props.location.search).get('redirect'))
                 } else {
-                    if (props.location.search) {
-                        history.push(new URLSearchParams(props.location.search).get('redirect'))
-                    } else {
-                        history.push('/home')
-                    }
+                    history.push('/home')
                 }
 
                 seo({title: 'Sponsoreds'})
 
-                dispatch(userActions.setInformation({...userFullInformation, importStatus: importStatus.result}))
+                dispatch(userActions.setInformation({importStatus: importStatus.result}))
             } catch (e) {
                 console.log(e)
             }
@@ -90,6 +76,8 @@ const LoginPage = (props) => {
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
+            localStorage.removeItem('activeRegion')
+            localStorage.removeItem('activeMarketplace')
 
             dispatch(userActions.logOut())
 

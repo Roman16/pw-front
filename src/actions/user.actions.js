@@ -2,67 +2,22 @@ import {productsConstants, reportsConstants, userConstants} from '../constans/ac
 import {history} from '../utils/history'
 import {userService} from '../services/user.services'
 import {notification} from "../components/Notification"
-import moment from "moment"
 import {store} from "../store/store"
-import {Redirect, Route} from "react-router-dom"
 import React from "react"
 
 export const userActions = {
-    login,
-    loginWithAmazon,
     logOut,
-    regist,
-    setMWS,
     getUserInfo,
     setInformation,
     getAuthorizedUserInfo,
     updateUserInformation,
-    reSetState,
     getPersonalUserInfo,
     unsetAccount,
-    resetChangesCount,
     setPpcStatus,
-    setBootstrap,
     getImpersonationUserInformation,
-    updateUser
-}
-
-function login() {
-    return dispatch => {
-        userService.getUserInfo()
-            .then(({result}) => {
-
-                const userFullInformation = result
-
-                dispatch(setInformation(userFullInformation))
-
-                const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
-                    ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
-
-                if (!mwsConnected && !ppcConnected) {
-                    history.push('/connect-amazon-account')
-                } else if (!mwsConnected && ppcConnected) {
-                    history.push('/connect-mws-account')
-                } else if (!ppcConnected && mwsConnected) {
-                    history.push('/connect-ppc-account')
-                } else {
-                    history.push('/home')
-                }
-            })
-    }
-}
-
-function loginWithAmazon(user) {
-    return dispatch => {
-        userService.loginWithAmazon(user)
-            .then(res => {
-                dispatch(setInformation(res))
-
-                localStorage.setItem('token', res.access_token)
-
-                dispatch(getUserInfo())
-            })
-    }
+    updateUser,
+    setAmazonRegionAccounts,
+    setActiveRegion
 }
 
 function logOut() {
@@ -73,47 +28,6 @@ function logOut() {
     }
 }
 
-function reSetState() {
-    return dispatch => {
-        dispatch({
-            type: userConstants.USER_LOGOUT
-        })
-    }
-}
-
-function regist(user) {
-    return dispatch => {
-        userService.regist(user)
-            .then(res => {
-                dispatch(setInformation({
-                    user: {
-                        email: user.email
-                    }
-                }))
-
-                localStorage.setItem('token', res.access_token)
-
-                // window.dataLayer.push({
-                //     'event': 'Registration',
-                // })
-
-                history.push('/confirm-email')
-            })
-    }
-}
-
-function setMWS(data) {
-    return dispatch => {
-        dispatch(setInformation(data))
-
-        if (data.account_links) {
-            if (!data.account_links[0].amazon_ppc.is_connected) {
-            } else {
-                history.push('/home')
-            }
-        }
-    }
-}
 
 function unsetAccount(type) {
     return ({
@@ -212,12 +126,6 @@ function setInformation(user) {
     }
 }
 
-function resetChangesCount(product) {
-    return {
-        type: userConstants.RESET_CHANGES_COUNT,
-        payload: product
-    }
-}
 
 function updateUserInformation(user) {
     return dispatch => {
@@ -246,9 +154,22 @@ function setPpcStatus(status) {
     }
 }
 
-function setBootstrap(status) {
+
+
+function setAmazonRegionAccounts(data) {
     return {
-        type: userConstants.SET_BOOTSTRAP,
-        payload: status
+        type: userConstants.SET_AMAZON_REGION_ACCOUNTS,
+        payload: data
     }
 }
+
+function setActiveRegion(data) {
+    return {
+        type: userConstants.SET_ACTIVE_REGION,
+        payload: data
+    }
+}
+
+
+
+

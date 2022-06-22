@@ -22,6 +22,25 @@ const initialState = {
         },
     }],
     default_accounts: {},
+
+    subscription: {
+        trial: {},
+        active_subscription_type: undefined,
+        access: {
+            analytics: false,
+            optimization: false
+        }
+    },
+    notifications: {
+        ppc_optimization: {
+            count_from_last_login: 0,
+            last_notice_date: undefined
+        }
+    },
+    amazonRegionAccounts: [],
+    fetchingAmazonRegionAccounts: true,
+    activeAmazonRegion: localStorage.getItem('activeRegion')  ? JSON.parse(localStorage.getItem('activeRegion')) : undefined,
+    activeAmazonMarketplace: localStorage.getItem('activeMarketplace')  ? JSON.parse(localStorage.getItem('activeMarketplace')) : undefined,
     importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
@@ -49,80 +68,23 @@ export function user(state = initialState, action) {
                 importStatus: action.payload.importStatus || state.importStatus || defaultImportStatus
             }
 
-        case userConstants.RESET_CHANGES_COUNT:
+        case userConstants.SET_AMAZON_REGION_ACCOUNTS:
             return {
                 ...state,
-                notifications: {
-                    ...state.notifications,
-
-                    [action.payload]: {
-                        ...state.notifications[action.payload],
-                        count_from_last_login: 0
-                    }
-                }
+                amazonRegionAccounts: [...action.payload],
+                fetchingAmazonRegionAccounts: false
             }
 
-        case userConstants.SET_PPC_STATUS:
+        case userConstants.SET_ACTIVE_REGION:
+            localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace))
+            localStorage.setItem('activeRegion', JSON.stringify(action.payload.region))
+
             return {
                 ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_ppc: {
-                        ...state.account_links[0].amazon_ppc,
-                        is_connected: true,
-                        ...action.payload
-                    }
-                }]
+                activeAmazonRegion: action.payload.region,
+                activeAmazonMarketplace: action.payload.marketplace
             }
 
-        case userConstants.SET_BOOTSTRAP:
-            return {
-                ...state,
-                notifications: {
-                    ...state.notifications,
-                    account_bootstrap: {
-                        bootstrap_in_progress: action.payload
-                    }
-                }
-            }
-
-        case userConstants.UNSET_AMAZON_MWS:
-            return {
-                ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_mws: {
-                        ...state.account_links[0].amazon_mws,
-                        is_connected: false,
-                        status: null
-                    }
-                }],
-                default_accounts: {
-                    ...state.default_accounts,
-                    amazon_mws: {
-                        seller_id: null
-                    }
-                }
-            }
-
-        case userConstants.UNSET_AMAZON_PPC:
-            return {
-                ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_ppc: {
-                        ...state.account_links[0].amazon_ppc,
-                        is_connected: false,
-                        status: null
-                    }
-                }],
-                default_accounts: {
-                    ...state.default_accounts,
-                    amazon_ppc: {
-                        seller_id: null
-                    }
-                }
-            }
 
         default:
             return state

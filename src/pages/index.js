@@ -13,6 +13,7 @@ import CampaignList from "../components/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
+import {history} from "../utils/history"
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -70,41 +71,36 @@ const AdminRoute = (props) => {
 }
 
 const ConnectedAmazonRoute = props => {
-    const {mwsConnected, ppcConnected, marketplace} = useSelector(state => ({
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        marketplace: marketplaceIdValues['ATVPDKIKX0DER']
-        // marketplace: marketplaceIdValues[state.user.default_accounts.amazon_ppc.marketplace_id]
-    }))
-    if (!mwsConnected && !ppcConnected) {
+    const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts)
+
+    if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
-    } else if (!mwsConnected && ppcConnected) {
-        return <Redirect to="/connect-mws-account"/>
-    } else if (!ppcConnected && mwsConnected) {
-        return <Redirect to="/connect-ppc-account"/>
     } else {
-        if (marketplace.countryCode === 'CA') {
-            if (props.path === '/ppc/product-settings' || props.path === '/account') {
-                return <Route {...props} />
-            } else {
-                return <Redirect to="/account/settings"/>
-            }
-        } else {
-            return <Route {...props} />
-        }
+        return <Route {...props} />
     }
+    //
+    // if (amazonRegionAccounts.length === 0) {
+    //     return <Redirect to="/connect-amazon-account"/>
+    // } else if (0) {
+    //     return <Redirect to="/connect-mws-account"/>
+    // } else if (0) {
+    //     return <Redirect to="/connect-ppc-account"/>
+    // } else {
+    //     return <Route {...props} />
+    // }
 }
 
 
 const AuthorizedUser = (props) => {
     const dispatch = useDispatch()
     const pathname = props.location.pathname
-    const [loadingUserInformation, setLoadingUserInformation] = useState(true)
+    const [loadingUserInformation, setLoadingUserInformation] = useState(false)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
 
-    const {user, lastStatusAction} = useSelector(state => ({
+    const {user, lastStatusAction, fetchingAmazonRegionAccounts} = useSelector(state => ({
         user: state.user,
         lastStatusAction: state.user.lastUserStatusAction,
+        fetchingAmazonRegionAccounts: state.user.fetchingAmazonRegionAccounts,
     }))
 
 
@@ -129,13 +125,20 @@ const AuthorizedUser = (props) => {
     )
 
     useEffect(() => {
-        setLoadingUserInformation(true)
+        if (!localStorage.getItem('token')) {
+            history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+            return
+        }
 
-        userService.getUserInfo()
+        userService.getAmazonRegionAccounts()
             .then(({result}) => {
-                dispatch(userActions.setInformation(result))
+                dispatch(userActions.setAmazonRegionAccounts(result))
+            })
+            .then(() => {
                 setLoadingUserInformation(false)
             })
+
+        getUserStatus()
     }, [])
 
     useEffect(() => {
@@ -148,8 +151,7 @@ const AuthorizedUser = (props) => {
 
     let isAgencyUser = user.user.is_agency_client
 
-
-    if (loadingUserInformation) {
+    if (loadingUserInformation || fetchingAmazonRegionAccounts) {
         return (
             <RouteLoader/>
         )
@@ -265,7 +267,7 @@ const AuthorizedUser = (props) => {
                                         component={Settings}
                                     />}
                                     {/*-------------------------------------------*/}
-                                    <Route exact path="/home" component={Home}/>
+                                    <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
 
 

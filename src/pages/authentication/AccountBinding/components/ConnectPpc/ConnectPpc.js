@@ -8,23 +8,40 @@ import {userActions} from "../../../../../actions/user.actions"
 import {notification} from "../../../../../components/Notification"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {Checkbox} from "antd"
+import {userService} from "../../../../../services/user.services"
+import {history} from "../../../../../utils/history"
 
 
 let intervalId
 
 const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const [pageStatus, setPageStatus] = useState('connect'),
-        [disabledConnect, setDisabledConnect] = useState(true)
+        [connectLink, setConnectLink] = useState(''),
+        [disabledConnect, setDisabledConnect] = useState(true),
+        [amazonRegionAccountId, setAmazonRegionAccountId] = useState()
+
     const dispatch = useDispatch()
 
-    const {ppcLink} = useSelector(state => ({
-        ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
-    }))
+    const getConnectLink = async () => {
+        try {
+            const res = await userService.getAmazonRegionAccounts()
+            setAmazonRegionAccountId(res.result[0].id)
+
+            const {result} = await userService.getPPCConnectLink({
+                regionId: res.result[0].id,
+                callbackUrl: `${window.location.origin}/ads-callback`
+            })
+
+            setConnectLink(result.connection_link)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const openConnectLink = () => {
         setPageStatus('getting-token')
 
-        const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570})
+        const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
 
         let timer = setInterval(() => {
             if (win.closed) {
@@ -33,30 +50,58 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             }
         }, 2000)
 
-        const checkWindowLocation = () => {
+        const checkWindowLocation = async () => {
             const windowLocation = win.location
 
-            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com'|| windowLocation.origin === 'https://sponsoreds.com') {
-                try {
-                    if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
-                        setPageStatus('error')
-                    } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
-                        setPageStatus('syncing-data')
-                        onGoNextStep()
-                        win.close()
-                        clearInterval(timer)
-                    } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
-                        notification.error({title: decodeURIComponent(windowLocation.href.split('?error_message=')[1].split('+').join(' '))})
-                        setPageStatus('error')
-                    }
+            if (windowLocation.pathname === '/ads-callback') {
+                clearInterval(intervalId)
 
+                const urlParams = new URLSearchParams(windowLocation.search)
+                const code = urlParams.get('code'),
+                    scope = urlParams.get('scope')
+
+                try {
+                    const res = userService.attachAmazonAds({
+                        amazon_region_account_id: amazonRegionAccountId,
+                        code,
+                        scope,
+                        callback_redirect_uri: `${window.location.origin}/ads-callback`
+                    })
+
+                    onGoNextStep()
                     win.close()
                     clearInterval(timer)
-                    clearInterval(intervalId)
+
+                    console.log(res)
+
                 } catch (e) {
-                    console.log(e)
+                    setPageStatus('error')
                 }
+
             }
+
+
+            // if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com'|| windowLocation.origin === 'https://sponsoreds.com') {
+            //     try {
+            //         if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
+            //             setPageStatus('error')
+            //         } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
+            //             setPageStatus('syncing-data')
+            //             onGoNextStep()
+            //             win.close()
+            //             clearInterval(timer)
+            //         } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
+            //             notification.error({title: decodeURIComponent(windowLocation.href.split('?error_message=')[1].split('+').join(' '))})
+            //             setPageStatus('error')
+            //         }
+            //
+            //         win.close()
+            //         clearInterval(timer)
+            //         clearInterval(intervalId)
+            //     } catch (e) {
+            //         console.log(e)
+            //     }
+            // }
 
         }
 
@@ -66,6 +111,8 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const tryAgain = () => setPageStatus('connect')
 
     useEffect(() => {
+        getConnectLink()
+
         return (() => {
             window.removeEventListener('message', () => {
             })

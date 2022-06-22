@@ -25,7 +25,7 @@ const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput, accountName, on
                     <Input
                         value={accountName}
                         type="text"
-                        name={'account_name'}
+                        name={'account_alias'}
                         placeholder={'eg. My US Account'}
                         onChange={onChangeInput}
                     />
