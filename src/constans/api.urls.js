@@ -56,7 +56,9 @@ export const userUrls = {
     customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
     growthAccelerationForm: 'landings/get-started-growth-acceleration',
     registrationTokens: 'admin/support-manager/tokens-for-agency',
-    importStatus: 'user/import-status'
+    importStatus: 'user/import-status',
+
+    userPersonalInformation: 'user/me'
 }
 
 export const productsUrls = {

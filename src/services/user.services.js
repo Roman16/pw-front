@@ -127,7 +127,7 @@ function unsetPPC(id) {
 }
 
 function getUserPersonalInformation() {
-    return api('get', userUrls.personalInformation, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', userUrls.userPersonalInformation, undefined, undefined, undefined, undefined, undefined, false)
 }
 function updateInformation({name, last_name, email, private_label_seller}) {
     return api('post', userUrls.personalInformation, {
