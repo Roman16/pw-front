@@ -104,22 +104,16 @@ const AuthorizedUser = (props) => {
     }))
 
 
-    function getUserStatus() {
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            dispatch(userActions.getPersonalUserInfo())
-        }, 1000)
-    }
 
     document.addEventListener("visibilitychange", () => {
         if (moment(new Date()).diff(lastStatusAction, "hours") > 6) {
-            getUserStatus()
+            // getUserStatus()
         }
     })
 
     document.addEventListener('mousemove', throttle(() => {
             if (moment(new Date()).diff(lastStatusAction, "hours") > 6) {
-                getUserStatus()
+                // getUserStatus()
             }
         }, 1000 * 60)
     )
@@ -130,6 +124,8 @@ const AuthorizedUser = (props) => {
             return
         }
 
+
+
         userService.getAmazonRegionAccounts()
             .then(({result}) => {
                 dispatch(userActions.setAmazonRegionAccounts(result))
@@ -137,8 +133,6 @@ const AuthorizedUser = (props) => {
             .then(() => {
                 setLoadingUserInformation(false)
             })
-
-        getUserStatus()
     }, [])
 
     useEffect(() => {

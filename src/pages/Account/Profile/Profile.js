@@ -10,13 +10,28 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
 
 const Profile = () => {
-    const user = useSelector(state => state.user.user)
-
-    const [userInformation, setUserInformation] = useState({...user}),
+    const [userInformation, setUserInformation] = useState({
+            name: '',
+            last_name: '',
+            email: ''
+        }),
         [saveProcessing, setSaveProcessing] = useState(false),
         [errorFields, setErrorFields] = useState([])
 
     const dispatch = useDispatch()
+
+    const getUserInformation = async () => {
+        try {
+            // const res = userService.getUserPersonalInformation()
+            // console.log(res)
+
+            // setUserInformation({...user})
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
 
     const changeInputHandler = ({target: {name, value}}) => {
         setErrorFields([...errorFields.filter(i => i !== name)])
@@ -48,8 +63,8 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        setUserInformation({...user})
-    }, [user])
+        getUserInformation()
+    }, [])
 
     return (<section className={'profile'}>
         <div className="container">
@@ -115,7 +130,6 @@ const Profile = () => {
                 <button
                     className="btn default"
                     onClick={saveSettingsHandler}
-                    disabled={saveProcessing || JSON.stringify(userInformation) === JSON.stringify(user)}
                 >
                     Save Changes
 

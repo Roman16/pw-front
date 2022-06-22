@@ -11,18 +11,15 @@ import ConnectedAccounts from "./ConnectedAccounts"
 
 
 const ApiConnection = () => {
-    const [disconnectObj, setDisconnectObj] = useState({})
-    const [visibleWindow, setVisibleWindow] = useState(false)
-    const [deleteProcessing, setDeleteProcessing] = useState(false)
+    const [disconnectObj, setDisconnectObj] = useState({}),
+        [visibleWindow, setVisibleWindow] = useState(false),
+        [deleteProcessing, setDeleteProcessing] = useState(false),
+        [activeAccount, setActiveAccount] = useState()
 
     const dispatch = useDispatch()
 
     const user = useSelector(state => state.user),
         connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
-
-    useEffect(() => {
-        dispatch(userActions.getPersonalUserInfo())
-    }, [])
 
 
     const disconnectHandler = (data) => {
@@ -71,29 +68,36 @@ const ApiConnection = () => {
         }
     }
 
+    useEffect(() => {
+        if (connectedAmazonAccounts[0]) setActiveAccount(connectedAmazonAccounts[0])
+    }, [connectedAmazonAccounts])
+
+    useEffect(() => {
+        userService.getAmazonRegionAccounts()
+            .then(({result}) => {
+                dispatch(userActions.setAmazonRegionAccounts(result))
+            })
+    }, [])
+
     return (
         <Fragment>
             <div className="api-connection">
                 <ConnectedAccounts
-                   accounts={connectedAmazonAccounts}
+                    accounts={connectedAmazonAccounts}
+                    onSelectAccount={(account) => setActiveAccount(account)}
                 />
 
-                {(user.account_links[0].amazon_mws.is_connected === true || user.account_links[0].amazon_ppc.is_connected === true) &&
+                {activeAccount &&
                 <div className="api-connection-block">
                     <div className={'connections-list'}>
-                        {connectedAmazonAccounts.map((account, index) => (
-                            <SellerAccount
-                                key={`account_${index}`}
-                                sellerName={user.user.name}
-                                account={account}
+                        <SellerAccount
+                            sellerName={user.user.name}
+                            account={activeAccount}
+                            deleteProcessing={deleteProcessing}
 
-                                accountName={user.default_accounts.amazon_mws.account_name}
-                                sellerId={user.default_accounts.amazon_mws.seller_id}
-                                onDisconnect={disconnectHandler}
-                                onReconnect={reconnectHandler}
-                                deleteProcessing={deleteProcessing}
-                            />
-                        ))}
+                            onDisconnect={disconnectHandler}
+                            onReconnect={reconnectHandler}
+                        />
                     </div>
                 </div>}
             </div>

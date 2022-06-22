@@ -68,7 +68,9 @@ export const userService = {
     getMWSConnectLink,
     getAmazonRegionAccounts,
     createAmazonRegionAccount,
-    attachAmazonAds
+    attachAmazonAds,
+
+    getUserPersonalInformation
 }
 
 function login(user) {
@@ -124,6 +126,9 @@ function unsetPPC(id) {
     return api('post', userUrls.deleteLwa, id, undefined, undefined, undefined, undefined, false)
 }
 
+function getUserPersonalInformation() {
+    return api('get', userUrls.personalInformation, undefined, undefined, undefined, undefined, undefined, false)
+}
 function updateInformation({name, last_name, email, private_label_seller}) {
     return api('post', userUrls.personalInformation, {
         name,
@@ -295,8 +300,8 @@ function checkImportStatus() {
 function getPPCConnectLink({callbackUrl, regionId}) {
     return api('get', `${userUrls.PPCConnectLink}?amazon_region_account_id=${regionId}&callback_redirect_uri=${callbackUrl}`, undefined, undefined, undefined, undefined, undefined, false)
 }
-function getMWSConnectLink() {
-    return api('get', `${userUrls.MWSConnectLink}`, undefined, undefined, undefined, undefined, undefined, false)
+function getMWSConnectLink(region) {
+    return api('get', `${userUrls.MWSConnectLink}?region=${region}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 function getAmazonRegionAccounts() {
     return api('get', `${userUrls.amazonRegionAccounts}`, undefined, undefined, undefined, undefined, undefined, false)

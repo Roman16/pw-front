@@ -29,7 +29,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
         setProcessing(true)
 
         try {
-            const {result} = await userService.getMWSConnectLink()
+            const {result} = await userService.getMWSConnectLink(fields.region_type)
 
             setConnectLink(result.connection_link)
         } catch (e) {

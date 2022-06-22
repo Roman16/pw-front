@@ -2,11 +2,12 @@ import React from "react"
 import USFlag from '../../../assets/img/icons/us-flag.png'
 import {history} from "../../../utils/history"
 
-const ConnectedAccounts = ({accounts}) => {
+const ConnectedAccounts = ({accounts, onSelectAccount}) => {
     return (<ul>
-        {accounts.map(({account_alias, seller_id, region_type}) => (<li className={'active'}>
+        {accounts.map((account) => (<li onClick={() => onSelectAccount(account)} className={'active'}>
                 <div className="card-header">
-                    <span title={account_alias || seller_id}>{account_alias || seller_id}</span>
+                    <span
+                        title={account.account_alias || account.seller_id}>{account.account_alias || account.seller_id}</span>
 
                     {/*{accountLinks.some(i => i.amazon_mws.is_connected === false || i.amazon_ppc.is_connected === false) &&*/}
                     {/*<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">*/}
@@ -17,7 +18,7 @@ const ConnectedAccounts = ({accounts}) => {
                 </div>
 
                 <RegionFlag
-                    region={region_type}
+                    region={account.region_type}
                 />
             </li>
         ))}

@@ -28,7 +28,7 @@ const ErrorBar = () => {
     useEffect(() => {
         intervalId = setInterval(() => {
             if (accountLinks.amazon_mws.status !== 'SUCCESS' || accountLinks.amazon_ppc.status !== 'SUCCESS') {
-                dispatch(userActions.getPersonalUserInfo());
+                // dispatch(userActions.getPersonalUserInfo());
             } else {
                 clearInterval(intervalId);
             }
