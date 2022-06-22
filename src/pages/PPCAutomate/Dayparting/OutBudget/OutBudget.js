@@ -11,7 +11,6 @@ import {useSelector, useDispatch} from "react-redux";
 import axios from "axios";
 import {numberMask} from "../../../../utils/numberMask";
 import {productsActions} from "../../../../actions/products.actions";
-import successImage from '../../../../assets/img/landing-contact-us/checked.svg';
 import {Spin} from "antd";
 import {NavLink} from "react-router-dom";
 import {SVG} from "../../../../utils/icons";
@@ -274,7 +273,6 @@ const OutBudget = ({date}) => {
             >
                 {saved ?
                     <div className='success'>
-                        <img src={successImage} alt=""/>
                         <h3>Budget saved</h3>
 
                         <button
