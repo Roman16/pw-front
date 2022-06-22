@@ -301,7 +301,7 @@ function getPPCConnectLink({callbackUrl, regionId}) {
     return api('get', `${userUrls.PPCConnectLink}?amazon_region_account_id=${regionId}&callback_redirect_uri=${callbackUrl}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 function getMWSConnectLink(region) {
-    return api('get', `${userUrls.MWSConnectLink}?region=${region}`, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', `${userUrls.MWSConnectLink}?region_type=${region}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 function getAmazonRegionAccounts() {
     return api('get', `${userUrls.amazonRegionAccounts}`, undefined, undefined, undefined, undefined, undefined, false)

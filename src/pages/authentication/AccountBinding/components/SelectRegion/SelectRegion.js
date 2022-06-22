@@ -116,10 +116,10 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
                     <div className="radio"/>
                 </li>
 
-                <li className={region === 'ASIA' && 'active'} onClick={() => onChangeInput({
+                <li className={region === 'FAR_EAST' && 'active'} onClick={() => onChangeInput({
                     target: {
                         name: 'region_type',
-                        value: 'ASIA'
+                        value: 'FAR_EAST'
                     }
                 })}>
                     <h4>Asia-Pacific</h4>

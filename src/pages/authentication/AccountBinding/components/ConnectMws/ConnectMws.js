@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react"
 import {Link} from "react-router-dom"
 import CustomSelect from "../../../../../components/Select/Select"
-import {Input, Select} from "antd"
+import {Input, Select, Spin} from "antd"
 import './ConnectMws.less'
 import loader from '../../../../../assets/img/loader.svg'
 
@@ -71,6 +71,8 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
 
                     <button disabled={processing} className='btn default' onClick={getCredentialsHandler}>
                         Get Credentials
+
+                        {processing &&<Spin size={'small'}/>}
                     </button>
                 </div>
 
