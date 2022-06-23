@@ -19,7 +19,7 @@ export const userService = {
     getUserInfo,
     setMWS,
     unsetMWS,
-    unsetPPC,
+    unsetAdsApi,
     getStripeAvailableCountries,
     updateInformation,
     changePassword,
@@ -103,7 +103,7 @@ function changeUserPassword({userId, token, newPassword}) {
 }
 
 function resendConfirmEmail() {
-    return api('post', userUrls.resendEmail, undefined,undefined, undefined, undefined, undefined, false)
+    return api('post', userUrls.resendEmail, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function confirmEmail({token}) {
@@ -119,16 +119,17 @@ function setMWS(data) {
 }
 
 function unsetMWS(id) {
-    return api('post', userUrls.deleteMws, id, undefined, undefined, undefined, undefined, false)
+    return api('delete', `${userUrls.mwsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function unsetPPC(id) {
-    return api('post', userUrls.deleteLwa, id, undefined, undefined, undefined, undefined, false)
+function unsetAdsApi(id) {
+    return api('delete', `${userUrls.adsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getUserPersonalInformation() {
     return api('get', userUrls.userPersonalInformation, undefined, undefined, undefined, undefined, undefined, false)
 }
+
 function updateInformation({name, last_name, email, private_label_seller}) {
     return api('post', userUrls.personalInformation, {
         name,
@@ -211,7 +212,6 @@ function reactivateSubscription(data) {
 }
 
 
-
 function updateSubscriptionStatus() {
     return api('post', userUrls.updateStatus, undefined, undefined, undefined, undefined, undefined, false)
 }
@@ -270,15 +270,24 @@ function sendContacts(data) {
 }
 
 function sendContactForm(data) {
-    return api('post', `${userUrls.contactForm}`, {...data, page_url: window.location.href}, undefined, undefined, undefined, undefined, false)
+    return api('post', `${userUrls.contactForm}`, {
+        ...data,
+        page_url: window.location.href
+    }, undefined, undefined, undefined, undefined, false)
 }
 
 function sendShortContactForm(data) {
-    return api('post', `${userUrls.shortContactForm}`, {...data, page_url: window.location.href}, undefined, undefined, undefined, undefined, false)
+    return api('post', `${userUrls.shortContactForm}`, {
+        ...data,
+        page_url: window.location.href
+    }, undefined, undefined, undefined, undefined, false)
 }
 
 function sendFormToPartnerSupport(data) {
-    return api('post', `${userUrls.partnerContactForm}`, {...data, page_url: window.location.href}, undefined, undefined, undefined, undefined, false)
+    return api('post', `${userUrls.partnerContactForm}`, {
+        ...data,
+        page_url: window.location.href
+    }, undefined, undefined, undefined, undefined, false)
 }
 
 function sendCustomerSatisfactionSurveyForm(data) {
@@ -300,9 +309,11 @@ function checkImportStatus() {
 function getPPCConnectLink({callbackUrl, regionId}) {
     return api('get', `${userUrls.PPCConnectLink}?amazon_region_account_id=${regionId}&callback_redirect_uri=${callbackUrl}`, undefined, undefined, undefined, undefined, undefined, false)
 }
+
 function getMWSConnectLink(region) {
     return api('get', `${userUrls.MWSConnectLink}?region_type=${region}`, undefined, undefined, undefined, undefined, undefined, false)
 }
+
 function getAmazonRegionAccounts() {
     return api('get', `${userUrls.amazonRegionAccounts}`, undefined, undefined, undefined, undefined, undefined, false)
 }
@@ -310,6 +321,7 @@ function getAmazonRegionAccounts() {
 function createAmazonRegionAccount(data) {
     return api('post', `${userUrls.amazonRegionAccounts}`, data, undefined, undefined, undefined, undefined, false)
 }
+
 function attachAmazonAds(data) {
     return api('post', `${userUrls.adsCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }

@@ -12,7 +12,6 @@ export const userActions = {
     getAuthorizedUserInfo,
     updateUserInformation,
     getPersonalUserInfo,
-    unsetAccount,
     setPpcStatus,
     getImpersonationUserInformation,
     updateUser,
@@ -26,13 +25,6 @@ function logOut() {
             user: {}
         }))
     }
-}
-
-
-function unsetAccount(type) {
-    return ({
-        type: userConstants[`UNSET_AMAZON_${type}`],
-    })
 }
 
 function getUserInfo() {

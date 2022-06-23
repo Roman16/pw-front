@@ -8,9 +8,6 @@ export const userUrls = {
     resetPassword: 'user/password/reset/change',
     resendEmail: 'user/email/resend',
     confirmEmail: 'user/email/verify',
-    mws: 'user/account/auth/mws/tokens',
-    deleteMws: 'user/account/auth/mws/delete',
-    deleteLwa: 'user/account/auth/lwa/delete',
     allInfo: 'user/status',
     personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
@@ -38,6 +35,9 @@ export const userUrls = {
     MWSConnectLink: 'user/account/amazon-region-accounts/mws-connect-link',
     amazonRegionAccounts: 'user/account/amazon-region-accounts',
     adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
+    mwsCredentials: 'user/account/amazon-region-accounts/mws-credentials',
+
+
 
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,

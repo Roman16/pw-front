@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, { useState} from "react"
 import ChooseAccount from "../components/ChooseAccount/ChooseAccount"
 import AccountName from "../components/AccountName/AccountName"
 import ConnectPpc from "../components/ConnectPpc/ConnectPpc"
@@ -21,11 +21,9 @@ const FullJourney = () => {
         mws_auth_token: '',
         seller_id: ''
     })
-    const {mwsId, userEmail, mwsConnected, ppcConnected} = useSelector(state => ({
+    const {mwsId, userEmail} = useSelector(state => ({
         mwsId: state.user.account_links[0].amazon_mws.id,
         userEmail: state.user.user.email,
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
     }))
     const dispatch = useDispatch()
 
@@ -71,16 +69,6 @@ const FullJourney = () => {
     const closeJourney = () => {
         history.push('/welcome')
     }
-
-    useEffect(() => {
-        if (mwsConnected && !ppcConnected) {
-            history.push('./connect-ppc-account')
-        } else if (!mwsConnected && ppcConnected) {
-            history.push('./connect-mws-account')
-        } else if (mwsConnected && ppcConnected) {
-            history.push('/account/api-connections')
-        }
-    }, [])
 
     return (
         <div className="amazon-connect full-journey">

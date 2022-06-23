@@ -48,7 +48,8 @@ const LoginPage = (props) => {
 
                 localStorage.setItem('token', res.access_token)
 
-                const importStatus = await userService.checkImportStatus()
+                // const importStatus = await userService.checkImportStatus()
+                // dispatch(userActions.setInformation({importStatus: importStatus.result}))
 
                 if (props.location.search) {
                     history.push(new URLSearchParams(props.location.search).get('redirect'))
@@ -58,7 +59,6 @@ const LoginPage = (props) => {
 
                 seo({title: 'Sponsoreds'})
 
-                dispatch(userActions.setInformation({importStatus: importStatus.result}))
             } catch (e) {
                 console.log(e)
             }

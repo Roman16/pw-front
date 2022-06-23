@@ -71,12 +71,13 @@ const AdminRoute = (props) => {
 }
 
 const ConnectedAmazonRoute = props => {
-    const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts)
+    const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion)
 
-    if (amazonRegionAccounts.length === 0) {
-        return <Redirect to="/connect-amazon-account"/>
-    } else {
+    if (amazonRegionAccounts.length > 0 && activeAmazonRegion?.is_amazon_ads_api_attached && activeAmazonRegion?.is_mws_attached) {
         return <Route {...props} />
+    } else {
+        return <Redirect to="/connect-amazon-account"/>
     }
     //
     // if (amazonRegionAccounts.length === 0) {
@@ -104,7 +105,6 @@ const AuthorizedUser = (props) => {
     }))
 
 
-
     document.addEventListener("visibilitychange", () => {
         if (moment(new Date()).diff(lastStatusAction, "hours") > 6) {
             // getUserStatus()
@@ -123,7 +123,6 @@ const AuthorizedUser = (props) => {
             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
             return
         }
-
 
 
         userService.getAmazonRegionAccounts()
@@ -209,7 +208,7 @@ const AuthorizedUser = (props) => {
                                         component={ProductsInfo}
                                     />
 
-                                     <ConnectedAmazonRoute
+                                    <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/dayparting"
                                         component={Dayparting}

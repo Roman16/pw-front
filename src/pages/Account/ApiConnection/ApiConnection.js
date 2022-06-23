@@ -14,7 +14,7 @@ const ApiConnection = () => {
     const [disconnectObj, setDisconnectObj] = useState({}),
         [visibleWindow, setVisibleWindow] = useState(false),
         [deleteProcessing, setDeleteProcessing] = useState(false),
-        [activeAccount, setActiveAccount] = useState()
+        [activeAccountIndex, setActiveAccountIndex] = useState()
 
     const dispatch = useDispatch()
 
@@ -32,8 +32,9 @@ const ApiConnection = () => {
         setVisibleWindow(false)
 
         try {
-            await userService[disconnectObj.type === 'ppc' ? 'unsetPPC' : 'unsetMWS']({id: disconnectObj.id})
-            dispatch(userActions.unsetAccount(disconnectObj.type === 'ppc' ? 'PPC' : 'MWS'))
+           const {result} =  await userService[disconnectObj.type === 'amazon_ads_api' ? 'unsetAdsApi' : 'unsetMWS'](disconnectObj.id)
+
+            dispatch(userActions.setAmazonRegionAccounts(result))
         } catch (e) {
             console.log(e)
         }
@@ -41,35 +42,18 @@ const ApiConnection = () => {
         setDeleteProcessing(false)
     }
 
-    const reconnectHandler = async (account, isFailed, type) => {
-        if (isFailed) {
-            try {
-                await userService[type === 'ppc' ? 'unsetPPC' : 'unsetMWS']({id: account[`amazon_${type}`].id})
-                dispatch(userActions.unsetAccount(type === 'ppc' ? 'PPC' : 'MWS'))
-
-                if (!account.amazon_mws.is_connected && type === 'ppc') {
-                    history.push('/connect-ppc-account')
-                } else if (!account.amazon_ppc.is_connected && type === 'mws') {
-                    history.push('/connect-mws-account')
-                } else {
-                    history.push('/connect-amazon-account')
-                }
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        if (!account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
+    const reconnectHandler = async (account) => {
+        if (!account.is_mws_attached && !account.is_amazon_ads_api_attached) {
             history.push('/connect-amazon-account')
-        } else if (!account.amazon_mws.is_connected && account.amazon_ppc.is_connected) {
+        } else if (!account.is_mws_attached && account.is_amazon_ads_api_attached) {
             history.push('/connect-mws-account')
-        } else if (account.amazon_mws.is_connected && !account.amazon_ppc.is_connected) {
+        } else if (account.is_mws_attached && !account.is_amazon_ads_api_attached) {
             history.push('/connect-ppc-account')
         }
     }
 
     useEffect(() => {
-        if (connectedAmazonAccounts[0]) setActiveAccount(connectedAmazonAccounts[0])
+        if (connectedAmazonAccounts[0]) setActiveAccountIndex(0)
     }, [connectedAmazonAccounts])
 
     useEffect(() => {
@@ -84,15 +68,15 @@ const ApiConnection = () => {
             <div className="api-connection">
                 <ConnectedAccounts
                     accounts={connectedAmazonAccounts}
-                    onSelectAccount={(account) => setActiveAccount(account)}
+                    onSelectAccount={setActiveAccountIndex}
                 />
 
-                {activeAccount &&
+                {activeAccountIndex !== undefined &&
                 <div className="api-connection-block">
                     <div className={'connections-list'}>
                         <SellerAccount
                             sellerName={user.user.name}
-                            account={activeAccount}
+                            account={connectedAmazonAccounts[activeAccountIndex]}
                             deleteProcessing={deleteProcessing}
 
                             onDisconnect={disconnectHandler}

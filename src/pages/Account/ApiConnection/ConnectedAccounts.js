@@ -4,7 +4,7 @@ import {history} from "../../../utils/history"
 
 const ConnectedAccounts = ({accounts, onSelectAccount}) => {
     return (<ul>
-        {accounts.map((account) => (<li onClick={() => onSelectAccount(account)} className={'active'}>
+        {accounts.map((account, index) => (<li onClick={() => onSelectAccount(index)} className={'active'}>
                 <div className="card-header">
                     <span
                         title={account.account_alias || account.seller_id}>{account.account_alias || account.seller_id}</span>

@@ -5,29 +5,20 @@ import sectionIcon from '../../../assets/img/account/api-connection-icon.svg'
 
 const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) => {
 
-    const Actions = ({account, type}) => {
-        if (account[`amazon_${type}`].id) {
-            if (account[`amazon_${type}`].is_connected && account[`amazon_${type}`].status !== 'FAILED') {
-                return (
-                    <button className={'btn white'}
-                            onClick={() => onDisconnect({
-                                type: type,
-                                id: account[`amazon_${type}`].id
-                            })}
-                            disabled={deleteProcessing === type}
-                    >
-                        Disconnect
-                        {deleteProcessing === type && <Spin size={'small'}/>}
-                    </button>
-                )
-            } else {
-                return (
-                    <button className={'btn default'}
-                            onClick={() => onReconnect(account, account[`amazon_${type}`].status === 'FAILED', type)}>
-                        Reconnect
-                    </button>
-                )
-            }
+    const Actions = ({type}) => {
+        if (account[`is_${type}_attached`]) {
+            return (
+                <button className={'btn white'}
+                        onClick={() => onDisconnect({
+                            type: type,
+                            id: account.id
+                        })}
+                        disabled={deleteProcessing === type}
+                >
+                    Disconnect
+                    {deleteProcessing === type && <Spin size={'small'}/>}
+                </button>
+            )
         } else {
             return (
                 <button className={'btn default'} onClick={() => onReconnect(account)}>
@@ -53,6 +44,8 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
     //         return ''
     //     }
     // }
+
+
     const MWSStatus = () => {
         if (account.is_mws_attached === false) {
             return <span style={{color: '#FF5256'}}>Canceled</span>
@@ -63,7 +56,8 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
                          </span>
         }
     }
-    //
+
+
     // const PPCStatus = () => {
     //     if (account.amazon_ppc.id && account.amazon_ppc.is_connected === false) {
     //         return <span style={{color: '#FF5256'}}>Canceled</span>
@@ -80,6 +74,18 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
     //         return ''
     //     }
     // }
+
+    const PPCStatus = () => {
+        if (account.is_amazon_ads_api_attached === false) {
+            return <span style={{color: '#FF5256'}}>Canceled</span>
+        } else {
+            return <span style={{color: '#7FD3A1'}} className={'success'}>
+                Success <br/>
+                {/*{account.amazon_ppc.account_email && <span>Email: {account.amazon_ppc.account_email}</span>}*/}
+            </span>
+
+        }
+    }
 
     return (
         <section className={`seller-account`}>
@@ -105,10 +111,9 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
                         </div>
 
                         <div className="account-action">
-                            {/*<Actions*/}
-                            {/*    account={account}*/}
-                            {/*    type={'mws'}*/}
-                            {/*/>*/}
+                            <Actions
+                                type={'mws'}
+                            />
                         </div>
                     </div>
 
@@ -116,14 +121,13 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
                         <h4>Advertising <br/> API</h4>
 
                         <div className={`account-status`}>
-                            {/*<PPCStatus/>*/}
+                            <PPCStatus/>
                         </div>
 
                         <div className="account-action">
-                            {/*<Actions*/}
-                            {/*    account={account}*/}
-                            {/*    type={'ppc'}*/}
-                            {/*/>*/}
+                            <Actions
+                                type={'amazon_ads_api'}
+                            />
                         </div>
                     </div>
                 </div>

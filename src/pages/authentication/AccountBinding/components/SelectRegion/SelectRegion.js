@@ -27,7 +27,7 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
                         </g>
                     </svg>
 
-                    <div className="radio"/>
+                    <Radio checked={region === 'NORTH_AMERICA'}/>
                 </li>
 
                 <li className={region === 'EUROPE' && 'active'} onClick={() => onChangeInput({
@@ -113,7 +113,7 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
                         </g>
                     </svg>
 
-                    <div className="radio"/>
+                    <Radio checked={region === 'EUROPE'}/>
                 </li>
 
                 <li className={region === 'FAR_EAST' && 'active'} onClick={() => onChangeInput({
@@ -161,7 +161,7 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
                     </svg>
 
 
-                    <div className="radio"/>
+                    <Radio checked={region === 'FAR_EAST'}/>
                 </li>
             </ul>
 
