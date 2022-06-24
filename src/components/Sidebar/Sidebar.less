@@ -76,13 +76,17 @@
     min-height: 4rem;
     display: flex;
     flex-direction: column;
-    background: #3F4448;
+    background: #2A2F33;
     margin: 0 0 1.4285714285714286rem;
     padding: 9px 0.7142857142857143rem 0 1.85714286rem;
     position: relative;
     transition: .2s ease-in-out;
     overflow: hidden;
     cursor: pointer;
+
+    &:hover {
+      background: #3F4448;
+    }
 
     &::before {
       content: '';
@@ -99,10 +103,13 @@
       opacity: 0;
     }
 
-    &.active::before {
+    &.active{
+      background: #3F4448;
+
+      &::before {
       opacity: 1;
     }
-
+}
     .country-active__title {
       display: flex;
       align-items: center;
@@ -962,19 +969,12 @@
     box-sizing: content-box;
   }
 
-  .btn.transparent {
+  .btn.default {
     height: 2.2857142857142856rem;
     width: calc(100% - 2.5714285714285716rem);
     margin: 20px auto 0;
-    border: 1px solid #FFFFFF;
-    color: #fff;
     font-weight: 600;
     font-size: 0.8571428571428571rem;
-
-    &:hover {
-      background: #FFFFFF;
-      color: #353A3E;
-    }
   }
 
   .regions {

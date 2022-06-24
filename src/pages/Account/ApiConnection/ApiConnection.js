@@ -32,9 +32,9 @@ const ApiConnection = () => {
         setVisibleWindow(false)
 
         try {
-           const {result} =  await userService[disconnectObj.type === 'amazon_ads_api' ? 'unsetAdsApi' : 'unsetMWS'](disconnectObj.id)
+            const {result} = await userService[(disconnectObj.type) === 'amazon_ads_api' ? 'unsetAdsApi' : 'unsetMWS'](disconnectObj.id)
 
-            dispatch(userActions.setAmazonRegionAccounts(result))
+            dispatch(userActions.setAmazonRegionAccounts([result]))
         } catch (e) {
             console.log(e)
         }
@@ -42,13 +42,13 @@ const ApiConnection = () => {
         setDeleteProcessing(false)
     }
 
-    const reconnectHandler = async (account) => {
-        if (!account.is_mws_attached && !account.is_amazon_ads_api_attached) {
+    const connectHandler = async (account, type) => {
+        if (type === 'mws') {
+            history.push(`/connect-mws-account/${account.region_type}`)
+        } else if (type === 'amazon_ads_api') {
+            history.push(`/connect-ppc-account/${account.id}`)
+        } else {
             history.push('/connect-amazon-account')
-        } else if (!account.is_mws_attached && account.is_amazon_ads_api_attached) {
-            history.push('/connect-mws-account')
-        } else if (account.is_mws_attached && !account.is_amazon_ads_api_attached) {
-            history.push('/connect-ppc-account')
         }
     }
 
@@ -80,7 +80,7 @@ const ApiConnection = () => {
                             deleteProcessing={deleteProcessing}
 
                             onDisconnect={disconnectHandler}
-                            onReconnect={reconnectHandler}
+                            onConnect={connectHandler}
                         />
                     </div>
                 </div>}

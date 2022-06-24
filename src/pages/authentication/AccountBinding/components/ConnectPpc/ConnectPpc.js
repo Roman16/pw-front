@@ -1,34 +1,26 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import './ConnectPpc.less'
-import {Link} from "react-router-dom"
 import {SVG} from "../../../../../utils/icons"
-import {useDispatch, useSelector} from "react-redux"
 import loader from '../../../../../assets/img/loader.svg'
-import {userActions} from "../../../../../actions/user.actions"
-import {notification} from "../../../../../components/Notification"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {Checkbox} from "antd"
 import {userService} from "../../../../../services/user.services"
-import {history} from "../../../../../utils/history"
-
+import {userActions} from "../../../../../actions/user.actions"
+import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
+const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
     const [pageStatus, setPageStatus] = useState('connect'),
         [connectLink, setConnectLink] = useState(''),
-        [disabledConnect, setDisabledConnect] = useState(true),
-        [amazonRegionAccountId, setAmazonRegionAccountId] = useState()
+        [disabledConnect, setDisabledConnect] = useState(true)
 
     const dispatch = useDispatch()
 
     const getConnectLink = async () => {
         try {
-            const res = await userService.getAmazonRegionAccounts()
-            setAmazonRegionAccountId(res.result[0].id)
-
             const {result} = await userService.getPPCConnectLink({
-                regionId: res.result[0].id,
+                regionId: regionId,
                 callbackUrl: `${window.location.origin}/ads-callback`
             })
 
@@ -61,48 +53,22 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                     scope = urlParams.get('scope')
 
                 try {
-                    const res = userService.attachAmazonAds({
-                        amazon_region_account_id: amazonRegionAccountId,
+                    const {result} =  await userService.attachAmazonAds({
+                        amazon_region_account_id: regionId,
                         code,
                         scope,
                         callback_redirect_uri: `${window.location.origin}/ads-callback`
                     })
 
+                    dispatch(userActions.updateAmazonRegionAccounts(result))
+
                     onGoNextStep()
                     win.close()
                     clearInterval(timer)
-
-                    console.log(res)
-
                 } catch (e) {
                     setPageStatus('error')
                 }
-
             }
-
-
-            // if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com'|| windowLocation.origin === 'https://sponsoreds.com') {
-            //     try {
-            //         if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
-            //             setPageStatus('error')
-            //         } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
-            //             setPageStatus('syncing-data')
-            //             onGoNextStep()
-            //             win.close()
-            //             clearInterval(timer)
-            //         } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
-            //             notification.error({title: decodeURIComponent(windowLocation.href.split('?error_message=')[1].split('+').join(' '))})
-            //             setPageStatus('error')
-            //         }
-            //
-            //         win.close()
-            //         clearInterval(timer)
-            //         clearInterval(intervalId)
-            //     } catch (e) {
-            //         console.log(e)
-            //     }
-            // }
-
         }
 
         intervalId = setInterval(checkWindowLocation, 2000)
@@ -152,11 +118,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         Cancel
                     </button>
                 </div>
-
-                {/*<div className="connect-ppc-links">*/}
-                {/*    <p>Don’t have access to Seller Central?</p>*/}
-                {/*    <p><Link to={'/affiliates'}>Invite person who does</Link></p>*/}
-                {/*</div>*/}
             </section>
         )
     } else if (pageStatus === 'getting-token' || pageStatus === 'syncing-data') {
@@ -186,11 +147,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         Back To Home
                     </button>
                 </div>
-
-                {/*<div className="connect-ppc-links">*/}
-                {/*    <p>Not the primary account holder?</p>*/}
-                {/*    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>*/}
-                {/*</div>*/}
             </section>)
     }
 }

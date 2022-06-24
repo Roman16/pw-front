@@ -1,24 +1,18 @@
 import React, {Fragment, useEffect, useState} from "react"
-import {Link} from "react-router-dom"
 import CustomSelect from "../../../../../components/Select/Select"
 import {Input, Select, Spin} from "antd"
 import './ConnectMws.less'
 import loader from '../../../../../assets/img/loader.svg'
 
 import {SVG} from "../../../../../utils/icons"
-import {useSelector} from "react-redux"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {userService} from "../../../../../services/user.services"
 
 const Option = Select.Option
 
-const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus, onClose, tryAgainMws, onCancel}) => {
+const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus, onClose, tryAgainMws, onCancel, disabled = false}) => {
     const [connectLink, setConnectLink] = useState(''),
         [processing, setProcessing] = useState(true)
-
-    // const {mwsLink} = useSelector(state => ({
-    //     mwsLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.connect_link : '',
-    // }))
 
     const getCredentialsHandler = () => {
         popupCenter({url: connectLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
@@ -55,7 +49,8 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                     more about it</a>). <br/>
                     Сlick “Get Credentials” button below to open Amazon Seller Central MWS registration page. <br/>
                     Follow authorization workflow to grant Sponsoreds access to MWS API. <br/>
-                    At the last step, copy your “Seller Id” and “MWS Authorization Token” and paste them below.
+                    At the last step, copy your {!disabled && '“Seller Id” and'} “MWS Authorization Token” and paste
+                    them below.
                     <br/>
                     <br/>
                     Please note that you need to log into your Amazon seller account as the primary account holder.
@@ -72,7 +67,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                     <button disabled={processing} className='btn default' onClick={getCredentialsHandler}>
                         Get Credentials
 
-                        {processing &&<Spin size={'small'}/>}
+                        {processing && <Spin size={'small'}/>}
                     </button>
                 </div>
 
@@ -86,6 +81,8 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                             placeholder="e.g. A1BCDE23F4GHIJ"
                             name={'seller_id'}
                             onChange={onChangeInput}
+                            value={fields.seller_id}
+                            disabled={disabled}
                         />
                     </div>
                     <div className="form-group required">

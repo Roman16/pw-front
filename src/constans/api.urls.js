@@ -58,7 +58,9 @@ export const userUrls = {
     registrationTokens: 'admin/support-manager/tokens-for-agency',
     importStatus: 'user/import-status',
 
-    userPersonalInformation: 'user/me'
+    userPersonalInformation: 'user/me',
+    notifications: 'notifications',
+    accountStatus: 'user/account/subscription/status'
 }
 
 export const productsUrls = {
@@ -83,7 +85,7 @@ export const reportsUrls = {
     lastReports: 'ppc-automation/last-changes',
     allReports: 'ppc-automation/reports-ch',
     downloadReports: 'ppc-automation/reports-ch/download',
-    reports: 'ppc-automation/reports'
+    reports: 'v2/ppc-automation/reports'
 }
 
 export const dashboardUrls = {

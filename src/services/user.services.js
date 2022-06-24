@@ -69,8 +69,12 @@ export const userService = {
     getAmazonRegionAccounts,
     createAmazonRegionAccount,
     attachAmazonAds,
+    attachMWS,
 
-    getUserPersonalInformation
+    getUserPersonalInformation,
+
+    getNotifications,
+    getAccountStatus
 }
 
 function login(user) {
@@ -118,13 +122,6 @@ function setMWS(data) {
     return api('post', userUrls.mws, data, undefined, undefined, undefined, undefined, false)
 }
 
-function unsetMWS(id) {
-    return api('delete', `${userUrls.mwsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
-}
-
-function unsetAdsApi(id) {
-    return api('delete', `${userUrls.adsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
-}
 
 function getUserPersonalInformation() {
     return api('get', userUrls.userPersonalInformation, undefined, undefined, undefined, undefined, undefined, false)
@@ -302,8 +299,8 @@ function getRegistrationTokens() {
     return api('get', `${userUrls.registrationTokens}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function checkImportStatus() {
-    return api('get', `${userUrls.importStatus}`, undefined, undefined, undefined, undefined, undefined, false)
+function checkImportStatus(id) {
+    return api('get', `${userUrls.importStatus}?amazon_region_account_marketplace_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getPPCConnectLink({callbackUrl, regionId}) {
@@ -326,10 +323,36 @@ function attachAmazonAds(data) {
     return api('post', `${userUrls.adsCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }
 
+function attachMWS(data) {
+    return api('post', `${userUrls.mwsCredentials}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+
+function unsetMWS(id) {
+    return api('delete', `${userUrls.mwsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function unsetAdsApi(id) {
+    return api('delete', `${userUrls.adsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function getAccountStatus(id) {
+    return api('get', `${userUrls.accountStatus}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+//-------------------------------------
+
+
 function getIndexHtml() {
     return axios.get(`${baseUrl}/index.html`)
 }
 
+
+//-------------------------------------
+
+function getNotifications() {
+    return api('get', `${userUrls.notifications}`)
+}
 
 //-------------------------------------
 function getStripeAvailableCountries() {

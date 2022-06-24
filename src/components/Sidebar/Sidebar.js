@@ -33,8 +33,6 @@ const Sidebar = () => {
 
     const wrapperRef = useRef(null)
 
-
-
     const parentLink = useRef(null)
 
     const dispatch = useDispatch()
@@ -42,9 +40,7 @@ const Sidebar = () => {
     const user = useSelector(state => state.user),
         amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
         activeRegion = useSelector(state => state.user.activeAmazonRegion),
-        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
-
-        accountLinks = user.account_links[0]
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
@@ -241,12 +237,6 @@ const Sidebar = () => {
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>
-
-                                    {(accountLinks.amazon_mws.status === 'FAILED' ||
-                                        accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
-                                        accountLinks.amazon_ppc.status === 'FAILED' ||
-                                        accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
-                                    <i><SVG id={'notification-icon'}/></i>}
                                 </div>
 
                                 <label>

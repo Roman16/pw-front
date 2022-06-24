@@ -3,7 +3,6 @@ import {history} from '../utils/history'
 import {userService} from '../services/user.services'
 import {notification} from "../components/Notification"
 import {store} from "../store/store"
-import React from "react"
 
 export const userActions = {
     logOut,
@@ -16,7 +15,11 @@ export const userActions = {
     getImpersonationUserInformation,
     updateUser,
     setAmazonRegionAccounts,
-    setActiveRegion
+    updateAmazonRegionAccounts,
+    setActiveRegion,
+    getNotifications,
+    getAccountStatus,
+    actualizeActiveRegion,
 }
 
 function logOut() {
@@ -109,12 +112,10 @@ function getImpersonationUserInformation() {
     }
 }
 
-function setInformation(user) {
-    localStorage.setItem('userId', user.user.id)
-
+function setInformation(data) {
     return {
         type: userConstants.SET_INFORMATION,
-        payload: user
+        payload: data
     }
 }
 
@@ -129,7 +130,6 @@ function updateUserInformation(user) {
             })
     }
 }
-
 
 
 function updateUser(user) {
@@ -147,10 +147,16 @@ function setPpcStatus(status) {
 }
 
 
-
 function setAmazonRegionAccounts(data) {
     return {
         type: userConstants.SET_AMAZON_REGION_ACCOUNTS,
+        payload: data
+    }
+}
+
+function updateAmazonRegionAccounts(data) {
+    return {
+        type: userConstants.UPDATE_AMAZON_REGION_ACCOUNTS,
         payload: data
     }
 }
@@ -161,6 +167,32 @@ function setActiveRegion(data) {
         payload: data
     }
 }
+
+
+function getNotifications() {
+    return dispatch => {
+        userService.getNotifications()
+            .then(({response}) => {
+                dispatch({
+                    type: userConstants.SET_NOTIFICATIONS,
+                    payload: response
+                })
+            })
+    }
+}
+
+function getAccountStatus(id) {
+    return dispatch => {
+        userService.getAccountStatus(id)
+            .then(({result}) => {
+                dispatch(setInformation({subscription: result}))
+            })
+    }
+}
+function actualizeActiveRegion() {
+    return {
+        type: userConstants.ACTUALIZE_ACTIVE_REGION,
+    }}
 
 
 

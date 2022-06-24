@@ -3,8 +3,7 @@ import USAFlag from '../../../assets/img/icons/us-flag.png'
 import {Spin} from "antd"
 import sectionIcon from '../../../assets/img/account/api-connection-icon.svg'
 
-const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) => {
-
+const SellerAccount = ({account, onDisconnect, deleteProcessing, onConnect}) => {
     const Actions = ({type}) => {
         if (account[`is_${type}_attached`]) {
             return (
@@ -21,69 +20,37 @@ const SellerAccount = ({account, onDisconnect, deleteProcessing, onReconnect}) =
             )
         } else {
             return (
-                <button className={'btn default'} onClick={() => onReconnect(account)}>
+                <button className={'btn default'} onClick={() => onConnect(account, type)}>
                     Connect
                 </button>
             )
         }
     }
 
-    // const MWSStatus = () => {
-    //     if (account.is_mws_attached === false) {
-    //         return <span style={{color: '#FF5256'}}>Canceled</span>
-    //     } else if (account.amazon_mws.is_connected && account.amazon_mws.id && account.amazon_mws.status === 'IN_PROGRESS') {
-    //         return <span style={{color: '#f0b849'}}>Verifying</span>
-    //     } else if (account.amazon_mws.id && account.amazon_mws.status === 'SUCCESS') {
-    //         return <span style={{color: '#7FD3A1'}} className={'success'}>
-    //             Success <br/>
-    //             {account.seller_id && <span>Seller id: {account.seller_id}</span>}
-    //         </span>
-    //     } else if (account.amazon_mws.id && (account.amazon_mws.status === 'FAILED' || account.amazon_mws.status === 'UNAUTHORIZED' || account.amazon_mws.status === 'REFRESH_INVALID')) {
-    //         return <span style={{color: '#FF5256'}}>Failed</span>
-    //     } else {
-    //         return ''
-    //     }
-    // }
-
-
     const MWSStatus = () => {
         if (account.is_mws_attached === false) {
             return <span style={{color: '#FF5256'}}>Canceled</span>
-        } else {
+        } else if (account.mws_access_status === 'CREDENTIALS_SUCCESS') {
             return <span style={{color: '#7FD3A1'}} className={'success'}>
                  Success <br/>
                 {account.seller_id && <span>Seller id: {account.seller_id}</span>}
                          </span>
+        } else {
+            return <span style={{color: '#FF5256'}}>Failed</span>
         }
     }
 
 
-    // const PPCStatus = () => {
-    //     if (account.amazon_ppc.id && account.amazon_ppc.is_connected === false) {
-    //         return <span style={{color: '#FF5256'}}>Canceled</span>
-    //     } else if (account.amazon_ppc.is_connected && account.amazon_ppc.id && account.amazon_ppc.status === 'IN_PROGRESS') {
-    //         return <span style={{color: '#f0b849'}}>Verifying</span>
-    //     } else if (account.amazon_ppc.id && account.amazon_ppc.status === 'SUCCESS') {
-    //         return <span style={{color: '#7FD3A1'}} className={'success'}>
-    //             Success <br/>
-    //             {account.amazon_ppc.account_email && <span>Email: {account.amazon_ppc.account_email}</span>}
-    //         </span>
-    //     } else if (account.amazon_ppc.id && (account.amazon_ppc.status === 'FAILED' || account.amazon_ppc.status === 'UNAUTHORIZED' || account.amazon_ppc.status === 'REFRESH_INVALID')) {
-    //         return <span style={{color: '#FF5256'}}>Failed</span>
-    //     } else {
-    //         return ''
-    //     }
-    // }
-
     const PPCStatus = () => {
         if (account.is_amazon_ads_api_attached === false) {
             return <span style={{color: '#FF5256'}}>Canceled</span>
-        } else {
+        } else if (account.amazon_ads_api_access_status === 'CREDENTIALS_SUCCESS') {
             return <span style={{color: '#7FD3A1'}} className={'success'}>
                 Success <br/>
-                {/*{account.amazon_ppc.account_email && <span>Email: {account.amazon_ppc.account_email}</span>}*/}
+                {account.seller_id && <span>Seller id: {account.seller_id}</span>}
             </span>
-
+        } else {
+            return <span style={{color: '#FF5256'}}>Failed</span>
         }
     }
 

@@ -1,4 +1,5 @@
 import {userConstants} from '../constans/actions.type'
+import _ from 'lodash'
 
 export const defaultImportStatus = {
     analytics: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
@@ -13,15 +14,6 @@ const initialState = {
     notFirstEntry: false,
     user: {},
     plans: {},
-    account_links: [{
-        amazon_mws: {
-            is_connected: false
-        },
-        amazon_ppc: {
-            is_connected: false
-        },
-    }],
-    default_accounts: {},
 
     subscription: {
         trial: {},
@@ -37,10 +29,10 @@ const initialState = {
             last_notice_date: undefined
         }
     },
-    amazonRegionAccounts: [],
     fetchingAmazonRegionAccounts: true,
-    activeAmazonRegion: localStorage.getItem('activeRegion')  ? JSON.parse(localStorage.getItem('activeRegion')) : undefined,
-    activeAmazonMarketplace: localStorage.getItem('activeMarketplace')  ? JSON.parse(localStorage.getItem('activeMarketplace')) : undefined,
+    amazonRegionAccounts: [],
+    activeAmazonRegion: localStorage.getItem('activeRegion') ? JSON.parse(localStorage.getItem('activeRegion')) : undefined,
+    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') ? JSON.parse(localStorage.getItem('activeMarketplace')) : undefined,
     importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
@@ -73,6 +65,36 @@ export function user(state = initialState, action) {
                 ...state,
                 amazonRegionAccounts: [...action.payload],
                 fetchingAmazonRegionAccounts: false
+            }
+
+        case userConstants.UPDATE_AMAZON_REGION_ACCOUNTS:
+            return {
+                ...state,
+                amazonRegionAccounts: [...state.amazonRegionAccounts.map(i => {
+                    if (i.id === action.payload.id) {
+                        return ({
+                            ...i,
+                            ...action.payload
+                        })
+                    } else {
+                        return i
+                    }
+                })]
+            }
+        case userConstants.SET_NOTIFICATIONS:
+            return {
+                ...state,
+                notifications: action.payload
+            }
+
+        case userConstants.ACTUALIZE_ACTIVE_REGION:
+            const region = _.find(state.amazonRegionAccounts, {id: state.activeAmazonRegion.id})
+
+            localStorage.setItem('activeRegion', JSON.stringify(region))
+
+            return {
+                ...state,
+                activeAmazonRegion: region,
             }
 
         case userConstants.SET_ACTIVE_REGION:

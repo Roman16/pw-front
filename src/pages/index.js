@@ -38,9 +38,6 @@ const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/Product
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
 
-let timerId = null
-
-
 function throttle(func, delay) {
     let timeout = null
 
@@ -74,21 +71,15 @@ const ConnectedAmazonRoute = props => {
     const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
         activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion)
 
-    if (amazonRegionAccounts.length > 0 && activeAmazonRegion?.is_amazon_ads_api_attached && activeAmazonRegion?.is_mws_attached) {
-        return <Route {...props} />
-    } else {
+    if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
+    } else if (!activeAmazonRegion.is_mws_attached) {
+        return <Redirect to={`/connect-mws-account/${activeAmazonRegion.region_type}`}/>
+    } else if (!activeAmazonRegion.is_amazon_ads_api_attached) {
+        return <Redirect to={`/connect-ppc-account/${activeAmazonRegion.id}`}/>
+    } else {
+        return <Route {...props} />
     }
-    //
-    // if (amazonRegionAccounts.length === 0) {
-    //     return <Redirect to="/connect-amazon-account"/>
-    // } else if (0) {
-    //     return <Redirect to="/connect-mws-account"/>
-    // } else if (0) {
-    //     return <Redirect to="/connect-ppc-account"/>
-    // } else {
-    //     return <Route {...props} />
-    // }
 }
 
 
@@ -99,10 +90,13 @@ const AuthorizedUser = (props) => {
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
 
     const {user, lastStatusAction, fetchingAmazonRegionAccounts} = useSelector(state => ({
-        user: state.user,
-        lastStatusAction: state.user.lastUserStatusAction,
-        fetchingAmazonRegionAccounts: state.user.fetchingAmazonRegionAccounts,
-    }))
+            user: state.user,
+            lastStatusAction: state.user.lastUserStatusAction,
+            fetchingAmazonRegionAccounts: state.user.fetchingAmazonRegionAccounts,
+        })),
+        activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
+        amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts)
 
 
     document.addEventListener("visibilitychange", () => {
@@ -128,11 +122,42 @@ const AuthorizedUser = (props) => {
         userService.getAmazonRegionAccounts()
             .then(({result}) => {
                 dispatch(userActions.setAmazonRegionAccounts(result))
+
+                if (result.length > 0 && activeAmazonRegion) {
+                    userService.checkImportStatus(activeAmazonMarketplace.id)
+                        .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
+
+                } else if (result.length > 0 && !activeAmazonRegion) {
+                    userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
+                        .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
+
+                    dispatch(userActions.setActiveRegion({
+                        region: result[0],
+                        marketplace: result[0].amazon_region_account_marketplaces[0]
+                    }))
+                } else if (result.length === 0) {
+                    dispatch(userActions.setActiveRegion({
+                        region: undefined,
+                        marketplace: undefined
+                    }))
+                }
             })
             .then(() => {
                 setLoadingUserInformation(false)
             })
     }, [])
+
+    useEffect(() => {
+        activeAmazonMarketplace && dispatch(userActions.getNotifications())
+    }, [activeAmazonMarketplace])
+
+    useEffect(() => {
+        activeAmazonRegion && dispatch(userActions.getAccountStatus(activeAmazonRegion.id))
+    }, [activeAmazonRegion])
+
+    useEffect(() => {
+        amazonRegionAccounts.length > 0 && dispatch(userActions.actualizeActiveRegion())
+    }, [amazonRegionAccounts])
 
     useEffect(() => {
         if (user.user.id === 714) {
@@ -219,8 +244,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account" component={ConnectMWS}/>
-                                    <Route exact path="/connect-ppc-account" component={ConnectPPC}/>
+                                    <Route exact path="/connect-mws-account/:regionType?" component={ConnectMWS}/>
+                                    <Route exact path="/connect-ppc-account/:regionId?" component={ConnectPPC}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 
 
