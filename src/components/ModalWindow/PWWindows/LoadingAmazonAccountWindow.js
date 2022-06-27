@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import ModalWindow from "../ModalWindow"
 import {userActions} from "../../../actions/user.actions"
 import {productsActions} from "../../../actions/products.actions"
@@ -52,6 +52,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     const [currentService, setCurrentService] = useState('')
     const dispatch = useDispatch()
     const prevVisibleRef = useRef();
+    const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     let requiredParts = {}
 
@@ -66,7 +67,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
 
     const checkStatus = async () => {
         try {
-            const importStatus = await userService.checkImportStatus()
+            const importStatus = await userService.checkImportStatus(activeAmazonMarketplace.id)
             dispatch(userActions.updateUser({importStatus: importStatus.result}))
         } catch (e) {
 
@@ -106,12 +107,6 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
             clearInterval(intervalId)
         })
     }, [visible])
-
-    useEffect(() => {
-        window.addEventListener("storage", (e) => {
-            if (e.key === 'importStatus') checkStatus()
-        })
-    }, [])
 
     useEffect(() => {
         if (pathname.includes('/ppc/automation') || pathname.includes('/ppc/report')) setCurrentService('optimization')

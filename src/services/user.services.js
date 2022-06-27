@@ -221,8 +221,8 @@ function getCouponStatus(coupon) {
     return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function getSubscriptionsState(scope) {
-    return api('get', `${userUrls.subscriptionState}?scopes[]=${scope}`, undefined, undefined, undefined, undefined, undefined, false)
+function getSubscriptionsState(scope, id) {
+    return api('get', `${userUrls.subscriptionState}?amazon_region_account_id=${id}&scopes[]=${scope}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function activateSubscription(data) {
@@ -237,8 +237,8 @@ function cancelSubscription(data) {
     return api('post', userUrls.cancelSubscription, data, undefined, undefined, undefined, undefined, false)
 }
 
-function getActivateInfo({scope, coupon}) {
-    return api('get', `${userUrls.activateInfo}?scopes[]=${scope}${coupon ? `&coupon=${coupon}` : ''}`, undefined, undefined, undefined, undefined, undefined, false)
+function getActivateInfo({scope, coupon, id}) {
+    return api('get', `${userUrls.activateInfo}?amazon_region_account_id=${id}&scopes[]=${scope}${coupon ? `&coupon=${coupon}` : ''}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getCouponInfo(coupon) {

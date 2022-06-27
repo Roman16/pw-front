@@ -53,7 +53,7 @@ function throttle(func, delay) {
 
 const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
 
-export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone
+export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
@@ -124,12 +124,13 @@ const AuthorizedUser = (props) => {
         userService.getAmazonRegionAccounts()
             .then(({result}) => {
                 dispatch(userActions.setAmazonRegionAccounts(result))
+                console.log(activeAmazonMarketplace)
 
-                if (result.length > 0 && activeAmazonRegion) {
+                if (result.length > 0 && activeAmazonMarketplace) {
                     userService.checkImportStatus(activeAmazonMarketplace.id)
                         .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
 
-                } else if (result.length > 0 && !activeAmazonRegion) {
+                } else if (result.length > 0 && !activeAmazonMarketplace) {
                     userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
                         .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
 
@@ -139,8 +140,8 @@ const AuthorizedUser = (props) => {
                     }))
                 } else if (result.length === 0) {
                     dispatch(userActions.setActiveRegion({
-                        region: undefined,
-                        marketplace: undefined
+                        region: null,
+                        marketplace: null
                     }))
                 }
             })

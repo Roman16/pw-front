@@ -31,8 +31,8 @@ const initialState = {
     },
     fetchingAmazonRegionAccounts: true,
     amazonRegionAccounts: [],
-    activeAmazonRegion: localStorage.getItem('activeRegion') ? JSON.parse(localStorage.getItem('activeRegion')) : undefined,
-    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') ? JSON.parse(localStorage.getItem('activeMarketplace')) : undefined,
+    activeAmazonRegion: localStorage.getItem('activeRegion') ? JSON.parse(localStorage.getItem('activeRegion')) : null,
+    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') ? JSON.parse(localStorage.getItem('activeMarketplace')) : null,
     importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
@@ -65,8 +65,8 @@ export function user(state = initialState, action) {
                 ...state,
                 amazonRegionAccounts: [...action.payload],
                 fetchingAmazonRegionAccounts: false,
-                activeAmazonRegion: state.activeAmazonRegion || action.payload[0],
-                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0].amazon_region_account_marketplaces[0]
+                activeAmazonRegion: state.activeAmazonRegion || action.payload[0] || null,
+                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null
             }
 
         case userConstants.UPDATE_AMAZON_REGION_ACCOUNTS:

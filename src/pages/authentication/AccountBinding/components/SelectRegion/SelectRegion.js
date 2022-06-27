@@ -98,6 +98,7 @@ const regions = [
     {
         key: 'FAR_EAST',
         title: 'Asia-Pacific',
+        disabled: true,
         icon: <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g>
                 <path
@@ -206,10 +207,10 @@ const SelectRegion = ({connectedAmazonAccounts, region, onGoNextStep, onGoBackSt
 
             <ul className="regions">
                 {regions.map(item => {
-                    const isDisabled = _.find(connectedAmazonAccounts, {region_type: item.key})
+                    const isDisabled = _.find(connectedAmazonAccounts, {region_type: item.key}) || item.disabled
 
                     return (
-                        <li className={`${region === item.key ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}
+                        <li className={`${region === item.key ? 'active' : ''} ${isDisabled  ? 'disabled' : ''}`}
                             onClick={() => !isDisabled && onChangeInput({
                                 target: {
                                     name: 'region_type',

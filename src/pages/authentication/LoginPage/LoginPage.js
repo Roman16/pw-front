@@ -78,6 +78,7 @@ const LoginPage = (props) => {
             localStorage.removeItem('userId')
             localStorage.removeItem('activeRegion')
             localStorage.removeItem('activeMarketplace')
+            localStorage.removeItem('importStatus')
 
             dispatch(userActions.logOut())
 

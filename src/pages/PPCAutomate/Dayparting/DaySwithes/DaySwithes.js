@@ -17,13 +17,13 @@ import {SVG} from "../../../../utils/icons"
 import {daypartingActions} from "../../../../actions/dayparting.actions"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {round} from "../../../../utils/round"
+import {activeTimezone} from "../../../index"
 
 const CancelToken = axios.CancelToken
 let source = null
 
-const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
 
-const timeLineShift = 24 - (moment.tz.zone(timezone).utcOffset(moment().utc()) / 60)
+const timeLineShift = 24 - (moment.tz.zone(activeTimezone).utcOffset(moment().utc()) / 60)
 
 const defaultList = Array.from({length: 168}, () => '1').join('')
 

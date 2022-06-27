@@ -74,15 +74,10 @@ const FullJourney = () => {
     }
 
     useEffect(() => {
-        if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'}) && _.find(connectedAmazonAccounts, {region_type: 'EUROPE'}) && _.find(connectedAmazonAccounts, {region_type: 'FAR_EAST'})) {
+        if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'}) && _.find(connectedAmazonAccounts, {region_type: 'EUROPE'})) {
             setFields({
                 ...fields,
                 region_type: undefined
-            })
-        } else if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'}) && _.find(connectedAmazonAccounts, {region_type: 'EUROPE'})) {
-            setFields({
-                ...fields,
-                region_type: 'FAR_EAST'
             })
         } else if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'})) {
             setFields({

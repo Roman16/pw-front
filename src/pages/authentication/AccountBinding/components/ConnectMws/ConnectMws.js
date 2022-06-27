@@ -57,12 +57,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                 </p>
 
                 <div className="form-group select-marketplace">
-                    <label htmlFor="">Select your Amazon Marketplaces:</label>
-
-                    <CustomSelect value={'USACAMX'}>
-                        <Option value={'USACAMX'}>North America (USA, CA, MX)</Option>
-                        <Option value={'UKDEFRESITINTR'} disabled>Europe (UK, DE, FR, ES, IT, IN, TR)</Option>
-                    </CustomSelect>
+                    <label htmlFor="">You are connecting {fields.region_type === 'NORTH_AMERICA' ? 'North America (US, CA, MX, BR)' : 'Europe (UK, DE, FR, ES, IT, IN, TR)'}  region</label>
 
                     <button disabled={processing} className='btn default' onClick={getCredentialsHandler}>
                         Get Credentials

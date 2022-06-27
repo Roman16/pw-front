@@ -52,8 +52,9 @@ const Subscriptions = (props) => {
 
     const user = useSelector(state => state.user)
     const importStatus = useSelector(state => state.user.importStatus)
+    const activeRegion = useSelector(state => state.user.activeAmazonRegion)
 
-    const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
+    const amazonIsConnected = activeRegion.is_amazon_ads_api_attached && activeRegion.is_mws_attached
 
     const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true) || visibleSomethingWrongWindow
 
@@ -67,7 +68,7 @@ const Subscriptions = (props) => {
         }
 
         try {
-            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
+            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope, activeRegion.id), userService.getActivateInfo({scope, id: activeRegion.id})])
 
 
             if (state.result[scope].error || info.result[scope].error) {
@@ -216,11 +217,11 @@ const Subscriptions = (props) => {
     }
 
     useEffect(() => {
-        amazonIsConnected && getSubscriptionsState()
-    }, [])
+        amazonIsConnected && activeRegion && getSubscriptionsState()
+    }, [activeRegion])
 
     return (<>
-        {amazonIsConnected && <PageHeader user={user}/>}
+        {amazonIsConnected && <PageHeader activeRegion={activeRegion}/>}
 
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
