@@ -20,6 +20,7 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import CustomSelect from "../../../../components/Select/Select"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
+import {activeTimezone} from "../../../index"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -328,7 +329,7 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
                     // getCalendarContainer={(trigger) => trigger.parentNode.parentNode}
                     panelRender={<div>ttttt</div>}
                     renderExtraFooter={() => <>
-                        <p>America/Los_Angeles</p>
+                        <p>{activeTimezone}</p>
                         <div className="actions">
                             <button className={'btn default'} onClick={submitFieldHandler}>
                                 Save

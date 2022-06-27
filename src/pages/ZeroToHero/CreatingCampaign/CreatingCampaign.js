@@ -17,6 +17,7 @@ import {cleanMainKeyword, findExistingDuplicateOfNewMainKeyword} from "../compon
 import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import AvailableZTHWindow from "./AvailableZTHWindow/AvailableZTHWindow"
+import {activeTimezone} from "../../index"
 
 
 const initialProductSettings = {
@@ -25,7 +26,7 @@ const initialProductSettings = {
         no_portfolio: false
     },
     campaigns: {
-        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
+        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString(),
         set_to_paused: false,
         main_keywords: [],
         bidding_strategy: 'legacyForSales',

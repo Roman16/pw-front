@@ -2,6 +2,7 @@ import api from './request'
 import {dashboardUrls} from '../constans/api.urls'
 import moment from "moment"
 import tx from 'moment-timezone'
+import {activeTimezone} from "../pages"
 
 export const dashboardServices = {
     fetchMetricsStatistics,
@@ -12,8 +13,8 @@ export const dashboardServices = {
     fetchProductOptimizationDetails
 }
 
-export const startDateFormatting = (date) => date === 'lifetime' || date == null ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
-export const endDateFormatting = (date) => date === 'lifetime' || date == null ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()
+export const startDateFormatting = (date) => date === 'lifetime' || date == null ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString()
+export const endDateFormatting = (date) => date === 'lifetime' || date == null ? 'lifetime' : moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString()
 
 function fetchMetricsStatistics({startDate, endDate, selectedProduct, onlyOptimization, advertisingType}) {
     const parameters = [

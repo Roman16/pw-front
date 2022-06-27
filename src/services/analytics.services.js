@@ -36,7 +36,9 @@ const stateIdValues = {
 }
 
 const dateRangeFormatting = (dateRange) => {
-    const offset =  moment.tz.zone('America/Los_Angeles').utcOffset(moment.utc()) / 60
+    const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
+
+    const offset =  moment.tz.zone(timezone).utcOffset(moment.utc()) / 60
     if (dateRange.startDate === 'lifetime') return ''
     else return `${moment(dateRange.startDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T00:00:00.000-0${offset}:00,${moment(dateRange.endDate, 'YYYY-MM-DD').format('YYYY-MM-DD')}T23:59:59.999-0${offset}:00`
 }
@@ -88,7 +90,6 @@ const urlGenerator = (url, pagination, sorting, filters) => {
     }
 
     return `${url}${filtersHandler(filters)}&page=${pagination.page}&size=${pagination.pageSize}${parameters.join('')}`
-
 }
 
 function fetchTableData(locationKey, paginationParams, sortingParams = {}, filters = [], cancelToken, idList = '') {

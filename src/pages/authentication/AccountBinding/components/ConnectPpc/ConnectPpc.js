@@ -53,7 +53,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                     scope = urlParams.get('scope')
 
                 try {
-                    const {result} =  await userService.attachAmazonAds({
+                    const {result} = await userService.attachAmazonAds({
                         amazon_region_account_id: regionId,
                         code,
                         scope,

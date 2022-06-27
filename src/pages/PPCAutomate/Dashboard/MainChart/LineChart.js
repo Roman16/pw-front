@@ -14,6 +14,7 @@ import {
 } from 'recharts'
 import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
+import {activeTimezone} from "../../../index"
 
 const animationDuration = 1000,
     dashedLineAnimationDuration = 1000,
@@ -35,7 +36,7 @@ const Chart = ({
 
     useEffect(() => {
         setChartData(data.map(item => {
-            if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+            if (`${moment().tz(activeTimezone).format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                 return ({
                     date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,
                     daily_first_metric_value: null,
@@ -47,7 +48,7 @@ const Chart = ({
                     dashed_daily_first_metric_value: item.daily_first_metric_value,
                     dashed_daily_second_metric_value: item.daily_second_metric_value,
                 })
-            } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+            } else if (`${moment().tz(activeTimezone).subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                 return ({
                     ...item,
                     date: `${moment(item.date).format('YYYY-MM-DD')}T00:00:00.000Z`,

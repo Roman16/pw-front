@@ -21,7 +21,9 @@ import {round} from "../../../../utils/round"
 const CancelToken = axios.CancelToken
 let source = null
 
-const timeLineShift = 24 - (moment.tz.zone('America/Los_Angeles').utcOffset(moment().utc()) / 60)
+const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
+
+const timeLineShift = 24 - (moment.tz.zone(timezone).utcOffset(moment().utc()) / 60)
 
 const defaultList = Array.from({length: 168}, () => '1').join('')
 

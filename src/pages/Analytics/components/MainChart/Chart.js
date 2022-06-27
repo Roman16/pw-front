@@ -15,6 +15,7 @@ import moment from "moment"
 import {analyticsAvailableMetricsList, metricKeys} from '../../componentsV2/MainMetrics/metricsList'
 import _ from "lodash"
 import {round} from "../../../../utils/round"
+import {activeTimezone} from "../../../index"
 
 const animationDuration = 1000,
     animationEasing = 'linear',
@@ -47,10 +48,10 @@ const Chart = ({
                     event[metric] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
                     event[`${metric}_7d`] = metricType === 'percent' ? +item[`${metric}_7d`] * 100 : +item[`${metric}_7d`]
 
-                    if (`${moment().tz('America/Los_Angeles').format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz('America/Los_Angeles').subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+                    if (`${moment().tz(activeTimezone).format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz(activeTimezone).subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz(activeTimezone).subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                         event[metric] = null
                         event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
-                    } else if (`${moment().tz('America/Los_Angeles').subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
+                    } else if (`${moment().tz(activeTimezone).subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
                         event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
                     }
                 }

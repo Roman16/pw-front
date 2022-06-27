@@ -4,6 +4,7 @@ import {numberMask} from "../../../../../utils/numberMask"
 import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
 import _ from 'lodash'
+import {activeTimezone} from "../../../../index"
 
 const CreateCampaignOverview = ({createData}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
@@ -40,12 +41,12 @@ const CreateCampaignOverview = ({createData}) => {
         startDate: {
             title: 'Start',
             fieldKey: 'startDate',
-            render: value => value && moment(value).tz('America/Los_Angeles').format('MMM DD, YYYY')
+            render: value => value && moment(value).tz(activeTimezone).format('MMM DD, YYYY')
         },
         endDate: {
             title: 'End',
             fieldKey: 'endDate',
-            render: value => value ? moment(value).tz('America/Los_Angeles').format('MMM DD, YYYY') : 'No end date'
+            render: value => value ? moment(value).tz(activeTimezone).format('MMM DD, YYYY') : 'No end date'
         },
         dailyBudget: {
             title: 'Daily Budget',

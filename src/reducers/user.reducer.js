@@ -64,7 +64,9 @@ export function user(state = initialState, action) {
             return {
                 ...state,
                 amazonRegionAccounts: [...action.payload],
-                fetchingAmazonRegionAccounts: false
+                fetchingAmazonRegionAccounts: false,
+                activeAmazonRegion: state.activeAmazonRegion || action.payload[0],
+                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0].amazon_region_account_marketplaces[0]
             }
 
         case userConstants.UPDATE_AMAZON_REGION_ACCOUNTS:

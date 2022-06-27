@@ -14,6 +14,7 @@ import {
 } from "../../../Analytics/Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import axios from "axios"
 import _ from 'lodash'
+import {activeTimezone} from "../../../index"
 
 const Option = Select.Option
 
@@ -137,7 +138,7 @@ const RequiredSettings = ({
 
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
-            [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
+            [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString() : null,
         })
     }
 

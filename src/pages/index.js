@@ -53,6 +53,8 @@ function throttle(func, delay) {
 
 const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
 
+export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone
+
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
             userId: state.user.user.id,
@@ -147,9 +149,9 @@ const AuthorizedUser = (props) => {
             })
     }, [])
 
-    useEffect(() => {
-        activeAmazonMarketplace && dispatch(userActions.getNotifications())
-    }, [activeAmazonMarketplace])
+    // useEffect(() => {
+    //     activeAmazonMarketplace && dispatch(userActions.getNotifications())
+    // }, [activeAmazonMarketplace])
 
     useEffect(() => {
         activeAmazonRegion && dispatch(userActions.getAccountStatus(activeAmazonRegion.id))

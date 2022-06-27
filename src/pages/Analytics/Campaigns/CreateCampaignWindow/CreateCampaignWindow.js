@@ -17,12 +17,13 @@ import {notification} from "../../../../components/Notification"
 import _ from "lodash"
 import moment from "moment"
 import {dateRequestFormat} from "../../../../utils/dateFormatting"
+import {activeTimezone} from "../../../index"
 
 const defaultState = {
     //campaign
     name: undefined,
     portfolioId: null,
-    startDate: dateRequestFormat(moment().tz('America/Los_Angeles')),
+    startDate: dateRequestFormat(moment().tz(activeTimezone)),
     endDate: undefined,
     calculatedBudget: undefined,
     advertisingType: 'SponsoredProducts',

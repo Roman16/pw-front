@@ -17,6 +17,7 @@ import {updateResponseHandler} from "../componentsV2/RenderPageParts/RenderPageP
 import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import locale from 'antd/lib/locale/en_US.js.map'
+import {activeTimezone} from "../../index"
 
 const Option = Select.Option
 
@@ -301,22 +302,22 @@ const CampaignSettings = () => {
 
                     <div className="value date">
                         <DatePicker
-                            disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day') || isSaasClient}
+                            disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz(activeTimezone).endOf('day') || isSaasClient}
                             showToday={false}
                             allowClear={false}
-                            value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
+                            value={settingParams.startDate && moment(settingParams.startDate).tz(activeTimezone)}
                             onChange={(date) => changeSettingsHandler({startDate: dateRequestFormat(date)})}
                             format={'MMM DD, YYYY'}
                             locale={locale}
                             dropdownClassName={`dropdown-with-timezone`}
                             disabledDate={date => disabledStartDate(date, settingParams.endDate)}
                             renderExtraFooter={() => <>
-                                <p className={'time-zone'}>America/Los_Angeles</p>
+                                <p className={'time-zone'}>{activeTimezone}</p>
                             </>}
                         />
 
                         <DatePicker
-                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
+                            value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz(activeTimezone) : undefined}
                             placeholder={'No end date'}
                             disabled={settingParams.state === 'archived' || isSaasClient}
                             showToday={false}
@@ -338,7 +339,7 @@ const CampaignSettings = () => {
                                     No end date
                                 </button>
 
-                                <p className={'time-zone'}>America/Los_Angeles</p>
+                                <p className={'time-zone'}>{activeTimezone}</p>
                             </>}
 
                         />
