@@ -13,11 +13,11 @@ import moment from 'moment'
 import * as Sentry from "@sentry/browser"
 import AvailableMarketplaces from "./ConnectedRegions/ConnectedRegions"
 import {userActions} from "../../actions/user.actions"
+import $ from 'jquery'
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
-
 
 
 const Sidebar = () => {
@@ -63,6 +63,14 @@ const Sidebar = () => {
 
     const toggleMarketplacesWindow = () => {
         setVisibleMarketplacesWindow(prevState => !prevState)
+
+        if(!visibleMarketplacesWindow) {
+            var obj = $('.current-marketplace')
+            var offset = obj.offset()
+            var new_top = offset.top
+
+            $('.available-marketplaces').css('top', new_top + 'px')
+        }
     }
 
     const setMarketplaceHandler = (data) => {
@@ -143,10 +151,29 @@ const Sidebar = () => {
     }, [wrapperRef])
 
 
+    useEffect(() => {
+        $('.nav-item.has-child').hover(function () {
+                var popup_div = $('.sub-menu')
+
+                var obj = $(this)
+                var offset = obj.offset()
+
+                var new_top = offset.top + 45
+
+                popup_div.css('top', new_top + 'px')
+         }
+        )
+    }, [])
+
+    const sidebarScrollHandler = () => {
+        $('.sub-menu').hide()
+        setVisibleMarketplacesWindow(false)
+    }
+
 
     return (
         <>
-            <div className={`sidebar ${className}`}>
+            <div className={`sidebar ${className}`} onScroll={sidebarScrollHandler}>
                 <div className="sidebar-header">
                     <div className="burger" onClick={toggleCollapsed}>
                         <div/>

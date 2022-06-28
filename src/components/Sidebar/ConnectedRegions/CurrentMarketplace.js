@@ -7,30 +7,6 @@ import {userActions} from "../../../actions/user.actions"
 import usFlag from '../../../assets/img/icons/us-flag.png'
 
 const CurrentMarketplace = ({user, onToggle, active}) => {
-    // const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues[user.default_accounts.amazon_ppc.marketplace_id]),
-    const [activeMarketplace, setActiveMarketplace] = useState(marketplaceIdValues['ATVPDKIKX0DER']),
-        [processing, setProcessing] = useState(true)
-
-    const dispatch = useDispatch()
-
-    const toggleMarketplaceHandler = async (marketplace) => {
-        setProcessing(true)
-
-        try {
-            setActiveMarketplace({
-                ...activeMarketplace,
-                countryCode: marketplace
-            })
-            const res = await userService.toggleMarketplace(user.account_links[0].amazon_ppc.id)
-
-            dispatch(userActions.setInformation(res))
-        } catch (e) {
-            console.log(e)
-        }
-        setProcessing(false)
-    }
-
-
     return (<>
         <div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
             <div className="country-active__title">

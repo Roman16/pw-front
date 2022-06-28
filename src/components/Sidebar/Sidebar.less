@@ -88,28 +88,10 @@
       background: #3F4448;
     }
 
-    &::before {
-      content: '';
-      width: 1.5714285714285714rem;
-      height: 1.5714285714285714rem;
-      border-radius: 2px;
-      background: #2A2F33;
-      transform: rotate(-45deg);
-      position: absolute;
-      right: -1rem;
-      top: 0;
-      bottom: 0;
-      margin: auto 0;
-      opacity: 0;
-    }
-
-    &.active{
+    &.active {
       background: #3F4448;
-
-      &::before {
-      opacity: 1;
     }
-}
+
     .country-active__title {
       display: flex;
       align-items: center;
@@ -556,7 +538,7 @@
               position: absolute;
               left: -0.7857142857142857rem;
               top: 0.9285714285714286rem;
-              background: #353A3E;
+              background: #2A2F33;
               opacity: 0;
               z-index: 1;
               //transition-delay: .1s;
@@ -569,7 +551,7 @@
               width: max-content;
               max-height: max-content;
               left: 5.14285714rem;
-              background: #353A3E;
+              background: #2A2F33;
               z-index: 10001111110;
               border-radius: 0 8px 8px 0;
               overflow: initial;
@@ -896,22 +878,42 @@
 .available-marketplaces {
   width: @sidebarWidth;
   position: fixed;
-  top: 76px;
+  top: 77px;
   left: 5.14285714rem;
   background: #2A2F33;
-  z-index: 11;
+  z-index: 111;
   padding: 0.7857142857142857rem 0 2.142857142857143rem;
   visibility: hidden;
   overflow: hidden;
   max-height: 0;
 
+
+  &::before {
+    content: '';
+    width: 1.5714285714285714rem;
+    height: 1.5714285714285714rem;
+    transform: rotate(45deg);
+    position: absolute;
+    left: -0.7857142857142857rem;
+    top: 1.2142857142857142rem;
+    background: #2A2F33;
+    opacity: 1;
+    z-index: 11;
+    //transition-delay: .1s;
+  }
+
   &.visible {
     visibility: visible;
     max-height: 600px;
+    overflow: inherit;
 
     &.with-sidebar {
       left: 15.71428571rem;
     }
+  }
+
+  ul {
+    list-style: none;
   }
 
   .form-group.search {
@@ -922,12 +924,12 @@
 
     input {
       width: 100%;
-      background: #353A3E;
+      background: transparent;
       color: #fff;
-      border: 0;
       font-size: 0.8571428571428571rem;
       padding-right: 2.142857142857143rem;
       transition: 0s !important;
+      border: 1px solid #464B50;
 
       &::placeholder {
         color: rgba(243, 243, 243, 0.5);
@@ -1155,6 +1157,7 @@
 
 .toggle-marketplace-window {
   padding-left: 2px !important;
+
 
   .ant-popover-arrow {
     display: none;

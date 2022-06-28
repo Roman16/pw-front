@@ -14,7 +14,13 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
     const regionsSearchHandler = ({target: {value}}) => {
         value = value.trim().toLowerCase()
 
-        setLocalRegions([...regions.filter(region => region.account_alias.toLowerCase().includes(value) || region.amazon_region_account_marketplaces.some(marketplace => marketplace.marketplace_id.toLowerCase().includes(value)))])
+        setLocalRegions([...regions
+            .filter(region => region.account_alias.toLowerCase().includes(value) || region.amazon_region_account_marketplaces.some(marketplace => marketplace.marketplace_id.toLowerCase().includes(value)))
+            .map(region => ({
+                ...region,
+                amazon_region_account_marketplaces: region.amazon_region_account_marketplaces.filter(marketplace => marketplace.marketplace_id.toLowerCase().includes(value))
+            }))
+        ])
     }
 
     useEffect(() => {
