@@ -31,25 +31,12 @@ export const userService = {
     addPaymentMethod,
     setDefaultPaymentMethod,
     deletePaymentMethod,
-    reactivateSubscription,
-    subscribe,
     confirmPayment,
-    updateSubscriptionStatus,
-    applyCoupon,
-    getSubscription,
-    getCouponStatus,
-    ebookOnSubscribe,
-    onSubscribe,
-    sendContacts,
     startFreeTrial,
     toggleMarketplace,
 
     getBlogPosts,
     sendContactForm,
-    sendShortContactForm,
-    sendFormToPartnerSupport,
-    sendCustomerSatisfactionSurveyForm,
-    sendGrowthAccelerationForm,
 
     getRegistrationTokens,
     checkImportStatus,
@@ -196,76 +183,41 @@ function startFreeTrial() {
 
 //-------------------------------------
 //-------------subscription---------
-function getSubscription() {
-    return api('get', userUrls.subscriptionList, undefined, undefined, undefined, undefined, undefined, false)
-}
-
-function subscribe(data) {
-    return api('post', userUrls.subscribe(data.subscription_id), data, undefined, undefined, undefined, undefined, false)
-}
-
-function reactivateSubscription(data) {
-    return api('post', userUrls.reactivate(data.subscription_id), data, undefined, undefined, undefined, undefined, false)
-}
-
-
-function updateSubscriptionStatus() {
-    return api('post', userUrls.updateStatus, undefined, undefined, undefined, undefined, undefined, false)
-}
-
-function applyCoupon(id, planId, coupon) {
-    return api('post', `${userUrls.coupon(id)}?coupon_code=${coupon}&subscription_plan_id=${planId}`, undefined, undefined, undefined, undefined, undefined, false)
-}
-
-function getCouponStatus(coupon) {
-    return api('post', `${userUrls.couponStatus}?coupon_code=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
-}
-
 function getSubscriptionsState(scope, id) {
     return api('get', `${userUrls.subscriptionState}?amazon_region_account_id=${id}&scopes[]=${scope}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function activateSubscription(data) {
-    return api('post', userUrls.activateSubscription, data, undefined, undefined, undefined, undefined, false)
+function activateSubscription(data, id) {
+    return api('post', `${userUrls.activateSubscription}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
 }
 
-function retryPayment(data) {
-    return api('post', userUrls.retryPayment, data, undefined, undefined, undefined, undefined, false)
+function retryPayment(data, id) {
+    return api('post', `${userUrls.retryPayment}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
 }
 
-function cancelSubscription(data) {
-    return api('post', userUrls.cancelSubscription, data, undefined, undefined, undefined, undefined, false)
+function cancelSubscription(data, id) {
+    return api('post', `${userUrls.cancelSubscription}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
 }
 
 function getActivateInfo({scope, coupon, id}) {
     return api('get', `${userUrls.activateInfo}?amazon_region_account_id=${id}&scopes[]=${scope}${coupon ? `&coupon=${coupon}` : ''}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function getCouponInfo(coupon) {
-    return api('get', `${userUrls.couponInfo}?coupon=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
+function getCouponInfo(coupon, id) {
+    return api('get', `${userUrls.couponInfo}?amazon_region_account_id=${id}&coupon=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function activateCoupon(data) {
-    return api('post', `${userUrls.couponActivate}`, data, undefined, undefined, undefined, undefined, false)
+function activateCoupon(data, id) {
+    return api('post', `${userUrls.couponActivate}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
 }
+
+//-------------------------------------
 
 function toggleMarketplace(id) {
     return api('post', `${userUrls.toggleMarketplace(id)}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 //-------------------------------------
-function ebookOnSubscribe(email) {
-    return api('post', `${userUrls.ebookSubscribe}`, email, undefined, undefined, undefined, undefined, false)
-}
-
-function onSubscribe(email) {
-    return api('post', `${userUrls.userSubscribe}`, email, undefined, undefined, undefined, undefined, false)
-}
-
-function sendContacts(data) {
-    return api('post', `${userUrls.contacts}`, data, undefined, undefined, undefined, undefined, false)
-}
-
 function sendContactForm(data) {
     return api('post', `${userUrls.contactForm}`, {
         ...data,
@@ -273,31 +225,11 @@ function sendContactForm(data) {
     }, undefined, undefined, undefined, undefined, false)
 }
 
-function sendShortContactForm(data) {
-    return api('post', `${userUrls.shortContactForm}`, {
-        ...data,
-        page_url: window.location.href
-    }, undefined, undefined, undefined, undefined, false)
-}
-
-function sendFormToPartnerSupport(data) {
-    return api('post', `${userUrls.partnerContactForm}`, {
-        ...data,
-        page_url: window.location.href
-    }, undefined, undefined, undefined, undefined, false)
-}
-
-function sendCustomerSatisfactionSurveyForm(data) {
-    return api('post', `${userUrls.customerSatisfactionSurveyForm}`, data, undefined, undefined, undefined, undefined, false)
-}
-
-function sendGrowthAccelerationForm(data) {
-    return api('post', `${userUrls.growthAccelerationForm}`, data, undefined, undefined, undefined, undefined, false)
-}
-
 function getRegistrationTokens() {
     return api('get', `${userUrls.registrationTokens}`, undefined, undefined, undefined, undefined, undefined, false)
 }
+
+//-------------------------------------
 
 function checkImportStatus(id) {
     return api('get', `${userUrls.importStatus}?amazon_region_account_marketplace_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
@@ -326,7 +258,6 @@ function attachAmazonAds(data) {
 function attachMWS(data) {
     return api('post', `${userUrls.mwsCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }
-
 
 function unsetMWS(id) {
     return api('delete', `${userUrls.mwsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)

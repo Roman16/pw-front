@@ -114,7 +114,7 @@ const Subscriptions = (props) => {
                 scope,
                 type: plan || selectedPlan,
                 coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
-            })
+            }, activeRegion.id)
 
             getSubscriptionsState()
             dispatch(userActions.getPersonalUserInfo())
@@ -157,7 +157,7 @@ const Subscriptions = (props) => {
                     const res = await userService.retryPayment({
                         type: subscriptionState.active_subscription_type,
                         scope
-                    })
+                    }, activeRegion.id)
 
                     retryPaymentHandler(res.result)
                 } catch (e) {
@@ -173,7 +173,7 @@ const Subscriptions = (props) => {
         setProcessingCancelSubscription(true)
 
         try {
-            await userService.cancelSubscription({scope})
+            await userService.cancelSubscription({scope}, activeRegion.id)
             getSubscriptionsState()
             setVisibleCancelSubscriptionsWindow(false)
         } catch (e) {
@@ -187,12 +187,12 @@ const Subscriptions = (props) => {
         setActivateCouponProcessing(true)
 
         try {
-            const {result} = await userService.getCouponInfo(coupon)
+            const {result} = await userService.getCouponInfo(coupon, activeRegion.id)
 
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type})
+                await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type}, activeRegion.id)
                 notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
                 setVisibleCancelSubscriptionsWindow(false)
@@ -282,6 +282,7 @@ const Subscriptions = (props) => {
             scope={scope}
             processing={activateProcessing}
             adSpend={user.ad_spend}
+            regionId={activeRegion.id}
 
             onClose={closeActivateWindowHandler}
             onActivate={subscribeHandler}

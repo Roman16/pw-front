@@ -141,12 +141,12 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('loadingAmazon')
         } else if (mobileCheck()) {
             setVisibleWindow('onlyDesktop')
+        } else if (user.subscription.trial.can_start_trial && user.subscription.active_subscription_type === null) {
+            setVisibleWindow('freeTrial')
         } else if ((!access.analytics && pathname.includes('/analytics')) || (!access.optimization && pathname.includes('/ppc/'))) {
             setVisibleWindow('notAccess')
         } else if (visibleSmallSpendWindow && user.ad_spend < 1000 && !user.user.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
             setVisibleWindow('smallSpend')
-        } else if (user.subscription.trial.can_start_trial && user.subscription.active_subscription_type === null) {
-            setVisibleWindow('freeTrial')
         } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0) {
             setVisibleWindow('newReportsCount')
         } else {
