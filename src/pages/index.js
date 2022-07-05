@@ -120,11 +120,12 @@ const AuthorizedUser = (props) => {
             return
         }
 
+        dispatch(userActions.getUserInfo())
+
 
         userService.getAmazonRegionAccounts()
             .then(({result}) => {
                 dispatch(userActions.setAmazonRegionAccounts(result))
-                console.log(activeAmazonMarketplace)
 
                 if (result.length > 0 && activeAmazonMarketplace) {
                     userService.checkImportStatus(activeAmazonMarketplace.id)

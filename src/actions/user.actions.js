@@ -32,36 +32,36 @@ function logOut() {
 
 function getUserInfo() {
     return dispatch => {
-        userService.getUserInfo().then(({result}) => {
-            const res = result
+        userService.getUserPersonalInformation()
+            .then((res) => {
 
-            const user = store.getState().user.user || null
+                const user = store.getState().user.user || null
 
-            if (user && (user.id !== res.user.id)) {
-                dispatch({
-                    type: productsConstants.SET_PRODUCT_LIST,
-                    payload: {
-                        result: [],
-                        fetching: false
-                    }
-                })
+                if (user && (user.id !== res.id)) {
+                    dispatch({
+                        type: productsConstants.SET_PRODUCT_LIST,
+                        payload: {
+                            result: [],
+                            fetching: false
+                        }
+                    })
 
-                dispatch({
-                    type: reportsConstants.SET_REPORTS_LIST,
-                    payload: {
-                        data: [],
-                        total_size: 0,
-                        today_changes: "0",
-                        counts: [],
-                        counts_with_new: [],
-                    }
-                })
-            }
+                    dispatch({
+                        type: reportsConstants.SET_REPORTS_LIST,
+                        payload: {
+                            data: [],
+                            total_size: 0,
+                            today_changes: "0",
+                            counts: [],
+                            counts_with_new: [],
+                        }
+                    })
+                }
 
-            localStorage.setItem('userId', res.user.id)
+                localStorage.setItem('userId', res.id)
 
-            dispatch(setInformation(res))
-        })
+                dispatch(setInformation(res))
+            })
     }
 }
 
@@ -189,10 +189,12 @@ function getAccountStatus(id) {
             })
     }
 }
+
 function actualizeActiveRegion() {
     return {
         type: userConstants.ACTUALIZE_ACTIVE_REGION,
-    }}
+    }
+}
 
 
 
