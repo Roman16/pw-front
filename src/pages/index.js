@@ -51,7 +51,7 @@ function throttle(func, delay) {
     }
 }
 
-const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
+const developer = (process.env.REACT_APP_ENV === "developer" || process.env.REACT_APP_ENV === "demo")
 
 export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
