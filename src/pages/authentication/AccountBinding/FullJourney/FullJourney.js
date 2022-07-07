@@ -73,24 +73,6 @@ const FullJourney = () => {
         history.push('/welcome')
     }
 
-    useEffect(() => {
-        if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'}) && _.find(connectedAmazonAccounts, {region_type: 'EUROPE'})) {
-            setFields({
-                ...fields,
-                region_type: undefined
-            })
-        } else if (_.find(connectedAmazonAccounts, {region_type: 'NORTH_AMERICA'})) {
-            setFields({
-                ...fields,
-                region_type: 'EUROPE'
-            })
-        } else {
-            setFields({
-                ...fields,
-                region_type: 'NORTH_AMERICA'
-            })
-        }
-    }, [connectedAmazonAccounts])
 
     return (
         <div className="amazon-connect full-journey">

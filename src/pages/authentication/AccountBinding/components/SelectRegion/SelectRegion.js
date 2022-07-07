@@ -1,7 +1,6 @@
 import React from "react"
 import {SVG} from "../../../../../utils/icons"
 import './SelectRegion.less'
-import _ from 'lodash'
 
 import {Radio} from "antd"
 
@@ -199,7 +198,7 @@ const regions = [
     }
 ]
 
-const SelectRegion = ({connectedAmazonAccounts, region, onGoNextStep, onGoBackStep, onCancel, onChangeInput}) => {
+const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInput}) => {
 
     return (
         <section className={'select-region-section'}>
@@ -207,7 +206,7 @@ const SelectRegion = ({connectedAmazonAccounts, region, onGoNextStep, onGoBackSt
 
             <ul className="regions">
                 {regions.map(item => {
-                    const isDisabled = _.find(connectedAmazonAccounts, {region_type: item.key}) || item.disabled
+                    const isDisabled =  item.disabled
 
                     return (
                         <li className={`${region === item.key ? 'active' : ''} ${isDisabled  ? 'disabled' : ''}`}
