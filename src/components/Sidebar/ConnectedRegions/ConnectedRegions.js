@@ -16,11 +16,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
         value = value.trim().toLowerCase()
 
         setLocalRegions([...regions
-            .filter(region => region.account_alias.toLowerCase().includes(value) || region.amazon_region_account_marketplaces.some(marketplace => marketplace.marketplace_id.toLowerCase().includes(value)))
-            .map(region => ({
-                ...region,
-                amazon_region_account_marketplaces: region.amazon_region_account_marketplaces.filter(marketplace => marketplace.marketplace_id.toLowerCase().includes(value))
-            }))
+            .filter(account => account.account_alias.toLowerCase().trim().includes(value.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(value.toLowerCase().replace(/\s+/g, '')))
         ])
     }
 
