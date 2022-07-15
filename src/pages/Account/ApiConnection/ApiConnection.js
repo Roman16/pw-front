@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {userService} from "../../../services/user.services"
 import {userActions} from "../../../actions/user.actions"
 import {EmptyData, NoFoundData} from "../../../components/Table/CustomTable"
-
+import _ from 'lodash'
 
 const ApiConnection = () => {
     const [sortType, setSortType] = useState(''),
@@ -21,8 +21,8 @@ const ApiConnection = () => {
 
     const dispatch = useDispatch()
 
-    const selectAccountHandler = (index) => {
-        setSelectedAccount(index)
+    const selectAccountHandler = (account) => {
+        setSelectedAccount(account)
     }
 
     const updateAccountHandler = async (data) => {
@@ -50,10 +50,14 @@ const ApiConnection = () => {
     }
 
     useEffect(() => {
-        if (accounts.length > 0) setSelectedAccount(0)
+        if (accounts.length > 0) setSelectedAccount(accounts[0])
     }, [])
 
-    const accountsWithFilter = accounts
+    useEffect(() => {
+        setSelectedAccount(prevState => _.find(accounts, {id: prevState.id}))
+    }, [accounts])
+
+    const accountsWithFilter = accounts.filter(account => account.account_alias.toLowerCase().trim().includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))
 
     return (
         <div className="api-connection">
@@ -78,7 +82,7 @@ const ApiConnection = () => {
                 />
 
                 {selectedAccount !== undefined && <AccountDetails
-                    account={accounts[selectedAccount]}
+                    account={selectedAccount}
 
                     onUpdateAlias={updateAccountHandler}
                     onDisconnect={revokeAccessHandler}

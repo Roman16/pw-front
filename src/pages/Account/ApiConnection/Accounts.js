@@ -12,8 +12,8 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
     return (
         <ul className="accounts-list">
             {accounts.map(({account_alias, seller_id, amazon_region_account_marketplaces, id, mws_access_status, amazon_ads_api_access_status, is_amazon_ads_api_attached, is_mws_attached}, index) => (
-                <li className={selectedAccount === index && 'active'}>
-                    <div className="account-name" onClick={() => onSelect(index)}>
+                <li className={selectedAccount?.id === id && 'active'}>
+                    <div className="account-name" onClick={() => onSelect(accounts[index])}>
                         <h3>
                             {account_alias || seller_id}
                             {activeRegion.id === id && <span>(Active)</span>}
