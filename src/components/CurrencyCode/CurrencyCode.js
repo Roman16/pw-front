@@ -1,6 +1,6 @@
 import {useSelector} from "react-redux"
 
-const CurrencyCode = ({value}) => {
+export const CurrencyWithCode = ({value}) => {
     const currency = useSelector(state => state.user.activeAmazonMarketplace.currency_code) || 'USD'
 
     switch (currency) {
@@ -41,4 +41,18 @@ const CurrencyCode = ({value}) => {
     }
 }
 
-export default CurrencyCode
+export const currencyCode = {
+    'USD': '$',
+    'CAD': '$',
+    'MXN': '$',
+    'SGD': '$',
+    'AUD': '$',
+    'PLN': 'zł',
+    'BRL': 'R$',
+    'GBP': '£',
+    'JPY': '¥',
+    'SEK': 'kr',
+    'TRY': '₺',
+    'AED': 'د.إ',
+    'EUR': '€',
+}

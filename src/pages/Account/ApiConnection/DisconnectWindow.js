@@ -1,16 +1,17 @@
-import React, {useState} from "react";
-import {Input} from "antd";
-import {notification} from "../../../components/Notification";
+import React, {useState} from "react"
+import {Input, Spin} from "antd"
+import {notification} from "../../../components/Notification"
 
 const DisconnectWindow = ({handleCancel, onDisconnect}) => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState(''),
+        [processing, setProcessing] = useState(false)
 
     const submitHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         if (inputValue.toLowerCase() === 'disconnect') {
-            onDisconnect();
-            setInputValue('');
+            setProcessing(true)
+            onDisconnect()
         } else {
             notification.error({title: 'You typed incorrect value'})
         }
@@ -37,11 +38,14 @@ const DisconnectWindow = ({handleCancel, onDisconnect}) => {
 
                 <div className="buttons">
                     <button type={'button'} className={'btn white'} onClick={handleCancel}>Cancel</button>
-                    <button className={'btn default'}>Disconnect</button>
+                    <button disabled={processing} className={'btn default'}>
+                        Disconnect
+                        {processing && <Spin size={'small'}/>}
+                    </button>
                 </div>
             </form>
         </>
     )
-};
+}
 
-export default DisconnectWindow;
+export default DisconnectWindow

@@ -47,7 +47,7 @@ const ConnectMWSJourney = ({match}) => {
                 amazon_region_account_id: _.find(connectedAmazonAccounts, {region_type: match.params.regionType}).id
             })
 
-            dispatch(userActions.updateAmazonRegionAccounts(result))
+            dispatch(userActions.updateAmazonRegionAccount(result))
 
             setCurrentStep(5)
         } catch (e) {

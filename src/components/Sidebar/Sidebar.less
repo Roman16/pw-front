@@ -92,36 +92,88 @@
       background: #3F4448;
     }
 
-    .country-active__title {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-
-      img {
-        height: inherit;
-        width: 1.9285714285714286rem;
-        margin: 2px 5px 2px 0;
-      }
-
-      h5 {
-        font-size: 1rem;
-        line-height: 1.1428571428571428rem;
-        color: #FFFFFF;
-        margin: 2px 0 2px 4px;
-      }
-    }
-
-    .country-active__description {
+    .marketplace-id {
       font-weight: 600;
       font-size: 0.8571428571428571rem;
       line-height: 1rem;
       color: #FFFFFF;
-      position: absolute;
-      left: 1.4285714285714286rem;
-      bottom: 8px;
+      max-height: 0;
+      opacity: 0;
+      transition: .2s ease-in-out;
     }
 
+    .country {
+      display: flex;
+      align-items: center;
 
+      .flag {
+        width: 100%;
+        min-width: 100%;
+        height: 0.8571428571428571rem;
+        display: flex;
+        margin: 0 6px 0 0;
+        transition: .2s ease-in-out;
+
+        img {
+          object-fit: contain;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .name {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #FFFFFF;
+        opacity: 0;
+        transition: .2s ease-in-out;
+      }
+    }
+
+    .code {
+      font-size: 1rem;
+      line-height: 1.2142857142857142rem;
+      color: #FFFFFF;
+      display: flex;
+      justify-content: center;
+      margin: 6px 0 0 0;
+      max-height: 1.2142857142857142rem;
+      transition: .2s ease-in-out;
+    }
+  }
+
+  .current-marketplace-details {
+    height: 18px;
+    padding: 0 0 0 1.85714286rem;
+    display: flex;
+    align-items: center;
+    margin: -0.7142857142857143rem 0 1.4285714285714286rem;
+    transition: .2s ease-in-out;
+
+    div {
+      display: flex;
+      align-items: center;
+      min-width: max-content;
+
+      &:first-child {
+        margin: 0 1rem 0 0;
+      }
+
+      svg {
+        width: 1rem;
+        min-width: 1rem;
+        height: 1rem;
+        margin: 0 5px 0 0;
+      }
+
+      p {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #FFFFFF;
+        border-bottom: 1px dashed #fff;
+        margin: 0;
+      }
+    }
   }
 
   .top-nav {
@@ -426,9 +478,27 @@
     }
 
     .current-marketplace {
-      .country-active__description {
-        .visibleAnimation();
-        transition-delay: .1s;
+      .marketplace-id {
+        max-height: 1rem;
+        opacity: 1;
+        margin: 0 0 6px 0;
+      }
+
+      .country {
+        .flag {
+          width: 1.4285714285714286rem;
+          min-width: 1.4285714285714286rem;
+          height: 0.8571428571428571rem;
+        }
+
+        .name {
+          opacity: 1;
+        }
+      }
+
+      .code {
+        opacity: 0;
+        max-height: 0;
       }
     }
 
@@ -489,9 +559,45 @@
 
     .current-marketplace {
       padding-left: 1.2857142857142858rem;
+      padding-right: 1.2857142857142858rem;
 
-      .country-active__description {
-        .hideAnimation()
+      .marketplace-id {
+        //transform: translateY(-30px);
+        max-height: 0;
+        opacity: 0;
+        //margin: -6px 0 6px 0;
+      }
+
+      .country {
+        .flag {
+          width: 100%;
+          min-width: 100%;
+          transition-delay: .1s;
+        }
+      }
+
+      .code {
+        transition-delay: .1s;
+      }
+
+    }
+
+    .current-marketplace-details {
+      padding: 0 0 0 0.42857142857142855rem;
+      flex-direction: column;
+      align-items: flex-start;
+
+      div {
+
+        &:first-child {
+          margin: 0 0 0.6428571428571429rem;
+        }
+
+        p {
+          span {
+            display: none;
+          }
+        }
       }
     }
 
@@ -557,6 +663,7 @@
               overflow: initial;
               padding: 0 0 8px;
               margin: -3.2857142857142856rem 0 0 0;
+              display: flex !important;
 
               &::before {
                 opacity: 1;
@@ -676,7 +783,7 @@
       transition: 0s !important;
 
       .country-active__title {
-        img {
+        svg {
           width: 27px;
           margin: 0 10px 0 0;
         }
@@ -1041,7 +1148,6 @@
 
       .marketplaces {
         display: grid;
-        grid-row-gap: 0.35714285714285715rem;
         overflow: hidden;
         max-height: 0;
         transition: .2s ease-in-out;
@@ -1074,10 +1180,17 @@
             margin: 0 0.8571428571428571rem 0 0;
           }
 
-          img {
+          .flag {
             width: 1.2142857142857142rem;
-            height: inherit;
+            min-width: 1.2142857142857142rem;
+            height: 1.2142857142857142rem;
             margin: 0 0.42857142857142855rem 0 0;
+
+            img {
+              object-fit: contain;
+              width: 100%;
+              height: 100%;
+            }
           }
         }
       }

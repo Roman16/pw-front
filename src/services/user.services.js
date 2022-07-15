@@ -61,7 +61,9 @@ export const userService = {
     getUserPersonalInformation,
 
     getNotifications,
-    getAccountStatus
+    getAccountStatus,
+
+    updateAmazonAccount
 }
 
 function login(user) {
@@ -269,6 +271,10 @@ function unsetAdsApi(id) {
 
 function getAccountStatus(id) {
     return api('get', `${userUrls.accountStatus}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function updateAmazonAccount(data) {
+    return api('put', `${userUrls.amazonRegionAccounts}`, data, undefined, undefined, undefined, undefined, false)
 }
 
 //-------------------------------------

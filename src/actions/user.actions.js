@@ -15,7 +15,7 @@ export const userActions = {
     getImpersonationUserInformation,
     updateUser,
     setAmazonRegionAccounts,
-    updateAmazonRegionAccounts,
+    updateAmazonRegionAccount,
     setActiveRegion,
     getNotifications,
     getAccountStatus,
@@ -154,9 +154,9 @@ function setAmazonRegionAccounts(data) {
     }
 }
 
-function updateAmazonRegionAccounts(data) {
+function updateAmazonRegionAccount(data) {
     return {
-        type: userConstants.UPDATE_AMAZON_REGION_ACCOUNTS,
+        type: userConstants.UPDATE_AMAZON_REGION_ACCOUNT_BY_ID,
         payload: data
     }
 }

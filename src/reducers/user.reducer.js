@@ -69,7 +69,7 @@ export function user(state = initialState, action) {
                 activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null
             }
 
-        case userConstants.UPDATE_AMAZON_REGION_ACCOUNTS:
+        case userConstants.UPDATE_AMAZON_REGION_ACCOUNT_BY_ID:
             return {
                 ...state,
                 amazonRegionAccounts: [...state.amazonRegionAccounts.map(i => {

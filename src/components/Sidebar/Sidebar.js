@@ -189,7 +189,7 @@ const Sidebar = () => {
                 <CurrentMarketplace
                     onToggle={toggleMarketplacesWindow}
                     active={visibleMarketplacesWindow}
-                    user={user}
+                    activeMarketplace={activeMarketplace}
                 />
 
                 <nav className="top-nav">

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {Link, NavLink, Redirect, Route} from "react-router-dom"
 import './Navigation.less'
 
@@ -41,7 +41,7 @@ const menu = [
         link: 'billing-history',
     },
     {
-        title: 'API Connection',
+        title: 'Accounts',
         link: 'api-connections',
     },
 ]

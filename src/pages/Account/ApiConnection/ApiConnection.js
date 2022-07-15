@@ -1,104 +1,99 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import './ApiConnection.less'
+import {Accounts} from "./Accounts"
+import {AccountDetails} from "./AccountDetails"
+import {Filters} from "./Filters"
+import {Tabs} from "./Tabs"
 import {useDispatch, useSelector} from "react-redux"
-import SellerAccount from "./SellerAccount"
-import {userActions} from "../../../actions/user.actions"
-import ModalWindow from "../../../components/ModalWindow/ModalWindow"
-import DisconnectWindow from "./DisconnectWindow"
 import {userService} from "../../../services/user.services"
-import {history} from "../../../utils/history"
-import ConnectedAccounts from "./ConnectedAccounts"
+import {userActions} from "../../../actions/user.actions"
+import {EmptyData, NoFoundData} from "../../../components/Table/CustomTable"
 
 
 const ApiConnection = () => {
-    const [disconnectObj, setDisconnectObj] = useState({}),
-        [visibleWindow, setVisibleWindow] = useState(false),
-        [deleteProcessing, setDeleteProcessing] = useState(false),
-        [activeAccountIndex, setActiveAccountIndex] = useState()
+    const [sortType, setSortType] = useState(''),
+        [selectedAccount, setSelectedAccount] = useState(),
+        [searchStr, setSearchStr] = useState('')
+
+    const accounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     const dispatch = useDispatch()
 
-    const user = useSelector(state => state.user),
-        connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
-
-
-    const disconnectHandler = (data) => {
-        setDisconnectObj(data)
-        setVisibleWindow(true)
+    const selectAccountHandler = (index) => {
+        setSelectedAccount(index)
     }
 
-    const deleteApiHandler = async () => {
-        setDeleteProcessing(disconnectObj.type)
-        setVisibleWindow(false)
-
+    const updateAccountHandler = async (data) => {
         try {
-            const {result} = await userService[(disconnectObj.type) === 'amazon_ads_api' ? 'unsetAdsApi' : 'unsetMWS'](disconnectObj.id)
-
-            dispatch(userActions.setAmazonRegionAccounts([result]))
+            const {result} = await userService.updateAmazonAccount(data)
+            dispatch(userActions.updateAmazonRegionAccount(result))
         } catch (e) {
             console.log(e)
         }
-
-        setDeleteProcessing(false)
     }
 
-    const connectHandler = async (account, type) => {
-        if (type === 'mws') {
-            history.push(`/connect-mws-account/${account.region_type}`)
-        } else if (type === 'amazon_ads_api') {
-            history.push(`/connect-ppc-account/${account.id}`)
-        } else {
-            history.push('/connect-amazon-account')
+    const setMarketplaceHandler = (data) => {
+        dispatch(userActions.setActiveRegion(data))
+        window.location.reload()
+    }
+
+    const revokeAccessHandler = async (type, id) => {
+        try {
+            const {result} = await userService[type === 'ads' ? 'unsetAdsApi' : 'unsetMWS'](id)
+
+            dispatch(userActions.updateAmazonRegionAccount(result))
+        } catch (e) {
+            console.log(e)
         }
     }
 
     useEffect(() => {
-        if (connectedAmazonAccounts[0]) setActiveAccountIndex(0)
-    }, [connectedAmazonAccounts])
-
-    useEffect(() => {
-        userService.getAmazonRegionAccounts()
-            .then(({result}) => {
-                dispatch(userActions.setAmazonRegionAccounts(result))
-            })
+        if (accounts.length > 0) setSelectedAccount(0)
     }, [])
 
+    const accountsWithFilter = accounts
+
     return (
-        <Fragment>
-            <div className="api-connection">
-                <ConnectedAccounts
-                    accounts={connectedAmazonAccounts}
-                    onSelectAccount={setActiveAccountIndex}
+        <div className="api-connection">
+            <Tabs/>
+
+            <Filters
+                sortType={sortType}
+
+                onChangeSort={() => setSortType(prevState => prevState === 'asc' ? 'desc' : prevState === 'desc' ? '' : 'asc')}
+                onChangeSearch={setSearchStr}
+            />
+
+            {accountsWithFilter.length > 0 ? <div className="row">
+                <Accounts
+                    accounts={accountsWithFilter}
+                    selectedAccount={selectedAccount}
+                    activeRegion={activeRegion}
+                    activeMarketplace={activeMarketplace}
+
+                    onSelect={selectAccountHandler}
+                    onSetMarketplace={setMarketplaceHandler}
                 />
 
-                {activeAccountIndex !== undefined &&
-                <div className="api-connection-block">
-                    <div className={'connections-list'}>
-                        <SellerAccount
-                            sellerName={user.user.name}
-                            account={connectedAmazonAccounts[activeAccountIndex]}
-                            deleteProcessing={deleteProcessing}
+                {selectedAccount !== undefined && <AccountDetails
+                    account={accounts[selectedAccount]}
 
-                            onDisconnect={disconnectHandler}
-                            onConnect={connectHandler}
-                        />
-                    </div>
-                </div>}
-            </div>
-
-            <ModalWindow
-                visible={visibleWindow}
-                footer={false}
-                handleCancel={() => setVisibleWindow(false)}
-                className={'disconnect-api-window'}
-            >
-                <DisconnectWindow
-                    onDisconnect={deleteApiHandler}
-                    handleCancel={() => setVisibleWindow(false)}
-                />
-            </ModalWindow>
-        </Fragment>
+                    onUpdateAlias={updateAccountHandler}
+                    onDisconnect={revokeAccessHandler}
+                />}
+            </div> : <NoData searchStr={searchStr}/>}
+        </div>
     )
 }
 
 export default ApiConnection
+
+const NoData = ({searchStr}) => {
+    if (searchStr) {
+        return <NoFoundData description={'Please try adjusting your search.'}/>
+    } else {
+        return <EmptyData title={'No data found'} description={'There’s currently no data to display'}/>
+    }
+}

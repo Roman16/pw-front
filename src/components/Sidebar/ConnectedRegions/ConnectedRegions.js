@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import usFlag from "../../../assets/img/icons/us-flag.png"
 import {Link} from "react-router-dom"
+import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 
 const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeMarketplace, activeRegion}) => {
     const [openedRegions, setOpenedRegions] = useState([]),
@@ -72,7 +73,9 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                             <li onClick={() => onSet({marketplace, region})}
                                 className={activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
                                 <div className="status"/>
-                                <img src={usFlag} alt=""/>
+                                <div className="flag">
+                                    <img src={marketplaceIdValues[marketplace.marketplace_id].flag} alt=""/>
+                                </div>
                                 {marketplace.marketplace_id}
                             </li>
                         ))}

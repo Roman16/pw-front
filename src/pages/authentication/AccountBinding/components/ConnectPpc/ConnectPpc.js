@@ -60,7 +60,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                         callback_redirect_uri: `${window.location.origin}/ads-callback`
                     })
 
-                    dispatch(userActions.updateAmazonRegionAccounts(result))
+                    dispatch(userActions.updateAmazonRegionAccount(result))
 
                     onGoNextStep()
                     win.close()

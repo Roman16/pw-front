@@ -1,24 +1,27 @@
-export const marketplaceIdValues = {
+import {countryFlags} from "../assets/img/flags"
+import _ from 'lodash'
+
+export const marketplaceIdValues = _.mapValues({
     //North America region
     'A2Q3Y263D00KWC': {
         countryCode: 'BR',
         country: 'Brazil',
-        domain: 'com'
+        domain: 'com',
     },
     'A2EUQ1WTGCTBG2': {
         countryCode: 'CA',
         country: 'Canada',
-        domain: 'ca'
+        domain: 'ca',
     },
     'A1AM78C64UM0Y8': {
         countryCode: 'MX',
         country: 'Mexico',
-        domain: 'com.mx'
+        domain: 'com.mx',
     },
     'ATVPDKIKX0DER': {
         countryCode: 'US',
         country: 'US',
-        domain: 'com'
+        domain: 'com',
     },
 
     //Europe region
@@ -47,6 +50,11 @@ export const marketplaceIdValues = {
         country: 'France',
         domain: 'com'
     },
+    'AMEN7PMS3EDWL': {
+        countryCode: 'BE',
+        country: 'Belgium',
+        domain: 'com'
+    },
     'A1F83G8C2ARO7P': {
         countryCode: 'GB',
         country: 'UK',
@@ -65,6 +73,11 @@ export const marketplaceIdValues = {
     'A1805IZSGTT6HS': {
         countryCode: 'NL',
         country: 'Netherlands',
+        domain: 'com'
+    },
+    'A1C3SOZRARQ6R3': {
+        countryCode: 'PL',
+        country: 'Poland',
         domain: 'com'
     },
     'A17E79C6D8DWNP': {
@@ -99,4 +112,10 @@ export const marketplaceIdValues = {
         country: 'Japan',
         domain: 'jp'
     },
-}
+}, (v) => {
+    return ({
+        ...v,
+        flag: countryFlags[v.country]
+    })
+})
+
