@@ -5,10 +5,13 @@ import {currencyCode} from "../../CurrencyCode/CurrencyCode"
 
 
 const CurrentMarketplace = ({activeMarketplace, onToggle, active}) => {
-    const marketplaceDetails = marketplaceIdValues[activeMarketplace.marketplace_id]
+    const marketplaceDetails = activeMarketplace ? marketplaceIdValues[activeMarketplace.marketplace_id] : undefined
+
     return (<>
-        <div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
-            {activeMarketplace.marketplace_id && <div className="marketplace-id">
+        {marketplaceDetails &&<div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
+
+
+          {activeMarketplace.marketplace_id && <div className="marketplace-id">
                 {activeMarketplace.marketplace_id}
             </div>}
 
@@ -21,7 +24,7 @@ const CurrentMarketplace = ({activeMarketplace, onToggle, active}) => {
             </div>
 
             <div className={'code'}>{marketplaceDetails.countryCode}</div>
-        </div>
+        </div>}
 
         {activeMarketplace && (activeMarketplace.timezone || activeMarketplace.currency_code) &&
         <div className="current-marketplace-details">

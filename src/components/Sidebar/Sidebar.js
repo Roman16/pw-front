@@ -137,7 +137,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         function handleClickOutside(event) {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !document.querySelector('.sidebar .current-marketplace').contains(event.target)) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !document.querySelector('.sidebar .current-marketplace')?.contains(event.target)) {
                 setVisibleMarketplacesWindow(false)
             }
         }
