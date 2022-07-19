@@ -1,22 +1,22 @@
-import React, {Fragment, useEffect, useState} from "react";
-import './OutBudget.less';
-import moment from "moment";
-import InformationTooltip from "../../../../components/Tooltip/Tooltip";
-import {colorList} from "../colorList";
-import shortid from "shortid";
-import {daypartingServices} from "../../../../services/dayparting.services";
-import BudgetDrawer from "./BudgetDrawer";
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow";
-import {useSelector, useDispatch} from "react-redux";
-import axios from "axios";
-import {numberMask} from "../../../../utils/numberMask";
-import {productsActions} from "../../../../actions/products.actions";
-import {Spin} from "antd";
-import {NavLink} from "react-router-dom";
-import {SVG} from "../../../../utils/icons";
+import React, {Fragment, useEffect, useState} from "react"
+import './OutBudget.less'
+import moment from "moment"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {colorList} from "../colorList"
+import shortid from "shortid"
+import {daypartingServices} from "../../../../services/dayparting.services"
+import BudgetDrawer from "./BudgetDrawer"
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import {useSelector, useDispatch} from "react-redux"
+import axios from "axios"
+import {numberMask} from "../../../../utils/numberMask"
+import {productsActions} from "../../../../actions/products.actions"
+import {Spin} from "antd"
+import {NavLink} from "react-router-dom"
+import {SVG} from "../../../../utils/icons"
 
-const CancelToken = axios.CancelToken;
-let source = null;
+const CancelToken = axios.CancelToken
+let source = null
 
 
 const days = [
@@ -27,112 +27,112 @@ const days = [
     'Thursday',
     'Friday',
     'Saturday',
-];
+]
 
-const hours = Array.from({length: 24}, (item, index) => index);
+const hours = Array.from({length: 24}, (item, index) => index)
 
 
 const OutBudget = ({date}) => {
-    let localFetching = false;
+    let localFetching = false
 
-    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'));
+    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'))
 
     const [data, setData] = useState(defaultData),
         [percentParams, setParams] = useState({min: 0, max: 1}),
         [visibleModal, setModal] = useState(false),
         [saved, setStatus] = useState(false),
         [processing, setProcessing] = useState(false),
-        [fetchingData, setFetchingData] = useState(false);
+        [fetchingData, setFetchingData] = useState(false)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.dayparting.selectedCampaign.id,
         fetchingCampaignList: state.dayparting.processing,
-    }));
+    }))
 
     async function saveBudget(data) {
-        setProcessing(true);
+        setProcessing(true)
         try {
-            await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}});
-            setStatus(true);
+            await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}})
+            setStatus(true)
 
             dispatch(productsActions.updateCampaignBudget({
                 id: campaignId,
                 dailyBudget: data.value
-            }));
+            }))
         } catch (e) {
-            console.log(e);
+            console.log(e)
         }
 
-        setProcessing(false);
+        setProcessing(false)
     }
 
     useEffect(() => {
 
         async function fetchData() {
-            source && source.cancel();
-            source = CancelToken.source();
+            source && source.cancel()
+            source = CancelToken.source()
 
-            console.log(campaignId);
+            console.log(campaignId)
 
             if (campaignId == null) {
                 setData(defaultData)
             } else if (!fetchingCampaignList) {
-                setFetchingData(true);
-                localFetching = true;
+                setFetchingData(true)
+                localFetching = true
 
                 try {
                     const res = await daypartingServices.getOutBudgetStatistic({
                         campaignId,
                         date,
                         cancelToken: source.token
-                    });
+                    })
 
                     const minValue = Math.min(...res.response.map(item => item.sales).filter(item => (item != null && item !== 0))),
-                        maxValue = Math.max(...res.response.map(item => item.sales));
+                        maxValue = Math.max(...res.response.map(item => item.sales))
 
                     setParams({
                         min: minValue,
                         max: maxValue
-                    });
+                    })
 
 
                     // setData(res.response);
                     setData(defaultData.map(item => {
                         return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
-                    }));
-                    setFetchingData(false);
-                    localFetching = false;
+                    }))
+                    setFetchingData(false)
+                    localFetching = false
                 } catch (e) {
-                    !localFetching && setFetchingData(false);
-                    localFetching = false;
+                    !localFetching && setFetchingData(false)
+                    localFetching = false
                 }
             }
         }
 
-        fetchData();
+        fetchData()
 
-    }, [campaignId, date]);
+    }, [campaignId, date])
 
     useEffect(() => {
         if (campaignId == null && !fetchingCampaignList) {
-            localFetching = false;
-            setFetchingData(false);
+            localFetching = false
+            setFetchingData(false)
         }
-    }, [fetchingCampaignList]);
+    }, [fetchingCampaignList])
 
     const StatisticItem = ({value, index, outBudget}) => {
-        let color;
+        let color
 
         colorList.forEach(item => {
             if (value != null) {
-                const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min);
+                const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min)
                 if (percent >= item.min && percent <= item.max) {
-                    color = item.color;
-                    return;
+                    color = item.color
+                    return
                 }
             }
-        });
+        })
 
         if (outBudget) {
             return (
@@ -145,7 +145,7 @@ const OutBudget = ({date}) => {
                 <div className='statistic-information' style={{background: color}}/>
             )
         }
-    };
+    }
 
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
@@ -173,9 +173,10 @@ const OutBudget = ({date}) => {
                 {outBudget && <div className="row out-of">
                     Out of Budget
                 </div>}
+
             </Fragment>
         )
-    };
+    }
 
     return (
         <Fragment>
@@ -188,13 +189,6 @@ const OutBudget = ({date}) => {
                             description={'Sales are total earnings (organic + PPC) from orders for your products that are being advertised in currently selected campaign (you have enabled product ads for these products in campaign)'}
                         />
                     </h2>
-
-                    <div className='out-of-budget'>
-                        <div className="campaign">
-                            <div/>
-                            Out of Budget
-                        </div>
-                    </div>
 
                     <button
                         className='btn default'
@@ -253,6 +247,32 @@ const OutBudget = ({date}) => {
                             ))}
                         </div>
                     </div>
+                    <div className="legend">
+                        <div className='last-synced'>
+                            <div className="color-gradation">
+                                Min
+                                {colorList.map(item => (
+                                    <InformationTooltip
+                                        type={'custom'}
+                                        description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
+                                        key={shortid.generate()}
+                                    >
+                                        <div key={item.color} style={{background: item.color}}/>
+                                    </InformationTooltip>
+                                ))}
+                                Max
+                            </div>
+
+                            <div className="no-data example">
+                                <div/>
+                                No data
+                            </div>
+                            <div className="out-of-budget example">
+                                <div/>
+                                Out of Budget
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
@@ -265,8 +285,8 @@ const OutBudget = ({date}) => {
                 visible={visibleModal}
                 className={'budget-window'}
                 handleCancel={() => {
-                    setModal(false);
-                    setStatus(false);
+                    setModal(false)
+                    setStatus(false)
                 }}
                 footer={false}
                 destroyOnClose={true}
@@ -277,8 +297,8 @@ const OutBudget = ({date}) => {
 
                         <button
                             onClick={() => {
-                                setModal(false);
-                                setStatus(false);
+                                setModal(false)
+                                setStatus(false)
                             }}
                             className='btn green-btn'
                         >
@@ -295,6 +315,6 @@ const OutBudget = ({date}) => {
             </ModalWindow>
         </Fragment>
     )
-};
+}
 
-export default React.memo(OutBudget);
+export default React.memo(OutBudget)

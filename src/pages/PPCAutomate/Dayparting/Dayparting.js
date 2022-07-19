@@ -1,24 +1,20 @@
-import React, {useState} from "react";
-import './Dayparting.less';
-import OutBudget from "./OutBudget/OutBudget";
-import ChartStatistics from "./ChartStatistics/ChartStatistics";
-import DaySwitches from "./DaySwithes/DaySwithes";
-import PlacementsStatistics from "./PlacementsStatistics";
-import {colorList} from "./colorList";
-import InformationTooltip from "../../../components/Tooltip/Tooltip";
-import shortid from "shortid";
-import CustomSelect from "../../../components/Select/Select";
-import {Select} from "antd";
-import moment from "moment";
-import tz from 'moment-timezone';
+import React, {useState} from "react"
+import './Dayparting.less'
+import OutBudget from "./OutBudget/OutBudget"
+import ChartStatistics from "./ChartStatistics/ChartStatistics"
+import DaySwitches from "./DaySwithes/DaySwithes"
+import PlacementsStatistics from "./PlacementsStatistics"
+import shortid from "shortid"
+import moment from "moment"
+import tz from 'moment-timezone'
 import {useSelector} from "react-redux"
+import CampaignList from "../../../components/CampaignList/CampaignList"
+import {Header} from "./Header"
 
-const Option = Select.Option;
 
-
-// eslint-disable-next-line no-unused-vars
 const Dayparting = () => {
-    const timezone = useSelector(state => state.user.activeAmazonMarketplace.timezone)
+    const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
+    const timezone = activeAmazonMarketplace.timezone
 
     const weeks = [0, 1, 2, 3].map((item) => {
         return ({
@@ -26,76 +22,51 @@ const Dayparting = () => {
             startDate: moment.tz(new Date(), timezone).day() !== 0 ? moment.tz(new Date(), timezone).subtract(item, 'w').startOf('isoweek').subtract(1, 'd') : moment.tz(new Date(), timezone).add(1, 'days').subtract(item, 'w').startOf('isoweek').subtract(1, 'd'),
             endDate: moment.tz(new Date(), timezone).day() !== 0 ? moment.tz(new Date(), timezone).subtract(item, 'w').endOf('isoweek').subtract(1, 'd') : moment.tz(new Date(), timezone).add(1, 'days').subtract(item, 'w').endOf('isoweek').subtract(1, 'd')
         })
-    });
+    })
 
-    const [selectedDate, setSelectedDate] = useState(weeks[0]);
+    const [selectedDate, setSelectedDate] = useState(weeks[0])
 
 
     function changeDateHandler(dateIndex) {
-        setSelectedDate(weeks[dateIndex]);
+        setSelectedDate(weeks[dateIndex])
     }
 
 
     return (
         <div className='dayparting-page'>
-            <div className='last-synced'>
-                <div className="date-stamp">
-                    Day-parting is operating in PST (Pacific Standard Time)
-                </div>
+            <Header
+                weeks={weeks}
+                marketplace={activeAmazonMarketplace}
 
-                <div className="week-select">
-                    <CustomSelect
-                        getPopupContainer={trigger => trigger.parentNode}
-                        defaultValue={0}
-                        dropdownClassName={'full-width-menu'}
-                        onChange={changeDateHandler}
-                    >
-                        {weeks.map((item, index) => (
-                            <Option
-                                key={item}
-                                value={item.id}
-                            >
-                                {`${moment(item.startDate).format('MMM DD')} - ${moment(item.endDate).format('MMM DD')}`}
-                            </Option>
-                        ))}
-                    </CustomSelect>
-                </div>
-
-                <div className="color-gradation">
-                    Min
-                    {colorList.map(item => (
-                        <InformationTooltip
-                            type={'custom'}
-                            description={<span>Min: {item.min} % <br/> Max: {item.max} %</span>}
-                            key={shortid.generate()}
-                        >
-                            <div key={item.color} style={{background: item.color}}/>
-                        </InformationTooltip>
-                    ))}
-                    Max
-                </div>
-            </div>
+                onChange={changeDateHandler}
+            />
 
             <div className="row">
-                <OutBudget
-                    date={selectedDate}
-                />
+                <CampaignList/>
 
-                <ChartStatistics
-                    date={selectedDate}
-                />
+                <div className="col">
+                    <div className="row">
+                        <OutBudget
+                            date={selectedDate}
+                        />
+
+                        <ChartStatistics
+                            date={selectedDate}
+                        />
+                    </div>
+
+                    <DaySwitches
+
+                    />
+
+                    <PlacementsStatistics
+                        date={selectedDate}
+                    />
+                </div>
             </div>
-
-            <DaySwitches
-
-            />
-
-            <PlacementsStatistics
-                date={selectedDate}
-            />
         </div>
 
     )
-};
+}
 
-export default React.memo(Dayparting);
+export default React.memo(Dayparting)

@@ -195,8 +195,6 @@ const AuthorizedUser = (props) => {
                             pathname={props.location.pathname}
                         />}
 
-                        {pathname === '/ppc/dayparting' && <CampaignList/>}
-
                         <div className="page">
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>

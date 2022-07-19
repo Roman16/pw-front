@@ -1,17 +1,17 @@
 import React from "react"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import moment from 'moment'
-import {currencyCode} from "../../CurrencyCode/CurrencyCode"
+import {currencySymbol} from "../../CurrencyCode/CurrencyCode"
 
 
 const CurrentMarketplace = ({activeMarketplace, onToggle, active}) => {
     const marketplaceDetails = activeMarketplace ? marketplaceIdValues[activeMarketplace.marketplace_id] : undefined
 
     return (<>
-        {marketplaceDetails &&<div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
+        {marketplaceDetails && <div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
 
 
-          {activeMarketplace.marketplace_id && <div className="marketplace-id">
+            {activeMarketplace.marketplace_id && <div className="marketplace-id">
                 {activeMarketplace.marketplace_id}
             </div>}
 
@@ -50,13 +50,13 @@ const CurrentMarketplace = ({activeMarketplace, onToggle, active}) => {
                     </g>
                 </svg>
 
-                <p>{activeMarketplace.currency_code} <span>- {currencyCode[activeMarketplace.currency_code]}</span></p>
+                <p>{activeMarketplace.currency_code} <span>- {currencySymbol[activeMarketplace.currency_code]}</span></p>
             </div>}
         </div>}
     </>)
 }
 
-const marketplaceTimezone = (timezone) => moment().tz(timezone).utcOffset() / 60
+export const marketplaceTimezone = (timezone) => timezone ? moment().tz(timezone).utcOffset() / 60 : '-0'
 
 
 export default React.memo(CurrentMarketplace)

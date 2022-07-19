@@ -40,10 +40,10 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
 
                     <div className="row">
                         <div className="col fills">
-                            {firstMetric.key !== 'nothing' && <div className='example-fill' style={{background: '#82ca9d'}}/>}
+                            {firstMetric.key !== 'nothing' && <div className='example-fill' style={{background: '#9464B9'}}/>}
 
                             {secondMetric.key !== 'nothing' &&
-                            <div className='example-fill' style={{background: '#8884d8'}}/>}
+                            <div className='example-fill' style={{background: '#FF5256'}}/>}
                         </div>
 
                         <div className="col metrics-name">
@@ -55,11 +55,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
                         </div>
 
                         <div className="col values">
-                            {firstMetric.key !== 'nothing' && <div className="value" style={{color: '#82ca9d'}}>
+                            {firstMetric.key !== 'nothing' && <div className="value" style={{color: '#9464B9'}}>
                                 {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
                             </div>}
 
-                            {secondMetric.key !== 'nothing' && <div className="value" style={{color: '#8884d8'}}>
+                            {secondMetric.key !== 'nothing' && <div className="value" style={{color: '#FF5256'}}>
                                 {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
                             </div>}
                         </div>
@@ -97,13 +97,13 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                     <YAxis
                         axisLine={false}
                         yAxisId="left"
-                        stroke="#82ca9d"
+                        stroke="#9464B9"
                         tickFormatter={(data) => round(data, 3)}
                     />
 
                     <YAxis
                         axisLine={false}
-                        stroke="#8884d8"
+                        stroke="#FF5256"
                         yAxisId="right"
                         orientation="right"
                         tickFormatter={(data) => round(data, 3)}
@@ -124,7 +124,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                         isAnimationActive={false}
                         yAxisId="left"
                         dataKey={firstMetric.key}
-                        stroke="#82ca9d"
+                        stroke="#9464B9"
                         activeDot={{r: 4}}
                     />
 
@@ -133,7 +133,7 @@ const DayChart = ({data, firstMetric, secondMetric}) => {
                         isAnimationActive={false}
                         yAxisId="right"
                         dataKey={secondMetric.key}
-                        stroke="#8884d8"
+                        stroke="#FF5256"
                         activeDot={{r: 4}}
                     />}
                 </LineChart>

@@ -41,7 +41,7 @@ export const CurrencyWithCode = ({value}) => {
     }
 }
 
-export const currencyCode = {
+export const currencySymbol = {
     'USD': '$',
     'CAD': '$',
     'MXN': '$',
@@ -55,4 +55,19 @@ export const currencyCode = {
     'TRY': '₺',
     'AED': 'د.إ',
     'EUR': '€',
+}
+export const currencyName = {
+    'USD': 'United States dollar',
+    'PLN': 'Polish złoty',
+    'CAD': 'Canadian dollar',
+    'BRL': 'Brazilian real',
+    'GBP': 'Pound sterling',
+    'JPY': 'Japanese yen',
+    'MXN': 'Mexican peso',
+    'SGD': 'Singapore dollar',
+    'AUD': 'Australian dollar',
+    'SEK': 'Swedish krona',
+    'TRY': 'Turkish lira',
+    'AED': 'UAE dirham',
+    'EUR': 'Euro',
 }
