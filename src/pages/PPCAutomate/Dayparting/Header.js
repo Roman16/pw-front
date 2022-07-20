@@ -4,6 +4,7 @@ import moment from "moment"
 import {Select} from "antd"
 import {marketplaceTimezone} from "../../../components/Sidebar/ConnectedRegions/CurrentMarketplace"
 import {currencySymbol, currencyName} from "../../../components/CurrencyCode/CurrencyCode"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const Option = Select.Option
 
@@ -37,7 +38,7 @@ export const Header = ({onChange, weeks, marketplace}) => (
                         fill="#6959AB" stroke="#6959AB" stroke-width="0.4"/>
                 </svg>
 
-                {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)})</>}
+                {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)}) <InformationTooltip description={`Timezone`}/></>}
             </div>
 
             <div className="currency">
@@ -50,7 +51,7 @@ export const Header = ({onChange, weeks, marketplace}) => (
                         fill="#6959AB" stroke="#6959AB" stroke-width="0.5"/>
                 </svg>
 
-                {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]})</>}
+                {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]}) <InformationTooltip description={`Currency code`}/></>}
             </div>
         </div>
     </div>

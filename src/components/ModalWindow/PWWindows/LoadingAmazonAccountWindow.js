@@ -4,18 +4,49 @@ import ModalWindow from "../ModalWindow"
 import {userActions} from "../../../actions/user.actions"
 import {productsActions} from "../../../actions/products.actions"
 import {userService} from "../../../services/user.services"
+import {Link} from "react-router-dom"
+import {round} from "../../../utils/round"
 
 let intervalId = null
 
 const serviceTitle = {
-    optimization: 'PPC Automation',
-    dayparting: 'Dayparting',
-    analytics: 'Analytics',
-    productSettings: 'PPC Automation',
+    ppc_automate: 'PPC Automation',
+    ppc_audit: 'PPC Audit',
     zth: 'Zero to Hero',
-    scanner: 'PPC Audit',
+    analytics: 'Analytics',
+    dayparting: 'Dayparting',
+
+    products_info: 'PPC Automation',
     subscription: 'Subscription',
 }
+
+const tools = [
+    {
+        key: 'ppc_automate',
+        title: 'PPC Automation',
+        link: '/ppc/automation'
+    },
+    {
+        key: 'ppc_audit',
+        title: 'PPC Audit',
+        link: '/ppc-audit'
+    },
+    {
+        key: 'zth',
+        title: 'Zero to Hero',
+        link: '/zero-to-hero/campaign'
+    },
+    {
+        key: 'analytics',
+        title: 'Analytics',
+        link: '/analytics/products/regular'
+    },
+    {
+        key: 'dayparting',
+        title: 'Dayparting',
+        link: '/ppc/dayparting'
+    }
+]
 
 const importTypes = [
     {
@@ -46,24 +77,22 @@ const importTypes = [
         title: 'SP Advertising',
         key: 'sp'
     },
+    {
+        title: 'Profiles',
+        key: 'profiles'
+    },
+    {
+        title: 'Portfolios',
+        key: 'portfolios'
+    },
 ]
 
 const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastName, productList, container = false}) => {
-    const [currentService, setCurrentService] = useState('')
+    const [activeTool, setActiveTool] = useState()
+
     const dispatch = useDispatch()
-    const prevVisibleRef = useRef();
+    const prevVisibleRef = useRef()
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
-
-    let requiredParts = {}
-
-    if (currentService === 'optimization') requiredParts = importStatus.ppc_automate.required_parts_details
-    if (currentService === 'dayparting') requiredParts = importStatus.dayparting.required_parts_details
-    if (currentService === 'analytics') requiredParts = importStatus.analytics.required_parts_details
-    // if (currentService === 'productSettings') requiredParts = importStatus.products_info.required_parts_details
-    if (currentService === 'productSettings') requiredParts = importStatus.ppc_automate.required_parts_details
-    if (currentService === 'zth') requiredParts = importStatus.zth.required_parts_details
-    if (currentService === 'scanner') requiredParts = importStatus.ppc_audit ? importStatus.ppc_audit.required_parts_details : false
-    if (currentService === 'subscription') requiredParts = importStatus.subscription ? importStatus.subscription.required_parts_details : false
 
     const checkStatus = async () => {
         try {
@@ -74,10 +103,14 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
         }
     }
 
+    const onChangeActiveTool = (index) => {
+        setActiveTool(prevState => prevState === index ? undefined : index)
+    }
+
     useEffect(() => {
         if (prevVisibleRef.current && !visible) document.location.reload()
 
-        prevVisibleRef.current = visible;
+        prevVisibleRef.current = visible
 
         visible && checkStatus()
 
@@ -108,16 +141,6 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
         })
     }, [visible])
 
-    useEffect(() => {
-        if (pathname.includes('/ppc/automation') || pathname.includes('/ppc/report')) setCurrentService('optimization')
-        else if (pathname.includes('/ppc/dayparting')) setCurrentService('dayparting')
-        else if (pathname.includes('/ppc/product-settings')) setCurrentService('productSettings')
-        else if (pathname.includes('/analytics')) setCurrentService('analytics')
-        else if (pathname.includes('/zero-to-hero')) setCurrentService('zth')
-        else if (pathname.includes('/ppc-audit')) setCurrentService('scanner')
-        else if (pathname.includes('/account/subscriptions')) setCurrentService('subscription')
-    }, [pathname])
-
     return (
         <ModalWindow
             className={'amazon-loading-window'}
@@ -134,28 +157,56 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                 zIndex: '11'
             }}
         >
+            <h1>📂</h1>
+
             <h2>Welcome {firstName} {lastName}!</h2>
 
             <p>
                 We are currently syncing data from your Amazon Account with our system. This may take up to 24 hours. To
-                access {serviceTitle[currentService]} next data imports must be completed:
+                access next data imports must be completed:
             </p>
 
             <div className="table">
                 <div className="row header">
-                    <div className="col">Import type</div>
+                    <div className="col">Tool</div>
                     <div className="col">Status</div>
+                    <div className="col">Action</div>
                 </div>
 
-                {requiredParts && importTypes.map(i => (
-                    requiredParts[i.key] && <div className="row ">
-                        <div className="col">{i.title}</div>
-                        <div className="col">
-                            {requiredParts[i.key].part_ready ?
-                                <><span>Done</span> <DoneIcon/></> :
-                                <><span>In Progress...</span> <ProgressIcon/></>}
+                {tools.map((item, index) => <>
+                    <div className={'row'}>
+                        <div className={`col name ${activeTool === index ? 'active' : ''}`} onClick={() => onChangeActiveTool(index)}>
+                            {item.title}
+                            {!importStatus[item.key].required_parts_ready &&
+                            <svg width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 1.5L4.5 5L1 1.5" stroke="#353A3E" stroke-width="2" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                            </svg>}
                         </div>
-                    </div>))}
+                        <div className="col status">
+                            <ToolStatus
+                                importDetails={importStatus[item.key]}
+                            />
+                        </div>
+                        <div className="col action">
+                            {importStatus[item.key].required_parts_ready ?
+                                <Link to={item.link} className={'btn default'}>Start Using</Link> : '-'}
+                        </div>
+                    </div>
+
+                    <div className={`details ${activeTool === index ? 'active' : ''}`}>
+                        {importTypes.map(i => (
+                            importStatus[item.key].required_parts_details[i.key] && <div className="row ">
+                                <div className="col">{i.title}</div>
+                                <div className="col status">
+                                    {importStatus[item.key].required_parts_details[i.key].part_ready ?
+                                        <><span className={'done'}>Done</span> <DoneIcon/></> :
+                                        <><span>In Progress...</span> <ProgressIcon/></>}
+                                </div>
+                                <div className="col"/>
+                            </div>))}
+                    </div>
+                </>)}
             </div>
         </ModalWindow>
     )
@@ -173,5 +224,20 @@ const DoneIcon = () => <i>
 const ProgressIcon = () => <i>
     <div className="loader"/>
 </i>
+
+const ToolStatus = ({importDetails}) => {
+    if (importDetails.required_parts_ready) {
+        return <span className={'ready'}>Ready</span>
+    } else {
+        const percent = round((100 / Object.values(importDetails.required_parts_details).length) * Object.values(importDetails.required_parts_details).reduce((prevValue, item) => item.part_ready ? prevValue + 1 : prevValue, 0), 0)
+
+        return (<>
+            <div className="status-bar">
+                <div style={{width: `${percent}%`}}/>
+            </div>
+            {percent} %</>)
+    }
+
+}
 
 export default LoadingAmazonAccount

@@ -8,7 +8,7 @@ const Personal = () => {
     const dispatch = useDispatch();
     const [userInformation, changeUserInformation] = useState({});
     const {user} = useSelector(state => ({
-        user: state.user.user
+        user: state.user.userDetails
     }));
 
     const handleSaveUserInformation = e => {

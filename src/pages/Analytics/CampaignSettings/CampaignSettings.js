@@ -30,7 +30,7 @@ let dataFromResponse = {}
 const CampaignSettings = () => {
     const mainState = useSelector(state => state.analytics.mainState)
     const portfolioList = useSelector(state => state.analytics.portfolioList)
-    const user = useSelector(state => state.user.user)
+    const user = useSelector(state => state.user.userDetails)
 
     const dispatch = useDispatch()
 

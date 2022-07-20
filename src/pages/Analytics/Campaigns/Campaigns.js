@@ -14,7 +14,7 @@ const Campaigns = () => {
     const dispatch = useDispatch()
     const {selectedPortfolio, user} = useSelector(state => ({
         selectedPortfolio: state.analytics.mainState.portfolioId,
-        user: state.user.user
+        user: state.user.userDetails
     }))
 
     const setStateHandler = (location, state, event) => {

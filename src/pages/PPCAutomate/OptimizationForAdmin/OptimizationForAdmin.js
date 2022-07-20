@@ -584,7 +584,7 @@ const OptimizationForAdmin = () => {
                     onUpdateField={updateProductInformationHandler}
                 />
 
-                {user.user.is_agency_client && <CampaignsConfiguration
+                {user.userDetails.is_agency_client && <CampaignsConfiguration
                     productId={productId}
                     optimizationJobId={productInformation.id}
                     productInformation={productInformation}

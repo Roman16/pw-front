@@ -15,7 +15,7 @@ const Targetings = () => {
     const {selectedCampaign, selectedAdGroup, user} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
-        user: state.user.user
+        user: state.user.userDetails
     }))
 
     const dispatch = useDispatch()

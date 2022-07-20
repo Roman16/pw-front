@@ -23,7 +23,7 @@ const FullJourney = () => {
         seller_id: ''
     })
     const {userEmail} = useSelector(state => ({
-            userEmail: state.user.user.email,
+            userEmail: state.user.userDetails.email,
         })),
         connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
 

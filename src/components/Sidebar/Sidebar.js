@@ -80,17 +80,17 @@ const Sidebar = () => {
 
 
     useEffect(() => {
-        if (user.user.id === 714) setAdminStatus(true)
+        if (user.userDetails.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
 
-        if (user.user.is_agency_client) setAgencyUser(true)
+        if (user.userDetails.is_agency_client) setAgencyUser(true)
         else setAgencyUser(false)
 
 
         Sentry.configureScope(function (scope) {
             scope.setUser({
-                id: user.user.id,
-                email: user.user.email,
+                id: user.userDetails.id,
+                email: user.userDetails.email,
             })
         })
     }, [user])
@@ -104,16 +104,16 @@ const Sidebar = () => {
         //IntercomProvider dont work with impersonate-->
         window.Intercom("boot", {
             app_id: process.env.REACT_APP_INTERCOM_ID,
-            name: user.user.name,
+            name: user.userDetails.name,
             alignment: 'left',
             horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
             hide_default_launcher: true,
             vertical_padding: 0,
             custom_launcher_selector: '#intercom-chat-launcher',
-            email: user.user.email,
-            user_id: user.user.id,
-            created_at: moment(user.user.created_at).unix(),
-            user_hash: user.user.intercom_user_hash,
+            email: user.userDetails.email,
+            user_id: user.userDetails.id,
+            created_at: moment(user.userDetails.created_at).unix(),
+            user_hash: user.userDetails.intercom_user_hash,
         })
 
         return (() => {
@@ -288,7 +288,7 @@ const Sidebar = () => {
                             </a>
                         </li>
 
-                        {(!production || user.user.id === 714 || localStorage.getItem('adminToken')) &&
+                        {(!production || user.userDetails.id === 714 || localStorage.getItem('adminToken')) &&
                         <li className="bottom-nav-item">
                             <Link
                                 className="menu-link"

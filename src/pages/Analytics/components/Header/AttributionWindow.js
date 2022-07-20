@@ -22,12 +22,11 @@ const AttributionWindow = () => {
 
     return (<div className="attribution-window">
         <div className="form-group">
-            <label htmlFor="">
-                Attribution window
+            <div className="label">
+                <InformationTooltip description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
 
-                <InformationTooltip
-                    description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
-            </label>
+                Attribution window:
+            </div>
 
             <CustomSelect
                 onChange={changeValueHandler}

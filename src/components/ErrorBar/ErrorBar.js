@@ -1,9 +1,7 @@
-import React, {useEffect} from "react";
+import React from "react";
 import './ErrorBar.less';
 import {useSelector, useDispatch} from "react-redux";
-import {Link} from "react-router-dom";
 import {SVG} from "../../utils/icons";
-import {userActions} from "../../actions/user.actions";
 import InformationTooltip from "../Tooltip/Tooltip";
 
 // const accountLinks = {
@@ -20,21 +18,8 @@ let intervalId = null;
 
 const ErrorBar = () => {
     const trialLeftDays = useSelector(state => state.user.subscription.trial.days_before_trial_end_date)
-    const onTrial = useSelector(state => state.user.subscription.trial.trial_active)
-
-    // useEffect(() => {
-    //     intervalId = setInterval(() => {
-    //         if (accountLinks.amazon_mws.status !== 'SUCCESS' || accountLinks.amazon_ppc.status !== 'SUCCESS') {
-    //             // dispatch(userActions.getPersonalUserInfo());
-    //         } else {
-    //             clearInterval(intervalId);
-    //         }
-    //     }, 60000);
-    //
-    //     return (() => {
-    //         clearInterval(intervalId);
-    //     })
-    // }, [accountLinks]);
+    const onTrial = useSelector(state => state.user.subscription.trial.trial_active),
+        marketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     return (
         <div className='errors-bar'>
@@ -68,6 +53,12 @@ const ErrorBar = () => {
 
             {/*    <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>*/}
             {/*</div>}*/}
+
+            {marketplace && marketplace.profile_id === null &&
+            <div className={'error'}>
+                <SVG id={'error-bar-icon'}/>
+                <p><strong> Attention!</strong> profile_id = null </p>
+            </div>}
 
             {/*{accountLinks.amazon_ppc.status === 'FAILED' &&*/}
             {/*<div className={'error'}>*/}

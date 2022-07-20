@@ -21,6 +21,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import CustomSelect from "../../../../components/Select/Select"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 import {activeTimezone} from "../../../index"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -75,7 +76,10 @@ export const RenderMetricValue = ({number, type, id}) => {
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? `- $${numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : `$${numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}` : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? <>- <CurrencyWithCode
+                    value={numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}/></> :
+                <CurrencyWithCode
+                    value={numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}/> : '-'))
     }
 }
 

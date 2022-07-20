@@ -32,7 +32,7 @@ const ListingTracking = () => {
         })
 
     const {isAgencyClient} = useSelector(state => ({
-            isAgencyClient: state.user.user.is_agency_client
+            isAgencyClient: state.user.userDetails.is_agency_client
         }
     ))
 

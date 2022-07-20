@@ -300,8 +300,8 @@ const Subscriptions = (props) => {
             pathname={'/account/subscriptions'}
             visible={!importStatus.subscription?.required_parts_ready}
             importStatus={importStatus}
-            lastName={user.user.last_name}
-            firstName={user.user.name}
+            lastName={user.userDetails.last_name}
+            firstName={user.userDetails.name}
             productList={[]}
             container={() => document.querySelector('.account-content')}
         />

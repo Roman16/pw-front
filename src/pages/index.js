@@ -57,7 +57,7 @@ export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace
 
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
-            userId: state.user.user.id,
+            userId: state.user.userDetails.id,
         })),
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
@@ -164,14 +164,14 @@ const AuthorizedUser = (props) => {
     }, [amazonRegionAccounts])
 
     useEffect(() => {
-        if (user.user.id === 714) {
+        if (user.userDetails.id === 714) {
             setIsSuperAdmin(true)
         } else {
             setIsSuperAdmin(false)
         }
     }, [user])
 
-    let isAgencyUser = user.user.is_agency_client
+    let isAgencyUser = user.userDetails.is_agency_client
 
     if (loadingUserInformation || fetchingAmazonRegionAccounts) {
         return (

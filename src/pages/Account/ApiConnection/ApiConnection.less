@@ -5,6 +5,12 @@
   background: #FFFFFF;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
   border-radius: 4px;
+  overflow: auto;
+
+  .tabs,
+  & > div {
+    min-width: 600px;
+  }
 
 
   .tabs {
@@ -18,6 +24,7 @@
 
     li {
       width: 13%;
+      min-width: 130px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -34,6 +41,7 @@
 
     .bar {
       width: 13%;
+      min-width: 130px;
       height: 4px;
       position: absolute;
       left: 1.4285714285714286rem;
@@ -52,6 +60,7 @@
 
     .search {
       width: 25%;
+      min-width: 300px;
       margin: 0 1.7857142857142858rem 0 0;
 
       .ant-input-suffix {
@@ -121,6 +130,7 @@
 
   .accounts-list {
     width: 30%;
+    min-width: 250px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -354,8 +364,9 @@
 
     & > .row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-column-gap: 1.4285714285714286rem;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-rows: max-content;
+      grid-gap: 1.4285714285714286rem;
 
       .access {
         height: max-content;

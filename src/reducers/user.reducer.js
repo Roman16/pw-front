@@ -12,7 +12,7 @@ export const defaultImportStatus = {
 
 const initialState = {
     notFirstEntry: false,
-    user: {},
+    userDetails: {},
     plans: {},
 
     subscription: {
@@ -53,8 +53,8 @@ export function user(state = initialState, action) {
 
             return {
                 ...state,
-                user: {
-                    ...state.user,
+                userDetails: {
+                    ...state.userDetails,
                     ...action.payload
                 },
                 importStatus: action.payload.importStatus || state.importStatus || defaultImportStatus

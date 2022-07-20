@@ -35,7 +35,7 @@ function getUserInfo() {
         userService.getUserPersonalInformation()
             .then((res) => {
 
-                const user = store.getState().user.user || null
+                const user = store.getState().user.userDetails || null
 
                 if (user && (user.id !== res.id)) {
                     dispatch({
@@ -60,7 +60,7 @@ function getUserInfo() {
 
                 localStorage.setItem('userId', res.id)
 
-                dispatch(setInformation(res))
+                dispatch(setInformation({userDetails: res}))
             })
     }
 }
@@ -89,7 +89,7 @@ function getImpersonationUserInformation() {
         userService.getUserInfo()
             .then(({result}) => {
                 const res = result
-                const user = store.getState().user.user || null
+                const user = store.getState().user.userDetails || null
 
                 if (user && (user.id !== res.user.id)) {
                     dispatch({
