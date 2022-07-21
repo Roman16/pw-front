@@ -16,7 +16,6 @@ export const userService = {
     regist,
     resendConfirmEmail,
     confirmEmail,
-    getUserInfo,
     setMWS,
     unsetMWS,
     unsetAdsApi,
@@ -101,10 +100,6 @@ function resendConfirmEmail() {
 
 function confirmEmail({token}) {
     return api('post', `${userUrls.confirmEmail}/${token}`, {token}, undefined, undefined, undefined, undefined, false)
-}
-
-function getUserInfo() {
-    return api('get', userUrls.allInfo)
 }
 
 function setMWS(data) {

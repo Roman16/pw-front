@@ -7,6 +7,8 @@ import {useSelector} from "react-redux"
 import OnlyDesktopWindow from "./OnlyDesktopWindow"
 import {mobileCheck} from "../../../utils/mobileCheck"
 import SmallSpend from "./SmallSpend"
+import {ImportProfileWindow} from "./ImportProfileWindow"
+import {CreateAdsAccount} from "./CreateAdsAccount"
 
 // const importStatus = {
 //     "zth": {
@@ -132,7 +134,9 @@ const PWWindows = ({pathname}) => {
     }
 
     useEffect(() => {
-        if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
+        if (!importStatus.profiles?.required_parts_ready) {
+            setVisibleWindow('loadingProfile')
+        } else if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
             (pathname.includes('/ppc-audit') && importStatus.ppc_audit && !importStatus.ppc_audit.required_parts_ready) ||
             (pathname.includes('/ppc/') && !importStatus.ppc_automate.required_parts_ready) ||
@@ -157,14 +161,27 @@ const PWWindows = ({pathname}) => {
     return (
         <>
             {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics') || pathname.includes('/ppc-audit')) &&
-            <LoadingAmazonAccount
-                pathname={pathname}
-                visible={visibleWindow === 'loadingAmazon'}
-                importStatus={importStatus}
-                lastName={user.userDetails.last_name}
-                firstName={user.userDetails.name}
-                productList={productList}
-            />}
+            <>
+                <LoadingAmazonAccount
+                    pathname={pathname}
+                    visible={visibleWindow === 'loadingAmazon'}
+                    importStatus={importStatus}
+                    lastName={user.userDetails.last_name}
+                    firstName={user.userDetails.name}
+                    productList={productList}
+                />
+
+                <ImportProfileWindow
+                    visible={visibleWindow === 'loadingProfile'}
+
+                    lastName={user.userDetails.last_name}
+                    firstName={user.userDetails.name}
+                />
+
+                <CreateAdsAccount
+                    visible={visibleWindow === 'adsAccount'}
+                />
+            </>}
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow
                 visible={visibleWindow === 'notAccess'}

@@ -54,7 +54,7 @@ const Subscriptions = (props) => {
     const importStatus = useSelector(state => state.user.importStatus)
     const activeRegion = useSelector(state => state.user.activeAmazonRegion)
 
-    const amazonIsConnected = activeRegion.is_amazon_ads_api_attached && activeRegion.is_mws_attached
+    const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_mws_attached
 
     const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true) || visibleSomethingWrongWindow
 

@@ -54,7 +54,7 @@ const ApiConnection = () => {
     }, [])
 
     useEffect(() => {
-        setSelectedAccount(prevState => _.find(accounts, {id: prevState.id}))
+        selectedAccount && setSelectedAccount(prevState => _.find(accounts, {id: prevState.id}))
     }, [accounts])
 
     const accountsWithFilter = accounts.filter(account => account.account_alias.toLowerCase().trim().includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))

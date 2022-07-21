@@ -22,11 +22,6 @@ const serviceTitle = {
 
 const tools = [
     {
-        key: 'ppc_automate',
-        title: 'PPC Automation',
-        link: '/ppc/automation'
-    },
-    {
         key: 'ppc_audit',
         title: 'PPC Audit',
         link: '/ppc-audit'
@@ -42,10 +37,27 @@ const tools = [
         link: '/analytics/products/regular'
     },
     {
+        key: 'ppc_automate',
+        title: 'PPC Automation',
+        link: '/ppc/automation'
+    },
+    {
         key: 'dayparting',
         title: 'Dayparting',
         link: '/ppc/dayparting'
-    }
+    },
+    {
+        key: 'products_info',
+        title: 'Products Info',
+        link: '/ppc/product-settings'
+    },
+    {
+        key: 'subscription',
+        title: 'Subscriptions',
+        link: '/account/subscriptions'
+    },
+
+
 ]
 
 const importTypes = [
@@ -129,9 +141,6 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                     }))
                 }
 
-                userService.getUserInfo()
-                    .then(({result}) => dispatch(userActions.setInformation(result)))
-
                 clearInterval(intervalId)
             }
         }, 10000)
@@ -168,14 +177,15 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
 
             <div className="table">
                 <div className="row header">
-                    <div className="col">Tool</div>
+                    <div className="col">Feature</div>
                     <div className="col">Status</div>
                     <div className="col">Action</div>
                 </div>
 
                 {tools.map((item, index) => <>
                     <div className={'row'}>
-                        <div className={`col name ${activeTool === index ? 'active' : ''}`} onClick={() => onChangeActiveTool(index)}>
+                        <div className={`col name ${activeTool === index ? 'active' : ''}`}
+                             onClick={() => onChangeActiveTool(index)}>
                             {item.title}
                             {!importStatus[item.key].required_parts_ready &&
                             <svg width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +211,9 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                                 <div className="col status">
                                     {importStatus[item.key].required_parts_details[i.key].part_ready ?
                                         <><span className={'done'}>Done</span> <DoneIcon/></> :
-                                        <><span>In Progress...</span> <ProgressIcon/></>}
+                                        <>
+                                            <span>In Progress ({importStatus[item.key].required_parts_details[i.key].ready_types_count / importStatus[item.key].required_parts_details[i.key].total_types_count * 100}%)</span>
+                                            <ProgressIcon/></>}
                                 </div>
                                 <div className="col"/>
                             </div>))}
