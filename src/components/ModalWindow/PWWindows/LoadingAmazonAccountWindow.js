@@ -187,7 +187,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                         <div className={`col name ${activeTool === index ? 'active' : ''}`}
                              onClick={() => onChangeActiveTool(index)}>
                             {item.title}
-                            {!importStatus[item.key].required_parts_ready &&
+                            {!importStatus[item.key]?.required_parts_ready &&
                             <svg width="9" height="6" viewBox="0 0 9 6" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M8 1.5L4.5 5L1 1.5" stroke="#353A3E" stroke-width="2" stroke-linecap="round"
                                       stroke-linejoin="round"/>
@@ -199,20 +199,20 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                             />
                         </div>
                         <div className="col action">
-                            {importStatus[item.key].required_parts_ready ?
+                            {importStatus[item.key]?.required_parts_ready ?
                                 <Link to={item.link} className={'btn default'}>Start Using</Link> : '-'}
                         </div>
                     </div>
 
                     <div className={`details ${activeTool === index ? 'active' : ''}`}>
                         {importTypes.map(i => (
-                            importStatus[item.key].required_parts_details[i.key] && <div className="row ">
+                            importStatus[item.key]?.required_parts_details[i.key] && <div className="row ">
                                 <div className="col">{i.title}</div>
                                 <div className="col status">
                                     {importStatus[item.key].required_parts_details[i.key].part_ready ?
                                         <><span className={'done'}>Done</span> <DoneIcon/></> :
                                         <>
-                                            <span>In Progress ({importStatus[item.key].required_parts_details[i.key].ready_types_count / importStatus[item.key].required_parts_details[i.key].total_types_count * 100}%)</span>
+                                            <span>In Progress ({importStatus[item.key]?.required_parts_details[i.key].ready_types_count / importStatus[item.key].required_parts_details[i.key].total_types_count * 100}%)</span>
                                             <ProgressIcon/></>}
                                 </div>
                                 <div className="col"/>
@@ -238,7 +238,7 @@ const ProgressIcon = () => <i>
 </i>
 
 const ToolStatus = ({importDetails}) => {
-    if (importDetails.required_parts_ready) {
+    if (importDetails?.required_parts_ready) {
         return <span className={'ready'}>Ready</span>
     } else {
         const percent = round((100 / Object.values(importDetails.required_parts_details).length) * Object.values(importDetails.required_parts_details).reduce((prevValue, item) => item.part_ready ? prevValue + 1 : prevValue, 0), 0)
