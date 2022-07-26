@@ -171,16 +171,16 @@ const PWWindows = ({pathname}) => {
                     productList={productList}
                 />
 
-                <ImportProfileWindow
-                    visible={visibleWindow === 'loadingProfile'}
+                {/*<ImportProfileWindow*/}
+                {/*    visible={visibleWindow === 'loadingProfile'}*/}
 
-                    lastName={user.userDetails.last_name}
-                    firstName={user.userDetails.name}
-                />
+                {/*    lastName={user.userDetails.last_name}*/}
+                {/*    firstName={user.userDetails.name}*/}
+                {/*/>*/}
 
-                <CreateAdsAccount
-                    visible={visibleWindow === 'adsAccount'}
-                />
+                {/*<CreateAdsAccount*/}
+                {/*    visible={visibleWindow === 'adsAccount'}*/}
+                {/*/>*/}
             </>}
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow

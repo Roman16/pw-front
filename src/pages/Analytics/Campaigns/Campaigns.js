@@ -47,8 +47,7 @@ const Campaigns = () => {
                 fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
 
                 columns={columns}
-                moreActions={(isAgencyUser || isSuperAdmin) ?
-                    <OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/> : false}
+                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
                 showRowSelection={!!(isAgencyUser || isSuperAdmin)}
                 rowKey={'campaignId'}
             >

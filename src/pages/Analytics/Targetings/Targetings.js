@@ -47,8 +47,7 @@ const Targetings = () => {
                 fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
 
                 columns={columns}
-                moreActions={(isAgencyUser || isSuperAdmin) ?
-                    <OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/> : false}
+                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
                 showRowSelection={!!(isAgencyUser || isSuperAdmin)}
                 rowKey={'targetingId'}
             >
