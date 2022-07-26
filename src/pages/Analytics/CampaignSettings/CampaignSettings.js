@@ -29,7 +29,6 @@ let dataFromResponse = {}
 const CampaignSettings = () => {
     const mainState = useSelector(state => state.analytics.mainState)
     const portfolioList = useSelector(state => state.analytics.portfolioList)
-    const user = useSelector(state => state.user.user)
 
     const dispatch = useDispatch()
 
@@ -160,8 +159,6 @@ const CampaignSettings = () => {
         setAvailablePortfolios([...portfolioList])
     }, [portfolioList])
 
-    const isSaasClient = !(user.id === 714 || user.is_agency_client)
-
     return (
         <div className={'campaign-settings-workplace'}>
             <div className={'settings-form'}>
@@ -174,7 +171,7 @@ const CampaignSettings = () => {
                         <div className={`form-group ${failedFields.includes('name') ? 'error-field' : ''}`}>
                             <Input
                                 placeholder={'Campaign Name'}
-                                disabled={settingParams.state === 'archived' || isSaasClient}
+                                disabled={settingParams.state === 'archived'}
                                 value={settingParams.name}
                                 onChange={({target: {value}}) => changeSettingsHandler({name: value})}
                                 onBlur={({target: {value}}) => {
@@ -205,7 +202,7 @@ const CampaignSettings = () => {
                         <div className="form-group">
                             <CustomSelect
                                 showSearch
-                                disabled={settingParams.state === 'archived' || isSaasClient}
+                                disabled={settingParams.state === 'archived'}
                                 placeholder={'Select by'}
                                 getPopupContainer={trigger => trigger.parentNode}
                                 value={settingParams.portfolioId}
@@ -273,7 +270,7 @@ const CampaignSettings = () => {
                             <div className='switch-block'>
                                 <Switch
                                     checked={settingParams.state === 'enabled'}
-                                    disabled={settingParams.state === 'archived' || isSaasClient}
+                                    disabled={settingParams.state === 'archived'}
                                     onChange={checked => changeSettingsHandler({'state': checked ? 'enabled' : 'paused'})}
                                 />
 
@@ -301,7 +298,7 @@ const CampaignSettings = () => {
 
                     <div className="value date">
                         <DatePicker
-                            disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day') || isSaasClient}
+                            disabled={settingParams.state === 'archived' || moment(settingParams.startDate).endOf('day') <= moment().tz('America/Los_Angeles').endOf('day')}
                             showToday={false}
                             allowClear={false}
                             value={settingParams.startDate && moment(settingParams.startDate).tz('America/Los_Angeles')}
@@ -318,7 +315,7 @@ const CampaignSettings = () => {
                         <DatePicker
                             value={settingParams.endDate && settingParams.endDate !== 'null' ? moment(settingParams.endDate).tz('America/Los_Angeles') : undefined}
                             placeholder={'No end date'}
-                            disabled={settingParams.state === 'archived' || isSaasClient}
+                            disabled={settingParams.state === 'archived'}
                             showToday={false}
                             allowClear={false}
                             onChange={(date) => changeSettingsHandler({endDate: dateRequestFormat(date)})}
@@ -353,7 +350,7 @@ const CampaignSettings = () => {
                     <div className="value budget">
                         <div className={`form-group ${failedFields.includes('budget') ? 'error-field' : ''}`}>
                             <InputCurrency
-                                disabled={settingParams.state === 'archived' || isSaasClient}
+                                disabled={settingParams.state === 'archived' }
                                 value={settingParams.calculatedBudget ? round(settingParams.calculatedBudget, 2) : undefined}
                                 step={0.01}
                                 onChange={(value) => changeSettingsHandler({calculatedBudget: value})}
@@ -377,7 +374,7 @@ const CampaignSettings = () => {
                         <div className="value strategy">
                             <Radio.Group
                                 value={settingParams.bidding_strategy}
-                                disabled={settingParams.state === 'archived' || isSaasClient}
+                                disabled={settingParams.state === 'archived' }
                                 onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
                             >
                                 <div className="col">
@@ -442,7 +439,7 @@ const CampaignSettings = () => {
                                 </label>
 
                                 <InputCurrency
-                                    disabled={settingParams.state === 'archived' || isSaasClient}
+                                    disabled={settingParams.state === 'archived'}
                                     step={1}
                                     parser={value => value && Math.abs(Math.trunc(value))}
                                     value={settingParams.bidding_adjustments[0].percentage}
@@ -470,7 +467,7 @@ const CampaignSettings = () => {
                                 </label>
 
                                 <InputCurrency
-                                    disabled={settingParams.state === 'archived' || isSaasClient}
+                                    disabled={settingParams.state === 'archived'}
                                     step={1}
                                     parser={value => value && Math.abs(Math.trunc(value))}
                                     value={settingParams.bidding_adjustments[1].percentage}
@@ -498,12 +495,12 @@ const CampaignSettings = () => {
                 {fetchProcessing && <RouteLoader/>}
             </div>
 
-            {(settingParams.state !== 'archived' && !isSaasClient) && <div
+            {(settingParams.state !== 'archived') && <div
                 className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
                 <p>{saveProcessing ? 'Saving changes' : 'You have unsaved changes'}</p>
 
                 {!saveProcessing && <button
-                    className="btn transparent"
+                    className="btn white"
                     onClick={refreshData}
                     disabled={saveProcessing}
                 >
@@ -511,7 +508,7 @@ const CampaignSettings = () => {
                 </button>}
 
                 <button
-                    className="btn white"
+                    className="btn default"
                     onClick={submitHandler}
                     disabled={saveProcessing}
                 >

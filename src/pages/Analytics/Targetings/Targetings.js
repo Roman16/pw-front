@@ -12,10 +12,9 @@ const Targetings = () => {
     const availableMetrics = _.filter([...metricsKeysWithoutOrganic], v => v !== 'ad_profit')
     const location = 'targetings'
 
-    const {selectedCampaign, selectedAdGroup, user} = useSelector(state => ({
+    const {selectedCampaign, selectedAdGroup} = useSelector(state => ({
         selectedCampaign: state.analytics.mainState.campaignId,
         selectedAdGroup: state.analytics.mainState.adGroupId,
-        user: state.user.user
     }))
 
     const dispatch = useDispatch()
@@ -27,16 +26,8 @@ const Targetings = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
-    const isAgencyUser = user.is_agency_client,
-        isSuperAdmin = user.id === 714
 
-    let columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, (isAgencyUser || isSuperAdmin))
-
-    columns.columnsWithFilters = columns.columnsWithFilters.map(i => {
-        if (!(isAgencyUser || isSuperAdmin)) i.editType = undefined
-        return i
-    })
-
+    let columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, true)
 
     return (
         <div className={'targetings-workplace'}>
@@ -44,12 +35,11 @@ const Targetings = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
+                fixedColumns={[0, 1]}
 
                 columns={columns}
-                moreActions={(isAgencyUser || isSuperAdmin) ?
-                    <OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/> : false}
-                showRowSelection={!!(isAgencyUser || isSuperAdmin)}
+                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                showRowSelection={true}
                 rowKey={'targetingId'}
             >
                 {successCreate => <CreateTargetingsWindow onReloadList={successCreate}/>}

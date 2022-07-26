@@ -12,9 +12,8 @@ const Campaigns = () => {
     const location = 'campaigns'
 
     const dispatch = useDispatch()
-    const {selectedPortfolio, user} = useSelector(state => ({
+    const {selectedPortfolio} = useSelector(state => ({
         selectedPortfolio: state.analytics.mainState.portfolioId,
-        user: state.user.user
     }))
 
     const setStateHandler = (location, state, event) => {
@@ -28,15 +27,7 @@ const Campaigns = () => {
         dispatch(analyticsActions.setStateDetails(data))
     }
 
-    const isAgencyUser = user.is_agency_client,
-        isSuperAdmin = user.id === 714
-
-    let columns = columnList(setStateHandler, setStateDetails, selectedPortfolio, (isAgencyUser || isSuperAdmin))
-
-    columns.columnsWithFilters = columns.columnsWithFilters.map(i => {
-        if (!(isAgencyUser || isSuperAdmin)) i.editType = undefined
-        return i
-    })
+    let columns = columnList(setStateHandler, setStateDetails, selectedPortfolio, true)
 
     return (
         <div className={'campaigns-workplace'}>
@@ -44,12 +35,11 @@ const Campaigns = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={(isAgencyUser || isSuperAdmin) ? [0, 1] : [0]}
+                fixedColumns={[0, 1]}
 
                 columns={columns}
-                moreActions={(isAgencyUser || isSuperAdmin) ?
-                    <OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/> : false}
-                showRowSelection={!!(isAgencyUser || isSuperAdmin)}
+                moreActions={<OpenCreateWindowButton title={'Add Campaign'} window={'campaign'}/>}
+                showRowSelection={true}
                 rowKey={'campaignId'}
             >
                 {successCreate => <CreateCampaignWindow onReloadList={successCreate}/>}
