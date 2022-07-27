@@ -7,6 +7,7 @@ import CustomSelect from "../../../components/Select/Select"
 import {SVG} from "../../../utils/icons"
 import {strategies} from "../../PPCAutomate/OptimizationForAdmin/OptimizationSettings/OptimizationSettings"
 import {Select, Spin} from "antd"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const Option = Select.Option
 
@@ -35,12 +36,16 @@ const StartScanning = ({
             <div className={`form-group cogs ${(loadingProducts || !product.id) ? 'disabled' : ''}`}>
                 <label htmlFor="">
                     Enter COGS
+
+                    <InformationTooltip
+                        description={'Cost of goods sold (CoGS) is the cost of acquiring or manufacturing one unit of product that you sell on Amazon during a particular period. Simply put, this is the cost you have to spend for one unit of product to end up in Amazon warehouse.'}
+                    />
                 </label>
 
                 <InputCurrency
                     disabled
                     value={product.cogs_value}
-                    onClick={() => (!loadingProducts || product.id) && setVisibleCogsWindow(true)}
+                    onClick={() => (!loadingProducts && product.id) && setVisibleCogsWindow(true)}
                 />
             </div>
 
@@ -69,13 +74,13 @@ const StartScanning = ({
             {/*    </CustomSelect>*/}
             {/*</div>*/}
 
-            {optimizationStrategy === 'AchieveTargetACoS' && <div className="form-group">
+            {optimizationStrategy === 'AchieveTargetACoS' && <div className={`form-group acos ${(loadingProducts || !product.id) ? 'disabled' : ''}`}>
                 <label htmlFor="">
                     Enter your target ACoS
                 </label>
 
                 <InputCurrency
-                    disabled={loadingProducts}
+                    disabled={loadingProducts || !product.id}
                     value={targetAcos}
                     typeIcon={'percent'}
                     onChange={(value) => setTargetAcos(value)}

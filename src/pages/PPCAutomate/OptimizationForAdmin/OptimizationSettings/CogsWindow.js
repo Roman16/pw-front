@@ -116,6 +116,8 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
                             setCurrentCogs('cogs', item.cogs_value)
                         }
                     })
+
+                    addNew(res.result.length)
                 })
         }
         setActiveIndex(undefined)
