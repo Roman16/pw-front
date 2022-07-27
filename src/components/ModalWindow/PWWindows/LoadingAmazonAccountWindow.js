@@ -212,7 +212,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
                                     {importStatus[item.key].required_parts_details[i.key].part_ready ?
                                         <><span className={'done'}>Done</span> <DoneIcon/></> :
                                         <>
-                                            <span>In Progress ({importStatus[item.key]?.required_parts_details[i.key].ready_types_count / importStatus[item.key].required_parts_details[i.key].total_types_count * 100}%)</span>
+                                            <span>In Progress ({round(importStatus[item.key]?.required_parts_details[i.key].ready_types_count / importStatus[item.key].required_parts_details[i.key].total_types_count * 100, 0)}%)</span>
                                             <ProgressIcon/></>}
                                 </div>
                                 <div className="col"/>

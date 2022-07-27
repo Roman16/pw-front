@@ -49,8 +49,6 @@
       font-size: 1rem;
       line-height: 1.2142857142857142rem;
       color: #353A3E;
-      display: flex;
-      flex-direction: column;
 
       span {
         font-size: 0.85714286rem;
@@ -70,12 +68,12 @@
 
       input {
         border: 1px solid #C9CBD4;
-        background: #fff !important;
+        background-color: #fff !important;
         color: #343C5A !important;
       }
     }
 
-    &.cogs {
+    &.cogs, &.acos {
       .InputCurrency {
         input {
           cursor: pointer !important;
@@ -92,6 +90,8 @@
         }
       }
     }
+
+
 
 
     .ant-select-selection-selected-value {

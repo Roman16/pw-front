@@ -589,7 +589,7 @@ const OptimizationForAdmin = () => {
                     optimizationJobId={productInformation.id}
                     productInformation={productInformation}
                     isDisabled={productInformation.optimization_strategy == null}
-                    jobsList={fakeCampaignConfiguration}
+                    jobsList={campaignSettings}
                     loading={loadingCampaignSettings}
                     getSettings={getCampaignSettings}
                     onUpdate={updateCampaignSettingsHandler}
