@@ -18,4 +18,8 @@ export const CreateAdsAccount = ({visible, container}) => (
     >
         <h2>Welcome!</h2>
 
+        <p>
+            - profile id = null <br/>
+            - profile import = true
+        </p>
     </ModalWindow>)

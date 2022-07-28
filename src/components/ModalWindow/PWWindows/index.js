@@ -113,11 +113,12 @@ const PWWindows = ({pathname}) => {
         [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true),
         [visibleNewChangesWindow, setVisibleNewChangesWindow] = useState(true)
 
-    const {user, productList, importStatus, access} = useSelector(state => ({
+    const {user, productList, importStatus, access, activeMarketplace} = useSelector(state => ({
         user: state.user,
         productList: state.products.productList || [],
         importStatus: state.user.importStatus,
         access: state.user.subscription.access,
+        activeMarketplace: state.user.activeAmazonMarketplace
     }))
 
     const closeWindowHandler = () => {
@@ -134,8 +135,10 @@ const PWWindows = ({pathname}) => {
     }
 
     useEffect(() => {
-        if (!importStatus.profiles?.required_parts_ready) {
+        if (!importStatus.common_resources?.required_parts_details.profiles.part_ready) {
             setVisibleWindow('loadingProfile')
+        } else if (importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null) {
+            setVisibleWindow('adsAccount')
         } else if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
             (pathname.includes('/ppc-audit') && importStatus.ppc_audit && !importStatus.ppc_audit.required_parts_ready) ||
@@ -171,16 +174,16 @@ const PWWindows = ({pathname}) => {
                     productList={productList}
                 />
 
-                {/*<ImportProfileWindow*/}
-                {/*    visible={visibleWindow === 'loadingProfile'}*/}
+                <ImportProfileWindow
+                    visible={visibleWindow === 'loadingProfile'}
 
-                {/*    lastName={user.userDetails.last_name}*/}
-                {/*    firstName={user.userDetails.name}*/}
-                {/*/>*/}
+                    lastName={user.userDetails.last_name}
+                    firstName={user.userDetails.name}
+                />
 
-                {/*<CreateAdsAccount*/}
-                {/*    visible={visibleWindow === 'adsAccount'}*/}
-                {/*/>*/}
+                <CreateAdsAccount
+                    visible={visibleWindow === 'adsAccount'}
+                />
             </>}
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow

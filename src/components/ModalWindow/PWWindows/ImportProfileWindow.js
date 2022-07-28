@@ -21,7 +21,6 @@ export const ImportProfileWindow = ({visible, container, firstName, lastName}) =
         <h2>Welcome {firstName} {lastName}!</h2>
 
         <p>
-            We are currently syncing data from your Amazon Account with our system. This may take up to 24 hours. To
-            access next data imports must be completed:
+           import profile data
         </p>
     </ModalWindow>)

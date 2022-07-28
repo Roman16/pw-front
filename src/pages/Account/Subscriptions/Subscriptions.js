@@ -16,6 +16,8 @@ import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
 import {injectStripe} from "react-stripe-elements"
 import {history} from "../../../utils/history"
+import {ImportProfileWindow} from "../../../components/ModalWindow/PWWindows/ImportProfileWindow"
+import {CreateAdsAccount} from "../../../components/ModalWindow/PWWindows/CreateAdsAccount"
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
@@ -53,6 +55,7 @@ const Subscriptions = (props) => {
     const user = useSelector(state => state.user)
     const importStatus = useSelector(state => state.user.importStatus)
     const activeRegion = useSelector(state => state.user.activeAmazonRegion)
+    const activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_mws_attached
 
@@ -68,7 +71,10 @@ const Subscriptions = (props) => {
         }
 
         try {
-            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope, activeRegion.id), userService.getActivateInfo({scope, id: activeRegion.id})])
+            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope, activeRegion.id), userService.getActivateInfo({
+                scope,
+                id: activeRegion.id
+            })])
 
 
             if (state.result[scope].error || info.result[scope].error) {
@@ -192,7 +198,11 @@ const Subscriptions = (props) => {
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type}, activeRegion.id)
+                await userService.activateCoupon({
+                    coupon,
+                    scope,
+                    type: subscriptionState.active_subscription_type
+                }, activeRegion.id)
                 notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
                 setVisibleCancelSubscriptionsWindow(false)
@@ -296,15 +306,33 @@ const Subscriptions = (props) => {
             visible={importStatus.subscription?.required_parts_ready && visibleSomethingWrongWindow}
         />
 
-        <LoadingAmazonAccount
-            pathname={'/account/subscriptions'}
-            visible={amazonIsConnected && !importStatus.subscription?.required_parts_ready}
-            importStatus={importStatus}
-            lastName={user.userDetails.last_name}
-            firstName={user.userDetails.name}
-            productList={[]}
-            container={() => document.querySelector('.account-content')}
-        />
+
+        {!importStatus.common_resources?.required_parts_details.profiles.part_ready ?
+            <ImportProfileWindow
+                visible={true}
+                container={() => document.querySelector('.account-content')}
+
+                lastName={user.userDetails.last_name}
+                firstName={user.userDetails.name}
+            /> : importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null ?
+                <CreateAdsAccount
+                    container={() => document.querySelector('.account-content')}
+
+                    visible={true}
+                /> : amazonIsConnected && !importStatus.subscription?.required_parts_ready ?
+                    <LoadingAmazonAccount
+                        pathname={'/account/subscriptions'}
+                        visible={true}
+                        importStatus={importStatus}
+                        lastName={user.userDetails.last_name}
+                        firstName={user.userDetails.name}
+                        productList={[]}
+                        container={() => document.querySelector('.account-content')}
+                    /> : false
+
+        }
+
+
     </>)
 }
 
