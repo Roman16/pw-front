@@ -52,7 +52,7 @@ const ErrorBar = () => {
             {/*    We are currently checking your Seller Central API connection.*/}
             {/*</div>}*/}
 
-            {region.mws_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
+            {region?.mws_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong> Attention!</strong> Looks like your MWS access was revoked. Please go to your Seller Central
@@ -65,7 +65,7 @@ const ErrorBar = () => {
             </div>}
 
 
-            {region.amazon_ads_api_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
+            {region?.amazon_ads_api_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Looks like we don’t have permission for your Advertising Campaigns. It

@@ -329,6 +329,7 @@ const Sidebar = () => {
                 activeMarketplace={activeMarketplace}
 
                 onSet={setMarketplaceHandler}
+                onChangeVisibleStatus={setVisibleMarketplacesWindow}
             />
         </>
     )

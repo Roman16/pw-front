@@ -141,8 +141,8 @@ const ProductList = ({
 
     const getValueFromDefaultVariation = (variations, key) => _.find(variations, {is_default_variation: true}) ? _.find(variations, {is_default_variation: true})[key] : variations[0][key]
 
-    const getValue = (product, key, fromVariation = false, type = 'currency',) => {
-        const value = (fromVariation && product.product.variations) ? getValueFromDefaultVariation(product.product.variations, key) : product[key]
+    const getValue = (product, key, fromVariation = false, type = 'currency') => {
+        const value = (fromVariation && product.product.variations && product.product.variations.length > 0) ? getValueFromDefaultVariation(product.product.variations, key) : product[key]
 
         return value ? type === 'currency' ? `$${value}` : `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
     }
@@ -195,7 +195,7 @@ const ProductList = ({
                 width: '170px',
                 key: PRICE_FROM_USER,
                 editType: 'currency',
-                saveValidation: () =>  false,
+                saveValidation: () => false,
                 render: (item) => getValue(item, PRICE_FROM_USER)
             },
             {
@@ -370,7 +370,7 @@ const ProductList = ({
             key: PRICE_FROM_USER,
             width: '170px',
             editType: (item) => item.product.variations ? false : 'currency',
-            saveValidation: () =>  false,
+            saveValidation: () => false,
             render: (index, item) => getValue(item, PRICE_FROM_USER, true)
         },
         {

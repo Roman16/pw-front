@@ -71,14 +71,18 @@ const LoginPage = (props) => {
         seo({title: 'Login Sponsoreds'})
 
         if (props.match.params.status === 'logout') {
-            userService.logOut()
+            localStorage.removeItem('importStatus')
 
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
-            localStorage.removeItem('activeRegion')
-            localStorage.removeItem('activeMarketplace')
-            localStorage.removeItem('importStatus')
+
+            dispatch(userActions.setActiveRegion({
+                marketplace: undefined,
+                region: undefined
+            }))
+
+            userService.logOut()
 
             dispatch(userActions.logOut())
 

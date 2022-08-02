@@ -75,9 +75,9 @@ const ConnectedAmazonRoute = props => {
 
     if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
-    } else if (!activeAmazonRegion.is_mws_attached) {
+    } else if (activeAmazonRegion && !activeAmazonRegion?.is_mws_attached) {
         return <Redirect to={`/connect-mws-account/${activeAmazonRegion.region_type}`}/>
-    } else if (!activeAmazonRegion.is_amazon_ads_api_attached) {
+    } else if (activeAmazonRegion && !activeAmazonRegion?.is_amazon_ads_api_attached) {
         return <Redirect to={`/connect-ppc-account/${activeAmazonRegion.id}`}/>
     } else {
         return <Route {...props} />

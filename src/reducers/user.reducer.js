@@ -31,8 +31,8 @@ const initialState = {
     },
     fetchingAmazonRegionAccounts: true,
     amazonRegionAccounts: [],
-    activeAmazonRegion: localStorage.getItem('activeRegion') ? JSON.parse(localStorage.getItem('activeRegion')) : null,
-    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') ? JSON.parse(localStorage.getItem('activeMarketplace')) : null,
+    activeAmazonRegion: localStorage.getItem('activeRegion') && localStorage.getItem('activeRegion') !== 'undefined' ? JSON.parse(localStorage.getItem('activeRegion')) : null,
+    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') && localStorage.getItem('activeMarketplace') !== 'undefined' ? JSON.parse(localStorage.getItem('activeMarketplace')) : null,
     importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
@@ -90,23 +90,24 @@ export function user(state = initialState, action) {
             }
 
         case userConstants.ACTUALIZE_ACTIVE_REGION:
-            const region = _.find(state.amazonRegionAccounts, {id: state.activeAmazonRegion.id})
-
-            localStorage.setItem('activeRegion', JSON.stringify(region))
+            const region = _.find(state.amazonRegionAccounts, {id: state.activeAmazonRegion?.id})
+            region && localStorage.setItem('activeRegion', JSON.stringify(region))
 
             return {
                 ...state,
-                activeAmazonRegion: region,
+                activeAmazonRegion: region || null,
             }
 
         case userConstants.SET_ACTIVE_REGION:
-            localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace))
-            localStorage.setItem('activeRegion', JSON.stringify(action.payload.region))
+            console.log(action.payload)
+
+            action.payload.marketplace ? localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace)) : localStorage.removeItem('activeMarketplace')
+            action.payload.region ? localStorage.setItem('activeRegion', JSON.stringify(action.payload.region)) : localStorage.removeItem('activeRegion')
 
             return {
                 ...state,
-                activeAmazonRegion: action.payload.region,
-                activeAmazonMarketplace: action.payload.marketplace
+                activeAmazonRegion: action.payload.region || null,
+                activeAmazonMarketplace: action.payload.marketplace || null
             }
 
 

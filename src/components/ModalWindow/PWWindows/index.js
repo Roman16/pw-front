@@ -137,7 +137,7 @@ const PWWindows = ({pathname}) => {
     useEffect(() => {
         if (!importStatus.common_resources?.required_parts_details.profiles.part_ready) {
             setVisibleWindow('loadingProfile')
-        } else if (importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null) {
+        } else if (importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace?.profile_id === null) {
             setVisibleWindow('adsAccount')
         } else if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||

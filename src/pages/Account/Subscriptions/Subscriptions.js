@@ -25,10 +25,7 @@ const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 const Subscriptions = (props) => {
     const dispatch = useDispatch()
 
-    const
-        [scope, setScope] = useState('America'),
-
-        [subscriptionState, setSubscriptionState] = useState({
+    const [subscriptionState, setSubscriptionState] = useState({
             active_subscription_type: null,
             subscriptions: {
                 optimization: {},
@@ -71,20 +68,17 @@ const Subscriptions = (props) => {
         }
 
         try {
-            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope, activeRegion.id), userService.getActivateInfo({
-                scope,
-                id: activeRegion.id
-            })])
+            let [state, info] = await Promise.all([userService.getSubscriptionsState(activeRegion.id), userService.getActivateInfo({id: activeRegion.id})])
 
 
-            if (state.result[scope].error || info.result[scope].error) {
+            if (state.result[activeRegion.id].error || info.result[activeRegion.id].error) {
                 openErrorWindow()
-            } else if ([state.result[scope].data.subscriptions.analytics, state.result[scope].data.subscriptions.optimization, state.result[scope].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing' || i?.incomplete_payment?.status === 'succeeded')) {
+            } else if ([state.result[activeRegion.id].data.subscriptions.analytics, state.result[activeRegion.id].data.subscriptions.optimization, state.result[activeRegion.id].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing' || i?.incomplete_payment?.status === 'succeeded')) {
                 getSubscriptionsState()
                 return
             } else {
-                state = state.result[scope].data
-                info = info.result[scope].data
+                state = state.result[activeRegion.id].data
+                info = info.result[activeRegion.id].data
 
                 setSubscriptionState({
                     ...state,
@@ -117,7 +111,6 @@ const Subscriptions = (props) => {
 
         try {
             await userService.activateSubscription({
-                scope,
                 type: plan || selectedPlan,
                 coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
             }, activeRegion.id)
@@ -162,7 +155,6 @@ const Subscriptions = (props) => {
                 try {
                     const res = await userService.retryPayment({
                         type: subscriptionState.active_subscription_type,
-                        scope
                     }, activeRegion.id)
 
                     retryPaymentHandler(res.result)
@@ -179,7 +171,7 @@ const Subscriptions = (props) => {
         setProcessingCancelSubscription(true)
 
         try {
-            await userService.cancelSubscription({scope}, activeRegion.id)
+            await userService.cancelSubscription( activeRegion.id)
             getSubscriptionsState()
             setVisibleCancelSubscriptionsWindow(false)
         } catch (e) {
@@ -200,7 +192,6 @@ const Subscriptions = (props) => {
             } else {
                 await userService.activateCoupon({
                     coupon,
-                    scope,
                     type: subscriptionState.active_subscription_type
                 }, activeRegion.id)
                 notification.success({title: 'Coupon activated'})
@@ -289,7 +280,6 @@ const Subscriptions = (props) => {
             plan={selectedPlan}
             activateType={activateType}
             subscriptionState={subscriptionState}
-            scope={scope}
             processing={activateProcessing}
             adSpend={user.ad_spend}
             regionId={activeRegion.id}

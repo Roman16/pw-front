@@ -3,7 +3,7 @@ import usFlag from "../../../assets/img/icons/us-flag.png"
 import {Link} from "react-router-dom"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 
-const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeMarketplace, activeRegion}) => {
+const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeMarketplace, activeRegion, onChangeVisibleStatus}) => {
     const [openedRegions, setOpenedRegions] = useState([]),
         [localRegions, setLocalRegions] = useState([...regions])
 
@@ -83,7 +83,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
 
         {/*<h3>SHARED WITH ME</h3>*/}
 
-        <Link to={'/account/api-connections'} className="btn default">
+        <Link to={'/account/api-connections'} className="btn default" onClick={() => onChangeVisibleStatus(false)}>
             See all
         </Link>
     </div>)
