@@ -40,7 +40,7 @@ const routers = () => {
 
                     <Route exact path={'/404'} component={NotFound}/>
 
-                    <Route exact path={'/ads-callback'} component={PpcProcessing}/>
+                    <Route exact path={'/amazon-ads-api-oauth-callback'} component={PpcProcessing}/>
 
                     {/*<Route path={'/'} render={(props) => {*/}
                     {/*    if (localStorage.getItem('token')) {*/}

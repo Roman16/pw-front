@@ -59,6 +59,11 @@ const FullJourney = () => {
 
             dispatch(userActions.setAmazonRegionAccounts([...connectedAmazonAccounts, result]))
 
+            setFields({
+                ...fields,
+                regionId: result.id
+            })
+
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
             setConnectMwsStatus('error')
@@ -117,7 +122,7 @@ const FullJourney = () => {
                 />}
 
                 {currentStep === 4 && <ConnectPpc
-                    regionId={_.find(connectedAmazonAccounts, {region_type: fields.region_type}).id}
+                    regionId={fields.regionId}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onClose={closeJourney}

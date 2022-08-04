@@ -21,7 +21,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
         try {
             const {result} = await userService.getPPCConnectLink({
                 regionId: regionId,
-                callbackUrl: `${window.location.origin}/ads-callback`
+                callbackUrl: `${window.location.origin}/amazon-ads-api-oauth-callback`
             })
 
             setConnectLink(result.connection_link)
@@ -45,7 +45,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
         const checkWindowLocation = async () => {
             const windowLocation = win.location
 
-            if (windowLocation.pathname === '/ads-callback') {
+            if (windowLocation.pathname === '/amazon-ads-api-oauth-callback') {
                 clearInterval(intervalId)
 
                 const urlParams = new URLSearchParams(windowLocation.search)
@@ -57,7 +57,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                         amazon_region_account_id: regionId,
                         code,
                         scope,
-                        callback_redirect_uri: `${window.location.origin}/ads-callback`
+                        callback_redirect_uri: `${window.location.origin}/amazon-ads-api-oauth-callback`
                     })
 
                     dispatch(userActions.updateAmazonRegionAccount(result))
