@@ -15,6 +15,7 @@ import AmazonFeeWindow from "../ProductSettings/AmazonFeesWindow/AmazonFeesWindo
 import MultiApply from "../ProductSettings/MultiApply/MultiApply"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import $ from "jquery"
+import {amazonDomain} from "../../../utils/amazonDomain"
 
 
 export const ACTIVE = 'RUNNING'
@@ -179,7 +180,7 @@ const ProductList = ({
                     <div title={asin}><b>ASIN:</b>
                         <a
                             target={'_blank'}
-                            href={`https://www.amazon.com/dp/${asin}`}
+                            href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                         >
                             {asin}
                         </a>
@@ -349,7 +350,7 @@ const ProductList = ({
                 <div title={asin}><b>ASIN:</b>
                     <a
                         target={'_blank'}
-                        href={`https://www.amazon.com/dp/${asin}`}
+                        href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     >
                         {asin}
                     </a>
@@ -656,7 +657,7 @@ const ProductItem = ({product: {image_url, asin, name, id, variations}, openedPr
 
         <a
             target={'_blank'}
-            href={`https://www.amazon.com/dp/${asin}`}
+            href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
             className={'short-name'}
             title={name}
         >

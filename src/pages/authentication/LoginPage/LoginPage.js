@@ -72,15 +72,11 @@ const LoginPage = (props) => {
 
         if (props.match.params.status === 'logout') {
             localStorage.removeItem('importStatus')
-
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
 
-            dispatch(userActions.setActiveRegion({
-                marketplace: undefined,
-                region: undefined
-            }))
+            dispatch(userActions.setActiveRegion(undefined))
 
             userService.logOut()
 

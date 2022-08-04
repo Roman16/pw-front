@@ -37,6 +37,17 @@ const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
+const localStorageVersion = '2.04'
+
+const checkLocalStorageVersion = () => {
+    if (!localStorage.getItem('localStorageVersion') || localStorage.getItem('localStorageVersion') !== localStorageVersion) {
+        localStorage.clear()
+
+        localStorage.setItem('localStorageVersion', localStorageVersion)
+
+        window.location.reload()
+    }
+}
 
 function throttle(func, delay) {
     let timeout = null
@@ -50,6 +61,7 @@ function throttle(func, delay) {
         }
     }
 }
+
 
 const developer = (process.env.REACT_APP_ENV === "developer" || process.env.REACT_APP_ENV === "demo")
 
@@ -86,6 +98,8 @@ const ConnectedAmazonRoute = props => {
 
 
 const AuthorizedUser = (props) => {
+    checkLocalStorageVersion()
+
     const dispatch = useDispatch()
     const pathname = props.location.pathname
     const [loadingUserInformation, setLoadingUserInformation] = useState(false)
@@ -121,7 +135,6 @@ const AuthorizedUser = (props) => {
         }
 
         dispatch(userActions.getUserInfo())
-
 
         userService.getAmazonRegionAccounts()
             .then(({result}) => {

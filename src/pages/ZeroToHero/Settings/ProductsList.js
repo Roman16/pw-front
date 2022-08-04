@@ -10,6 +10,7 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
 import noImage from '../../../assets/img/no-image-available.svg'
 import {Spin} from "antd"
+import {amazonDomain} from "../../../utils/amazonDomain"
 
 
 const DEV = process.env.REACT_APP_ENV !== 'production'
@@ -23,7 +24,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
             </div>
 
             <div className="col">
-                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}
+                <a href={`https://www.amazon.${amazonDomain()}/dp/${product.asin}`} className="name" title={product.name}
                    target={'_blank'}>
                     {product.name}
                 </a>
@@ -232,7 +233,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                         <div title={asin}><b>ASIN:</b>
                             <a
                                 target={'_blank'}
-                                href={`https://www.amazon.com/dp/${asin}`}
+                                href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                             >
                                 {asin}
                             </a>
@@ -270,7 +271,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                         <div title={asin}><b>ASIN:</b>
                             <a
                                 target={'_blank'}
-                                href={`https://www.amazon.com/dp/${asin}`}
+                                href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                             >
                                 {asin}
                             </a>
@@ -338,7 +339,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 <div title={asin}><b>ASIN:</b>
                     <a
                         target={'_blank'}
-                        href={`https://www.amazon.com/dp/${asin}`}
+                        href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     >
                         {asin}
                     </a>

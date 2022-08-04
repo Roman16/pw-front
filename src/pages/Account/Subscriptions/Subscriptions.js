@@ -53,6 +53,7 @@ const Subscriptions = (props) => {
     const importStatus = useSelector(state => state.user.importStatus)
     const activeRegion = useSelector(state => state.user.activeAmazonRegion)
     const activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
+    const adSpend = useSelector(state => state.user.subscription.ad_spend)
 
     const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_mws_attached
 
@@ -238,7 +239,7 @@ const Subscriptions = (props) => {
                     plan={plan}
                     subscriptionState={subscriptionState}
                     disabledPage={disabledPage}
-                    adSpend={user.ad_spend}
+                    adSpend={adSpend}
 
                     loadStateProcessing={loadStateProcessing}
                     retryProcessing={retryProcessing}
@@ -281,7 +282,7 @@ const Subscriptions = (props) => {
             activateType={activateType}
             subscriptionState={subscriptionState}
             processing={activateProcessing}
-            adSpend={user.ad_spend}
+            adSpend={adSpend}
             regionId={activeRegion.id}
 
             onClose={closeActivateWindowHandler}

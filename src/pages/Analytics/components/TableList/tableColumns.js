@@ -22,6 +22,7 @@ import CustomSelect from "../../../../components/Select/Select"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 import {activeTimezone} from "../../../index"
 import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {amazonDomain} from "../../../../utils/amazonDomain"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -215,7 +216,7 @@ export const keywordPTColumn = {
             const asin = text.replace('asin="', '').replace('"', '')
             return (<div className="asin-link"><span>asin="</span>
                 <a
-                    href={`https://www.amazon.com/dp/${asin}`}
+                    href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     target={'_blank'}
                 >
                     {asin}

@@ -1,5 +1,6 @@
 import {userConstants} from '../constans/actions.type'
 import _ from 'lodash'
+import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 
 export const defaultImportStatus = {
     analytics: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
@@ -9,6 +10,8 @@ export const defaultImportStatus = {
     zth: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
     subscription: {required_parts_ready: true, required_parts_details: {sp: {}}},
 }
+
+const amazonRegionsSort = (arr) => arr.sort((a, b) => _.findIndex(Object.keys(marketplaceIdValues), key => key === a.marketplace_id) - _.findIndex(Object.keys(marketplaceIdValues), key => key === b.marketplace_id))
 
 const initialState = {
     notFirstEntry: false,
@@ -63,7 +66,10 @@ export function user(state = initialState, action) {
         case userConstants.SET_AMAZON_REGION_ACCOUNTS:
             return {
                 ...state,
-                amazonRegionAccounts: [...action.payload],
+                amazonRegionAccounts: [...action.payload.map(item => ({
+                    ...item,
+                    amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+                }))],
                 fetchingAmazonRegionAccounts: false,
                 activeAmazonRegion: state.activeAmazonRegion || action.payload[0] || null,
                 activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null
@@ -76,7 +82,8 @@ export function user(state = initialState, action) {
                     if (i.id === action.payload.id) {
                         return ({
                             ...i,
-                            ...action.payload
+                            ...action.payload,
+                            amazon_region_account_marketplaces: amazonRegionsSort(action.payload.amazon_region_account_marketplaces)
                         })
                     } else {
                         return i
@@ -99,15 +106,15 @@ export function user(state = initialState, action) {
             }
 
         case userConstants.SET_ACTIVE_REGION:
-            console.log(action.payload)
-
-            action.payload.marketplace ? localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace)) : localStorage.removeItem('activeMarketplace')
-            action.payload.region ? localStorage.setItem('activeRegion', JSON.stringify(action.payload.region)) : localStorage.removeItem('activeRegion')
+            action.payload?.marketplace ? localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace)) : localStorage.removeItem('activeMarketplace')
+            action.payload?.region ? localStorage.setItem('activeRegion', JSON.stringify(action.payload.region)) : localStorage.removeItem('activeRegion')
 
             return {
                 ...state,
-                activeAmazonRegion: action.payload.region || null,
-                activeAmazonMarketplace: action.payload.marketplace || null
+                activeAmazonRegion: action.payload?.region || null,
+                activeAmazonMarketplace: action.payload?.marketplace || null,
+                fetchingAmazonRegionAccounts: action.payload ? state.fetchingAmazonRegionAccounts : true,
+
             }
 
 

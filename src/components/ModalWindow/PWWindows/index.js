@@ -152,7 +152,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('freeTrial')
         } else if ((!access.analytics && pathname.includes('/analytics')) || (!access.optimization && pathname.includes('/ppc/'))) {
             setVisibleWindow('notAccess')
-        } else if (visibleSmallSpendWindow && user.ad_spend < 1000 && !user.userDetails.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
+        } else if (visibleSmallSpendWindow && user.subscription.ad_spend < 1000 && !user.userDetails.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
             setVisibleWindow('smallSpend')
         } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0) {
             setVisibleWindow('newReportsCount')

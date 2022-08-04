@@ -350,11 +350,13 @@
 //----------------------------------------------
 .amazon-loading-window {
   width: 100% !important;
-  max-width: 42.857142857142854rem !important;
-  height: 90vh;
-  max-height: 51.42857142857143rem;
+  max-width: 50rem !important;
+  height: 92vh;
+  max-height: 52.142857142857146rem;
   display: flex;
   align-items: center;
+
+
 
   &.profile-import {
     max-height: 28.571428571428573rem;
@@ -368,6 +370,8 @@
 
   .ant-modal-content {
     display: flex;
+    overflow-y: overlay;
+
   }
 
   .ant-modal-body {
@@ -377,8 +381,9 @@
     align-items: center;
     margin: auto 0;
 
-    h1 {
-      font-size: 5rem;
+    svg {
+      width: 5rem;
+      height: 5rem;
       margin-bottom: 2.857142857142857rem;
     }
 
@@ -420,7 +425,6 @@
         &.header {
           border-bottom: 2px solid #C9CBD4;
         }
-
 
 
         .col {
@@ -518,6 +522,7 @@
             svg {
               width: 1.1428571428571428rem;
               height: 1.1428571428571428rem;
+              margin: 0;
             }
 
             .loader {

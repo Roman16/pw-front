@@ -2,17 +2,6 @@ import {analyticsConstants} from '../constans/actions.type'
 import moment from "moment"
 import _ from 'lodash'
 
-const localStorageVersion = '24_5'
-
-if (!localStorage.getItem('analyticsLocalStorageVersion') || localStorage.getItem('analyticsLocalStorageVersion') !== localStorageVersion) {
-    localStorage.removeItem('analyticsMetricsState')
-    localStorage.removeItem('analyticsFiltersList')
-    localStorage.removeItem('analyticsChartState')
-    localStorage.removeItem('analyticsColumnsOrder')
-    localStorage.removeItem('analyticsSorterColumn')
-    localStorage.setItem('analyticsLocalStorageVersion', localStorageVersion)
-}
-
 const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState') && JSON.parse(localStorage.getItem('analyticsMetricsState')),
     filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
     chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState')),

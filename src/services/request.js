@@ -8,6 +8,8 @@ import {userService} from "./user.services"
 import {defaultImportStatus} from "../reducers/user.reducer"
 import _ from 'lodash'
 import * as Sentry from "@sentry/react"
+import {store} from "../store/store"
+import {userConstants} from "../constans/actions.type"
 
 export const baseUrl =
     // 'http://staging.profitwhales.com';
@@ -111,6 +113,11 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
 
                         if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+
+                            store.dispatch({
+                                type: userConstants.SET_ACTIVE_REGION,
+                                payload: undefined
+                            })
                         }
                     }
                 } else if (error.response && error.response.status === 412) {
