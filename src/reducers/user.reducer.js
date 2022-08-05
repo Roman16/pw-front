@@ -70,9 +70,9 @@ export function user(state = initialState, action) {
                     ...item,
                     amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
                 }))],
-                fetchingAmazonRegionAccounts: false,
                 activeAmazonRegion: state.activeAmazonRegion || action.payload[0] || null,
-                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null
+                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null,
+                fetchingAmazonRegionAccounts: false,
             }
 
         case userConstants.UPDATE_AMAZON_REGION_ACCOUNT_BY_ID:
@@ -113,8 +113,7 @@ export function user(state = initialState, action) {
                 ...state,
                 activeAmazonRegion: action.payload?.region || null,
                 activeAmazonMarketplace: action.payload?.marketplace || null,
-                fetchingAmazonRegionAccounts: action.payload ? state.fetchingAmazonRegionAccounts : true,
-
+                fetchingAmazonRegionAccounts: true,
             }
 
 

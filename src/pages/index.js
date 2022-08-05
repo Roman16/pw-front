@@ -37,12 +37,14 @@ const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
-const localStorageVersion = '2.04'
+const localStorageVersion = '2.03'
 
 const checkLocalStorageVersion = () => {
     if (!localStorage.getItem('localStorageVersion') || localStorage.getItem('localStorageVersion') !== localStorageVersion) {
-        localStorage.clear()
 
+        const token = localStorage.getItem('token')
+        localStorage.clear()
+        localStorage.setItem('token', token)
         localStorage.setItem('localStorageVersion', localStorageVersion)
 
         window.location.reload()
@@ -128,6 +130,38 @@ const AuthorizedUser = (props) => {
         }, 1000 * 60)
     )
 
+    const loadUserData = async () => {
+        try {
+            const {result} = await userService.getAmazonRegionAccounts()
+
+            if (result.length > 0 && activeAmazonMarketplace) {
+                const importStatus = await userService.checkImportStatus(activeAmazonMarketplace.id)
+                dispatch(userActions.setInformation({importStatus: importStatus.result}))
+            } else if (result.length > 0 && !activeAmazonMarketplace) {
+                const importStatus = await userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
+
+                dispatch(userActions.setInformation({importStatus: importStatus.result}))
+
+                dispatch(userActions.setActiveRegion({
+                    region: result[0],
+                    marketplace: result[0].amazon_region_account_marketplaces[0]
+                }))
+            } else if (result.length === 0) {
+                dispatch(userActions.setActiveRegion({
+                    region: null,
+                    marketplace: null
+                }))
+            }
+
+            dispatch(userActions.setAmazonRegionAccounts(result))
+
+            setLoadingUserInformation(false)
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
     useEffect(() => {
         if (!localStorage.getItem('token')) {
             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
@@ -136,32 +170,7 @@ const AuthorizedUser = (props) => {
 
         dispatch(userActions.getUserInfo())
 
-        userService.getAmazonRegionAccounts()
-            .then(({result}) => {
-                dispatch(userActions.setAmazonRegionAccounts(result))
-
-                if (result.length > 0 && activeAmazonMarketplace) {
-                    userService.checkImportStatus(activeAmazonMarketplace.id)
-                        .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
-
-                } else if (result.length > 0 && !activeAmazonMarketplace) {
-                    userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
-                        .then(({result}) => dispatch(userActions.setInformation({importStatus: result})))
-
-                    dispatch(userActions.setActiveRegion({
-                        region: result[0],
-                        marketplace: result[0].amazon_region_account_marketplaces[0]
-                    }))
-                } else if (result.length === 0) {
-                    dispatch(userActions.setActiveRegion({
-                        region: null,
-                        marketplace: null
-                    }))
-                }
-            })
-            .then(() => {
-                setLoadingUserInformation(false)
-            })
+        loadUserData()
     }, [])
 
     // useEffect(() => {
