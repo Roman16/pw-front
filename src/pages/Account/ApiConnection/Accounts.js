@@ -17,7 +17,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
                 <li className={selectedAccount?.id === id && 'active'}>
                     <div className="account-name" onClick={() => onSelect(accounts[index])}>
                         <h3>
-                            {account_alias || seller_id}
+                            <div className="text" title={account_alias || seller_id}>{account_alias || seller_id}</div>
                             {activeRegion.id === id && <span>(Active)</span>}
                         </h3>
 
@@ -48,7 +48,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
                                     <img src={marketplaceIdValues[marketplace_id].flag} alt=""/>
                                 </div>
 
-                                <h4>{marketplace_id}</h4>
+                                <h4>{marketplaceIdValues[marketplace_id].countryName}</h4>
 
                                 {activeMarketplace.marketplace_id === marketplace_id ?
                                     <div className="active-marketplace">

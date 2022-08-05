@@ -9,7 +9,9 @@ export const AccountDetails = ({account, onUpdateAlias, onDisconnect}) => {
 
     return (<div className="account-details">
         <div className={'alias'}>
-            <b>Account alias: </b> {account.account_alias}
+            <b>Account alias: </b>
+
+            <div className="text">{account.account_alias}</div>
 
             <AliasEditPopup
                 alias={account.account_alias}

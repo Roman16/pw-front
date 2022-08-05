@@ -74,7 +74,9 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                                     <img src={marketplaceIdValues[marketplace.marketplace_id].flag} alt=""/>
                                 </div>
 
-                                <div className={'id'} title={marketplace.marketplace_id}>{marketplace.marketplace_id}</div>
+                                <div className={'id'} title={marketplace.marketplace_id}>
+                                    {marketplaceIdValues[marketplace.marketplace_id].countryName}
+                                </div>
 
                                 {!marketplace.profile_id &&<InformationTooltip
                                     type={'custom'}

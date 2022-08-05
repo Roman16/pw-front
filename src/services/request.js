@@ -137,7 +137,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                             }
                         } else if (error.response.status === 429) {
                             handlerErrors('This request is throttled, please try again later')
-                        } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
+                        } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.data.message === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)

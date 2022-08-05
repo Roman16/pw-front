@@ -149,6 +149,7 @@
         border-bottom: 1px solid #C9CBD4;
         cursor: pointer;
         position: relative;
+        overflow: hidden;
 
         &::before {
           content: '';
@@ -163,11 +164,21 @@
         }
 
         h3 {
+          flex: 1;
+          overflow: hidden;
           font-weight: 600;
           font-size: 1rem;
           line-height: 1.2142857142857142rem;
           color: #353A3E;
-          margin: 0 auto 0 0;
+          margin: 0 5px 0 0;
+          display: flex;
+          align-items: center;
+
+          .text {
+            overflow:hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
 
           span {
             margin: 0 0 0 5px;
@@ -190,6 +201,7 @@
 
         .arrow {
           width: 2.2857142857142856rem;
+          min-width: 2.2857142857142856rem;
           height: 2.2857142857142856rem;
           display: flex;
           align-items: center;
