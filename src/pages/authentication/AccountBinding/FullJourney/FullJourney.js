@@ -54,11 +54,14 @@ const FullJourney = () => {
         setConnectMwsStatus('processing')
 
         try {
-            const res = await userService.setMWS({
+           await userService.setMWS({
                 ...fields,
                 ...mwsId && {id: mwsId}
             })
-            dispatch(userActions.setInformation(res))
+
+            const res = await userService.getUserInfo()
+
+            dispatch(userActions.setInformation(res.result))
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
             setConnectMwsStatus('error')
