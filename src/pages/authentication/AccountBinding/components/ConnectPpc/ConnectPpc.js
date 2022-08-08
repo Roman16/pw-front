@@ -66,6 +66,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                     win.close()
                     clearInterval(timer)
                 } catch (e) {
+                    win.close()
                     setPageStatus('error')
                 }
             }

@@ -14,6 +14,7 @@ import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 import {history} from "../utils/history"
+import {amazonRegionsSort} from "../reducers/user.reducer"
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -133,6 +134,11 @@ const AuthorizedUser = (props) => {
     const loadUserData = async () => {
         try {
             const {result} = await userService.getAmazonRegionAccounts()
+
+            result.forEach(item => ({
+                ...item,
+                amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+            }))
 
             if (result.length > 0 && activeAmazonMarketplace) {
                 const importStatus = await userService.checkImportStatus(activeAmazonMarketplace.id)

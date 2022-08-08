@@ -11,7 +11,7 @@ export const defaultImportStatus = {
     subscription: {required_parts_ready: true, required_parts_details: {sp: {}}},
 }
 
-const amazonRegionsSort = (arr) => arr.sort((a, b) => _.findIndex(Object.keys(marketplaceIdValues), key => key === a.marketplace_id) - _.findIndex(Object.keys(marketplaceIdValues), key => key === b.marketplace_id))
+export const amazonRegionsSort = (arr) => arr.sort((a, b) => _.findIndex(Object.keys(marketplaceIdValues), key => key === a.marketplace_id) - _.findIndex(Object.keys(marketplaceIdValues), key => key === b.marketplace_id))
 
 const initialState = {
     notFirstEntry: false,

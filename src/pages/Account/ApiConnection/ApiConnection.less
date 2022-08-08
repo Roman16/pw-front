@@ -9,7 +9,7 @@
 
   .tabs,
   & > div {
-    min-width: 600px;
+    min-width: 750px;
   }
 
 
@@ -130,7 +130,7 @@
 
   .accounts-list {
     width: 30%;
-    min-width: 250px;
+    min-width: 350px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -175,7 +175,7 @@
           align-items: center;
 
           .text {
-            overflow:hidden;
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
@@ -317,9 +317,11 @@
 
   .account-details {
     flex: 1;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     padding: 2.142857142857143rem 1.4285714285714286rem;
+    overflow: auto;
 
     .alias {
       font-size: 1.4285714285714286rem;
@@ -400,6 +402,7 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       grid-template-rows: max-content;
       grid-gap: 1.4285714285714286rem;
+      overflow: initial;
 
       .access {
         height: max-content;

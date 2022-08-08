@@ -27,9 +27,10 @@ export const SomethingWrong = ({visible}) => {
         getContainer={() => accountContentBlock}
     >
         <h2>Unexpected error occured</h2>
-        <p>Unexpected error occured and we can't display Subscription information. Please try again later. If issue persists, contact support.</p>
+        <p>Unexpected error occured and we can't display Subscription information. Please try again later. If issue
+            persists, contact support.</p>
 
-        <button className="btn default" id={'intercom-chat-launcher'}>
+        <button className="btn default" onClick={() => window.Intercom('show')}>
             Contact Support
         </button>
     </ModalWindow>

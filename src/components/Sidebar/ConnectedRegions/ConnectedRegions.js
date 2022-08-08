@@ -68,7 +68,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                     <ul className={'marketplaces'}>
                         {region.amazon_region_account_marketplaces.map(marketplace => (
                             <li onClick={() => onSet({marketplace, region})}
-                                className={activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
+                                className={ activeRegion?.id === region.id && activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
                                 <div className="status"/>
                                 <div className="flag">
                                     <img src={marketplaceIdValues[marketplace.marketplace_id].flag} alt=""/>
