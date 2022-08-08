@@ -97,7 +97,7 @@ function regist(user) {
                 //     'event': 'Registration',
                 // })
 
-                history.push('/confirm-email')
+                history.push('/home')
             })
     }
 }
