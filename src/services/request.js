@@ -121,7 +121,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         }
                     }
                 } else if (error.response && error.response.status === 412) {
-                    history.push('/confirm-email')
+                    // history.push('/confirm-email')
                 } else if (error.response && error.response.status === 423) {
                     localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                     reject(error)

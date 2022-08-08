@@ -107,7 +107,7 @@ class RegistrationForm extends Component {
 
                 seo({title: 'Sponsoreds'})
 
-                history.push('/confirm-email')
+                history.push('/home')
             } catch (e) {
                 console.log(e)
             }
