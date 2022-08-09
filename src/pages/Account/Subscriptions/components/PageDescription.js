@@ -29,7 +29,8 @@ export const PageDescription = ({subscriptionState, disabledPage}) => {
         } else if (!subscriptionState.trial.can_start_trial && [subscriptions['optimization'], subscriptions['analytics'], subscriptions['full']].some(i => i?.expected_action === 'resume_trial')) {
             return <p className="page-description">
                 You are currently on a Free Trial and have full access to PPC Automation and Analytics tools. Free
-                Trial ends in <b> {subscriptionState.trial.trial_left_days || 0} </b> days. You have canceled your subscription
+                Trial ends in <b> {subscriptionState.trial.days_before_trial_end_date || 0} </b> days. You have canceled
+                your subscription
                 plan,
                 thus you will lose access to the software when Free Trial ends. You can renew your subscription that
                 will be active after Free Trial at any time.

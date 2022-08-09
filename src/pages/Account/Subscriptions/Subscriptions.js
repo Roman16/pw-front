@@ -122,7 +122,7 @@ const Subscriptions = (props) => {
             setSelectedPlan(undefined)
             setActivateProcessing(false)
         } catch (e) {
-            if (e.response.data.result?.status === 'requires_action') {
+            if (e.response?.data.result?.status === 'requires_action') {
                 retryPaymentHandler(e.response.data.result)
             } else {
                 setActivateProcessing(false)
@@ -172,7 +172,7 @@ const Subscriptions = (props) => {
         setProcessingCancelSubscription(true)
 
         try {
-            await userService.cancelSubscription( activeRegion.id)
+            await userService.cancelSubscription(activeRegion.id)
             getSubscriptionsState()
             setVisibleCancelSubscriptionsWindow(false)
         } catch (e) {

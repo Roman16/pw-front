@@ -5,8 +5,7 @@ import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import DisconnectWindow from "./DisconnectWindow"
 import {history} from "../../../utils/history"
 
-export const AccountDetails = ({account, onUpdateAlias, onDisconnect}) => {
-
+export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisconnect}) => {
     return (<div className="account-details">
         <div className={'alias'}>
             <b>Account alias: </b>
@@ -15,6 +14,8 @@ export const AccountDetails = ({account, onUpdateAlias, onDisconnect}) => {
 
             <AliasEditPopup
                 alias={account.account_alias}
+                processing={updateProcessing}
+
                 onSubmit={(alias) => onUpdateAlias({account_alias: alias, amazon_region_account_id: account.id})}
             />
         </div>
@@ -43,10 +44,9 @@ export const AccountDetails = ({account, onUpdateAlias, onDisconnect}) => {
     </div>)
 }
 
-const AliasEditPopup = ({alias, onSubmit}) => {
+const AliasEditPopup = ({alias, onSubmit, processing}) => {
     const [visible, setVisible] = useState(false),
-        [value, setValue] = useState(alias),
-        [processing, setProcessing] = useState(false)
+        [value, setValue] = useState(alias)
 
     const handleVisibleChange = (newVisible) => {
         setVisible(newVisible)
@@ -54,13 +54,16 @@ const AliasEditPopup = ({alias, onSubmit}) => {
 
     const submitHandler = () => {
         onSubmit(value)
-        setProcessing(true)
     }
 
     useEffect(() => {
         setVisible(false)
-        setProcessing(false)
+        setValue(alias)
     }, [alias])
+
+    useEffect(() => {
+        if (!visible) setValue(alias)
+    }, [visible])
 
     return (<Popover
         content={<div>
@@ -74,8 +77,11 @@ const AliasEditPopup = ({alias, onSubmit}) => {
             </div>
 
             <div className="actions">
-                <button disabled={processing} className="btn transparent"
-                        onClick={() => handleVisibleChange(false)}>Cancel
+                <button
+                    disabled={processing}
+                    className="btn transparent"
+                    onClick={() => handleVisibleChange(false)}>
+                    Cancel
                 </button>
                 <button disabled={processing} className="btn default" onClick={submitHandler}>
                     Submit

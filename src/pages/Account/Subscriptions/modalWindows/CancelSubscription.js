@@ -3,8 +3,6 @@ import {Spin} from "antd"
 import {numberMask} from "../../../../utils/numberMask"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import moment from 'moment'
-import {getTotalActual} from "./ActivateSubscription"
-
 
 export const CancelSubscription = ({
                                        visible,

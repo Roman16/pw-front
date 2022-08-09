@@ -61,8 +61,9 @@ export const ActivateSubscription = ({
 
         try {
             const {result} = await userService.getActivateInfo({
-                coupon: activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid ? activateInfo[subscriptionState.activeSubscriptionType].coupon.code : activateInfoSelectedPlan?.coupon?.valid ? activateInfoSelectedPlan?.coupon.code : undefined
-            }, regionId)
+                coupon: activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid ? activateInfo[subscriptionState.activeSubscriptionType].coupon.code : activateInfoSelectedPlan?.coupon?.valid ? activateInfoSelectedPlan?.coupon.code : undefined,
+                id: regionId
+            })
 
             setActivateData(result[regionId].data)
 
@@ -80,7 +81,7 @@ export const ActivateSubscription = ({
             if (!couponRes.result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                const {result} = await userService.getActivateInfo({coupon: value}, regionId)
+                const {result} = await userService.getActivateInfo({coupon: value, id: regionId})
                 setCouponInfo(couponRes.result)
                 setActivateData(result[regionId].data)
             }

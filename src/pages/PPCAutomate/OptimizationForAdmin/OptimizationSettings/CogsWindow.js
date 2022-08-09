@@ -29,7 +29,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
 
     const addNew = (index) => {
         const defaultItem = {cogs_start_datetime: undefined, cogs_value: undefined},
-            list = [...cogsList.filter(item => item.record_id)]
+            list = [...[...cogsList].filter(item => item.record_id)]
 
         if (index === 0) {
             setCogsList([defaultItem, ...list])
@@ -106,21 +106,19 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
                 .then(res => {
                     let currentCogs = moment('01-01-2000', 'DD-MM-YYYY')
 
-                    setCogsList(res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm')))
+                    setCogsList([{cogs_start_datetime: undefined, cogs_value: undefined}, ...res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm'))])
                     cogsFromApi = res.result.sort((a, b) => moment(b.cogs_start_datetime).format('YYYYMMDDHHmm') - moment(a.cogs_start_datetime).format('YYYYMMDDHHmm'))
 
                     res.result.forEach(item => {
                         if (moment(item.cogs_start_datetime) < moment() && moment(item.cogs_start_datetime) > moment(currentCogs)) {
                             currentCogs = item.cogs_start_datetime
-
                             setCurrentCogs('cogs', item.cogs_value)
                         }
                     })
-
-                    addNew(res.result.length)
+                    setActiveIndex(0)
                 })
         }
-        setActiveIndex(undefined)
+
     }, [productId, visible])
 
     useEffect(() => {

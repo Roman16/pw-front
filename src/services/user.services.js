@@ -184,28 +184,29 @@ function getSubscriptionsState(id) {
     return api('get', `${userUrls.subscriptionState}?amazon_region_account_ids[]=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function activateSubscription(data, id) {
-    return api('post', `${userUrls.activateSubscription}?amazon_region_account_ids[]=${id}`, data, undefined, undefined, undefined, undefined, false)
-}
-
-function retryPayment(data, id) {
-    return api('post', `${userUrls.retryPayment}?amazon_region_account_ids[]=${id}`, data, undefined, undefined, undefined, undefined, false)
-}
-
-function cancelSubscription(id) {
-    return api('post', `${userUrls.cancelSubscription}?amazon_region_account_ids[]=${id}`, id, undefined, undefined, undefined, undefined, false)
-}
-
 function getActivateInfo({coupon, id}) {
     return api('get', `${userUrls.activateInfo}?amazon_region_account_ids[]=${id}${coupon ? `&coupon=${coupon}` : ''}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
+function activateSubscription(data, id) {
+    return api('post', `${userUrls.activateSubscription}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+function retryPayment(data, id) {
+    return api('post', `${userUrls.retryPayment}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+function cancelSubscription(id) {
+    return api('post', `${userUrls.cancelSubscription}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+
 function getCouponInfo(coupon, id) {
-    return api('get', `${userUrls.couponInfo}?amazon_region_account_ids[]=${id}&coupon=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', `${userUrls.couponInfo}?amazon_region_account_id=${id}&coupon=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function activateCoupon(data, id) {
-    return api('post', `${userUrls.couponActivate}?amazon_region_account_ids[]=${id}`, data, undefined, undefined, undefined, undefined, false)
+    return api('post', `${userUrls.couponActivate}?amazon_region_account_id=${id}`, data, undefined, undefined, undefined, undefined, false)
 }
 
 //-------------------------------------

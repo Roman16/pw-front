@@ -13,7 +13,8 @@ import _ from 'lodash'
 const ApiConnection = () => {
     const [sortType, setSortType] = useState(''),
         [selectedAccount, setSelectedAccount] = useState(),
-        [searchStr, setSearchStr] = useState('')
+        [searchStr, setSearchStr] = useState(''),
+        [updateProcessing, setUpdateProcessing] = useState(false)
 
     const accounts = useSelector(state => state.user.amazonRegionAccounts),
         activeRegion = useSelector(state => state.user.activeAmazonRegion),
@@ -26,12 +27,16 @@ const ApiConnection = () => {
     }
 
     const updateAccountHandler = async (data) => {
+        setUpdateProcessing(true)
+
         try {
             const {result} = await userService.updateAmazonAccount(data)
             dispatch(userActions.updateAmazonRegionAccount(result))
         } catch (e) {
             console.log(e)
         }
+
+        setUpdateProcessing(false)
     }
 
     const setMarketplaceHandler = (data) => {
@@ -57,7 +62,17 @@ const ApiConnection = () => {
         selectedAccount && setSelectedAccount(prevState => _.find(accounts, {id: prevState.id}))
     }, [accounts])
 
-    const accountsWithFilter = accounts.filter(account => account.account_alias.toLowerCase().trim().includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))
+    const accountsWithFilter = accounts
+        .filter(account => account.account_alias.toLowerCase().replace(/\s+/g, '').includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))
+        .sort((a, b) => {
+            if (sortType === 'asc') {
+                return (a.account_alias || a.seller_id).localeCompare(b.account_alias || b.seller_id)
+            } else if (sortType === 'desc') {
+                return (b.account_alias || b.seller_id).localeCompare(a.account_alias || a.seller_id)
+            } else {
+                return 0
+            }
+        })
 
     return (
         <div className="api-connection">
@@ -83,6 +98,7 @@ const ApiConnection = () => {
 
                 {selectedAccount !== undefined && <AccountDetails
                     account={selectedAccount}
+                    updateProcessing={updateProcessing}
 
                     onUpdateAlias={updateAccountHandler}
                     onDisconnect={revokeAccessHandler}
