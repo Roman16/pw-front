@@ -351,11 +351,10 @@
 .amazon-loading-window {
   width: 100% !important;
   max-width: 50rem !important;
-  height: 92vh;
-  max-height: 52.142857142857146rem;
+  height: 90vh;
+  max-height: 50.1rem;
   display: flex;
   align-items: center;
-
 
 
   &.profile-import {
@@ -383,7 +382,6 @@
   .ant-modal-content {
     display: flex;
     overflow-y: overlay;
-
   }
 
   .ant-modal-body {
@@ -391,11 +389,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: auto 0;
+    height: max-content;
 
     & > svg {
       width: 5rem;
+      min-width: 5rem;
       height: 5rem;
+      min-height: 5rem;
       margin-bottom: 2.857142857142857rem;
     }
 
