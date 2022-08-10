@@ -63,7 +63,7 @@ const ApiConnection = () => {
     }, [accounts])
 
     const accountsWithFilter = accounts
-        .filter(account => account.account_alias.toLowerCase().replace(/\s+/g, '').includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))
+        .filter(account => (account.account_alias || account.seller_id).toLowerCase().replace(/\s+/g, '').includes(searchStr.toLowerCase().replace(/\s+/g, '')) || account.seller_id.toLowerCase().includes(searchStr.toLowerCase().replace(/\s+/g, '')))
         .sort((a, b) => {
             if (sortType === 'asc') {
                 return (a.account_alias || a.seller_id).localeCompare(b.account_alias || b.seller_id)

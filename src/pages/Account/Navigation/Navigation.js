@@ -41,7 +41,7 @@ const menu = [
         link: 'billing-history',
     },
     {
-        title: 'Accounts',
+        title: 'Amazon Accounts',
         link: 'api-connections',
     },
 ]

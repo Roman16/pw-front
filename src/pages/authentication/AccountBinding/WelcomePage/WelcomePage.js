@@ -2,8 +2,11 @@ import React from "react"
 import './WelcomePage.less'
 
 import {history} from "../../../../utils/history"
+import {useSelector} from "react-redux"
 
 const WelcomePage = () => {
+    const user = useSelector(state => state.user.userDetails)
+    console.log(user)
 
     const goConnectPage = () => history.push('/connect-amazon-account')
 
@@ -51,7 +54,7 @@ const WelcomePage = () => {
                     </g>
                 </svg>
 
-                <h2>Welcome Human!</h2>
+                <h2>Welcome {user.name} {user.last_name}!</h2>
 
                 <p>Let’s get you started by connecting your <br/> Seller Central Account</p>
 

@@ -183,6 +183,7 @@ const PWWindows = ({pathname}) => {
 
                 <CreateAdsAccount
                     visible={visibleWindow === 'adsAccount'}
+                    marketplace={activeMarketplace}
                 />
             </>}
 

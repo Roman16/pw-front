@@ -22,7 +22,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
                         </h3>
 
                         {(mws_access_status !== 'CREDENTIALS_SUCCESS' || amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || is_amazon_ads_api_attached === false || is_mws_attached === false) &&
-                        <InformationTooltip type={'custom'}>
+                        <InformationTooltip type={'custom'} description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your Account -> Amazon Accounts page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}>
                             <div className={'error'}>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
@@ -62,7 +62,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
 
                                 {!profile_id && <InformationTooltip
                                     type={'custom'}
-                                    description={'Lorem LoremLoremLoremLorem Lorem'}
+                                    description={`No Advertising account exists for ${marketplaceIdValues[marketplace_id].countryName} marketplace on this Seller account. You won\'t be able to use Sponsoreds services on this marketplace until you create an Advertising account for ${marketplaceIdValues[marketplace_id].countryName} marketplace in your Seller Central.`}
                                 >
                                     <i className="error">
                                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"

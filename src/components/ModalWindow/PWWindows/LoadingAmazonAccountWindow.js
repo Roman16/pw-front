@@ -6,6 +6,7 @@ import {productsActions} from "../../../actions/products.actions"
 import {userService} from "../../../services/user.services"
 import {Link} from "react-router-dom"
 import {round} from "../../../utils/round"
+import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 
 let intervalId = null
 
@@ -180,8 +181,9 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
             <h2>Welcome {firstName} {lastName}!</h2>
 
             <p>
-                We are currently syncing data from your Amazon Account with our system. This may take up to 24 hours. To
-                access next data imports must be completed:
+                We’re currently retrieving Amazon data for your {marketplaceIdValues[activeAmazonMarketplace.marketplace_id].countryName} marketplace. <br/>
+                It only needs to be completed once and may take up to 24 hours. <br/>
+                See the table below for import progress and start using features whenever they’re ready!
             </p>
 
             <div className="table">

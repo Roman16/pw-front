@@ -8,6 +8,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
     const [openedRegions, setOpenedRegions] = useState([]),
         [localRegions, setLocalRegions] = useState([...regions])
 
+
     const openRegionHandler = (index) => {
         if (openedRegions.includes(index)) setOpenedRegions(openedRegions.filter(i => i !== index))
         else setOpenedRegions([...openedRegions, index])
@@ -46,8 +47,11 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                     <div className="account-name" onClick={() => openRegionHandler(index)}>
                         <div className="text" title={region.account_alias || region.region_type.replace(/_/g, ' ')}>{region.account_alias || region.region_type.replace(/_/g, ' ')}</div>
 
-                        {(region.mws_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS') &&
-                        <InformationTooltip type={'custom'} description={'Text text text text'}><i className="error">
+                        {(region.mws_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || region.is_amazon_ads_api_attached === false || region.is_mws_attached === false) &&
+                        <InformationTooltip
+                            type={'custom'}
+                            description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your Account -> Amazon Accounts page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}
+                        ><i className="error">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -80,7 +84,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
 
                                 {!marketplace.profile_id &&<InformationTooltip
                                     type={'custom'}
-                                    description={'Lorem LoremLoremLoremLorem Lorem'}
+                                    description={`No Advertising account exists for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace on this Seller account. You won\'t be able to use Sponsoreds services on this marketplace until you create an Advertising account for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace in your Seller Central.`}
                                 >
                                     <i className="error">
                                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"

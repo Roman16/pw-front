@@ -12,6 +12,7 @@ import AttributionWindow from "./AttributionWindow"
 import {marketplaceTimezone} from "../../../../components/Sidebar/ConnectedRegions/CurrentMarketplace"
 import {currencyName, currencySymbol} from "../../../../components/CurrencyCode/CurrencyCode"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 
 let newState = undefined
 
@@ -218,7 +219,7 @@ const Header = ({location}) => {
                             fill="#6959AB" stroke="#6959AB" stroke-width="0.4"/>
                     </svg>
 
-                    {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)}) <InformationTooltip description={`Timezone`}/></>}
+                    {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)}) <InformationTooltip position={'bottomLeft'} description={`All date-based campaign management and reporting are currently using ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace's local time zone: ${marketplace?.timezone} (GMT ${marketplaceTimezone(marketplace.timezone)})`}/></>}
                 </div>
 
                 <div className="currency">
@@ -231,7 +232,7 @@ const Header = ({location}) => {
                             fill="#6959AB" stroke="#6959AB" stroke-width="0.5"/>
                     </svg>
 
-                    {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]}) <InformationTooltip description={`Currency code`}/></>}
+                    {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]}) <InformationTooltip position={'bottomLeft'} description={`All monetary values are currently shown in ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace's local currency: ${currencyName[marketplace?.currency_code]} (${marketplace?.currency_code} - ${currencySymbol[marketplace?.currency_code]})`}/></>}
                 </div>
             </div>
 

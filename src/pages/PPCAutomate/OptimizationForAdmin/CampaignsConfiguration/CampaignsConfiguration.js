@@ -212,6 +212,46 @@ const CampaignsConfiguration = ({optimizationJobId, productInformation, isDisabl
             </div>
 
             <div className={`table-block`}>
+                <div className="section-description">
+                    <p>This is an Advanced feature for PPC Automation. We strongly suggest reading the guide below to
+                        efficiently use it.</p>
+
+                    <p> In this interface you can see all Advertising campaigns associated with your product under
+                        optimization. PPC Automation tool optimizes those campaigns based on your settings.</p>
+
+                    <p> You can further fine-tune your optimization settings per-campaign basis here. When optimizing a
+                        campaign, settings you set for a specific campaign take precedence and override general settings
+                        you
+                        set above. For example, you can disable all automation parts above (in <b>What do you want to
+                            automate?</b> section), but enable some optimization parts for some of your campaigns in <b>Custom
+                            Optimization Parts</b> column, and they will be optimized accordingly.</p>
+
+                    <p> Next options are available for Campaigns Configuration:</p>
+
+                    <ul>
+                        <li><b>Optimize</b> flag - if enabled, this campaign will be optimized by PPC Automation tool.
+                        </li>
+                        <li><b>Use for PPC Metrics</b> flag - if enabled, metrics from this campaign will contribute
+                            towards PPC Automation tool's overall decision-making process. Usually you want to leave it
+                            enabled. Can only be disabled if Optimize is disabled for the campaign.
+                        </li>
+                        <li><b>Min Bid</b> input - set min bid that PPC Automation tool can set for your targetings in
+                            this campaign when optimizing it. For example, you can use this setting to ensure your bids
+                            never go down below $1.0.
+                        </li>
+                        <li><b>Max Bid</b> input - set max bid that PPC Automation tool can set for your targetings in
+                            this campaign when optimizing it. For example, you can use this setting to ensure your bids
+                            never go above $2.0.
+                        </li>
+                        <li><b>Custom Optimization Parts</b> selector - if enabled, in the selector you can select
+                            specific optimization parts you want this campaign to be optimized for. For example, you may
+                            want PPC Automation tool to only perform bid optimizations for some campaigns, and only
+                            pause bleeding targetings for other campaigns.
+                        </li>
+
+                    </ul>
+                </div>
+
                 <div className={'block-header'}>
                     <div className="form-group">
                         <Search

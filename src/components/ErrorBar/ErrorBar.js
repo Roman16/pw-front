@@ -4,6 +4,7 @@ import {useSelector, useDispatch} from "react-redux"
 import {SVG} from "../../utils/icons"
 import InformationTooltip from "../Tooltip/Tooltip"
 import {Link} from "react-router-dom"
+import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
 
 // const accountLinks = {
 //     amazon_mws: {
@@ -24,6 +25,7 @@ const ErrorBar = () => {
         region = useSelector(state => state.user.activeAmazonRegion),
         importStatus = useSelector(state => state.user.importStatus)
 
+    const marketplaceName = marketplaceIdValues[marketplace.marketplace_id].countryName
 
     return (
         <div className='errors-bar'>
@@ -43,7 +45,7 @@ const ErrorBar = () => {
             {marketplace && marketplace.profile_id === null && importStatus.common_resources?.required_parts_details.profiles.part_ready &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
-                <p><strong> Attention!</strong> profile_id = null </p>
+                <p>No Advertising account exists for {marketplaceName} marketplace for current Seller account. We are unable to provide Sponsoreds services for {marketplaceName} marketplace without an existing Advertising account. Please select another marketplace or create an Advertising account for {marketplaceName} marketplace.</p>
             </div>}
 
             {/*{(accountLinks.amazon_mws.status === 'IN_PROGRESS' || accountLinks.amazon_ppc.status === 'IN_PROGRESS') &&*/}

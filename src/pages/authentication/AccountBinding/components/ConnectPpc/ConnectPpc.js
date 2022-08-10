@@ -136,7 +136,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
             <section className='connect-ppc-section error'>
                 <h2>There was an error connecting your <br/> PPC account</h2>
                 <p>
-                    Please connect our support to help you connect with Sponsoreds.
+                    Please contact our support to help you connect with Sponsoreds.
                 </p>
 
                 <div className="actions">
