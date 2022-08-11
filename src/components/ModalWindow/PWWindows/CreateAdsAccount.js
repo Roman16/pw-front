@@ -32,7 +32,7 @@ export const CreateAdsAccount = ({visible, container, marketplace}) => {
                 <br/>
                 To create an Advertising account, login to your Seller Central, select {marketplaceName} marketplace,
                 and go to Advertising
-                Console at Advertising -> Campaign Manager. Follow steps provided by Amazon to create your first
+                Console at <b>Advertising -> Campaign Manager</b>. Follow steps provided by Amazon to create your first
                 advertising
                 campaign and Advertising account for the {marketplaceName} marketplace.
                 <br/>

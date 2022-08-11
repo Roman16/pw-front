@@ -154,7 +154,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                     >
                         <h4 title={product.product_name}>{product.product_name}</h4>
                     </Link>
-                    <p>{product.product_price !== null && `$${numberMask(product.product_price, 2)}`}</p>
+                    <p>{product.product_price !== null && <CurrencyWithCode value={numberMask(product.product_price, 2)}/>}</p>
                 </div>}
 
             {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
@@ -353,7 +353,7 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
                     {/*<InputCurrency disabled value={value}/>*/}
 
-                    {value ? `$${value}` : ''}
+                    {value ? <CurrencyWithCode value={value}/> : ''}
 
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>

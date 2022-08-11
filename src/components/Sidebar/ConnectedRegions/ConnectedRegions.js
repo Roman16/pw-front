@@ -50,7 +50,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                         {(region.mws_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || region.is_amazon_ads_api_attached === false || region.is_mws_attached === false) &&
                         <InformationTooltip
                             type={'custom'}
-                            description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your Account -> Amazon Accounts page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}
+                            description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your <b>Account -> Amazon Accounts</b> page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}
                         ><i className="error">
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">

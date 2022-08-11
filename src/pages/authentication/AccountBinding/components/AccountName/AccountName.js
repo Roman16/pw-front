@@ -37,8 +37,8 @@ const AccountName = ({onGoNextStep, onGoBackStep, onChangeInput, accountName, on
                             <SVG id={'left-grey-arrow'}/>
                             Back
                         </button>
-                        <button className="btn default next">
-                            {accountName ? 'Next' : 'Skip'}
+                        <button className="btn default next" disabled={!accountName}>
+                            {'Next'}
                             <SVG id={'right-white-arrow'}/>
                         </button>
                     </div>

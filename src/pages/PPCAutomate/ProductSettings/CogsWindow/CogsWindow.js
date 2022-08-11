@@ -8,6 +8,7 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../../components/DatePicker/DatePicker"
 import {productsServices} from "../../../../services/products.services"
 import {Spin} from "antd"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 let hasChanges = false,
     cogsFromApi = []
@@ -157,7 +158,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs}) => {
                                 <div className="line"/>
                             </div>
 
-                            <div className="value">{item.cogs_value && `${numberMask(item.cogs_value, 2)}$`}</div>
+                            <div className="value">{item.cogs_value && <CurrencyWithCode value={numberMask(item.cogs_value, 2)}/>}</div>
                         </div>
 
                         <li className={activeIndex === index && 'active'}>
@@ -171,7 +172,7 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs}) => {
                             /> : <>
                                 <div className="time">{moment(item.cogs_start_datetime).format('DD MMM YYYY, HH:mm')},
                                 </div>
-                                <div className="value">{numberMask(item.cogs_value, 2)}$</div>
+                                <div className="value"><CurrencyWithCode value={numberMask(item.cogs_value, 2)}/></div>
 
                                 <button className="btn icon edit-btn" onClick={() => editHandler(item.record_id)}>
                                     <SVG id={'edit-pen-icon'}/>

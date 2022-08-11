@@ -1,5 +1,6 @@
 import React from "react"
 import noImage from "../../../assets/img/no-image-available.svg"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 const BulkInformation = ({product}) => {
     const job = product.job
@@ -15,7 +16,7 @@ const BulkInformation = ({product}) => {
                     <div className="col">
                         <h3>{product.name}</h3>
                         <div className="price">
-                            {product.price ? `$${product.price}` : ''} $35.99
+                            {product.price ? <CurrencyWithCode value={product.price}/> : ''} $35.99
                         </div>
 
                         <div className="row">

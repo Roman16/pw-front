@@ -3,6 +3,7 @@ import './Overview.less'
 import moment from 'moment'
 import {numberMask} from "../../../../utils/numberMask"
 import {round} from "../../../../utils/round"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 
 const Overview = ({product}) => {
@@ -44,7 +45,7 @@ const Overview = ({product}) => {
                 if (product.portfolio.type === "UseExisting") {
                     return product.portfolio.selectName
                 } else if (product.portfolio.type === 'CreateNew') {
-                    return `New Portoflio: ${product.portfolio.name}, ${numberMask(product.portfolio.monthly_recurring_budget, 2)}$ monthly budget`
+                    return `New Portoflio: ${product.portfolio.name}, ${<CurrencyWithCode value={numberMask(product.portfolio.monthly_recurring_budget, 2)}/>} monthly budget`
                 } else {
                     return 'No portfolio'
                 }
@@ -64,11 +65,11 @@ const Overview = ({product}) => {
         },
         {
             title: 'Daily Budget',
-            render: (product) => product.campaigns.daily_budget ? `${numberMask(product.campaigns.daily_budget, 2)}$` : '-'
+            render: (product) => product.campaigns.daily_budget ? <CurrencyWithCode value={numberMask(product.campaigns.daily_budget, 2)}/> : '-'
         },
         {
             title: 'Default Bid',
-            render: (product) => product.campaigns.default_bid ? `${numberMask(product.campaigns.default_bid, 2)}$` : '-'
+            render: (product) => product.campaigns.default_bid ? <CurrencyWithCode value={numberMask(product.campaigns.default_bid, 2)}/> : '-'
         },
         {
             title: 'Your Brand Name',

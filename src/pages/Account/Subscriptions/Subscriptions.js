@@ -117,7 +117,7 @@ const Subscriptions = (props) => {
             }, activeRegion.id)
 
             getSubscriptionsState()
-            dispatch(userActions.getPersonalUserInfo())
+            dispatch(userActions.getAccountStatus(activeRegion.id))
             setVisibleActivateSubscriptionsWindow(false)
             setSelectedPlan(undefined)
             setActivateProcessing(false)
@@ -308,7 +308,7 @@ const Subscriptions = (props) => {
             /> : importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null ?
                 <CreateAdsAccount
                     container={() => document.querySelector('.account-content')}
-
+                    marketplace={activeMarketplace}
                     visible={true}
                 /> : amazonIsConnected && !importStatus.subscription?.required_parts_ready ?
                     <LoadingAmazonAccount

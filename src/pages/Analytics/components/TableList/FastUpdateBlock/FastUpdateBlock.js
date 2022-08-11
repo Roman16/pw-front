@@ -185,7 +185,7 @@ const FastUpdateBlock = ({
                     />
                 </div>
 
-                <button className={'btn green'}
+                <button className={'btn default'}
                         disabled={(changingValue === undefined) || submitProcessing}
                 >
                     Apply

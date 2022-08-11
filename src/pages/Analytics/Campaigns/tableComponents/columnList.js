@@ -22,6 +22,8 @@ import moment from 'moment-timezone'
 import tz from 'moment-timezone'
 import {round} from "../../../../utils/round"
 import {activeTimezone} from "../../../index"
+import {numberMask} from "../../../../utils/numberMask"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 
 const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editable) => ([
@@ -117,7 +119,7 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
         fastUpdating: true,
         editType: 'currency',
         render: (budget, item) => {
-            const text = budget ? `$${round(budget, 2)}${item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}` : ''
+            const text = budget ? <><CurrencyWithCode value={round(budget, 2)}/> {item.calculatedBudgetType ? ` / ${item.calculatedBudgetType}` : ''}</> : ''
             return <span className={'overflow-text campaign-budget'} title={text}>{text}</span>
         }
     },

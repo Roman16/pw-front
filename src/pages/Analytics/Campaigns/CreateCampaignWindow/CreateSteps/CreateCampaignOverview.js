@@ -5,6 +5,7 @@ import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
 import _ from 'lodash'
 import {activeTimezone} from "../../../../index"
+import {CurrencyWithCode} from "../../../../../components/CurrencyCode/CurrencyCode"
 
 const CreateCampaignOverview = ({createData}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
@@ -51,7 +52,7 @@ const CreateCampaignOverview = ({createData}) => {
         dailyBudget: {
             title: 'Daily Budget',
             fieldKey: 'calculatedBudget',
-            render: value => `${numberMask(value, 2)}$`
+            render: value => <CurrencyWithCode value={numberMask(value, 2)}/>
         },
         status: {
             title: 'Status',

@@ -30,6 +30,7 @@ export const ImportProfileWindow = ({visible, container, firstName, lastName}) =
         <h2>Welcome {firstName} {lastName}!</h2>
 
         <p>
-            We are retrieving your Advertising accounts from Amazon API. This usually takes less than a few minutes.
+            We are retrieving your Advertising accounts from Amazon API. <br/>
+            This usually takes less than a few minutes.
         </p>
     </ModalWindow>)

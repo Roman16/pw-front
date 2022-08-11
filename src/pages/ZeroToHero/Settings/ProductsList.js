@@ -11,6 +11,7 @@ import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductIte
 import noImage from '../../../assets/img/no-image-available.svg'
 import {Spin} from "antd"
 import {amazonDomain} from "../../../utils/amazonDomain"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 
 const DEV = process.env.REACT_APP_ENV !== 'production'
@@ -32,7 +33,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
                 {!product.variations ?
                     <div className="row">
                         {(product.item_price !== null && product.item_price !== 0) && <div className="price">
-                            ${product.item_price}
+                            <CurrencyWithCode value={product.item_price}/>
                         </div>}
 
                         <div className="stock">
@@ -46,7 +47,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
                     :
                     <div className="row">
                         {(product.item_price !== null && product.item_price !== 0) && <div className="price">
-                            ${product.item_price}
+                            <CurrencyWithCode value={product.item_price}/>
                         </div>}
 
                         <div className="stock">

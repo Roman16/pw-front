@@ -45,7 +45,10 @@ const ErrorBar = () => {
             {marketplace && marketplace.profile_id === null && importStatus.common_resources?.required_parts_details.profiles.part_ready &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
-                <p>No Advertising account exists for {marketplaceName} marketplace for current Seller account. We are unable to provide Sponsoreds services for {marketplaceName} marketplace without an existing Advertising account. Please select another marketplace or create an Advertising account for {marketplaceName} marketplace.</p>
+                <p>No Advertising account exists for {marketplaceName} marketplace for current Seller account. We are
+                    unable to provide Sponsoreds services for {marketplaceName} marketplace without an existing
+                    Advertising account. Please select another marketplace or create an Advertising account
+                    for {marketplaceName} marketplace.</p>
             </div>}
 
             {/*{(accountLinks.amazon_mws.status === 'IN_PROGRESS' || accountLinks.amazon_ppc.status === 'IN_PROGRESS') &&*/}
@@ -54,7 +57,7 @@ const ErrorBar = () => {
             {/*    We are currently checking your Seller Central API connection.*/}
             {/*</div>}*/}
 
-            {region?.mws_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
+            {region?.mws_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong> Attention!</strong> Looks like your MWS access was revoked. Please go to your Seller Central
@@ -67,7 +70,7 @@ const ErrorBar = () => {
             </div>}
 
 
-            {region?.amazon_ads_api_access_status === 'CREDENTIALS_SERVICE_ERROR' &&
+            {region?.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Looks like we don’t have permission for your Advertising Campaigns. It

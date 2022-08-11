@@ -92,7 +92,8 @@ export const columnList = (setStateHandler, selectedCampaign) => {
             filter: true,
             fastUpdating: true,
             editType: 'currency',
-            disableField: () => true
+            disableField: () => true,
+            ...renderNumberField('currency')
         },
         {
             title: 'Total Targets',
