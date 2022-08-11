@@ -71,12 +71,11 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs, setCurrent
         setActiveIndex(undefined)
         setCogsList([...cogsList.filter(item => item.record_id)])
     }
-
     const submitItemHandler = async (data) => {
         try {
             const requestData = {
                 product_id: productId,
-                cogs_start_datetime: moment(data.cogs_start_datetime).set({second: 0, millisecond: 0}).utc(),
+                cogs_start_datetime: `${moment(data.cogs_start_datetime).set({second: 0, millisecond: 0}).utc().format('YYYY-MM-DDTHH:mm:00.000-00:00')}`,
                 cogs_value: data.cogs_value,
                 record_id: data.record_id || undefined
             }
