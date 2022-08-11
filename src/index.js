@@ -17,7 +17,7 @@ Sentry.init({
     tracesSampleRate: 1.0,
 });
 
-Sentry.setTag("build_type", process.env.REACT_APP_ENV === 'production' ? 'production' : 'development');
+Sentry.setTag("build_type", process.env.REACT_APP_ENV === 'production' ? 'production' : 'developer');
 
 
 ReactDOM.render(<App />, document.getElementById('root'));

@@ -86,6 +86,11 @@ const ChartStatistics = ({date}) => {
 
                 <div className='sorter'>
                     <div className={"select first"}>
+                        <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4C3.5 2.61929 4.63964 1.5 6.04545 1.5C7.45127 1.5 8.59091 2.61929 8.59091 4Z" fill="white"/>
+                            <path d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4M8.59091 4C8.59091 2.61929 7.45127 1.5 6.04545 1.5C4.63964 1.5 3.5 2.61929 3.5 4M8.59091 4H12.0455M3.5 4H0" stroke="#9464B9" stroke-width="1.5"/>
+                        </svg>
+
                         <CustomSelect
                             value={firstMetric.key}
                             getPopupContainer={trigger => trigger.parentNode}
@@ -115,6 +120,11 @@ const ChartStatistics = ({date}) => {
                     <span>vs</span>
 
                     <div className="select second">
+                        <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4C3.5 2.61929 4.63964 1.5 6.04545 1.5C7.45127 1.5 8.59091 2.61929 8.59091 4Z" fill="white"/>
+                            <path d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4M8.59091 4C8.59091 2.61929 7.45127 1.5 6.04545 1.5C4.63964 1.5 3.5 2.61929 3.5 4M8.59091 4H12.0455M3.5 4H0" stroke="#FF5256" stroke-width="1.5"/>
+                        </svg>
+
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
                             value={secondMetric.key}

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-window.BASE_URL =    (process.env.REACT_APP_ENV === 'development' || process.env.REACT_APP_ENV === 'demo')
+window.BASE_URL =    (process.env.REACT_APP_ENV === 'developer' || process.env.REACT_APP_ENV === 'demo')
         ? process.env.REACT_APP_API_URL
         : process.env.REACT_APP_API_PROD;
 const token = global.localStorage.getItem('token');

@@ -15,7 +15,7 @@ import {NavLink, Route, Redirect} from "react-router-dom"
 import ZTH from "./ZTH/ZTH"
 import AgencyUsers from "./AgencyUsers/AgencyUsers"
 
-const developer = process.env.REACT_APP_ENV === "development"
+const developer = process.env.REACT_APP_ENV === "developer"
 
 
 const AdminPanel = () => {

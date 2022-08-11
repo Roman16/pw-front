@@ -48,31 +48,17 @@ const LoginPage = (props) => {
 
                 localStorage.setItem('token', res.access_token)
 
-                const importStatus = await userService.checkImportStatus()
+                // const importStatus = await userService.checkImportStatus()
+                // dispatch(userActions.setInformation({importStatus: importStatus.result}))
 
-                let userFullInformation = await userService.getUserInfo()
-                userFullInformation = userFullInformation.result
-
-                const mwsConnected = userFullInformation.account_links[0].amazon_mws.is_connected,
-                    ppcConnected = userFullInformation.account_links[0].amazon_ppc.is_connected
-
-                if (!mwsConnected && !ppcConnected) {
-                    history.push('/connect-amazon-account')
-                } else if (!mwsConnected && ppcConnected) {
-                    history.push('/connect-mws-account')
-                } else if (!ppcConnected && mwsConnected) {
-                    history.push('/connect-ppc-account')
+                if (props.location.search) {
+                    history.push(new URLSearchParams(props.location.search).get('redirect'))
                 } else {
-                    if (props.location.search) {
-                        history.push(new URLSearchParams(props.location.search).get('redirect'))
-                    } else {
-                        history.push('/home')
-                    }
+                    history.push('/home')
                 }
 
                 seo({title: 'Sponsoreds'})
 
-                dispatch(userActions.setInformation({...userFullInformation, importStatus: importStatus.result}))
             } catch (e) {
                 console.log(e)
             }
@@ -85,11 +71,14 @@ const LoginPage = (props) => {
         seo({title: 'Login Sponsoreds'})
 
         if (props.match.params.status === 'logout') {
-            userService.logOut()
-
+            localStorage.removeItem('importStatus')
             localStorage.removeItem('token')
             localStorage.removeItem('adminToken')
             localStorage.removeItem('userId')
+
+            dispatch(userActions.setActiveRegion(undefined))
+
+            userService.logOut()
 
             dispatch(userActions.logOut())
 

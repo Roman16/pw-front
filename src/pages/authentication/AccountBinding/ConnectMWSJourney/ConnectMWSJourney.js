@@ -7,21 +7,22 @@ import {userService} from "../../../../services/user.services"
 import {userActions} from "../../../../actions/user.actions"
 import {useDispatch, useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
+import _ from 'lodash'
 
-
-const ConnectMWSJourney = () => {
+const ConnectMWSJourney = ({match}) => {
     const [currentStep, setCurrentStep] = useState(3)
+
+    const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
+    const connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
+
     const [fields, setFields] = useState({
         mws_auth_token: '',
-        merchant_id: ''
+        seller_id: _.find(connectedAmazonAccounts, {region_type: match.params.regionType}).seller_id,
+        region_type: match.params.regionType
     })
-    const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
+
     const dispatch = useDispatch()
 
-    const {mwsId, mwsConnected} = useSelector(state => ({
-        mwsId: state.user.account_links[0].amazon_mws.id,
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-    }))
 
     const closeJourney = () => {
         history.push('/account/api-connections')
@@ -41,15 +42,14 @@ const ConnectMWSJourney = () => {
         setConnectMwsStatus('processing')
 
         try {
-            await userService.setMWS({
-                ...fields,
-                ...mwsId && {id: mwsId}
+          const {result} =  await userService.attachMWS({
+                mws_auth_token: fields.mws_auth_token,
+                amazon_region_account_id: _.find(connectedAmazonAccounts, {region_type: match.params.regionType}).id
             })
 
-            const res = await userService.getUserInfo()
+            dispatch(userActions.updateAmazonRegionAccount(result))
 
-            dispatch(userActions.setInformation(res.result))
-            setCurrentStep(prevState => prevState + 1)
+            setCurrentStep(5)
         } catch (e) {
             setConnectMwsStatus('error')
         }
@@ -57,10 +57,6 @@ const ConnectMWSJourney = () => {
 
     const tryAgainMws = () => {
         setConnectMwsStatus('connect')
-    }
-
-    if (mwsConnected) {
-        history.push('/account/api-connections')
     }
 
     return (
@@ -78,9 +74,10 @@ const ConnectMWSJourney = () => {
                     fields={fields}
                     onClose={closeJourney}
                     tryAgainMws={tryAgainMws}
+                    disabled={true}
                 />}
 
-                {currentStep === 4 && <SuccessPage/>}
+                {currentStep === 5 && <SuccessPage/>}
             </div>
         </div>
     )

@@ -136,10 +136,10 @@ const Home = () => {
 
 
     useEffect(() => {
-        if (user.user.id === 714) setAdminStatus(true)
+        if (user.userDetails.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
 
-        if (user.user.is_agency_client) setAgencyUser(true)
+        if (user.userDetails.is_agency_client) setAgencyUser(true)
         else setAgencyUser(false)
     }, [user])
 

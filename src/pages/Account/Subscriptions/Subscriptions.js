@@ -16,6 +16,8 @@ import {PageDescription} from "./components/PageDescription"
 import {SomethingWrong} from "./modalWindows/SomethingWrong"
 import {injectStripe} from "react-stripe-elements"
 import {history} from "../../../utils/history"
+import {ImportProfileWindow} from "../../../components/ModalWindow/PWWindows/ImportProfileWindow"
+import {CreateAdsAccount} from "../../../components/ModalWindow/PWWindows/CreateAdsAccount"
 
 const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 
@@ -23,10 +25,7 @@ const cancelCoupon = process.env.REACT_APP_SUBSCRIPTION_COUPON
 const Subscriptions = (props) => {
     const dispatch = useDispatch()
 
-    const
-        [scope, setScope] = useState('America'),
-
-        [subscriptionState, setSubscriptionState] = useState({
+    const [subscriptionState, setSubscriptionState] = useState({
             active_subscription_type: null,
             subscriptions: {
                 optimization: {},
@@ -52,8 +51,11 @@ const Subscriptions = (props) => {
 
     const user = useSelector(state => state.user)
     const importStatus = useSelector(state => state.user.importStatus)
+    const activeRegion = useSelector(state => state.user.activeAmazonRegion)
+    const activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
+    const adSpend = useSelector(state => state.user.subscription.ad_spend)
 
-    const amazonIsConnected = user.account_links[0].amazon_mws.is_connected === true && user.account_links[0].amazon_ppc.is_connected === true
+    const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_mws_attached
 
     const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true) || visibleSomethingWrongWindow
 
@@ -67,17 +69,17 @@ const Subscriptions = (props) => {
         }
 
         try {
-            let [state, info] = await Promise.all([userService.getSubscriptionsState(scope), userService.getActivateInfo({scope})])
+            let [state, info] = await Promise.all([userService.getSubscriptionsState(activeRegion.id), userService.getActivateInfo({id: activeRegion.id})])
 
 
-            if (state.result[scope].error || info.result[scope].error) {
+            if (state.result[activeRegion.id].error || info.result[activeRegion.id].error) {
                 openErrorWindow()
-            } else if ([state.result[scope].data.subscriptions.analytics, state.result[scope].data.subscriptions.optimization, state.result[scope].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing' || i?.incomplete_payment?.status === 'succeeded')) {
+            } else if ([state.result[activeRegion.id].data.subscriptions.analytics, state.result[activeRegion.id].data.subscriptions.optimization, state.result[activeRegion.id].data.subscriptions.full].some(i => i?.incomplete_payment?.status === 'processing' || i?.incomplete_payment?.status === 'succeeded')) {
                 getSubscriptionsState()
                 return
             } else {
-                state = state.result[scope].data
-                info = info.result[scope].data
+                state = state.result[activeRegion.id].data
+                info = info.result[activeRegion.id].data
 
                 setSubscriptionState({
                     ...state,
@@ -110,18 +112,17 @@ const Subscriptions = (props) => {
 
         try {
             await userService.activateSubscription({
-                scope,
                 type: plan || selectedPlan,
                 coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
-            })
+            }, activeRegion.id)
 
             getSubscriptionsState()
-            dispatch(userActions.getPersonalUserInfo())
+            dispatch(userActions.getAccountStatus(activeRegion.id))
             setVisibleActivateSubscriptionsWindow(false)
             setSelectedPlan(undefined)
             setActivateProcessing(false)
         } catch (e) {
-            if (e.response.data.result?.status === 'requires_action') {
+            if (e.response?.data.result?.status === 'requires_action') {
                 retryPaymentHandler(e.response.data.result)
             } else {
                 setActivateProcessing(false)
@@ -155,8 +156,7 @@ const Subscriptions = (props) => {
                 try {
                     const res = await userService.retryPayment({
                         type: subscriptionState.active_subscription_type,
-                        scope
-                    })
+                    }, activeRegion.id)
 
                     retryPaymentHandler(res.result)
                 } catch (e) {
@@ -172,7 +172,7 @@ const Subscriptions = (props) => {
         setProcessingCancelSubscription(true)
 
         try {
-            await userService.cancelSubscription({scope})
+            await userService.cancelSubscription(activeRegion.id)
             getSubscriptionsState()
             setVisibleCancelSubscriptionsWindow(false)
         } catch (e) {
@@ -186,12 +186,15 @@ const Subscriptions = (props) => {
         setActivateCouponProcessing(true)
 
         try {
-            const {result} = await userService.getCouponInfo(coupon)
+            const {result} = await userService.getCouponInfo(coupon, activeRegion.id)
 
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({coupon, scope, type: subscriptionState.active_subscription_type})
+                await userService.activateCoupon({
+                    coupon,
+                    type: subscriptionState.active_subscription_type
+                }, activeRegion.id)
                 notification.success({title: 'Coupon activated'})
                 getSubscriptionsState()
                 setVisibleCancelSubscriptionsWindow(false)
@@ -216,11 +219,11 @@ const Subscriptions = (props) => {
     }
 
     useEffect(() => {
-        amazonIsConnected && getSubscriptionsState()
-    }, [])
+        amazonIsConnected && activeRegion && getSubscriptionsState()
+    }, [activeRegion])
 
     return (<>
-        {amazonIsConnected && <PageHeader user={user}/>}
+        {amazonIsConnected && <PageHeader activeRegion={activeRegion}/>}
 
         <section className={'subscriptions-page'}>
             <h1>Subscription</h1>
@@ -236,7 +239,7 @@ const Subscriptions = (props) => {
                     plan={plan}
                     subscriptionState={subscriptionState}
                     disabledPage={disabledPage}
-                    adSpend={user.ad_spend}
+                    adSpend={adSpend}
 
                     loadStateProcessing={loadStateProcessing}
                     retryProcessing={retryProcessing}
@@ -278,9 +281,9 @@ const Subscriptions = (props) => {
             plan={selectedPlan}
             activateType={activateType}
             subscriptionState={subscriptionState}
-            scope={scope}
             processing={activateProcessing}
-            adSpend={user.ad_spend}
+            adSpend={adSpend}
+            regionId={activeRegion.id}
 
             onClose={closeActivateWindowHandler}
             onActivate={subscribeHandler}
@@ -294,15 +297,33 @@ const Subscriptions = (props) => {
             visible={importStatus.subscription?.required_parts_ready && visibleSomethingWrongWindow}
         />
 
-        <LoadingAmazonAccount
-            pathname={'/account/subscriptions'}
-            visible={!importStatus.subscription?.required_parts_ready}
-            importStatus={importStatus}
-            lastName={user.user.last_name}
-            firstName={user.user.name}
-            productList={[]}
-            container={() => document.querySelector('.account-content')}
-        />
+
+        {!importStatus.common_resources?.required_parts_details.profiles.part_ready ?
+            <ImportProfileWindow
+                visible={true}
+                container={() => document.querySelector('.account-content')}
+
+                lastName={user.userDetails.last_name}
+                firstName={user.userDetails.name}
+            /> : importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null ?
+                <CreateAdsAccount
+                    container={() => document.querySelector('.account-content')}
+                    marketplace={activeMarketplace}
+                    visible={true}
+                /> : amazonIsConnected && !importStatus.subscription?.required_parts_ready ?
+                    <LoadingAmazonAccount
+                        pathname={'/account/subscriptions'}
+                        visible={true}
+                        importStatus={importStatus}
+                        lastName={user.userDetails.last_name}
+                        firstName={user.userDetails.name}
+                        productList={[]}
+                        container={() => document.querySelector('.account-content')}
+                    /> : false
+
+        }
+
+
     </>)
 }
 

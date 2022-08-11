@@ -5,13 +5,14 @@ import {useSelector} from "react-redux";
 import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 const RenderMetricValue = ({value, type}) => {
 
     if (value != null && !isNaN(value)) {
         value = +value
         if (type === 'currency') {
-            return (`$${Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}`)
+            return <CurrencyWithCode value={Math.round(value).toString().length > 4 ? numberMask(value) : numberMask(value, 2)}/>
         } else if (type === 'percent') {
             return (`${numberMask(value * 100, 2)}%`)
         } else if (type === 'number') {

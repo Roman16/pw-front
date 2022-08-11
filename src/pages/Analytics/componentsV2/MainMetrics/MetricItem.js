@@ -7,6 +7,7 @@ import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {metricKeys} from "./metricsList"
 import {roundTo} from "../../../ZeroToHero/Payment/Summary"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 const DiffTooltip = ({currentValue, diff, type, prevValue, name, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
@@ -94,7 +95,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}
+                        <CurrencyWithCode value={numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}/>
                     </div>}
 
                     {(value < prevValue) &&
@@ -102,7 +103,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}
+                        <CurrencyWithCode value={numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2)}/>
                     </div>}
 
                     {diffValue === 0 && <div className='down-changes'>
@@ -160,9 +161,9 @@ const RenderMetricValue = ({value, type, id}) => {
         const number = +value
         if (type === 'currency') {
             if (id === metricKeys['rpi']) {
-                return `$${numberMask(number, 4, null, 2)}`
+                return <CurrencyWithCode value={numberMask(number, 4, null, 2)}/>
             } else {
-                return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
+                return <CurrencyWithCode value={Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}/>
             }
         } else if (type === 'percent') {
             return (`${round(number * 100, id === metricKeys['icvr'] ? 4 : 2)}%`)

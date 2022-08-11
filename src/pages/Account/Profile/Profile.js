@@ -1,22 +1,36 @@
 import React, {useEffect, useState} from "react"
 import './Profile.less'
-import {useDispatch, useSelector} from "react-redux"
+import {useDispatch} from "react-redux"
 import {Spin} from "antd"
 import {userService} from "../../../services/user.services"
 import {notification} from "../../../components/Notification"
-import {userActions} from "../../../actions/user.actions"
 import {SVG} from "../../../utils/icons"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
+import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 
 const Profile = () => {
-    const user = useSelector(state => state.user.user)
-
-    const [userInformation, setUserInformation] = useState({...user}),
+    const [userInformation, setUserInformation] = useState({
+            name: '',
+            last_name: '',
+            email: ''
+        }),
         [saveProcessing, setSaveProcessing] = useState(false),
+        [fetchingProcessing, setFetchingProcessing] = useState(true),
         [errorFields, setErrorFields] = useState([])
 
-    const dispatch = useDispatch()
+    const getUserInformation = async () => {
+        try {
+            const res = await userService.getUserPersonalInformation()
+
+            setUserInformation({...res})
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        setFetchingProcessing(false)
+    }
 
     const changeInputHandler = ({target: {name, value}}) => {
         setErrorFields([...errorFields.filter(i => i !== name)])
@@ -35,8 +49,7 @@ const Profile = () => {
             if (!userInformation.last_name) setErrorFields(prevState => [...prevState, 'last_name'])
         } else {
             try {
-                const res = await userService.updateInformation(userInformation)
-                dispatch(userActions.updateUser(res.user))
+                await userService.updateInformation(userInformation)
 
                 notification.success({title: 'Completed'})
             } catch (e) {
@@ -48,8 +61,8 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        setUserInformation({...user})
-    }, [user])
+        getUserInformation()
+    }, [])
 
     return (<section className={'profile'}>
         <div className="container">
@@ -115,7 +128,7 @@ const Profile = () => {
                 <button
                     className="btn default"
                     onClick={saveSettingsHandler}
-                    disabled={saveProcessing || JSON.stringify(userInformation) === JSON.stringify(user)}
+                    disabled={saveProcessing}
                 >
                     Save Changes
 
@@ -123,6 +136,8 @@ const Profile = () => {
                 </button>
             </div>
         </div>
+
+        {fetchingProcessing && <RouteLoader/>}
     </section>)
 }
 export default Profile

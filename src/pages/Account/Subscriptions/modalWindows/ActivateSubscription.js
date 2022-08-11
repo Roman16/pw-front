@@ -15,10 +15,10 @@ export const ActivateSubscription = ({
                                          visible,
                                          plan,
                                          subscriptionState,
-                                         scope,
                                          processing,
                                          activateType,
                                          adSpend,
+                                         regionId,
 
                                          onClose,
                                          onActivate
@@ -61,11 +61,11 @@ export const ActivateSubscription = ({
 
         try {
             const {result} = await userService.getActivateInfo({
-                scope,
-                coupon: activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid ? activateInfo[subscriptionState.activeSubscriptionType].coupon.code : activateInfoSelectedPlan?.coupon?.valid ? activateInfoSelectedPlan?.coupon.code : undefined
+                coupon: activateInfo[subscriptionState.activeSubscriptionType]?.coupon?.valid ? activateInfo[subscriptionState.activeSubscriptionType].coupon.code : activateInfoSelectedPlan?.coupon?.valid ? activateInfoSelectedPlan?.coupon.code : undefined,
+                id: regionId
             })
 
-            setActivateData(result[scope].data)
+            setActivateData(result[regionId].data)
 
         } catch (e) {
             console.log(e)
@@ -76,14 +76,14 @@ export const ActivateSubscription = ({
     const applyCouponHandler = async (value) => {
         setApplyCouponProcessing(true)
         try {
-            const couponRes = await userService.getCouponInfo(value)
+            const couponRes = await userService.getCouponInfo(value, regionId)
 
             if (!couponRes.result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                const {result} = await userService.getActivateInfo({scope, coupon: value})
+                const {result} = await userService.getActivateInfo({coupon: value, id: regionId})
                 setCouponInfo(couponRes.result)
-                setActivateData(result[scope].data)
+                setActivateData(result[regionId].data)
             }
         } catch (e) {
             console.log(e)

@@ -1,26 +1,9 @@
-import React, {useEffect} from "react"
+import React from "react"
 import successImage from '../../../../../assets/img/success-connect.svg'
 import './SuccessPage.less'
 import {history} from "../../../../../utils/history"
-import {userService} from "../../../../../services/user.services"
-import {userActions} from "../../../../../actions/user.actions"
-import {useDispatch} from "react-redux"
 
 const SuccessPage = () => {
-    const dispatch = useDispatch()
-
-    const checkStatus = async () => {
-        try {
-            const importStatus = await userService.checkImportStatus()
-            dispatch(userActions.updateUser({importStatus: importStatus.result}))
-        } catch (e) {
-
-        }
-    }
-    useEffect(() => {
-        checkStatus()
-    }, [])
-
     return (
         <div className='success-section'>
             <img src={successImage} alt=""/>

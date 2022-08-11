@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import './CampaignsConfiguration.less'
 import {SVG} from "../../../../utils/icons"
 import CustomTable from "../../../../components/Table/CustomTable"
-import {Checkbox, Input} from "antd"
+import {Checkbox, Drawer, Input} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import _ from "lodash"
@@ -26,6 +26,7 @@ export const multiSelectVariations = [
 const CampaignsConfiguration = ({optimizationJobId, productInformation, isDisabled, getSettings, loading, jobsList, onUpdate}) => {
     const [sectionHeightState, setSectionHeightState] = useState(false),
         [hasJob, setJobState] = useState(false),
+        [visibleDrawer, setVisibleDrawer] = useState(false),
         [searchText, setSearchText] = useState()
 
 
@@ -204,39 +205,109 @@ const CampaignsConfiguration = ({optimizationJobId, productInformation, isDisabl
     }, [sectionHeightState, optimizationJobId])
 
     return (
-        <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
-            <div className="section-header" onClick={() => setSectionHeightState(prevState => !prevState)}>
-                <h2>Campaigns Configuration</h2>
+        <>
+            <section className={`campaigns-configuration ${sectionHeightState ? 'opened' : 'closed'}`}>
+                <div className="section-header" onClick={() => setSectionHeightState(prevState => !prevState)}>
+                    <h2>Campaigns Configuration</h2>
 
-                <SVG id={'select-icon'}/>
-            </div>
-
-            <div className={`table-block`}>
-                <div className={'block-header'}>
-                    <div className="form-group">
-                        <Search
-                            className="search-field"
-                            placeholder={`Search by campaign name`}
-                            onPressEnter={e => setSearchText(e.target.value)}
-                            onBlur={e => setSearchText(e.target.value)}
-                            data-intercom-target='search-field'
-                            suffix={<SVG id={'search'}/>}
-                        />
-                    </div>
-
-                    <button className="btn default" onClick={() => resetSettingsHandler('all')}>
-                        Reset All
-                    </button>
+                    <SVG id={'select-icon'}/>
                 </div>
 
-                <CustomTable
-                    loading={loading}
-                    dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
-                    columns={columns}
-                    emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
-                />
-            </div>
-        </section>
+                <div className={`table-block`}>
+                    <div className="section-description">
+                        This is an <b>Advanced feature</b> for PPC Automation. We strongly suggest <span onClick={() => setVisibleDrawer(true)}>reading the guide</span> to efficiently use it.
+                    </div>
+
+                    <div className={'block-header'}>
+                        <div className="form-group">
+                            <Search
+                                className="search-field"
+                                placeholder={`Search by campaign name`}
+                                onPressEnter={e => setSearchText(e.target.value)}
+                                onBlur={e => setSearchText(e.target.value)}
+                                data-intercom-target='search-field'
+                                suffix={<SVG id={'search'}/>}
+                            />
+                        </div>
+
+                        <button className="btn default" onClick={() => resetSettingsHandler('all')}>
+                            Reset All
+                        </button>
+                    </div>
+
+                    <CustomTable
+                        loading={loading}
+                        dataSource={_.orderBy(searchText ? _.filter(jobsList, (item) => _.includes(item.campaignName.toLowerCase(), searchText.toLowerCase())) : jobsList, ['campaignName'], ['asc'])}
+                        columns={columns}
+                        emptyText={!hasJob ? 'Can\'t configure campaigns, start optimization first' : 'No campaigns for optimization, check product ads'}
+                    />
+                </div>
+            </section>
+
+            <Drawer
+                placement="right"
+                closable={false}
+                onClose={() => setVisibleDrawer(false)}
+                visible={visibleDrawer}
+                width={413}
+                className={'strategies-description-drawer campaign-configuration'}
+            >
+                <div className="header-block" onClick={() => setVisibleDrawer(false)}>
+                    <h2>Campaigns Configuration</h2>
+
+                    <i>
+                        <SVG id={'select-icon'}/>
+                    </i>
+                </div>
+
+                <div className="content">
+                    <p> In this interface you can see all Advertising campaigns associated with your product under
+                        optimization. PPC Automation tool optimizes those campaigns based on your settings.</p>
+
+                    <p> You can further fine-tune your optimization settings per-campaign basis here. When
+                        optimizing a
+                        campaign, settings you set for a specific campaign take precedence and override general
+                        settings
+                        you
+                        set above. For example, you can disable all automation parts above (in <b>What do you want
+                            to
+                            automate?</b> section), but enable some optimization parts for some of your campaigns
+                        in <b>Custom
+                            Optimization Parts</b> column, and they will be optimized accordingly.</p>
+
+                    <p> Next options are available for Campaigns Configuration:</p>
+
+                    <ul>
+                        <li><b>Optimize</b> flag - if enabled, this campaign will be optimized by PPC Automation
+                            tool.
+                        </li>
+                        <li><b>Use for PPC Metrics</b> flag - if enabled, metrics from this campaign will contribute
+                            towards PPC Automation tool's overall decision-making process. Usually you want to leave
+                            it
+                            enabled. Can only be disabled if Optimize is disabled for the campaign.
+                        </li>
+                        <li><b>Min Bid</b> input - set min bid that PPC Automation tool can set for your targetings
+                            in
+                            this campaign when optimizing it. For example, you can use this setting to ensure your
+                            bids
+                            never go down below $1.0.
+                        </li>
+                        <li><b>Max Bid</b> input - set max bid that PPC Automation tool can set for your targetings
+                            in
+                            this campaign when optimizing it. For example, you can use this setting to ensure your
+                            bids
+                            never go above $2.0.
+                        </li>
+                        <li><b>Custom Optimization Parts</b> selector - if enabled, in the selector you can select
+                            specific optimization parts you want this campaign to be optimized for. For example, you
+                            may
+                            want PPC Automation tool to only perform bid optimizations for some campaigns, and only
+                            pause bleeding targetings for other campaigns.
+                        </li>
+                    </ul>
+                </div>
+            </Drawer>
+        </>
     )
 }
 

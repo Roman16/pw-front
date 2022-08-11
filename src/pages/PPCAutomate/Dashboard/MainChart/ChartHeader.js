@@ -3,6 +3,7 @@ import {Switch} from "antd";
 import moment from "moment";
 import DatePicker from "../../../../components/DatePicker/DatePickerRange";
 import {SVG} from "../../../../utils/icons";
+import {activeTimezone} from "../../../index"
 
 const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveMetricTitle, secondActiveMetricTitle, showWeekChart, showDailyChart, showOptimizationChart}) => {
     return (
@@ -40,7 +41,7 @@ const ChartHeader = ({timeRange, onChangeSwitch, selectedRangeDate, firstActiveM
             </div>
 
             <div className='chart-legend'>
-                {(moment().tz('America/Los_Angeles').subtract(3, "days") < moment(selectedRangeDate.endDate) || selectedRangeDate.endDate === 'lifetime') &&
+                {(moment().tz(activeTimezone).subtract(3, "days") < moment(selectedRangeDate.endDate) || selectedRangeDate.endDate === 'lifetime') &&
                 <div className="first-line">
                     <span className="dashed-line">
                         <SVG id='dashed-lines'/>

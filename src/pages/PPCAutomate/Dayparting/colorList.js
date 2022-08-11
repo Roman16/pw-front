@@ -2,51 +2,51 @@ export const colorList = [
     {
         min: 0,
         max: 10,
-        color: '#BCBDF5'
+        color: '#F0EEF7'
     },
     {
         min: 10,
         max: 20,
-        color: '#A2A3F3'
+        color: '#E1DEEE'
     },
     {
         min: 20,
         max: 30,
-        color: '#9496F1'
+        color: '#D2CDE6'
     },
     {
         min: 30,
         max: 40,
-        color: '#8789F0'
+        color: '#C3BDDD'
     },
     {
         min: 40,
         max: 50,
-        color: '#7A7CEE'
+        color: '#B4ACD5'
     },
     {
         min: 50,
         max: 60,
-        color: '#6C70EE'
+        color: '#A59CCD'
     },
     {
         min: 60,
         max: 70,
-        color: '#6367D9'
+        color: '#968BC4'
     },
     {
         min: 70,
         max: 80,
-        color: '#5A5CC3'
+        color: '#877ABC'
     },
     {
         min: 80,
         max: 90,
-        color: '#5052AD'
+        color: '#786AB3'
     },
     {
         min: 90,
         max: 100,
-        color: '#464898'
+        color: '#6959AB'
     },
 ];

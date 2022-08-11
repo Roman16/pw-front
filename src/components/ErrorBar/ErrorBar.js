@@ -1,10 +1,10 @@
-import React, {useEffect} from "react";
-import './ErrorBar.less';
-import {useSelector, useDispatch} from "react-redux";
-import {Link} from "react-router-dom";
-import {SVG} from "../../utils/icons";
-import {userActions} from "../../actions/user.actions";
-import InformationTooltip from "../Tooltip/Tooltip";
+import React from "react"
+import './ErrorBar.less'
+import {useSelector, useDispatch} from "react-redux"
+import {SVG} from "../../utils/icons"
+import InformationTooltip from "../Tooltip/Tooltip"
+import {Link} from "react-router-dom"
+import {marketplaceIdValues} from "../../constans/amazonMarketplaceIdValues"
 
 // const accountLinks = {
 //     amazon_mws: {
@@ -15,29 +15,17 @@ import InformationTooltip from "../Tooltip/Tooltip";
 //     }
 // };
 
-let intervalId = null;
+let intervalId = null
 
 
 const ErrorBar = () => {
-    const dispatch = useDispatch();
-
-    const accountLinks = useSelector(state => state.user.account_links[0])
     const trialLeftDays = useSelector(state => state.user.subscription.trial.days_before_trial_end_date)
-    const onTrial = useSelector(state => state.user.subscription.trial.trial_active)
+    const onTrial = useSelector(state => state.user.subscription.trial.trial_active),
+        marketplace = useSelector(state => state.user.activeAmazonMarketplace),
+        region = useSelector(state => state.user.activeAmazonRegion),
+        importStatus = useSelector(state => state.user.importStatus)
 
-    useEffect(() => {
-        intervalId = setInterval(() => {
-            if (accountLinks.amazon_mws.status !== 'SUCCESS' || accountLinks.amazon_ppc.status !== 'SUCCESS') {
-                dispatch(userActions.getPersonalUserInfo());
-            } else {
-                clearInterval(intervalId);
-            }
-        }, 60000);
-
-        return (() => {
-            clearInterval(intervalId);
-        })
-    }, [accountLinks]);
+    const marketplaceName = marketplaceIdValues[marketplace.marketplace_id].countryName
 
     return (
         <div className='errors-bar'>
@@ -54,13 +42,22 @@ const ErrorBar = () => {
                 Days Left
             </div>}
 
-            {(accountLinks.amazon_mws.status === 'IN_PROGRESS' || accountLinks.amazon_ppc.status === 'IN_PROGRESS') &&
-            <div className={'in-progress'}>
-                <SVG id={'attention-bar-icon'}/>
-                We are currently checking your Seller Central API connection.
+            {marketplace && marketplace.profile_id === null && importStatus.common_resources?.required_parts_details.profiles.part_ready &&
+            <div className={'error'}>
+                <SVG id={'error-bar-icon'}/>
+                <p>No Advertising account exists for {marketplaceName} marketplace for current Seller account. We are
+                    unable to provide Sponsoreds services for {marketplaceName} marketplace without an existing
+                    Advertising account. Please select another marketplace or create an Advertising account
+                    for {marketplaceName} marketplace.</p>
             </div>}
 
-            {accountLinks.amazon_mws.status === 'FAILED' &&
+            {/*{(accountLinks.amazon_mws.status === 'IN_PROGRESS' || accountLinks.amazon_ppc.status === 'IN_PROGRESS') &&*/}
+            {/*<div className={'in-progress'}>*/}
+            {/*    <SVG id={'attention-bar-icon'}/>*/}
+            {/*    We are currently checking your Seller Central API connection.*/}
+            {/*</div>}*/}
+
+            {region?.mws_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong> Attention!</strong> Looks like your MWS access was revoked. Please go to your Seller Central
@@ -72,7 +69,8 @@ const ErrorBar = () => {
                 <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
-            {accountLinks.amazon_ppc.status === 'FAILED' &&
+
+            {region?.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Looks like we don’t have permission for your Advertising Campaigns. It
@@ -83,26 +81,26 @@ const ErrorBar = () => {
                 <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
-            {(accountLinks.amazon_mws.status === 'UNAUTHORIZED' && accountLinks.amazon_ppc.status === 'UNAUTHORIZED') ?
-                <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>
-                    Attention, we have some problems with Seller Central connection, please
-                    go to your account and update your credentials or contact support.</div>
-                :
-                accountLinks.amazon_mws.status === 'UNAUTHORIZED' ?
-                    <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>
-                        Attention, we have some problems with MWS API connection, please go
-                        to your account and update your credentials or contact support.</div>
-                    :
-                    accountLinks.amazon_ppc.status === 'UNAUTHORIZED' &&
-                    <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>
-                        Attention, we have some problems with your Amazon Advertising
-                        connection, please go to your account and update your credentials or contact support.</div>
-            }
+            {/*{(accountLinks.amazon_mws.status === 'UNAUTHORIZED' && accountLinks.amazon_ppc.status === 'UNAUTHORIZED') ?*/}
+            {/*    <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>*/}
+            {/*        Attention, we have some problems with Seller Central connection, please*/}
+            {/*        go to your account and update your credentials or contact support.</div>*/}
+            {/*    :*/}
+            {/*    accountLinks.amazon_mws.status === 'UNAUTHORIZED' ?*/}
+            {/*        <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>*/}
+            {/*            Attention, we have some problems with MWS API connection, please go*/}
+            {/*            to your account and update your credentials or contact support.</div>*/}
+            {/*        :*/}
+            {/*        accountLinks.amazon_ppc.status === 'UNAUTHORIZED' &&*/}
+            {/*        <div className={'unauthorized'}><SVG id={'attention-bar-icon'}/>*/}
+            {/*            Attention, we have some problems with your Amazon Advertising*/}
+            {/*            connection, please go to your account and update your credentials or contact support.</div>*/}
+            {/*}*/}
         </div>
     )
-};
+}
 
-export default ErrorBar;
+export default ErrorBar
 
 //possible status
 //----------------

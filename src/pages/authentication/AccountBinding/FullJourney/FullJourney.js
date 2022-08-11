@@ -6,6 +6,7 @@ import SelectRegion from "../components/SelectRegion/SelectRegion"
 import ConnectMws from "../components/ConnectMws/ConnectMws"
 import SuccessPage from "../components/SuccessPage/SuccessPage"
 import {history} from "../../../../utils/history"
+import _ from 'lodash'
 
 import '../components/Steps.less'
 import {userService} from "../../../../services/user.services"
@@ -16,18 +17,16 @@ import Navigations from "../components/Navigations/Navigations"
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0)
     const [fields, setFields] = useState({
-        account_name: '',
-        account_region: 'north_america',
-        account_type: 'seller_account',
+        account_alias: '',
+        region_type: 'NORTH_AMERICA',
         mws_auth_token: '',
-        merchant_id: ''
+        seller_id: ''
     })
-    const {mwsId, userEmail, mwsConnected, ppcConnected} = useSelector(state => ({
-        mwsId: state.user.account_links[0].amazon_mws.id,
-        userEmail: state.user.user.email,
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-    }))
+    const {userEmail} = useSelector(state => ({
+            userEmail: state.user.userDetails.email,
+        })),
+        connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
+
     const dispatch = useDispatch()
 
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
@@ -54,14 +53,17 @@ const FullJourney = () => {
         setConnectMwsStatus('processing')
 
         try {
-           await userService.setMWS({
+            const {result} = await userService.createAmazonRegionAccount({
                 ...fields,
-                ...mwsId && {id: mwsId}
             })
 
-            const res = await userService.getUserInfo()
+            dispatch(userActions.setAmazonRegionAccounts([...connectedAmazonAccounts, result]))
 
-            dispatch(userActions.setInformation(res.result))
+            setFields({
+                ...fields,
+                regionId: result.id
+            })
+
             setCurrentStep(prevState => prevState + 1)
         } catch (e) {
             setConnectMwsStatus('error')
@@ -76,15 +78,6 @@ const FullJourney = () => {
         history.push('/welcome')
     }
 
-    useEffect(() => {
-        if (mwsConnected && !ppcConnected) {
-            history.push('./connect-ppc-account')
-        } else if (!mwsConnected && ppcConnected) {
-            history.push('./connect-mws-account')
-        } else if (mwsConnected && ppcConnected) {
-            history.push('/account/api-connections')
-        }
-    }, [])
 
     return (
         <div className="amazon-connect full-journey">
@@ -100,16 +93,20 @@ const FullJourney = () => {
                 />}
 
                 {currentStep === 1 && <SelectRegion
+                    connectedAmazonAccounts={connectedAmazonAccounts}
+                    region={fields.region_type}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onCancel={closeJourney}
+                    onChangeInput={changeInputHandler}
+
                 />}
 
                 {currentStep === 2 && <AccountName
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onChangeInput={changeInputHandler}
-                    accountName={fields.account_name}
+                    accountName={fields.account_alias}
                     onCancel={closeJourney}
                 />}
 
@@ -125,6 +122,7 @@ const FullJourney = () => {
                 />}
 
                 {currentStep === 4 && <ConnectPpc
+                    regionId={fields.regionId}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onClose={closeJourney}

@@ -7,6 +7,8 @@ import {useSelector} from "react-redux"
 import OnlyDesktopWindow from "./OnlyDesktopWindow"
 import {mobileCheck} from "../../../utils/mobileCheck"
 import SmallSpend from "./SmallSpend"
+import {ImportProfileWindow} from "./ImportProfileWindow"
+import {CreateAdsAccount} from "./CreateAdsAccount"
 
 // const importStatus = {
 //     "zth": {
@@ -111,11 +113,12 @@ const PWWindows = ({pathname}) => {
         [visibleSmallSpendWindow, setVisibleSmallSpendWindow] = useState(true),
         [visibleNewChangesWindow, setVisibleNewChangesWindow] = useState(true)
 
-    const {user, productList, importStatus, access} = useSelector(state => ({
+    const {user, productList, importStatus, access, activeMarketplace} = useSelector(state => ({
         user: state.user,
         productList: state.products.productList || [],
         importStatus: state.user.importStatus,
         access: state.user.subscription.access,
+        activeMarketplace: state.user.activeAmazonMarketplace
     }))
 
     const closeWindowHandler = () => {
@@ -132,7 +135,11 @@ const PWWindows = ({pathname}) => {
     }
 
     useEffect(() => {
-        if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
+        if (!importStatus.common_resources?.required_parts_details.profiles.part_ready) {
+            setVisibleWindow('loadingProfile')
+        } else if (importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace?.profile_id === null) {
+            setVisibleWindow('adsAccount')
+        } else if ((pathname.includes('/analytics') && !importStatus.analytics.required_parts_ready) ||
             (pathname.includes('/ppc/dayparting') && !importStatus.dayparting.required_parts_ready) ||
             (pathname.includes('/ppc-audit') && importStatus.ppc_audit && !importStatus.ppc_audit.required_parts_ready) ||
             (pathname.includes('/ppc/') && !importStatus.ppc_automate.required_parts_ready) ||
@@ -145,7 +152,7 @@ const PWWindows = ({pathname}) => {
             setVisibleWindow('freeTrial')
         } else if ((!access.analytics && pathname.includes('/analytics')) || (!access.optimization && pathname.includes('/ppc/'))) {
             setVisibleWindow('notAccess')
-        } else if (visibleSmallSpendWindow && user.ad_spend < 1000 && !user.user.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
+        } else if (visibleSmallSpendWindow && user.subscription.ad_spend < 1000 && !user.userDetails.is_agency_client && (!access.analytics || !access.optimization) && user.subscription.active_subscription_type === null) {
             setVisibleWindow('smallSpend')
         } else if (visibleNewChangesWindow && user.notifications.ppc_optimization.count_from_last_login > 0) {
             setVisibleWindow('newReportsCount')
@@ -157,14 +164,28 @@ const PWWindows = ({pathname}) => {
     return (
         <>
             {(pathname.includes('/ppc/') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics') || pathname.includes('/ppc-audit')) &&
-            <LoadingAmazonAccount
-                pathname={pathname}
-                visible={visibleWindow === 'loadingAmazon'}
-                importStatus={importStatus}
-                lastName={user.user.last_name}
-                firstName={user.user.name}
-                productList={productList}
-            />}
+            <>
+                <LoadingAmazonAccount
+                    pathname={pathname}
+                    visible={visibleWindow === 'loadingAmazon'}
+                    importStatus={importStatus}
+                    lastName={user.userDetails.last_name}
+                    firstName={user.userDetails.name}
+                    productList={productList}
+                />
+
+                <ImportProfileWindow
+                    visible={visibleWindow === 'loadingProfile'}
+
+                    lastName={user.userDetails.last_name}
+                    firstName={user.userDetails.name}
+                />
+
+                <CreateAdsAccount
+                    visible={visibleWindow === 'adsAccount'}
+                    marketplace={activeMarketplace}
+                />
+            </>}
 
             {(pathname.includes('/ppc/') || pathname.includes('/analytics')) && <SubscriptionNotificationWindow
                 visible={visibleWindow === 'notAccess'}

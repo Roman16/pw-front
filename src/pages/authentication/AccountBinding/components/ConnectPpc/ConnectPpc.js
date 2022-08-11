@@ -1,30 +1,39 @@
-import React, {Fragment, useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import './ConnectPpc.less'
-import {Link} from "react-router-dom"
 import {SVG} from "../../../../../utils/icons"
-import {useDispatch, useSelector} from "react-redux"
 import loader from '../../../../../assets/img/loader.svg'
-import {userActions} from "../../../../../actions/user.actions"
-import {notification} from "../../../../../components/Notification"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {Checkbox} from "antd"
-
+import {userService} from "../../../../../services/user.services"
+import {userActions} from "../../../../../actions/user.actions"
+import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
+const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
     const [pageStatus, setPageStatus] = useState('connect'),
+        [connectLink, setConnectLink] = useState(''),
         [disabledConnect, setDisabledConnect] = useState(true)
+
     const dispatch = useDispatch()
 
-    const {ppcLink} = useSelector(state => ({
-        ppcLink: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.connect_link : null,
-    }))
+    const getConnectLink = async () => {
+        try {
+            const {result} = await userService.getPPCConnectLink({
+                regionId: regionId,
+                callbackUrl: `${window.location.origin}/amazon-ads-api-oauth-callback`
+            })
+
+            setConnectLink(result.connection_link)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     const openConnectLink = () => {
         setPageStatus('getting-token')
 
-        const win = popupCenter({url: ppcLink, title: 'xtf', w: 520, h: 570})
+        const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
 
         let timer = setInterval(() => {
             if (win.closed) {
@@ -33,31 +42,34 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             }
         }, 2000)
 
-        const checkWindowLocation = () => {
+        const checkWindowLocation = async () => {
             const windowLocation = win.location
 
-            if (windowLocation.origin === 'https://front1.profitwhales.com' || windowLocation.origin === 'https://profitwhales.com' || windowLocation.origin === 'https://app.sponsoreds.com'|| windowLocation.origin === 'https://sponsoreds.com') {
-                try {
-                    if (windowLocation.href && windowLocation.href.split('?status=').includes('FAILED')) {
-                        setPageStatus('error')
-                    } else if (windowLocation.href && ((windowLocation.href.split('?status=').includes('SUCCESS')) || (windowLocation.href.split('?status=').includes('IN_PROGRESS')))) {
-                        setPageStatus('syncing-data')
-                        onGoNextStep()
-                        win.close()
-                        clearInterval(timer)
-                    } else if (windowLocation.href && windowLocation.href.indexOf('?error_message=') !== -1) {
-                        notification.error({title: decodeURIComponent(windowLocation.href.split('?error_message=')[1].split('+').join(' '))})
-                        setPageStatus('error')
-                    }
+            if (windowLocation.pathname === '/amazon-ads-api-oauth-callback') {
+                clearInterval(intervalId)
 
+                const urlParams = new URLSearchParams(windowLocation.search)
+                const code = urlParams.get('code'),
+                    scope = urlParams.get('scope')
+
+                try {
+                    const {result} = await userService.attachAmazonAds({
+                        amazon_region_account_id: regionId,
+                        code,
+                        scope,
+                        callback_redirect_uri: `${window.location.origin}/amazon-ads-api-oauth-callback`
+                    })
+
+                    dispatch(userActions.updateAmazonRegionAccount(result))
+
+                    onGoNextStep()
                     win.close()
                     clearInterval(timer)
-                    clearInterval(intervalId)
                 } catch (e) {
-                    console.log(e)
+                    win.close()
+                    setPageStatus('error')
                 }
             }
-
         }
 
         intervalId = setInterval(checkWindowLocation, 2000)
@@ -66,6 +78,8 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
     const tryAgain = () => setPageStatus('connect')
 
     useEffect(() => {
+        getConnectLink()
+
         return (() => {
             window.removeEventListener('message', () => {
             })
@@ -105,11 +119,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         Cancel
                     </button>
                 </div>
-
-                {/*<div className="connect-ppc-links">*/}
-                {/*    <p>Don’t have access to Seller Central?</p>*/}
-                {/*    <p><Link to={'/affiliates'}>Invite person who does</Link></p>*/}
-                {/*</div>*/}
             </section>
         )
     } else if (pageStatus === 'getting-token' || pageStatus === 'syncing-data') {
@@ -127,7 +136,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
             <section className='connect-ppc-section error'>
                 <h2>There was an error connecting your <br/> PPC account</h2>
                 <p>
-                    Please connect our support to help you connect with Sponsoreds.
+                    Please contact our support to help you connect with Sponsoreds.
                 </p>
 
                 <div className="actions">
@@ -139,11 +148,6 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose}) => {
                         Back To Home
                     </button>
                 </div>
-
-                {/*<div className="connect-ppc-links">*/}
-                {/*    <p>Not the primary account holder?</p>*/}
-                {/*    <p><Link to={'/'}>Click here</Link> to send them instructions to connect.</p>*/}
-                {/*</div>*/}
             </section>)
     }
 }

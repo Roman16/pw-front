@@ -8,6 +8,7 @@ import CustomSelect from "../../../../../components/Select/Select";
 import MultiTextArea from "../../../components/MultiTextArea/MultiTextArea";
 import moment from "moment";
 import './SetupSetting.less';
+import {activeTimezone} from "../../../../index"
 
 const Option = Select.Option;
 
@@ -62,9 +63,9 @@ const SetupSetting = ({
 
     const changeDateHandler = (type, date) => {
         changeCampaignsHandler({
-            [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
+            [`${type}_date`]: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString() : null,
             ...type === 'start' && moment(campaigns.end_date) < moment(date) && {
-                end_date: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString() : null,
+                end_date: date ? moment.tz(`${moment(date).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString() : null,
             }
         });
     };
@@ -186,7 +187,7 @@ const SetupSetting = ({
 
                     <div className="col">
                         <p className={'portfolio-p'}>
-                            At Profit Whales, we use Portfolios to better organize advertising campaigns for different
+                            At Sponsoreds, we use Portfolios to better organize advertising campaigns for different
                             products so that you can adjust them in the Advertising Console more easily. We highly
                             encourage
                             you to use this option.
@@ -206,7 +207,7 @@ const SetupSetting = ({
                                     value={moment(campaigns.start_date)}
                                     onChange={(date) => changeDateHandler('start', date)}
                                     allowClear={false}
-                                    disabledDate={current => moment().tz('America/Los_Angeles').add(-1, 'days') >= current && moment()}
+                                    disabledDate={current => moment().tz(activeTimezone).add(-1, 'days') >= current && moment()}
                                 />
                             </div>
 
@@ -217,7 +218,7 @@ const SetupSetting = ({
                                     format="MMM DD, YYYY"
                                     value={campaigns.end_date && moment(campaigns.end_date)}
                                     onChange={(date) => changeDateHandler('end', date)}
-                                    disabledDate={current => moment(campaigns.start_date).tz('America/Los_Angeles') > current && moment()}
+                                    disabledDate={current => moment(campaigns.start_date).tz(activeTimezone) > current && moment()}
                                 />
                             </div>
                         </div>

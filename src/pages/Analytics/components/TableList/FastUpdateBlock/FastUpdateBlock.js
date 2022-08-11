@@ -13,6 +13,7 @@ import {round} from "../../../../../utils/round"
 import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateSteps/CampaignDetails"
 import {notification} from "../../../../../components/Notification"
 import locale from 'antd/lib/locale/en_US.js.map'
+import {activeTimezone} from "../../../../index"
 
 const Option = Select.Option
 
@@ -184,7 +185,7 @@ const FastUpdateBlock = ({
                     />
                 </div>
 
-                <button className={'btn green'}
+                <button className={'btn default'}
                         disabled={(changingValue === undefined) || submitProcessing}
                 >
                     Apply
@@ -226,7 +227,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
             showToday={false}
             allowClear={false}
             disabledDate={(date) => disabledStartDate(date, undefined)}
-            value={value && value !== 'null' ? moment(value).tz('America/Los_Angeles') : undefined}
+            value={value && value !== 'null' ? moment(value).tz(activeTimezone) : undefined}
             placeholder={value === 'null' ? 'No end date' : 'Select date'}
             onChange={(date) => onChangeValue(dateRequestFormat(date))}
             open={visibleDatePopup}
@@ -243,7 +244,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                     No end date
                 </button>}
 
-                <p className={'time-zone'}>America/Los_Angeles</p>
+                <p className={'time-zone'}>{activeTimezone}</p>
             </>}
         />)
     } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {

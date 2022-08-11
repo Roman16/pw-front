@@ -5,6 +5,7 @@ import moment from 'moment-timezone'
 
 import './DatePicker.less'
 import {SVG} from "../../utils/icons"
+import {activeTimezone} from "../../pages"
 
 const {RangePicker} = AntDatePicker
 
@@ -20,7 +21,7 @@ class DatePicker extends Component {
 
 
     disabledDate = current => {
-        return current && moment(current).endOf('day') > moment().tz('America/Los_Angeles').endOf('day')
+        return current && moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
     }
 
     render() {
@@ -32,20 +33,20 @@ class DatePicker extends Component {
                     ranges={{
                         Today: [moment(), moment()],
                         Yesterday: [
-                            moment().tz('America/Los_Angeles').add(-1, 'days'),
-                            moment().tz('America/Los_Angeles').add(-1, 'days'),
+                            moment().tz(activeTimezone).add(-1, 'days'),
+                            moment().tz(activeTimezone).add(-1, 'days'),
                         ],
                         'Last 7 Days': [
-                            moment().tz('America/Los_Angeles').add(-6, 'days'),
-                            moment().tz('America/Los_Angeles')
+                            moment().tz(activeTimezone).add(-6, 'days'),
+                            moment().tz(activeTimezone)
                         ],
                         'Last 14 Days': [
-                            moment().tz('America/Los_Angeles').add(-13, 'days'),
-                            moment().tz('America/Los_Angeles')
+                            moment().tz(activeTimezone).add(-13, 'days'),
+                            moment().tz(activeTimezone)
                         ],
                         'Last 30 Days': [
-                            moment().tz('America/Los_Angeles').add(-29, 'days'),
-                            moment().tz('America/Los_Angeles')
+                            moment().tz(activeTimezone).add(-29, 'days'),
+                            moment().tz(activeTimezone)
                         ],
                         'Year to date': [
                             moment(new Date(new Date().getFullYear(), 0, 1)),

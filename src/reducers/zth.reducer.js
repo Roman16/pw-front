@@ -3,6 +3,7 @@ import moment from "moment";
 import tz from 'moment-timezone';
 import {Checkbox} from "antd";
 import React from "react";
+import {activeTimezone} from "../pages"
 
 const initialProductSettings = {
     portfolio: {
@@ -10,7 +11,7 @@ const initialProductSettings = {
         no_portfolio: false
     },
     campaigns: {
-        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString(),
+        start_date: moment.tz(`${moment(new Date()).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, activeTimezone).toISOString(),
         set_to_paused: false,
         main_keywords: [],
         bidding_strategy: 'legacyForSales',

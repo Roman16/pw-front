@@ -1,4 +1,6 @@
 import {userConstants} from '../constans/actions.type'
+import _ from 'lodash'
+import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 
 export const defaultImportStatus = {
     analytics: {required_parts_ready: true, required_parts_details: {products: {}, sp: {}, sd: {}, orders: {}}},
@@ -9,19 +11,31 @@ export const defaultImportStatus = {
     subscription: {required_parts_ready: true, required_parts_details: {sp: {}}},
 }
 
+export const amazonRegionsSort = (arr) => arr.sort((a, b) => _.findIndex(Object.keys(marketplaceIdValues), key => key === a.marketplace_id) - _.findIndex(Object.keys(marketplaceIdValues), key => key === b.marketplace_id))
+
 const initialState = {
     notFirstEntry: false,
-    user: {},
+    userDetails: {},
     plans: {},
-    account_links: [{
-        amazon_mws: {
-            is_connected: false
-        },
-        amazon_ppc: {
-            is_connected: false
-        },
-    }],
-    default_accounts: {},
+
+    subscription: {
+        trial: {},
+        active_subscription_type: undefined,
+        access: {
+            analytics: false,
+            optimization: false
+        }
+    },
+    notifications: {
+        ppc_optimization: {
+            count_from_last_login: 0,
+            last_notice_date: undefined
+        }
+    },
+    fetchingAmazonRegionAccounts: true,
+    amazonRegionAccounts: [],
+    activeAmazonRegion: localStorage.getItem('activeRegion') && localStorage.getItem('activeRegion') !== 'undefined' ? JSON.parse(localStorage.getItem('activeRegion')) : null,
+    activeAmazonMarketplace: localStorage.getItem('activeMarketplace') && localStorage.getItem('activeMarketplace') !== 'undefined' ? JSON.parse(localStorage.getItem('activeMarketplace')) : null,
     importStatus: localStorage.getItem('importStatus') && localStorage.getItem('importStatus') !== 'undefined' ? JSON.parse(localStorage.getItem('importStatus')) : defaultImportStatus
 }
 
@@ -42,87 +56,66 @@ export function user(state = initialState, action) {
 
             return {
                 ...state,
-                user: {
-                    ...state.user,
+                userDetails: {
+                    ...state.userDetails,
                     ...action.payload
                 },
                 importStatus: action.payload.importStatus || state.importStatus || defaultImportStatus
             }
 
-        case userConstants.RESET_CHANGES_COUNT:
+        case userConstants.SET_AMAZON_REGION_ACCOUNTS:
             return {
                 ...state,
-                notifications: {
-                    ...state.notifications,
-
-                    [action.payload]: {
-                        ...state.notifications[action.payload],
-                        count_from_last_login: 0
-                    }
-                }
+                amazonRegionAccounts: [...action.payload.map(item => ({
+                    ...item,
+                    amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+                }))],
+                activeAmazonRegion: state.activeAmazonRegion || action.payload[0] || null,
+                activeAmazonMarketplace: state.activeAmazonMarketplace || action.payload[0]?.amazon_region_account_marketplaces[0] || null,
+                fetchingAmazonRegionAccounts: false,
             }
 
-        case userConstants.SET_PPC_STATUS:
+        case userConstants.UPDATE_AMAZON_REGION_ACCOUNT_BY_ID:
             return {
                 ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_ppc: {
-                        ...state.account_links[0].amazon_ppc,
-                        is_connected: true,
-                        ...action.payload
+                amazonRegionAccounts: [...state.amazonRegionAccounts.map(i => {
+                    if (i.id === action.payload.id) {
+                        return ({
+                            ...i,
+                            ...action.payload,
+                            amazon_region_account_marketplaces: amazonRegionsSort(action.payload.amazon_region_account_marketplaces)
+                        })
+                    } else {
+                        return i
                     }
-                }]
+                })]
             }
-
-        case userConstants.SET_BOOTSTRAP:
+        case userConstants.SET_NOTIFICATIONS:
             return {
                 ...state,
-                notifications: {
-                    ...state.notifications,
-                    account_bootstrap: {
-                        bootstrap_in_progress: action.payload
-                    }
-                }
+                notifications: action.payload
             }
 
-        case userConstants.UNSET_AMAZON_MWS:
+        case userConstants.ACTUALIZE_ACTIVE_REGION:
+            const region = _.find(state.amazonRegionAccounts, {id: state.activeAmazonRegion?.id})
+            region && localStorage.setItem('activeRegion', JSON.stringify(region))
+
             return {
                 ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_mws: {
-                        ...state.account_links[0].amazon_mws,
-                        is_connected: false,
-                        status: null
-                    }
-                }],
-                default_accounts: {
-                    ...state.default_accounts,
-                    amazon_mws: {
-                        seller_id: null
-                    }
-                }
+                activeAmazonRegion: region || null,
             }
 
-        case userConstants.UNSET_AMAZON_PPC:
+        case userConstants.SET_ACTIVE_REGION:
+            action.payload?.marketplace ? localStorage.setItem('activeMarketplace', JSON.stringify(action.payload.marketplace)) : localStorage.removeItem('activeMarketplace')
+            action.payload?.region ? localStorage.setItem('activeRegion', JSON.stringify(action.payload.region)) : localStorage.removeItem('activeRegion')
+
             return {
                 ...state,
-                account_links: [{
-                    ...state.account_links[0],
-                    amazon_ppc: {
-                        ...state.account_links[0].amazon_ppc,
-                        is_connected: false,
-                        status: null
-                    }
-                }],
-                default_accounts: {
-                    ...state.default_accounts,
-                    amazon_ppc: {
-                        seller_id: null
-                    }
-                }
+                activeAmazonRegion: action.payload?.region || null,
+                activeAmazonMarketplace: action.payload?.marketplace || null,
+                fetchingAmazonRegionAccounts: true,
             }
+
 
         default:
             return state

@@ -16,6 +16,7 @@ import {Link} from "react-router-dom"
 import {notification} from "../Notification"
 import {ADVERTISING_STRATEGY, BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
 import CustomSelect from "../Select/Select"
+import {activeTimezone} from "../../pages"
 
 const Option = Select.Option
 
@@ -326,12 +327,12 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
         return (<div ref={wrapperRef}>
 
                 <div className={`field-value ${disabled ? 'disabled' : ''}`} onClick={openEditWindow}>
-                    {value ? `${moment(value).tz('America/Los_Angeles').format('DD MMM YYYY')}` : 'No end date'}
+                    {value ? `${moment(value).tz(activeTimezone).format('DD MMM YYYY')}` : 'No end date'}
                     {!disabled && <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>}
                 </div>
 
                 {visibleEditableWindow && <DatePicker
-                    value={newValue && newValue !== 'null' ? moment(newValue).tz('America/Los_Angeles') : undefined}
+                    value={newValue && newValue !== 'null' ? moment(newValue).tz(activeTimezone) : undefined}
                     open={visibleEditableWindow}
                     showToday={false}
                     allowClear={false}
@@ -349,7 +350,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                             Remove
                         </button>}
 
-                        <p>America/Los_Angeles</p>
+                        <p>{activeTimezone}</p>
                         <div className="actions">
                             <button disabled={processing || newValue === value} className={'btn default'}
                                     onClick={() => submitFieldHandler()}>

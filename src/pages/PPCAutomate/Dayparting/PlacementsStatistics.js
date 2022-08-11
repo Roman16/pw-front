@@ -10,6 +10,7 @@ import {round} from "../../../utils/round";
 import {Spin} from "antd";
 import {SVG} from "../../../utils/icons";
 import {numberMask} from "../../../utils/numberMask";
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 const CancelToken = axios.CancelToken;
 let source = null;
@@ -93,16 +94,16 @@ const statisticMetrics = [
 
 const chartColors = [
     {
-        stroke: '#F1C75C',
-        fill: '#F6DB97'
+        stroke: '#9464B9',
+        fill: '#a290b9'
     },
     {
-        stroke: '#EC7F5C',
-        fill: '#F3AD97'
+        stroke: '#BA96F4',
+        fill: '#d0c2f4'
     },
     {
-        stroke: '#6D6DF6',
-        fill: '#A1A1F9'
+        stroke: '#FFA8AA',
+        fill: '#ffcad1'
     }
 
 ];
@@ -168,21 +169,21 @@ const MetricValue = ({metric = {}, type}) => {
             return (
                 <div className="value">
                     {+metric.diff === 0 ? <div/> : <SVG id={metric.diff > 0 ? 'down-red-arrow' : 'up-green-arrow'}/>}
-                    {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${numberMask(metric.value, 0)}` : metric.value)}
+                    {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? <CurrencyWithCode value={numberMask(metric.value, 0)}/> : metric.value)}
                 </div>
             )
         } else {
             return (
                 <div className="value">
                     {+metric.diff === 0 ? <div/> : <SVG id={metric.diff > 0 ? 'up-green-arrow' : 'down-red-arrow'}/>}
-                    {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${numberMask(metric.value, 0)}` : metric.value)}
+                    {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? <CurrencyWithCode value={numberMask(metric.value, 0)}/> : metric.value)}
                 </div>
             )
         }
     } else {
         return (
             <div className="value">
-                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? `$${numberMask(metric.value, 0)}` : metric.value)}
+                {metric.value == null ? 'NaN' : type === 'ctr' || type === 'acos' ? `${round(metric.value, 2)}%` : (type === 'spend' || type === 'sales' ? <CurrencyWithCode value={numberMask(metric.value, 0)}/> : metric.value)}
             </div>
         )
     }
@@ -265,10 +266,10 @@ const PlacementsStatistics = ({date}) => {
 
             <div className="row">
                 <div className='chart'>
-                    <ResponsiveContainer height={280} width='100%'>
+                    <ResponsiveContainer height={200} width='100%'>
                         <AreaChart
                             width={400}
-                            height={400}
+                            height={200}
                             data={chartData}
                             stackOffset="expand"
                             isAnimationActive={false}
@@ -354,7 +355,8 @@ const PlacementsStatistics = ({date}) => {
 
                 <div className='metrics-statistics'>
                     <div className="row metrics-name">
-                        <div/>
+                        <div>Description</div>
+
                         {statisticMetrics.map(item => (
                             <div key={item.key}>{item.title}</div>
                         ))}

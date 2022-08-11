@@ -9,22 +9,23 @@ import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
 import {dateRequestFormat} from "../../../../../utils/dateFormatting"
 import locale from 'antd/lib/locale/en_US.js.map'
+import {activeTimezone} from "../../../../index"
 
 const Option = Select.Option
 
 export const disabledStartDate = (current, endDate) => {
     if (current) {
         if (endDate) {
-            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day')) || moment(current).endOf('day') > moment(endDate).tz('America/Los_Angeles').endOf('day')
+            return moment(current).endOf('day').isBefore(moment().tz(activeTimezone).endOf('day')) || moment(current).endOf('day') > moment(endDate).tz(activeTimezone).endOf('day')
         } else {
-            return moment(current).endOf('day').isBefore(moment().tz('America/Los_Angeles').endOf('day'))
+            return moment(current).endOf('day').isBefore(moment().tz(activeTimezone).endOf('day'))
         }
     }
 }
 export const disabledEndDate = (current, startDate) => {
     if (current) {
-        if (moment().tz('America/Los_Angeles').endOf('day') > moment(startDate).tz('America/Los_Angeles').endOf('day')) return disabledStartDate(current, null)
-        else return moment(current).endOf('day').isBefore(moment(startDate).tz('America/Los_Angeles').endOf('day'))
+        if (moment().tz(activeTimezone).endOf('day') > moment(startDate).tz(activeTimezone).endOf('day')) return disabledStartDate(current, null)
+        else return moment(current).endOf('day').isBefore(moment(startDate).tz(activeTimezone).endOf('day'))
     }
 }
 
@@ -143,7 +144,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                             onChange={(date) => onChange({startDate: dateRequestFormat(date)})}
-                            value={moment(createData.startDate).tz('America/Los_Angeles')}
+                            value={moment(createData.startDate).tz(activeTimezone)}
                             showToday={false}
                             allowClear={false}
                             locale={locale}
@@ -151,7 +152,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                             disabledDate={(data) => disabledStartDate(data, createData.endDate)}
                             dropdownClassName={'dropdown-with-timezone'}
                             renderExtraFooter={() => <>
-                                <p>America/Los_Angeles</p>
+                                <p>{activeTimezone}</p>
                             </>}
                         />
                     </div>
@@ -160,7 +161,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">End</label>
                         <DatePicker
                             placeholder={'No end date'}
-                            value={createData.endDate ? moment(createData.endDate).tz('America/Los_Angeles') : undefined}
+                            value={createData.endDate ? moment(createData.endDate).tz(activeTimezone) : undefined}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                             onChange={(date) => onChange({endDate: dateRequestFormat(date)})}
                             showToday={false}
@@ -170,7 +171,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                             dropdownClassName={'dropdown-with-timezone'}
                             defaultPickerValue={(createData.endDate === 'null' || !createData.endDate) && moment.max([moment(createData.startDate), moment()]).add(1, 'month').startOf('month')}
                             renderExtraFooter={() => <>
-                                <p>America/Los_Angeles</p>
+                                <p>{activeTimezone}</p>
                             </>}
                         />
                     </div>

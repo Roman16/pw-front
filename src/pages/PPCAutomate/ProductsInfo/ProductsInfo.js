@@ -30,7 +30,7 @@ const ProductsInfo = () => {
         }),
         [totalSize, setTotalSize] = useState(0)
 
-    const isAgencyClient = useSelector(state => state.user.user.is_agency_client)
+    const isAgencyClient = useSelector(state => state.user.userDetails.is_agency_client)
 
     const fetchProducts = async () => {
         if (processing && source) {

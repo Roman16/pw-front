@@ -34,7 +34,7 @@ const Optimization = () => {
         selectedAll: state.products.selectedAll,
         productList: state.products.productList,
         productsFetching: state.products.fetching,
-        isAgencyUser: state.user.user.is_agency_client
+        isAgencyUser: state.user.userDetails.is_agency_client
     }))
 
 

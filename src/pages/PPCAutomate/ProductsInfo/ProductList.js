@@ -15,6 +15,8 @@ import AmazonFeeWindow from "../ProductSettings/AmazonFeesWindow/AmazonFeesWindo
 import MultiApply from "../ProductSettings/MultiApply/MultiApply"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import $ from "jquery"
+import {amazonDomain} from "../../../utils/amazonDomain"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 
 export const ACTIVE = 'RUNNING'
@@ -141,10 +143,10 @@ const ProductList = ({
 
     const getValueFromDefaultVariation = (variations, key) => _.find(variations, {is_default_variation: true}) ? _.find(variations, {is_default_variation: true})[key] : variations[0][key]
 
-    const getValue = (product, key, fromVariation = false, type = 'currency',) => {
+    const getValue = (product, key, fromVariation = false, type = 'currency') => {
         const value = (fromVariation && product.product.variations) ? getValueFromDefaultVariation(product.product.variations, key) : product[key]
 
-        return value ? type === 'currency' ? `$${value}` : `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
+        return value ? type === 'currency' ? <CurrencyWithCode value={value}/> : `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
     }
 
     const openEditableWindow = (key, product) => {
@@ -179,7 +181,7 @@ const ProductList = ({
                     <div title={asin}><b>ASIN:</b>
                         <a
                             target={'_blank'}
-                            href={`https://www.amazon.com/dp/${asin}`}
+                            href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                         >
                             {asin}
                         </a>
@@ -349,7 +351,7 @@ const ProductList = ({
                 <div title={asin}><b>ASIN:</b>
                     <a
                         target={'_blank'}
-                        href={`https://www.amazon.com/dp/${asin}`}
+                        href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     >
                         {asin}
                     </a>
@@ -656,7 +658,7 @@ const ProductItem = ({product: {image_url, asin, name, id, variations}, openedPr
 
         <a
             target={'_blank'}
-            href={`https://www.amazon.com/dp/${asin}`}
+            href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
             className={'short-name'}
             title={name}
         >

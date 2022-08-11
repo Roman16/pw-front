@@ -8,6 +8,7 @@ import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
 import {notification} from "../../../../components/Notification"
 import {saveFile, saveGoogleSpreadsheet, saveWorkbook} from "../../../../utils/saveFile"
+import _ from 'lodash'
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -384,7 +385,22 @@ const ConvertSemanticCore = () => {
         setConvertProcessing(true)
 
         try {
-            const res = await adminServices.convertSemantic(semanticData)
+            const res = await adminServices.convertSemantic({
+                ...semanticData,
+                conversionOptions: {
+                    ...semanticData.conversionOptions,
+                    productInformation: {
+                        ...semanticData.conversionOptions.productInformation,
+                        variations: _.mapValues(semanticData.conversionOptions.productInformation.variations, (item) => ({
+                            ...item,
+                            themeValues: item.themeValues.map(value => ({
+                                ...value,
+                                relatedValues: [...value.relatedValues.filter(i => !!i)]
+                            }))
+                        }))
+                    }
+                }
+            })
 
             semanticData.convertToXLSXWorkBook && saveGoogleSpreadsheet(res)
 
@@ -413,7 +429,16 @@ const ConvertSemanticCore = () => {
                         campaignsStatus: semanticData.conversionOptions.converter.campaignsStatus,
                         semanticCoreUrls: semanticData.conversionOptions.converter.semanticCoreUrls
                     },
-                    productInformation: {...semanticData.conversionOptions.productInformation},
+                    productInformation: {
+                        ...semanticData.conversionOptions.productInformation,
+                        variations: _.mapValues(semanticData.conversionOptions.productInformation.variations, (item) => ({
+                            ...item,
+                            themeValues: item.themeValues.map(value => ({
+                                ...value,
+                                relatedValues: [...value.relatedValues.filter(i => !!i)]
+                            }))
+                        }))
+                    },
                     upload: {...semanticData.conversionOptions.upload},
                     zeroToHero: {...semanticData.conversionOptions.zeroToHero},
                 }

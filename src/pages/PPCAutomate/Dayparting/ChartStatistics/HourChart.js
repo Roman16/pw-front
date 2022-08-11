@@ -2,6 +2,7 @@ import React from "react";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Text
 } from "recharts";
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 
 const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
@@ -28,11 +29,11 @@ const ChartTooltip = ({payload, firstMetric, secondMetric}) => {
 
                         <div className="col values">
                             <div className="value">
-                                {firstMetric.type === 'currency' ? `$${payload[0].value}` : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                                {firstMetric.type === 'currency' ? <CurrencyWithCode value={payload[0].value}/>  : (firstMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
                             </div>
 
                             {secondMetric.key !== 'nothing' && <div className="value">
-                                {secondMetric.type === 'currency' ? `$${payload[1].value}` : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
+                                {secondMetric.type === 'currency' ? <CurrencyWithCode value={payload[1].value}/>  : (secondMetric.type === 'percent' ? `${payload[0].value} %` : payload[0].value)}
                             </div>}
                         </div>
                     </div>

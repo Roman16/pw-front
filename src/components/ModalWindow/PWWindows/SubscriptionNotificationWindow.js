@@ -19,10 +19,8 @@ const SubscriptionNotificationWindow = ({visible}) => {
             <h3>Oops!</h3>
 
             <p>
-                It looks like your Free Trial has expired, <br/>
-                or you didn’t renew your subscription plan.<br/>
-                Please subscribe to continue using this <br/>
-                feature of Sponsoreds Software.
+                It looks like your Free Trial has expired or your subscription <br/> plan doesn't include this Sponsoreds feature. <br/>
+                Please subscribe or upgrade your subscription plan <br/> to get access to this feature of Sponsoreds software.
             </p>
 
             <Link to={'/account/subscriptions'} className={'btn default'}>

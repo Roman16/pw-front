@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from "react"
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
@@ -8,31 +8,39 @@ import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
 import {history} from "../../utils/history"
-import ToggleMarketplace from "./ToggleMarketplace"
+import CurrentMarketplace from "./ConnectedRegions/CurrentMarketplace"
 import moment from 'moment'
 import * as Sentry from "@sentry/browser"
+import AvailableMarketplaces from "./ConnectedRegions/ConnectedRegions"
+import {userActions} from "../../actions/user.actions"
+import $ from 'jquery'
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
 
+
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
         [isAdmin, setAdminStatus] = useState(false),
         [isAgencyUser, setAgencyUser] = useState(false),
+        [visibleMarketplacesWindow, setVisibleMarketplacesWindow] = useState(false),
         [subMenuState, setSubMenuState] = useState({
             zth: false,
             ppc: false,
             notifications: false
         })
 
+    const wrapperRef = useRef(null)
+
     const parentLink = useRef(null)
 
-    const {user} = useSelector(state => ({
-            user: state.user,
-            notFirstEntry: state.user.notFirstEntry,
-        })),
-        accountLinks = user.account_links[0]
+    const dispatch = useDispatch()
+
+    const user = useSelector(state => state.user),
+        amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
@@ -52,18 +60,37 @@ const Sidebar = () => {
         })
     }
 
+
+    const toggleMarketplacesWindow = () => {
+        setVisibleMarketplacesWindow(prevState => !prevState)
+
+        if(!visibleMarketplacesWindow) {
+            var obj = $('.current-marketplace')
+            var offset = obj.offset()
+            var new_top = offset.top
+
+            $('.available-marketplaces').css('top', new_top + 'px')
+        }
+    }
+
+    const setMarketplaceHandler = (data) => {
+        dispatch(userActions.setActiveRegion(data))
+        window.location.reload()
+    }
+
+
     useEffect(() => {
-        if (user.user.id === 714) setAdminStatus(true)
+        if (user.userDetails.id === 714) setAdminStatus(true)
         else setAdminStatus(false)
 
-        if (user.user.is_agency_client) setAgencyUser(true)
+        if (user.userDetails.is_agency_client) setAgencyUser(true)
         else setAgencyUser(false)
 
 
         Sentry.configureScope(function (scope) {
             scope.setUser({
-                id: user.user.id,
-                email: user.user.email,
+                id: user.userDetails.id,
+                email: user.userDetails.email,
             })
         })
     }, [user])
@@ -77,16 +104,16 @@ const Sidebar = () => {
         //IntercomProvider dont work with impersonate-->
         window.Intercom("boot", {
             app_id: process.env.REACT_APP_INTERCOM_ID,
-            name: user.user.name,
+            name: user.userDetails.name,
             alignment: 'left',
             horizontal_padding: devicePixelRatio === 2 ? 64 : 82,
             hide_default_launcher: true,
             vertical_padding: 0,
             custom_launcher_selector: '#intercom-chat-launcher',
-            email: user.user.email,
-            user_id: user.user.id,
-            created_at: moment(user.user.created_at).unix(),
-            user_hash: user.user.intercom_user_hash,
+            email: user.userDetails.email,
+            user_id: user.userDetails.id,
+            created_at: moment(user.userDetails.created_at).unix(),
+            user_hash: user.userDetails.intercom_user_hash,
         })
 
         return (() => {
@@ -108,10 +135,45 @@ const Sidebar = () => {
         }
     }, [collapsed])
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target) && !document.querySelector('.sidebar .current-marketplace')?.contains(event.target)) {
+                setVisibleMarketplacesWindow(false)
+            }
+        }
+
+        // Bind the event listener
+        document.addEventListener("mousedown", handleClickOutside)
+        return () => {
+            // Unbind the event listener on clean up
+            document.removeEventListener("mousedown", handleClickOutside)
+        }
+    }, [wrapperRef])
+
+
+    useEffect(() => {
+        $('.nav-item.has-child').hover(function () {
+                var popup_div = $('.sub-menu')
+
+                var obj = $(this)
+                var offset = obj.offset()
+
+                var new_top = offset.top + 45
+
+                popup_div.css('top', new_top + 'px')
+         }
+        )
+    }, [])
+
+    const sidebarScrollHandler = () => {
+        $('.sub-menu').hide()
+        setVisibleMarketplacesWindow(false)
+    }
+
 
     return (
         <>
-            <div className={`sidebar ${className}`}>
+            <div className={`sidebar ${className}`} onScroll={sidebarScrollHandler}>
                 <div className="sidebar-header">
                     <div className="burger" onClick={toggleCollapsed}>
                         <div/>
@@ -124,8 +186,10 @@ const Sidebar = () => {
                     </Link>
                 </div>
 
-                <ToggleMarketplace
-                    user={user}
+                <CurrentMarketplace
+                    onToggle={toggleMarketplacesWindow}
+                    active={visibleMarketplacesWindow}
+                    activeMarketplace={activeMarketplace}
                 />
 
                 <nav className="top-nav">
@@ -200,12 +264,6 @@ const Sidebar = () => {
                             >
                                 <div className="link-icon">
                                     <SVG id='account'/>
-
-                                    {(accountLinks.amazon_mws.status === 'FAILED' ||
-                                        accountLinks.amazon_mws.status === 'UNAUTHORIZED' ||
-                                        accountLinks.amazon_ppc.status === 'FAILED' ||
-                                        accountLinks.amazon_ppc.status === 'UNAUTHORIZED') &&
-                                    <i><SVG id={'notification-icon'}/></i>}
                                 </div>
 
                                 <label>
@@ -230,7 +288,7 @@ const Sidebar = () => {
                             </a>
                         </li>
 
-                        {(!production || user.user.id === 714 || localStorage.getItem('adminToken')) &&
+                        {(!production || user.userDetails.id === 714 || localStorage.getItem('adminToken')) &&
                         <li className="bottom-nav-item">
                             <Link
                                 className="menu-link"
@@ -261,6 +319,18 @@ const Sidebar = () => {
                     </ul>
                 </nav>
             </div>
+
+            <AvailableMarketplaces
+                popupRef={wrapperRef}
+                visible={visibleMarketplacesWindow}
+                collapsed={collapsed}
+                regions={amazonRegionAccounts}
+                activeRegion={activeRegion}
+                activeMarketplace={activeMarketplace}
+
+                onSet={setMarketplaceHandler}
+                onChangeVisibleStatus={setVisibleMarketplacesWindow}
+            />
         </>
     )
 }

@@ -5,6 +5,7 @@ import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 const DiffTooltip = ({currentValue, diff, type, prevValue, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
@@ -76,14 +77,14 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, 2)}
+                        <CurrencyWithCode value={numberMask(diffValue, 2)}/>
                     </div>}
 
                     {(value < prevValue) && <div className='downward-changes'>
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
-                        ${numberMask(diffValue, 2)}
+                        <CurrencyWithCode value={numberMask(diffValue, 2)}/>
                     </div>}
 
                     {diffValue === 0 && <div className='down-changes'>
@@ -167,7 +168,7 @@ const RenderMetricValue = ({value, type}) => {
     if (value != null && !isNaN(value)) {
         const number = +value
         if (type === 'currency') {
-            return (`$${Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}`)
+            return <CurrencyWithCode value={Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2)}/>
         } else if (type === 'percent') {
             return (`${round(number * 100, 2)}%`)
         } else if (type === 'number') {

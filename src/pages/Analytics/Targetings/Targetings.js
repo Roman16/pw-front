@@ -29,6 +29,7 @@ const Targetings = () => {
 
     let columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, true)
 
+
     return (
         <div className={'targetings-workplace'}>
             <RenderPageParts

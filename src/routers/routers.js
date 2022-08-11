@@ -3,6 +3,7 @@ import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import {history} from '../utils/history'
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
+import PpcProcessing from "../pages/authentication/AccountBinding/components/PpcProcessing/PpcProcessing"
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
 const NotFound = React.lazy(() => import('../pages/404/404'))
@@ -15,7 +16,7 @@ const ResetPassword = React.lazy(() => import('../pages/authentication/ResetPass
 const LoginWithAmazon = React.lazy(() => import('../pages/authentication/LoginWithAmazon/LoginWithAmazon'))
 const ThankPage = React.lazy(() => import('../pages/authentication/AccountBinding/ThankPage/ThankPage'))
 
-const developer = process.env.REACT_APP_ENV === "development"
+const developer = process.env.REACT_APP_ENV === "developer"
 
 
 const routers = () => {
@@ -39,6 +40,8 @@ const routers = () => {
 
                     <Route exact path={'/404'} component={NotFound}/>
 
+                    <Route exact path={'/amazon-ads-api-oauth-callback'} component={PpcProcessing}/>
+
                     {/*<Route path={'/'} render={(props) => {*/}
                     {/*    if (localStorage.getItem('token')) {*/}
                     {/*        return <AuthorizedUser {...history}/>*/}
@@ -49,8 +52,7 @@ const routers = () => {
                     {/*}*/}
                     {/*}/>*/}
                     <Route path={'/'} render={(props) => {
-                        return <AuthorizedUser {...history}/>
-                       
+                            return <AuthorizedUser {...history}/>
                     }
                     }/>
                 </Switch>

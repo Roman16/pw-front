@@ -8,9 +8,6 @@ export const userUrls = {
     resetPassword: 'user/password/reset/change',
     resendEmail: 'user/email/resend',
     confirmEmail: 'user/email/verify',
-    mws: 'user/account/auth/mws/tokens',
-    deleteMws: 'user/account/auth/mws/delete',
-    deleteLwa: 'user/account/auth/lwa/delete',
     allInfo: 'user/status',
     personalInformation: 'user/account/personal/information',
     updatePhoto: 'user/account/personal/change-avatar',
@@ -34,6 +31,13 @@ export const userUrls = {
     activateSubscription: 'user/account/subscription/activate',
     retryPayment: 'user/account/subscription/payment/retry',
 
+    PPCConnectLink: 'user/account/amazon-region-accounts/amazon-ads-api-connect-link',
+    MWSConnectLink: 'user/account/amazon-region-accounts/mws-connect-link',
+    amazonRegionAccounts: 'user/account/amazon-region-accounts',
+    adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
+    mwsCredentials: 'user/account/amazon-region-accounts/mws-credentials',
+
+
 
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
@@ -52,7 +56,11 @@ export const userUrls = {
     customerSatisfactionSurveyForm: 'landings/customer-satisfaction-survey',
     growthAccelerationForm: 'landings/get-started-growth-acceleration',
     registrationTokens: 'admin/support-manager/tokens-for-agency',
-    importStatus: 'user/import-status'
+    importStatus: 'user/import-status',
+
+    userPersonalInformation: 'user/me',
+    notifications: 'notifications',
+    accountStatus: 'user/account/subscription/status'
 }
 
 export const productsUrls = {
@@ -77,7 +85,7 @@ export const reportsUrls = {
     lastReports: 'ppc-automation/last-changes',
     allReports: 'ppc-automation/reports-ch',
     downloadReports: 'ppc-automation/reports-ch/download',
-    reports: 'ppc-automation/reports'
+    reports: 'v2/ppc-automation/reports'
 }
 
 export const dashboardUrls = {

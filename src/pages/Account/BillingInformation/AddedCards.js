@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import moment from "moment"
 import {Dropdown, Menu, Popover, Spin} from "antd"
-import {PlusIcon} from "../ApiConnection/ConnectedAccounts"
+import {PlusIcon} from "../ApiConnection/Filters"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const AddedCards = ({cards, activeCardIndex, defaultProcessing, deleteProcessing, onDelete, onSetDefault, onSetActive}) => {

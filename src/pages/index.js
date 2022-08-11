@@ -13,6 +13,8 @@ import CampaignList from "../components/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
+import {history} from "../utils/history"
+import {amazonRegionsSort} from "../reducers/user.reducer"
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -36,9 +38,19 @@ const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
+const localStorageVersion = '2.03'
 
-let timerId = null
+const checkLocalStorageVersion = () => {
+    if (!localStorage.getItem('localStorageVersion') || localStorage.getItem('localStorageVersion') !== localStorageVersion) {
 
+        const token = localStorage.getItem('token')
+        localStorage.clear()
+        localStorage.setItem('token', token)
+        localStorage.setItem('localStorageVersion', localStorageVersion)
+
+        window.location.reload()
+    }
+}
 
 function throttle(func, delay) {
     let timeout = null
@@ -53,11 +65,14 @@ function throttle(func, delay) {
     }
 }
 
-const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
+
+const developer = (process.env.REACT_APP_ENV === "developer" || process.env.REACT_APP_ENV === "demo")
+
+export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
 const AdminRoute = (props) => {
     const {userId} = useSelector(state => ({
-            userId: state.user.user.id,
+            userId: state.user.userDetails.id,
         })),
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
@@ -70,86 +85,123 @@ const AdminRoute = (props) => {
 }
 
 const ConnectedAmazonRoute = props => {
-    const {mwsConnected, ppcConnected, marketplace} = useSelector(state => ({
-        mwsConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_mws.is_connected : false,
-        ppcConnected: state.user.account_links.length > 0 ? state.user.account_links[0].amazon_ppc.is_connected : false,
-        marketplace: marketplaceIdValues['ATVPDKIKX0DER']
-        // marketplace: marketplaceIdValues[state.user.default_accounts.amazon_ppc.marketplace_id]
-    }))
-    if (!mwsConnected && !ppcConnected) {
+    const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
+        activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion)
+
+    if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
-    } else if (!mwsConnected && ppcConnected) {
-        return <Redirect to="/connect-mws-account"/>
-    } else if (!ppcConnected && mwsConnected) {
-        return <Redirect to="/connect-ppc-account"/>
+    } else if (activeAmazonRegion && !activeAmazonRegion?.is_mws_attached) {
+        return <Redirect to={`/connect-mws-account/${activeAmazonRegion.region_type}`}/>
+    } else if (activeAmazonRegion && !activeAmazonRegion?.is_amazon_ads_api_attached) {
+        return <Redirect to={`/connect-ppc-account/${activeAmazonRegion.id}`}/>
     } else {
-        if (marketplace.countryCode === 'CA') {
-            if (props.path === '/ppc/product-settings' || props.path === '/account') {
-                return <Route {...props} />
-            } else {
-                return <Redirect to="/account/settings"/>
-            }
-        } else {
-            return <Route {...props} />
-        }
+        return <Route {...props} />
     }
 }
 
 
 const AuthorizedUser = (props) => {
+    checkLocalStorageVersion()
+
     const dispatch = useDispatch()
     const pathname = props.location.pathname
-    const [loadingUserInformation, setLoadingUserInformation] = useState(true)
+    const [loadingUserInformation, setLoadingUserInformation] = useState(false)
     const [isSuperAdmin, setIsSuperAdmin] = useState(false)
 
-    const {user, lastStatusAction} = useSelector(state => ({
-        user: state.user,
-        lastStatusAction: state.user.lastUserStatusAction,
-    }))
+    const {user, lastStatusAction, fetchingAmazonRegionAccounts} = useSelector(state => ({
+            user: state.user,
+            lastStatusAction: state.user.lastUserStatusAction,
+            fetchingAmazonRegionAccounts: state.user.fetchingAmazonRegionAccounts,
+        })),
+        activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion),
+        activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
+        amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts)
 
-
-    function getUserStatus() {
-        clearTimeout(timerId)
-        timerId = setTimeout(() => {
-            dispatch(userActions.getPersonalUserInfo())
-        }, 1000)
-    }
 
     document.addEventListener("visibilitychange", () => {
         if (moment(new Date()).diff(lastStatusAction, "hours") > 6) {
-            getUserStatus()
+            // getUserStatus()
         }
     })
 
     document.addEventListener('mousemove', throttle(() => {
             if (moment(new Date()).diff(lastStatusAction, "hours") > 6) {
-                getUserStatus()
+                // getUserStatus()
             }
         }, 1000 * 60)
     )
 
-    useEffect(() => {
-        setLoadingUserInformation(true)
+    const loadUserData = async () => {
+        try {
+            const {result} = await userService.getAmazonRegionAccounts()
 
-        userService.getUserInfo()
-            .then(({result}) => {
-                dispatch(userActions.setInformation(result))
-                setLoadingUserInformation(false)
-            })
+            result.forEach(item => ({
+                ...item,
+                amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+            }))
+
+            if (result.length > 0 && activeAmazonMarketplace) {
+                const importStatus = await userService.checkImportStatus(activeAmazonMarketplace.id)
+                dispatch(userActions.setInformation({importStatus: importStatus.result}))
+            } else if (result.length > 0 && !activeAmazonMarketplace) {
+                const importStatus = await userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
+
+                dispatch(userActions.setInformation({importStatus: importStatus.result}))
+
+                dispatch(userActions.setActiveRegion({
+                    region: result[0],
+                    marketplace: result[0].amazon_region_account_marketplaces[0]
+                }))
+            } else if (result.length === 0) {
+                dispatch(userActions.setActiveRegion({
+                    region: null,
+                    marketplace: null
+                }))
+            }
+
+            dispatch(userActions.setAmazonRegionAccounts(result))
+
+            setLoadingUserInformation(false)
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+            return
+        }
+
+        dispatch(userActions.getUserInfo())
+
+        loadUserData()
     }, [])
 
+    // useEffect(() => {
+    //     activeAmazonMarketplace && dispatch(userActions.getNotifications())
+    // }, [activeAmazonMarketplace])
+
     useEffect(() => {
-        if (user.user.id === 714) {
+        activeAmazonRegion && dispatch(userActions.getAccountStatus(activeAmazonRegion.id))
+    }, [activeAmazonRegion])
+
+    useEffect(() => {
+        amazonRegionAccounts.length > 0 && dispatch(userActions.actualizeActiveRegion())
+    }, [amazonRegionAccounts])
+
+    useEffect(() => {
+        if (user.userDetails.id === 714) {
             setIsSuperAdmin(true)
         } else {
             setIsSuperAdmin(false)
         }
     }, [user])
 
-    let isAgencyUser = user.user.is_agency_client
+    let isAgencyUser = user.userDetails.is_agency_client
 
-
-    if (loadingUserInformation) {
+    if (loadingUserInformation || fetchingAmazonRegionAccounts) {
         return (
             <RouteLoader/>
         )
@@ -170,8 +222,6 @@ const AuthorizedUser = (props) => {
                         <ProductList
                             pathname={props.location.pathname}
                         />}
-
-                        {pathname === '/ppc/dayparting' && <CampaignList/>}
 
                         <div className="page">
                             <Suspense fallback={<RouteLoader/>}>
@@ -213,7 +263,7 @@ const AuthorizedUser = (props) => {
                                         component={ProductsInfo}
                                     />
 
-                                     <ConnectedAmazonRoute
+                                    <ConnectedAmazonRoute
                                         exact
                                         path="/ppc/dayparting"
                                         component={Dayparting}
@@ -224,8 +274,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account" component={ConnectMWS}/>
-                                    <Route exact path="/connect-ppc-account" component={ConnectPPC}/>
+                                    <Route exact path="/connect-mws-account/:regionType?" component={ConnectMWS}/>
+                                    <Route exact path="/connect-ppc-account/:regionId?" component={ConnectPPC}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 
 
@@ -265,7 +315,7 @@ const AuthorizedUser = (props) => {
                                         component={Settings}
                                     />}
                                     {/*-------------------------------------------*/}
-                                    <Route exact path="/home" component={Home}/>
+                                    <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
 
 

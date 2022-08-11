@@ -4,9 +4,15 @@ import moment from 'moment-timezone'
 import locale from 'antd/lib/locale/en_US.js.map'
 
 const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
-    const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
-    const endPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days')
-    const startPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff)
+    let dateDiff,
+        endPrevDate,
+        startPrevDate
+
+    if (tableOptions.comparePreviousPeriod) {
+        dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+        endPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days')
+        startPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff)
+    }
 
     return (
         <div

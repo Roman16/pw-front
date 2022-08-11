@@ -8,6 +8,8 @@ import {userService} from "./user.services"
 import {defaultImportStatus} from "../reducers/user.reducer"
 import _ from 'lodash'
 import * as Sentry from "@sentry/react"
+import {store} from "../store/store"
+import {userConstants} from "../constans/actions.type"
 
 export const baseUrl =
     // 'http://staging.profitwhales.com';
@@ -31,8 +33,27 @@ function handlerErrors(error) {
     }
 }
 
+const urlGenerator = ({url, withDefaultUrl, withMarketplace}) => {
+    if (withDefaultUrl) {
+        if (withMarketplace) {
+            const marketplace = JSON.parse(localStorage.getItem('activeMarketplace'))
 
-const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true) => {
+            if(marketplace) {
+                if (url.includes('?')) {
+                    return `${baseUrl}/api/${url.split('?')[0]}?amazon_region_account_marketplace_id=${marketplace.id}&${url.split('?')[1]}`
+                } else {
+                    return `${baseUrl}/api/${url}?amazon_region_account_marketplace_id=${marketplace.id}`
+                }
+            }
+        } else {
+            return `${baseUrl}/api/${url}`
+        }
+    } else {
+        return url
+    }
+}
+
+const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNotifications = true, withMarketplace = true) => {
     loadProgressBar()
 
     const token = localStorage.getItem('token'),
@@ -43,7 +64,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: withDefaultUrl ? `${baseUrl}/api/${url}` : url,
+            url: urlGenerator({url, withDefaultUrl, withMarketplace}),
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
@@ -87,8 +108,16 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     } else {
                         localStorage.removeItem('token')
                         localStorage.removeItem('adminToken')
+                        localStorage.removeItem('activeRegion')
+                        localStorage.removeItem('activeMarketplace')
+
                         if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
+
+                            store.dispatch({
+                                type: userConstants.SET_ACTIVE_REGION,
+                                payload: undefined
+                            })
                         }
                     }
                 } else if (error.response && error.response.status === 412) {
@@ -96,11 +125,11 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 } else if (error.response && error.response.status === 423) {
                     localStorage.setItem('importStatus', JSON.stringify(_.mapValues(defaultImportStatus, () => ({required_parts_ready: false}))))
                     reject(error)
-                } else if (error.response) {
+                } else if (error.response && showNotifications) {
                     if (!error.response.data || !error.response.data.message) {
                         handlerErrors('Something wrong!')
                         reject(error)
-                    } else if (typeof error.response.data === 'object' && showNotifications) {
+                    } else if (typeof error.response.data === 'object') {
                         reject(error)
                         if (error.response.status === 401) {
                             if (error.response.data) {
@@ -108,7 +137,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                             }
                         } else if (error.response.status === 429) {
                             handlerErrors('This request is throttled, please try again later')
-                        } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.statusText === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
+                        } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.data.message === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
                                 handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)

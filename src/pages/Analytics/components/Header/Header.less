@@ -49,6 +49,7 @@
       flex-direction: column;
       padding: 0 0 0 1.4285714285714286rem;
       border-left: 1px solid #C9CBD4;
+      margin: 0 auto 0 0;
 
       .steps {
         display: flex;
@@ -98,22 +99,66 @@
     }
 
     .attribution-window {
-      margin: 0 0 0 auto;
+      margin: 0 20px 0 auto;
+      padding: 0 20px 0 0;
+      border-right: 0.5px solid #C9CBD4;
+      position: relative;
+
+      .label {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 15px;
+        top: 0;
+        bottom: 0;
+        z-index: 11;
+        font-size: 0.8571428571428571rem;
+        color: #686868;
+
+        .custom-tooltip {
+          margin: 0 5px 2px 0;
+        }
+      }
 
       .form-group {
         display: flex;
         align-items: center;
 
-        label {
-          font-weight: 600;
-          font-size: 1rem;
-          color: #353A3E;
-          margin: 0 1.4285714285714286rem 0 0;
+        .custom-select {
+          width: 17.8rem;
+          height: 2.2857142857142856rem;
+
+          .ant-select-selection {
+            padding: 0 0 0 10.5rem;
+
+            .ant-select-selection-selected-value {
+              font-weight: 600;
+              font-size: 0.8571428571428571rem;
+            }
+          }
+        }
+      }
+    }
+
+    .marketplace-info {
+      display: flex;
+      flex-direction: column;
+
+      div {
+        display: flex;
+        align-items: center;
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #353A3E;
+
+        &:first-child {
+          margin: 0 0 10px;
         }
 
-        .custom-select {
-          width: 7.857142857142857rem;
-          height: 2.2857142857142856rem;
+        svg {
+          width: 1rem;
+          height: 1rem;
+          margin: 0 5px 0 0;
         }
       }
     }

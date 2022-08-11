@@ -110,6 +110,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
         filter: true,
         fastUpdating: true,
         editType: 'currency',
+        ...renderNumberField('currency')
     },
 
     impressionsColumn,
