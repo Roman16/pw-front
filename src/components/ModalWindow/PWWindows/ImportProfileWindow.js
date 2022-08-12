@@ -1,7 +1,48 @@
-import React from "react"
+import React, {useEffect, useRef} from "react"
 import ModalWindow from "../ModalWindow"
+import {productsActions} from "../../../actions/products.actions"
+import {useDispatch, useSelector} from "react-redux"
+import {userService} from "../../../services/user.services"
+import {userActions} from "../../../actions/user.actions"
 
-export const ImportProfileWindow = ({visible, container, firstName, lastName}) => (
+let intervalId = null
+
+export const ImportProfileWindow = ({visible, container, firstName, lastName, marketplace}) => {
+    const prevVisibleRef = useRef()
+    const dispatch = useDispatch()
+
+    const checkStatus = async () => {
+        try {
+            const importStatus = await userService.checkImportStatus(marketplace.id)
+            dispatch(userActions.updateUser({importStatus: importStatus.result}))
+        } catch (e) {
+
+        }
+    }
+
+
+    useEffect(() => {
+        if (prevVisibleRef.current && !visible) document.location.reload()
+
+        prevVisibleRef.current = visible
+
+        visible && checkStatus()
+
+        intervalId = setInterval(() => {
+            if (visible) {
+                checkStatus()
+            } else {
+                clearInterval(intervalId)
+            }
+        }, 10000)
+
+        return (() => {
+            clearInterval(intervalId)
+        })
+    }, [visible])
+
+
+    return(
     <ModalWindow
         className={'amazon-loading-window profile-import'}
         wrapClassName="import-status-window-wrap"
@@ -33,4 +74,4 @@ export const ImportProfileWindow = ({visible, container, firstName, lastName}) =
             We are retrieving your Advertising accounts from Amazon API. <br/>
             This usually takes less than a few minutes.
         </p>
-    </ModalWindow>)
+    </ModalWindow>)}
