@@ -190,6 +190,7 @@ const Sidebar = () => {
                     onToggle={toggleMarketplacesWindow}
                     active={visibleMarketplacesWindow}
                     activeMarketplace={activeMarketplace}
+                    activeRegion={activeRegion}
                 />
 
                 <nav className="top-nav">

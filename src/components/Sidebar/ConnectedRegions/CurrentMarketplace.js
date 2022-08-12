@@ -5,13 +5,13 @@ import {currencyName, currencySymbol} from "../../CurrencyCode/CurrencyCode"
 import InformationTooltip from "../../Tooltip/Tooltip"
 
 
-const CurrentMarketplace = ({activeMarketplace, onToggle, active}) => {
+const CurrentMarketplace = ({activeMarketplace,activeRegion, onToggle, active}) => {
     const marketplaceDetails = activeMarketplace ? marketplaceIdValues[activeMarketplace.marketplace_id] : undefined
 
     return (<>
         {marketplaceDetails && <div className={`current-marketplace ${active ? 'active' : ''}`} onClick={onToggle}>
-            {activeMarketplace.marketplace_id && <div className="marketplace-id">
-                {activeMarketplace.marketplace_id}
+            {activeRegion?.account_alias && <div className="marketplace-id">
+                {activeRegion.account_alias}
             </div>}
 
             <div className="country">

@@ -7,6 +7,7 @@ import {userActions} from "../../../actions/user.actions"
 import {useDispatch} from "react-redux"
 import queryString from "query-string"
 import {userService} from "../../../services/user.services"
+import {amazonRegionsSort} from "../../../reducers/user.reducer"
 
 const {Option} = Select
 let fullUsersList = []
@@ -38,8 +39,33 @@ const Impersonations = (props) => {
         }
     }
 
-    const updateUserInformation = () => {
-        dispatch(userActions.getImpersonationUserInformation())
+    const updateUserInformation = async () => {
+        const {result} = await userService.getAmazonRegionAccounts()
+
+        result.forEach(item => ({
+            ...item,
+            amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+        }))
+
+        if (result.length > 0) {
+            const importStatus = await userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
+
+            dispatch(userActions.setInformation({importStatus: importStatus.result}))
+
+            dispatch(userActions.setActiveRegion({
+                region: result[0],
+                marketplace: result[0].amazon_region_account_marketplaces[0]
+            }))
+        } else if (result.length === 0) {
+            dispatch(userActions.setActiveRegion({
+                region: null,
+                marketplace: null
+            }))
+        }
+
+        dispatch(userActions.setAmazonRegionAccounts(result))
+
+        notification.success({title: 'Success!'})
     }
 
     const updateLocaleStorage = () => {
@@ -83,14 +109,11 @@ const Impersonations = (props) => {
         try {
             await localStorage.setItem('token', localStorage.getItem('adminToken'))
 
-            const res = await userService.getUserInfo()
             localStorage.removeItem('adminToken')
-
-            dispatch(userActions.setInformation(res.result))
 
             updateLocaleStorage()
 
-            notification.success({title: 'Success!'})
+            updateUserInformation()
         } catch (e) {
 
         }

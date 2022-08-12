@@ -124,7 +124,7 @@ function changePassword({current_password, new_password, password_confirmation})
         current_password,
         password_confirmation,
         password: new_password
-    })
+    }, undefined, undefined, undefined, undefined, false)
 }
 
 //-------------------------------------
