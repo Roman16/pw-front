@@ -26,6 +26,7 @@ const AccessSettings = () => {
         } else {
             try {
                 await userService.changePassword(userPassword)
+
                 setUserPassword({
                     current_password: '',
                     new_password: '',
