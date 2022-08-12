@@ -25,7 +25,7 @@ const ErrorBar = () => {
         region = useSelector(state => state.user.activeAmazonRegion),
         importStatus = useSelector(state => state.user.importStatus)
 
-    const marketplaceName = marketplaceIdValues[marketplace.marketplace_id].countryName
+    const marketplaceName =  marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
 
     return (
         <div className='errors-bar'>

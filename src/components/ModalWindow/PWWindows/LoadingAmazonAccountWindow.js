@@ -107,6 +107,8 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
     const prevVisibleRef = useRef()
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
+    const marketplaceName = activeAmazonMarketplace?.marketplace_id ? marketplaceIdValues[activeAmazonMarketplace.marketplace_id].countryName : ''
+
     const checkStatus = async () => {
         try {
             const importStatus = await userService.checkImportStatus(activeAmazonMarketplace.id)
@@ -181,7 +183,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
             <h2>Welcome {firstName} {lastName}!</h2>
 
             <p>
-                We’re currently retrieving Amazon data for your {marketplaceIdValues[activeAmazonMarketplace.marketplace_id].countryName} marketplace. <br/>
+                We’re currently retrieving Amazon data for your {marketplaceName} marketplace. <br/>
                 It only needs to be completed once and may take up to 24 hours. <br/>
                 See the table below for import progress and start using features whenever they’re ready!
             </p>
