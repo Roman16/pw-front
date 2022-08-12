@@ -8,6 +8,7 @@ import {SVG} from "../../../utils/icons"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import sectionIcon from '../../../assets/img/account/profile-icon.svg'
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
+import {userActions} from "../../../actions/user.actions"
 
 const Profile = () => {
     const [userInformation, setUserInformation] = useState({
@@ -19,12 +20,15 @@ const Profile = () => {
         [fetchingProcessing, setFetchingProcessing] = useState(true),
         [errorFields, setErrorFields] = useState([])
 
+    const dispatch = useDispatch()
+
     const getUserInformation = async () => {
         try {
             const res = await userService.getUserPersonalInformation()
 
             setUserInformation({...res})
 
+            dispatch(userActions.setInformation({userDetails: res}))
         } catch (e) {
             console.log(e)
         }
@@ -50,6 +54,8 @@ const Profile = () => {
         } else {
             try {
                 await userService.updateInformation(userInformation)
+
+                dispatch(userActions.setInformation({userDetails: userInformation}))
 
                 notification.success({title: 'Completed'})
             } catch (e) {

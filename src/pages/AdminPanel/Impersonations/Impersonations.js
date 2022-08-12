@@ -39,13 +39,17 @@ const Impersonations = (props) => {
         }
     }
 
-    const updateUserInformation = async () => {
+    const updateUserInformation = async (logOut = false) => {
         const {result} = await userService.getAmazonRegionAccounts()
 
         result.forEach(item => ({
             ...item,
             amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
         }))
+
+        const user = await userService.getUserPersonalInformation()
+
+        dispatch(userActions.setInformation({userDetails: user}))
 
         if (result.length > 0) {
             const importStatus = await userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)
@@ -64,6 +68,8 @@ const Impersonations = (props) => {
         }
 
         dispatch(userActions.setAmazonRegionAccounts(result))
+
+        logOut && localStorage.removeItem('adminToken')
 
         notification.success({title: 'Success!'})
     }
@@ -109,11 +115,10 @@ const Impersonations = (props) => {
         try {
             await localStorage.setItem('token', localStorage.getItem('adminToken'))
 
-            localStorage.removeItem('adminToken')
 
             updateLocaleStorage()
 
-            updateUserInformation()
+            updateUserInformation(true)
         } catch (e) {
 
         }
