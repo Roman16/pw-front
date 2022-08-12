@@ -298,14 +298,14 @@ const Subscriptions = (props) => {
         />
 
 
-        {!importStatus.common_resources?.required_parts_details.profiles.part_ready ?
+        {!importStatus.common_resources?.required_parts_details?.profiles.part_ready ?
             <ImportProfileWindow
                 visible={true}
                 container={() => document.querySelector('.account-content')}
 
                 lastName={user.userDetails.last_name}
                 firstName={user.userDetails.name}
-            /> : importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace.profile_id === null ?
+            /> : importStatus.common_resources?.required_parts_details.profiles.part_ready && activeMarketplace?.profile_id === null ?
                 <CreateAdsAccount
                     container={() => document.querySelector('.account-content')}
                     marketplace={activeMarketplace}

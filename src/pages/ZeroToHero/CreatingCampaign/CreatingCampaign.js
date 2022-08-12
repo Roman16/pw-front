@@ -113,7 +113,7 @@ const CreatingCampaign = () => {
             setPortfolioList(result)
         } catch (e) {
             console.log(e)
-            setPortfolioList()
+            setPortfolioList([])
         }
     }
 

@@ -75,16 +75,16 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                                 className={ activeRegion?.id === region.id && activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
                                 <div className="status"/>
                                 <div className="flag">
-                                    <img src={marketplaceIdValues[marketplace.marketplace_id].flag} alt=""/>
+                                    <img src={marketplaceIdValues[marketplace?.marketplace_id]?.flag} alt=""/>
                                 </div>
 
                                 <div className={'id'} title={marketplace.marketplace_id}>
-                                    {marketplaceIdValues[marketplace.marketplace_id].countryName}
+                                    {marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''}
                                 </div>
 
                                 {!marketplace.profile_id &&<InformationTooltip
                                     type={'custom'}
-                                    description={`No Advertising account exists for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace on this Seller account. You won\'t be able to use Sponsoreds services on this marketplace until you create an Advertising account for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace in your Seller Central.`}
+                                    description={`No Advertising account exists for ${marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''} marketplace on this Seller account. You won\'t be able to use Sponsoreds services on this marketplace until you create an Advertising account for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace in your Seller Central.`}
                                 >
                                     <i className="error">
                                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"

@@ -3,7 +3,7 @@ import ModalWindow from "../ModalWindow"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 
 export const CreateAdsAccount = ({visible, container, marketplace}) => {
-    const marketplaceName = marketplaceIdValues[marketplace.marketplace_id].countryName
+    const marketplaceName = marketplace?.marketplace_id ? marketplaceIdValues[marketplace.marketplace_id].countryName : ''
 
     return (
         <ModalWindow
