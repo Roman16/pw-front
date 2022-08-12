@@ -64,7 +64,7 @@ const Sidebar = () => {
     const toggleMarketplacesWindow = () => {
         setVisibleMarketplacesWindow(prevState => !prevState)
 
-        if(!visibleMarketplacesWindow) {
+        if (!visibleMarketplacesWindow) {
             var obj = $('.current-marketplace')
             var offset = obj.offset()
             var new_top = offset.top
@@ -153,7 +153,7 @@ const Sidebar = () => {
 
     useEffect(() => {
         $('.nav-item.has-child').hover(function () {
-                var popup_div = $('.sub-menu')
+                var popup_div = $(this > '.sub-menu')
 
                 var obj = $(this)
                 var offset = obj.offset()
@@ -161,7 +161,7 @@ const Sidebar = () => {
                 var new_top = offset.top + 45
 
                 popup_div.css('top', new_top + 'px')
-         }
+            }
         )
     }, [])
 
@@ -225,10 +225,7 @@ const Sidebar = () => {
                                         </NavLink>
 
                                         {item.subMenu &&
-                                        <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}
-                                            onClick={() => {
-                                                console.log(parentLink)
-                                            }}>
+                                        <ul className={`sub-menu ${subMenuState[item.key] ? 'opened' : 'closed'}`}>
                                             <h4>{item.title}</h4>
 
                                             {item.subMenu && item.subMenu
