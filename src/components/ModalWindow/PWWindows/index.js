@@ -179,6 +179,7 @@ const PWWindows = ({pathname}) => {
 
                     lastName={user.userDetails.last_name}
                     firstName={user.userDetails.name}
+                    marketplace={activeMarketplace}
                 />
 
                 <CreateAdsAccount
