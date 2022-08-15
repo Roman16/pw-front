@@ -92,7 +92,14 @@ const CreateSemanticCore = () => {
     const createZeroToHeroHandler = async () => {
         const requestData = new FormData()
 
-        const ips = JSON.stringify([getInputParameters()])
+        const ips = JSON.stringify([{
+            ...getInputParameters(),
+            apiClients: {
+                Amazon: {
+                    marketplaceId: 'ATVPDKIKX0DER'
+                }
+            },
+        }])
 
         requestData.set(
             'inputParameters',
