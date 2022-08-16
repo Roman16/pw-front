@@ -528,12 +528,21 @@
           }
 
           div {
+            display: flex;
+
             &:first-child {
               margin: 0 15px 0 0;
             }
 
             span:first-child {
               font-weight: 600;
+            }
+
+            span:last-child {
+              width: 6.07142857rem;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
             }
           }
         }
