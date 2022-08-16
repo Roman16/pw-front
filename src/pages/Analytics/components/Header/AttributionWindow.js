@@ -8,7 +8,7 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 const Option = Select.Option
 
 const AttributionWindow = () => {
-    const [value, setValue] = useState(localStorage.getItem('attributionWindow') || 30)
+    const [value, setValue] = useState(localStorage.getItem('attributionWindow') || 7)
 
     const dispatch = useDispatch()
 

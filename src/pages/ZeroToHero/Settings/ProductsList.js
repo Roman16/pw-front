@@ -169,7 +169,7 @@ const jobActions = (item, onDeleteJob, deleteProcessing) => {
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
                             onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
-                        Pay & Upload
+                        Review & Upload
                     </button>
 
                     <button className={'sds-btn grey'}

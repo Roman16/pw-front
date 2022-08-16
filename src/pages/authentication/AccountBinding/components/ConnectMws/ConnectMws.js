@@ -42,15 +42,16 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
         return (
             <section className='connect-mws-section'>
                 <h2>Connect Seller Account</h2>
+
                 <p className={'section-description'}>
-                    For you to use Sponsoreds services we need programmatic access to your <br/> Amazon seller account via
-                    Amazon MWS API (<a href="https://docs.developer.amazonservices.com/en_US/dev_guide/DG_IfNew.html"
-                                       target={'_blank'}>read more about it</a>). <br/>
+                    For you to use Sponsoreds services we need programmatic access to your Amazon seller account via
+                    Amazon MWS API (<a
+                    href="https://docs.developer.amazonservices.com/en_US/dev_guide/DG_IfNew.html" target={'_blank'}>read
+                    more about it</a>). <br/>
                     At Sponsoreds, we’re dedicated to keeping your information secure and encrypted. <br/>
                     We never share your data with any third-parties. <br/>
                     For any questions related to the security of your data, please feel free to email us at <a
                     href="mailto: info@sponsoreds.com">info@sponsoreds.com</a>.
-
                     <br/>
                     <br/>
 
@@ -58,10 +59,8 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                     Follow authorization workflow to grant Sponsoreds access to the MWS API. <br/>
                     At the last step, copy your {!disabled && '“Seller Id” and'} “MWS Authorization Token” values shown
                     on the page and paste them below.
-
                     <br/>
                     <br/>
-
                     Please note that you need to log into your Amazon seller account as a primary account holder.
                 </p>
 

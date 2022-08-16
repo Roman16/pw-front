@@ -108,6 +108,8 @@ const ApiAccess = ({title, status, isAttached, onDisconnect, onConnect}) => {
     const statusText = () => {
         if (success) {
             return (<span style={{color: '#7FD3A1'}}>Success</span>)
+        } else if(!isAttached) {
+            return (<span style={{color: '#FF5256'}}>No access granted</span>)
         } else {
             return (<span style={{color: '#FF5256'}}>Failed</span>)
         }

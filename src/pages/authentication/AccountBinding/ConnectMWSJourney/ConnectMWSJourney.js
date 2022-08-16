@@ -10,7 +10,7 @@ import Navigations from "../components/Navigations/Navigations"
 import _ from 'lodash'
 
 const ConnectMWSJourney = ({match}) => {
-    const [currentStep, setCurrentStep] = useState(3)
+    const [currentStep, setCurrentStep] = useState(1)
 
     const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
     const connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
@@ -49,7 +49,7 @@ const ConnectMWSJourney = ({match}) => {
 
             dispatch(userActions.updateAmazonRegionAccount(result))
 
-            setCurrentStep(5)
+            setCurrentStep(3)
         } catch (e) {
             setConnectMwsStatus('error')
         }
@@ -66,7 +66,7 @@ const ConnectMWSJourney = ({match}) => {
             />
 
             <div className="container">
-                {currentStep === 3 && <ConnectMws
+                {currentStep === 1 && <ConnectMws
                     onGoNextStep={goNextStep}
                     onChangeInput={changeInputHandler}
                     onConnectMws={onConnectMws}
@@ -77,7 +77,7 @@ const ConnectMWSJourney = ({match}) => {
                     disabled={true}
                 />}
 
-                {currentStep === 5 && <SuccessPage/>}
+                {currentStep === 3 && <SuccessPage/>}
             </div>
         </div>
     )

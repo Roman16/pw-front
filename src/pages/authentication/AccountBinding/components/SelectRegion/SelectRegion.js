@@ -203,14 +203,20 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
 
     return (
         <section className={'select-region-section'}>
-            <h2>What region is this account in?</h2>
+            <h2>What Amazon region do you want to connect?</h2>
+
+            <p className={'section-description'}>
+                Currently we support only connecting <b>Amazon Seller accounts</b>.
+                <br/>
+                Vendor and KDP accounts are not supported.
+            </p>
 
             <ul className="regions">
                 {regions.map(item => {
-                    const isDisabled =  item.disabled
+                    const isDisabled = item.disabled
 
                     return (
-                        <li className={`${region === item.key ? 'active' : ''} ${isDisabled  ? 'disabled' : ''}`}
+                        <li className={`${region === item.key ? 'active' : ''} ${isDisabled ? 'disabled' : ''}`}
                             onClick={() => !isDisabled && onChangeInput({
                                 target: {
                                     name: 'region_type',
@@ -229,10 +235,10 @@ const SelectRegion = ({region, onGoNextStep, onGoBackStep, onCancel, onChangeInp
 
             <div className="actions">
                 <div className="row">
-                    <button type={'button'} className="btn grey back" onClick={onGoBackStep}>
-                        <SVG id={'left-grey-arrow'}/>
-                        Back
-                    </button>
+                    {/*<button type={'button'} className="btn grey back" onClick={onGoBackStep}>*/}
+                    {/*    <SVG id={'left-grey-arrow'}/>*/}
+                    {/*    Back*/}
+                    {/*</button>*/}
 
                     <button className="btn default next" onClick={onGoNextStep}>
                         Next

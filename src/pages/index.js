@@ -38,7 +38,7 @@ const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
-const localStorageVersion = '2.03'
+const localStorageVersion = '3.01'
 
 const checkLocalStorageVersion = () => {
     if (!localStorage.getItem('localStorageVersion') || localStorage.getItem('localStorageVersion') !== localStorageVersion) {

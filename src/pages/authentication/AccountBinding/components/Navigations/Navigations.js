@@ -2,9 +2,9 @@ import React from "react"
 import {CheckSmall} from "../../../../ZeroToHero/CreatingCampaign/Navigation/Navigation"
 
 const steps = [
-    "Choose Account Type",
+    // "Choose Account Type",
     "Select Region",
-    "Set Account Alias",
+    // "Set Account Alias",
     "Connect Seller Acount",
     "Connect Advertising Account"
 ]
@@ -18,7 +18,7 @@ const Navigations = ({current}) => {
                     <div>{current > index ? <CheckSmall/> : index + 1}</div>
                     <span>{item}</span>
                 </li>
-                {index < 4 && <hr/>}</>)}
+                {index < 2 && <hr/>}</>)}
 
             <div className="bar" style={{width: `${20 * (current + 1)}%`}}/>
         </ul>

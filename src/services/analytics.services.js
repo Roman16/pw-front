@@ -131,7 +131,7 @@ function fetchSettingsDetails(page, id) {
 function fetchSearchTermsData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment} = params
 
-    const attributionWindow = localStorage.getItem('attributionWindow') || '30'
+    const attributionWindow = localStorage.getItem('attributionWindow') || '7'
 
     return api('get', `${analyticsUrls.searchTermsData}${filtersHandler(filtersWithState)}&attribution_window=${+attributionWindow}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=targetingId` : ''}${idList || ''}`)
 }
@@ -139,7 +139,7 @@ function fetchSearchTermsData(params, idList) {
 function fetchPlacementData(params, idList) {
     const {activeMetrics, page, pageSize, filtersWithState, pageParts, sorterColumn, segment, areaChartMetric} = params
 
-    const attributionWindow = localStorage.getItem('attributionWindow') || '30'
+    const attributionWindow = localStorage.getItem('attributionWindow') || '7'
 
     return api('get', `${analyticsUrls.placementData}${filtersHandler(filtersWithState)}&attribution_window=${+attributionWindow}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}${idList || ''}&stacked_area_chart_metric[]=${areaChartMetric}`)
 }
@@ -157,7 +157,7 @@ function fetchPageData(location, params, idList, cancelToken) {
         })]
     }
 
-    const attributionWindow = localStorage.getItem('attributionWindow') || '30'
+    const attributionWindow = localStorage.getItem('attributionWindow') || '7'
 
     return api('get', `${analyticsUrls.pageData(location)}${filtersHandler(filtersWithState)}&attribution_window=${+attributionWindow}&size=${pageSize}&page=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
 }
@@ -209,5 +209,9 @@ function downloadTableCSV(location, filtersWithState) {
         })]
     }
 
-    window.open(`${baseUrl}/api/analytics/${location}/csv${filtersHandler(filtersWithState)}&token=${token}`)
+    const attributionWindow = localStorage.getItem('attributionWindow') || '7',
+        marketplace = localStorage.getItem('activeMarketplace') && localStorage.getItem('activeMarketplace') !== 'undefined' ? JSON.parse(localStorage.getItem('activeMarketplace')) : null
+
+
+    window.open(`${baseUrl}/api/analytics/${location}/csv${filtersHandler(filtersWithState)}&token=${token}&attribution_window=${+attributionWindow}&amazon_region_account_marketplace_id=${marketplace?.id}`)
 }

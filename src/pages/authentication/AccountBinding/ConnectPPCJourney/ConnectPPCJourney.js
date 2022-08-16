@@ -6,7 +6,7 @@ import {history} from "../../../../utils/history"
 import Navigations from "../components/Navigations/Navigations"
 
 const ConnectPPCJourney = ({match}) => {
-    const [currentStep, setCurrentStep] = useState(4)
+    const [currentStep, setCurrentStep] = useState(2)
 
     const closeJourney = () => {
         history.push('/account/api-connections')
@@ -21,7 +21,7 @@ const ConnectPPCJourney = ({match}) => {
             />
 
             <div className="container">
-                {currentStep === 4 && <ConnectPpc
+                {currentStep === 2 && <ConnectPpc
                     regionId={match.params.regionId}
 
                     onGoNextStep={goNextStep}
@@ -29,7 +29,7 @@ const ConnectPPCJourney = ({match}) => {
                     onClose={closeJourney}
                 />}
 
-                {currentStep === 5 && <SuccessPage/>}
+                {currentStep === 3 && <SuccessPage/>}
             </div>
         </div>
 

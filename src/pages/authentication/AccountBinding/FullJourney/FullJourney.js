@@ -87,12 +87,12 @@ const FullJourney = () => {
 
             <div className="container">
 
-                {currentStep === 0 && <ChooseAccount
-                    onGoNextStep={goNextStep}
-                    onCancel={closeJourney}
-                />}
+                {/*{currentStep === 0 && <ChooseAccount*/}
+                {/*    onGoNextStep={goNextStep}*/}
+                {/*    onCancel={closeJourney}*/}
+                {/*/>}*/}
 
-                {currentStep === 1 && <SelectRegion
+                {currentStep === 0 && <SelectRegion
                     connectedAmazonAccounts={connectedAmazonAccounts}
                     region={fields.region_type}
                     onGoNextStep={goNextStep}
@@ -102,15 +102,15 @@ const FullJourney = () => {
 
                 />}
 
-                {currentStep === 2 && <AccountName
-                    onGoNextStep={goNextStep}
-                    onGoBackStep={goBackStep}
-                    onChangeInput={changeInputHandler}
-                    accountName={fields.account_alias}
-                    onCancel={closeJourney}
-                />}
+                {/*{currentStep === 2 && <AccountName*/}
+                {/*    onGoNextStep={goNextStep}*/}
+                {/*    onGoBackStep={goBackStep}*/}
+                {/*    onChangeInput={changeInputHandler}*/}
+                {/*    accountName={fields.account_alias}*/}
+                {/*    onCancel={closeJourney}*/}
+                {/*/>}*/}
 
-                {currentStep === 3 && <ConnectMws
+                {currentStep === 1 && <ConnectMws
                     fields={fields}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
@@ -121,14 +121,14 @@ const FullJourney = () => {
                     tryAgainMws={tryAgainMws}
                 />}
 
-                {currentStep === 4 && <ConnectPpc
+                {currentStep === 2 && <ConnectPpc
                     regionId={fields.regionId}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                     onClose={closeJourney}
                 />}
 
-                {currentStep === 5 && <SuccessPage
+                {currentStep === 3 && <SuccessPage
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
                 />}
