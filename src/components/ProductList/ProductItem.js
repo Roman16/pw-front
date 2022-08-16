@@ -54,12 +54,12 @@ const ProductItem = ({
                     <div className='detail'>
                         <div className="asin" title={asin}>
                             <span> ASIN: </span>
-                            <span>{asin}</span>
+                            <span title={asin}>{asin}</span>
                         </div>
 
                         <div className="sku" title={sku}>
                             <span> SKU: </span>
-                            <span>{sku}</span>
+                            <span title={sku}>{sku}</span>
                         </div>
                     </div>
                 </div>
@@ -93,12 +93,12 @@ const ProductItem = ({
                                 <div className='detail'>
                                     <div className="asin">
                                         <span> ASIN: </span>
-                                        <span>{childrenProduct.asin}</span>
+                                        <span title={childrenProduct.asin}>{childrenProduct.asin}</span>
                                     </div>
 
                                     <div className="sku">
                                         <span> SKU: </span>
-                                        <span>{childrenProduct.sku}</span>
+                                        <span title={childrenProduct.sku}>{childrenProduct.sku}</span>
                                     </div>
                                 </div>
                             </div>
