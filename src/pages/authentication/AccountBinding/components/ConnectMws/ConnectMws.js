@@ -1,18 +1,22 @@
 import React, {Fragment, useEffect, useState} from "react"
 import CustomSelect from "../../../../../components/Select/Select"
-import {Input, Select, Spin} from "antd"
+import {Checkbox} from "antd"
 import './ConnectMws.less'
 import loader from '../../../../../assets/img/loader.svg'
 
 import {SVG} from "../../../../../utils/icons"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {userService} from "../../../../../services/user.services"
+import {userActions} from "../../../../../actions/user.actions"
 
-const Option = Select.Option
+let intervalId
 
-const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectMwsStatus, onClose, tryAgainMws, onCancel, disabled = false}) => {
+const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, onCancel, disabled = false}) => {
     const [connectLink, setConnectLink] = useState(''),
-        [processing, setProcessing] = useState(true)
+        [pageStatus, setPageStatus] = useState('connect'),
+        [processing, setProcessing] = useState(true),
+        [disabledConnect, setDisabledConnect] = useState(true)
+
 
     const getCredentialsHandler = () => {
         popupCenter({url: connectLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
@@ -33,72 +37,83 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
         setProcessing(false)
     }
 
+    const openConnectLink = () => {
+        setPageStatus('getting-token')
+
+        // const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
+
+        // let timer = setInterval(() => {
+        //     if (win.closed) {
+        //         clearInterval(timer)
+        //         setPageStatus('error')
+        //     }
+        // }, 2000)
+
+        // const checkWindowLocation = async () => {
+        //     const windowLocation = win.location
+        //
+        //     if (windowLocation.pathname === '/amazon-ads-api-oauth-callback') {
+        //         clearInterval(intervalId)
+        //
+        //         const urlParams = new URLSearchParams(windowLocation.search)
+        //         const id = urlParams.get('selling_partner_id'),
+        //             state = urlParams.get('state'),
+        //             code = urlParams.get('spapi_oauth_code')
+        //
+        //         try {
+        //             // const {result} = await userService.attachAmazonAds({
+        //             //     code,
+        //             //     scope,
+        //             //     callback_redirect_uri: `${window.location.origin}/amazon-ads-api-oauth-callback`
+        //             // })
+        //
+        //             // dispatch(userActions.updateAmazonRegionAccount(result))
+        //
+        //             // onGoNextStep()
+        //             win.close()
+        //             clearInterval(timer)
+        //         } catch (e) {
+        //             win.close()
+        //             setPageStatus('error')
+        //         }
+        //     }
+        // }
+
+        // intervalId = setInterval(checkWindowLocation, 2000)
+    }
+
+
     useEffect(() => {
         getConnectLink()
     }, [])
 
 
-    if (connectMwsStatus === 'connect') {
+    if (pageStatus === 'connect') {
         return (
             <section className='connect-mws-section'>
-                <h2>Connect Seller Account</h2>
+                <h2>Connect Selling Partner API</h2>
 
                 <p className={'section-description'}>
                     For you to use Sponsoreds services we need programmatic access to your Amazon seller account via
-                    Amazon MWS API (<a
-                    href="https://docs.developer.amazonservices.com/en_US/dev_guide/DG_IfNew.html" target={'_blank'}>read
-                    more about it</a>). <br/>
-                    At Sponsoreds, we’re dedicated to keeping your information secure and encrypted. <br/>
+                    Selling Partner API (<a
+                    href="https://developer-docs.amazon.com/sp-api/docs" target={'_blank'}>read more about
+                    it</a>). <br/>
+                    At Sponsoreds, we are dedicated to keeping your information secure and encrypted. <br/>
                     We never share your data with any third-parties. <br/>
                     For any questions related to the security of your data, please feel free to email us at <a
                     href="mailto: info@sponsoreds.com">info@sponsoreds.com</a>.
                     <br/>
                     <br/>
-
-                    Сlick “Get Credentials” button below to open Amazon Seller Central MWS API registration page. <br/>
-                    Follow authorization workflow to grant Sponsoreds access to the MWS API. <br/>
-                    At the last step, copy your {!disabled && '“Seller Id” and'} “MWS Authorization Token” values shown
-                    on the page and paste them below.
+                    Click “Connect” button below and follow authorization workflow <br/>
+                    to grant Sponsoreds access to Selling Partner API.
                     <br/>
                     <br/>
                     Please note that you need to log into your Amazon seller account as a primary account holder.
                 </p>
 
-                <div className="form-group select-marketplace">
-                    <label htmlFor="">You are
-                        connecting {fields.region_type === 'NORTH_AMERICA' ? 'North America (US, CA, MX, BR)' : 'Europe (UK, DE, FR, ES, IT, IN, TR)'} region</label>
-
-                    <button disabled={processing} className='btn default' onClick={getCredentialsHandler}>
-                        Get Credentials
-
-                        {processing && <Spin size={'small'}/>}
-                    </button>
-                </div>
-
-                <h4>Paste your credentials below:</h4>
-
-                <div className="mws-credentials">
-                    <div className="form-group required">
-                        <label htmlFor="">Seller ID <i>*</i></label>
-                        <Input
-                            type="text"
-                            placeholder="e.g. A1BCDE23F4GHIJ"
-                            name={'seller_id'}
-                            onChange={onChangeInput}
-                            value={fields.seller_id}
-                            disabled={disabled}
-                        />
-                    </div>
-                    <div className="form-group required">
-                        <label htmlFor="">MWS Authorization Token <i>*</i></label>
-                        <Input
-                            type="text"
-                            placeholder="e.g. amzn.mws. 01234567"
-                            name={'mws_auth_token'}
-                            onChange={onChangeInput}
-                        />
-                    </div>
-                </div>
+                <Checkbox checked={!disabledConnect} onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
+                    Connect Selling Partner API
+                </Checkbox>
 
                 <div className="actions">
                     <div className="row">
@@ -107,10 +122,9 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                             Back
                         </button>}
 
-                        <button disabled={!fields.seller_id || !fields.mws_auth_token} className="btn default next"
-                                onClick={onConnectMws}>
-                            Next
-                            <SVG id={'right-white-arrow'}/>
+                        <button disabled={disabledConnect} className="btn default next"
+                                onClick={openConnectLink}>
+                            Connect
                         </button>
                     </div>
 
@@ -118,9 +132,10 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                         Cancel
                     </button>
                 </div>
+
             </section>
         )
-    } else if (connectMwsStatus === 'processing') {
+    } else if (pageStatus === 'processing') {
         return (
             <section className='connect-mws-section progress'>
                 <h2>MWS Account Sync</h2>
@@ -132,7 +147,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                 <img src={loader} alt=""/>
             </section>
         )
-    } else if (connectMwsStatus === 'error') {
+    } else if (pageStatus === 'error') {
         return (
             <Fragment>
                 <section className='connect-mws-section error'>
@@ -150,11 +165,6 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onConnectMws, connectM
                             Back To Home
                         </button>
                     </div>
-
-                    {/*<div className="mws-error-links">*/}
-                    {/*    <p>Not the primary account holder?</p>*/}
-                    {/*    <p>Click <Link to={'/'}>here</Link> to send them instructions to connect.</p>*/}
-                    {/*</div>*/}
                 </section>
             </Fragment>
         )

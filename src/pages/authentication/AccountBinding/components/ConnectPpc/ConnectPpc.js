@@ -89,17 +89,24 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
     if (pageStatus === 'connect') {
         return (
             <section className='connect-ppc-section'>
-                <h2>Connect Advertising Account</h2>
-                <p>To use Sponsoreds we need programmatic access to your Advertising Account. <br/>
-                    This access can be granted via Amazon Advertising API (<a target={'_blank'}
-                                                                              href="https://advertising.amazon.com/API/docs/en-us/what-is/amazon-advertising-api">read
-                        more about it</a>). <br/>
-                    Click “Connect” button below and follow authorization workflow to grant Sponsoreds <br/> access to
-                    Amazon Advertising API.
+                <h2>Connect Amazon Ads API</h2>
+                <p>
+                    For you to use Sponsoreds services we need programmatic access to your Amazon advertising account via Amazon Ads API (<a
+                    href="https://advertising.amazon.com/API/docs/en-us/index" target={'_blank'}>read more about it</a>). <br/>
+                    At Sponsoreds, we are dedicated to keeping your information secure and encrypted. <br/>
+                    We never share your data with any third-parties. <br/>
+                    For any questions related to the security of your data, please feel free to email us at <a
+                    href="mailto: info@sponsoreds.com">info@sponsoreds.com</a>.
+                    <br/>
+                    <br/>
+                    Click “Connect” button below and follow authorization workflow to grant Sponsoreds access to Amazon Ads API.
+                    <br/>
+                    <br/>
+                    Please note that you need to log into your Amazon seller account as a primary account holder.
                 </p>
 
                 <Checkbox checked={!disabledConnect} onChange={({target: {checked}}) => setDisabledConnect(!checked)}>
-                    Connect Amazon Advertising API
+                    Connect Amazon Ads API
                 </Checkbox>
 
                 <div className="actions">

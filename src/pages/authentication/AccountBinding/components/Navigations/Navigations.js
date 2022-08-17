@@ -5,8 +5,8 @@ const steps = [
     // "Choose Account Type",
     "Select Region",
     // "Set Account Alias",
-    "Connect Seller Acount",
-    "Connect Advertising Account"
+    "Connect Selling Partner API",
+    "Connect Amazon Ads API"
 ]
 
 const Navigations = ({current}) => {

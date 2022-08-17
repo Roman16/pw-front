@@ -186,13 +186,13 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                     </div>
 
                     <div className="form-group w-25">
-                        <label htmlFor="">Convert for marketplace</label>
+                        <label htmlFor="">Convert for Amazon region</label>
                         <CustomSelect
                             getPopupContainer={trigger => trigger}
-                            value={semanticData.conversionOptions.converter.convertForMarketplace}
-                            onChange={value => changeConversionOptionsHandler('converter', 'convertForMarketplace', value)}
+                            value={semanticData.conversionOptions.converter.convertForAmazonRegion}
+                            onChange={value => changeConversionOptionsHandler('converter', 'convertForAmazonRegion', value)}
                         >
-                            {zthEnums.enums.MarketplaceType.map(item => (
+                            {zthEnums.enums.AmazonRegion.map(item => (
                                 <Option value={item}>{item}</Option>
                             ))}
                         </CustomSelect>

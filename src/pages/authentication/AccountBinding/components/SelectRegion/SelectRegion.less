@@ -18,24 +18,19 @@
       flex-direction: column;
       align-items: center;
       padding: 1.1428571428571428rem 0.7142857142857143rem 1.4285714285714286rem;
-      border: 2px solid #F3F3F3;
+      border: 2px solid #C9CBD4;
+
       box-sizing: border-box;
       border-radius: 4px;
       cursor: pointer;
 
-      &:last-child {
-        margin: 0;
+      &:not(.disabled):hover {
+        border: 2px solid #6959AB;
+        background: rgba(105, 89, 171, 0.05);
       }
 
-      .soon {
-        background: #F8F7FB;
-        border-radius: 4px;
-        font-weight: 500;
-        font-size: 0.8571428571428571rem;
-        line-height: 1.0714285714285714rem;
-        color: #46435C;
-        padding: 3px 8px;
-        margin-bottom: 12px;
+      &:last-child {
+        margin: 0;
       }
 
       h4 {
@@ -43,7 +38,8 @@
         line-height: 1.5714285714285714rem;
         font-weight: 600;
         text-align: center;
-        color: #C9CBD4;
+        color: #353A3E;
+
         margin-bottom: 12px;
       }
 
@@ -103,6 +99,20 @@
 
       &.disabled {
         cursor: not-allowed;
+        border: 2px solid #F3F3F3;
+
+        h4 {
+          color: #C9CBD4;
+        }
+
+
+        svg {
+          margin-bottom: 15px;
+
+          path {
+            fill: #C9CBD4;
+          }
+        }
       }
     }
   }
