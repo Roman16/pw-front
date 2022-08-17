@@ -193,7 +193,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                             onChange={value => changeConversionOptionsHandler('converter', 'convertForAmazonRegion', value)}
                         >
                             {zthEnums.enums.AmazonRegion.map(item => (
-                                <Option value={item}>{item}</Option>
+                                <Option value={item}>{item.replaceAll('_', ' ')}</Option>
                             ))}
                         </CustomSelect>
                     </div>

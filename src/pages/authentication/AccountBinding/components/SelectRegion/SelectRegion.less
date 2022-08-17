@@ -27,6 +27,22 @@
       &:not(.disabled):hover {
         border: 2px solid #6959AB;
         background: rgba(105, 89, 171, 0.05);
+
+        h4 {
+          color: #353A3E;
+        }
+
+        svg {
+          path {
+            fill: #6959AB;
+          }
+        }
+
+        .ant-radio-wrapper {
+          .ant-radio-inner {
+            border-color: #6959AB;
+          }
+        }
       }
 
       &:last-child {
@@ -38,7 +54,7 @@
         line-height: 1.5714285714285714rem;
         font-weight: 600;
         text-align: center;
-        color: #353A3E;
+        color: #C9CBD4;
 
         margin-bottom: 12px;
       }
@@ -71,6 +87,12 @@
           bottom: 0;
           margin: auto;
           transition: .2s ease-in-out;
+        }
+      }
+
+      .ant-radio-wrapper {
+        .ant-radio-inner {
+          border-color: #C9CBD4;
         }
       }
 
