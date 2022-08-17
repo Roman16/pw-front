@@ -296,7 +296,7 @@ const ConvertSemanticCore = () => {
                 CampaignType: [],
                 AdGroupType: [],
                 CampaignsCompressionStrategy: [],
-                MarketplaceType: [],
+                AmazonRegion: [],
                 PPCPlan: [],
                 Status: []
             },
@@ -351,7 +351,7 @@ const ConvertSemanticCore = () => {
                     converter: {
                         useInputParametersProductName: true,
                         campaignsStatus: zthEnums.enums.Status[0],
-                        convertForMarketplace: zthEnums.enums.MarketplaceType[0],
+                        convertForAmazonRegion: zthEnums.enums.AmazonRegion[0],
                         semanticCoreUrls: [semanticUrl]
                     },
                     productInformation: {
