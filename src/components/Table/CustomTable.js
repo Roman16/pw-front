@@ -17,6 +17,9 @@ import {notification} from "../Notification"
 import {ADVERTISING_STRATEGY, BSR_TRACKING} from "../../pages/PPCAutomate/ProductsInfo/ProductList"
 import CustomSelect from "../Select/Select"
 import {activeTimezone} from "../../pages"
+import {RenderMetricChanges} from "../../pages/Analytics/componentsV2/MainMetrics/MetricItem"
+import {analyticsAvailableMetricsList} from "../../pages/Analytics/componentsV2/MainMetrics/metricsList"
+import _ from "lodash"
 
 const Option = Select.Option
 
@@ -92,6 +95,7 @@ const CustomTable = ({
         }
     }
 
+
     return (
         <div className={`custom-table ${rowSelection ? 'with-checkbox' : ''}`}>
             <div
@@ -158,7 +162,16 @@ const CustomTable = ({
                                     minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
                                 }}
                             >
-                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(totalDataSource[item.key], item, columnIndex) : item.render(totalDataSource[item.key], item, columnIndex, item.key) : totalDataSource[item.key])}
+                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(+totalDataSource[item.key].value, item, columnIndex) : item.render((typeof totalDataSource[item.key] === 'object' ? +totalDataSource[item.key].value : totalDataSource[item.key]), item, columnIndex, item.key) : (totalDataSource[item.key].value || totalDataSource[item.key]))}
+
+                                {!item.noTotal && dataSource[0].compareWithPrevious && columnIndex > 2 &&
+                                <RenderMetricChanges
+                                    value={totalDataSource[item.key].value}
+                                    prevValue={totalDataSource[item.key].value_prev}
+                                    diff={totalDataSource[item.key].value_diff}
+                                    type={_.find(analyticsAvailableMetricsList, {key: item.key})?.type}
+                                    name={item.key}
+                                />}
                             </div>
                         )
                     })}

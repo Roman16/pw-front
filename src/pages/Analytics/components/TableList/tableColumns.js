@@ -77,6 +77,8 @@ export const RenderMetricValue = ({number, type, id}) => {
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
+            console.log(number)
+
             return ((number !== null && number !== undefined ? number < 0 ? <>- <CurrencyWithCode
                     value={numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}/></> :
                 <CurrencyWithCode
