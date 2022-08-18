@@ -91,9 +91,9 @@ const ConnectedAmazonRoute = props => {
     if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
     } else if (activeAmazonRegion && !activeAmazonRegion?.is_mws_attached) {
-        return <Redirect to={`/connect-mws-account/${activeAmazonRegion.region_type}`}/>
+        return <Redirect to={`/connect-sp-api/${activeAmazonRegion.id}`}/>
     } else if (activeAmazonRegion && !activeAmazonRegion?.is_amazon_ads_api_attached) {
-        return <Redirect to={`/connect-ppc-account/${activeAmazonRegion.id}`}/>
+        return <Redirect to={`/connect-ads-api/${activeAmazonRegion.id}`}/>
     } else {
         return <Route {...props} />
     }
@@ -274,8 +274,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account/:regionId?" component={ConnectMWS}/>
-                                    <Route exact path="/connect-ppc-account/:regionId?" component={ConnectPPC}/>
+                                    <Route exact path="/connect-sp-api/:regionId?" component={ConnectMWS}/>
+                                    <Route exact path="/connect-ads-api/:regionId?" component={ConnectPPC}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 
 

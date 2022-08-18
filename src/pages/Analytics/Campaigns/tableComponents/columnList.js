@@ -125,8 +125,8 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
     },
     ...!selectedPortfolio ? [{
         title: 'Portfolio',
-        dataIndex: 'portfolioId',
-        key: 'portfolioId',
+        dataIndex: 'portfolioName',
+        key: 'portfolioName',
         width: '150px',
         sorter: true,
         locked: false,

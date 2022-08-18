@@ -22,7 +22,7 @@ const ConnectAdsApiJourney = ({match}) => {
 
             <div className="container">
                 {currentStep === 2 && <ConnectAdsApi
-                    regionId={match.params.regionId}
+                    regionId={+match.params.regionId}
 
                     onGoNextStep={goNextStep}
                     onGoBackStep={closeJourney}

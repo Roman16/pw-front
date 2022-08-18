@@ -29,7 +29,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
                 isAttached={account.is_mws_attached}
 
                 onDisconnect={() => onDisconnect('mws', account.id)}
-                onConnect={() => history.push(`/connect-mws-account/${account.id}`)}
+                onConnect={() => history.push(`/connect-sp-api/${account.id}`)}
             />
 
             <ApiAccess
@@ -38,7 +38,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
                 isAttached={account.is_amazon_ads_api_attached}
 
                 onDisconnect={() => onDisconnect('ads', account.id)}
-                onConnect={() => history.push(`/connect-ppc-account/${account.id}`)}
+                onConnect={() => history.push(`/connect-ads-api/${account.id}`)}
             />
         </div>
     </div>)

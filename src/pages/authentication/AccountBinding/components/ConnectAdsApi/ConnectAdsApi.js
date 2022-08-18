@@ -99,7 +99,7 @@ const ConnectAdsApi = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                     href="mailto: info@sponsoreds.com">info@sponsoreds.com</a>.
                     <br/>
                     <br/>
-                    Click “Connect” button below and follow authorization workflow to grant Sponsoreds access to Amazon Ads API.
+                    Click “Connect” button below and follow authorization workflow <br/> to grant Sponsoreds access to Amazon Ads API.
                     <br/>
                     <br/>
                     Please note that you need to log into your Amazon seller account as a primary account holder.

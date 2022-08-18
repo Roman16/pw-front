@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from "react"
 import CustomSelect from "../../../../../components/Select/Select"
 import {Checkbox} from "antd"
-import './ConnectSpApi.less'
+import '../ConnectAdsApi/ConnectAdsApi.less'
 import loader from '../../../../../assets/img/loader.svg'
 
 import {SVG} from "../../../../../utils/icons"
@@ -26,7 +26,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
         try {
             const {result} = await userService.getSpConnectLink({
                 region_type: region,
-                callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
+                callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`
             })
 
             setConnectLink(result.connection_link)
@@ -51,11 +51,13 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
 
         const checkWindowLocation = async () => {
             const windowLocation = win.location
+            console.log(win)
 
             if (windowLocation.pathname === '/amazon-sp-api-oauth-callback') {
                 clearInterval(intervalId)
 
                 const urlParams = new URLSearchParams(windowLocation.search)
+                console.log(urlParams)
 
                 const selling_partner_id = urlParams.get('selling_partner_id'),
                     state = urlParams.get('state'),
@@ -68,7 +70,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
                             spapi_oauth_code,
                             state,
                             selling_partner_id: sellerId,
-                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
+                            callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`
                         })
 
                         dispatch(userActions.updateAmazonRegionAccount(result))
@@ -78,7 +80,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
                             spapi_oauth_code,
                             selling_partner_id,
                             state,
-                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`,
+                            callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`,
                             account_alias: ''
                         })
 
@@ -107,7 +109,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
 
     if (pageStatus === 'connect') {
         return (
-            <section className='connect-mws-section'>
+            <section className='connect-ppc-section'>
                 <h2>Connect Selling Partner API</h2>
 
                 <p className={'section-description'}>
@@ -154,7 +156,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
         )
     } else if (pageStatus === 'processing') {
         return (
-            <section className='connect-mws-section progress'>
+            <section className='connect-ppc-section progress'>
                 <h2>SP Account Sync</h2>
                 <p>
                     We are syncing your data from SP API. <br/>
@@ -167,7 +169,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
     } else if (pageStatus === 'error') {
         return (
             <Fragment>
-                <section className='connect-mws-section error'>
+                <section className='connect-ppc-section error'>
                     <h2>There was an error connecting your <br/> Seller Account</h2>
                     <p>
                         Please contact our support to help you connecting your Seller Account with Sponsoreds.
