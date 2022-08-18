@@ -81,6 +81,7 @@ const FullJourney = () => {
 
                 {currentStep === 1 && <ConnectSpApi
                     region={fields.region_type}
+                    onSetRegionId={(id) => setFields({...fields, regionId: id})}
                     connectedAmazonAccounts={connectedAmazonAccounts}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}

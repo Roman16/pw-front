@@ -12,7 +12,7 @@ import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, connectedAmazonAccounts}) => {
+const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, connectedAmazonAccounts, onSetRegionId}) => {
     const [connectLink, setConnectLink] = useState(''),
         [pageStatus, setPageStatus] = useState('connect'),
         [processing, setProcessing] = useState(true),
@@ -81,6 +81,8 @@ const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, co
                             callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`,
                             account_alias: ''
                         })
+
+                        onSetRegionId(result.id)
 
                         dispatch(userActions.setAmazonRegionAccounts([...connectedAmazonAccounts, result]))
                     }

@@ -89,7 +89,7 @@ const ErrorBar = () => {
                     this account.</p>
             </div>}
 
-            {!region.is_mws_attached &&
+            {!region.is_amazon_sp_api_attached &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> MWS API access is not granted or was revoked for this Amazon

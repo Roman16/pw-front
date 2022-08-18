@@ -55,7 +55,7 @@ const Subscriptions = (props) => {
     const activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
     const adSpend = useSelector(state => state.user.subscription.ad_spend)
 
-    const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_mws_attached
+    const amazonIsConnected = activeRegion?.is_amazon_ads_api_attached && activeRegion?.is_amazon_sp_api_attached
 
     const disabledPage = !amazonIsConnected || (importStatus.subscription ? !importStatus.subscription.required_parts_details : true) || visibleSomethingWrongWindow
 
