@@ -30,7 +30,6 @@ const ConnectSpApiJourney = ({match}) => {
             <div className="container">
                 {currentStep === 1 && <ConnectSpApi
                     regionId={match.params.regionId}
-                    sellerId={_.find(connectedAmazonAccounts, {id: +match.params.regionId}).seller_id}
                     region={_.find(connectedAmazonAccounts, {id: +match.params.regionId}).region_type}
 
                     onGoNextStep={goNextStep}

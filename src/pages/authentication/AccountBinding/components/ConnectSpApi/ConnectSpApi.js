@@ -12,7 +12,7 @@ import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, onClose, connectedAmazonAccounts}) => {
+const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, connectedAmazonAccounts}) => {
     const [connectLink, setConnectLink] = useState(''),
         [pageStatus, setPageStatus] = useState('connect'),
         [processing, setProcessing] = useState(true),
@@ -62,7 +62,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
                     spapi_oauth_code = urlParams.get('spapi_oauth_code')
 
                 try {
-                    if (sellerId) {
+                    if (regionId) {
                         const {result} = await userService.attachSpCredentials({
                             amazon_region_account_id: regionId,
                             spapi_oauth_code,
