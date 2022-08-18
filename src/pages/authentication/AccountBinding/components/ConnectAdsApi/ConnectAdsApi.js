@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import './ConnectPpc.less'
+import './ConnectAdsApi.less'
 import {SVG} from "../../../../../utils/icons"
 import loader from '../../../../../assets/img/loader.svg'
 import {popupCenter} from "../../../../../utils/newWindow"
@@ -10,7 +10,7 @@ import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
+const ConnectAdsApi = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
     const [pageStatus, setPageStatus] = useState('connect'),
         [connectLink, setConnectLink] = useState(''),
         [disabledConnect, setDisabledConnect] = useState(true)
@@ -53,7 +53,7 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
                     scope = urlParams.get('scope')
 
                 try {
-                    const {result} = await userService.attachAmazonAds({
+                    const {result} = await userService.attachAdsCredentials({
                         amazon_region_account_id: regionId,
                         code,
                         scope,
@@ -159,4 +159,4 @@ const ConnectPpc = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
     }
 }
 
-export default ConnectPpc
+export default ConnectAdsApi

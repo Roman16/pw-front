@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from "react"
 import ChooseAccount from "../components/ChooseAccount/ChooseAccount"
 import AccountName from "../components/AccountName/AccountName"
-import ConnectPpc from "../components/ConnectPpc/ConnectPpc"
+import ConnectAdsApi from "../components/ConnectAdsApi/ConnectAdsApi"
 import SelectRegion from "../components/SelectRegion/SelectRegion"
-import ConnectMws from "../components/ConnectMws/ConnectMws"
+import ConnectSpApi from "../components/ConnectSpApi/ConnectSpApi"
 import SuccessPage from "../components/SuccessPage/SuccessPage"
 import {history} from "../../../../utils/history"
 import _ from 'lodash'
 
 import '../components/Steps.less'
-import {userService} from "../../../../services/user.services"
-import {userActions} from "../../../../actions/user.actions"
-import {useDispatch, useSelector} from "react-redux"
+import {useSelector} from "react-redux"
 import Navigations from "../components/Navigations/Navigations"
 
 const FullJourney = () => {
@@ -27,9 +25,6 @@ const FullJourney = () => {
         })),
         connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
 
-    const dispatch = useDispatch()
-
-    const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
 
     const goNextStep = () => {
         if (localStorage.getItem('userFromAgency') && localStorage.getItem('userFromAgency') === userEmail && currentStep === 2) {
@@ -46,32 +41,6 @@ const FullJourney = () => {
             ...fields,
             [e.target.name]: e.target.value
         })
-    }
-
-    const onConnectMws = async (e) => {
-        e.preventDefault()
-        setConnectMwsStatus('processing')
-
-        try {
-            const {result} = await userService.createAmazonRegionAccount({
-                ...fields,
-            })
-
-            dispatch(userActions.setAmazonRegionAccounts([...connectedAmazonAccounts, result]))
-
-            setFields({
-                ...fields,
-                regionId: result.id
-            })
-
-            setCurrentStep(prevState => prevState + 1)
-        } catch (e) {
-            setConnectMwsStatus('error')
-        }
-    }
-
-    const tryAgainMws = () => {
-        setConnectMwsStatus('connect')
     }
 
     const closeJourney = () => {
@@ -110,18 +79,15 @@ const FullJourney = () => {
                 {/*    onCancel={closeJourney}*/}
                 {/*/>}*/}
 
-                {currentStep === 1 && <ConnectMws
-                    fields={fields}
+                {currentStep === 1 && <ConnectSpApi
+                    region={fields.region_type}
+                    connectedAmazonAccounts={connectedAmazonAccounts}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}
-                    onChangeInput={changeInputHandler}
-                    onConnectMws={onConnectMws}
-                    connectMwsStatus={connectMwsStatus}
                     onClose={closeJourney}
-                    tryAgainMws={tryAgainMws}
                 />}
 
-                {currentStep === 2 && <ConnectPpc
+                {currentStep === 2 && <ConnectAdsApi
                     regionId={fields.regionId}
                     onGoNextStep={goNextStep}
                     onGoBackStep={goBackStep}

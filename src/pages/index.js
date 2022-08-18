@@ -32,8 +32,8 @@ const Home = React.lazy(() => import('./Home/Home'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
-const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'))
-const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
+const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectSpApiJourney/ConnectSpApiJourney'))
+const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectAdsApiJourney/ConnectAdsApiJourney'))
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
@@ -274,7 +274,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account/:regionType?" component={ConnectMWS}/>
+                                    <Route exact path="/connect-mws-account/:regionId?" component={ConnectMWS}/>
                                     <Route exact path="/connect-ppc-account/:regionId?" component={ConnectPPC}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 

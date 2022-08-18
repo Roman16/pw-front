@@ -1,33 +1,33 @@
 import React, {Fragment, useEffect, useState} from "react"
 import CustomSelect from "../../../../../components/Select/Select"
 import {Checkbox} from "antd"
-import './ConnectMws.less'
+import './ConnectSpApi.less'
 import loader from '../../../../../assets/img/loader.svg'
 
 import {SVG} from "../../../../../utils/icons"
 import {popupCenter} from "../../../../../utils/newWindow"
 import {userService} from "../../../../../services/user.services"
 import {userActions} from "../../../../../actions/user.actions"
+import {useDispatch} from "react-redux"
 
 let intervalId
 
-const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, onCancel, disabled = false}) => {
+const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, onClose, connectedAmazonAccounts}) => {
     const [connectLink, setConnectLink] = useState(''),
         [pageStatus, setPageStatus] = useState('connect'),
         [processing, setProcessing] = useState(true),
         [disabledConnect, setDisabledConnect] = useState(true)
 
-
-    const getCredentialsHandler = () => {
-        popupCenter({url: connectLink, title: 'xtf', w: 700, h: 750, importantWidth: true})
-    }
-
+    const dispatch = useDispatch()
 
     const getConnectLink = async () => {
         setProcessing(true)
 
         try {
-            const {result} = await userService.getMWSConnectLink(fields.region_type)
+            const {result} = await userService.getSpConnectLink({
+                region_type: region,
+                callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
+            })
 
             setConnectLink(result.connection_link)
         } catch (e) {
@@ -38,50 +38,67 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, 
     }
 
     const openConnectLink = () => {
-        setPageStatus('getting-token')
+        setPageStatus('processing')
 
-        // const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
+        const win = popupCenter({url: connectLink, title: 'xtf', w: 520, h: 570})
 
-        // let timer = setInterval(() => {
-        //     if (win.closed) {
-        //         clearInterval(timer)
-        //         setPageStatus('error')
-        //     }
-        // }, 2000)
+        let timer = setInterval(() => {
+            if (win.closed) {
+                clearInterval(timer)
+                setPageStatus('error')
+            }
+        }, 2000)
 
-        // const checkWindowLocation = async () => {
-        //     const windowLocation = win.location
-        //
-        //     if (windowLocation.pathname === '/amazon-ads-api-oauth-callback') {
-        //         clearInterval(intervalId)
-        //
-        //         const urlParams = new URLSearchParams(windowLocation.search)
-        //         const id = urlParams.get('selling_partner_id'),
-        //             state = urlParams.get('state'),
-        //             code = urlParams.get('spapi_oauth_code')
-        //
-        //         try {
-        //             // const {result} = await userService.attachAmazonAds({
-        //             //     code,
-        //             //     scope,
-        //             //     callback_redirect_uri: `${window.location.origin}/amazon-ads-api-oauth-callback`
-        //             // })
-        //
-        //             // dispatch(userActions.updateAmazonRegionAccount(result))
-        //
-        //             // onGoNextStep()
-        //             win.close()
-        //             clearInterval(timer)
-        //         } catch (e) {
-        //             win.close()
-        //             setPageStatus('error')
-        //         }
-        //     }
-        // }
+        const checkWindowLocation = async () => {
+            const windowLocation = win.location
 
-        // intervalId = setInterval(checkWindowLocation, 2000)
+            if (windowLocation.pathname === '/amazon-sp-api-oauth-callback') {
+                clearInterval(intervalId)
+
+                const urlParams = new URLSearchParams(windowLocation.search)
+
+                const selling_partner_id = urlParams.get('selling_partner_id'),
+                    state = urlParams.get('state'),
+                    spapi_oauth_code = urlParams.get('spapi_oauth_code')
+
+                try {
+                    if (sellerId) {
+                        const {result} = await userService.attachSpCredentials({
+                            amazon_region_account_id: regionId,
+                            spapi_oauth_code,
+                            state,
+                            selling_partner_id: sellerId,
+                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
+                        })
+
+                        dispatch(userActions.updateAmazonRegionAccount(result))
+                    } else {
+                        const {result} = await userService.createAmazonRegionAccount({
+                            region_type: region,
+                            spapi_oauth_code,
+                            selling_partner_id,
+                            state,
+                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`,
+                            account_alias: ''
+                        })
+
+                        dispatch(userActions.setAmazonRegionAccounts([...connectedAmazonAccounts, result]))
+                    }
+
+                    onGoNextStep()
+                    win.close()
+                    clearInterval(timer)
+                } catch (e) {
+                    win.close()
+                    setPageStatus('error')
+                }
+            }
+        }
+
+        intervalId = setInterval(checkWindowLocation, 2000)
     }
 
+    const tryAgain = () => setPageStatus('connect')
 
     useEffect(() => {
         getConnectLink()
@@ -138,9 +155,9 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, 
     } else if (pageStatus === 'processing') {
         return (
             <section className='connect-mws-section progress'>
-                <h2>MWS Account Sync</h2>
+                <h2>SP Account Sync</h2>
                 <p>
-                    We are syncing your data from MWS API. <br/>
+                    We are syncing your data from SP API. <br/>
                     It could take up to a few minutes.
                 </p>
 
@@ -157,7 +174,7 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, 
                     </p>
 
                     <div className="actions">
-                        <button className="btn default" onClick={tryAgainMws}>
+                        <button className="btn default" onClick={tryAgain}>
                             Try Again
                         </button>
 
@@ -171,4 +188,4 @@ const ConnectMws = ({fields, onGoBackStep, onChangeInput, onClose, tryAgainMws, 
     }
 }
 
-export default ConnectMws
+export default ConnectSpApi

@@ -1,11 +1,11 @@
 import React, {useState} from "react"
 import '../components/Steps.less'
 import SuccessPage from "../components/SuccessPage/SuccessPage"
-import ConnectPpc from "../components/ConnectPpc/ConnectPpc"
+import ConnectAdsApi from "../components/ConnectAdsApi/ConnectAdsApi"
 import {history} from "../../../../utils/history"
 import Navigations from "../components/Navigations/Navigations"
 
-const ConnectPPCJourney = ({match}) => {
+const ConnectAdsApiJourney = ({match}) => {
     const [currentStep, setCurrentStep] = useState(2)
 
     const closeJourney = () => {
@@ -21,7 +21,7 @@ const ConnectPPCJourney = ({match}) => {
             />
 
             <div className="container">
-                {currentStep === 2 && <ConnectPpc
+                {currentStep === 2 && <ConnectAdsApi
                     regionId={match.params.regionId}
 
                     onGoNextStep={goNextStep}
@@ -36,4 +36,4 @@ const ConnectPPCJourney = ({match}) => {
     )
 }
 
-export default ConnectPPCJourney
+export default ConnectAdsApiJourney

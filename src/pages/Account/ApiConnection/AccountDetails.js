@@ -29,7 +29,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
                 isAttached={account.is_mws_attached}
 
                 onDisconnect={() => onDisconnect('mws', account.id)}
-                onConnect={() => history.push(`/connect-mws-account/${account.region_type}`)}
+                onConnect={() => history.push(`/connect-mws-account/${account.id}`)}
             />
 
             <ApiAccess

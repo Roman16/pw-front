@@ -32,12 +32,12 @@ export const userUrls = {
     retryPayment: 'user/account/subscription/payment/retry',
 
     PPCConnectLink: 'user/account/amazon-region-accounts/amazon-ads-api-connect-link',
-    MWSConnectLink: 'user/account/amazon-region-accounts/mws-connect-link',
+    SPConnectLink: 'user/account/amazon-region-accounts/amazon-sp-api-connect-link',
+
     amazonRegionAccounts: 'user/account/amazon-region-accounts',
+
     adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
-    mwsCredentials: 'user/account/amazon-region-accounts/mws-credentials',
-
-
+    spCredentials:  'user/account/amazon-region-accounts/amazon-sp-api-credentials',
 
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,

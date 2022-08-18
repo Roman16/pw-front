@@ -2,7 +2,6 @@ import React, {Suspense} from 'react'
 import {Router, Route, Switch, Redirect} from 'react-router-dom'
 import {history} from '../utils/history'
 import RouteLoader from "../components/RouteLoader/RouteLoader"
-import PPCRedirect from "../pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect"
 import PpcProcessing from "../pages/authentication/AccountBinding/components/PpcProcessing/PpcProcessing"
 
 const AuthorizedUser = React.lazy(() => import('../pages'))
@@ -35,12 +34,12 @@ const routers = () => {
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     <Route path="/success-connect" component={ThankPage}/>
-                    <Route exact path="/ppc-redirect" component={PPCRedirect}/>
                     {/*-----------------------------------------------------------*/}
 
                     <Route exact path={'/404'} component={NotFound}/>
 
                     <Route exact path={'/amazon-ads-api-oauth-callback'} component={PpcProcessing}/>
+                    <Route exact path={'/amazon-sp-api-oauth-callback'} component={PpcProcessing}/>
 
                     {/*<Route path={'/'} render={(props) => {*/}
                     {/*    if (localStorage.getItem('token')) {*/}

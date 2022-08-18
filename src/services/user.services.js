@@ -51,11 +51,12 @@ export const userService = {
     retryPayment,
 
     getPPCConnectLink,
-    getMWSConnectLink,
+    getSpConnectLink,
     getAmazonRegionAccounts,
     createAmazonRegionAccount,
-    attachAmazonAds,
-    attachMWS,
+
+    attachAdsCredentials,
+    attachSpCredentials,
 
     getUserPersonalInformation,
 
@@ -237,8 +238,8 @@ function getPPCConnectLink({callbackUrl, regionId}) {
     return api('get', `${userUrls.PPCConnectLink}?amazon_region_account_id=${regionId}&callback_redirect_uri=${callbackUrl}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
-function getMWSConnectLink(region) {
-    return api('get', `${userUrls.MWSConnectLink}?region_type=${region}`, undefined, undefined, undefined, undefined, undefined, false)
+function getSpConnectLink({region_type, callback_redirect_uri}) {
+    return api('get', `${userUrls.SPConnectLink}?region_type=${region_type}&callback_redirect_uri=${callback_redirect_uri}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getAmazonRegionAccounts() {
@@ -249,16 +250,16 @@ function createAmazonRegionAccount(data) {
     return api('post', `${userUrls.amazonRegionAccounts}`, data, undefined, undefined, undefined, undefined, false)
 }
 
-function attachAmazonAds(data) {
+function attachAdsCredentials(data) {
     return api('post', `${userUrls.adsCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }
 
-function attachMWS(data) {
-    return api('post', `${userUrls.mwsCredentials}`, data, undefined, undefined, undefined, undefined, false)
+function attachSpCredentials(data) {
+    return api('post', `${userUrls.spCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }
 
 function unsetMWS(id) {
-    return api('delete', `${userUrls.mwsCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
+    return api('delete', `${userUrls.spCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function unsetAdsApi(id) {
