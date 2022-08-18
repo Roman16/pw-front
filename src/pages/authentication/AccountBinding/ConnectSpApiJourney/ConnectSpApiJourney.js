@@ -12,14 +12,13 @@ import _ from 'lodash'
 const ConnectSpApiJourney = ({match}) => {
     const [currentStep, setCurrentStep] = useState(1)
 
-    const [connectMwsStatus, setConnectMwsStatus] = useState('connect')
     const connectedAmazonAccounts = useSelector(state => state.user.amazonRegionAccounts)
 
     const closeJourney = () => {
         history.push('/account/api-connections')
     }
 
-    const goNextStep = () => setCurrentStep(prev => prev + 1)
+    const goNextStep = () => setCurrentStep(3)
 
     return (
         <div className="amazon-connect full-journey">
@@ -33,9 +32,7 @@ const ConnectSpApiJourney = ({match}) => {
                     region={_.find(connectedAmazonAccounts, {id: +match.params.regionId}).region_type}
 
                     onGoNextStep={goNextStep}
-                    connectMwsStatus={connectMwsStatus}
                     onClose={closeJourney}
-                    disabled={true}
                 />}
 
                 {currentStep === 3 && <SuccessPage/>}

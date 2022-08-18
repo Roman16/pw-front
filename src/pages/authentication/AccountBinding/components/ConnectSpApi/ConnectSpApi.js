@@ -26,7 +26,7 @@ const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, co
         try {
             const {result} = await userService.getSpConnectLink({
                 region_type: region,
-                callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`
+                callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
             })
 
             setConnectLink(result.connection_link)
@@ -68,7 +68,7 @@ const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, co
                             spapi_oauth_code,
                             state,
                             selling_partner_id,
-                            callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`
+                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`
                         })
 
                         dispatch(userActions.updateAmazonRegionAccount(result))
@@ -78,7 +78,7 @@ const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, co
                             spapi_oauth_code,
                             selling_partner_id,
                             state,
-                            callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`,
+                            callback_redirect_uri: `${window.location.origin}/amazon-sp-api-oauth-callback`,
                             account_alias: ''
                         })
 
@@ -139,7 +139,7 @@ const ConnectSpApi = ({region, regionId, onGoBackStep, onGoNextStep, onClose, co
                             Back
                         </button>}
 
-                        <button disabled={disabledConnect} className="btn default next"
+                        <button disabled={disabledConnect || processing} className="btn default next"
                                 onClick={openConnectLink}>
                             Connect
                         </button>
