@@ -51,13 +51,11 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
 
         const checkWindowLocation = async () => {
             const windowLocation = win.location
-            console.log(win)
 
             if (windowLocation.pathname === '/amazon-sp-api-oauth-callback') {
                 clearInterval(intervalId)
 
                 const urlParams = new URLSearchParams(windowLocation.search)
-                console.log(urlParams)
 
                 const selling_partner_id = urlParams.get('selling_partner_id'),
                     state = urlParams.get('state'),
@@ -69,7 +67,7 @@ const ConnectSpApi = ({region, sellerId, regionId, onGoBackStep, onGoNextStep, o
                             amazon_region_account_id: regionId,
                             spapi_oauth_code,
                             state,
-                            selling_partner_id: sellerId,
+                            selling_partner_id,
                             callback_redirect_uri: `https://dev.app.sponsoreds.com/amazon-sp-api-oauth-callback`
                         })
 
