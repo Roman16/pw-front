@@ -97,7 +97,7 @@ const FastUpdateBlock = ({
 
             onSetChanges({
                 bulkOperation: {
-                    entity: selectedColumn,
+                    entity: selectedColumn === 'portfolioName' ? 'portfolioId' : selectedColumn,
                     action: actionType,
                     value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
                 }
@@ -120,7 +120,7 @@ const FastUpdateBlock = ({
         } else if (selectedColumn === 'calculatedBudget' || selectedColumn === 'calculatedBid' || selectedColumn === 'defaultBid') {
             setAvailableActions(updateActions.number)
             setChangingValue(undefined)
-        } else if (selectedColumn === 'portfolioId') {
+        } else if (selectedColumn === 'portfolioName') {
             setAvailableActions(updateActions.state)
             setChangingValue('null')
         } else if (selectedColumn === 'state') {
@@ -267,7 +267,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 <Option value={'archived'}>Archived</Option>
             </CustomSelect>
         )
-    } else if (selectedColumn === 'portfolioId') {
+    } else if (selectedColumn === 'portfolioName') {
         return (<CustomSelect
                 showSearch
                 placeholder={'Select by'}
