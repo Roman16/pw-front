@@ -16,8 +16,7 @@ export const userService = {
     regist,
     resendConfirmEmail,
     confirmEmail,
-    setMWS,
-    unsetMWS,
+    unsetSpApi,
     unsetAdsApi,
     getStripeAvailableCountries,
     updateInformation,
@@ -101,10 +100,6 @@ function resendConfirmEmail() {
 
 function confirmEmail({token}) {
     return api('post', `${userUrls.confirmEmail}/${token}`, {token}, undefined, undefined, undefined, undefined, false)
-}
-
-function setMWS(data) {
-    return api('post', userUrls.mws, data, undefined, undefined, undefined, undefined, false)
 }
 
 
@@ -258,7 +253,7 @@ function attachSpCredentials(data) {
     return api('post', `${userUrls.spCredentials}`, data, undefined, undefined, undefined, undefined, false)
 }
 
-function unsetMWS(id) {
+function unsetSpApi(id) {
     return api('delete', `${userUrls.spCredentials}?amazon_region_account_id=${id}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 

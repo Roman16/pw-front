@@ -15,10 +15,7 @@ import Navigations from "../components/Navigations/Navigations"
 const FullJourney = () => {
     const [currentStep, setCurrentStep] = useState(0)
     const [fields, setFields] = useState({
-        account_alias: '',
         region_type: 'NORTH_AMERICA',
-        mws_auth_token: '',
-        seller_id: ''
     })
     const {userEmail} = useSelector(state => ({
             userEmail: state.user.userDetails.email,

@@ -132,7 +132,7 @@ const ConnectAdsApi = ({onGoNextStep, onGoBackStep, onClose, regionId}) => {
         return (
             <section className='connect-mws-section progress'>
                 <h2>Amazon Account Synchronization</h2>
-                <p>We are syncing your data from MWS API and Amazon Advertising API <br/> with our system. It could take
+                <p>We are syncing your data from SP API and Amazon Advertising API <br/> with our system. It could take
                     up to a few minutes.</p>
 
                 <img src={loader} alt=""/>

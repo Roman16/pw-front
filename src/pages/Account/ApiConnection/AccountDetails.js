@@ -24,11 +24,11 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
 
         <div className="row">
             <ApiAccess
-                title={'MWS API access'}
-                status={account.mws_access_status}
+                title={'Amazon SP API access'}
+                status={account.amazon_sp_api_access_status}
                 isAttached={account.is_amazon_sp_api_attached}
 
-                onDisconnect={() => onDisconnect('mws', account.id)}
+                onDisconnect={() => onDisconnect('sp', account.id)}
                 onConnect={() => history.push(`/connect-sp-api/${account.id}`)}
             />
 
