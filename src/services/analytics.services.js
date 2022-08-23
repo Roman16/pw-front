@@ -36,13 +36,10 @@ const stateIdValues = {
 }
 
 const dateRangeFormatting = (dateRange) => {
-    console.log(dateRange)
-
     const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
-    // const timezone = 'Europe/London'
 
     if (dateRange.startDate === 'lifetime') return ''
-    else return `${moment(dateRange.startDate).tz(timezone).format('YYYY-MM-DDT00:00:00.000Z')},${moment(dateRange.endDate).tz(timezone).format('YYYY-MM-DDT23:59:59.999Z')}`
+    else return `${moment(dateRange.startDate).tz(timezone).format('YYYY-MM-DDT00:00:00.000Z')},${moment(dateRange.endDate).tz(timezone).format('YYYY-MM-DDT23:59:59.999Z')}`.replaceAll('+', '%2B')
 }
 
 export const filtersHandler = (f) => {
