@@ -15,6 +15,7 @@ import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 import {history} from "../utils/history"
 import {amazonRegionsSort} from "../reducers/user.reducer"
+import ProductFruits from 'react-product-fruits';
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -339,6 +340,15 @@ const AuthorizedUser = (props) => {
                     </div>
                 </div>
                 <PWWindows pathname={pathname}/>
+
+                <ProductFruits
+                    projectCode={process.env.REACT_APP_PRODUCT_FRUITS_CODE}
+                    language="EN"
+                    username={user.userDetails.id}
+                    email={user.userDetails.email}
+                    firstname={user.userDetails.name}
+                    lastname={user.userDetails.last_name}
+                />
             </Fragment>
         )
     }
