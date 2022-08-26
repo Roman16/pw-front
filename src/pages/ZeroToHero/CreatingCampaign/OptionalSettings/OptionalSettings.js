@@ -1,7 +1,7 @@
 import React from "react"
 import BiddingStrategies from "./BiddingStrategies/BiddingStrategies"
-import RelevantKeywords from "./RelevantKeywords/RelevantKeywords"
-import NegativeKeywords from "./NegativeKeywords/NegativeKeywords"
+import RelevantKeywords from "../Step3/RelevantKeywords/RelevantKeywords"
+import NegativeKeywords from "../Step4/NegativeKeywords/NegativeKeywords"
 import './OptionalSettings.less'
 
 const OptionalSettings = ({product, onUpdate}) => {

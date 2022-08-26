@@ -1,0 +1,88 @@
+.seed-keywords {
+  & > .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1.4285714285714286rem;
+    margin-bottom: 10px;
+
+    & > .col {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .header {
+    .col {
+      justify-content: flex-end;
+
+      p {
+        margin: 0;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      label {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #353A3E;
+        margin-bottom: 5px;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        margin: 0;
+      }
+
+      button {
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+      }
+    }
+  }
+
+  .body {
+    height: 128px;
+
+    textarea {
+      height: 100%;
+      resize: none;
+      font-size: 1rem;
+    }
+
+    .item-text {
+      width: 100%;
+      display: flex;
+
+      & > i {
+        margin: 0 0 0 auto;
+      }
+    }
+  }
+
+  .footer {
+    margin: 5px 0 0;
+
+    .col {
+      align-items: flex-end;
+    }
+
+    .sds-btn {
+      height: 2.2857142857142856rem;
+      font-size: 0.8571428571428571rem;
+      padding: 0 15px;
+
+      svg {
+        width: 1rem;
+        height: 1rem;
+        stroke: #fff;
+        margin: 0 12px 0 0;
+      }
+    }
+  }
+}

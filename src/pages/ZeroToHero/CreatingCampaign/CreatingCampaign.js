@@ -1,9 +1,7 @@
 import React, {memo, useEffect, useState} from "react"
 import '../ZeroToHero.less'
 import './CreatingCampaign.less'
-import Navigation from "./Navigation/Navigation"
 import SelectProduct from "./SelectProduct/SelectProduct"
-import StepActions from "./StepActions/StepActions"
 import RequiredSettings from "./RequiredSettings/RequiredSettings"
 import {useDispatch, useSelector} from "react-redux"
 import {zthActions} from "../../../actions/zth.actions"
@@ -18,6 +16,11 @@ import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import AvailableZTHWindow from "./AvailableZTHWindow/AvailableZTHWindow"
 import {activeTimezone} from "../../index"
+import {SelectedProduct} from "./SelectedProduct/SelectedProduct"
+import {Step1} from "./Step1/Step1"
+import {Step2} from "./Step2/Step2"
+import {Step3} from "./Step3/Step3"
+import {Step4} from "./Step4/Step4"
 
 
 const initialProductSettings = {
@@ -44,18 +47,17 @@ const initialProductSettings = {
 const CreatingCampaign = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [portfolioList, setPortfolioList] = useState([]),
-        [addedProducts, setAddedProducts] = useState([{...initialProductSettings}]),
         [openedSteps, setOpenedSteps] = useState(-1),
-        [activeProductIndex, setActiveProductIndex] = useState(0),
         [invalidField, setInvalidField] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false),
         [pageLoading, setPageLoading] = useState(true),
-        [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false)
+        [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false),
+        [selectedProduct, setSelectedProduct] = useState({...initialProductSettings})
 
     const dispatch = useDispatch()
 
     const updateProductHandler = (params, isInvalid) => {
-        setAddedProducts([{...addedProducts[0], ...params}])
+        setSelectedProduct(prevState => ({...prevState, ...params}))
 
         if (isInvalid) {
             dispatch(zthActions.setInvalidField({
@@ -66,10 +68,10 @@ const CreatingCampaign = () => {
     }
 
     const setStepHandler = (step) => {
-        const budget = addedProducts[0].campaigns.daily_budget,
-            bid = addedProducts[0].campaigns.default_bid
+        const budget = selectedProduct.campaigns.daily_budget,
+            bid = selectedProduct.campaigns.default_bid
 
-        if (step === 1 && addedProducts.length === 0) {
+        if (step === 1 && !selectedProduct) {
             notification.error({
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
@@ -94,7 +96,7 @@ const CreatingCampaign = () => {
                     behavior: "smooth"
                 })
             }, 10)
-        } else if (step === 4) {
+        } else if (step === 6) {
             createCampaignHandler()
         } else {
             setCurrentStep(step)
@@ -102,10 +104,11 @@ const CreatingCampaign = () => {
         }
     }
 
-    const addProductHandler = (product) => setAddedProducts([{
-        ...addedProducts[0], ...product,
-        campaigns: {...addedProducts[0].campaigns, main_keywords: []}
-    }])
+
+    const addProductHandler = (product) => setSelectedProduct({
+        ...product,
+        ...initialProductSettings
+    })
 
     const fetchPortfolios = async () => {
         try {
@@ -113,7 +116,7 @@ const CreatingCampaign = () => {
             setPortfolioList(result)
         } catch (e) {
             console.log(e)
-            setPortfolioList([])
+            setPortfolioList()
         }
     }
 
@@ -155,7 +158,7 @@ const CreatingCampaign = () => {
             }
 
             const res = await zthServices.saveSettings({
-                setup_settings: setupSettingsFilter(addedProducts)
+                setup_settings: setupSettingsFilter([selectedProduct])
             })
 
             setTimeout(() => {
@@ -169,7 +172,7 @@ const CreatingCampaign = () => {
     }
 
     const requiredSettingsValidation = () => {
-        const product = addedProducts[0]
+        const product = selectedProduct
         if ([
             ...product.campaigns.main_keywords
                 .filter(item => item.hasMeaningfulWords !== false)
@@ -231,52 +234,73 @@ const CreatingCampaign = () => {
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
-            <Navigation
-                currentStep={currentStep}
-                openedSteps={openedSteps}
+            <div className="steps">
+                <SelectProduct
+                    visible={currentStep === 0}
+                    selectedProduct={selectedProduct}
+                    openedSteps={openedSteps}
 
-                onChangeStep={setStepHandler}
+                    onAddProducts={addProductHandler}
+                    onChangeOpenedSteps={setOpenedSteps}
+                    onChangeStep={setStepHandler}
+                />
+
+                <Step1
+                    visible={currentStep === 1}
+                    product={selectedProduct}
+                    portfolioList={portfolioList}
+                    invalidField={invalidField}
+
+                    onUpdate={updateProductHandler}
+                    onUpdateInvalidFields={setInvalidField}
+                    onChangeStep={setStepHandler}
+                />
+
+                <Step2
+                    visible={currentStep === 2}
+                    product={selectedProduct}
+                    invalidField={invalidField}
+
+                    onUpdate={updateProductHandler}
+                    onUpdateInvalidFields={setInvalidField}
+                    onChangeStep={setStepHandler}
+                />
+
+                <Step3
+                    visible={currentStep === 3}
+                    product={selectedProduct}
+
+                    onUpdate={updateProductHandler}
+                    onChangeStep={setStepHandler}
+                />
+
+                <Step4
+                    visible={currentStep === 4}
+                    product={selectedProduct}
+
+                    onUpdate={updateProductHandler}
+                    onChangeStep={setStepHandler}
+                />
+
+                {/*{currentStep === 2 && <OptionalSettings*/}
+                {/*    product={selectedProduct}*/}
+                {/*    portfolioList={portfolioList}*/}
+                {/*    invalidField={invalidField}*/}
+
+                {/*    onUpdate={updateProductHandler}*/}
+                {/*/>}*/}
+
+                {currentStep === 5 && <Overview
+                    product={selectedProduct}
+                    onChangeStep={setStepHandler}
+                    onCreate={createCampaignHandler}
+                />}
+            </div>
+
+            <SelectedProduct
+                product={selectedProduct}
             />
 
-            <SelectProduct
-                visible={currentStep === 0}
-                addedProducts={addedProducts}
-                openedSteps={openedSteps}
-
-                onAddProducts={addProductHandler}
-                onChangeOpenedSteps={setOpenedSteps}
-            />
-
-            <RequiredSettings
-                visible={currentStep === 1}
-                product={addedProducts[activeProductIndex]}
-                portfolioList={portfolioList}
-                invalidField={invalidField}
-
-                onUpdate={updateProductHandler}
-                onUpdateInvalidFields={setInvalidField}
-            />
-
-            {currentStep === 2 && <OptionalSettings
-                product={addedProducts[activeProductIndex]}
-                portfolioList={portfolioList}
-                invalidField={invalidField}
-
-                onUpdate={updateProductHandler}
-            />}
-
-            {currentStep === 3 && <Overview
-                product={addedProducts[activeProductIndex]}
-            />}
-
-            <StepActions
-                currentStep={currentStep}
-                product={addedProducts[activeProductIndex]}
-                createProcessing={createProcessing}
-                disabled={currentStep === 1 ? requiredSettingsValidation() : false}
-
-                onChangeStep={setStepHandler}
-            />
 
             <AvailableZTHWindow
                 visible={visibleAvailableWindow}

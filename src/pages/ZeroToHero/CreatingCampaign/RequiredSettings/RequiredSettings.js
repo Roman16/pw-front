@@ -297,7 +297,7 @@ const RequiredSettings = ({
 
                             <div className="col">
                                 <p className={'description portfolio-p'}>
-                                    At Sponsoreds, we use Portfolios to better organize advertising campaigns for
+                                    At Profit Whales, we use Portfolios to better organize advertising campaigns for
                                     different
                                     products so that you can adjust them in the Advertising Console more easily. We
                                     highly
