@@ -108,7 +108,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
             dispatch(daypartingActions.selectCampaign([selectedCampaign[0] || selectedCampaign]))
             onSetMultiselect(value)
         } else {
-            dispatch(daypartingActions.selectCampaign(selectedCampaign[0]))
+            dispatch(daypartingActions.selectCampaign(selectedCampaign[0] || campaignList[0] || {id: null}))
             onSetMultiselect(value)
         }
     }
@@ -159,7 +159,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                             {campaign.hasEnabledDayparting && <InformationTooltip
                                 arrowPointAtCenter={true}
                                 type={'custom'}
-                                description={'Campaign on day-parting'}
+                                description={'Campaign on dayparting'}
                                 position={'topRight'}
                             >
                                 <div className='on-dayparting'/>
