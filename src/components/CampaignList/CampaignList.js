@@ -159,7 +159,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                             {campaign.hasEnabledDayparting && <InformationTooltip
                                 arrowPointAtCenter={true}
                                 type={'custom'}
-                                description={'Campaign on day-parting'}
+                                description={'Campaign on dayparting'}
                                 position={'topRight'}
                             >
                                 <div className='on-dayparting'/>
