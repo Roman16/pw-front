@@ -16,7 +16,9 @@ export const daypartingServices = {
     getDayPartingParams,
     updateDayPartingParams,
     activateDayparting,
-    deactivateDayparting
+    deactivateDayparting,
+    deactivateMultiDayparting,
+    activateMultiDayparting,
 };
 
 function getCampaigns({pageSize, page, searchStr, cancelToken, campaign_type, campaign_status, onlyOndayparting}) {
@@ -59,7 +61,14 @@ function updateDayPartingParams({campaignId, state_encoded_string, status}) {
 function activateDayparting({campaignId}) {
     return api('put', `${daypartingUrls.dayParting(campaignId)}`, {status: 'ACTIVE'})
 }
+function activateMultiDayparting(data) {
+    return api('post', `${daypartingUrls.multiDayParting}?campaignId:in=${data.campaignId}&state_encoded_string=${data.state.join('')}`)
+}
 
 function deactivateDayparting({campaignId}) {
     return api('put', `${daypartingUrls.dayParting(campaignId)}`, {status: 'DISABLED'})
+}
+
+function deactivateMultiDayparting(data) {
+    return api('delete', `${daypartingUrls.multiDayParting}?campaignId:in=${data.campaignId}`)
 }
