@@ -5,9 +5,7 @@ const defaultState = {
     processing: false,
     totalSize: 0,
     copiedParams: undefined,
-    selectedCampaign: {
-        id: null
-    }
+    selectedCampaign: {id: null}
 }
 
 export function dayparting(state = defaultState, action) {
@@ -17,7 +15,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: action.payload.response,
                 totalSize: action.payload.total_count,
-                selectedCampaign: action.payload.response[0] || {id: null},
+                selectedCampaign: action.payload.response[0],
                 processing: false
             }
 

@@ -10,9 +10,12 @@ import tz from 'moment-timezone'
 import {useSelector} from "react-redux"
 import CampaignList from "../../../components/CampaignList/CampaignList"
 import {Header} from "./Header"
+import DaySwitchesMulti from "./DaySwithes/DaySwitchesMulti"
 
 
 const Dayparting = () => {
+    const [multiselect, setMultiselect] = useState(false)
+
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
     const timezone = activeAmazonMarketplace.timezone
 
@@ -42,10 +45,18 @@ const Dayparting = () => {
             />
 
             <div className="row">
-                <CampaignList/>
+                <CampaignList
+                    multiselect={multiselect}
 
-                <div className="col">
-                    <div className="row">
+                    onSetMultiselect={setMultiselect}
+                />
+
+                {multiselect ? <div className="col">
+                    <DaySwitchesMulti
+                        multiselect={multiselect}
+                    />
+                </div> : <div className="col">
+                    <div className="row charts">
                         <OutBudget
                             date={selectedDate}
                         />
@@ -56,13 +67,15 @@ const Dayparting = () => {
                     </div>
 
                     <DaySwitches
+                        multiselect={multiselect}
 
                     />
 
                     <PlacementsStatistics
                         date={selectedDate}
                     />
-                </div>
+                </div>}
+
             </div>
         </div>
 

@@ -44,6 +44,48 @@
         margin: 0 8px 0 0;
       }
     }
+
+    .multi-select-switch {
+      display: flex;
+      align-items: center;
+
+      .btn {
+        width: 2.2857142857142856rem;
+        height: 2.2857142857142856rem;
+        border-radius: 4px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 3px 0 0;
+
+        svg {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+          fill: #353A3E;
+        }
+
+        &:hover {
+          background: rgba(105, 89, 171, 0.15);
+
+          svg {
+            fill: #6959AB;
+          }
+        }
+
+        &.active {
+          svg {
+            fill: #6959AB;
+          }
+        }
+      }
+
+      .select-count {
+        font-size: 0.8571428571428571rem;
+        line-height: 1rem;
+        color: #6959AB;
+      }
+    }
   }
 
   .filter-dropdown-window {
