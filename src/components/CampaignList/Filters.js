@@ -102,7 +102,7 @@ const Filters = ({
 
             <div className="row">
                 <div className={'multi-select-switch'}>
-                    <button className={`btn`} onClick={() => onSetMultiselect('all')}>
+                    <button title={'Select all on this page'} className={`btn`} onClick={() => onSetMultiselect('all')}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M1.11106 13.3337H1C0.447715 13.3337 0 13.7815 0 14.3337V19.0002C0 19.5525 0.447715 20.0002 1 20.0002H5.66649C6.21877 20.0002 6.66649 19.5525 6.66649 19.0002V18.8882H2.11106C1.55878 18.8882 1.11106 18.4405 1.11106 17.8882V13.3337Z"/>
@@ -147,7 +147,7 @@ const Filters = ({
                         </svg>
                     </button>
 
-                    <button className={`btn ${multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(true)}>
+                    <button title={'Multi-campaigns Dayparting mode'} className={`btn ${multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(true)}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M1.11105 13.3337H1C0.447715 13.3337 0 13.7815 0 14.3337V19.0002C0 19.5525 0.447715 20.0002 1 20.0002H5.66649C6.21877 20.0002 6.66649 19.5525 6.66649 19.0002V18.8882H2.11105C1.55877 18.8882 1.11105 18.4405 1.11105 17.8882V13.3337Z"/>
@@ -168,7 +168,7 @@ const Filters = ({
                         </svg>
                     </button>
 
-                    <button className={`btn ${!multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(false)}>
+                    <button title={'Single campaign Dayparting mode'} className={`btn ${!multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(false)}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M1.11106 13.3337H1C0.447715 13.3337 0 13.7815 0 14.3337V19.0002C0 19.5525 0.447715 20.0002 1 20.0002H5.66649C6.21877 20.0002 6.66649 19.5525 6.66649 19.0002V18.8882H2.11106C1.55878 18.8882 1.11106 18.4405 1.11106 17.8882V13.3337Z"/>
