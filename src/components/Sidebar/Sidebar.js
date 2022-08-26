@@ -74,6 +74,7 @@ const Sidebar = () => {
     }
 
     const setMarketplaceHandler = (data) => {
+        history.push('/home')
         dispatch(userActions.setActiveRegion(data))
         window.location.reload()
     }
