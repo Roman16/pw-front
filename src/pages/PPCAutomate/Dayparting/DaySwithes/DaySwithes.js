@@ -402,7 +402,7 @@ class DaySwitches extends Component {
                                 onClick={this.switchDayPartingHandler}
                                 disabled={processing || !this.props.campaignId}
                             >
-                                {activeDayparting ? 'Disable Day-parting' : 'Enable Day-parting'}
+                                {activeDayparting ? 'Disable Dayparting' : 'Enable Dayparting'}
                             </button>
 
                             <div className={`reset-btn`} onClick={activeDayparting && this.handleReset}>
@@ -454,7 +454,7 @@ class DaySwitches extends Component {
                                     overlayClassName={'diff-tooltip'}
                                     getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
                                     position="bottomRight"
-                                    description={!activeDayparting ? 'Enable day-parting first' : 'No copied params'}>
+                                    description={!activeDayparting ? 'Enable dayparting first' : 'No copied params'}>
                                     <div className="past-btn">
                                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -540,7 +540,7 @@ class DaySwitches extends Component {
                     <Fragment>
                         <h2>Are you sure?</h2>
                         <p>
-                            This will result in pausing the day-parting feature for this particular campaign. Your
+                            This will result in pausing the dayparting feature for this particular campaign. Your
                             settings will be saved. <br/> Please note, that this campaign will be set to its initial
                             state:
                             <b>{initialState}</b>

@@ -194,7 +194,7 @@ const Filters = ({
                         onChange={onChangeSwitch}
                     />
 
-                    <label htmlFor="">On day-parting only</label>
+                    <label htmlFor="">On dayparting only</label>
                 </div>
             </div>
         </div>

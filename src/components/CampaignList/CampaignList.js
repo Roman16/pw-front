@@ -108,7 +108,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
             dispatch(daypartingActions.selectCampaign([selectedCampaign[0] || selectedCampaign]))
             onSetMultiselect(value)
         } else {
-            dispatch(daypartingActions.selectCampaign(selectedCampaign[0]))
+            dispatch(daypartingActions.selectCampaign(selectedCampaign[0] || campaignList[0] || {id: null}))
             onSetMultiselect(value)
         }
     }
