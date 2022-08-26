@@ -15,7 +15,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: action.payload.response,
                 totalSize: action.payload.total_count,
-                selectedCampaign: action.payload.response[0],
+                selectedCampaign: action.payload.response[0] || {id: null},
                 processing: false
             }
 

@@ -96,7 +96,6 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     })
 
     const setMultiselectHandler = (value) => {
-
         if (value === 'all') {
             onSetMultiselect(true)
 
@@ -106,7 +105,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                 dispatch(daypartingActions.selectCampaign([...campaignList]))
             }
         } else if (value) {
-            dispatch(daypartingActions.selectCampaign([selectedCampaign]))
+            dispatch(daypartingActions.selectCampaign([selectedCampaign[0] || selectedCampaign]))
             onSetMultiselect(value)
         } else {
             dispatch(daypartingActions.selectCampaign(selectedCampaign[0]))
@@ -116,6 +115,9 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
 
     useEffect(() => {
         getCampaignList()
+
+        onSetMultiselect(false)
+        dispatch(daypartingActions.selectCampaign(selectedCampaign[0] || {id: null}))
 
         return (() => {
             dispatch(daypartingActions.setCampaignList({
