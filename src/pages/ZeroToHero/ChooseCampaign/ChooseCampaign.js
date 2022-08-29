@@ -24,7 +24,7 @@ const campaigns = [
     },
     {
         name: 'Sponsored Display',
-        description: `Re-engage shoppers off Amazon who viewed your <br> products or similar products, and drive them to your detail pages.`,
+        description: `Re-engage shoppers off Amazon who viewed your <br> products or similar products, and drive them to your <br> detail pages.`,
         image: sponsoredDisplayImage,
         soon: true
     }
@@ -49,8 +49,7 @@ const ChooseCampaign = () => {
         <div className={'choose-campaign-container'}>
 
             <section className='choose-campaign'>
-                <h2>Welcome to Zero to Hero!</h2>
-                <p className={'description'}>Choose your campaign type to get started:</p>
+                <h2>Choose Your Campaign Type</h2>
 
                 <ul className="campaign-types">
                     {campaigns.map(item => (
@@ -64,7 +63,7 @@ const ChooseCampaign = () => {
                                 disabled={item.soon}
                                 onClick={() => handleContinue('sponsored_products')}
                             >
-                                {item.soon ? 'Coming Soon' : 'Start'}
+                                {item.soon ? 'Coming Soon' : 'Continue'}
                             </button>
                         </li>
                     ))}

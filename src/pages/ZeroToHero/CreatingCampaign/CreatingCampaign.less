@@ -1,96 +1,10 @@
-.main-container .page > div.creating-campaign-page {
-  flex-direction: row;
-
-  .steps {
-    flex: 1;
-    display: flex;
-  }
-
-  .selected-product {
-    width: 25.7%;
-    margin: 0 10px;
-  }
+.creating-campaign-page {
+  height: 100vh;
 
   .step {
     flex: 1;
-    padding: 10px 0 10px 10px;
-
-    .section-header {
-      display: flex;
-      flex-direction: column;
-
-      .step-count {
-        font-size: 1.1428571428571428rem;
-        line-height: 1.4285714285714286rem;
-        color: #C9CBD4;
-        margin-bottom: 1.4285714285714286rem;
-      }
-
-      h2 {
-        font-weight: 600;
-        font-size: 2.2857142857142856rem;
-        line-height: 2.7142857142857144rem;
-        color: #353A3E;
-        margin-bottom: 1.4285714285714286rem;
-        display: flex;
-        align-items: flex-start;
-
-        span {
-          height: 1.4285714285714286rem;
-          padding: 0 5px;
-          background: #F3F3F3;
-          border-radius: 4px;
-          display: flex;
-          align-items: center;
-
-          font-weight: 500;
-          font-size: 0.8571428571428571rem;
-          line-height: 1.0714285714285714rem;
-          color: #353A3E;
-          margin: 0 0 0 10px;
-        }
-      }
-
-      p {
-        font-size: 1.1428571428571428rem;
-        line-height: 1.4285714285714286rem;
-        color: #686868;
-        margin-bottom: 1.4285714285714286rem;
-      }
-    }
-
-    .form-group, .text-area-group {
-      display: flex;
-      flex-direction: column;
-
-      label {
-        font-weight: 600;
-        font-size: 1rem;
-        line-height: 1.2142857142857142rem;
-        color: #353A3E;
-        margin-bottom: 0.7142857142857143rem;
-        display: flex;
-        align-items: center;
-      }
-
-      & > p {
-        font-weight: 500;
-        font-size: 1rem;
-        line-height: 1.2142857142857142rem;
-        color: #686868;
-        margin-bottom: 0.7142857142857143rem;
-      }
-
-      &.radio {
-        .ant-radio-group {
-          display: flex;
-
-          label {
-            font-weight: 500;
-          }
-        }
-      }
-    }
+    padding: 10px;
+    overflow-y: auto;
 
     & > .bg-container {
       width: 100%;
@@ -99,188 +13,17 @@
       background: #fff;
       border-radius: 4px;
       box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-      padding: 50px 0 50px;
+      padding: 30px 0 20px;
       display: flex;
-      position: relative;
     }
 
     .container {
       width: 100%;
-      max-width: 60rem;
+      max-width: 1100px;
       min-height: 100%;
       margin: 0 auto;
-      padding: 0 1.4285714285714286rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-    }
-
-    .nav-buttons {
-      display: flex;
-      margin: 2.857142857142857rem 0 0 0;
-
-      .btn {
-        height: 3.4285714285714284rem;
-        position: relative;
-
-        .ant-spin {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-      }
-
-      .grey {
-        width: 3.4285714285714284rem;
-        margin: 0 1.4285714285714286rem 0 0;
-        padding: 0;
-      }
-
-      .next-step {
-        font-size: 1.1428571428571428rem;
-
-        svg {
-          margin: auto 0 auto 1rem;
-        }
-      }
-    }
-
-
-    .progress-bar {
-      height: 6px;
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: #F3F3F3;
-      border-radius: 4px;
-
-      div {
-        height: 100%;
-        background: #6959AB;
-        border-radius: 4px;
-      }
-    }
-
-    .keywords-list {
-      width: 100%;
-      flex: 1;
-      border: 1px solid #C9CBD4;
-      box-sizing: border-box;
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      background: #fff;
-
-      .header {
-        font-size: 0.8571428571428571rem;
-        color: #353A3E;
-        font-weight: 600;
-        padding: 5px 10px;
-        border-bottom: 2px solid #C9CBD4;
-        display: flex;
-      }
-
-      ul {
-        flex: 1;
-        margin: 0;
-        padding: 0;
-        overflow: auto;
-      }
-
-      li {
-        padding: 5px 10px;
-        border-bottom: 1px solid #C9CBD4;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-
-        &:last-child {
-          border: 0;
-        }
-
-        i {
-          width: 1.4285714285714286rem;
-          height: 1.4285714285714286rem;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &:hover {
-            background: #F5F5FF;
-            cursor: pointer;
-          }
-
-          svg {
-            stroke: #656A84;
-          }
-        }
-      }
-    }
-
-    .edit-block {
-      position: relative;
-
-      textarea {
-        background: #fff;
-      }
-
-      label {
-        z-index: 11;
-      }
-
-      &::before {
-        content: '';
-        position: absolute;
-        top: -10px;
-        bottom: -10px;
-        left: -10px;
-        right: -10px;
-        border-radius: 4px;
-        z-index: 0;
-        transition: .3s ease-in-out;
-        background: rgba(105, 89, 171, 0.1);
-        opacity: 0;
-      }
-
-      &.visible::before {
-        opacity: 1;
-        animation-duration: 4s;
-        animation-name: showAnimation;
-      }
-
-      @keyframes showAnimation {
-        0% {
-          opacity: 0;
-        }
-
-        10% {
-          opacity: 1;
-        }
-
-        30% {
-          opacity: .5;
-        }
-
-        50% {
-          opacity: 1;
-        }
-
-        80% {
-          opacity: 1;
-        }
-
-        100% {
-          opacity: 0;
-        }
-      }
     }
   }
 }
@@ -347,27 +90,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-    }
-  }
-}
-
-.ant-popover.estimate-description {
-  .ant-popover-inner-content {
-    max-width: 400px;
-    font-size: 0.8571428571428571rem;
-    line-height: 1.0714285714285714rem;
-  }
-
-  ul {
-    margin: 10px 0;
-    padding: 0 0 0 1.0714285714285714rem;
-
-    li {
-      margin: 5px 0 0 0;
-
-      span {
-        font-weight: 600;
       }
     }
   }

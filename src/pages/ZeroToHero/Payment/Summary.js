@@ -79,6 +79,12 @@ const Summary = ({jobPrice, payProcessing}) => {
                 </div>}
             </div>
 
+            <div className="total-price">
+                <div className={'label'}>TOTAL PRICE:</div>
+                <div className="value">
+                    ${numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
+                </div>
+            </div>
 
             {/*<div className="discount">*/}
             {/*    <div className="label">Discount:</div>*/}
@@ -89,23 +95,13 @@ const Summary = ({jobPrice, payProcessing}) => {
             {/*    <div className="value">$500</div>*/}
             {/*</div>*/}
 
-            <div className="action-block">
-                <div className="total-price">
-                    <div className={'label'}>Total:</div>
-
-                    <div className="value">
-                        ${numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
-                    </div>
-                </div>
-
-                <button
-                    className={'btn default'}
-                    disabled={payProcessing}
-                >
-                    Pay
-                    {payProcessing && <Spin size={'small'}/>}
-                </button>
-            </div>
+            <button
+                className={'sds-btn default'}
+                disabled={payProcessing}
+            >
+                Pay
+                {payProcessing && <Spin size={'small'}/>}
+            </button>
         </div>
 
     )

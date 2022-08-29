@@ -13,13 +13,23 @@
     display: flex;
   }
 
-
-  .progress-bar {
-    div {
-      width: calc(100% / 6);
-    }
+  h2 {
+    font-weight: 600;
+    font-size: 1.4285714285714286rem;
+    line-height: 1.7142857142857142rem;
+    color: #353A3E;
+    margin-bottom: 20px;
   }
 
+  .form-group.search {
+    width: 100%;
+    max-width: 470px;
+    margin-bottom: 20px;
+
+    .search-field {
+      height: 2.357142857142857rem;
+    }
+  }
 
   .products {
     flex: 1;
@@ -59,12 +69,6 @@
             stroke: #6959AB;
           }
         }
-      }
-
-      .form-group.search {
-        width: 100%;
-        max-width: 420px;
-        margin: 0 0 0 auto;
       }
     }
 
@@ -328,7 +332,6 @@
           @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
             right: 19px;
           }
-
           .custom-tooltip {
             margin: 0;
           }

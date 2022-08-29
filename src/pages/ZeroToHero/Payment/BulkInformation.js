@@ -1,5 +1,6 @@
 import React from "react"
 import noImage from "../../../assets/img/no-image-available.svg"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 const BulkInformation = ({product}) => {
     const job = product.job
@@ -15,7 +16,7 @@ const BulkInformation = ({product}) => {
                     <div className="col">
                         <h3>{product.name}</h3>
                         <div className="price">
-                            {product.price ? `$${product.price}` : ''} $35.99
+                            {product.price ? <CurrencyWithCode value={product.price}/> : ''} $35.99
                         </div>
 
                         <div className="row">
@@ -90,6 +91,10 @@ const BulkInformation = ({product}) => {
             </div>
 
             <div className="campaigns-count">
+                <div className="total">
+                    Total Campaigns: {job.sponsored_products_campaigns_count + job.sponsored_display_campaigns_count}
+                </div>
+
                 <ul>
                     <li>
                         <b>{job.sponsored_products_campaigns_count}</b>
@@ -108,10 +113,6 @@ const BulkInformation = ({product}) => {
                         Product Targeting <br/> Campaigns
                     </li>
                 </ul>
-
-                <div className="total">
-                    Total Campaigns: {job.sponsored_products_campaigns_count + job.sponsored_display_campaigns_count}
-                </div>
             </div>
         </div>
     )

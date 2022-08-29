@@ -1,4 +1,5 @@
 import React from "react";
+import image from '../../../assets/img/zth/success-image.png';
 import './ThankPageZTH.less';
 import {history} from "../../../utils/history";
 
@@ -7,14 +8,17 @@ const ThankPage = () => {
         <div className={'success-page-zth'}>
             <section>
                 <h1>
-                    Congratulations! Generation of your campaigns has started!
+                    Congratulations! <br/> Your campaigns are in progress!
                 </h1>
 
                 <p>
-                    Zero to Hero software started generation of your campaigns structure based on inputs you <br/>
-                    provided. Due to the complexity of the process and high volume of data required to be processed <br/>
-                    to create professionally structured campaigns from scratch, it may take our system up to 6 hours <br/>
-                    to generate your campaigns.
+                    It takes up to 15 minutes for our algorithm to create and upload professionally structured campaigns
+                    to your Seller Central account.
+                </p>
+
+                <p>
+                    Make sure you paused the SKU’s with Zero to Hero campaigns in other Sponsored Products Ad Campaigns
+                    that weren’t created by our software to prevent the competition.
                 </p>
 
                 <button
@@ -23,6 +27,10 @@ const ThankPage = () => {
                 >
                     View Status
                 </button>
+
+                <div className="image">
+                    <img src={image} alt=""/>
+                </div>
             </section>
         </div>
     )

@@ -22,7 +22,7 @@ let source = null
 
 let timeoutId = null
 
-const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, onChangeOpenedSteps, onChangeStep}) => {
+const SelectProduct = ({visible, addedProducts, openedSteps, onAddProducts, onChangeOpenedSteps}) => {
     const [products, setProducts] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
@@ -120,7 +120,7 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
             return
         }
 
-        if (selectedProduct.id !== product.id) {
+        if (addedProducts[0].id !== product.id) {
             selectedParent = product
             openVariationsListHandler(product.id)
         }
@@ -136,12 +136,17 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
     return (<section className={`step select-product ${visible ? 'visible' : ''}`}>
         <div className="bg-container">
             <div className="container">
-                <div className="section-header">
-                    <div className="step-count">Step 1/6</div>
-                    <h2>Choose a product</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum nulla.</p>
-                </div>
+                <h2 className={'step-title'}>Choose the product you want to create campaigns for</h2>
 
+                <div className="form-group search">
+                    <Search
+                        className="search-field"
+                        placeholder={'Search by product name, ASIN or SKU'}
+                        value={searchStr}
+                        onChange={e => changeSearchHandler(e.target.value)}
+                        suffix={<SVG id={'search'}/>}
+                    />
+                </div>
 
                 <div className="products">
                     <div className="block-header">
@@ -151,16 +156,6 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
                                 onClick={() => changePaginationHandler({sorting: requestParams.sorting === 'desc' ? 'asc' : 'desc'})}>
                             <SVG id={'sorter-arrow'}/>
                         </button>
-
-                        <div className="form-group search">
-                            <Search
-                                className="search-field"
-                                placeholder={'Search by product name, ASIN or SKU'}
-                                value={searchStr}
-                                onChange={e => changeSearchHandler(e.target.value)}
-                                suffix={<SVG id={'search'}/>}
-                            />
-                        </div>
                     </div>
 
                     <ul>
@@ -173,8 +168,8 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
                                 key={product.id}
                                 product={product}
                                 isOpened={product.id === openedProduct}
-                                isSelected={selectedProduct.id === product.id}
-                                selectedProduct={selectedProduct}
+                                isSelected={!!addedProducts.find(item => item.id === product.id)}
+                                selectedProducts={addedProducts}
                                 type={'all_products'}
                                 fetchVariationsProcessing={fetchVariationsProcessing}
 
@@ -197,17 +192,6 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
                         disabled={totalSize === 0}
                     />
                 </div>
-
-
-                <NavigationButtons
-                    prevStep={false}
-                    disabled={!selectedProduct.id}
-                    onNextStep={() => onChangeStep(1)}
-                />
-            </div>
-
-            <div className="progress-bar">
-                <div/>
             </div>
         </div>
 
@@ -281,32 +265,5 @@ const NoFound = () => <div className="empty no-f0und">
     <h4>No results found</h4>
     <p>Please select products you want to create <br/> campaigns for</p>
 </div>
-
-export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disabled, nextBtnText = 'NEXT', nextBtnArrow = true, nextBtnProcessing=false}) => (
-    <div className="nav-buttons">
-        {prevStep && <button className="btn grey" onClick={onPrevStep}>
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                    <path d="M4.75 1L1 5M1 5L4.75 9M1 5L13 5" stroke="#353A3E" stroke-width="2" stroke-linecap="round"
-                          stroke-linejoin="round"/>
-                </g>
-            </svg>
-        </button>}
-
-        <button className="btn default next-step" onClick={onNextStep} disabled={disabled || nextBtnProcessing}>
-            {nextBtnText}
-
-            {nextBtnArrow &&
-            <svg width="15" height="10" viewBox="0 0 15 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g>
-                    <path d="M9.75 1L13.5 5M13.5 5L9.75 9M13.5 5L1.5 5" stroke="white" stroke-width="2"
-                          stroke-linecap="round" stroke-linejoin="round"/>
-                </g>
-            </svg>}
-
-            {nextBtnProcessing && <Spin size={'small'}/>}
-        </button>
-    </div>
-)
 
 export default SelectProduct

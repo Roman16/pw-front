@@ -154,7 +154,7 @@
         font-size: 1.4285714285714286rem;
         color: #343C5A;
         padding: 1.7142857142857142rem;
-        border-top: 1px solid #C9CBD4;
+        border-bottom: 1px solid #C9CBD4;
         text-align: center;
       }
 
@@ -584,7 +584,7 @@
     display: flex;
     flex-direction: column;
     border-left: 2px solid #C9CBD4;
-    padding: 2.142857142857143rem 2.142857142857143rem 0;
+    padding: 2.142857142857143rem 2.142857142857143rem 2.857142857142857rem;
 
     h2 {
       font-weight: 600;
@@ -736,34 +736,9 @@
       margin: auto 0;
     }
 
-    .action-block {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-      margin: auto 0 0 0;
-      padding: 1.0714285714285714rem 0;
-
-      &::before {
-        content: '';
-        height: 2px;
-        background: #C9CBD4;
-        position: absolute;
-        top: 0;
-        left: -2.142857142857143rem;
-        right: -2.142857142857143rem;
-      }
-
-      .btn {
-        height: 3.4285714285714284rem;
-        font-size: 1.1428571428571428rem;
-        padding: 0 5rem;
-      }
-    }
-
     .total-price {
       display: flex;
-      align-items: center;
+      justify-content: space-between;
       margin-bottom: 10px;
       font-weight: 600;
       font-size: 1.7142857142857142rem;
@@ -771,7 +746,6 @@
 
       .label {
         color: #353A3E;
-        margin: 0 5px 0 0;
       }
 
       .value {
