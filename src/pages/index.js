@@ -22,6 +22,7 @@ const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/Choo
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
+const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 
@@ -308,7 +309,7 @@ const AuthorizedUser = (props) => {
                                         component={Payment}
                                     />}
 
-                                    {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
                                     {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact

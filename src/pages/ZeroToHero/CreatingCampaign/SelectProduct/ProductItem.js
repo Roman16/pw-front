@@ -14,7 +14,7 @@ const ProductItem = ({
                          isOpened,
                          onOpenVariations,
                          showChildCount,
-                         selectedProducts,
+                         selectedProduct,
                          fetchVariationsProcessing,
                          disabled
                      }) => {
@@ -78,7 +78,7 @@ const ProductItem = ({
                     </div>
                 </div>
 
-                {!disabled && product.variations && product.variations.find(i => i.id === selectedProducts[0].id) &&
+                {!disabled && product.variations && product.variations.find(i => i.id === selectedProduct.id) &&
                 <div className="variation-selected">
                     <InformationTooltip
                         type={'custom'}
@@ -125,7 +125,7 @@ const ProductItem = ({
             {product.variations && isOpened &&
             <div className={`variations-list`}>
                 {fetchVariationsProcessing ? <Spin size={'large'}/> : product.variations.map(variationProduct => {
-                    const variationIsSelected = !!selectedProducts.find(item => item.id === variationProduct.id) || isSelected,
+                    const variationIsSelected = selectedProduct.id === variationProduct.id || isSelected,
                         variationIsDisabled = variationProduct.eligibility_status === 'INELIGIBLE'
 
                     return (

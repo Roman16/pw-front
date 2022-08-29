@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="41cf014b-2cc6-487e-8087-6bcc1f807e3c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/AccountDetails 2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/Accounts 2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/Filters 2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/Tabs 2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/AmazonConnection/Amazon.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/AmazonConnection/Connectors.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/AmazonConnection/Seller.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/Info.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/Information.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/Information.less" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/Password.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Account/Information/Personal.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectMws/ConnectMws.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectPpc/PPCRedirect.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CampaignList/CampaignList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CampaignList/CampaignList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/CampaignList/Filters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/CampaignList/Filters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ErrorBar/ErrorBar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ErrorBar/ErrorBar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ModalWindow/PWWindows/LoadingAmazonAccountWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalWindow/PWWindows/LoadingAmazonAccountWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ModalWindow/PWWindows/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalWindow/PWWindows/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/ConnectedRegions/ConnectedRegions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/ConnectedRegions/ConnectedRegions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Sidebar/Sidebar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Table/CustomTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/CustomTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Table/CustomTable.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Table/CustomTable.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/constans/api.urls.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/constans/api.urls.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Account/ApiConnection/AccountDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/AccountDetails.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Account/ApiConnection/Accounts.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/Accounts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Account/ApiConnection/ApiConnection.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Account/ApiConnection/ApiConnection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Account/BillingInformation/BillingInformation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Account/BillingInformation/BillingInformation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Account/Subscriptions/Subscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Account/Subscriptions/Subscriptions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analytics/components/Header/AttributionWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analytics/components/Header/AttributionWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analytics/components/TableList/TableList.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analytics/components/TableList/TableList.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analytics/componentsV2/TableList/TableList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analytics/componentsV2/TableList/TableList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PPCAutomate/Dayparting/DaySwithes/DaySwitchesMulti.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PPCAutomate/Dayparting/DaySwithes/DaySwitchesMulti.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PPCAutomate/Dayparting/DaySwithes/DaySwithes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PPCAutomate/Dayparting/DaySwithes/DaySwithes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/ZeroToHero/Settings/ProductsList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ZeroToHero/Settings/ProductsList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/ConnectAdsApiJourney/ConnectAdsApiJourney.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/ConnectSpApiJourney/ConnectSpApiJourney.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/FullJourney/FullJourney.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/FullJourney/FullJourney.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectAdsApi/ConnectAdsApi.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectPpc/ConnectPpc.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectAdsApi/ConnectAdsApi.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectPpc/ConnectPpc.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectSpApi/ConnectSpApi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectSpApi/ConnectSpApi.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/ConnectMws/ConnectMws.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/Navigations/Navigations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/Navigations/Navigations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/SelectRegion/SelectRegion.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/SelectRegion/SelectRegion.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/SelectRegion/SelectRegion.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/SelectRegion/SelectRegion.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/Steps.less" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/authentication/AccountBinding/components/Steps.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reducers/analytics.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/reducers/analytics.reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routers/routers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routers/routers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/analytics.services.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/analytics.services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/user.services.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/user.services.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/dateFormatting.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/dateFormatting.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
+  </component>
+  <component name="ProjectId" id="1pfwrbsUWlygHePj9KViAxyaUUc" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/pages/Account/Subscriptions/modalWindows" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/ZeroToHero/CreatingCampaign/Step1/SeedKeywords" />
+      <recent name="$PROJECT_DIR$/src/pages/ZeroToHero/CreatingCampaign/Step4" />
+      <recent name="$PROJECT_DIR$/src/pages/ZeroToHero/CreatingCampaign/Step3" />
+      <recent name="$PROJECT_DIR$/src/components/Sidebar/Marketplaces" />
+      <recent name="$PROJECT_DIR$/src/pages/Account/Subscriptions/components" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/Account/Subscriptions/modalWindows" />
+      <recent name="$PROJECT_DIR$/src/pages/Analytics/components/MainMetrics" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="npm.start" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41cf014b-2cc6-487e-8087-6bcc1f807e3c" name="Default Changelist" comment="" />
+      <created>1615587652526</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615587652526</updated>
+      <workItem from="1615587654873" duration="21717000" />
+      <workItem from="1615809684590" duration="30235000" />
+      <workItem from="1616059328170" duration="15631000" />
+      <workItem from="1616132829162" duration="86113000" />
+      <workItem from="1617089210021" duration="28900000" />
+      <workItem from="1617357173987" duration="519000" />
+      <workItem from="1617481947737" duration="3409000" />
+      <workItem from="1617616571960" duration="145684000" />
+      <workItem from="1619262494491" duration="31912000" />
+      <workItem from="1619598005423" duration="74000" />
+      <workItem from="1619600567312" duration="38843000" />
+      <workItem from="1620240264119" duration="90000" />
+      <workItem from="1620287957185" duration="118386000" />
+      <workItem from="1621841658360" duration="41973000" />
+      <workItem from="1623484565684" duration="89000" />
+      <workItem from="1624906088328" duration="1717000" />
+      <workItem from="1625657812100" duration="9933000" />
+      <workItem from="1626084939827" duration="60812000" />
+      <workItem from="1627278974875" duration="48329000" />
+      <workItem from="1628521892422" duration="50000" />
+      <workItem from="1628576997389" duration="32552000" />
+      <workItem from="1629181722917" duration="6751000" />
+      <workItem from="1629266795316" duration="2955000" />
+      <workItem from="1629356935902" duration="84550000" />
+      <workItem from="1630646213430" duration="130495000" />
+      <workItem from="1632809279590" duration="187224000" />
+      <workItem from="1634821899368" duration="804000" />
+      <workItem from="1634842135061" duration="123044000" />
+      <workItem from="1635867420941" duration="133123000" />
+      <workItem from="1637043586447" duration="518000" />
+      <workItem from="1637052215791" duration="146312000" />
+      <workItem from="1638950348416" duration="79055000" />
+      <workItem from="1640100665200" duration="5117000" />
+      <workItem from="1640592823192" duration="28359000" />
+      <workItem from="1641806309571" duration="15734000" />
+      <workItem from="1641892065189" duration="26826000" />
+      <workItem from="1642498776622" duration="7225000" />
+      <workItem from="1642511335663" duration="92380000" />
+      <workItem from="1643532297205" duration="97000" />
+      <workItem from="1643537206061" duration="32226000" />
+      <workItem from="1643793681708" duration="26917000" />
+      <workItem from="1644247620788" duration="79075000" />
+      <workItem from="1647511243907" duration="5467000" />
+      <workItem from="1648221873254" duration="895000" />
+      <workItem from="1648294056932" duration="29000" />
+      <workItem from="1648563265647" duration="11601000" />
+      <workItem from="1649058022821" duration="111643000" />
+      <workItem from="1650476350277" duration="145000" />
+      <workItem from="1650523451063" duration="36132000" />
+      <workItem from="1650792238185" duration="46163000" />
+      <workItem from="1651473849703" duration="8069000" />
+      <workItem from="1651655718119" duration="7233000" />
+      <workItem from="1652440002285" duration="359000" />
+      <workItem from="1653909021199" duration="21469000" />
+      <workItem from="1654612632126" duration="10643000" />
+      <workItem from="1654857752986" duration="1696000" />
+      <workItem from="1655038219007" duration="12745000" />
+      <workItem from="1655713647707" duration="7569000" />
+      <workItem from="1655800297316" duration="95609000" />
+      <workItem from="1658230841317" duration="148826000" />
+      <workItem from="1660984544963" duration="35956000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
