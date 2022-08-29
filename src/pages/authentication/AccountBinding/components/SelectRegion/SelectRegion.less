@@ -70,7 +70,6 @@
         width: 18px;
         height: 18px;
         border-radius: 50%;
-        border: 2px solid #C9CBD4;
         position: relative;
         transition: .2s ease-in-out;
 
@@ -97,6 +96,12 @@
 
       &.active {
         border: 2px solid #6959AB;
+
+        .ant-radio-wrapper {
+          .ant-radio-inner {
+            border-color: #6959AB;
+          }
+        }
 
         h4 {
           color: #353A3E;

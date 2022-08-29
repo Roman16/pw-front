@@ -79,6 +79,7 @@ const Payment = (props) => {
 
                 if (res.error) {
                     notification.error({title: res.error.message})
+                    setPayProcessing(false)
                 } else if (res.paymentMethod) {
                     setTimeout(() => {
                         zthServices.payBatch({
@@ -90,6 +91,7 @@ const Payment = (props) => {
                             })
                             .catch(e => {
                                 console.log(e)
+                                setPayProcessing(false)
                             })
 
                     }, 1500)
@@ -105,6 +107,7 @@ const Payment = (props) => {
                         })
                         .catch(e => {
                             console.log(e)
+                            setPayProcessing(false)
                         })
                 }, 1500)
             }
@@ -132,8 +135,6 @@ const Payment = (props) => {
                     })
             }
         }
-
-        setPayProcessing(false)
     }
 
     const swipeCardHandler = (index) => {
