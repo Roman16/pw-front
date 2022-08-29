@@ -63,7 +63,7 @@ const initialState = {
         endDate: moment().toISOString()
     },
     portfolioList: [],
-    attributionWindow: localStorage.getItem('attributionWindow') || '30'
+    attributionWindow: localStorage.getItem('attributionWindow') || '7'
 }
 
 

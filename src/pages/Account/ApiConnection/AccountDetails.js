@@ -24,12 +24,12 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
 
         <div className="row">
             <ApiAccess
-                title={'MWS API access'}
-                status={account.mws_access_status}
-                isAttached={account.is_mws_attached}
+                title={'Amazon SP API access'}
+                status={account.amazon_sp_api_access_status}
+                isAttached={account.is_amazon_sp_api_attached}
 
-                onDisconnect={() => onDisconnect('mws', account.id)}
-                onConnect={() => history.push(`/connect-mws-account/${account.region_type}`)}
+                onDisconnect={() => onDisconnect('sp', account.id)}
+                onConnect={() => history.push(`/connect-sp-api/${account.id}`)}
             />
 
             <ApiAccess
@@ -38,7 +38,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
                 isAttached={account.is_amazon_ads_api_attached}
 
                 onDisconnect={() => onDisconnect('ads', account.id)}
-                onConnect={() => history.push(`/connect-ppc-account/${account.id}`)}
+                onConnect={() => history.push(`/connect-ads-api/${account.id}`)}
             />
         </div>
     </div>)
@@ -108,6 +108,8 @@ const ApiAccess = ({title, status, isAttached, onDisconnect, onConnect}) => {
     const statusText = () => {
         if (success) {
             return (<span style={{color: '#7FD3A1'}}>Success</span>)
+        } else if(!isAttached) {
+            return (<span style={{color: '#FF5256'}}>No access granted</span>)
         } else {
             return (<span style={{color: '#FF5256'}}>Failed</span>)
         }

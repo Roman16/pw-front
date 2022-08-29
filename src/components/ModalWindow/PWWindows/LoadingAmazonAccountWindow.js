@@ -47,11 +47,11 @@ const tools = [
         title: 'Dayparting',
         link: '/ppc/dayparting'
     },
-    {
-        key: 'products_info',
-        title: 'Products Info',
-        link: '/ppc/product-settings'
-    },
+    // {
+    //     key: 'products_info',
+    //     title: 'Products Info',
+    //     link: '/ppc/product-settings'
+    // },
     {
         key: 'subscription',
         title: 'Subscriptions',

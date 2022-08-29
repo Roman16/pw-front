@@ -46,7 +46,7 @@ const ApiConnection = () => {
 
     const revokeAccessHandler = async (type, id) => {
         try {
-            const {result} = await userService[type === 'ads' ? 'unsetAdsApi' : 'unsetMWS'](id)
+            const {result} = await userService[type === 'ads' ? 'unsetAdsApi' : 'unsetSpApi'](id)
 
             dispatch(userActions.updateAmazonRegionAccount(result))
         } catch (e) {

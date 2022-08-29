@@ -256,7 +256,7 @@ const TableList = ({
                     dataSource={tableData.response}
                     {...showTotal && {
                         totalDataSource: {
-                            ..._.mapValues(metricsData, (value) => (+value.value)),
+                            ...metricsData,
                             ...{[showRowSelection ? columns.columnsWithFilters[1].dataIndex : columns.columnsWithFilters[0].dataIndex]: `Total: ${tableData.total_count}`}
 
                         }

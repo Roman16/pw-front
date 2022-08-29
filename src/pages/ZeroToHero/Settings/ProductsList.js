@@ -10,8 +10,6 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
 import noImage from '../../../assets/img/no-image-available.svg'
 import {Spin} from "antd"
-import {amazonDomain} from "../../../utils/amazonDomain"
-import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 
 const DEV = process.env.REACT_APP_ENV !== 'production'
@@ -25,7 +23,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
             </div>
 
             <div className="col">
-                <a href={`https://www.amazon.${amazonDomain()}/dp/${product.asin}`} className="name" title={product.name}
+                <a href={`https://www.amazon.com/dp/${product.asin}`} className="name" title={product.name}
                    target={'_blank'}>
                     {product.name}
                 </a>
@@ -33,7 +31,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
                 {!product.variations ?
                     <div className="row">
                         {(product.item_price !== null && product.item_price !== 0) && <div className="price">
-                            <CurrencyWithCode value={product.item_price}/>
+                            ${product.item_price}
                         </div>}
 
                         <div className="stock">
@@ -47,7 +45,7 @@ const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) =>
                     :
                     <div className="row">
                         {(product.item_price !== null && product.item_price !== 0) && <div className="price">
-                            <CurrencyWithCode value={product.item_price}/>
+                            ${product.item_price}
                         </div>}
 
                         <div className="stock">
@@ -234,7 +232,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                         <div title={asin}><b>ASIN:</b>
                             <a
                                 target={'_blank'}
-                                href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
+                                href={`https://www.amazon.com/dp/${asin}`}
                             >
                                 {asin}
                             </a>
@@ -272,7 +270,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                         <div title={asin}><b>ASIN:</b>
                             <a
                                 target={'_blank'}
-                                href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
+                                href={`https://www.amazon.com/dp/${asin}`}
                             >
                                 {asin}
                             </a>
@@ -340,7 +338,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
                 <div title={asin}><b>ASIN:</b>
                     <a
                         target={'_blank'}
-                        href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
+                        href={`https://www.amazon.com/dp/${asin}`}
                     >
                         {asin}
                     </a>

@@ -15,12 +15,14 @@ import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 import {history} from "../utils/history"
 import {amazonRegionsSort} from "../reducers/user.reducer"
+import ProductFruits from 'react-product-fruits';
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
 const Marketing = React.lazy(() => import('./ZeroToHero/Marketing/Marketing'))
 const CreatingCampaign = React.lazy(() => import('./ZeroToHero/CreatingCampaign/CreatingCampaign'))
 const Settings = React.lazy(() => import('./ZeroToHero/Settings/Settings'))
+const ThankPage = React.lazy(() => import('./ZeroToHero/ThankPage/ThankPage'))
 const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/OptimizationForAdmin/OptimizationForAdmin'))
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 
@@ -32,13 +34,13 @@ const Home = React.lazy(() => import('./Home/Home'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
-const ConnectMWS = React.lazy(() => import('./authentication/AccountBinding/ConnectMWSJourney/ConnectMWSJourney'))
-const ConnectPPC = React.lazy(() => import('./authentication/AccountBinding/ConnectPPCJourney/ConnectPPCJourney'))
+const ConnectSpApiJourney = React.lazy(() => import('./authentication/AccountBinding/ConnectSpApiJourney/ConnectSpApiJourney'))
+const ConnectAdsApiJourney = React.lazy(() => import('./authentication/AccountBinding/ConnectAdsApiJourney/ConnectAdsApiJourney'))
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 
-const localStorageVersion = '2.03'
+const localStorageVersion = '3.01'
 
 const checkLocalStorageVersion = () => {
     if (!localStorage.getItem('localStorageVersion') || localStorage.getItem('localStorageVersion') !== localStorageVersion) {
@@ -66,7 +68,7 @@ function throttle(func, delay) {
 }
 
 
-const developer = (process.env.REACT_APP_ENV === "developer" || process.env.REACT_APP_ENV === "demo")
+const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
 
 export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
@@ -90,10 +92,10 @@ const ConnectedAmazonRoute = props => {
 
     if (amazonRegionAccounts.length === 0) {
         return <Redirect to="/connect-amazon-account"/>
-    } else if (activeAmazonRegion && !activeAmazonRegion?.is_mws_attached) {
-        return <Redirect to={`/connect-mws-account/${activeAmazonRegion.region_type}`}/>
+    } else if (activeAmazonRegion && !activeAmazonRegion?.is_amazon_sp_api_attached) {
+        return <Redirect to={`/connect-sp-api/${activeAmazonRegion.id}`}/>
     } else if (activeAmazonRegion && !activeAmazonRegion?.is_amazon_ads_api_attached) {
-        return <Redirect to={`/connect-ppc-account/${activeAmazonRegion.id}`}/>
+        return <Redirect to={`/connect-ads-api/${activeAmazonRegion.id}`}/>
     } else {
         return <Route {...props} />
     }
@@ -274,8 +276,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>
-                                    <Route exact path="/connect-mws-account/:regionType?" component={ConnectMWS}/>
-                                    <Route exact path="/connect-ppc-account/:regionId?" component={ConnectPPC}/>
+                                    <Route exact path="/connect-sp-api/:regionId?" component={ConnectSpApiJourney}/>
+                                    <Route exact path="/connect-ads-api/:regionId?" component={ConnectAdsApiJourney}/>
                                     <Route exact path="/welcome" component={WelcomePage}/>
 
 
@@ -307,7 +309,7 @@ const AuthorizedUser = (props) => {
                                         component={Payment}
                                     />}
 
-                                    {/*<ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>*/}
+                                    <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
                                     {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
@@ -339,6 +341,15 @@ const AuthorizedUser = (props) => {
                     </div>
                 </div>
                 <PWWindows pathname={pathname}/>
+
+                <ProductFruits
+                    projectCode={process.env.REACT_APP_PRODUCT_FRUITS_CODE}
+                    language="EN"
+                    username={user.userDetails.id}
+                    email={user.userDetails.email}
+                    firstname={user.userDetails.name}
+                    lastname={user.userDetails.last_name}
+                />
             </Fragment>
         )
     }

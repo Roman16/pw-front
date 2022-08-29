@@ -203,8 +203,8 @@ const PWWindows = ({pathname}) => {
                 !pathname.includes('/home') &&
                 !pathname.includes('/welcome') &&
                 !pathname.includes('/connect-amazon-account') &&
-                !pathname.includes('/connect-ppc-account') &&
-                !pathname.includes('/connect-mws-account')) &&
+                !pathname.includes('/connect-ads-api') &&
+                !pathname.includes('/connect-sp-api')) &&
             <OnlyDesktopWindow
                 visible={visibleWindow === 'onlyDesktop'}
             />}

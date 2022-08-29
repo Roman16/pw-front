@@ -138,15 +138,6 @@ const BillingInformation = () => {
 
     useEffect(() => {
         getPaymentMethodList()
-
-        const toastId = notification.info({
-            title: 'We’re sorry!',
-            description: 'We do not accept Pioneer cards yet, but our team works on this issue. Until we deal with the problem, please, do not enter the Pioneer card number because the payment will not be completed.'
-        })
-
-        return (() => {
-            toast.dismiss(toastId)
-        })
     }, [])
 
     return (

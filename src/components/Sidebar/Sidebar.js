@@ -208,13 +208,13 @@ const Sidebar = () => {
                                         <NavLink
                                             className={`menu-link ${item.subMenu ? 'has-child' : ''}`}
                                             activeClassName="active"
-                                            to={`/${item.link}`}
+                                            to={item.subMenu ? `/${item.link}/${item.subMenu[0].link}` : `/${item.link}`}
                                             onClick={(e) => {
-                                                if (item.subMenu) {
+                                                if (item.subMenu && collapsed) {
                                                     e.preventDefault()
                                                     e.stopPropagation()
 
-                                                    collapsed && toggleSubMenu(item.key)
+                                                    toggleSubMenu(item.key)
                                                 }
                                             }}
                                         >

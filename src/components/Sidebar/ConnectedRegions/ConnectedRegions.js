@@ -45,9 +45,10 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
             {localRegions.map((region, index) =>
                 <li className={`${openedRegions.includes(index) ? 'opened' : ''} ${activeRegion && activeRegion.id === region.id ? 'active' : ''}`}>
                     <div className="account-name" onClick={() => openRegionHandler(index)}>
-                        <div className="text" title={region.account_alias || region.region_type.replace(/_/g, ' ')}>{region.account_alias || region.region_type.replace(/_/g, ' ')}</div>
+                        <div className="text"
+                             title={region.account_alias || region.region_type.replace(/_/g, ' ')}>{region.account_alias || region.region_type.replace(/_/g, ' ')}</div>
 
-                        {(region.mws_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || region.is_amazon_ads_api_attached === false || region.is_mws_attached === false) &&
+                        {(region.amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || region.is_amazon_ads_api_attached === false || region.is_amazon_sp_api_attached === false) &&
                         <InformationTooltip
                             type={'custom'}
                             description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your <b>Account -> Amazon Accounts</b> page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}
@@ -70,9 +71,12 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                     </div>
 
                     <ul className={'marketplaces'}>
-                        {region.amazon_region_account_marketplaces.map(marketplace => (
+                        {region.amazon_region_account_marketplaces.map(marketplace => {
+                            const countryName = marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
+
+                            return (
                             <li onClick={() => onSet({marketplace, region})}
-                                className={ activeRegion?.id === region.id && activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
+                                className={activeRegion?.id === region.id && activeMarketplace && activeMarketplace.id === marketplace.id && 'active'}>
                                 <div className="status"/>
                                 <div className="flag">
                                     <img src={marketplaceIdValues[marketplace.marketplace_id].flag} alt=""/>
@@ -82,9 +86,9 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                                     {marketplaceIdValues[marketplace.marketplace_id].countryName}
                                 </div>
 
-                                {!marketplace.profile_id &&<InformationTooltip
+                                {!marketplace.profile_id && <InformationTooltip
                                     type={'custom'}
-                                    description={`No Advertising account exists for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace on this Seller account. You won\'t be able to use Sponsoreds services on this marketplace until you create an Advertising account for ${marketplaceIdValues[marketplace.marketplace_id].countryName} marketplace in your Seller Central.`}
+                                    description={`We haven't imported Advertising account info for ${countryName} marketplace yet. <br/> <br/>If you have used Advertising on ${countryName} before, then we just need more time to get info from Amazon.<br><br>If you haven't used Advertising on ${countryName} before, then create Advertising account in Seller Central first to use this marketplace.`}
                                 >
                                     <i className="error">
                                         <svg width="12" height="12" viewBox="0 0 12 12" fill="none"
@@ -96,7 +100,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                                     </i>
                                 </InformationTooltip>}
                             </li>
-                        ))}
+                        )})}
                     </ul>
                 </li>
             )}

@@ -14,7 +14,7 @@ const SuccessPage = () => {
             </p>
 
             <div className="actions">
-                <button className='btn default' onClick={() => history.push('/home')}>Finish</button>
+                <button className='btn default' onClick={() => history.push('/account/api-connections')}>Finish</button>
             </div>
         </div>
     )

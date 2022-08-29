@@ -25,7 +25,7 @@ const ErrorBar = () => {
         region = useSelector(state => state.user.activeAmazonRegion),
         importStatus = useSelector(state => state.user.importStatus)
 
-    const marketplaceName =  marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
+    const marketplaceName = marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
 
     return (
         <div className='errors-bar'>
@@ -57,10 +57,10 @@ const ErrorBar = () => {
             {/*    We are currently checking your Seller Central API connection.*/}
             {/*</div>}*/}
 
-            {region?.mws_access_status && region?.mws_access_status !== 'CREDENTIALS_SUCCESS' &&
+            {region?.amazon_sp_api_access_status && region?.amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
-                <p><strong> Attention!</strong> Looks like your MWS access was revoked. Please go to your Seller Central
+                <p><strong> Attention!</strong> Looks like your SP API access was revoked. Please go to your Seller Central
                     account under settings, then user permissions, reinstate access, copy your new authorization token,
                     and
                     enter it on your Sponsoreds Account page. This will then reinstate access and your account synced
@@ -79,6 +79,22 @@ const ErrorBar = () => {
                     update your Amazon Advertising credentials in your account or contact support.</p>
 
                 <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
+            </div>}
+
+            {!region.is_amazon_ads_api_attached &&
+            <div className={'error'}>
+                <SVG id={'error-bar-icon'}/>
+                <p><strong>Attention!</strong> Amazon Ads API access is not granted or was revoked for this Amazon
+                    account. Please go to your <b>Account -> Amazon Accounts</b> page and connect Amazon Ads API for
+                    this account.</p>
+            </div>}
+
+            {!region.is_amazon_sp_api_attached &&
+            <div className={'error'}>
+                <SVG id={'error-bar-icon'}/>
+                <p><strong>Attention!</strong> Amazon SP API access is not granted or was revoked for this Amazon
+                    account. Please go to your <b>Account -> Amazon Accounts</b> page and connect Amazon SP API for
+                    this account.</p>
             </div>}
 
             {/*{(accountLinks.amazon_mws.status === 'UNAUTHORIZED' && accountLinks.amazon_ppc.status === 'UNAUTHORIZED') ?*/}

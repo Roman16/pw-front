@@ -1,13 +1,9 @@
 import React, {memo, useEffect, useState} from "react"
 import '../ZeroToHero.less'
 import './CreatingCampaign.less'
-import Navigation from "./Navigation/Navigation"
 import SelectProduct from "./SelectProduct/SelectProduct"
-import StepActions from "./StepActions/StepActions"
-import RequiredSettings from "./RequiredSettings/RequiredSettings"
 import {useDispatch, useSelector} from "react-redux"
 import {zthActions} from "../../../actions/zth.actions"
-import OptionalSettings from "./OptionalSettings/OptionalSettings"
 import Overview from "./Overview/Overview"
 import {notification} from "../../../components/Notification"
 import moment from "moment"
@@ -18,11 +14,23 @@ import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import AvailableZTHWindow from "./AvailableZTHWindow/AvailableZTHWindow"
 import {activeTimezone} from "../../index"
+import {SelectedProduct} from "./SelectedProduct/SelectedProduct"
+import {Step1} from "./Step1/Step1"
+import {Step2} from "./Step2/Step2"
+import {Step3} from "./Step3/Step3"
+import {Step4} from "./Step4/Step4"
+
+//no using fields
+//portfolio
+//start_date
+//use_existing_ppc_targetings
+//radio buttons ?
+//pioneer card on payment page ?
 
 
 const initialProductSettings = {
     portfolio: {
-        type: 'CreateNew',
+        type: 'NoPortfolio',
         no_portfolio: false
     },
     campaigns: {
@@ -44,18 +52,17 @@ const initialProductSettings = {
 const CreatingCampaign = () => {
     const [currentStep, setCurrentStep] = useState(0),
         [portfolioList, setPortfolioList] = useState([]),
-        [addedProducts, setAddedProducts] = useState([{...initialProductSettings}]),
         [openedSteps, setOpenedSteps] = useState(-1),
-        [activeProductIndex, setActiveProductIndex] = useState(0),
         [invalidField, setInvalidField] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false),
         [pageLoading, setPageLoading] = useState(true),
-        [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false)
+        [visibleAvailableWindow, setVisibleAvailableWindow] = useState(false),
+        [selectedProduct, setSelectedProduct] = useState({...initialProductSettings})
 
     const dispatch = useDispatch()
 
     const updateProductHandler = (params, isInvalid) => {
-        setAddedProducts([{...addedProducts[0], ...params}])
+        setSelectedProduct(prevState => ({...prevState, ...params}))
 
         if (isInvalid) {
             dispatch(zthActions.setInvalidField({
@@ -66,35 +73,26 @@ const CreatingCampaign = () => {
     }
 
     const setStepHandler = (step) => {
-        const budget = addedProducts[0].campaigns.daily_budget,
-            bid = addedProducts[0].campaigns.default_bid
+        const budget = selectedProduct.campaigns.daily_budget,
+            bid = selectedProduct.campaigns.default_bid
 
-        if (step === 1 && addedProducts.length === 0) {
+        if (step === 1 && !selectedProduct) {
             notification.error({
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
             })
-        } else if (step >= 2 && (budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
-            setCurrentStep(1)
-
+        } else if ((budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
             if ((budget < 1 || budget > 1000000) && (bid < 0.02 || bid > 1000)) {
                 notification.error({title: 'Please enter correct Daily Budget'})
-                setInvalidField(prevState => [...prevState, 'daily_budget', 'default_bid'])
+                goEditBlockHandler('daily_budget')
             } else if (budget < 1 || budget > 1000000) {
-                setInvalidField(prevState => [...prevState, 'daily_budget'])
                 notification.error({title: 'Please enter correct Daily Budget'})
+                goEditBlockHandler('daily_budget')
             } else if (bid < 0.02 || bid > 1000) {
-                setInvalidField(prevState => [...prevState, 'default_bid'])
                 notification.error({title: 'Please enter correct Default Bid'})
+                goEditBlockHandler('default_bid')
             }
-
-            setTimeout(() => {
-                document.querySelector('.error-field') && document.querySelector('.error-field').scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                })
-            }, 10)
-        } else if (step === 4) {
+        } else if (step === 6) {
             createCampaignHandler()
         } else {
             setCurrentStep(step)
@@ -102,10 +100,11 @@ const CreatingCampaign = () => {
         }
     }
 
-    const addProductHandler = (product) => setAddedProducts([{
-        ...addedProducts[0], ...product,
-        campaigns: {...addedProducts[0].campaigns, main_keywords: []}
-    }])
+
+    const addProductHandler = (product) => setSelectedProduct({
+        ...product,
+        ...initialProductSettings
+    })
 
     const fetchPortfolios = async () => {
         try {
@@ -113,7 +112,7 @@ const CreatingCampaign = () => {
             setPortfolioList(result)
         } catch (e) {
             console.log(e)
-            setPortfolioList([])
+            setPortfolioList()
         }
     }
 
@@ -154,58 +153,17 @@ const CreatingCampaign = () => {
                 }))
             }
 
-            const res = await zthServices.saveSettings({
-                setup_settings: setupSettingsFilter(addedProducts)
+            await zthServices.saveSettings({
+                setup_settings: setupSettingsFilter([selectedProduct])
             })
 
             setTimeout(() => {
-                history.push('/zero-to-hero/settings/create-success')
+                history.push('/zero-to-hero/success')
                 setCreateProcessing(false)
             }, 100)
         } catch (e) {
             console.log(e)
             setCreateProcessing(false)
-        }
-    }
-
-    const requiredSettingsValidation = () => {
-        const product = addedProducts[0]
-        if ([
-            ...product.campaigns.main_keywords
-                .filter(item => item.hasMeaningfulWords !== false)
-                .reverse()
-                .filter(item => {
-                    const clearKeyword = cleanMainKeyword(item.value)
-                    return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
-                })
-                .reverse()
-                .map(item => item.value)
-        ].length < 3) {
-            // notification.error({title: 'Please enter at least 3 main keywords'})
-            // setField('mainKeywords')
-            return true
-        } else if (product.portfolio.type === 'CreateNew' && (!product.portfolio.name || product.portfolio.name === '')) {
-            // notification.error({title: 'Please enter the portfolio name'})
-            // setField('portfolioName')
-            return true
-        } else if (product.portfolio.type === 'UseExisting' && (!product.portfolio.id)) {
-            // notification.error({title: 'Please select the existing portfolio'})
-            // setField('portfolioId')
-            return true
-        } else if (!product.campaigns.daily_budget) {
-            // notification.error({title: 'Please enter your daily budged'})
-            // setField('dailyBudget')
-            return true
-        } else if (!product.campaigns.default_bid) {
-            // notification.error({title: 'Please enter your default bid'})
-            // setField('defaultBid')
-            return true
-        } else if (!product.brand.name) {
-            // notification.error({title: 'Please enter your Brand Name'})
-            // setField('brandName')
-            return true
-        } else {
-            return false
         }
     }
 
@@ -223,6 +181,26 @@ const CreatingCampaign = () => {
         setPageLoading(false)
     }
 
+    const goEditBlockHandler = (key) => {
+        if (key === 'name' || key === 'competitor_brand_names' || key === 'main_keywords') {
+            setCurrentStep(1)
+        } else if (key === 'daily_budget' || key === 'default_bid' || key === 'set_to_paused' || key === 'pause_existing_duplicates_of_zth_targetings') {
+            setCurrentStep(2)
+        } else if (key === 'relevant_keywords') {
+            setCurrentStep(3)
+        } else if (key === 'negative_keywords') {
+            setCurrentStep(4)
+        }
+
+        setTimeout(() => {
+            document.querySelector(`.steps .edit-block.${key}`).classList.add('visible')
+        }, 50)
+
+        setTimeout(() => {
+            document.querySelector(`.steps .edit-block.${key}`).classList.remove('visible')
+        }, 4000)
+    }
+
     useEffect(() => {
         fetchPortfolios()
 
@@ -231,51 +209,65 @@ const CreatingCampaign = () => {
 
     return (
         <div className='zero-to-hero-page creating-campaign-page'>
-            <Navigation
-                currentStep={currentStep}
-                openedSteps={openedSteps}
+            <div className="steps">
+                <SelectProduct
+                    visible={currentStep === 0}
+                    selectedProduct={selectedProduct}
+                    openedSteps={openedSteps}
 
-                onChangeStep={setStepHandler}
-            />
+                    onAddProducts={addProductHandler}
+                    onChangeOpenedSteps={setOpenedSteps}
+                    onChangeStep={setStepHandler}
+                />
 
-            <SelectProduct
-                visible={currentStep === 0}
-                addedProducts={addedProducts}
-                openedSteps={openedSteps}
+                <Step1
+                    visible={currentStep === 1}
+                    product={selectedProduct}
+                    portfolioList={portfolioList}
+                    invalidField={invalidField}
 
-                onAddProducts={addProductHandler}
-                onChangeOpenedSteps={setOpenedSteps}
-            />
+                    onUpdate={updateProductHandler}
+                    onUpdateInvalidFields={setInvalidField}
+                    onChangeStep={setStepHandler}
+                />
 
-            <RequiredSettings
-                visible={currentStep === 1}
-                product={addedProducts[activeProductIndex]}
-                portfolioList={portfolioList}
-                invalidField={invalidField}
+                <Step2
+                    visible={currentStep === 2}
+                    product={selectedProduct}
+                    invalidField={invalidField}
 
-                onUpdate={updateProductHandler}
-                onUpdateInvalidFields={setInvalidField}
-            />
+                    onUpdate={updateProductHandler}
+                    onUpdateInvalidFields={setInvalidField}
+                    onChangeStep={setStepHandler}
+                />
 
-            {currentStep === 2 && <OptionalSettings
-                product={addedProducts[activeProductIndex]}
-                portfolioList={portfolioList}
-                invalidField={invalidField}
+                <Step3
+                    visible={currentStep === 3}
+                    product={selectedProduct}
 
-                onUpdate={updateProductHandler}
-            />}
+                    onUpdate={updateProductHandler}
+                    onChangeStep={setStepHandler}
+                />
 
-            {currentStep === 3 && <Overview
-                product={addedProducts[activeProductIndex]}
-            />}
+                <Step4
+                    visible={currentStep === 4}
+                    product={selectedProduct}
 
-            <StepActions
-                currentStep={currentStep}
-                product={addedProducts[activeProductIndex]}
-                createProcessing={createProcessing}
-                disabled={currentStep === 1 ? requiredSettingsValidation() : false}
+                    onUpdate={updateProductHandler}
+                    onChangeStep={setStepHandler}
+                />
 
-                onChangeStep={setStepHandler}
+                {currentStep === 5 && <Overview
+                    product={selectedProduct}
+                    createProcessing={createProcessing}
+                    onChangeStep={setStepHandler}
+                    onCreate={createCampaignHandler}
+                    onEdit={goEditBlockHandler}
+                />}
+            </div>
+
+            <SelectedProduct
+                product={selectedProduct}
             />
 
             <AvailableZTHWindow

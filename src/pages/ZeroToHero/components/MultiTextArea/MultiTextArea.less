@@ -9,6 +9,8 @@
   flex-wrap: wrap;
   align-items: flex-start;
   position: relative;
+  background: #fff;
+  transition: .2s ease-in-out;
 
   .list {
     width: 100%;
@@ -87,6 +89,10 @@
       box-shadow: none;
     }
   }
+
+  &.focus {
+    border-color: #6959AB;
+  }
 }
 
 .mistake-with-keyword {
@@ -95,22 +101,22 @@
   .ant-popover-inner-content {
     width: 100%;
     max-width: 100%;
-    padding: 15px 20px;
+    padding: 1.0714285714285714rem 1.4285714285714286rem;
   }
 
   p {
-    font-size: 1rem;
+    font-size: 0.8571428571428571rem;
     color: #343C5A;
-    margin-bottom: 18px;
+    margin-bottom: 1.0714285714285714rem;
   }
 
   ol {
-    margin: 0 0 0 15px;
+    margin: 0 0 0 1.0714285714285714rem;
 
     li {
-      margin-bottom: 18px;
+      margin-bottom: 1.0714285714285714rem;
       text-align: justify;
-      font-size: 1rem;
+      font-size: 0.8571428571428571rem;
       color: #343C5A;
 
       &:last-child {
