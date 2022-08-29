@@ -282,7 +282,7 @@ const NoFound = () => <div className="empty no-f0und">
     <p>Please select products you want to create <br/> campaigns for</p>
 </div>
 
-export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disabled, nextBtnText = 'NEXT', nextBtnArrow = true}) => (
+export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disabled, nextBtnText = 'NEXT', nextBtnArrow = true, nextBtnProcessing=false}) => (
     <div className="nav-buttons">
         {prevStep && <button className="btn grey" onClick={onPrevStep}>
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -293,7 +293,7 @@ export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disa
             </svg>
         </button>}
 
-        <button className="btn default next-step" onClick={onNextStep} disabled={disabled}>
+        <button className="btn default next-step" onClick={onNextStep} disabled={disabled || nextBtnProcessing}>
             {nextBtnText}
 
             {nextBtnArrow &&
@@ -303,6 +303,8 @@ export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disa
                           stroke-linecap="round" stroke-linejoin="round"/>
                 </g>
             </svg>}
+
+            {nextBtnProcessing && <Spin size={'small'}/>}
         </button>
     </div>
 )

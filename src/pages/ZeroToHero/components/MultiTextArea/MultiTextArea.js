@@ -17,6 +17,7 @@ import {
 const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productName, unique = false, placeholder = 'Type here'}) => {
     const [inputValue, setInputValue] = useState(null),
         [valueList, setValueList] = useState([])
+    const [focused, setFocused] = useState(false)
 
     const inputEl = useRef(null)
 
@@ -111,8 +112,11 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
         }
     }, [value])
 
+    const onFocus = () => setFocused(true)
+    const onBlur = () => setFocused(false)
+
     return (
-        <div className={'multi-text-area'}
+        <div className={`multi-text-area ${focused ? 'focus' : ''}`}
              onClick={() => (!value || value.length < max) && inputEl.current.focus()}>
             <div className="list">
                 {valueList && valueList.map((item, index) => {
@@ -138,6 +142,8 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
 
                 {(!value || (toMark ? value.filter(item => item.hasMeaningfulWords !== false && item.isDuplicate === undefined).length < max : value.length < max)) &&
                 <Input
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                     ref={inputEl}
                     value={inputValue}
                     placeholder={placeholder}

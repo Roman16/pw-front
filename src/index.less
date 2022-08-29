@@ -475,108 +475,80 @@ img {
   display: flex;
   align-items: center;
 
-  *,
-  *:focus,
-  *:active {
-    //animation-duration: 0s !important;
-    //box-shadow: none !important;
-    //outline: none !important;
-    //border: 0 !important;
+  * {
+    outline: none !important;
+    box-shadow: none !important;
+    animation: none !important;
   }
 
-  span:last-child {
-    font-size: 1rem;
-    letter-spacing: -0.05px;
-    color: #343C5A;
-  }
-
-  .ant-radio:hover::before {
-    content: '';
-    position: absolute;
-    top: -11px;
-    left: -11px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: rgba(109, 109, 246, 0.05);
+  .ant-radio-input:focus + .ant-radio-inner {
+    border-color: #6959AB;
   }
 
 
-  .ant-radio:hover {
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: -11px;
-      left: -11px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(105, 89, 171, 0.05);
-    }
-
-    .ant-radio-inner {
-      border-color: @default-purple;
-    }
-  }
-
-  .ant-radio:active {
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: -11px;
-      left: -11px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: rgba(109, 109, 246, 0.15);
-    }
-
-    .ant-radio-inner {
-      border-color: @default-purple;
-    }
-  }
-
-  .ant-radio-inner {
+  .ant-radio {
     width: 18px;
     height: 18px;
-    border-width: 2px;
-    border-color: @default-purple;
-    background: initial;
-    box-shadow: none !important;
 
-    &:focus {
-      outline: none;
+    @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+      width: 14px;
+      height: 14px;
     }
 
-    &::after {
-      background-color: @default-purple;
-      width: 10px;
-      height: 10px;
-      top: 2px;
-      left: 2px;
+    .ant-radio-input {
+      width: 100%;
+      height: 100%;
     }
 
+    .ant-radio-inner {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #6959AB;
 
+      &::after {
+        transition: 0s !important;
+      }
+    }
+
+    &:hover {
+      .ant-radio-inner {
+        border: 2px solid #6959AB;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 220%;
+        height: 220%;
+        border-radius: 50%;
+        background: rgba(105, 89, 171, 0.05);
+
+      }
+    }
   }
 
   &.ant-radio-wrapper-checked {
-    .ant-radio-checked::after {
-      display: none;
+    .ant-radio {
+      .ant-radio-inner {
+        &::after {
+          background: #6959AB;
+
+          width: calc(100% - 3px);
+          height: calc(100% - 3px);
+
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
 
-    .ant-radio-inner {
-      border-color: @default-purple !important;
-
-      &::after {
-        background-color: @default-purple;
-        border: 0;
-        width: 10px;
-        height: 10px;
-        top: 2px;
-        left: 2px;
-      }
+    .ant-radio-checked::after {
+      display: none;
     }
   }
 

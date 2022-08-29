@@ -1,13 +1,11 @@
 import React, {useState} from "react"
 import './Overview.less'
-import moment from 'moment'
 import {numberMask} from "../../../../utils/numberMask"
-import {round} from "../../../../utils/round"
 import {NavigationButtons} from "../SelectProduct/SelectProduct"
 import {SVG} from "../../../../utils/icons"
 
 
-const Overview = ({product, onChangeStep, onCreate}) => {
+const Overview = ({product,createProcessing, onChangeStep, onCreate, onEdit}) => {
     const [visibleKeywords, setVisibleKeywords] = useState([])
 
     const openKeywordsHandler = (type) => {
@@ -148,19 +146,6 @@ const Overview = ({product, onChangeStep, onCreate}) => {
         // },
     ]
 
-    const onEditParams = (key) => {
-        if (key === 'name' || key === 'competitor_brand_names' || key === 'main_keywords') {
-            onChangeStep(1)
-        } else if (key === 'daily_budget' || key === 'default_bid' || key === 'set_to_paused' || key === 'pause_existing_duplicates_of_zth_targetings') {
-            onChangeStep(2)
-        } else if (key === 'relevant_keywords') {
-            onChangeStep(3)
-        } else if (key === 'negative_keywords') {
-            onChangeStep(4)
-        }
-    }
-
-
     return (<section className={`step step-5 overview`}>
         <div className="bg-container">
             <div className="container">
@@ -183,7 +168,7 @@ const Overview = ({product, onChangeStep, onCreate}) => {
                             {item.render(product)}
                         </div>
 
-                        {item.key !== 'type' && <button className={'btn icon'} onClick={() => onEditParams(item.key)}>
+                        {item.key !== 'type' && <button className={'btn icon'} onClick={() => onEdit(item.key)}>
                             <SVG id={'edit-pen-icon'}/>
                         </button>}
                     </li>)}
@@ -194,6 +179,7 @@ const Overview = ({product, onChangeStep, onCreate}) => {
                     onNextStep={onCreate}
                     nextBtnText={'GENERATE CAMPAIGNS'}
                     nextBtnArrow={false}
+                    nextBtnProcessing={createProcessing}
                 />
             </div>
 

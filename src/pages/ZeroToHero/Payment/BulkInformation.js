@@ -90,10 +90,6 @@ const BulkInformation = ({product}) => {
             </div>
 
             <div className="campaigns-count">
-                <div className="total">
-                    Total Campaigns: {job.sponsored_products_campaigns_count + job.sponsored_display_campaigns_count}
-                </div>
-
                 <ul>
                     <li>
                         <b>{job.sponsored_products_campaigns_count}</b>
@@ -112,6 +108,10 @@ const BulkInformation = ({product}) => {
                         Product Targeting <br/> Campaigns
                     </li>
                 </ul>
+
+                <div className="total">
+                    Total Campaigns: {job.sponsored_products_campaigns_count + job.sponsored_display_campaigns_count}
+                </div>
             </div>
         </div>
     )

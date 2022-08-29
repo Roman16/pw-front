@@ -5,6 +5,10 @@ import './Step1.less'
 import {NavigationButtons} from "../SelectProduct/SelectProduct"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {SeedKeywords} from "./SeedKeywords/SeedKeywords"
+import {
+    cleanMainKeyword,
+    findExistingDuplicateOfNewMainKeyword
+} from "../../components/MultiTextArea/isMainKeywordValid"
 
 
 export const Step1 = ({
@@ -43,8 +47,11 @@ export const Step1 = ({
                     </p>
                 </div>
 
-                <div className={`form-group ${invalidField === 'brandName' ? 'error-field' : ''}`}>
-                    <label htmlFor="" className={'required'}>Your Brand Name </label>
+                <div className={`form-group col edit-block name`}>
+                    <label htmlFor="">
+                        Your Brand Name
+                    </label>
+
                     <Input
                         maxLength={80}
                         placeholder={'Your Brand Name'}
@@ -53,10 +60,10 @@ export const Step1 = ({
                     />
                 </div>
 
-                <br/>
-
-                <div className={`col text-area-group`}>
-                    <label>Competitors Brand Names</label>
+                <div className={`col text-area-group edit-block competitor_brand_names`}>
+                    <label>
+                        Competitors Brand Names
+                    </label>
                     <p>
                         Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
                         faucibus.
@@ -69,8 +76,6 @@ export const Step1 = ({
                     />
                 </div>
 
-                <br/>
-
                 <SeedKeywords
                     campaigns={campaigns}
                     name={name}
@@ -79,6 +84,15 @@ export const Step1 = ({
                 />
 
                 <NavigationButtons
+                    disabled={!brand.name || brand.competitor_brand_names.length === 0 || [
+                        ...campaigns.main_keywords
+                            .filter(item => item.hasMeaningfulWords !== false)
+                            .filter(item => {
+                                const clearKeyword = cleanMainKeyword(item.value)
+                                return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                            })
+                    ].length < 3}
+
                     onNextStep={() => onChangeStep(2)}
                     onPrevStep={() => onChangeStep(0)}
                 />

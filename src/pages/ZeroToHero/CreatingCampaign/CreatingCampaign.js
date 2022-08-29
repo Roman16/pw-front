@@ -2,10 +2,8 @@ import React, {memo, useEffect, useState} from "react"
 import '../ZeroToHero.less'
 import './CreatingCampaign.less'
 import SelectProduct from "./SelectProduct/SelectProduct"
-import RequiredSettings from "./RequiredSettings/RequiredSettings"
 import {useDispatch, useSelector} from "react-redux"
 import {zthActions} from "../../../actions/zth.actions"
-import OptionalSettings from "./OptionalSettings/OptionalSettings"
 import Overview from "./Overview/Overview"
 import {notification} from "../../../components/Notification"
 import moment from "moment"
@@ -22,10 +20,17 @@ import {Step2} from "./Step2/Step2"
 import {Step3} from "./Step3/Step3"
 import {Step4} from "./Step4/Step4"
 
+//no using fields
+//portfolio
+//start_date
+//use_existing_ppc_targetings
+//radio buttons ?
+//pioneer card on payment page ?
+
 
 const initialProductSettings = {
     portfolio: {
-        type: 'CreateNew',
+        type: 'NoPortfolio',
         no_portfolio: false
     },
     campaigns: {
@@ -76,26 +81,17 @@ const CreatingCampaign = () => {
                 title: 'You haven’t chosen any product yet! ',
                 description: 'Please select one product you want to create campaign for.'
             })
-        } else if (step >= 2 && (budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
-            setCurrentStep(1)
-
+        } else if ((budget < 1 || budget > 1000000 || bid < 0.02 || bid > 1000)) {
             if ((budget < 1 || budget > 1000000) && (bid < 0.02 || bid > 1000)) {
                 notification.error({title: 'Please enter correct Daily Budget'})
-                setInvalidField(prevState => [...prevState, 'daily_budget', 'default_bid'])
+                goEditBlockHandler('daily_budget')
             } else if (budget < 1 || budget > 1000000) {
-                setInvalidField(prevState => [...prevState, 'daily_budget'])
                 notification.error({title: 'Please enter correct Daily Budget'})
+                goEditBlockHandler('daily_budget')
             } else if (bid < 0.02 || bid > 1000) {
-                setInvalidField(prevState => [...prevState, 'default_bid'])
                 notification.error({title: 'Please enter correct Default Bid'})
+                goEditBlockHandler('default_bid')
             }
-
-            setTimeout(() => {
-                document.querySelector('.error-field') && document.querySelector('.error-field').scrollIntoView({
-                    block: "center",
-                    behavior: "smooth"
-                })
-            }, 10)
         } else if (step === 6) {
             createCampaignHandler()
         } else {
@@ -157,58 +153,17 @@ const CreatingCampaign = () => {
                 }))
             }
 
-            const res = await zthServices.saveSettings({
+            await zthServices.saveSettings({
                 setup_settings: setupSettingsFilter([selectedProduct])
             })
 
             setTimeout(() => {
-                history.push('/zero-to-hero/settings/create-success')
+                history.push('/zero-to-hero/success')
                 setCreateProcessing(false)
             }, 100)
         } catch (e) {
             console.log(e)
             setCreateProcessing(false)
-        }
-    }
-
-    const requiredSettingsValidation = () => {
-        const product = selectedProduct
-        if ([
-            ...product.campaigns.main_keywords
-                .filter(item => item.hasMeaningfulWords !== false)
-                .reverse()
-                .filter(item => {
-                    const clearKeyword = cleanMainKeyword(item.value)
-                    return !findExistingDuplicateOfNewMainKeyword(clearKeyword, product.campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
-                })
-                .reverse()
-                .map(item => item.value)
-        ].length < 3) {
-            // notification.error({title: 'Please enter at least 3 main keywords'})
-            // setField('mainKeywords')
-            return true
-        } else if (product.portfolio.type === 'CreateNew' && (!product.portfolio.name || product.portfolio.name === '')) {
-            // notification.error({title: 'Please enter the portfolio name'})
-            // setField('portfolioName')
-            return true
-        } else if (product.portfolio.type === 'UseExisting' && (!product.portfolio.id)) {
-            // notification.error({title: 'Please select the existing portfolio'})
-            // setField('portfolioId')
-            return true
-        } else if (!product.campaigns.daily_budget) {
-            // notification.error({title: 'Please enter your daily budged'})
-            // setField('dailyBudget')
-            return true
-        } else if (!product.campaigns.default_bid) {
-            // notification.error({title: 'Please enter your default bid'})
-            // setField('defaultBid')
-            return true
-        } else if (!product.brand.name) {
-            // notification.error({title: 'Please enter your Brand Name'})
-            // setField('brandName')
-            return true
-        } else {
-            return false
         }
     }
 
@@ -224,6 +179,26 @@ const CreatingCampaign = () => {
         }
 
         setPageLoading(false)
+    }
+
+    const goEditBlockHandler = (key) => {
+        if (key === 'name' || key === 'competitor_brand_names' || key === 'main_keywords') {
+            setCurrentStep(1)
+        } else if (key === 'daily_budget' || key === 'default_bid' || key === 'set_to_paused' || key === 'pause_existing_duplicates_of_zth_targetings') {
+            setCurrentStep(2)
+        } else if (key === 'relevant_keywords') {
+            setCurrentStep(3)
+        } else if (key === 'negative_keywords') {
+            setCurrentStep(4)
+        }
+
+        setTimeout(() => {
+            document.querySelector(`.steps .edit-block.${key}`).classList.add('visible')
+        }, 50)
+
+        setTimeout(() => {
+            document.querySelector(`.steps .edit-block.${key}`).classList.remove('visible')
+        }, 4000)
     }
 
     useEffect(() => {
@@ -282,25 +257,18 @@ const CreatingCampaign = () => {
                     onChangeStep={setStepHandler}
                 />
 
-                {/*{currentStep === 2 && <OptionalSettings*/}
-                {/*    product={selectedProduct}*/}
-                {/*    portfolioList={portfolioList}*/}
-                {/*    invalidField={invalidField}*/}
-
-                {/*    onUpdate={updateProductHandler}*/}
-                {/*/>}*/}
-
                 {currentStep === 5 && <Overview
                     product={selectedProduct}
+                    createProcessing={createProcessing}
                     onChangeStep={setStepHandler}
                     onCreate={createCampaignHandler}
+                    onEdit={goEditBlockHandler}
                 />}
             </div>
 
             <SelectedProduct
                 product={selectedProduct}
             />
-
 
             <AvailableZTHWindow
                 visible={visibleAvailableWindow}

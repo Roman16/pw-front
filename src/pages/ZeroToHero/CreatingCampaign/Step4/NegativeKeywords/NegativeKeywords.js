@@ -124,7 +124,7 @@ const NegativeKeywords = ({keywords, onUpdate}) => {
                 <div className="col">
                     <button className={'sds-btn blue p15 add'} onClick={addKeywordsHandler}>
                         <SVG id={'plus-icon'}/>
-                        Add Keyword
+                        Add Keywords
                     </button>
                 </div>
             </div>

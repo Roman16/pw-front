@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import {SVG} from "../../../../../utils/icons"
 import './RelevantKeywords.less'
 import {unique} from "../../../../../utils/unique"
+import InformationTooltip from "../../../../../components/Tooltip/Tooltip"
 
 
 const RelevantKeywords = ({keywords, onUpdate}) => {
@@ -35,11 +36,13 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
     }
 
     return (
-        <section className={`relevant-keywords ${sectionCollapse ? 'collapsed' : ''}`}>
+        <section className={`relevant-keywords edit-block relevant_keywords`}>
 
             <div className="row header">
                 <div className="col">
-                    <label htmlFor="">Relevant keywords</label>
+                    <label htmlFor="">
+                        Relevant keywords
+                    </label>
 
                     <p>
                         Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas

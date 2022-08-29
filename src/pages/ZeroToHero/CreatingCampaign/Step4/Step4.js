@@ -23,15 +23,18 @@ export const Step4 = ({
                     </p>
                 </div>
 
-                <div className="col">
-                    <label htmlFor="" style={{}}>Negative keywords</label>
-                    <p>Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas</p>
-                </div>
+                <div className="edit-block negative_keywords">
+                    <div className="col">
+                        <label htmlFor="" style={{}}>Negative keywords</label>
+                        <p>Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed
+                            egestas</p>
+                    </div>
 
-                <NegativeKeywords
-                    keywords={product.negative_keywords}
-                    onUpdate={onUpdate}
-                />
+                    <NegativeKeywords
+                        keywords={product.negative_keywords}
+                        onUpdate={onUpdate}
+                    />
+                </div>
 
                 <NavigationButtons
                     onNextStep={() => onChangeStep(5)}

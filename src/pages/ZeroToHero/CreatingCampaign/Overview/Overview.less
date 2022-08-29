@@ -19,9 +19,11 @@
     flex-direction: column;
 
     li {
+      min-height: 2.857142857142857rem;
       display: flex;
       border-bottom: 1px solid #C9CBD4;
       position: relative;
+      box-sizing: border-box;
 
       &:last-child {
         border: 0;
@@ -91,7 +93,7 @@
         height: 2.857142857142857rem;
         position: absolute;
         right: 10px;
-        top: 5px;
+        top: 0;
         display: none;
         align-items: center;
         justify-content: center;

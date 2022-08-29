@@ -50,9 +50,10 @@ export const Step2 = ({
                     </p>
                 </div>
 
-                <div className={`col form-group ${invalidField.includes('daily_budget') ? 'error-field' : ''}`}>
+                <div className={`col form-group  edit-block daily_budget`}>
                     <label>
                         ZTH Campaigns Daily Budget
+
                         <InformationTooltip
                             description={` Daily budget is used to put a limit on how much you'll spend on this particular product. This amount will be split between the Zero to Hero campaigns.`}
                         />
@@ -69,9 +70,7 @@ export const Step2 = ({
                     </p>}
                 </div>
 
-                <br/>
-
-                <div className={`col form-group ${invalidField.includes('default_bid') ? 'error-field' : ''}`}>
+                <div className={`col form-group edit-block default_bid`}>
                     <label>
                         Default Bid
 
@@ -90,14 +89,15 @@ export const Step2 = ({
                         {campaigns.default_bid < 0.02 ? 'Bid should be greater than or equal to $0.02' : 'Bid should be less than or equal to $1000.00'}
                     </p>}
                 </div>
-                <br/>
 
-                <div className="col form-group radio">
+                <div className="col form-group radio edit-block set_to_paused">
                     <label htmlFor="">
                         Set campaigns status to Paused on upload
+
                         <InformationTooltip
                             description={`If this option is enabled, Zero to Hero campaigns will be uploaded in <b>Paused</b> Status in case you want to activate them later.`}/>
                     </label>
+
                     <Radio.Group
                         value={campaigns.set_to_paused}
                         onChange={({target: {value}}) => changeCampaignsHandler({set_to_paused: value})}
@@ -107,15 +107,11 @@ export const Step2 = ({
                     </Radio.Group>
                 </div>
 
-                <br/>
-
-                <div className="col form-group radio">
+                <div className="col form-group radio edit-block pause_existing_duplicates_of_zth_targetings">
                     <label htmlFor="">
                         Pause existing keywords / PTs that are duplicates of ZTH targetings
                         <InformationTooltip
-                            description={'If this option is enabled, we will try to find existing keywords / PTs on your account related to your product that are duplicates of targetings we would create in Zero to Hero\n' +
-                            '                                    campaigns on upload to Advertising Console. Such duplicates will be paused to prevent competition between them and new Zero to Hero campaigns. Works best when "Use\n' +
-                            '                                    existing PPC keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.'}/>
+                            description={'If this option is enabled, we will try to find existing keywords / PTs on your account related to your product that are duplicates of targetings we would create in Zero to Hero campaigns on upload to Advertising Console. Such duplicates will be paused to prevent competition between them and new Zero to Hero campaigns. Works best when "Use existing PPC keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.'}/>
                     </label>
 
                     <Radio.Group
@@ -133,7 +129,6 @@ export const Step2 = ({
                     disabled={!campaigns.daily_budget || !campaigns.default_bid}
                 />
             </div>
-
 
             <div className="progress-bar">
                 <div/>
