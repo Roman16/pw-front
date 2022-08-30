@@ -24,7 +24,12 @@
       grid-area: partProblemsCount;
     }
 
-    &.processing, &.finished {
+    &.processing {
+
+    }
+
+
+     &.finished {
       grid-template-areas: 'processingStatus problemsCount' 'partProblemsCount partProblemsCount' 'problemsReport problemsReport';
       grid-template-columns: 43.3% 1fr;
       grid-template-rows: max-content max-content 1fr;

@@ -13,6 +13,7 @@ import {productsServices} from "../../services/products.services"
 import StrategiesDescription from "../PPCAutomate/OptimizationForAdmin/StrategiesDescription/StrategiesDescription"
 import axios from "axios"
 import {useSelector} from "react-redux"
+import {ScanningProcessing} from "./ScanningProcessing/ScanningProcessing"
 
 const CancelToken = axios.CancelToken
 let detailsSource = null
@@ -338,10 +339,13 @@ const PPCAudit = () => {
                     onOpenStrategyDescription={() => setVisibleDrawer(true)}
                 />}
 
-                {(
-                    scanningStatus === scanningStatusEnums.PROCESSING ||
-                    scanningStatus === scanningStatusEnums.FINISHED
-                ) && <>
+                {scanningStatus === scanningStatusEnums.PROCESSING &&
+                <ScanningProcessing
+                    onStop={stopScanningHandler}
+                    btnProcessing={stopRequestProcessing}
+                />}
+
+                {scanningStatus === scanningStatusEnums.FINISHED && <>
                     <ScanningProcessingStatus
                         product={selectedProduct}
                         scanningStatus={scanningStatus}
