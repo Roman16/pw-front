@@ -342,14 +342,14 @@ const AuthorizedUser = (props) => {
                 </div>
                 <PWWindows pathname={pathname}/>
 
-                {user.userDetails?.id && <ProductFruits
+                <ProductFruits
                     projectCode={process.env.REACT_APP_PRODUCT_FRUITS_CODE}
                     language="EN"
                     username={user.userDetails.id}
                     email={user.userDetails.email}
                     firstname={user.userDetails.name}
                     lastname={user.userDetails.last_name}
-                />}
+                />
             </Fragment>
         )
     }

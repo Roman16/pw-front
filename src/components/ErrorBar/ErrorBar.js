@@ -81,7 +81,7 @@ const ErrorBar = () => {
                 <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
-            {region != null && region.is_amazon_ads_api_attached !== true &&
+            {!region.is_amazon_ads_api_attached &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Amazon Ads API access is not granted or was revoked for this Amazon
@@ -89,7 +89,7 @@ const ErrorBar = () => {
                     this account.</p>
             </div>}
 
-            {region != null && region.is_amazon_sp_api_attached !== true &&
+            {!region.is_amazon_sp_api_attached &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Amazon SP API access is not granted or was revoked for this Amazon
