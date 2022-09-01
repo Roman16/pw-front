@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Dropdown, Input, Menu, Switch, Select} from "antd"
-import {SVG} from "../../utils/icons"
-import CustomSelect from "../Select/Select"
+import {SVG} from "../../../../utils/icons"
+import CustomSelect from "../../../../components/Select/Select"
 
 const {Search} = Input,
     Option = Select.Option
@@ -45,6 +45,15 @@ const Filters = ({
     const dropdownWindow = (
         <Menu className={'filter-dropdown-window'}>
             <div className="row">
+                <div className="form-group">
+                    <label htmlFor="">Campaign Type</label>
+
+                    <CustomSelect value={campaign_type} onChange={value => setCampaignType(value)}>
+                        <Option value={'all'}>All</Option>
+                        <Option value={'auto'}>Auto</Option>
+                        <Option value={'manual'}>Manual</Option>
+                    </CustomSelect>
+                </div>
                 <div className="form-group">
                     <label htmlFor="">Campaign Status</label>
 

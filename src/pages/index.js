@@ -9,7 +9,7 @@ import {useSelector, useDispatch} from "react-redux"
 import RouteLoader from "../components/RouteLoader/RouteLoader"
 import ErrorBar from "../components/ErrorBar/ErrorBar"
 import WelcomePage from "./authentication/AccountBinding/WelcomePage/WelcomePage"
-import CampaignList from "../components/CampaignList/CampaignList"
+import CampaignList from "./PPCAutomate/Dayparting2/CampaignList/CampaignList"
 import {userService} from "../services/user.services"
 import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
@@ -32,6 +32,7 @@ const Account = React.lazy(() => import('./Account/Navigation/Navigation'))
 
 const Home = React.lazy(() => import('./Home/Home'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
+const Dayparting2= React.lazy(() => import('./PPCAutomate/Dayparting2/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
 const ConnectSpApiJourney = React.lazy(() => import('./authentication/AccountBinding/ConnectSpApiJourney/ConnectSpApiJourney'))
@@ -269,6 +270,12 @@ const AuthorizedUser = (props) => {
                                         exact
                                         path="/ppc/dayparting"
                                         component={Dayparting}
+                                    />
+
+                                    <ConnectedAmazonRoute
+                                        exact
+                                        path="/ppc/dayparting2"
+                                        component={Dayparting2}
                                     />
 
                                     {/*-------------------------------------------*/}
