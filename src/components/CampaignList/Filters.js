@@ -46,15 +46,6 @@ const Filters = ({
         <Menu className={'filter-dropdown-window'}>
             <div className="row">
                 <div className="form-group">
-                    <label htmlFor="">Campaign Type</label>
-
-                    <CustomSelect value={campaign_type} onChange={value => setCampaignType(value)}>
-                        <Option value={'all'}>All</Option>
-                        <Option value={'auto'}>Auto</Option>
-                        <Option value={'manual'}>Manual</Option>
-                    </CustomSelect>
-                </div>
-                <div className="form-group">
                     <label htmlFor="">Campaign Status</label>
 
                     <CustomSelect value={campaign_status} onChange={value => setCampaignStatus(value)}>
