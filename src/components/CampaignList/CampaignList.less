@@ -120,12 +120,13 @@
     }
 
     .buttons {
-      display: flex;
-      justify-content: flex-end;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 15px;
       margin-top: 1.4285714285714286rem;
 
       button {
-        margin: 0 0 0 15px;
         height: 2.2857142857142856rem;
         font-size: 0.8571428571428571rem;
       }
