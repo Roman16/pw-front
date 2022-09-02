@@ -113,7 +113,11 @@ const MultiTextArea = ({onChange, max = 999999, value, toMark = false, productNa
     }, [value])
 
     const onFocus = () => setFocused(true)
-    const onBlur = () => setFocused(false)
+    const onBlur = (e) => {
+        addKeywordHandler(e)
+
+        setFocused(false)
+    }
 
     return (
         <div className={`multi-text-area ${focused ? 'focus' : ''}`}

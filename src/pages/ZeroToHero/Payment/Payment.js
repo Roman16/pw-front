@@ -38,7 +38,7 @@ const Payment = (props) => {
         [productInformation, setProductInformation] = useState({job: {}}),
         [payProcessing, setPayProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true),
-        [saveCard, setSaveCard] = useState(true),
+        [dontSaveCard, setDontSaveCard] = useState(false),
         [couponInfo, setCouponInfo] = useState(),
         [couponCheckProcessing, setCouponCheckProcessing] = useState(false),
         [newCard, setNewCard] = useState({
@@ -61,6 +61,32 @@ const Payment = (props) => {
         }
     }
 
+    const handlePaymentError = ({response: {data}}, payment_method, event) => {
+        if(data.message === "Requires action") {
+            props.stripe.confirmCardPayment(
+                data.result.client_secret,
+                {
+                    payment_method: payment_method
+                })
+                .then((res) => {
+                    if (res.error) {
+                        notification.error({title: res.error.message})
+                    } else {
+                        history.push('/zero-to-hero/settings/payment-success')
+                    }
+
+                    setPayProcessing(false)
+                })
+                .catch(e => {
+                    notification.error({title: e.error.message})
+                    console.log(e)
+
+                    setPayProcessing(false)
+                })
+
+        }
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         setPayProcessing(true)
@@ -77,7 +103,7 @@ const Payment = (props) => {
                     res = await props.stripe.createPaymentMethod('card')
                 }
 
-                saveCard && await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
+                 await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
 
                 if (res.error) {
                     notification.error({title: res.error.message})
@@ -93,10 +119,14 @@ const Payment = (props) => {
                                 history.push('/zero-to-hero/settings/payment-success')
                             })
                             .catch(e => {
-                                console.log(e)
+                                handlePaymentError(e, res.paymentMethod.id, event)
                                 setPayProcessing(false)
                             })
-
+                            .finally(() => {
+                                if (dontSaveCard) {
+                                    userService.deletePaymentMethod(res.paymentMethod.id)
+                                }
+                            })
                     }, 1500)
                 }
             } else {
@@ -110,34 +140,13 @@ const Payment = (props) => {
                             history.push('/zero-to-hero/settings/payment-success')
                         })
                         .catch(e => {
-                            console.log(e)
+                            handlePaymentError(e, cardsList[selectedCard].id, event)
                             setPayProcessing(false)
                         })
                 }, 1500)
             }
         } catch ({response: {data}}) {
-            if (data.status === 'requires_payment_method') {
-                props.stripe.confirmCardPayment(
-                    data.result.payment_intent_client_secret,
-                    {
-                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
-                    })
-                    .then((res) => {
-                        if (res.error) {
-                            notification.error({title: res.error.message})
-                        } else {
-                            handleSubmit(event)
-                        }
-
-                        setPayProcessing(false)
-                    })
-                    .catch(e => {
-                        notification.error({title: e.error.message})
-                        console.log(e)
-
-                        setPayProcessing(false)
-                    })
-            }
+            console.log(data)
         }
     }
 
@@ -218,11 +227,11 @@ const Payment = (props) => {
                                 <div className="radio-description">
                                     <NewCard
                                         disabled={selectedPaymentMethod !== 'new_card'}
-                                        saveCard={saveCard}
+                                        dontSaveCard={dontSaveCard}
                                         newCard={newCard}
                                         stripeElementChange={stripeElementChangeHandler}
                                         onChangeUserName={(value) => setUserName(value)}
-                                        switchSaveCard={setSaveCard}
+                                        switchSaveCard={setDontSaveCard}
                                     />
                                 </div>
                             </div>
