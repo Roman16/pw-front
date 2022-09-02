@@ -198,7 +198,7 @@ function cancelSubscription(id) {
 
 
 function getCouponInfo(coupon, id) {
-    return api('get', `${userUrls.couponInfo}?amazon_region_account_id=${id}&coupon=${coupon}`, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', `${userUrls.couponInfo}?coupon=${coupon}${id ? `&amazon_region_account_id=${id}` : ''}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function activateCoupon(data, id) {

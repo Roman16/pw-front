@@ -598,7 +598,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       border: 1px solid #C9CBD4;
       border-radius: 4px;
       overflow-x: auto;
@@ -694,37 +694,59 @@
     }
 
     .coupon-block {
-      padding: 2.142857142857143rem 0 0 0;
-      border-top: 1px solid #FFFFFF;
-      margin-top: 1.4285714285714286rem;
+      background: rgba(243, 243, 243, 0.5);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8571428571428571rem;
 
-      h3 {
+      h2 {
+        font-weight: 600;
         font-size: 1.1428571428571428rem;
-        margin-bottom: 15px;
+        line-height: 1.4285714285714286rem;
+        color: #353A3E;
+        margin-bottom: 0;
+      }
+
+      p {
+        font-size: 0.8571428571428571rem;
+        line-height: 1.0714285714285714rem;
+        color: #353A3E;
+        margin: 2px 0 0 0;
+
+        span {
+          color: #7FD3A1;
+          font-weight: 600;
+          text-decoration: underline;
+        }
       }
 
       .row {
         display: flex;
-        align-items: flex-end;
-        justify-content: flex-start;
       }
 
-      .form-group {
-        width: 9.285714285714286rem;
-        display: flex;
-        flex-direction: column;
+      input {
+        width: 11.142857142857142rem;
+        height: 2.2857142857142856rem;
+      }
 
-        label {
-          margin: 0 0 5px 0;
-        }
+      .btn {
+        height: 2.2857142857142856rem;
+        font-size: 0.8571428571428571rem;
+        padding: 0 2.5rem;
+        margin: 0 0 0 15px;
+        position: relative;
 
-        input {
-          background: inherit;
-          height: 2.2857142857142856rem;
-
-          &:focus {
-            border: 1px solid #fff !important;
-          }
+        .ant-spin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
       }
     }
@@ -776,6 +798,15 @@
 
       .value {
         color: #6959AB;
+        display: flex;
+        align-items: center;
+      }
+
+      .prev-value {
+        text-decoration-line: line-through;
+        color: #353A3E;
+        font-weight: 500;
+        margin: 0 10px 0 0;
       }
     }
 

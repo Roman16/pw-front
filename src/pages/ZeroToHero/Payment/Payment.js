@@ -39,6 +39,8 @@ const Payment = (props) => {
         [payProcessing, setPayProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true),
         [saveCard, setSaveCard] = useState(true),
+        [couponInfo, setCouponInfo] = useState(),
+        [couponCheckProcessing, setCouponCheckProcessing] = useState(false),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
@@ -83,8 +85,9 @@ const Payment = (props) => {
                 } else if (res.paymentMethod) {
                     setTimeout(() => {
                         zthServices.payBatch({
-                            jobs_ids: [props.batchId],
-                            payment_token: res.paymentMethod.id
+                            job_id: props.batchId,
+                            payment_token: res.paymentMethod.id,
+                            coupon: couponInfo?.code
                         })
                             .then(() => {
                                 history.push('/zero-to-hero/settings/payment-success')
@@ -99,8 +102,9 @@ const Payment = (props) => {
             } else {
                 setTimeout(() => {
                     zthServices.payBatch({
-                        jobs_ids: [props.batchId],
-                        payment_token: cardsList[selectedCard].id
+                        job_id: props.batchId,
+                        payment_token: cardsList[selectedCard].id,
+                        coupon: couponInfo?.code
                     })
                         .then(() => {
                             history.push('/zero-to-hero/settings/payment-success')
@@ -112,7 +116,7 @@ const Payment = (props) => {
                 }, 1500)
             }
         } catch ({response: {data}}) {
-            if (data.error_code === 'authentication_required') {
+            if (data.status === 'requires_payment_method') {
                 props.stripe.confirmCardPayment(
                     data.result.payment_intent_client_secret,
                     {
@@ -135,6 +139,22 @@ const Payment = (props) => {
                     })
             }
         }
+    }
+
+    const checkCouponHandler = async (coupon) => {
+        setCouponCheckProcessing(true)
+        try {
+            const {result} = await userService.getCouponInfo(coupon)
+            if (result.applies_to === null || result.applies_to.includes('zero_to_hero')) {
+                setCouponInfo(result)
+            } else {
+                notification.error({description: 'This coupon isn\'t valid for zth'})
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+        setCouponCheckProcessing(false)
     }
 
     const swipeCardHandler = (index) => {
@@ -228,6 +248,10 @@ const Payment = (props) => {
                     <Summary
                         jobPrice={productInformation.job.pricing}
                         payProcessing={payProcessing}
+                        couponInfo={couponInfo}
+                        checkProcessing={couponCheckProcessing}
+
+                        onCheckCoupon={checkCouponHandler}
                     />
                 </form>
             </>}
