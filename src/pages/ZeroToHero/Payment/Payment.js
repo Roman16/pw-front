@@ -71,11 +71,16 @@ const Payment = (props) => {
                 .then((res) => {
                     if (res.error) {
                         notification.error({title: res.error.message})
+                        setPayProcessing(false)
                     } else {
-                        history.push('/zero-to-hero/settings/payment-success')
-                    }
+                        if (dontSaveCard) {
+                            userService.deletePaymentMethod(payment_method)
+                        }
 
-                    setPayProcessing(false)
+                        setTimeout(() => {
+                            history.push('/zero-to-hero/settings/payment-success')
+                        }, 1500)
+                    }
                 })
                 .catch(e => {
                     notification.error({title: e.error.message})
@@ -116,16 +121,16 @@ const Payment = (props) => {
                             coupon: couponInfo?.code
                         })
                             .then(() => {
-                                history.push('/zero-to-hero/settings/payment-success')
-                            })
-                            .catch(e => {
-                                handlePaymentError(e, res.paymentMethod.id, event)
-                                setPayProcessing(false)
-                            })
-                            .finally(() => {
                                 if (dontSaveCard) {
                                     userService.deletePaymentMethod(res.paymentMethod.id)
                                 }
+
+                                setTimeout(() => {
+                                    history.push('/zero-to-hero/settings/payment-success')
+                                }, 1500)
+                            })
+                            .catch(e => {
+                                handlePaymentError(e, res.paymentMethod.id, event)
                             })
                     }, 1500)
                 }
@@ -137,7 +142,9 @@ const Payment = (props) => {
                         coupon: couponInfo?.code
                     })
                         .then(() => {
-                            history.push('/zero-to-hero/settings/payment-success')
+                            setTimeout(() => {
+                                history.push('/zero-to-hero/settings/payment-success')
+                            }, 1500)
                         })
                         .catch(e => {
                             handlePaymentError(e, cardsList[selectedCard].id, event)
