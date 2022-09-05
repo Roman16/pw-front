@@ -62,7 +62,7 @@ const Payment = (props) => {
     }
 
     const handlePaymentError = ({response: {data}}, payment_method, event) => {
-        if(data.message === "Requires action") {
+        if (data.message === "Requires action") {
             props.stripe.confirmCardPayment(
                 data.result.client_secret,
                 {
@@ -103,7 +103,7 @@ const Payment = (props) => {
                     res = await props.stripe.createPaymentMethod('card')
                 }
 
-                 await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
+                await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
 
                 if (res.error) {
                     notification.error({title: res.error.message})
@@ -154,10 +154,10 @@ const Payment = (props) => {
         setCouponCheckProcessing(true)
         try {
             const {result} = await userService.getCouponInfo(coupon)
-            if (result.applies_to === null || result.applies_to.includes('zero_to_hero')) {
+            if (result.valid && (result.applies_to === null || result.applies_to.includes('zero_to_hero'))) {
                 setCouponInfo(result)
             } else {
-                notification.error({description: 'This coupon isn\'t valid for zth'})
+                notification.error({description: 'Coupon is not valid'})
             }
         } catch (e) {
             console.log(e)

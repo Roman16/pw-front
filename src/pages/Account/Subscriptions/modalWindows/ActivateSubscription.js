@@ -81,9 +81,18 @@ export const ActivateSubscription = ({
             if (!couponRes.result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                const {result} = await userService.getActivateInfo({coupon: value, id: regionId})
-                setCouponInfo(couponRes.result)
-                setActivateData(result[regionId].data)
+                if (
+                    couponRes.result.applies_to === null ||
+                    (plan === 'full' && couponRes.result.applies_to.includes('analytics_access') && couponRes.result.applies_to.includes('ppc_automation_access')) ||
+                    (plan === 'analytics' && couponRes.result.applies_to.includes('analytics_access')) ||
+                    (plan === 'optimization' && couponRes.result.applies_to.includes('ppc_automation_access'))
+                ) {
+                    const {result} = await userService.getActivateInfo({coupon: value, id: regionId})
+                    setCouponInfo(couponRes.result)
+                    setActivateData(result[regionId].data)
+                } else {
+
+                }
             }
         } catch (e) {
             console.log(e)
