@@ -61,7 +61,7 @@ const Payment = (props) => {
         }
     }
 
-    const handlePaymentError = ({response: {data}}, payment_method, event) => {
+    const handlePaymentError = ({response: {data}}, payment_method) => {
         if (data.message === "Requires action") {
             props.stripe.confirmCardPayment(
                 data.result.client_secret,
@@ -88,7 +88,10 @@ const Payment = (props) => {
 
                     setPayProcessing(false)
                 })
-
+        } else {
+            if (dontSaveCard) {
+                userService.deletePaymentMethod(payment_method)
+            }
         }
     }
 
