@@ -424,6 +424,7 @@ const ProductList = ({
             key: MIN_BID_MANUAL_CAMPING,
             width: '175px',
             editType: 'currency',
+            saveValidation: () =>  false,
             render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
         },
         {
@@ -432,6 +433,7 @@ const ProductList = ({
             key: MAX_BID_MANUAL_CAMPING,
             width: '175px',
             editType: 'currency',
+            saveValidation: () =>  false,
             render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
         },
         {

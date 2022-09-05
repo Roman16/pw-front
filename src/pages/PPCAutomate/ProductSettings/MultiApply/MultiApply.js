@@ -14,7 +14,7 @@ const Option = Select.Option
 
 const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll, onSubmit}) => {
     const [fieldType, setFieldType] = useState('min_bid_manual_campaign'),
-        [settingValue, setSettingValue] = useState(''),
+        [settingValue, setSettingValue] = useState(),
         [submitProcessing, setSubmitProcessing] = useState(false)
 
     const submitHandler = e => {
@@ -27,7 +27,7 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
         } else {
             onSubmit({
                     field: fieldType,
-                    [fieldType]: settingValue
+                    [fieldType]: settingValue || null
                 },
                 () => {
                     setSettingValue('')
@@ -70,7 +70,6 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
 
                 <div className="form-group">
                     <InputCurrency
-                        required
                         typeIcon={fieldType === 'product_margin_value' || fieldType === 'desired_acos' || fieldType === 'break_even_acos' ? 'percent' : 'currency'}
                         value={settingValue}
                         onChange={value => setSettingValue(value)}
@@ -79,7 +78,7 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
                     />
                 </div>
 
-                <button className={'btn default p15'}>
+                <button className={'btn default p15'} disabled={submitProcessing}>
                     Apply
 
                     {submitProcessing && <Spin size={'small'}/>}

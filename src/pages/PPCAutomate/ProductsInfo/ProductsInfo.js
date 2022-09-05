@@ -71,7 +71,7 @@ const ProductsInfo = () => {
     const changeFiltersHandler = (data) => setRequestParams({...requestParams, ...data, page: 1})
     const changePaginationHandler = (data) => setRequestParams({...requestParams, ...data})
 
-    const updateFieldHandler = async (item, column, value, success, error, parentId) => {
+    const updateFieldHandler = async (item, column, value=null, success, error, parentId) => {
         const breakSubmit = (text) => {
             notification.warning({title: text})
             error()
@@ -79,7 +79,7 @@ const ProductsInfo = () => {
 
         if (column === PRICE_FROM_USER && value <= 0) {
             breakSubmit('Price should be greater than 0')
-        } else if ((column === MIN_BID_MANUAL_CAMPING || column === MAX_BID_MANUAL_CAMPING || column === MIN_BID_AUTO_CAMPING || column === MAX_BID_AUTO_CAMPING) && value < 0.02) {
+        } else if ((column === MIN_BID_MANUAL_CAMPING || column === MAX_BID_MANUAL_CAMPING || column === MIN_BID_AUTO_CAMPING || column === MAX_BID_AUTO_CAMPING) && value < 0.02 && value !== null) {
             breakSubmit('Bids should be greater than or equal to 0.02$')
         } else if (column === MIN_BID_MANUAL_CAMPING && item[MAX_BID_MANUAL_CAMPING] && value > item[MAX_BID_MANUAL_CAMPING]) {
             breakSubmit('Min Bid (Manual Campaign) should be less than Max Bid (Manual Campaign)')
@@ -174,6 +174,8 @@ const ProductsInfo = () => {
             notification.success({title: 'Changes saved'})
         } catch (e) {
             console.log(e)
+
+            success()
         }
     }
 
