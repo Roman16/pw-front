@@ -69,14 +69,14 @@ const Payment = (props) => {
                     payment_method: payment_method
                 })
                 .then((res) => {
+                    if (dontSaveCard) {
+                        userService.deletePaymentMethod(payment_method)
+                    }
+
                     if (res.error) {
                         notification.error({title: res.error.message})
                         setPayProcessing(false)
                     } else {
-                        if (dontSaveCard) {
-                            userService.deletePaymentMethod(payment_method)
-                        }
-
                         setTimeout(() => {
                             history.push('/zero-to-hero/settings/payment-success')
                         }, 1500)
@@ -89,6 +89,8 @@ const Payment = (props) => {
                     setPayProcessing(false)
                 })
         } else {
+            notification.error({title: data.message})
+
             if (dontSaveCard) {
                 userService.deletePaymentMethod(payment_method)
             }
