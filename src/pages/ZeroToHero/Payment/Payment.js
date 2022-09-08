@@ -121,6 +121,14 @@ const Payment = (props) => {
                     setPayProcessing(false)
                 } else if (res.paymentMethod) {
                     setTimeout(() => {
+                        setProductInformation({
+                            ...productInformation,
+                            job: {
+                                ...productInformation.job,
+                                status: 'PAYMENT_IN_PROGRESS'
+                            }
+                        })
+
                         zthServices.payBatch({
                             job_id: props.batchId,
                             payment_token: res.paymentMethod.id,
@@ -142,6 +150,14 @@ const Payment = (props) => {
                 }
             } else {
                 setTimeout(() => {
+                    setProductInformation({
+                        ...productInformation,
+                        job: {
+                            ...productInformation.job,
+                            status: 'PAYMENT_IN_PROGRESS'
+                        }
+                    })
+
                     zthServices.payBatch({
                         job_id: props.batchId,
                         payment_token: cardsList[selectedCard].id,
