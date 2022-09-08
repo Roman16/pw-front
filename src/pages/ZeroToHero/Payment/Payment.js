@@ -160,6 +160,7 @@ const Payment = (props) => {
             }
         } catch ({response: {data}}) {
             console.log(data)
+            setPayProcessing(false)
         }
     }
 
