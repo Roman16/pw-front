@@ -191,13 +191,22 @@ const Subscriptions = (props) => {
             if (!result.valid) {
                 notification.error({title: 'Coupon is not valid'})
             } else {
-                await userService.activateCoupon({
-                    coupon,
-                    type: subscriptionState.active_subscription_type
-                }, activeRegion.id)
-                notification.success({title: 'Coupon activated'})
-                getSubscriptionsState()
-                setVisibleCancelSubscriptionsWindow(false)
+                if (
+                    result.applies_to === null ||
+                    (subscriptionState.active_subscription_type === 'full' && result.applies_to.includes('analytics_access') && result.applies_to.includes('ppc_automation_access')) ||
+                    (subscriptionState.active_subscription_type === 'analytics' && result.applies_to.includes('analytics_access')) ||
+                    (subscriptionState.active_subscription_type === 'optimization' && result.applies_to.includes('ppc_automation_access'))
+                ) {
+                    await userService.activateCoupon({
+                        coupon,
+                        type: subscriptionState.active_subscription_type
+                    }, activeRegion.id)
+                    notification.success({title: 'Coupon activated'})
+                    getSubscriptionsState()
+                    setVisibleCancelSubscriptionsWindow(false)
+                } else {
+                    notification.error({title: 'Coupon is not valid'})
+                }
             }
         } catch (e) {
             console.log(e)

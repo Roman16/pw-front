@@ -26,7 +26,7 @@ export const userUrls = {
     subscriptionState: 'user/account/subscription/state',
     cancelSubscription: 'user/account/subscription/cancel',
     activateInfo: 'user/account/subscription/activate/info',
-    couponInfo: 'user/account/subscription/coupon/check',
+    couponInfo: 'billing/coupon/check',
     couponActivate: 'user/account/subscription/coupon/apply',
     activateSubscription: 'user/account/subscription/activate',
     retryPayment: 'user/account/subscription/payment/retry',
@@ -165,6 +165,7 @@ export const zthUrls = {
     deleteCreatedJob: (id) => `v2/zero-to-hero/products-jobs/${id}`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
+    incompleteJob: 'v2/zero-to-hero/products-jobs/pay/invoice'
 }
 
 export const analyticsUrls = {

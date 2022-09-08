@@ -13,11 +13,11 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
 
     return (
         <ul className="accounts-list">
-            {accounts.map(({account_alias, seller_id, amazon_region_account_marketplaces, id, amazon_sp_api_access_status, amazon_ads_api_access_status, is_amazon_ads_api_attached, is_amazon_sp_api_attached}, index) => (
+            {accounts.map(({account_alias, seller_id, amazon_region_account_marketplaces,region_type, id, amazon_sp_api_access_status, amazon_ads_api_access_status, is_amazon_ads_api_attached, is_amazon_sp_api_attached}, index) => (
                 <li className={selectedAccount?.id === id && 'active'}>
                     <div className="account-name" onClick={() => onSelect(accounts[index])}>
                         <h3>
-                            <div className="text" title={account_alias || seller_id}>{account_alias || seller_id}</div>
+                            <div className="text" title={account_alias || region_type.replace(/_/g, ' ')}>{account_alias || region_type.replace(/_/g, ' ')}</div>
                             {activeRegion.id === id && <span>(Active)</span>}
                         </h3>
 

@@ -4,17 +4,32 @@ import {Spin} from "antd"
 import {SVG} from "../../../utils/icons"
 
 export const roundTo = (num, digits, minFix) => {
-    const multiplicator = Math.pow(10, digits);
-    const multiplied = parseFloat((num * multiplicator).toFixed(11));
-    const res = Math.round(multiplied) / multiplicator;
-    return res;
+    const multiplicator = Math.pow(10, digits)
+    const multiplied = parseFloat((num * multiplicator).toFixed(11))
+    const res = Math.round(multiplied) / multiplicator
+    return res
 }
 
-const Summary = ({jobPrice, payProcessing}) => {
-    const [openedRow, setOpenedRow] = useState()
+const Summary = ({jobPrice, payProcessing, couponInfo, onCheckCoupon, checkProcessing, jobStatus}) => {
+    const [openedRow, setOpenedRow] = useState(),
+        [coupon, setCoupon] = useState('')
 
     const openRowHandler = (row) => {
         setOpenedRow(row === openedRow ? undefined : row)
+    }
+
+    const priceWitchCoupon = () => {
+        if (couponInfo) {
+            if (couponInfo.amount_off && couponInfo.percent_off) {
+                return numberMask(((jobPrice.grand_total_price_in_cents - (jobPrice.grand_total_price_in_cents * couponInfo.percent_off / 100)) - couponInfo.amount_off) / 100, 2)
+            } else if (couponInfo.amount_off) {
+                return numberMask(jobPrice.grand_total_price_in_cents - couponInfo.amount_off / 100, 2)
+            } else if (couponInfo.percent_off) {
+                return numberMask((jobPrice.grand_total_price_in_cents - (jobPrice.grand_total_price_in_cents * couponInfo.percent_off / 100)) / 100, 2)
+            }
+        } else {
+            return numberMask(jobPrice.grand_total_price_in_cents / 100, 2)
+        }
     }
 
     return (
@@ -48,7 +63,7 @@ const Summary = ({jobPrice, payProcessing}) => {
                     <div>${numberMask(jobPrice.keywords.summary.total_price_in_cents / 100, 2)}</div>
                 </div>
 
-               {openedRow === 'keywords' && <div className="description-list">
+                {openedRow === 'keywords' && <div className="description-list">
                     {jobPrice.keywords.details.map(i => <div className="row">
                         <div></div>
                         <div>{i.entities_count}</div>
@@ -79,29 +94,52 @@ const Summary = ({jobPrice, payProcessing}) => {
                 </div>}
             </div>
 
-            <div className="total-price">
-                <div className={'label'}>TOTAL PRICE:</div>
-                <div className="value">
-                    ${numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
+            {(jobStatus !== 'PAYMENT_IN_PROGRESS' || couponInfo) && <div className="coupon-block">
+                <div className="col">
+                    <h2>Enter Coupon</h2>
+
+                    {couponInfo && <p>Applied coupon: <span>{couponInfo.name}
+                   </span>  ({couponInfo.percent_off && `${couponInfo.percent_off}% discount`} {couponInfo.amount_off && couponInfo.percent_off && ', '} {couponInfo.amount_off && `$${numberMask(couponInfo.amount_off / 100, 2)} discount`} )</p>}
                 </div>
+
+                {jobStatus !== 'PAYMENT_IN_PROGRESS' && <div className="row">
+                    <div className="form-group">
+                        <input
+                            placeholder={'Your coupon'}
+                            value={coupon}
+                            onChange={({target: {value}}) => setCoupon(value)}
+                        />
+                    </div>
+
+                    <button disabled={checkProcessing} type={'button'} className="btn blue"
+                            onClick={() => onCheckCoupon(coupon)}>
+                        Apply
+
+                        {checkProcessing && <Spin size={'small'}/>}
+                    </button>
+                </div>}
+            </div>}
+
+            <div className="action-block">
+                <div className="total-price">
+                    <div className={'label'}>Total:</div>
+
+                    <div className="value">
+                        {couponInfo && <div className="prev-value">
+                            ${numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
+                        </div>}
+                        ${priceWitchCoupon()}
+                    </div>
+                </div>
+
+                <button
+                    className={'btn default'}
+                    disabled={payProcessing}
+                >
+                    Pay
+                    {payProcessing && <Spin size={'small'}/>}
+                </button>
             </div>
-
-            {/*<div className="discount">*/}
-            {/*    <div className="label">Discount:</div>*/}
-            {/*    <div className="value">$500</div>*/}
-            {/*</div>*/}
-            {/*<div className="save">*/}
-            {/*    <div className="label">You save:</div>*/}
-            {/*    <div className="value">$500</div>*/}
-            {/*</div>*/}
-
-            <button
-                className={'sds-btn default'}
-                disabled={payProcessing}
-            >
-                Pay
-                {payProcessing && <Spin size={'small'}/>}
-            </button>
         </div>
 
     )

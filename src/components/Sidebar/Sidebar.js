@@ -154,12 +154,12 @@ const Sidebar = () => {
 
     useEffect(() => {
         $('.nav-item.has-child').hover(function () {
-                var popup_div = $(this > '.sub-menu')
+                const popup_div = $(this).find(".sub-menu")
 
-                var obj = $(this)
-                var offset = obj.offset()
+                const obj = $(this)
+                const offset = obj.offset()
 
-                var new_top = offset.top + 45
+                const new_top = offset.top + 45
 
                 popup_div.css('top', new_top + 'px')
             }

@@ -38,7 +38,9 @@ const Payment = (props) => {
         [productInformation, setProductInformation] = useState({job: {}}),
         [payProcessing, setPayProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true),
-        [saveCard, setSaveCard] = useState(true),
+        [dontSaveCard, setDontSaveCard] = useState(false),
+        [couponInfo, setCouponInfo] = useState(),
+        [couponCheckProcessing, setCouponCheckProcessing] = useState(false),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
@@ -59,6 +61,43 @@ const Payment = (props) => {
         }
     }
 
+    const handlePaymentError = ({response: {data}}, payment_method) => {
+        if (data.message === "Requires action") {
+            props.stripe.confirmCardPayment(
+                data.result.client_secret,
+                {
+                    payment_method: payment_method
+                })
+                .then((res) => {
+                    if (dontSaveCard && selectedPaymentMethod === 'new_card') {
+                        userService.deletePaymentMethod(payment_method)
+                    }
+
+                    if (res.error) {
+                        notification.error({title: res.error.message})
+                        setPayProcessing(false)
+                    } else {
+                        setTimeout(() => {
+                            history.push('/zero-to-hero/settings/payment-success')
+                        }, 1500)
+                    }
+                })
+                .catch(e => {
+                    notification.error({title: e.error.message})
+
+                    setPayProcessing(false)
+                })
+        } else {
+            notification.error({title: data.message})
+
+            setPayProcessing(false)
+
+            if (dontSaveCard && selectedPaymentMethod === 'new_card') {
+                userService.deletePaymentMethod(payment_method)
+            }
+        }
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         setPayProcessing(true)
@@ -75,65 +114,75 @@ const Payment = (props) => {
                     res = await props.stripe.createPaymentMethod('card')
                 }
 
-                saveCard && await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
+                await userService.addPaymentMethod({stripe_token: res.paymentMethod.id})
 
                 if (res.error) {
                     notification.error({title: res.error.message})
+                    setPayProcessing(false)
                 } else if (res.paymentMethod) {
                     setTimeout(() => {
                         zthServices.payBatch({
-                            jobs_ids: [props.batchId],
-                            payment_token: res.paymentMethod.id
+                            job_id: props.batchId,
+                            payment_token: res.paymentMethod.id,
+                            coupon: couponInfo?.code
                         })
                             .then(() => {
-                                history.push('/zero-to-hero/settings/payment-success')
+                                if (dontSaveCard) {
+                                    userService.deletePaymentMethod(res.paymentMethod.id)
+                                }
+
+                                setTimeout(() => {
+                                    history.push('/zero-to-hero/settings/payment-success')
+                                }, 1500)
                             })
                             .catch(e => {
-                                console.log(e)
+                                handlePaymentError(e, res.paymentMethod.id, event)
                             })
-
                     }, 1500)
                 }
             } else {
                 setTimeout(() => {
                     zthServices.payBatch({
-                        jobs_ids: [props.batchId],
-                        payment_token: cardsList[selectedCard].id
+                        job_id: props.batchId,
+                        payment_token: cardsList[selectedCard].id,
+                        coupon: couponInfo?.code
                     })
                         .then(() => {
-                            history.push('/zero-to-hero/settings/payment-success')
+                            setTimeout(() => {
+                                history.push('/zero-to-hero/settings/payment-success')
+                            }, 1500)
                         })
                         .catch(e => {
-                            console.log(e)
+                            handlePaymentError(e, cardsList[selectedCard].id, event)
+                            setPayProcessing(false)
                         })
                 }, 1500)
             }
         } catch ({response: {data}}) {
-            if (data.error_code === 'authentication_required') {
-                props.stripe.confirmCardPayment(
-                    data.result.payment_intent_client_secret,
-                    {
-                        payment_method: selectedPaymentMethod === 'new_card' ? res.paymentMethod.id : cardsList[selectedCard].id
-                    })
-                    .then((res) => {
-                        if (res.error) {
-                            notification.error({title: res.error.message})
-                        } else {
-                            handleSubmit(event)
-                        }
+            console.log(data)
+            setPayProcessing(false)
+        }
+    }
 
-                        setPayProcessing(false)
-                    })
-                    .catch(e => {
-                        notification.error({title: e.error.message})
-                        console.log(e)
-
-                        setPayProcessing(false)
-                    })
+    const checkCouponHandler = async (coupon) => {
+        setCouponCheckProcessing(true)
+        if (coupon) {
+            try {
+                const {result} = await userService.getCouponInfo(coupon)
+                if (result.valid && (result.applies_to === null || result.applies_to.includes('zero_to_hero'))) {
+                    setCouponInfo(result)
+                } else {
+                    notification.error({title: 'Coupon is not valid'})
+                }
+            } catch (e) {
+                console.log(e)
             }
+
+        } else {
+            setCouponInfo(undefined)
         }
 
-        setPayProcessing(false)
+        setCouponCheckProcessing(false)
     }
 
     const swipeCardHandler = (index) => {
@@ -145,6 +194,10 @@ const Payment = (props) => {
             setFetchProcessing(true)
 
             const [batchInfo, paymentCards] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation()])
+
+            if(batchInfo.result.products[0].job.status === 'PAYMENT_IN_PROGRESS') {
+                fetchIncompleteJobInfo()
+            }
 
             if (paymentCards.length > 0) setPaymentMethod('select')
 
@@ -161,13 +214,21 @@ const Payment = (props) => {
         }
     }
 
+    const fetchIncompleteJobInfo = async () => {
+        try {
+            const {result} = await zthServices.getIncompleteJob(props.batchId)
+
+            if(result.coupon) {
+                setCouponInfo(result.coupon)
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     useEffect(() => {
         fetchBatchInformation()
-
-        notification.info({
-            title: 'We’re sorry!',
-            description: 'We do not accept Pioneer cards yet, but our team works on this issue. Until we deal with the problem, please, do not enter the Pioneer card number because the payment will not be completed.'
-        })
 
         return (() => {
             toast.dismiss()
@@ -197,11 +258,11 @@ const Payment = (props) => {
                                 <div className="radio-description">
                                     <NewCard
                                         disabled={selectedPaymentMethod !== 'new_card'}
-                                        saveCard={saveCard}
+                                        dontSaveCard={dontSaveCard}
                                         newCard={newCard}
                                         stripeElementChange={stripeElementChangeHandler}
                                         onChangeUserName={(value) => setUserName(value)}
-                                        switchSaveCard={setSaveCard}
+                                        switchSaveCard={setDontSaveCard}
                                     />
                                 </div>
                             </div>
@@ -227,6 +288,11 @@ const Payment = (props) => {
                     <Summary
                         jobPrice={productInformation.job.pricing}
                         payProcessing={payProcessing}
+                        couponInfo={couponInfo}
+                        checkProcessing={couponCheckProcessing}
+                        jobStatus={productInformation.job.status}
+
+                        onCheckCoupon={checkCouponHandler}
                     />
                 </form>
             </>}

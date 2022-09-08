@@ -95,10 +95,10 @@ const NewCard = (props) => {
 
             <Checkbox
                 disabled={props.disabled}
-                checked={props.saveCard}
+                checked={props.dontSaveCard}
                 onChange={({target: {checked}}) => props.switchSaveCard(checked)}
             >
-                Save this card for future payments
+                Don`t save this card for future payments
             </Checkbox>
         </div>
     )
