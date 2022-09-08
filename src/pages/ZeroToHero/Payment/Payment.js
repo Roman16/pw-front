@@ -194,6 +194,9 @@ const Payment = (props) => {
 
             const [batchInfo, paymentCards] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation()])
 
+            if(batchInfo.result.products[0].job.status === 'PAYMENT_IN_PROGRESS') {
+                fetchIncompleteJobInfo()
+            }
 
             if (paymentCards.length > 0) setPaymentMethod('select')
 
@@ -225,10 +228,6 @@ const Payment = (props) => {
 
     useEffect(() => {
         fetchBatchInformation()
-
-        if (props.jobStatus === 'PAYMENT_IN_PROGRESS') {
-            fetchIncompleteJobInfo()
-        }
 
         return (() => {
             toast.dismiss()
@@ -290,7 +289,7 @@ const Payment = (props) => {
                         payProcessing={payProcessing}
                         couponInfo={couponInfo}
                         checkProcessing={couponCheckProcessing}
-                        jobStatus={props.jobStatus}
+                        jobStatus={productInformation.job.status}
 
                         onCheckCoupon={checkCouponHandler}
                     />
@@ -305,7 +304,7 @@ const PaymentRender = injectStripe(Payment)
 const PaymentContainer = (props) => {
     return (<StripeProvider apiKey={stripeKey}>
         <Elements>
-            {<PaymentRender batchId={props.match.params.batchId} jobStatus={props.match.params.status}/>}
+            {<PaymentRender batchId={props.match.params.batchId}/>}
         </Elements>
     </StripeProvider>)
 }

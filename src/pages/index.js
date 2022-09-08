@@ -312,7 +312,7 @@ const AuthorizedUser = (props) => {
 
                                     {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
                                         exact
-                                        path="/zero-to-hero/payment/:batchId?/:status?"
+                                        path="/zero-to-hero/payment/:batchId?"
                                         component={Payment}
                                     />}
 
