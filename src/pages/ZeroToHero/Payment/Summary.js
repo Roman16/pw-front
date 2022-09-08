@@ -23,7 +23,7 @@ const Summary = ({jobPrice, payProcessing, couponInfo, onCheckCoupon, checkProce
             if (couponInfo.amount_off && couponInfo.percent_off) {
                 return numberMask(((jobPrice.grand_total_price_in_cents - (jobPrice.grand_total_price_in_cents * couponInfo.percent_off / 100)) - couponInfo.amount_off) / 100, 2)
             } else if (couponInfo.amount_off) {
-                return numberMask(jobPrice.grand_total_price_in_cents - couponInfo.amount_off / 100, 2)
+                return numberMask((jobPrice.grand_total_price_in_cents - couponInfo.amount_off) / 100, 2)
             } else if (couponInfo.percent_off) {
                 return numberMask((jobPrice.grand_total_price_in_cents - (jobPrice.grand_total_price_in_cents * couponInfo.percent_off / 100)) / 100, 2)
             }
