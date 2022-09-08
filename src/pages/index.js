@@ -272,11 +272,11 @@ const AuthorizedUser = (props) => {
                                         component={Dayparting}
                                     />
 
-                                    <ConnectedAmazonRoute
-                                        exact
-                                        path="/ppc/dayparting2"
-                                        component={Dayparting2}
-                                    />
+                                    {/*<ConnectedAmazonRoute*/}
+                                    {/*    exact*/}
+                                    {/*    path="/ppc/dayparting2"*/}
+                                    {/*    component={Dayparting2}*/}
+                                    {/*/>*/}
 
                                     {/*-------------------------------------------*/}
                                     <AdminRoute path="/admin-panel" component={AdminPanel}/>
