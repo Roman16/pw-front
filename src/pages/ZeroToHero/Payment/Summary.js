@@ -112,7 +112,8 @@ const Summary = ({jobPrice, payProcessing, couponInfo, onCheckCoupon, checkProce
                         {couponInfo && <div className="prev-value">
                             ${numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
                         </div>}
-                        {couponInfo?.amount_off ? numberMask(jobPrice.grand_total_price_in_cents - couponInfo.amount_off / 100, 2) :
+
+                        ${couponInfo?.amount_off ? numberMask(jobPrice.grand_total_price_in_cents - couponInfo.amount_off / 100, 2) :
                             couponInfo?.percent_off ? numberMask((jobPrice.grand_total_price_in_cents - (jobPrice.grand_total_price_in_cents * couponInfo.percent_off / 100)) / 100, 2) :
                                 numberMask(jobPrice.grand_total_price_in_cents / 100, 2)}
                     </div>

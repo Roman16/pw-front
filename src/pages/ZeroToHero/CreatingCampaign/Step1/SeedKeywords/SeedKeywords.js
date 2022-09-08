@@ -7,7 +7,7 @@ import axios from "axios"
 import {SVG} from "../../../../../utils/icons"
 import './SeedKeywords.less'
 import {
-    cleanMainKeyword, isLongTail,
+    cleanMainKeyword, findExistingDuplicateOfNewMainKeyword, isLongTail,
     isMainKeywordValid, isTooShort,
     keywordHasMeaningfulWords
 } from "../../../components/MultiTextArea/isMainKeywordValid"
@@ -55,15 +55,13 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
     const addKeywordHandler = () => {
         const value = campaigns.main_keywords
 
-        if ([...value, ...newKeyword.split('\n')].length > 5) {
-            notification.error({description: "You need to enter up to 5 most popular keywords"})
-        }
-
-        changeMainKeywordsHandler([...value, ...newKeyword.split('\n')
-            .map(word => {
+        changeMainKeywordsHandler([...value, ...[...new Set(newKeyword.split('\n'))]
+            .filter(word => {
                 const clearKeyword = cleanMainKeyword(word)
-
-                if (clearKeyword !== '' && !value.find(item => item.value === clearKeyword)) {
+                return (clearKeyword !== '' && !value.find(item => item.value === clearKeyword))
+            })
+            .map(word => {
+                    const clearKeyword = cleanMainKeyword(word)
                     return ({
                         value: clearKeyword,
                         hasMeaningfulWords: keywordHasMeaningfulWords(clearKeyword),
@@ -71,11 +69,8 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
                         isLongTail: isLongTail(clearKeyword),
                         isTooShort: isTooShort(clearKeyword)
                     })
-                } else {
-                    return undefined
                 }
-            })]
-            .filter((i, index) => index < 5)
+            )]
         )
 
 
@@ -83,7 +78,6 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
     }
 
     const getKeysEstimation = async (item) => {
-
         try {
             prevCheckKeywords = [...prevCheckKeywords, item.value]
 
@@ -122,6 +116,23 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
     }, [mainKeywords])
 
 
+    useEffect(() => {
+        let validList = [...campaigns.main_keywords.map(item => {
+            delete item.isDuplicate
+
+            return item
+        })]
+
+        for (let i = validList.length - 1; i >= 0; i--) {
+            const clearKeyword = cleanMainKeyword(validList[i].value)
+            validList.find(findItem => findItem.value === validList[i].value).isDuplicate = findExistingDuplicateOfNewMainKeyword(clearKeyword, validList.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+        }
+
+        setMainKeywords(validList)
+
+        validList = []
+    }, [campaigns.main_keywords])
+
     const clearKeywordsListHandler = () => {
         changeMainKeywordsHandler([])
     }
@@ -129,7 +140,6 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
     const removeKeywordHandler = (index) => {
         changeMainKeywordsHandler([...mainKeywords.filter((i, itemIndex) => itemIndex !== index)])
     }
-
 
     return (
         <div className={`col text-area-group edit-block main_keywords seed-keywords`}>
@@ -149,7 +159,13 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
 
                 <div className="col">
                     <div className="row">
-                        <div className="count"><b>{mainKeywords.length || 0}</b> keywords added</div>
+                        <div className="count"><b>{[...campaigns.main_keywords
+                            .filter(item => item.hasMeaningfulWords !== false)
+                            .filter(item => {
+                                const clearKeyword = cleanMainKeyword(item.value)
+                                return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                            })].length || 0}</b> keywords added
+                        </div>
                         <button onClick={clearKeywordsListHandler}>Remove All</button>
                     </div>
                 </div>
@@ -194,6 +210,17 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
                 </div>
 
                 <div className="col">
+                    {[
+                        ...campaigns.main_keywords
+                            .filter(item => item.hasMeaningfulWords !== false)
+                            .filter(item => {
+                                const clearKeyword = cleanMainKeyword(item.value)
+                                return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+                            })
+                    ].length > 5 && <div className="length-error">
+                        Maximum length of 5 keywords. Please leave the most suitable words.
+                    </div>}
+
                     <div className="estimated-info">
                         <p>
                             Estimated amount of keywords in your <br/> campaigns yielded by the seed keywords

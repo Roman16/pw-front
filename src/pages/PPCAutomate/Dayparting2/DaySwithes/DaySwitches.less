@@ -1,79 +1,43 @@
-
-section.day-switches {
+.dayparting-page.dark-mode .day-switches {
   display: flex;
   flex-direction: column;
   grid-area: daySwitches;
-  margin: 0 0 10px;
-  width: 100%;
-  position: relative;
-
-  &.in-processing {
-    .section-header,
-    .switches {
-      filter: grayscale(100%);
-    }
-  }
 
   .section-header {
-    margin: 0 0 10px 0;
-    justify-content: space-between;
-    z-index: 11;
-
-    h2 {
-      font-weight: 600;
-      font-size: 1.4285714285714286rem;
-      line-height: 1.7142857142857142rem;
-      color: #353A3E;
-      margin: 0;
-    }
-
-    .legend {
-      display: flex;
-      align-items: center;
-
-      .example {
-        display: flex;
-        align-items: center;
-        font-size: 0.8571428571428571rem;
-        color: #353A3E;
-
-        div {
-          width: 1.1428571428571428rem;
-          height: 1.1428571428571428rem;
-          border-radius: 2px;
-          background: #F3F3F3;
-          margin: 0 5px 0 0;
-        }
-
-        &:first-child {
-          margin: 0 1.4285714285714286rem 0 0;
-
-          div {
-            background: #6959AB;
-          }
-        }
-      }
-    }
-
     .actions {
       display: flex;
+      align-items: center;
+      margin: 0 0 0 auto;
+
+      .custom-tooltip {
+        margin: 0;
+      }
+
+      .reset-btn, .copy-btn {
+        margin: 0 2rem 0 0;
+      }
 
       .reset-btn, .copy-btn, .past-btn {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0 0 0 2rem;
         font-size: 0.7142857142857143rem;
         line-height: 1.0714285714285714rem;
         text-align: center;
         text-transform: uppercase;
-        color: #353A3E;
+        color: #fff;
         cursor: pointer;
 
         svg {
           margin: 0 0 2px;
-          stroke: #353A3E;
+          stroke: #fff;
+          fill: #fff;
         }
+      }
+
+      .btn {
+        margin: 0 0 0 2.5rem;
+        padding: 0 1.0714285714285714rem;
       }
     }
 
@@ -91,57 +55,58 @@ section.day-switches {
 
   &.disabled {
     .section-header {
-      .actions {
-        -webkit-filter: grayscale(100%);
-        filter: grayscale(100%);
+      .reset-btn, .copy-btn, .past-btn {
+        color: #898989;
+        pointer-events: none;
+        cursor: not-allowed;
+
+        svg {
+          stroke: #898989;
+          fill: #898989;
+        }
       }
     }
 
     .switches {
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
+
+      .time-name div,
+      .row .day-axis .day-name {
+          color: #898989;
+      }
     }
   }
 
   .switches {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.4285714285714286rem 1.4285714285714286rem;
 
     .time-name {
+      display: grid;
+      grid-template-columns: repeat(24, 1fr);
+      grid-column-gap: 4px;
+      margin-bottom: 8px;
+      padding: 0 0 0 62px;
+
       div {
-        flex: 1;
-        margin: 0 5px 0 0;
-        text-align: center;
-
-        &:first-child {
-          width: 5%;
-          min-width: 75px;
-          margin: 0;
-        }
-
-        &:last-child {
-          margin: 0;
-        }
+        font-weight: 600;
+        font-size: 1rem;
+        color: #FFFFFF;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         button {
-          margin: 5px 0 10px 0;
-        }
-      }
-
-      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-        & {
-
-          div {
-            &:first-child {
-              width: 7%;
-              min-width: 55px;
-              margin: 0;
-            }
-          }
+          margin: 5px 0 0 0;
         }
       }
     }
 
     .row {
+      display: flex;
       flex-wrap: nowrap;
       align-items: stretch;
 
@@ -149,29 +114,23 @@ section.day-switches {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin: 0 12px 0 0;
 
         .day-name {
+          width: 50px;
           display: flex;
-          width: 5%;
-          min-width: 75px;
-          height: 1.71428571rem;
+          font-weight: 600;
+          font-size: 1rem;
+          color: #FFFFFF;
 
           button {
-            margin: 0 5px 0 0;
+            margin: 0 4px 0 0;
           }
 
-          @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2) {
-            & {
-              text-align: center;
-              min-width: 55px;
-
-              span {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 20px;
-              }
-            }
+          span {
+            flex: 1;
+            display: flex;
+            justify-content: center;
           }
         }
       }
@@ -202,11 +161,11 @@ section.day-switches {
             background: #F3F3F3;
 
             &.active {
-              background: #6959AB;
+              background: #A292E2;
             }
 
             &.selected {
-              background: #6959AB;
+              background: #A292E2;
             }
 
             &.removed {
@@ -221,13 +180,6 @@ section.day-switches {
           }
         }
       }
-    }
-  }
-
-
-  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-    & {
-      padding-right: 3px;
     }
   }
 }

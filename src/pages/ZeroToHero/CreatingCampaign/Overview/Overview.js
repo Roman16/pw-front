@@ -24,27 +24,27 @@ const Overview = ({product,createProcessing, onChangeStep, onCreate, onEdit}) =>
             key: 'name',
             render: (product) => product.brand.name || '-'
         },
-        {
-            title: 'Competitors Brands Names',
-            key: 'competitor_brand_names',
-            render: (product) => {
-                const key = 'competitor_brand_names'
-
-                return (<div className="keywords">
-                    <p>{product.brand[key].length} Competitors Brands Names.
-                        {product.brand[key].length > 0 && <div
-                            onClick={() => openKeywordsHandler(key)}
-                        >
-                            {visibleKeywords.includes(key) ? 'Hide' : 'Show'}
-                        </div>}
-                    </p>
-
-                    {visibleKeywords.includes(key) && <div className="list">
-                        {product.brand[key].join(', ')}
-                    </div>}
-                </div>)
-            }
-        },
+        // {
+        //     title: 'Competitors Brands Names',
+        //     key: 'competitor_brand_names',
+        //     render: (product) => {
+        //         const key = 'competitor_brand_names'
+        //
+        //         return (<div className="keywords">
+        //             <p>{product.brand[key].length} Competitors Brands Names.
+        //                 {product.brand[key].length > 0 && <div
+        //                     onClick={() => openKeywordsHandler(key)}
+        //                 >
+        //                     {visibleKeywords.includes(key) ? 'Hide' : 'Show'}
+        //                 </div>}
+        //             </p>
+        //
+        //             {visibleKeywords.includes(key) && <div className="list">
+        //                 {product.brand[key].join(', ')}
+        //             </div>}
+        //         </div>)
+        //     }
+        // },
         {
             title: 'Seed Keywords',
             key: 'main_keywords',

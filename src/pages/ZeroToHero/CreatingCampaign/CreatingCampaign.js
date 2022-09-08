@@ -182,7 +182,7 @@ const CreatingCampaign = () => {
     }
 
     const goEditBlockHandler = (key) => {
-        if (key === 'name' || key === 'competitor_brand_names' || key === 'main_keywords') {
+        if (key === 'name' || key === 'main_keywords') {
             setCurrentStep(1)
         } else if (key === 'daily_budget' || key === 'default_bid' || key === 'set_to_paused' || key === 'pause_existing_duplicates_of_zth_targetings') {
             setCurrentStep(2)

@@ -3,7 +3,7 @@ import './Dayparting.less'
 import HourDayStatistics from "./HourDayStatistics/HourDayStatistics"
 import ChartStatistics from "./ChartStatistics/ChartStatistics"
 import DaySwitches from "./DaySwithes/DaySwithes"
-import PlacementsStatistics from "./PlacementsStatistics"
+import PlacementsStatistics from "./Placements/Placements"
 import shortid from "shortid"
 import moment from "moment"
 import tz from 'moment-timezone'
@@ -11,6 +11,7 @@ import {useSelector} from "react-redux"
 import CampaignList from "./CampaignList/CampaignList"
 import {Header} from "./Header/Header"
 import DaySwitchesMulti from "./DaySwithes/DaySwitchesMulti"
+import MetricsComparison from "./MetricsComparison/MetricsComparison"
 
 
 const Dayparting = () => {
@@ -63,7 +64,7 @@ const Dayparting = () => {
                         date={selectedDate}
                     />
 
-                    <ChartStatistics
+                    <MetricsComparison
                         date={selectedDate}
                     />
 
@@ -76,7 +77,6 @@ const Dayparting = () => {
 
                     />
                 </div>}
-
             </div>
         </div>
 

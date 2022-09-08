@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Input} from "antd"
 import MultiTextArea from "../../components/MultiTextArea/MultiTextArea"
 import './Step1.less'
@@ -24,6 +24,7 @@ export const Step1 = ({
 
                           onChangeStep,
                       }) => {
+    const [reload, setReload] = useState()
 
 
     const changeBrandHandler = (value, isInvalid) => {
@@ -34,6 +35,22 @@ export const Step1 = ({
             }
         }, isInvalid)
     }
+
+    let validSeedKeywords = [
+        ...campaigns.main_keywords
+            .filter(item => item.hasMeaningfulWords !== false)
+            .filter(item => {
+                const clearKeyword = cleanMainKeyword(item.value)
+                return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
+            })
+    ]
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            setReload(new Date().toISOString())
+        }, 100)
+    }, [campaigns.main_keywords])
 
     return (<section className={`step step-1 ${visible ? 'visible' : ''}`}>
         <div className="bg-container">
@@ -60,22 +77,6 @@ export const Step1 = ({
                     />
                 </div>
 
-                <div className={`col text-area-group edit-block competitor_brand_names`}>
-                    <label>
-                        Competitors Brand Names
-                    </label>
-                    <p>
-                        Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
-                        faucibus.
-                    </p>
-
-                    <MultiTextArea
-                        unique={true}
-                        value={brand.competitor_brand_names}
-                        onChange={(competitor_brand_names) => changeBrandHandler({competitor_brand_names}, invalidField === 'brandCompetitorsNames')}
-                    />
-                </div>
-
                 <SeedKeywords
                     campaigns={campaigns}
                     name={name}
@@ -84,14 +85,7 @@ export const Step1 = ({
                 />
 
                 <NavigationButtons
-                    disabled={!brand.name || brand.competitor_brand_names.length === 0 || [
-                        ...campaigns.main_keywords
-                            .filter(item => item.hasMeaningfulWords !== false)
-                            .filter(item => {
-                                const clearKeyword = cleanMainKeyword(item.value)
-                                return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
-                            })
-                    ].length < 3}
+                    disabled={!brand.name || validSeedKeywords.length < 3 || validSeedKeywords.length > 5}
 
                     onNextStep={() => onChangeStep(2)}
                     onPrevStep={() => onChangeStep(0)}

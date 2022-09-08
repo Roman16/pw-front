@@ -166,29 +166,31 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     onSetMultiselect={setMultiselectHandler}
                 />
 
-                {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
+                {}
 
                 <div className={`campaigns`}>
-                    {campaignList && campaignList.map(campaign => (
-                        <div
-                            key={campaign.id}
-                            className={`${_.find(selectedCampaign, {id: campaign.id}) || selectedCampaign.id === campaign.id ? 'campaign-item active' : 'campaign-item'} ${campaign.hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
-                            onClick={() => selectCampaignHandler(campaign)}
+                    {processing ?
+                        <div className='fetching-data'><Spin size={'large'}/></div> :
+                        campaignList && campaignList.map(campaign => (
+                            <div
+                                key={campaign.id}
+                                className={`${_.find(selectedCampaign, {id: campaign.id}) || selectedCampaign.id === campaign.id ? 'campaign-item active' : 'campaign-item'} ${campaign.hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
+                                onClick={() => selectCampaignHandler(campaign)}
 
-                        >
-                            <span className={'short-name'} title={campaign.name}>{campaign.name}</span>
-
-                            {campaign.hasEnabledDayparting && <InformationTooltip
-                                arrowPointAtCenter={true}
-                                type={'custom'}
-                                description={'Campaign on dayparting'}
-                                position={'topRight'}
                             >
-                                <div className='on-dayparting'/>
-                            </InformationTooltip>}
-                        </div>
+                                <span className={'short-name'} title={campaign.name}>{campaign.name}</span>
 
-                    ))}
+                                {campaign.hasEnabledDayparting && <InformationTooltip
+                                    arrowPointAtCenter={true}
+                                    type={'custom'}
+                                    description={'Campaign on dayparting'}
+                                    position={'topRight'}
+                                >
+                                    <div className='on-dayparting'/>
+                                </InformationTooltip>}
+                            </div>
+
+                        ))}
                 </div>
 
                 <Pagination
