@@ -165,6 +165,7 @@ export const zthUrls = {
     deleteCreatedJob: (id) => `v2/zero-to-hero/products-jobs/${id}`,
     batchInfo: `zero-to-hero/batch`,
     saveBatchSettings: (batchId) => `zero-to-hero/batch/${batchId}/setup-settings`,
+    incompleteJob: 'v2/zero-to-hero/products-jobs/pay/invoice'
 }
 
 export const analyticsUrls = {

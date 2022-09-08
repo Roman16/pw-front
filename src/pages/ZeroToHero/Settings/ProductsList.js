@@ -166,7 +166,7 @@ const jobActions = (item, onDeleteJob, deleteProcessing) => {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
-                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}/${job.status}`)}>
                         Pay & Upload
                     </button>
 
@@ -183,7 +183,7 @@ const jobActions = (item, onDeleteJob, deleteProcessing) => {
             return (
                 <div className="issues-field">
                     <button className={'sds-btn blue'}
-                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}`)}>
+                            onClick={() => history.push(`/zero-to-hero/payment/${job.id}/${job.status}`)}>
                         Complete Payment
                     </button>
                 </div>

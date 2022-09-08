@@ -16,6 +16,7 @@ export const zthServices = {
 
     createFreeBatch,
     checkBatchById,
+    getIncompleteJob
 }
 
 function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
@@ -69,5 +70,9 @@ function getVariationsEligibilityStatus(id, cancelToken) {
 
 function fetchBatchInformation(id) {
     return api('get', `${zthUrls.batchInformation}?size=10&page=1&ids[]=${id}`)
+}
+
+function getIncompleteJob(id) {
+    return api('get', `${zthUrls.incompleteJob}?job_id=${id}`)
 }
 
