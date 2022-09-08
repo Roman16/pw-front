@@ -19,7 +19,7 @@ export const Step3 = ({
                     <div className="step-count">Step 4/6</div>
                     <h2>Fine-tuning <span>optional</span></h2>
                     <p>
-                        In this step Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas faucibus.
+                        This step is optional and you can skip it if you don't have an additional information requested below.
                     </p>
                 </div>
 

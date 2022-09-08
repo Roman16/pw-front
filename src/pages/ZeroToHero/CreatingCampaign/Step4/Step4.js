@@ -18,16 +18,14 @@ export const Step4 = ({
                     <div className="step-count">Step 5/6</div>
                     <h2>Fine-tuning <span>optional</span></h2>
                     <p>
-                        In this step Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
-                        faucibus.
+                        This step is optional and you can skip it if you don't have an additional information requested below.
                     </p>
                 </div>
 
                 <div className="edit-block negative_keywords">
                     <div className="col">
                         <label htmlFor="" style={{}}>Negative keywords</label>
-                        <p>Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed
-                            egestas</p>
+                        <p>Add negative keywords to help our software eliminate keywords that are not relevant to your product.</p>
                     </div>
 
                     <NegativeKeywords

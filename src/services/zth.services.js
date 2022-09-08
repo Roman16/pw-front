@@ -56,7 +56,7 @@ function deleteCreatedJob(id) {
 }
 
 function payBatch(data) {
-    return api('post', `${zthUrls.payBatch}`, data, false)
+    return api('post', `${zthUrls.payBatch}`, data, false, undefined, undefined, false)
 }
 
 function getUserPortfolio() {

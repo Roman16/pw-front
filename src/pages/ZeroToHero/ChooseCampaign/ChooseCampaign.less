@@ -15,7 +15,7 @@
   background: #fff;
   box-shadow: @default-section-shadow;
   border-radius: 4px;
-  padding: 50px 113px;
+  padding: 20px 113px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,22 +32,22 @@
   }
 
   .description {
+    max-width: 900px;
     font-size: 1.1428571428571428rem;
     line-height: 1.4285714285714286rem;
     color: #353A3E;
     margin-bottom: 2.142857142857143rem;
+    text-align: center;
   }
 
   .campaign-types {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(27%, 440px));
-    grid-column-gap: 10px;
-    margin: 0;
+    display: flex;
     position: relative;
     list-style: none;
 
     li {
-      height: 100%;
+      width: 18vw;
+      min-height: 100%;
       background: #fff;
       box-sizing: border-box;
       display: flex;
@@ -55,10 +55,11 @@
       padding: 1.4285714285714286rem 1.4285714285714286rem 2.857142857142857rem;
       border: 1px solid #C9CBD4;
       border-radius: 4px;
+      margin: 0 10px;
 
       img {
         width: 100%;
-        max-height: 50vh;
+        height: initial;
         margin: 0 0 2.142857142857143rem;
       }
 

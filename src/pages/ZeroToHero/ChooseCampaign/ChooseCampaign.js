@@ -13,18 +13,18 @@ import HasIncompleteBatch from "../components/HasIncompleteBatch/HasIncompleteBa
 const campaigns = [
     {
         name: 'Sponsored Products',
-        description: `Promote products to shoppers actively searching <br> with related keywords or viewing similar <br> products on Amazon.`,
+        description: `Promote products to shoppers actively searching with related keywords or viewing similar products on Amazon.`,
         image: sponsoredProductsImage
     },
     {
         name: 'Sponsored Brands',
-        description: `Showcase a collection of products to shoppers <br> actively searching with related keywords on <br> Amazon.`,
+        description: `Showcase a collection of products to shoppers actively searching with related keywords on Amazon.`,
         image: sponsoredBrandsImage,
         soon: true
     },
     {
         name: 'Sponsored Display',
-        description: `Re-engage shoppers off Amazon who viewed your <br> products or similar products, and drive them to your detail pages.`,
+        description: `Re-engage shoppers off Amazon who viewed your products or similar products, and drive them to your detail pages.`,
         image: sponsoredDisplayImage,
         soon: true
     }
@@ -50,7 +50,17 @@ const ChooseCampaign = () => {
 
             <section className='choose-campaign'>
                 <h2>Welcome to Zero to Hero!</h2>
-                <p className={'description'}>Choose your campaign type to get started:</p>
+                <p className={'description'}>
+                    Zero to Hero is a campaigns generation tool. By providing us basic information about your product,
+                    our software will be able to perform an automatic keyword research and generate Semantic Core to
+                    advertise your product. <br/> This also includes automatic generation of professional campaigns structure,
+                    with unique campaigns fulfilling different advertising goals. You won't need to manually create
+                    campaigns, ad groups or keywords - everything will be set up automatically and uploaded to your
+                    Amazon account when finished.
+                    <br/>
+                    <br/>
+                    To start, please choose campaigns type you wish to set up:
+                </p>
 
                 <ul className="campaign-types">
                     {campaigns.map(item => (

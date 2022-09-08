@@ -139,7 +139,10 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
                 <div className="section-header">
                     <div className="step-count">Step 1/6</div>
                     <h2>Choose a product</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elementum nulla.</p>
+                    <p>
+                        Choose a product you wish to create advertising campaigns for. <br/>
+                        For parent products, we recommend to create Zero to Hero campaigns structure for a parent product itself, not for each variation separately.
+                    </p>
                 </div>
 
 

@@ -44,15 +44,11 @@ export const Step2 = ({
                 <div className="section-header">
                     <div className="step-count">Step 3/6</div>
                     <h2>Campaigns Settings</h2>
-                    <p>
-                        In this step Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
-                        faucibus.
-                    </p>
                 </div>
 
                 <div className={`col form-group  edit-block daily_budget`}>
                     <label>
-                        ZTH Campaigns Daily Budget
+                        Target Campaigns Daily Budget
 
                         <InformationTooltip
                             description={` Daily budget is used to put a limit on how much you'll spend on this particular product. This amount will be split between the Zero to Hero campaigns.`}
@@ -72,10 +68,12 @@ export const Step2 = ({
 
                 <div className={`col form-group edit-block default_bid`}>
                     <label>
-                        Default Bid
+                        Starting Bid
 
                         <InformationTooltip
-                            description={`We use this information as the starter point to put the bids on our different campaigns with different objections. Please enter your average bid for the given product.`}
+                            description={`Please enter an average bid used to advertise this product or average bid for a niche.
+<br/><br/>
+This bid will be used as a baseline for targetings in Zero to Hero campaigns. Some targetings will have lower or a bit higher bids than the one you provided, based on the goal of each campaign.`}
                         />
                     </label>
 
@@ -95,7 +93,7 @@ export const Step2 = ({
                         Set campaigns status to Paused on upload
 
                         <InformationTooltip
-                            description={`If this option is enabled, Zero to Hero campaigns will be uploaded in <b>Paused</b> Status in case you want to activate them later.`}/>
+                            description={`If this option is set to "Yes", Zero to Hero campaigns will be uploaded to your Amazon Account in <b>Enabled</b> Status and will begin working immediately.`}/>
                     </label>
 
                     <Radio.Group
@@ -111,7 +109,7 @@ export const Step2 = ({
                     <label htmlFor="">
                         Pause existing keywords / PTs that are duplicates of ZTH targetings
                         <InformationTooltip
-                            description={'If this option is enabled, we will try to find existing keywords / PTs on your account related to your product that are duplicates of targetings we would create in Zero to Hero campaigns on upload to Advertising Console. Such duplicates will be paused to prevent competition between them and new Zero to Hero campaigns. Works best when "Use existing PPC keywords / PTs for ZTH campaigns" is enabled. We recommend enabling this option.'}/>
+                            description={`If this option is set to "Yes", then when uploading Zero to Hero campaigns to your Advertising Console we will pause your existing keywords / PTs that are advertising this product and are duplicates of keywords / PTs in Zero to Hero campaigns.<br/><br/>Those duplicates should be paused to prevent competition between them and your new Zero to Hero advertising campaigns. We recommend leaving this option at "Yes".`}/>
                     </label>
 
                     <Radio.Group

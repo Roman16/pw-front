@@ -143,7 +143,7 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
 
     return (
         <div className={`col text-area-group edit-block main_keywords seed-keywords`}>
-            <div className="row header">
+            <div className="row description">
                 <div className="col">
                     <label>
                         Add Seed Keywords
@@ -154,7 +154,14 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
                         />
                     </label>
 
-                    <p>Add minimum 3 most popular keywords</p>
+                    <p> Seed keywords are basic keywords used to describe your product.</p>
+                </div>
+            </div>
+            <div className="row header">
+                <div className="col">
+                    <p>
+                        Please enter 3-5 keywords.
+                    </p>
                 </div>
 
                 <div className="col">
@@ -218,7 +225,7 @@ export const SeedKeywords = ({onUpdate, campaigns, name}) => {
                                 return !findExistingDuplicateOfNewMainKeyword(clearKeyword, campaigns.main_keywords.filter(item => !item.isDuplicate && item.value !== clearKeyword).map(item => item.value))
                             })
                     ].length > 5 && <div className="length-error">
-                        Maximum length of 5 keywords. Please leave the most suitable words.
+                        Please input no more than 5 keywords. Use estimation tool below to leave keywords with best yield.
                     </div>}
 
                     <div className="estimated-info">

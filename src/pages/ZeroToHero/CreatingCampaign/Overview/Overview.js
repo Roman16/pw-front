@@ -67,12 +67,12 @@ const Overview = ({product,createProcessing, onChangeStep, onCreate, onEdit}) =>
             }
         },
         {
-            title: 'Daily Budget',
+            title: 'Target Campaigns Daily Budget',
             key: 'daily_budget',
             render: (product) => product.campaigns.daily_budget ? `${numberMask(product.campaigns.daily_budget, 2)}$` : '-'
         },
         {
-            title: 'Default Bid',
+            title: 'Starting Bid',
             key: 'default_bid',
             render: (product) => product.campaigns.default_bid ? `${numberMask(product.campaigns.default_bid, 2)}$` : '-'
         },
@@ -153,8 +153,9 @@ const Overview = ({product,createProcessing, onChangeStep, onCreate, onEdit}) =>
                     <div className="step-count">Step 6/6</div>
                     <h2>Overview</h2>
                     <p>
-                        In this step Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
-                        faucibus.
+                        Please review information you provided. If everything is ok, press "Generate campaigns" button. <br/>
+                        Software will perform keyword and product research, generate Semantic Core and campaigns structure for you. <br/>
+                        When everything is ready, you will be able to review the result and proceed to the payment. After the payment, campaigns structure will be automatically uploaded to your Amazon Account.
                     </p>
                 </div>
 

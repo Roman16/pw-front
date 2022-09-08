@@ -69,7 +69,7 @@ const Payment = (props) => {
                     payment_method: payment_method
                 })
                 .then((res) => {
-                    if (dontSaveCard) {
+                    if (dontSaveCard && selectedPaymentMethod === 'new_card') {
                         userService.deletePaymentMethod(payment_method)
                     }
 
@@ -84,14 +84,15 @@ const Payment = (props) => {
                 })
                 .catch(e => {
                     notification.error({title: e.error.message})
-                    console.log(e)
 
                     setPayProcessing(false)
                 })
         } else {
             notification.error({title: data.message})
 
-            if (dontSaveCard) {
+            setPayProcessing(false)
+
+            if (dontSaveCard && selectedPaymentMethod === 'new_card') {
                 userService.deletePaymentMethod(payment_method)
             }
         }
@@ -164,15 +165,20 @@ const Payment = (props) => {
 
     const checkCouponHandler = async (coupon) => {
         setCouponCheckProcessing(true)
-        try {
-            const {result} = await userService.getCouponInfo(coupon)
-            if (result.valid && (result.applies_to === null || result.applies_to.includes('zero_to_hero'))) {
-                setCouponInfo(result)
-            } else {
-                notification.error({description: 'Coupon is not valid'})
+        if (coupon) {
+            try {
+                const {result} = await userService.getCouponInfo(coupon)
+                if (result.valid && (result.applies_to === null || result.applies_to.includes('zero_to_hero'))) {
+                    setCouponInfo(result)
+                } else {
+                    notification.error({title: 'Coupon is not valid'})
+                }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
+
+        } else {
+            setCouponInfo(undefined)
         }
 
         setCouponCheckProcessing(false)
@@ -205,11 +211,6 @@ const Payment = (props) => {
 
     useEffect(() => {
         fetchBatchInformation()
-
-        notification.info({
-            title: 'We’re sorry!',
-            description: 'We do not accept Pioneer cards yet, but our team works on this issue. Until we deal with the problem, please, do not enter the Pioneer card number because the payment will not be completed.'
-        })
 
         return (() => {
             toast.dismiss()

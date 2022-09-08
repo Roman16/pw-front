@@ -58,10 +58,6 @@ export const Step1 = ({
                 <div className="section-header">
                     <div className="step-count">Step 2/6</div>
                     <h2>Tell us about your product</h2>
-                    <p>
-                        In this step Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
-                        faucibus.
-                    </p>
                 </div>
 
                 <div className={`form-group col edit-block name`}>

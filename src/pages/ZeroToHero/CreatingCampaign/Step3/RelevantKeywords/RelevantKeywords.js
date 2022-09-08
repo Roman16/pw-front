@@ -38,15 +38,21 @@ const RelevantKeywords = ({keywords, onUpdate}) => {
     return (
         <section className={`relevant-keywords edit-block relevant_keywords`}>
 
-            <div className="row header">
+            <div className="row description">
                 <div className="col">
                     <label htmlFor="">
                         Relevant keywords
                     </label>
 
                     <p>
-                        Add minimum Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh donec sed egestas
+                        Relevant keywords are any additional keywords you want to use to advertise your product. <br/>
+                        Most keywords will be generated automatically by the software, but you can add some specific
+                        ones you have in mind.
                     </p>
+                </div>
+            </div>
+            <div className="row header">
+                <div className="col">
                 </div>
 
                 <div className="col">
