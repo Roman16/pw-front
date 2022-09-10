@@ -92,6 +92,7 @@ const jobStatus = ({job}) => {
                 <div className="status-field processing">
                     Creation in progress
                     <InformationTooltip
+                        type={'new-info'}
                         description={'We are in the process of creating your PPC campaigns.'}
                     />
                 </div>
@@ -107,6 +108,7 @@ const jobStatus = ({job}) => {
                 <div className="status-field processing">
                     Upload in progress
                     <InformationTooltip
+                        type={'new-info'}
                         description={'We are in the process of uploading your PPC campaigns to your Amazon account.'}
                     />
                 </div>

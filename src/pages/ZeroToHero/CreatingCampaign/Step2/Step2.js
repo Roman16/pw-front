@@ -2,7 +2,7 @@ import React from "react"
 import {NavigationButtons} from "../SelectProduct/SelectProduct"
 import './Step2.less'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
-import {Checkbox, Radio} from "antd"
+import { Radio} from "antd"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 
 
@@ -51,6 +51,7 @@ export const Step2 = ({
                         Target Campaigns Daily Budget
 
                         <InformationTooltip
+                            type={'new-info'}
                             description={` Daily budget is used to put a limit on how much you'll spend on this particular product. This amount will be split between the Zero to Hero campaigns.`}
                         />
                     </label>
@@ -71,6 +72,7 @@ export const Step2 = ({
                         Starting Bid
 
                         <InformationTooltip
+                            type={'new-info'}
                             description={`Please enter an average bid used to advertise this product or average bid for a niche.
 <br/><br/>
 This bid will be used as a baseline for targetings in Zero to Hero campaigns. Some targetings will have lower or a bit higher bids than the one you provided, based on the goal of each campaign.`}
@@ -90,9 +92,10 @@ This bid will be used as a baseline for targetings in Zero to Hero campaigns. So
 
                 <div className="col form-group radio edit-block set_to_paused">
                     <label htmlFor="">
-                        Set campaigns status to Paused on upload
+                        Enable campaigns after upload
 
                         <InformationTooltip
+                            type={'new-info'}
                             description={`If this option is set to "Yes", Zero to Hero campaigns will be uploaded to your Amazon Account in <b>Enabled</b> Status and will begin working immediately.`}/>
                     </label>
 
@@ -100,8 +103,8 @@ This bid will be used as a baseline for targetings in Zero to Hero campaigns. So
                         value={campaigns.set_to_paused}
                         onChange={({target: {value}}) => changeCampaignsHandler({set_to_paused: value})}
                     >
-                        <Radio value={true}>Yes</Radio>
-                        <Radio value={false}>No</Radio>
+                        <Radio value={false}>Yes</Radio>
+                        <Radio value={true}>No</Radio>
                     </Radio.Group>
                 </div>
 
@@ -109,6 +112,7 @@ This bid will be used as a baseline for targetings in Zero to Hero campaigns. So
                     <label htmlFor="">
                         Pause existing keywords / PTs that are duplicates of ZTH targetings
                         <InformationTooltip
+                            type={'new-info'}
                             description={`If this option is set to "Yes", then when uploading Zero to Hero campaigns to your Advertising Console we will pause your existing keywords / PTs that are advertising this product and are duplicates of keywords / PTs in Zero to Hero campaigns.<br/><br/>Those duplicates should be paused to prevent competition between them and your new Zero to Hero advertising campaigns. We recommend leaving this option at "Yes".`}/>
                     </label>
 

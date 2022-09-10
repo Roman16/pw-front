@@ -77,9 +77,9 @@ const Overview = ({product,createProcessing, onChangeStep, onCreate, onEdit}) =>
             render: (product) => product.campaigns.default_bid ? `${numberMask(product.campaigns.default_bid, 2)}$` : '-'
         },
         {
-            title: 'Set campaigns Status to Paused on upload',
+            title: 'Enable campaigns after upload',
             key: 'set_to_paused',
-            render: (product) => product.campaigns.set_to_paused ? 'Yes' : 'No'
+            render: (product) => product.campaigns.set_to_paused ? 'No' : 'Yes'
         },
         {
             title: 'Pause existing keywords / PTs that are duplicates of ZTH targetings',
