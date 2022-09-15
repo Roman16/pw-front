@@ -3,19 +3,24 @@ import {Chart} from "./Chart"
 import './MetricsComparison.less'
 import CustomSelect from "../../../../components/Select/Select"
 import {metricsList} from "../ChartStatistics/metricsList"
-import {Select, Switch} from "antd"
+import {Select, Spin, Switch} from "antd"
+import {useSelector} from "react-redux"
 
 
 const Option = Select.Option
 
 
-const MetricsComparison = ({fetchingData, fetchingCampaignList}) => {
+const MetricsComparison = ({fetchingData}) => {
 
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metricsList[1]),
         [secondMetric, setSecondMetric] = useState(metricsList[0]),
         [processing, setProcessing] = useState(false),
         [chartType, setChartType] = useState('daily')
+
+    const {fetchingCampaignList} = useSelector(state => ({
+        fetchingCampaignList: state.dayparting.processing,
+    }))
 
     return (
         <section className={`metrics-comparison ${(fetchingData || fetchingCampaignList) ? ' disabled' : ''}`}>
@@ -39,7 +44,7 @@ const MetricsComparison = ({fetchingData, fetchingCampaignList}) => {
                             value={firstMetric.key}
                             getPopupContainer={trigger => trigger.parentNode}
                             dropdownClassName={'full-width-menu'}
-                            className={firstMetric.key === 'nothing' && 'default-border'}
+                            className={`dark-mode ${firstMetric.key === 'nothing' && 'default-border'}`}
                             onChange={(metric) => {
                                 setFirstMetric(metricsList.find(item => item.key === metric))
 
@@ -77,7 +82,7 @@ const MetricsComparison = ({fetchingData, fetchingCampaignList}) => {
                             getPopupContainer={trigger => trigger.parentNode}
                             value={secondMetric.key}
                             dropdownClassName={'full-width-menu'}
-                            className={secondMetric.key === 'nothing' && 'default-border'}
+                            className={`dark-mode ${secondMetric.key === 'nothing' && 'default-border'}`}
                             onChange={(metric) => setSecondMetric(metricsList.find(item => item.key === metric))}
                         >
                             {metricsList.map(item => (
@@ -107,6 +112,10 @@ const MetricsComparison = ({fetchingData, fetchingCampaignList}) => {
             </div>
 
             <Chart/>
+
+            {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
+                <Spin size="large"/>
+            </div>}
         </section>
     )
 }

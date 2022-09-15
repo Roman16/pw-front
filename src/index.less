@@ -1234,6 +1234,26 @@ button.white[disabled] {
       border: 1px solid #FF5256;
     }
   }
+
+  &.dark-mode {
+    input {
+      background: transparent;
+      border: 1px solid #898989;
+      color: #fff;
+
+      &:hover {
+        border: 1px solid #6959AB !important;
+      }
+
+      &:focus {
+        border: 1px solid #fff !important;
+      }
+
+      &::placeholder {
+        color: #B7B7B7;
+      }
+    }
+  }
 }
 
 .form-group {

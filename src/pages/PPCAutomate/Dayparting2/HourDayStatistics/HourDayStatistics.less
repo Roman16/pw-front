@@ -85,8 +85,14 @@
         text-align: center;
         letter-spacing: -0.4375px;
         color: #656A84;
-
         text-transform: lowercase;
+        border: 1px solid transparent;
+        border-radius: 2px;
+        transition: .2s ease-in-out;
+
+        &:hover {
+          border-color: #fff;
+        }
 
         .custom-tooltip {
           width: 100%;
@@ -112,61 +118,69 @@
 
         .chart-tooltip {
           .ant-popover-inner-content {
-            display: flex;
-            flex-direction: column;
+            width: 300px;
             border: 0;
             box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
+            padding: 1.0714285714285714rem;
+            display: flex;
+            flex-direction: column;
 
-
-            .date {
-              //justify-content: center;
-              text-transform: capitalize;
-              font-weight: bold;
-            }
-
-            .col {
-              display: flex;
-              flex-direction: column;
-
-              &:first-child {
-                h3 {
-                  padding-right: 30px;
-                }
-              }
-
-              h3 {
-                margin: 0 0 5px 0;
-                padding: 0 0 5px 0;
-                border-bottom: 1px solid #F5F5FF;
-              }
-
-              .selected-metric {
-                height: 20px;
-                display: flex;
-                align-items: center;
-                text-transform: capitalize;
-              }
-            }
-
-            .value {
-              height: 20px;
-              margin: auto 0 0 0;
+            .tooltip-header {
               display: flex;
               align-items: center;
-              justify-content: flex-end;
-              color: #82ca9d;
+              justify-content: space-between;
+              padding-bottom: 10px;
+              border-bottom: 1px solid #C9CBD4;
+              margin: 0 0 5px;
 
-              .no-value {
-                width: 10px;
-                height: 2px;
-                background: #919191;
+              .date {
+                font-weight: 600;
+                font-size: 0.8571428571428571rem;
+                color: #353A3E;
+              }
+
+              .percent {
+                background: #695AA6;
+                border-radius: 4px;
+                padding: 2px 5px;
+                font-size: 0.8571428571428571rem;
+                color: #FFFFFF;
+
               }
             }
 
-            .out-of {
-              text-transform: initial;
-              color: #FFA8AA;
+            label {
+              font-size: 0.7142857142857143rem;
+              color: #686868;
+              margin-bottom: 5px;
+            }
 
+
+            .row {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              margin-bottom: 1.0714285714285714rem;
+
+
+              .name {
+                font-size: 0.8571428571428571rem;
+                color: #353A3E;
+                text-transform: capitalize;
+              }
+
+              .value {
+                font-size: 0.8571428571428571rem;
+                color: #6959AB;
+              }
+
+              &.main-metric {
+                background: #F3F3F3;
+                border-radius: 4px;
+                padding: 10px 5px;
+                font-weight: 600;
+
+              }
             }
           }
         }

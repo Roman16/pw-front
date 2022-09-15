@@ -151,30 +151,33 @@ const HourDayStatistics = ({date}) => {
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
-                <h3 className="date">{`${days[Math.floor(timeIndex / 24)]}`}</h3>
-                <div className="row">
-                    <div className="col">
-                        <h3>
-                            {moment(date).format('MMMM DD')}
-                        </h3>
+                <div className="tooltip-header">
+                    <h3 className="date">{days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}</h3>
 
-                        <span className='selected-metric'>Sales</span>
-                    </div>
-                    <div className="col">
-                        <h3>
-                            {`${moment(timeIndex - 24 * Math.floor(timeIndex / 24), 'HH').format('hh A')} - ${moment(timeIndex - 24 * Math.floor(timeIndex / 24) + 1, 'HH').format('hh A')}`}
-                        </h3>
-
-                        <div className="value">
-                            {(value != null && value !== 0) ? `$${numberMask(value, 2)}` : <div className='no-value'/>}
-                        </div>
+                    <div className="percent">
+                        96%
                     </div>
                 </div>
 
-                {outBudget && <div className="row out-of">
-                    Out of Budget
-                </div>}
+                <div className="row main-metric">
+                    <div className="name">Impressions</div>
+                    <div className="value">244</div>
+                </div>
 
+                <label htmlFor="">By Placements:</label>
+
+                <div className="row">
+                    <div className="name">Top of Search</div>
+                    <div className="value">244</div>
+                </div>
+                <div className="row">
+                    <div className="name">Product Pages</div>
+                    <div className="value">244</div>
+                </div>
+                <div className="row">
+                    <div className="name">Rest of Search</div>
+                    <div className="value">244</div>
+                </div>
             </Fragment>
         )
     }

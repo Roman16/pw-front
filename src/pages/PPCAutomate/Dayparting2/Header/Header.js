@@ -20,6 +20,7 @@ export const Header = ({onChange, weeks, marketplace}) => (
                 defaultValue={0}
                 dropdownClassName={'full-width-menu'}
                 onChange={onChange}
+                className={'dark-mode'}
             >
                 {weeks.map((item, index) => (
                     <Option
