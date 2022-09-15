@@ -9,6 +9,39 @@
     }
   }
 
+  .section-header {
+    justify-content: space-between;
+
+    .custom-select {
+      width: 180px;
+      height: 2.2857142857142856rem;
+
+      .ant-select-selection {
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 1.0714285714285714rem;
+
+        &::before {
+          content: 'Metric:';
+          height: 100%;
+          font-size: 0.8571428571428571rem;
+          display: flex;
+          align-items: center;
+          color: #898989;
+        }
+
+        .ant-select-selection__rendered {
+          margin-right: 40px;
+
+          .ant-select-selection-selected-value {
+            padding: 0 0 0 5px;
+            font-size: 0.8571428571428571rem;
+          }
+        }
+      }
+    }
+  }
+
   .statistics-block {
     padding: 0 1.4285714285714286rem 1.0714285714285714rem;
 

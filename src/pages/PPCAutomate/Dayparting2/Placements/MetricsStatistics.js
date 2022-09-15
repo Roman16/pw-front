@@ -21,7 +21,7 @@ const statisticParams = [
 ]
 
 
-const metrics = [
+export const metrics = [
     {
         title: 'Clicks',
         key: 'clicks'

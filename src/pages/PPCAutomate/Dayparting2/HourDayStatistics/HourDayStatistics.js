@@ -11,12 +11,15 @@ import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
 import {numberMask} from "../../../../utils/numberMask"
 import {productsActions} from "../../../../actions/products.actions"
-import {Spin} from "antd"
+import {Select, Spin} from "antd"
 import {NavLink} from "react-router-dom"
 import {SVG} from "../../../../utils/icons"
+import CustomSelect from "../../../../components/Select/Select"
+import {metrics} from '../Placements/MetricsStatistics'
 
 const CancelToken = axios.CancelToken
 let source = null
+const Option = Select.Option
 
 
 const days = [
@@ -200,6 +203,24 @@ const HourDayStatistics = ({date}) => {
                     {/*    <SVG id='plus-white'/>*/}
                     {/*    Add budget*/}
                     {/*</button>*/}
+
+                    <div className="metric-select">
+                        <CustomSelect
+                            getPopupContainer={trigger => trigger.parentNode}
+                            defaultValue={'impressions'}
+                            dropdownClassName={'full-width-menu'}
+                            className={'dark-mode'}
+                        >
+                            {metrics.map((item, index) => (
+                                <Option
+                                    key={item}
+                                    value={item.key}
+                                >
+                                    {item.title}
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
                 </div>
 
                 <div className="statistics-block">
