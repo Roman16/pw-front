@@ -10,16 +10,64 @@ import {useSelector} from "react-redux"
 const Option = Select.Option
 
 
-const MetricsComparison = ({fetchingData}) => {
+const fakeDataDaily = [
+    {
+        "date": "2022-09-18 07:00:00",
+        impressions: 900,
+        clicks: 300
+    },
+    {
+        "date": "2022-09-19 07:00:00",
+        impressions: 800,
+        clicks: 300
+    },
+    {
+        "date": "2022-09-20 07:00:00",
+        impressions: 850,
+        clicks: 350
+    },
+    {
+        "date": "2022-09-21 07:00:00",
+        impressions: 800,
+        clicks: 350
+    },
+    {
+        "date": "2022-09-22 07:00:00",
+        impressions: 600,
+        clicks: 140
+    },
+    {
+        "date": "2022-09-23 07:00:00",
+        impressions: 700,
+        clicks: 200
+    },
+    {
+        "date": "2022-09-24 07:00:00",
+        impressions: 500,
+        clicks: 550
+    },
+]
+
+
+const MetricsComparison = ({fetchingData, date}) => {
 
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metricsList[1]),
-        [secondMetric, setSecondMetric] = useState(metricsList[0]),
+        [secondMetric, setSecondMetric] = useState(metricsList[2]),
         [processing, setProcessing] = useState(false),
         [chartType, setChartType] = useState('daily')
 
     const {fetchingCampaignList} = useSelector(state => ({
         fetchingCampaignList: state.dayparting.processing,
+    }))
+
+    const fakeDataHourly = Array.from({length: 24}, (item, index) => ({
+        date: index,
+        dateRange: {
+            ...date
+        },
+        impressions: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
+        clicks: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
     }))
 
     return (
@@ -34,10 +82,10 @@ const MetricsComparison = ({fetchingData}) => {
                         <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4C3.5 2.61929 4.63964 1.5 6.04545 1.5C7.45127 1.5 8.59091 2.61929 8.59091 4Z"
-                                fill="white"/>
+                                fill="#3F4347"/>
                             <path
                                 d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4M8.59091 4C8.59091 2.61929 7.45127 1.5 6.04545 1.5C4.63964 1.5 3.5 2.61929 3.5 4M8.59091 4H12.0455M3.5 4H0"
-                                stroke="#9464B9" stroke-width="1.5"/>
+                                stroke="#A292E2" stroke-width="1.5"/>
                         </svg>
 
                         <CustomSelect
@@ -72,7 +120,7 @@ const MetricsComparison = ({fetchingData}) => {
                         <svg width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4C3.5 2.61929 4.63964 1.5 6.04545 1.5C7.45127 1.5 8.59091 2.61929 8.59091 4Z"
-                                fill="white"/>
+                                fill="#3F4347"/>
                             <path
                                 d="M8.59091 4C8.59091 5.38071 7.45127 6.5 6.04545 6.5C4.63964 6.5 3.5 5.38071 3.5 4M8.59091 4C8.59091 2.61929 7.45127 1.5 6.04545 1.5C4.63964 1.5 3.5 2.61929 3.5 4M8.59091 4H12.0455M3.5 4H0"
                                 stroke="#FF5256" stroke-width="1.5"/>
@@ -111,7 +159,12 @@ const MetricsComparison = ({fetchingData}) => {
 
             </div>
 
-            <Chart/>
+            <Chart
+                data={chartType === 'daily' ? fakeDataDaily : fakeDataHourly}
+                firstMetric={firstMetric}
+                secondMetric={secondMetric}
+                chartType={chartType}
+            />
 
             {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
                 <Spin size="large"/>

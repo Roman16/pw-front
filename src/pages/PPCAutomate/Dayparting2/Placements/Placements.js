@@ -32,6 +32,50 @@ export const chartColors = [
 
 ]
 
+const fakeDataDaily = [
+    {
+        date: '2022-09-18',
+        top_search: 300,
+        product_pages: 450,
+        rest_search: 600,
+    },
+    {
+        date: '2022-09-19',
+        top_search: 200,
+        product_pages: 550,
+        rest_search: 600,
+    },
+    {
+        date: '2022-09-20',
+        top_search: 240,
+        product_pages: 450,
+        rest_search: 560,
+    },
+    {
+        date: '2022-09-21',
+        top_search: 440,
+        product_pages: 650,
+        rest_search: 660,
+    },
+    {
+        date: '2022-09-22',
+        top_search: 540,
+        product_pages: 550,
+        rest_search: 360,
+    },
+    {
+        date: '2022-09-23',
+        top_search: 320,
+        product_pages: 750,
+        rest_search: 460,
+    },
+    {
+        date: '2022-09-24',
+        top_search: 420,
+        product_pages: 850,
+        rest_search: 560,
+    },
+]
 
 const Placements = ({date}) => {
     let localFetching = false
@@ -45,6 +89,17 @@ const Placements = ({date}) => {
         campaignId: state.dayparting.selectedCampaign.id,
         fetchingCampaignList: state.dayparting.processing,
     }))
+
+    const fakeDataHourly = Array.from({length: 24}, (item, index) => ({
+        date: index,
+        dateRange: {
+            ...date
+        },
+        top_search: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
+        product_pages: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
+        rest_search: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
+    }))
+
 
     useEffect(() => {
         async function fetchData() {
@@ -113,11 +168,12 @@ const Placements = ({date}) => {
             </div>
 
             <Chart
-                data={chartData}
+                data={chartType === 'daily' ? fakeDataDaily : fakeDataHourly}
+                chartType={chartType}
             />
 
             <MetricsStatistics
-                data={metricsStatistics}
+                data={chartType === 'daily' ? metricsStatistics : fakeDataHourly}
             />
 
             {(processing || fetchingCampaignList) && <div className="disable-page-loading">

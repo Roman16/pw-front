@@ -53,6 +53,12 @@ export const mainMenu = [
         ]
     },
     {
+        title: 'Dayparting',
+        key: 'dayparting',
+        icon: 'dayparting-icon-sidebar',
+        link: 'dayparting2'
+    },
+    {
         title: 'PPC Audit',
         key: 'scanner',
         icon: 'scanner-icon-sidebar',

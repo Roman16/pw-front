@@ -46,6 +46,7 @@
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
     border-radius: 4px;
     position: relative;
+    padding: 0;
 
     .disable-page-loading {
       background: rgba(63, 67, 71, 0.8);
@@ -84,113 +85,76 @@
 
     .ant-popover-inner-content {
       background: #fff;
-      padding: 0.8571428571428571rem 1.1428571428571428rem !important;
       width: max-content;
+      min-width: 18.571428571428573rem;
       border: 0;
       box-sizing: border-box;
-      box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
       border-radius: 4px;
+      padding: 1.0714285714285714rem !important;
 
-      .border-title {
-        border-bottom: 1px solid #F5F5FF;
-        padding: 0 0 5px 0;
-        margin: 0 0 5px 0;
-      }
-
-      h3 {
+      .tooltip-header {
         display: flex;
-        align-items: flex-end;
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: capitalize;
-        color: #343C5A;
-        margin: 0;
+        flex-direction: column;
+        border-bottom: 1px solid #C9CBD4;
+        padding: 0 0 0.7142857142857143rem;
+        margin: 0 0 1.0714285714285714rem;
 
-
-        .time {
-          margin: 0 0 0 20px;
+        h3 {
+          display: flex;
+          align-items: flex-end;
           font-size: 0.8571428571428571rem;
-          line-height: initial;
+          line-height: 1.0714285714285714rem;
+          font-weight: 600;
+          text-transform: capitalize;
+          color: #343C5A;
+          margin: 0;
+        }
+
+        p {
+          font-size: 0.7142857142857143rem;
+          line-height: 0.9285714285714286rem;
+          color: #686868;
+          margin: 2px 0 0 0;
         }
       }
 
-      .row-metric {
+      .row {
         display: flex;
         align-items: center;
+        margin: 0 0 15px;
 
-        .out-budget-item {
-          width: 16px !important;
-          height: 16px !important;
-          margin: 0 10px 0 0;
-
-          .statistic-information {
-            margin: 0;
-          }
-
+        &:last-of-type {
+          margin: 0;
         }
 
-        .statistic-information {
-          width: 12px !important;
-          height: 12px !important;
-          border-radius: 4px;
-          margin: 0 10px 0 0;
-        }
-
-        .selected-metric {
-          font-size: 1rem;
-          color: #656A84;
-          text-transform: capitalize;
+        .name {
+          width: 40%;
+          font-size: 0.8571428571428571rem;
+          color: #353A3E;
+          margin: 0 auto 0 0;
         }
 
         .value {
+          font-weight: 600;
+          font-size: 0.8571428571428571rem;
+          margin: 0 2.142857142857143rem 0 auto;
           display: flex;
           align-items: center;
-          font-size: 1.1428571428571428rem;
-          color: #343C5A;
-          margin: 0 0 0 20px;
-        }
-      }
 
-
-    }
-
-    &.twice-metrics {
-      .ant-popover-inner-content {
-        width: max-content;
-
-        .row {
-          display: flex;
-          justify-content: flex-start !important;
-          align-items: stretch;
-
-          .col {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
+          svg {
+            margin: 0 8px 0 0;
           }
         }
 
-        .example-fill {
-          width: 12px;
-          height: 12px;
-          border-radius: 4px;
-          margin: 0 10px 0 0;
-        }
-
-        .metrics-name {
-          width: max-content;
-          margin: 0 2.857142857142857rem 0 0;
-        }
-
-        .selected-metric {
-          width: max-content;
-        }
-
-        .value {
-          justify-content: flex-start;
-          font-size: 1.1428571428571428rem;
+        .current-value {
+          font-size: 0.8571428571428571rem;
+          color: #353A3E;
+          margin: 0 auto 0 -20px;
         }
       }
+
+
     }
   }
 

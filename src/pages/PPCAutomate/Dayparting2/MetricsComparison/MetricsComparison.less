@@ -64,4 +64,22 @@
       }
     }
   }
+
+  .chart {
+    flex: 1;
+    padding: 0 10px 10px;
+    margin: 10px 0 0 0;
+
+    .recharts-cartesian-axis-tick-line {
+      display: none;
+    }
+
+    .recharts-cartesian-grid {
+      .recharts-cartesian-grid-horizontal {
+        line {
+          stroke-dasharray: none !important;
+        }
+      }
+    }
+  }
 }

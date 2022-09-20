@@ -424,6 +424,38 @@ td.ant-calendar-cell.ant-calendar-selected-start-date.ant-calendar-selected-end-
 
       stroke: #656A84;
     }
+
+    input {
+      font-size: 0.8571428571428571rem;
+    }
+  }
+
+  &.dark-mode {
+    .ant-calendar-picker-input {
+      background: transparent;
+      border: 1px solid #898989;
+
+      &:hover {
+        border: 1px solid #6959AB;
+      }
+
+      input {
+        color: #fff;
+
+
+        &::placeholder {
+          color: #fff;
+        }
+      }
+
+      .ant-calendar-range-picker-separator {
+        color: #fff;
+      }
+
+      & > svg {
+        stroke: #fff;
+      }
+    }
   }
 }
 

@@ -16,6 +16,11 @@ import {NavLink} from "react-router-dom"
 import {SVG} from "../../../../utils/icons"
 import CustomSelect from "../../../../components/Select/Select"
 import {metrics} from '../Placements/MetricsStatistics'
+import {RenderMetricChanges} from "../../../Analytics/componentsV2/MainMetrics/MetricItem"
+import _ from 'lodash'
+import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
+
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -35,7 +40,7 @@ const days = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date}) => {
+const HourDayStatistics = ({date, selectedCompareDate}) => {
     let localFetching = false
 
     const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'))
@@ -45,7 +50,8 @@ const HourDayStatistics = ({date}) => {
         [visibleModal, setModal] = useState(false),
         [saved, setStatus] = useState(false),
         [processing, setProcessing] = useState(false),
-        [fetchingData, setFetchingData] = useState(false)
+        [fetchingData, setFetchingData] = useState(false),
+        [selectedMetric, setSelectedMetric] = useState('impressions')
 
     const dispatch = useDispatch()
     const {campaignId, fetchingCampaignList} = useSelector(state => ({
@@ -137,25 +143,26 @@ const HourDayStatistics = ({date}) => {
             }
         })
 
-        if (outBudget) {
-            return (
-                <div className="out-budget-item">
-                    <div className='statistic-information' style={{background: color, opacity: color ? 1 : 0}}>500k
-                    </div>
-                </div>
-            )
-        } else {
-            return (
-                <div className='statistic-information' style={{background: color}}>500k</div>
-            )
-        }
+        return (
+            <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}>
+                <div className="value">500k</div>
+
+                {selectedCompareDate && <div className={`diff-value`}>
+                    <SVG id='upward-metric-changes'/>
+
+                    10.8%
+                </div>}
+            </div>
+        )
     }
 
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
             <Fragment>
                 <div className="tooltip-header">
-                    <h3 className="date">{days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}</h3>
+                    <h3 className="date">
+                        {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}
+                    </h3>
 
                     <div className="percent">
                         96%
@@ -163,8 +170,17 @@ const HourDayStatistics = ({date}) => {
                 </div>
 
                 <div className="row main-metric">
-                    <div className="name">Impressions</div>
+                    <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
                     <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
                 </div>
 
                 <label htmlFor="">By Placements:</label>
@@ -172,14 +188,41 @@ const HourDayStatistics = ({date}) => {
                 <div className="row">
                     <div className="name">Top of Search</div>
                     <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
                 </div>
                 <div className="row">
                     <div className="name">Product Pages</div>
                     <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
                 </div>
                 <div className="row">
                     <div className="name">Rest of Search</div>
                     <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
                 </div>
             </Fragment>
         )
@@ -207,9 +250,10 @@ const HourDayStatistics = ({date}) => {
                     <div className="metric-select">
                         <CustomSelect
                             getPopupContainer={trigger => trigger.parentNode}
-                            defaultValue={'impressions'}
+                            value={selectedMetric}
                             dropdownClassName={'full-width-menu'}
                             className={'dark-mode'}
+                            onChange={value => setSelectedMetric(value)}
                         >
                             {metrics.map((item, index) => (
                                 <Option
