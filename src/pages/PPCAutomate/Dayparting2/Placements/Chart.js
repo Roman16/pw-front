@@ -53,17 +53,17 @@ export const Chart = ({data, chartType}) => {
                     }}
                 >
                     <defs>
-                        <linearGradient spreadMethod="pad" id="gradient3" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="gradient33" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor='rgba(255, 168, 170)' stopOpacity='0.25'/>
                             <stop offset="100%" stopColor='rgba(255, 168, 170)' stopOpacity='0'/>
                         </linearGradient>
 
-                        <linearGradient id="gradient2" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(255, 168, 170)" stopOpacity='0.25'/>
-                            <stop offset="100%" stopColor="rgba(255, 168, 170)" stopOpacity='0'/>
+                        <linearGradient id="gradient22" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stopColor="rgba(162, 146, 226)" stopOpacity='0.25'/>
+                            <stop offset="100%" stopColor="rgba(162, 146, 226)" stopOpacity='0'/>
                         </linearGradient>
 
-                        <linearGradient id="gradient1" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="gradient11" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="rgba(152, 82, 206)" stopOpacity='0.25'/>
                             <stop offset="100%" stopColor="rgba(152, 82, 206)" stopOpacity='0'/>
                         </linearGradient>
@@ -103,8 +103,10 @@ export const Chart = ({data, chartType}) => {
                     <Area
                         dataKey="rest_search"
                         stackId="1"
+                        strokeWidth={2}
                         stroke={chartColors[2].stroke}
-                        fill="url(#gradient3)"
+
+                        fill="url(#gradient11)"
                         isAnimationActive={false}
                         activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2, fill: '#fff'}}
                         type={chartType === 'daily' ? 'linear' : "monotone"}
@@ -116,8 +118,9 @@ export const Chart = ({data, chartType}) => {
                     <Area
                         dataKey="product_pages"
                         stackId="1"
+                        strokeWidth={2}
                         stroke={chartColors[1].stroke}
-                        fill="url(#gradient2)"
+                        fill="url(#gradient22)"
                         isAnimationActive={false}
                         activeDot={{stroke: chartColors[1].stroke, strokeWidth: 2, fill: '#fff'}}
                         type={chartType === 'daily' ? 'linear' : "monotone"}
@@ -129,8 +132,9 @@ export const Chart = ({data, chartType}) => {
                     <Area
                         dataKey="top_search"
                         stackId="1"
+                        strokeWidth={2}
+                        fill="url(#gradient33)"
                         stroke={chartColors[0].stroke}
-                        fill="url(#gradient1)"
                         isAnimationActive={false}
                         activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2, fill: '#fff'}}
                         type={chartType === 'daily' ? 'linear' : "monotone"}

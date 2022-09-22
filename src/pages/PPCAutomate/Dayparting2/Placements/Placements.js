@@ -4,7 +4,7 @@ import {daypartingServices} from "../../../../services/dayparting.services"
 import {useSelector} from "react-redux"
 import axios from "axios"
 import {round} from "../../../../utils/round"
-import {Spin, Switch} from "antd"
+import {Popover, Spin, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {numberMask} from "../../../../utils/numberMask"
 import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
@@ -18,18 +18,18 @@ let source = null
 
 export const chartColors = [
     {
-        stroke: '#9464B9',
-        fill: '#a290b9'
+        stroke: '#FFA8AA',
+        fill: '#ffcad1'
     },
+
     {
         stroke: '#BA96F4',
         fill: '#d0c2f4'
     },
     {
-        stroke: '#FFA8AA',
-        fill: '#ffcad1'
-    }
-
+        stroke: '#9464B9',
+        fill: '#a290b9'
+    },
 ]
 
 const fakeDataDaily = [
@@ -154,7 +154,6 @@ const Placements = ({date}) => {
             className={`placements ${(processing || fetchingCampaignList) ? 'disabled' : ''}`}>
             <div className="section-header">
                 <h2>Placements</h2>
-
 
                 <div className="chart-switch">
                     <span className={chartType === 'daily' && 'active'}>Daily</span>

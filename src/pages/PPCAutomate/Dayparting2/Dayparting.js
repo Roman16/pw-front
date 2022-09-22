@@ -20,7 +20,9 @@ moment.locale('en')
 const Dayparting = () => {
     const [multiselect, setMultiselect] = useState(false)
 
-    const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
+    const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
+        subscription = useSelector(state => state.user.subscription)
+
     const timezone = activeAmazonMarketplace.timezone
 
 
@@ -69,7 +71,7 @@ const Dayparting = () => {
 
                     <DaySwitches
                         multiselect={multiselect}
-
+                        hasSubscriptions={subscription.active_subscription_type || subscription.trial.trial_active}
                     />
                 </div>}
             </div>

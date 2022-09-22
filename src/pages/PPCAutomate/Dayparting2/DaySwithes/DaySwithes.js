@@ -12,7 +12,7 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {connect} from "react-redux"
 import axios from "axios"
 import {productsActions} from '../../../../actions/products.actions'
-import {NavLink} from "react-router-dom"
+import {Link, NavLink} from "react-router-dom"
 import {SVG} from "../../../../utils/icons"
 import {daypartingActions} from "../../../../actions/dayparting.actions"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
@@ -373,7 +373,8 @@ class DaySwitches extends Component {
 
 
     render() {
-        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state
+        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state,
+            {hasSubscriptions} = this.props
 
         return (
             <Fragment>
@@ -449,7 +450,7 @@ class DaySwitches extends Component {
                                                     fill='none' stroke-width="2"/>
                                                 <path
                                                     d="M6.64548 5.30371H16.8733C17.0621 5.30371 17.2151 5.45673 17.2151 5.64548V18.6581C17.2151 18.8469 17.0621 18.9999 16.8733 18.9999H6.64548C6.45673 18.9999 6.30371 18.8469 6.30371 18.6581V5.64548C6.30371 5.45673 6.45673 5.30371 6.64548 5.30371Z"
-                                                     stroke-width="2"/>
+                                                    stroke-width="2"/>
                                             </g>
                                         </svg>
 
@@ -458,9 +459,9 @@ class DaySwitches extends Component {
                                 </InformationTooltip>}
 
                             <button
-                                className='btn default'
+                                className={`btn default ${!hasSubscriptions ? 'not-access' : ''}`}
                                 onClick={this.switchDayPartingHandler}
-                                disabled={processing || !this.props.campaignId}
+                                disabled={processing || !this.props.campaignId || !hasSubscriptions}
                             >
                                 {activeDayparting ? 'Disable Dayparting' : 'Enable Dayparting'}
                             </button>
@@ -504,6 +505,8 @@ class DaySwitches extends Component {
                             </div>
 
                             <div className={`col multi-select ${activeDayparting ? 'enabled' : 'disabled'}`}>
+                                {!hasSubscriptions && <SubscribeBlock/>}
+
                                 {hoursStatus.map((value, hourIndex) => (
                                     <div className='statistic-item' key={shortid.generate()}>
                                         <div
@@ -560,6 +563,13 @@ class DaySwitches extends Component {
         )
     }
 }
+
+const SubscribeBlock =() => (
+    <div className={'subscribe-block'}>
+        <p>Oops! It looks like you’re not subscribed to use this feature </p>
+        <Link to={'/account/subscriptions'} className={'btn default'}>subscribe now</Link>
+    </div>
+)
 
 
 const mapStateToProps = state => ({

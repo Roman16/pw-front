@@ -33,11 +33,25 @@
           stroke: #fff;
           fill: #fff;
         }
+
+        &:hover {
+          color: #A292E2;
+
+         svg {
+           stroke: #A292E2;
+           fill: #A292E2;
+         }
+        }
       }
 
       .btn {
         margin: 0 0 0 2.5rem;
         padding: 0 1.0714285714285714rem;
+
+        &.not-access {
+          background: #5D5F61;
+          color: #898989;
+        }
       }
     }
 
@@ -68,12 +82,16 @@
     }
 
     .switches {
-      -webkit-filter: grayscale(100%);
-      filter: grayscale(100%);
+
+      .time-name, .day-axis {
+        -webkit-filter: grayscale(100%);
+        filter: grayscale(100%);
+
+      }
 
       .time-name div,
       .row .day-axis .day-name {
-          color: #898989;
+        color: #898989;
       }
     }
   }
@@ -83,6 +101,35 @@
     display: flex;
     flex-direction: column;
     padding: 0 1.4285714285714286rem 1.4285714285714286rem;
+
+    .subscribe-block {
+      background: #474B50;
+      border-radius: 4px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 111;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      filter: grayscale(0);
+
+      p {
+        font-size: 1rem;
+        text-align: center;
+        color: #FFFFFF;
+        margin-bottom: 1.4285714285714286rem;
+      }
+
+      .btn {
+        height: 2.2857142857142856rem;
+        font-size: 0.8571428571428571rem;
+        text-transform: uppercase;
+      }
+    }
 
     .time-name {
       display: grid;
@@ -158,7 +205,7 @@
             height: 1.7142857142857142rem;
             border-radius: 4px;
             cursor: pointer;
-            background: #F3F3F3;
+            background: #474B50;
 
             &.active {
               background: #A292E2;
@@ -169,7 +216,7 @@
             }
 
             &.removed {
-              background: #F3F3F3;
+              background: #474B50;
             }
           }
         }
@@ -177,6 +224,9 @@
         &.disabled {
           .statistic-information {
             cursor: not-allowed;
+            background: #474B50 !important;
+
+
           }
         }
       }
