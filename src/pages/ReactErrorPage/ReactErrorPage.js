@@ -29,12 +29,16 @@ export default class ErrorBoundary extends Component {
 
     goBackHandler = () => {
         this.setState({hasError: false}, () => history.goBack())
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 100)
     }
 
     hoHomeHandler = () => {
         this.setState({hasError: false}, () => history.push('/home'))
-        window.location.reload();
+        setTimeout(() => {
+            window.location.reload();
+        }, 100)
     }
 
     render() {
