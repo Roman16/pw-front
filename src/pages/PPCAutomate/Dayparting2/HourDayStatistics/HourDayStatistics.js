@@ -226,12 +226,12 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
         )
     }
 
-    const DailyTooltipDescription = ({value, timeIndex, date}) => {
+    const DailyTooltipDescription = ({value, day, date}) => {
         return (
             <Fragment>
                 <div className="tooltip-header">
                     <h3 className="date">
-                        {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY')}
+                        {day}, {moment(date).format('DD MMM YYYY')}
                     </h3>
 
                     <div className="percent">
@@ -360,7 +360,7 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                                         <DailyTooltipDescription
                                             value={200}
                                             date={moment(date.startDate).add(dayIndex)}
-                                            timeIndex={dayIndex}
+                                            day={day}
                                         />
                                     }
                                 >
