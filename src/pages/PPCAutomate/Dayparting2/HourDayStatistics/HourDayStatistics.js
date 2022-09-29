@@ -82,8 +82,6 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
             source && source.cancel()
             source = CancelToken.source()
 
-            console.log(campaignId)
-
             if (campaignId == null) {
                 setData(defaultData)
             } else if (!fetchingCampaignList) {
@@ -228,6 +226,78 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
         )
     }
 
+    const DailyTooltipDescription = ({value, timeIndex, date}) => {
+        return (
+            <Fragment>
+                <div className="tooltip-header">
+                    <h3 className="date">
+                        {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY')}
+                    </h3>
+
+                    <div className="percent">
+                        96%
+                    </div>
+                </div>
+
+                <div className="row main-metric">
+                    <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
+                    <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
+                </div>
+
+                <label htmlFor="">By Placements:</label>
+
+                <div className="row">
+                    <div className="name">Top of Search</div>
+                    <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
+                </div>
+                <div className="row">
+                    <div className="name">Product Pages</div>
+                    <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
+                </div>
+                <div className="row">
+                    <div className="name">Rest of Search</div>
+                    <div className="value">244</div>
+
+                    {selectedCompareDate && <div className="diff-value">
+                        <SVG id='upward-metric-changes'/>
+                        10.8%
+
+                        <div className="from">
+                            (from 200)
+                        </div>
+                    </div>}
+                </div>
+            </Fragment>
+        )
+    }
+
     return (
         <Fragment>
             <section
@@ -281,9 +351,29 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                     <div className="row">
                         <div className="col day-axis">
                             {days.map((day, dayIndex) => (
-                                <div className='day-name' key={shortid.generate()}>
-                                    {day[0]}
-                                </div>
+                                <InformationTooltip
+                                    getPopupContainer={() => document.querySelector('.dayparting-page')}
+                                    type={'custom'}
+                                    className={'chart-tooltip'}
+                                    overlayClassName={'HourDayStatistics-tooltip'}
+                                    description={
+                                        <DailyTooltipDescription
+                                            value={200}
+                                            date={moment(date.startDate).add(dayIndex)}
+                                            timeIndex={dayIndex}
+                                        />
+                                    }
+                                >
+                                    <div className='day-name' key={shortid.generate()}>
+                                        {day[0]}
+
+                                        {selectedCompareDate && <div className={`diff-value`}>
+                                            <SVG id='upward-metric-changes'/>
+
+                                            10.8%
+                                        </div>}
+                                    </div>
+                                </InformationTooltip>
                             ))}
                         </div>
 
@@ -294,6 +384,7 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                                         getPopupContainer={trigger => trigger.parentNode}
                                         type={'custom'}
                                         className={'chart-tooltip'}
+                                        overlayClassName={'HourDayStatistics-tooltip'}
                                         description={
                                             <TooltipDescription
                                                 value={item.sales}

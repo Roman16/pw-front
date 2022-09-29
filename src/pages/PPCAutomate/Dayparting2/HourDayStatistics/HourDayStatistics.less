@@ -51,12 +51,13 @@
       grid-template-columns: 1fr;
       margin: 0 4px 0 0;
 
-      div {
+      .day-name {
         height: 3.5714285714285716rem;
         width: 2.5714285714285716rem;
         background: #474B50;
         border-radius: 2px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
 
@@ -150,113 +151,25 @@
             line-height: 1.2142857142857142rem;
             color: #FFFFFF;
           }
-
-          .diff-value {
-            font-size: 0.7142857142857143rem;
-            line-height: 1.0714285714285714rem;
-            color: #7FD3A1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 3px 0 0 0;
-
-            svg {
-              fill: #7DD4A1;
-              margin: 0 3px 0 0;
-            }
-          }
-        }
-
-        .chart-tooltip {
-          .ant-popover-inner-content {
-            min-width: 300px;
-            border: 0;
-            box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
-            padding: 1.0714285714285714rem;
-            display: flex;
-            flex-direction: column;
-
-            .tooltip-header {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              padding-bottom: 10px;
-              border-bottom: 1px solid #C9CBD4;
-              margin: 0 0 5px;
-
-              .date {
-                font-weight: 600;
-                font-size: 0.8571428571428571rem;
-                color: #353A3E;
-              }
-
-              .percent {
-                background: #695AA6;
-                border-radius: 4px;
-                padding: 2px 5px;
-                font-size: 0.8571428571428571rem;
-                color: #FFFFFF;
-
-              }
-            }
-
-            label {
-              font-size: 0.7142857142857143rem;
-              color: #686868;
-              margin-bottom: 5px;
-            }
-
-
-            .row {
-              display: flex;
-              align-items: center;
-              margin-bottom: 1.0714285714285714rem;
-
-
-              .name {
-                font-size: 0.8571428571428571rem;
-                color: #353A3E;
-                text-transform: capitalize;
-              }
-
-              .value {
-                font-size: 0.8571428571428571rem;
-                color: #6959AB;
-                margin: 0 20px 0 auto;
-              }
-
-              .diff-value {
-                display: flex;
-                align-items: center;
-
-                font-size: 0.8571428571428571rem;
-                font-weight: 500;
-                color: #7FD3A1;
-
-                svg {
-                  fill: #7FD3A1;
-                  margin: 0 3px 2px 0;
-                }
-
-                .from {
-                  font-size: 0.7142857142857143rem;
-                  color: #686868;
-                  margin: 0 0 0 5px;
-                }
-              }
-
-              &.main-metric {
-                background: #F3F3F3;
-                border-radius: 4px;
-                padding: 10px 5px;
-                font-weight: 600;
-              }
-            }
-          }
         }
       }
     }
+
+    .diff-value {
+      font-size: 0.7142857142857143rem;
+      line-height: 1.0714285714285714rem;
+      color: #7FD3A1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 3px 0 0 0;
+
+      svg {
+        fill: #7DD4A1;
+        margin: 0 3px 0 0;
+      }
+    }
+
 
     .legend {
       display: flex;
@@ -463,6 +376,98 @@
       width: 45%;
       height: 32px;
       margin: 25px auto 25px auto;
+    }
+  }
+}
+
+.dayparting-page.dark-mode .HourDayStatistics-tooltip {
+  .ant-popover-arrow {
+    display: none;
+  }
+  .ant-popover-inner-content {
+    min-width: 300px;
+    border: 0;
+    box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
+    padding: 1.0714285714285714rem;
+    display: flex;
+    flex-direction: column;
+
+    .tooltip-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #C9CBD4;
+      margin: 0 0 5px;
+
+      .date {
+        font-weight: 600;
+        font-size: 0.8571428571428571rem;
+        color: #353A3E;
+      }
+
+      .percent {
+        background: #695AA6;
+        border-radius: 4px;
+        padding: 2px 5px;
+        font-size: 0.8571428571428571rem;
+        color: #FFFFFF;
+
+      }
+    }
+
+    label {
+      font-size: 0.7142857142857143rem;
+      color: #686868;
+      margin-bottom: 5px;
+    }
+
+
+    .row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.0714285714285714rem;
+
+
+      .name {
+        font-size: 0.8571428571428571rem;
+        color: #353A3E;
+        text-transform: capitalize;
+      }
+
+      .value {
+        font-size: 0.8571428571428571rem;
+        color: #6959AB;
+        margin: 0 20px 0 auto;
+      }
+
+      .diff-value {
+        display: flex;
+        align-items: center;
+
+        font-size: 0.8571428571428571rem;
+        font-weight: 500;
+        color: #7FD3A1;
+
+        svg {
+          fill: #7FD3A1;
+          margin: 0 3px 2px 0;
+        }
+
+        .from {
+          font-size: 0.7142857142857143rem;
+          color: #686868;
+          margin: 0 0 0 5px;
+        }
+      }
+
+      &.main-metric {
+        background: #F3F3F3;
+        border-radius: 4px;
+        padding: 10px 5px;
+        font-weight: 600;
+      }
     }
   }
 }
