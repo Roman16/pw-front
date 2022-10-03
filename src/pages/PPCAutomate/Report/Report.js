@@ -179,7 +179,6 @@ function Report() {
         } catch (e) {
             console.log(e)
             setReportsList([])
-            setTotalSize(0)
         }
 
         setProcessing(false)

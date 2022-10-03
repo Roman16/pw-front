@@ -662,6 +662,17 @@
               z-index: 1;
               //transition-delay: .1s;
             }
+
+            &::after {
+              content: '';
+              width: 40px;
+              height: 60px;
+              position: absolute;
+              left: -20px;
+              top: 0;
+              opacity: 0;
+              z-index: 11;
+            }
           }
 
           &:hover {

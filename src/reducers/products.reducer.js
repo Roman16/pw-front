@@ -27,7 +27,7 @@ export function products(state = initialState, action) {
             return {
                 ...state,
                 productList: action.payload.result,
-                totalSize: action.payload.fetching ? state.totalSize : action.payload.totalSize,
+                totalSize: action.payload.fetching ? state.totalSize : (action.payload.totalSize || state.totalSize) ,
                 fetching: action.payload.fetching,
                 selectedProduct: action.payload.result && action.payload.result.length > 0 ? action.payload.result[0] : {}
             }
