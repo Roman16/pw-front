@@ -39,7 +39,7 @@ const dateRangeFormatting = (dateRange) => {
     const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
 
     if (dateRange.startDate === 'lifetime') return ''
-    else return encodeURIComponent(`${moment(dateRange.startDate).tz(timezone).format('YYYY-MM-DDT00:00:00.000Z')},${moment(dateRange.endDate).tz(timezone).format('YYYY-MM-DDT23:59:59.999Z')}`)
+    else return encodeURIComponent(`${dateRange.startDate}${moment().tz(timezone).format('T00:00:00.000Z')},${dateRange.endDate}${moment().format('T23:59:59.999Z')}`)
 }
 
 export const filtersHandler = (f) => {
