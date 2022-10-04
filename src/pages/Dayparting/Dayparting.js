@@ -25,6 +25,9 @@ const Dayparting = () => {
 
     const timezone = activeAmazonMarketplace.timezone
 
+    const {campaignId} = useSelector(state => ({
+        campaignId: state.dayparting.selectedCampaign.id,
+    }))
 
     const [selectedDate, setSelectedDate] = useState({
             startDate: moment().startOf('week'),
@@ -58,6 +61,7 @@ const Dayparting = () => {
                 </div> : <div className="col">
                     <HourDayStatistics
                         date={selectedDate}
+                        campaignId={campaignId}
                         selectedCompareDate={selectedCompareDate}
                     />
 

@@ -149,7 +149,8 @@ export const daypartingUrls = {
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements',
     multiDayParting: 'ppc-automation/dayparting/campaigns/state',
 //    ------------------------
-    mainStatistic: 'dayparting/stats'
+    statisticDayByHour: 'dayparting/stats/by_day/by_hour',
+    statisticDayByHourByPlacement: 'dayparting/stats/by_day/by_hour/by_placement',
 }
 
 export const zthUrls = {

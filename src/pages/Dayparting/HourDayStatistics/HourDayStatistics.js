@@ -5,11 +5,7 @@ import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {colorList} from "../colorList"
 import shortid from "shortid"
 import {daypartingServices} from "../../../services/dayparting.services"
-import BudgetDrawer from "./BudgetDrawer"
-import ModalWindow from "../../../components/ModalWindow/ModalWindow"
-import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
-import {productsActions} from "../../../actions/products.actions"
 import {Select, Spin} from "antd"
 import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
@@ -35,119 +31,62 @@ const days = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date, selectedCompareDate}) => {
-    let localFetching = false
-
-    const defaultData = Array.from({length: 168}, (item, index) => moment(`${moment(date.startDate).add(Math.floor(index / 24), 'days').format('DD.MM.YYYY')} ${index - 24 * Math.floor(index / 24)}`, 'DD.MM.YYYY HH').format('YYYY-MM-DD HH:mm:ss'))
-
-    const [data, setData] = useState(defaultData),
+const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
+    const [data, setData] = useState({}),
         [percentParams, setParams] = useState({min: 0, max: 1}),
-        [visibleModal, setModal] = useState(false),
-        [saved, setStatus] = useState(false),
-        [processing, setProcessing] = useState(false),
-        [fetchingData, setFetchingData] = useState(false),
+        [fetchingData, setFetchingData] = useState(true),
         [selectedMetric, setSelectedMetric] = useState('impressions')
 
-    const dispatch = useDispatch()
-    const {campaignId, fetchingCampaignList} = useSelector(state => ({
-        campaignId: state.dayparting.selectedCampaign.id,
-        fetchingCampaignList: state.dayparting.processing,
-    }))
 
-    async function saveBudget(data) {
-        setProcessing(true)
+    const getData = async () => {
+        source && source.cancel()
+        source = CancelToken.source()
+
+        setFetchingData(true)
+
         try {
-            await daypartingServices.setCampaignBudget({campaignId, data: {'value_in_usd': data.value}})
-            setStatus(true)
-
-            dispatch(productsActions.updateCampaignBudget({
-                id: campaignId,
-                dailyBudget: data.value
-            }))
-        } catch (e) {
-            console.log(e)
-        }
-
-        setProcessing(false)
-    }
-
-    useEffect(() => {
-
-        async function fetchData() {
-            source && source.cancel()
-            source = CancelToken.source()
-
-            if (campaignId == null) {
-                setData(defaultData)
-            } else if (!fetchingCampaignList) {
-                setFetchingData(true)
-                localFetching = true
-
-                try {
-                    const res = await daypartingServices.getMainStatistic({
-                        campaignId,
-                        date,
-                        cancelToken: source.token
-                    })
-
-                    const minValue = Math.min(...res.response.map(item => item.sales).filter(item => (item != null && item !== 0))),
-                        maxValue = Math.max(...res.response.map(item => item.sales))
-
-                    setParams({
-                        min: minValue,
-                        max: maxValue
-                    })
-
-
-                    // setData(res.response);
-                    setData(defaultData.map(item => {
-                        return res.response.find(dataDot => dataDot.date === item) ? res.response.find(dataDot => dataDot.date === item) : {}
-                    }))
-                    setFetchingData(false)
-                    localFetching = false
-                } catch (e) {
-                    !localFetching && setFetchingData(false)
-                    localFetching = false
-                }
+            const requestParams = {
+                campaignId,
+                date,
+                cancelToken: source.token
             }
-        }
 
-        fetchData()
+            const [statisticDayByHour, statisticDayByHourByPlacement] = await Promise.all([daypartingServices.getStatisticDayByHour(requestParams), daypartingServices.getStatisticDayByHourByPlacement(requestParams)])
 
-    }, [campaignId, date])
+            console.log(statisticDayByHour)
+            console.log(statisticDayByHourByPlacement)
 
-    useEffect(() => {
-        if (campaignId == null && !fetchingCampaignList) {
-            localFetching = false
+            // const minValue = Math.min(...statisticDayByHour.result.map(item => item.sales).filter(item => (item != null && item !== 0))),
+            //     maxValue = Math.max(...statisticDayByHour.result.map(item => item.sales))
+            //
+            // setParams({
+            //     min: minValue,
+            //     max: maxValue
+            // })
+
+            // setData(res.response);
+
+            await setData(_.keys(statisticDayByHour.result).map(key => ({
+                key: {
+                    ..._.map(statisticDayByHour.result[key], (val, hourKey) => ({
+                        [hourKey]: {
+                            ...val,
+                            placement: {...statisticDayByHourByPlacement.result[key][hourKey]}
+                        }
+                    }))
+                }
+            })))
+
+            setFetchingData(false)
+        } catch (e) {
             setFetchingData(false)
         }
-    }, [fetchingCampaignList])
-
-    const StatisticItem = ({value, index, outBudget}) => {
-        let color
-
-        colorList.forEach(item => {
-            if (value != null) {
-                const percent = ((value - percentParams.min) * 100) / (percentParams.max - percentParams.min)
-                if (percent >= item.min && percent <= item.max) {
-                    color = item.color
-                    return
-                }
-            }
-        })
-
-        return (
-            <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}>
-                <div className="value">500k</div>
-
-                {selectedCompareDate && <div className={`diff-value`}>
-                    <SVG id='upward-metric-changes'/>
-
-                    10.8%
-                </div>}
-            </div>
-        )
     }
+
+    useEffect(() => {
+        campaignId && getData()
+    }, [campaignId, date])
+
 
     const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
         return (
@@ -293,24 +232,16 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
         )
     }
 
+    console.log(data)
+
     return (
         <Fragment>
             <section
-                className={` ${(fetchingData || fetchingCampaignList) ? 'spend-statistics disabled' : 'spend-statistics'}`}>
+                className={`spend-statistics ${(fetchingData || !campaignId) ? ' disabled' : ''}`}>
                 <div className="section-header">
                     <h2>
                         Stats by Hour & Day
                     </h2>
-
-                    {/*<button*/}
-                    {/*    className='btn default'*/}
-                    {/*    onClick={() => setModal(true)}*/}
-                    {/*    disabled={!campaignId}*/}
-                    {/*    data-intercom-target='add-budget-button'*/}
-                    {/*>*/}
-                    {/*    <SVG id='plus-white'/>*/}
-                    {/*    Add budget*/}
-                    {/*</button>*/}
 
                     <div className="metric-select">
                         <CustomSelect
@@ -343,62 +274,69 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                         ))}
                     </div>
 
-                    <div className="row">
-                        <div className="col day-axis">
-                            {days.map((day, dayIndex) => (
-                                <InformationTooltip
-                                    getPopupContainer={() => document.querySelector('.dayparting-page')}
-                                    type={'custom'}
-                                    className={'chart-tooltip'}
-                                    overlayClassName={'HourDayStatistics-tooltip'}
-                                    description={
-                                        <DailyTooltipDescription
-                                            value={200}
-                                            date={moment(date.startDate).add(dayIndex)}
-                                            day={day}
-                                        />
-                                    }
-                                >
-                                    <div className='day-name' key={shortid.generate()}>
-                                        {day[0]}
-
-                                        {selectedCompareDate && <div className={`diff-value`}>
-                                            <SVG id='upward-metric-changes'/>
-
-                                            10.8%
-                                        </div>}
-                                    </div>
-                                </InformationTooltip>
-                            ))}
-                        </div>
-
-                        <div className="statistic">
-                            {data.map((item, index) => (
-                                <div className='statistic-item' key={shortid.generate()}>
+                    <div className="statistic">
+                        {days.map((day, dayIndex) => (
+                            <div className="row">
+                                <div className="day">
                                     <InformationTooltip
-                                        getPopupContainer={trigger => trigger.parentNode}
+                                        getPopupContainer={() => document.querySelector('.dayparting-page')}
                                         type={'custom'}
                                         className={'chart-tooltip'}
                                         overlayClassName={'HourDayStatistics-tooltip'}
                                         description={
-                                            <TooltipDescription
-                                                value={item.sales}
-                                                date={item.date}
-                                                timeIndex={index}
-                                                outBudget={item.out_of_budget}
+                                            <DailyTooltipDescription
+                                                value={200}
+                                                date={moment(date.startDate).add(dayIndex)}
+                                                day={day}
                                             />
                                         }
                                     >
-                                        <StatisticItem
-                                            value={item.sales}
-                                            outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
-                                            index={index}
-                                        />
+                                        <div className='day-name' key={shortid.generate()}>
+                                            {day[0]}
+
+                                            {selectedCompareDate && <div className={`diff-value`}>
+                                                <SVG id='upward-metric-changes'/>
+
+                                                10.8%
+                                            </div>}
+                                        </div>
                                     </InformationTooltip>
                                 </div>
-                            ))}
-                        </div>
+
+                                {hours.map((item, hourIndex) => {
+                                    return (
+                                        <div className='statistic-item'>
+                                            <InformationTooltip
+                                                getPopupContainer={trigger => trigger.parentNode}
+                                                type={'custom'}
+                                                className={'chart-tooltip'}
+                                                overlayClassName={'HourDayStatistics-tooltip'}
+                                                description={
+                                                    <TooltipDescription
+                                                        value={item.sales}
+                                                        date={item.date}
+                                                        timeIndex={hourIndex}
+                                                        outBudget={item.out_of_budget}
+                                                    />
+                                                }
+                                            >
+                                                <StatisticItem
+                                                    value={fetchingData ? 0 : Object.values(data)[dayIndex][item][selectedMetric]}
+                                                    data={data}
+                                                    selectedMetric={selectedMetric}
+                                                    outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
+                                                    index={hourIndex}
+                                                />
+                                            </InformationTooltip>
+                                        </div>
+
+                                    )
+                                })}
+                            </div>
+                        ))}
+
                     </div>
+
 
                     <div className="legend">
                         <div className="color-gradation">
@@ -407,6 +345,7 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                                     <div key={item.color} style={{background: item.color}}/>
                                 ))}
                             </div>
+
                             <div className="percent">
                                 {[...Array(11).keys()].map((i, index) => <div>{index === 0 ? '0' : `${index}0`}%</div>)}
                             </div>
@@ -420,46 +359,46 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                     </div>
                 </div>
 
-                {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
+                {(fetchingData || !campaignId) && <div className="disable-page-loading">
                     <Spin size="large"/>
                 </div>}
             </section>
-
-
-            <ModalWindow
-                visible={visibleModal}
-                className={'budget-window'}
-                handleCancel={() => {
-                    setModal(false)
-                    setStatus(false)
-                }}
-                footer={false}
-                destroyOnClose={true}
-            >
-                {saved ?
-                    <div className='success'>
-                        <h3>Budget saved</h3>
-
-                        <button
-                            onClick={() => {
-                                setModal(false)
-                                setStatus(false)
-                            }}
-                            className='btn green-btn'
-                        >
-                            Done
-                        </button>
-                    </div>
-                    :
-                    <BudgetDrawer
-                        onClose={() => setModal(false)}
-                        onSave={saveBudget}
-                        processing={processing}
-                    />
-                }
-            </ModalWindow>
         </Fragment>
     )
 }
+
+
+const StatisticItem = ({value, data, index, outBudget, selectedCompareDate, selectedMetric}) => {
+    let color
+
+    const percentParams = {
+        min: _.min(_.values(data).map(item => _.minBy(_.values(item), selectedMetric)[selectedMetric])),
+        max: _.max(_.values(data).map(item => _.maxBy(_.values(item), selectedMetric)[selectedMetric]))
+    }
+
+    colorList.forEach(item => {
+        if (value != null) {
+            const percent = (value - percentParams.min) / (percentParams.max - percentParams.min) * 100
+
+            if (percent >= item.min && percent <= item.max) {
+                color = item.color
+                return
+            }
+        }
+    })
+
+    return (
+        <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`} style={{background: color}}>
+            <div className="value">{value}</div>
+
+            {selectedCompareDate && <div className={`diff-value`}>
+                <SVG id='upward-metric-changes'/>
+
+                10.8%
+            </div>}
+        </div>
+    )
+}
+
 
 export default React.memo(HourDayStatistics)
