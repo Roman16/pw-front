@@ -6,18 +6,18 @@ import tz from 'moment-timezone'
 import Selection from "@simonwep/selection-js/src/selection"
 import shortid from "shortid"
 import './DaySwitches.less'
-import {daypartingServices} from "../../../../services/dayparting.services"
-import {notification} from "../../../../components/Notification"
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import {daypartingServices} from "../../../services/dayparting.services"
+import {notification} from "../../../components/Notification"
+import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import {connect} from "react-redux"
 import axios from "axios"
-import {productsActions} from '../../../../actions/products.actions'
+import {productsActions} from '../../../actions/products.actions'
 import {Link, NavLink} from "react-router-dom"
-import {SVG} from "../../../../utils/icons"
-import {daypartingActions} from "../../../../actions/dayparting.actions"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {round} from "../../../../utils/round"
-import {activeTimezone} from "../../../index"
+import {SVG} from "../../../utils/icons"
+import {daypartingActions} from "../../../actions/dayparting.actions"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import {round} from "../../../utils/round"
+import {activeTimezone} from "../../index"
 
 const CancelToken = axios.CancelToken
 let source = null

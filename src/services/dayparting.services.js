@@ -1,6 +1,6 @@
-import api from './request';
-import {daypartingUrls} from '../constans/api.urls';
-import moment from "moment";
+import api from './request'
+import {daypartingUrls} from '../constans/api.urls'
+import moment from "moment"
 
 function dateFormatter(date) {
     return moment(date).format('YYYY-MM-DD')
@@ -19,12 +19,14 @@ export const daypartingServices = {
     deactivateDayparting,
     deactivateMultiDayparting,
     activateMultiDayparting,
-};
 
-function getCampaigns({pageSize, page, searchStr, cancelToken, campaign_status, onlyOndayparting}) {
+    getMainStatistic
+}
+
+function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, campaign_status, onlyOndayparting}) {
     const parameters = [
         searchStr ? `&name:search=${searchStr}` : '',
-    ];
+    ]
 
     return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&state:in=${campaign_status === 'all' ? 'enabled,paused' : campaign_status}&has_enabled_dayparting=${onlyOndayparting ? 1 : 0}${parameters.join('')}`, null, null, cancelToken)
 }
@@ -61,6 +63,7 @@ function updateDayPartingParams({campaignId, state_encoded_string, status}) {
 function activateDayparting({campaignId}) {
     return api('put', `${daypartingUrls.dayParting(campaignId)}`, {status: 'ACTIVE'})
 }
+
 function activateMultiDayparting(data) {
     return api('post', `${daypartingUrls.multiDayParting}?campaignId:in=${data.campaignId}&state_encoded_string=${data.state.join('')}`)
 }
@@ -71,4 +74,10 @@ function deactivateDayparting({campaignId}) {
 
 function deactivateMultiDayparting(data) {
     return api('delete', `${daypartingUrls.multiDayParting}?campaignId:in=${data.campaignId}`)
+}
+
+//-----------------
+
+function getMainStatistic({cancelToken, campaignId, date}) {
+    return api('get', `${daypartingUrls.mainStatistic}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-M-D')}&date_to=${moment(date.endDate).format('Y-M-D')}`, null, null, cancelToken)
 }

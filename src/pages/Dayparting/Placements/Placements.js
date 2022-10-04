@@ -1,13 +1,9 @@
-import React, {useEffect, useState, Fragment} from 'react'
+import React, {useEffect, useState} from 'react'
 
-import {daypartingServices} from "../../../../services/dayparting.services"
+import {daypartingServices} from "../../../services/dayparting.services"
 import {useSelector} from "react-redux"
 import axios from "axios"
-import {round} from "../../../../utils/round"
-import {Popover, Spin, Switch} from "antd"
-import {SVG} from "../../../../utils/icons"
-import {numberMask} from "../../../../utils/numberMask"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import { Spin, Switch} from "antd"
 import './Placements.less'
 import {Chart} from "./Chart"
 import {MetricsStatistics} from "./MetricsStatistics"

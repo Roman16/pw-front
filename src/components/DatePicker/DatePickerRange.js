@@ -77,7 +77,7 @@ class DatePicker extends Component {
                     getPopupContainer={trigger => trigger.parentNode}
                     onCalendarChange={onCalendarChange}
                     renderExtraFooter={renderExtraFooter}
-                    open={open}
+                    {...open !== undefined && {open: open}}
 
                     onOpenChange={onOpenChange}
                     onChange={this.handleChange}

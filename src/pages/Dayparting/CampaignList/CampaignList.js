@@ -1,16 +1,16 @@
 import React, {Fragment, useEffect, useState} from "react"
 import {Spin} from "antd"
-import Pagination from "../../../../components/Pagination/Pagination"
-import {SVG} from "../../../../utils/icons"
-import '../../../../components/ProductList/ProductList.less'
+import Pagination from "../../../components/Pagination/Pagination"
+import {SVG} from "../../../utils/icons"
+import '../../../components/ProductList/ProductList.less'
 import './CampaignList.less'
 
 import Filters from "./Filters"
 import axios from "axios"
 import {debounce} from "throttle-debounce"
-import {daypartingActions} from "../../../../actions/dayparting.actions"
+import {daypartingActions} from "../../../actions/dayparting.actions"
 import {useDispatch, useSelector} from "react-redux"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import _ from 'lodash'
 
 const CancelToken = axios.CancelToken
@@ -165,8 +165,6 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     onChangeSwitch={changeSwitchHandler}
                     onSetMultiselect={setMultiselectHandler}
                 />
-
-                {}
 
                 <div className={`campaigns`}>
                     {processing ?

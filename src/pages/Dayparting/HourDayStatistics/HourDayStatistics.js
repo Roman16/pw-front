@@ -1,25 +1,20 @@
 import React, {Fragment, useEffect, useState} from "react"
 import './HourDayStatistics.less'
 import moment from "moment"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {colorList} from "../colorList"
 import shortid from "shortid"
-import {daypartingServices} from "../../../../services/dayparting.services"
+import {daypartingServices} from "../../../services/dayparting.services"
 import BudgetDrawer from "./BudgetDrawer"
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import ModalWindow from "../../../components/ModalWindow/ModalWindow"
 import {useSelector, useDispatch} from "react-redux"
 import axios from "axios"
-import {numberMask} from "../../../../utils/numberMask"
-import {productsActions} from "../../../../actions/products.actions"
+import {productsActions} from "../../../actions/products.actions"
 import {Select, Spin} from "antd"
-import {NavLink} from "react-router-dom"
-import {SVG} from "../../../../utils/icons"
-import CustomSelect from "../../../../components/Select/Select"
+import {SVG} from "../../../utils/icons"
+import CustomSelect from "../../../components/Select/Select"
 import {metrics} from '../Placements/MetricsStatistics'
-import {RenderMetricChanges} from "../../../Analytics/componentsV2/MainMetrics/MetricItem"
 import _ from 'lodash'
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
-import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
 
 
 const CancelToken = axios.CancelToken
@@ -89,7 +84,7 @@ const HourDayStatistics = ({date, selectedCompareDate}) => {
                 localFetching = true
 
                 try {
-                    const res = await daypartingServices.getOutBudgetStatistic({
+                    const res = await daypartingServices.getMainStatistic({
                         campaignId,
                         date,
                         cancelToken: source.token

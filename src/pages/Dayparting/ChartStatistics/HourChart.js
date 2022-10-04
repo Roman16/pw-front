@@ -2,7 +2,7 @@ import React from "react";
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Text
 } from "recharts";
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 
 const ChartTooltip = ({payload, firstMetric, secondMetric}) => {

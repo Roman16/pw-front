@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useState} from "react";
-import InformationTooltip from "../../../../components/Tooltip/Tooltip";
+import InformationTooltip from "../../../components/Tooltip/Tooltip";
 import {colorList} from "../colorList";
 import shortid from "shortid";
 import {metricsList} from "./metricsList";
 import moment from "moment";
-import {daypartingServices} from "../../../../services/dayparting.services";
+import {daypartingServices} from "../../../services/dayparting.services";
 
 const testData = [
     {

@@ -1,12 +1,11 @@
 import React, {useState} from "react"
-import {marketplaceTimezone} from "../../../../components/Sidebar/ConnectedRegions/CurrentMarketplace"
-import {currencySymbol, currencyName} from "../../../../components/CurrencyCode/CurrencyCode"
-import InformationTooltip from "../../../../components/Tooltip/Tooltip"
-import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
+import {marketplaceTimezone} from "../../../components/Sidebar/ConnectedRegions/CurrentMarketplace"
+import {currencySymbol, currencyName} from "../../../components/CurrencyCode/CurrencyCode"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import './Header.less'
-import DatePicker from "../../../../components/DatePicker/DatePickerRange"
+import DatePicker from "../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
-import {activeTimezone} from "../../../index"
 
 moment.locale('en')
 

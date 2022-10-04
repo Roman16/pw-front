@@ -37,7 +37,7 @@ export const userUrls = {
     amazonRegionAccounts: 'user/account/amazon-region-accounts',
 
     adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
-    spCredentials:  'user/account/amazon-region-accounts/amazon-sp-api-credentials',
+    spCredentials: 'user/account/amazon-region-accounts/amazon-sp-api-credentials',
 
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
@@ -147,7 +147,9 @@ export const daypartingUrls = {
     getDayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : `ppc-automation/dayparting/campaigns/state`,
     dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements',
-    multiDayParting: 'ppc-automation/dayparting/campaigns/state'
+    multiDayParting: 'ppc-automation/dayparting/campaigns/state',
+//    ------------------------
+    mainStatistic: 'dayparting/stats'
 }
 
 export const zthUrls = {

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Chart} from "./Chart"
 import './MetricsComparison.less'
-import CustomSelect from "../../../../components/Select/Select"
+import CustomSelect from "../../../components/Select/Select"
 import {metricsList} from "../ChartStatistics/metricsList"
 import {Select, Spin, Switch} from "antd"
 import {useSelector} from "react-redux"

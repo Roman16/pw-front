@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Dropdown, Input, Menu, Switch, Select} from "antd"
-import {SVG} from "../../../../utils/icons"
-import CustomSelect from "../../../../components/Select/Select"
+import {SVG} from "../../../utils/icons"
+import CustomSelect from "../../../components/Select/Select"
 
 const {Search} = Input,
     Option = Select.Option

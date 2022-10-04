@@ -1,10 +1,10 @@
 import React, {Fragment} from "react"
 import {chartColors} from "./Placements"
-import {SVG} from "../../../../utils/icons"
-import {round} from "../../../../utils/round"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
-import {numberMask} from "../../../../utils/numberMask"
-import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
+import {SVG} from "../../../utils/icons"
+import {round} from "../../../utils/round"
+import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
+import {numberMask} from "../../../utils/numberMask"
+import {metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 
 const statisticParams = [
     {

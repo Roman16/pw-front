@@ -3,8 +3,8 @@ import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAx
 import moment from "moment"
 import {chartColors} from "./Placements"
 import {CustomizedTick} from "../MetricsComparison/Chart"
-import {round} from "../../../../utils/round"
-import {numberMask} from "../../../../utils/numberMask"
+import {round} from "../../../utils/round"
+import {numberMask} from "../../../utils/numberMask"
 
 
 const chartLabel = {

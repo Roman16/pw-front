@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import './Dayparting.less'
 import HourDayStatistics from "./HourDayStatistics/HourDayStatistics"
-import ChartStatistics from "./ChartStatistics/ChartStatistics"
 import DaySwitches from "./DaySwithes/DaySwithes"
 import PlacementsStatistics from "./Placements/Placements"
 import shortid from "shortid"
@@ -13,6 +12,7 @@ import {Header} from "./Header/Header"
 import DaySwitchesMulti from "./DaySwithes/DaySwitchesMulti"
 import MetricsComparison from "./MetricsComparison/MetricsComparison"
 import {activeTimezone} from "../../index"
+import {daypartingServices} from "../../services/dayparting.services"
 
 
 moment.locale('en')

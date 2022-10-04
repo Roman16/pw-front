@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Select, Spin} from "antd";
-import CustomSelect from "../../../../components/Select/Select";
+import CustomSelect from "../../../components/Select/Select";
 import DayChart from './DayChart';
 import {metricsList} from "./metricsList";
-import {daypartingServices} from "../../../../services/dayparting.services";
+import {daypartingServices} from "../../../services/dayparting.services";
 import {useSelector} from "react-redux";
 import axios from "axios";
 

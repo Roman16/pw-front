@@ -1,8 +1,8 @@
 import React from "react"
 import {CartesianGrid, Line, AreaChart, Area, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
 import moment from "moment"
-import {round} from "../../../../utils/round"
-import {numberMask} from "../../../../utils/numberMask"
+import {round} from "../../../utils/round"
+import {numberMask} from "../../../utils/numberMask"
 
 const weakDays = [
     {

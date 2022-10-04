@@ -3,8 +3,8 @@ import {
     XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, CartesianGrid
 } from 'recharts';
 import moment from "moment";
-import {numberMask} from "../../../../utils/numberMask";
-import {round} from "../../../../utils/round";
+import {numberMask} from "../../../utils/numberMask";
+import {round} from "../../../utils/round";
 
 
 const weakDays = [
