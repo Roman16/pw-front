@@ -93,10 +93,10 @@ function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
 function getStatisticDayByHour({cancelToken, campaignId, date}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.statisticDayByHour}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-M-DD')}&date_to=${moment(date.endDate).format('Y-M-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.statisticDayByHour}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 function getStatisticDayByHourByPlacement({cancelToken, campaignId, date}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.statisticDayByHourByPlacement}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-M-DD')}&date_to=${moment(date.endDate).format('Y-M-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.statisticDayByHourByPlacement}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }

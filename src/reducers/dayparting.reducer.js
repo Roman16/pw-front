@@ -12,7 +12,6 @@ const defaultState = {
 export function dayparting(state = defaultState, action) {
     switch (action.type) {
         case daypartingConstants.SET_CAMPAIGN_LIST:
-            console.log('rrr')
             return {
                 ...state,
                 campaignList: action.payload.data,

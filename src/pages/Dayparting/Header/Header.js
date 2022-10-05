@@ -35,10 +35,11 @@ export const Header = ({
 
     const onChange = (date) => {
         setVisibleDatePickerDropdown(false)
+        console.log(date)
 
         onChangeDate({
-            startDate: moment(date[0]).startOf('week'),
-            endDate: moment(date[0]).endOf('week')
+            startDate: moment(date[0] ? date[0] : date).startOf('week'),
+            endDate: moment(date[0] ? date[0] : date).endOf('week')
         })
     }
 
