@@ -41,7 +41,7 @@ export const metrics = [
     },
     {
         title: 'Spend',
-        key: 'spend'
+        key: 'cost'
     },
     {
         title: 'Sales',

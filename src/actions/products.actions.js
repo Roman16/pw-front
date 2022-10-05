@@ -67,6 +67,7 @@ function fetchProducts(paginationParams) {
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
                             result: [],
+                            totalSize: 0,
                             fetching: false
                         }
                     })

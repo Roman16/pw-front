@@ -11,6 +11,9 @@ import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
 import {metrics} from '../Placements/MetricsStatistics'
 import _ from 'lodash'
+import {analyticsAvailableMetricsList, metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
+import {round} from "../../../utils/round"
+import {numberMask} from "../../../utils/numberMask"
 
 
 const CancelToken = axios.CancelToken
@@ -28,15 +31,28 @@ const days = [
     'Saturday',
 ]
 
+const placementsEnums = [
+    {
+        title: 'Top of Search',
+        key: 'top_of_search'
+    },
+    {
+        title: 'Product Pages',
+        key: 'detail_page'
+    },
+    {
+        title: 'Rest of Search',
+        key: 'other'
+    },
+]
+
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
 const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
-    const [data, setData] = useState({}),
-        [percentParams, setParams] = useState({min: 0, max: 1}),
+    const [data, setData] = useState([]),
         [fetchingData, setFetchingData] = useState(true),
         [selectedMetric, setSelectedMetric] = useState('impressions')
-
 
     const getData = async () => {
         source && source.cancel()
@@ -53,29 +69,15 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
 
             const [statisticDayByHour, statisticDayByHourByPlacement] = await Promise.all([daypartingServices.getStatisticDayByHour(requestParams), daypartingServices.getStatisticDayByHourByPlacement(requestParams)])
 
-            console.log(statisticDayByHour)
-            console.log(statisticDayByHourByPlacement)
+            const result = _.values(statisticDayByHour.result).map((day, dayIndex) => _.values(day).map((hour, hourIndex) => {
 
-            // const minValue = Math.min(...statisticDayByHour.result.map(item => item.sales).filter(item => (item != null && item !== 0))),
-            //     maxValue = Math.max(...statisticDayByHour.result.map(item => item.sales))
-            //
-            // setParams({
-            //     min: minValue,
-            //     max: maxValue
-            // })
+                return ({
+                    ...hour,
+                    placements: _.values(_.values(statisticDayByHourByPlacement.result)[dayIndex])[hourIndex]
+                })
+            }))
 
-            // setData(res.response);
-
-            await setData(_.keys(statisticDayByHour.result).map(key => ({
-                key: {
-                    ..._.map(statisticDayByHour.result[key], (val, hourKey) => ({
-                        [hourKey]: {
-                            ...val,
-                            placement: {...statisticDayByHourByPlacement.result[key][hourKey]}
-                        }
-                    }))
-                }
-            })))
+            await setData([...result])
 
             setFetchingData(false)
         } catch (e) {
@@ -87,152 +89,6 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
         campaignId && getData()
     }, [campaignId, date])
 
-
-    const TooltipDescription = ({value, timeIndex, date, outBudget}) => {
-        return (
-            <Fragment>
-                <div className="tooltip-header">
-                    <h3 className="date">
-                        {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}
-                    </h3>
-
-                    <div className="percent">
-                        96%
-                    </div>
-                </div>
-
-                <div className="row main-metric">
-                    <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-
-                <label htmlFor="">By Placements:</label>
-
-                <div className="row">
-                    <div className="name">Top of Search</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-                <div className="row">
-                    <div className="name">Product Pages</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-                <div className="row">
-                    <div className="name">Rest of Search</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-            </Fragment>
-        )
-    }
-
-    const DailyTooltipDescription = ({value, day, date}) => {
-        return (
-            <Fragment>
-                <div className="tooltip-header">
-                    <h3 className="date">
-                        {day}, {moment(date).format('DD MMM YYYY')}
-                    </h3>
-
-                    <div className="percent">
-                        96%
-                    </div>
-                </div>
-
-                <div className="row main-metric">
-                    <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-
-                <label htmlFor="">By Placements:</label>
-
-                <div className="row">
-                    <div className="name">Top of Search</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-                <div className="row">
-                    <div className="name">Product Pages</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-                <div className="row">
-                    <div className="name">Rest of Search</div>
-                    <div className="value">244</div>
-
-                    {selectedCompareDate && <div className="diff-value">
-                        <SVG id='upward-metric-changes'/>
-                        10.8%
-
-                        <div className="from">
-                            (from 200)
-                        </div>
-                    </div>}
-                </div>
-            </Fragment>
-        )
-    }
-
-    console.log(data)
 
     return (
         <Fragment>
@@ -285,9 +141,11 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
                                         overlayClassName={'HourDayStatistics-tooltip'}
                                         description={
                                             <DailyTooltipDescription
-                                                value={200}
                                                 date={moment(date.startDate).add(dayIndex)}
                                                 day={day}
+                                                data={data}
+                                                index={dayIndex}
+                                                selectedMetric={selectedMetric}
                                             />
                                         }
                                     >
@@ -313,10 +171,13 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
                                                 overlayClassName={'HourDayStatistics-tooltip'}
                                                 description={
                                                     <TooltipDescription
-                                                        value={item.sales}
+                                                        value={fetchingData ? 0 : Object.values(data)[dayIndex][item][selectedMetric]}
                                                         date={item.date}
+                                                        data={data}
                                                         timeIndex={hourIndex}
                                                         outBudget={item.out_of_budget}
+                                                        selectedMetric={selectedMetric}
+                                                        placements={fetchingData ? 0 : Object.values(data)[dayIndex][item].placements}
                                                     />
                                                 }
                                             >
@@ -367,18 +228,18 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
     )
 }
 
-
-const StatisticItem = ({value, data, index, outBudget, selectedCompareDate, selectedMetric}) => {
-    let color
+const percentColor = ({value, metric, data}) => {
+    let color,
+        percent
 
     const percentParams = {
-        min: _.min(_.values(data).map(item => _.minBy(_.values(item), selectedMetric)[selectedMetric])),
-        max: _.max(_.values(data).map(item => _.maxBy(_.values(item), selectedMetric)[selectedMetric]))
+        min: _.min(data.map(item => _.minBy(item, metric)[metric])),
+        max: _.max(data.map(item => _.maxBy(item, metric)[metric])),
     }
 
     colorList.forEach(item => {
         if (value != null) {
-            const percent = (value - percentParams.min) / (percentParams.max - percentParams.min) * 100
+            percent = (value - percentParams.min) / (percentParams.max - percentParams.min) * 100
 
             if (percent >= item.min && percent <= item.max) {
                 color = item.color
@@ -387,16 +248,132 @@ const StatisticItem = ({value, data, index, outBudget, selectedCompareDate, sele
         }
     })
 
+    return {color, percent}
+}
+
+const renderMetricValue = ({value, metric}) => {
+    if (value) {
+        if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
+            return (`${round(value * 100, 2)}%`)
+        } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
+            return (`$${numberMask(value, 4, null, 2)}`)
+        } else {
+            return (numberMask(value))
+        }
+    } else {
+        return ''
+    }
+}
+
+
+const StatisticItem = ({value, data, index, outBudget, selectedCompareDate, selectedMetric}) => (
+    <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
+         style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
+        <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
+
+        {selectedCompareDate && <div className={`diff-value`}>
+            <SVG id='upward-metric-changes'/>
+
+            10.8%
+        </div>}
+    </div>
+)
+
+const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMetric, selectedCompareDate, placements}) => {
+    const percentByRange = percentColor({value, data, metric: selectedMetric})
+
     return (
-        <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`} style={{background: color}}>
-            <div className="value">{value}</div>
+        <Fragment>
+            <div className="tooltip-header">
+                <h3 className="date">
+                    {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}
+                </h3>
 
-            {selectedCompareDate && <div className={`diff-value`}>
-                <SVG id='upward-metric-changes'/>
+                <div className="percent" style={{background: percentByRange.color}}>
+                    {round(percentByRange.percent, 2)}%
+                </div>
+            </div>
 
-                10.8%
-            </div>}
-        </div>
+            <div className="row main-metric">
+                <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
+                <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
+
+                {selectedCompareDate && <div className="diff-value">
+                    <SVG id='upward-metric-changes'/>
+                    10.8%
+
+                    <div className="from">
+                        (from 200)
+                    </div>
+                </div>}
+            </div>
+
+            <label htmlFor="">By Placements:</label>
+
+            {placementsEnums.map(item => (
+                <div className="row">
+                    <div className="name">{item.title}</div>
+                    <div className="value">{placements?.[item.key]?.[selectedMetric] || '-'}</div>
+
+                    {/*{selectedCompareDate && <div className="diff-value">*/}
+                    {/*    <SVG id='upward-metric-changes'/>*/}
+                    {/*    10.8%*/}
+
+                    {/*    <div className="from">*/}
+                    {/*        (from 200)*/}
+                    {/*    </div>*/}
+                    {/*</div>}*/}
+                </div>
+            ))}
+        </Fragment>
+    )
+}
+
+const DailyTooltipDescription = ({data, index, day, date, selectedMetric, selectedCompareDate}) => {
+    return (
+        <Fragment>
+            <div className="tooltip-header">
+                <h3 className="date">
+                    {day}, {moment(date).format('DD MMM YYYY')}
+                </h3>
+            </div>
+
+            <div className="row main-metric">
+                <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
+                <div className="value">
+                    {_.reduce(data[index],  (sum, item) => sum + item[selectedMetric], 0)}
+                </div>
+
+                {selectedCompareDate && <div className="diff-value">
+                    <SVG id='upward-metric-changes'/>
+                    10.8%
+
+                    <div className="from">
+                        (from 200)
+                    </div>
+                </div>}
+            </div>
+
+            <label htmlFor="">By Placements:</label>
+
+            {placementsEnums.map(item => (
+                <div className="row">
+                    <div className="name">{item.title}</div>
+                    <div className="value">
+                        {_.reduce(data[index],  (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0)}
+                    </div>
+
+                    {/*{selectedCompareDate && <div className="diff-value">*/}
+                    {/*    <SVG id='upward-metric-changes'/>*/}
+                    {/*    10.8%*/}
+
+                    {/*    <div className="from">*/}
+                    {/*        (from 200)*/}
+                    {/*    </div>*/}
+                    {/*</div>}*/}
+                </div>
+            ))}
+        </Fragment>
     )
 }
 
