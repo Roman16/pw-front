@@ -25,6 +25,11 @@
   overflow-y: auto;
   overflow-x: hidden;
 
+  /* width */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
   .sidebar-header {
     min-height: 2.142857142857143rem;
     display: flex;
@@ -661,17 +666,6 @@
               opacity: 0;
               z-index: 1;
               //transition-delay: .1s;
-            }
-
-            &::after {
-              content: '';
-              width: 40px;
-              height: 60px;
-              position: absolute;
-              left: -20px;
-              top: 0;
-              opacity: 0;
-              z-index: 11;
             }
           }
 

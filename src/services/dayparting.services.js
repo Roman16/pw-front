@@ -7,7 +7,6 @@ function dateFormatter(date) {
 }
 
 export const daypartingServices = {
-    getCampaigns,
     getOutBudgetStatistic,
     getRecommendedBudget,
     setCampaignBudget,
@@ -20,17 +19,13 @@ export const daypartingServices = {
     deactivateMultiDayparting,
     activateMultiDayparting,
 
+    getCampaigns,
+    getProducts,
     getStatisticDayByHour,
-    getStatisticDayByHourByPlacement
+    getStatisticDayByHourByPlacement,
+
 }
 
-function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, campaign_status, onlyOndayparting}) {
-    const parameters = [
-        searchStr ? `&name:search=${searchStr}` : '',
-    ]
-
-    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&state:in=${campaign_status === 'all' ? 'enabled,paused' : campaign_status}&has_enabled_dayparting=${onlyOndayparting ? 1 : 0}${parameters.join('')}`, null, null, cancelToken)
-}
 
 function getOutBudgetStatistic({campaignId, date, cancelToken}) {
     return api('get', `${daypartingUrls.outBudget(campaignId)}?start_date=${dateFormatter(date.startDate)}&end_date=${dateFormatter(date.endDate)}`, null, null, cancelToken)
@@ -78,6 +73,22 @@ function deactivateMultiDayparting(data) {
 }
 
 //-----------------
+
+function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting}) {
+    const parameters = [
+        searchStr ? `&name:search=${searchStr}` : '',
+    ]
+
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${parameters.join('')}`, null, null, cancelToken)
+}
+
+function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
+    const parameters = [
+        searchStr ? `&name:search=${searchStr}` : '',
+    ]
+
+    return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${parameters.join('')}`, null, null, cancelToken)
+}
 
 function getStatisticDayByHour({cancelToken, campaignId, date}) {
     campaignId = '454717564720'

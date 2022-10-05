@@ -52,7 +52,7 @@ const hours = Array.from({length: 24}, (item, index) => index)
 const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
     const [data, setData] = useState([]),
         [fetchingData, setFetchingData] = useState(true),
-        [selectedMetric, setSelectedMetric] = useState('impressions')
+        [selectedMetric, setSelectedMetric] = useState('clicks')
 
     const getData = async () => {
         source && source.cancel()
@@ -165,7 +165,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
                                     return (
                                         <div className='statistic-item'>
                                             <InformationTooltip
-                                                getPopupContainer={trigger => trigger.parentNode}
+                                                getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
                                                 type={'custom'}
                                                 className={'chart-tooltip'}
                                                 overlayClassName={'HourDayStatistics-tooltip'}
@@ -256,7 +256,11 @@ const renderMetricValue = ({value, metric}) => {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}%`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
-            return (`$${numberMask(value, 4, null, 2)}`)
+            if(value < 0) {
+                return (`-$${numberMask(Math.abs(value), 1, null, 2)}`)
+            } else {
+                return (`$${numberMask(value, 1, null, 2)}`)
+            }
         } else {
             return (numberMask(value))
         }
@@ -313,7 +317,9 @@ const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMe
             {placementsEnums.map(item => (
                 <div className="row">
                     <div className="name">{item.title}</div>
-                    <div className="value">{placements?.[item.key]?.[selectedMetric] || '-'}</div>
+                    <div className="value">
+                        {placements?.[item.key]?.[selectedMetric] ? round(placements?.[item.key]?.[selectedMetric], 2) : '-'}
+                    </div>
 
                     {/*{selectedCompareDate && <div className="diff-value">*/}
                     {/*    <SVG id='upward-metric-changes'/>*/}
@@ -341,7 +347,10 @@ const DailyTooltipDescription = ({data, index, day, date, selectedMetric, select
             <div className="row main-metric">
                 <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
                 <div className="value">
-                    {_.reduce(data[index],  (sum, item) => sum + item[selectedMetric], 0)}
+                    {renderMetricValue({
+                        value: _.reduce(data[index], (sum, item) => sum + item[selectedMetric], 0),
+                        metric: selectedMetric
+                    })}
                 </div>
 
                 {selectedCompareDate && <div className="diff-value">
@@ -360,7 +369,7 @@ const DailyTooltipDescription = ({data, index, day, date, selectedMetric, select
                 <div className="row">
                     <div className="name">{item.title}</div>
                     <div className="value">
-                        {_.reduce(data[index],  (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0)}
+                        {round(_.reduce(data[index], (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0), 2)}
                     </div>
 
                     {/*{selectedCompareDate && <div className="diff-value">*/}

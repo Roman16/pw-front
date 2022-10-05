@@ -139,7 +139,6 @@ export const adminUrls = {
 }
 
 export const daypartingUrls = {
-    campaigns: 'ppc-automation/dayparting/campaigns',
     outBudget: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/sales-oob` : 'ppc-automation/dayparting/campaigns/sales-oob',
     recommendedBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/recommended-budget`,
     dailyBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/daily-budget`,
@@ -149,6 +148,9 @@ export const daypartingUrls = {
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements',
     multiDayParting: 'ppc-automation/dayparting/campaigns/state',
 //    ------------------------
+    campaigns: 'dayparting/campaigns',
+    products: 'dayparting/products',
+
     statisticDayByHour: 'dayparting/stats/by_day/by_hour',
     statisticDayByHourByPlacement: 'dayparting/stats/by_day/by_hour/by_placement',
 }

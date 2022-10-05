@@ -27,25 +27,29 @@ export const metrics = [
         title: 'Clicks',
         key: 'clicks'
     },
+    // {
+    //     title: 'CTR',
+    //     key: 'ctr'
+    // },
+    // {
+    //     title: 'ACoS',
+    //     key: 'acos'
+    // },
     {
-        title: 'CTR',
-        key: 'ctr'
-    },
-    {
-        title: 'ACoS',
-        key: 'acos'
-    },
-    {
-        title: 'Orders',
-        key: 'orders'
+        title: 'Ad Orders',
+        key: 'attributedConversions'
     },
     {
         title: 'Spend',
         key: 'cost'
     },
     {
-        title: 'Sales',
-        key: 'sales'
+        title: 'Ad Sales',
+        key: 'attributedSales'
+    },
+    {
+        title: 'Ad Units',
+        key: 'attributedUnitsOrdered'
     },
     {
         title: 'Impressions',

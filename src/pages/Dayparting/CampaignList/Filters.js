@@ -11,6 +11,7 @@ const Filters = ({
                      onApplyFilter,
                      onlyOndayparting,
                      onChangeSwitch,
+                     tab,
                      onSetMultiselect,
                      multiselect,
                      selectedCampaign
@@ -138,7 +139,8 @@ const Filters = ({
                         </svg>
                     </button>
 
-                    <button title={'Multi-campaigns Dayparting mode'} className={`btn ${multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(true)}>
+                    <button title={'Multi-campaigns Dayparting mode'} className={`btn ${multiselect ? 'active' : ''}`}
+                            onClick={() => onSetMultiselect(true)}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M1.11105 13.3337H1C0.447715 13.3337 0 13.7815 0 14.3337V19.0002C0 19.5525 0.447715 20.0002 1 20.0002H5.66649C6.21877 20.0002 6.66649 19.5525 6.66649 19.0002V18.8882H2.11105C1.55877 18.8882 1.11105 18.4405 1.11105 17.8882V13.3337Z"/>
@@ -159,7 +161,8 @@ const Filters = ({
                         </svg>
                     </button>
 
-                    <button title={'Single campaign Dayparting mode'} className={`btn ${!multiselect ? 'active' : ''}`} onClick={() => onSetMultiselect(false)}>
+                    <button title={'Single campaign Dayparting mode'} className={`btn ${!multiselect ? 'active' : ''}`}
+                            onClick={() => onSetMultiselect(false)}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
                                   d="M1.11106 13.3337H1C0.447715 13.3337 0 13.7815 0 14.3337V19.0002C0 19.5525 0.447715 20.0002 1 20.0002H5.66649C6.21877 20.0002 6.66649 19.5525 6.66649 19.0002V18.8882H2.11106C1.55878 18.8882 1.11106 18.4405 1.11106 17.8882V13.3337Z"/>
@@ -179,7 +182,7 @@ const Filters = ({
                     </div>}
                 </div>
 
-                <div className="active-only">
+                {tab === 'campaigns' && <div className="active-only">
                     <Switch
                         className={'dark'}
                         checked={onlyOndayparting}
@@ -188,13 +191,15 @@ const Filters = ({
 
                     <label htmlFor="">On dayparting only</label>
                 </div>
-            </div>
+                }            </div>
         </div>
     )
 }
 
 const SearchIcon = () => <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13 13.5L9.32215 9.82215M9.32215 9.82215C10.2043 8.93994 10.75 7.72119 10.75 6.375C10.75 3.68261 8.56739 1.5 5.875 1.5C3.18261 1.5 1 3.68261 1 6.375C1 9.06739 3.18261 11.25 5.875 11.25C7.22119 11.25 8.43994 10.7043 9.32215 9.82215Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path
+        d="M13 13.5L9.32215 9.82215M9.32215 9.82215C10.2043 8.93994 10.75 7.72119 10.75 6.375C10.75 3.68261 8.56739 1.5 5.875 1.5C3.18261 1.5 1 3.68261 1 6.375C1 9.06739 3.18261 11.25 5.875 11.25C7.22119 11.25 8.43994 10.7043 9.32215 9.82215Z"
+        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 
 

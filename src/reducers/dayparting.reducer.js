@@ -5,17 +5,19 @@ const defaultState = {
     processing: false,
     totalSize: 0,
     copiedParams: undefined,
-    selectedCampaign: {id: null}
+    selectedCampaign: {id: null},
+    activeTab: 'campaigns'
 }
 
 export function dayparting(state = defaultState, action) {
     switch (action.type) {
         case daypartingConstants.SET_CAMPAIGN_LIST:
+            console.log('rrr')
             return {
                 ...state,
-                campaignList: action.payload.response,
-                totalSize: action.payload.total_count,
-                selectedCampaign: action.payload.response[0] || {id: null},
+                campaignList: action.payload.data,
+                totalSize: action.payload.total,
+                selectedCampaign: action.payload?.data[0] || {id: null},
                 processing: false
             }
 
@@ -50,7 +52,6 @@ export function dayparting(state = defaultState, action) {
                 copiedParams: action.payload
             }
 
-
         case daypartingConstants.DEACTIVATED_DAYPARTING:
             return {
                 ...state,
@@ -61,6 +62,14 @@ export function dayparting(state = defaultState, action) {
 
                     return item
                 })
+            }
+
+        case daypartingConstants.SET_ACTIVE_TAB:
+            return {
+                ...state,
+                activeTab: action.payload,
+                campaignList: [],
+                totalSize: 0
             }
 
 

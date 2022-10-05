@@ -126,9 +126,15 @@
       }
 
       .statistic-item {
+        width: 100%;
+        max-width: 100%;
         display: flex;
+        overflow: hidden;
+
         .chart-tooltip {
-          flex: 1;
+          max-width: 100%;
+          width: 100%;
+          overflow: hidden;
         }
 
         .statistic-information {
@@ -142,6 +148,19 @@
           justify-content: center;
           color: #fff;
           font-size: 1rem;
+          position: relative;
+          overflow: hidden;
+          padding: 0 2px;
+
+          .value {
+            max-width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
         }
       }
     }
@@ -374,6 +393,7 @@
   .ant-popover-arrow {
     display: none;
   }
+
   .ant-popover-inner-content {
     min-width: 300px;
     border: 0;
@@ -403,7 +423,7 @@
         padding: 2px 5px;
         font-size: 0.8571428571428571rem;
         color: #FFFFFF;
-margin: 0 0 0 20px;
+        margin: 0 0 0 20px;
       }
     }
 

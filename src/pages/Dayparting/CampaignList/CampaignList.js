@@ -16,14 +16,14 @@ import _ from 'lodash'
 const CancelToken = axios.CancelToken
 let source = null
 
-const navigationTabs = ['CAMPAIGNS', 'ACCOUNTS', 'PRODUCTS']
+const navigationTabs = ['campaigns', 'accounts', 'products']
 
 const CampaignList = ({multiselect, onSetMultiselect}) => {
     const dispatch = useDispatch()
 
     const [isOpenList, setIsOpenList] = useState(true),
         [searchStr, setSearchStr] = useState(''),
-        [onlyOndayparting, setOnlyOndayparting] = useState(false),
+        [onlyOnDayparting, setOnlyOnDayparting] = useState(false),
         [filterParams, setFilterParams] = useState({
             campaign_status: 'all',
             campaign_type: 'all'
@@ -33,24 +33,25 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
             pageSize: 25
         })
 
-    const {campaignList, processing, totalSize, selectedCampaign} = useSelector(state => ({
+    const {campaignList, processing, totalSize, selectedCampaign, activeTab} = useSelector(state => ({
         campaignList: state.dayparting.campaignList,
         processing: state.dayparting.processing,
         totalSize: state.dayparting.totalSize,
         selectedCampaign: state.dayparting.selectedCampaign,
+        activeTab: state.dayparting.activeTab
     }))
 
-    const getCampaignList = () => {
+    const getDataList = () => {
         source && source.cancel()
         source = CancelToken.source()
 
-        dispatch(daypartingActions.getCampaignList({
+        dispatch(daypartingActions.getDataList({
             ...paginationParams,
             ...filterParams,
-            onlyOndayparting,
+            onlyOnDayparting,
             searchStr,
             cancelToken: source.token
-        }))
+        }, activeTab))
     }
 
     const selectCampaignHandler = (campaign) => {
@@ -85,7 +86,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
             page: 1
         })
 
-        setOnlyOndayparting(value)
+        setOnlyOnDayparting(value)
     }
 
     const changeSearchHandler = debounce(500, false, str => {
@@ -114,28 +115,39 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         }
     }
 
+    const setActiveTabHandler = (tab) => {
+        dispatch(daypartingActions.setActiveTab(tab))
+
+        setPaginationParams(prevState => ({
+            ...prevState,
+            page: 1
+        }))
+    }
+
     useEffect(() => {
-        getCampaignList()
+        getDataList()
 
         onSetMultiselect(false)
         dispatch(daypartingActions.selectCampaign(selectedCampaign[0] || {id: null}))
 
         return (() => {
             dispatch(daypartingActions.setCampaignList({
-                response: [],
-                total_count: 0,
+                data: [],
+                total: 0,
             }))
 
             selectCampaignHandler({})
         })
-    }, [paginationParams, searchStr, filterParams, onlyOndayparting])
+    }, [paginationParams, searchStr, filterParams, onlyOnDayparting])
 
 
     return (
         <Fragment>
             <div className={`campaign-list ${isOpenList ? '' : 'closed'}`}>
                 <div className="tabs">
-                    {navigationTabs.map((i, index) => (<div className={`tab ${index === 0 ? 'active' : ''}`}>
+                    {navigationTabs.map((i) => (<div
+                        onClick={() => setActiveTabHandler(i)}
+                        className={`tab ${activeTab === i ? 'active' : ''}`}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
                             <g>
@@ -157,9 +169,10 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
 
                 <Filters
                     onSearch={changeSearchHandler}
-                    onlyOndayparting={onlyOndayparting}
+                    onlyOndayparting={onlyOnDayparting}
                     multiselect={multiselect}
                     selectedCampaign={selectedCampaign}
+                    tab={activeTab}
 
                     onApplyFilter={changeSelectHandler}
                     onChangeSwitch={changeSwitchHandler}
@@ -169,26 +182,19 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                 <div className={`campaigns`}>
                     {processing ?
                         <div className='fetching-data'><Spin size={'large'}/></div> :
-                        campaignList && campaignList.map(campaign => (
-                            <div
-                                key={campaign.id}
-                                className={`${_.find(selectedCampaign, {id: campaign.id}) || selectedCampaign.id === campaign.id ? 'campaign-item active' : 'campaign-item'} ${campaign.hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
-                                onClick={() => selectCampaignHandler(campaign)}
+                        campaignList && campaignList.map(campaign => <>
+                            {activeTab === 'campaigns' && <Campaign
+                                campaign={campaign}
+                                selectedCampaign={selectedCampaign}
+                                onSelect={selectCampaignHandler}
+                            />}
 
-                            >
-                                <span className={'short-name'} title={campaign.name}>{campaign.name}</span>
-
-                                {campaign.hasEnabledDayparting && <InformationTooltip
-                                    arrowPointAtCenter={true}
-                                    type={'custom'}
-                                    description={'Campaign on dayparting'}
-                                    position={'topRight'}
-                                >
-                                    <div className='on-dayparting'/>
-                                </InformationTooltip>}
-                            </div>
-
-                        ))}
+                            {activeTab === 'products' && <Product
+                                campaign={campaign}
+                                selectedCampaign={selectedCampaign}
+                                onSelect={selectCampaignHandler}
+                            />}
+                        </>)}
                 </div>
 
                 <Pagination
@@ -213,5 +219,32 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         </Fragment>
     )
 }
+
+const Campaign = ({campaign, campaign: {id, name}, selectedCampaign, hasEnabledDayparting, onSelect}) => (
+    <div
+        key={id}
+        className={`campaign-item ${_.find(selectedCampaign, {id: id}) || selectedCampaign.id === id ? 'active' : ''} ${hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
+        onClick={() => onSelect(campaign)}
+    >
+        <span className={'short-name'} title={name}>{name}</span>
+
+        {hasEnabledDayparting && <InformationTooltip
+            arrowPointAtCenter={true}
+            type={'custom'}
+            description={'Campaign on dayparting'}
+            position={'topRight'}
+        >
+            <div className='on-dayparting'/>
+        </InformationTooltip>}
+    </div>
+)
+
+const Product = () => (
+    <div
+        className={'product-item'}
+    >
+        Product
+    </div>
+)
 
 export default CampaignList
