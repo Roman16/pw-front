@@ -232,13 +232,13 @@ const percentColor = ({value, metric, data}) => {
         percent
 
     const percentParams = {
-        min: _.min(data.map(item => _.minBy(item, metric)[metric])),
-        max: _.max(data.map(item => _.maxBy(item, metric)[metric])),
+        min: _.min(data.map(item => _.minBy(item, metric)?.[metric] || 0)),
+        max: _.max(data.map(item => _.maxBy(item, metric)?.[metric] || 0)),
     }
 
     colorList.forEach(item => {
         if (value != null) {
-            percent = (value - percentParams.min) / (percentParams.max - percentParams.min) * 100
+            percent = value ? (value - percentParams.min) / (percentParams.max - percentParams.min) * 100 : 0
 
             if (percent >= item.min && percent <= item.max) {
                 color = item.color
@@ -250,7 +250,7 @@ const percentColor = ({value, metric, data}) => {
     return {color, percent}
 }
 
-export const renderMetricValue = ({value, metric, numberCut=1}) => {
+export const renderMetricValue = ({value, metric, numberCut = 1}) => {
     if (value) {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}%`)
@@ -293,7 +293,7 @@ const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMe
                 </h3>
 
                 <div className="percent" style={{background: percentByRange.color}}>
-                    {round(percentByRange.percent, 2)}%
+                    {percentByRange.percent ? round(percentByRange.percent, 2) : 0}%
                 </div>
             </div>
 
