@@ -120,7 +120,7 @@ const services = [
                     stroke="#6959AB" stroke-width="2" stroke-linecap="round"/>
             </g>
         </svg>,
-        link: '/ppc/dayparting'
+        link: '/dayparting'
     },
 
 ]

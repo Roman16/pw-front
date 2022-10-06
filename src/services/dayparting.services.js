@@ -95,44 +95,44 @@ function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
     return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${parameters.join('')}`, null, null, cancelToken)
 }
 
-function getStatisticDayByHour({cancelToken, campaignId, date}) {
+function getStatisticDayByHour({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.statisticDayByHour}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.statisticDayByHour}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getStatisticDayByHourByPlacement({cancelToken, campaignId, date}) {
+function getStatisticDayByHourByPlacement({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.statisticDayByHourByPlacement}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.statisticDayByHourByPlacement}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getChartDataByWeekday({cancelToken, campaignId, date}) {
+function getChartDataByWeekday({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.chartDataByWeekday}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.chartDataByWeekday}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getChartDataByHour({cancelToken, campaignId, date}) {
+function getChartDataByHour({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.chartDataByHour}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.chartDataByHour}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getPlacementChartDataByWeekday({cancelToken, campaignId, date}) {
+function getPlacementChartDataByWeekday({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.placementChartDataByWeekday}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.placementChartDataByWeekday}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getPlacementChartDataByHour({cancelToken, campaignId, date}) {
+function getPlacementChartDataByHour({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.placementChartDataByHour}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.placementChartDataByHour}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }
 
-function getPlacementMetricsData({cancelToken, campaignId, date}) {
+function getPlacementMetricsData({cancelToken, campaignId, date, attributionWindow}) {
     campaignId = '454717564720'
 
-    return api('get', `${daypartingUrls.placementMetricsData}?attribution_window=30&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.placementMetricsData}?attribution_window=${attributionWindow}&campaign_id=${campaignId}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
 }

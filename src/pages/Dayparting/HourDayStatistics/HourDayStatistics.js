@@ -49,8 +49,9 @@ const placementsEnums = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date, selectedCompareDate, campaignId, selectedMetric, onChangeMetric}) => {
+const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow}) => {
     const [data, setData] = useState([]),
+        [selectedMetric, setSelectedMetric] = useState('clicks'),
         [fetchingData, setFetchingData] = useState(true)
 
     const getData = async () => {
@@ -63,6 +64,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, selectedMetri
             const requestParams = {
                 campaignId,
                 date,
+                attributionWindow,
                 cancelToken: source.token
             }
 
@@ -86,7 +88,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, selectedMetri
 
     useEffect(() => {
         campaignId && getData()
-    }, [campaignId, date])
+    }, [campaignId, date, attributionWindow])
 
 
     return (
@@ -104,7 +106,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, selectedMetri
                             value={selectedMetric}
                             dropdownClassName={'full-width-menu'}
                             className={'dark-mode'}
-                            onChange={value => onChangeMetric(value)}
+                            onChange={value => setSelectedMetric(value)}
                         >
                             {metrics.map((item, index) => (
                                 <Option

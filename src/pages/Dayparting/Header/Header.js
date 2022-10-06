@@ -6,6 +6,7 @@ import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import './Header.less'
 import DatePicker from "../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 moment.locale('en')
 
@@ -25,6 +26,8 @@ export const Header = ({
                            marketplace,
                            selectedDate,
                            onChangeDate,
+                           attributionWindowValue,
+                           onChangeAttributionWindow,
 
                            selectedCompareDate,
                            onChangeCompareDate
@@ -35,7 +38,6 @@ export const Header = ({
 
     const onChange = (date) => {
         setVisibleDatePickerDropdown(false)
-        console.log(date)
 
         onChangeDate({
             startDate: moment(date[0] ? date[0] : date).startOf('week'),
@@ -101,6 +103,12 @@ export const Header = ({
                     disabled={() => false}
                 />
             </div>
+
+            <AttributionWindowSelect
+                value={attributionWindowValue}
+                onChange={onChangeAttributionWindow}
+                className={'dark-mode'}
+            />
 
             <div className="marketplace-info">
                 <div className="tz">

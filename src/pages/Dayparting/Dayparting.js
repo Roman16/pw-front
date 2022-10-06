@@ -19,7 +19,7 @@ moment.locale('en')
 
 const Dayparting = () => {
     const [multiselect, setMultiselect] = useState(false),
-        [selectedMetric, setSelectedMetric] = useState('clicks')
+        [attributionWindow, setAttributionWindow] = useState(30)
 
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
         subscription = useSelector(state => state.user.subscription)
@@ -44,8 +44,10 @@ const Dayparting = () => {
                 selectedDate={selectedDate}
                 selectedCompareDate={selectedCompareDate}
                 marketplace={activeAmazonMarketplace}
+                attributionWindowValue={attributionWindow}
 
                 onChangeDate={setSelectedDate}
+                onChangeAttributionWindow={setAttributionWindow}
                 onChangeCompareDate={setSelectedCompareDate}
             />
 
@@ -65,20 +67,19 @@ const Dayparting = () => {
                         date={selectedDate}
                         campaignId={campaignId}
                         selectedCompareDate={selectedCompareDate}
-                        selectedMetric={selectedMetric}
-
-                        onChangeMetric={setSelectedMetric}
+                        attributionWindow={attributionWindow}
                     />
 
                     <MetricsComparison
                         date={selectedDate}
                         campaignId={campaignId}
+                        attributionWindow={attributionWindow}
                     />
 
                     <PlacementsStatistics
                         date={selectedDate}
                         campaignId={campaignId}
-                        selectedMetric={selectedMetric}
+                        attributionWindow={attributionWindow}
                     />
 
                     <DaySwitches

@@ -45,10 +45,6 @@ export const mainMenu = [
             {
                 title: 'Products Info',
                 link: 'product-settings'
-            },
-            {
-                title: 'Dayparting',
-                link: 'dayparting',
             }
         ]
     },

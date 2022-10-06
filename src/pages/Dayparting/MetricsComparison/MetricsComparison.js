@@ -13,26 +13,26 @@ const Option = Select.Option
 
 
 
-const MetricsComparison = ({ date, campaignId}) => {
+const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metrics[0]),
         [secondMetric, setSecondMetric] = useState(metrics[1]),
         [processing, setProcessing] = useState(true),
-        [chartType, setChartType] = useState('daily')
+        [chartType, setChartType] = useState('hourly')
 
     const getData = async () => {
         setProcessing(true)
 
         try {
             if (chartType === 'daily') {
-                const {result} = await daypartingServices.getChartDataByWeekday({date, campaignId})
+                const {result} = await daypartingServices.getChartDataByWeekday({date, campaignId, attributionWindow})
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,
                     date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
                 })))
             } else {
-                const {result} = await daypartingServices.getChartDataByHour({date, campaignId})
+                const {result} = await daypartingServices.getChartDataByHour({date, campaignId, attributionWindow})
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,
@@ -51,7 +51,7 @@ const MetricsComparison = ({ date, campaignId}) => {
     useEffect(() => {
         campaignId && getData()
 
-    }, [date, chartType, campaignId])
+    }, [date, chartType, campaignId, attributionWindow])
 
 
     return (
@@ -132,13 +132,13 @@ const MetricsComparison = ({ date, campaignId}) => {
                 </div>
 
                 <div className="chart-switch">
-                    <span className={chartType === 'daily' && 'active'}>Daily</span>
+                    <span className={chartType === 'hourly' && 'active'}>Hourly</span>
                     <Switch
                         className={'dark'}
-                        checked={chartType === 'hourly'}
-                        onChange={e => setChartType(e ? 'hourly' : 'daily')}
+                        checked={chartType === 'daily'}
+                        onChange={e => setChartType(e ? 'daily' : 'hourly')}
                     />
-                    <span className={chartType === 'hourly' && 'active'}>Hourly</span>
+                    <span className={chartType === 'daily' && 'active'}>Daily</span>
                 </div>
 
             </div>

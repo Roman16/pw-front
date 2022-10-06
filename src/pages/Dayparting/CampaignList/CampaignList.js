@@ -12,6 +12,7 @@ import {daypartingActions} from "../../../actions/dayparting.actions"
 import {useDispatch, useSelector} from "react-redux"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import _ from 'lodash'
+import ProductItem from "../../../components/ProductList/ProductItem"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -182,15 +183,15 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                 <div className={`campaigns`}>
                     {processing ?
                         <div className='fetching-data'><Spin size={'large'}/></div> :
-                        campaignList && campaignList.map(campaign => <>
+                        campaignList && campaignList.map(item => <>
                             {activeTab === 'campaigns' && <Campaign
-                                campaign={campaign}
+                                campaign={item}
                                 selectedCampaign={selectedCampaign}
                                 onSelect={selectCampaignHandler}
                             />}
 
-                            {activeTab === 'products' && <Product
-                                campaign={campaign}
+                            {activeTab === 'products' && <ProductItem
+                                product={item}
                                 selectedCampaign={selectedCampaign}
                                 onSelect={selectCampaignHandler}
                             />}
@@ -239,12 +240,5 @@ const Campaign = ({campaign, campaign: {id, name}, selectedCampaign, hasEnabledD
     </div>
 )
 
-const Product = () => (
-    <div
-        className={'product-item'}
-    >
-        Product
-    </div>
-)
 
 export default CampaignList
