@@ -145,8 +145,8 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         <Fragment>
             <div className={`campaign-list ${isOpenList ? '' : 'closed'}`}>
                 <div className="tabs">
-                    {navigationTabs.map((i) => (<div
-                        onClick={() => setActiveTabHandler(i)}
+                    {navigationTabs.map((i, index) => (<div
+                        onClick={() => index !== 1 && setActiveTabHandler(i)}
                         className={`tab ${activeTab === i ? 'active' : ''}`}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                              xmlns="http://www.w3.org/2000/svg">

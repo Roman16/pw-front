@@ -18,15 +18,17 @@ import {daypartingServices} from "../../services/dayparting.services"
 moment.locale('en')
 
 const Dayparting = () => {
-    const [multiselect, setMultiselect] = useState(false)
+    const [multiselect, setMultiselect] = useState(false),
+        [selectedMetric, setSelectedMetric] = useState('clicks')
 
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
         subscription = useSelector(state => state.user.subscription)
 
     const timezone = activeAmazonMarketplace.timezone
 
-    const {campaignId} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList} = useSelector(state => ({
         campaignId: state.dayparting.selectedCampaign.id,
+        fetchingCampaignList: state.dayparting.fetchingCampaignList,
     }))
 
     const [selectedDate, setSelectedDate] = useState({
@@ -63,14 +65,20 @@ const Dayparting = () => {
                         date={selectedDate}
                         campaignId={campaignId}
                         selectedCompareDate={selectedCompareDate}
+                        selectedMetric={selectedMetric}
+
+                        onChangeMetric={setSelectedMetric}
                     />
 
                     <MetricsComparison
                         date={selectedDate}
+                        campaignId={campaignId}
                     />
 
                     <PlacementsStatistics
                         date={selectedDate}
+                        campaignId={campaignId}
+                        selectedMetric={selectedMetric}
                     />
 
                     <DaySwitches

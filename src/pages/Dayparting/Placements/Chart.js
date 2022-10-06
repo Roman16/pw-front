@@ -7,11 +7,6 @@ import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
 
 
-const chartLabel = {
-    top_search: 'Top of search',
-    product_pages: 'Product pages',
-    rest_search: 'Rest of search'
-}
 
 const weakDays = [
     {
@@ -37,7 +32,14 @@ const weakDays = [
     },
 ]
 
-export const Chart = ({data, chartType}) => {
+const chartLabel =(selectedMetric) => ({
+    [`top_of_search_${selectedMetric}`]: 'Top of search',
+    [`detail_page_${selectedMetric}`]: 'Product pages',
+    [`other_${selectedMetric}`]: 'Rest of search'
+})
+
+export const Chart = ({data, chartType, selectedMetric}) => {
+
 
     return (
         <div className='chart'>
@@ -96,12 +98,12 @@ export const Chart = ({data, chartType}) => {
                     <Tooltip
                         isAnimationActive={false}
                         content={
-                            <ChartTooltip chartType={chartType}/>
+                            <ChartTooltip chartType={chartType} selectedMetric={selectedMetric}/>
                         }
                     />
 
                     <Area
-                        dataKey="rest_search"
+                        dataKey={`other_${selectedMetric}`}
                         stackId="1"
                         strokeWidth={2}
                         stroke={chartColors[2].stroke}
@@ -116,7 +118,7 @@ export const Chart = ({data, chartType}) => {
                     />
 
                     <Area
-                        dataKey="product_pages"
+                        dataKey={`detail_page_${selectedMetric}`}
                         stackId="1"
                         strokeWidth={2}
                         stroke={chartColors[1].stroke}
@@ -130,7 +132,7 @@ export const Chart = ({data, chartType}) => {
                     />
 
                     <Area
-                        dataKey="top_search"
+                        dataKey={`top_of_search_${selectedMetric}`}
                         stackId="1"
                         strokeWidth={2}
                         fill="url(#gradient33)"
@@ -149,7 +151,7 @@ export const Chart = ({data, chartType}) => {
     )
 }
 
-const ChartTooltip = ({payload, chartType}) => {
+const ChartTooltip = ({payload, chartType, selectedMetric}) => {
     if (payload && payload.length > 0) {
         const total = payload.reduce((result, entry) => (result + entry.value), 0)
 
@@ -169,7 +171,7 @@ const ChartTooltip = ({payload, chartType}) => {
                     {payload.reverse().map((entry, index) => (
                         <div className={'row'} key={`item-${index}`}>
                             <div className='name'>
-                                {chartLabel[entry.name]}
+                                {chartLabel(selectedMetric)[entry.name]}
                             </div>
 
                             <div className='value' style={{color: entry.color}}>
@@ -187,7 +189,7 @@ const ChartTooltip = ({payload, chartType}) => {
                             </div>
 
                             <div className='current-value'>
-                                ({entry.value})
+                                ({round(entry.value, 2)})
                             </div>
                         </div>
                     ))}

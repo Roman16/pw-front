@@ -1,77 +1,61 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Chart} from "./Chart"
 import './MetricsComparison.less'
 import CustomSelect from "../../../components/Select/Select"
-import {metricsList} from "../ChartStatistics/metricsList"
 import {Select, Spin, Switch} from "antd"
 import {useSelector} from "react-redux"
-
+import {daypartingServices} from "../../../services/dayparting.services"
+import _ from 'lodash'
+import moment from 'moment'
+import {metrics} from "../Placements/MetricsStatistics"
 
 const Option = Select.Option
 
 
-const fakeDataDaily = [
-    {
-        "date": "2022-09-18 07:00:00",
-        impressions: 900,
-        clicks: 300
-    },
-    {
-        "date": "2022-09-19 07:00:00",
-        impressions: 800,
-        clicks: 300
-    },
-    {
-        "date": "2022-09-20 07:00:00",
-        impressions: 850,
-        clicks: 350
-    },
-    {
-        "date": "2022-09-21 07:00:00",
-        impressions: 800,
-        clicks: 350
-    },
-    {
-        "date": "2022-09-22 07:00:00",
-        impressions: 600,
-        clicks: 140
-    },
-    {
-        "date": "2022-09-23 07:00:00",
-        impressions: 700,
-        clicks: 200
-    },
-    {
-        "date": "2022-09-24 07:00:00",
-        impressions: 500,
-        clicks: 550
-    },
-]
 
-
-const MetricsComparison = ({fetchingData, date}) => {
-
+const MetricsComparison = ({ date, campaignId}) => {
     const [data, setData] = useState([]),
-        [firstMetric, setFirstMetric] = useState(metricsList[1]),
-        [secondMetric, setSecondMetric] = useState(metricsList[2]),
-        [processing, setProcessing] = useState(false),
+        [firstMetric, setFirstMetric] = useState(metrics[0]),
+        [secondMetric, setSecondMetric] = useState(metrics[1]),
+        [processing, setProcessing] = useState(true),
         [chartType, setChartType] = useState('daily')
 
-    const {fetchingCampaignList} = useSelector(state => ({
-        fetchingCampaignList: state.dayparting.processing,
-    }))
+    const getData = async () => {
+        setProcessing(true)
 
-    const fakeDataHourly = Array.from({length: 24}, (item, index) => ({
-        date: index,
-        dateRange: {
-            ...date
-        },
-        impressions: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
-        clicks: Math.floor(Math.random() * (1000 - 1 + 1) + 1),
-    }))
+        try {
+            if (chartType === 'daily') {
+                const {result} = await daypartingServices.getChartDataByWeekday({date, campaignId})
+
+                setData(_.values(result).map((i, index) => ({
+                    ...i,
+                    date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
+                })))
+            } else {
+                const {result} = await daypartingServices.getChartDataByHour({date, campaignId})
+
+                setData(_.values(result).map((i, index) => ({
+                    ...i,
+                    date: index,
+                    dateRange: {...date},
+                })))
+
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+        setProcessing(false)
+    }
+
+    useEffect(() => {
+        campaignId && getData()
+
+    }, [date, chartType, campaignId])
+
 
     return (
-        <section className={`metrics-comparison ${(fetchingData || fetchingCampaignList) ? ' disabled' : ''}`}>
+        <section className={`metrics-comparison ${(processing || !campaignId) ? ' disabled' : ''}`}>
             <div className="section-header">
                 <h2>
                     Metrics Comparison
@@ -94,14 +78,14 @@ const MetricsComparison = ({fetchingData, date}) => {
                             dropdownClassName={'full-width-menu'}
                             className={`dark-mode ${firstMetric.key === 'nothing' && 'default-border'}`}
                             onChange={(metric) => {
-                                setFirstMetric(metricsList.find(item => item.key === metric))
+                                setFirstMetric(metrics.find(item => item.key === metric))
 
                                 if (metric === secondMetric.key) {
-                                    setSecondMetric(metricsList[0])
+                                    setSecondMetric(metrics[0])
                                 }
                             }}
                         >
-                            {metricsList.map(item => (
+                            {metrics.map(item => (
                                 <Option
                                     title={item.title}
                                     key={item.key}
@@ -131,9 +115,9 @@ const MetricsComparison = ({fetchingData, date}) => {
                             value={secondMetric.key}
                             dropdownClassName={'full-width-menu'}
                             className={`dark-mode ${secondMetric.key === 'nothing' && 'default-border'}`}
-                            onChange={(metric) => setSecondMetric(metricsList.find(item => item.key === metric))}
+                            onChange={(metric) => setSecondMetric(metrics.find(item => item.key === metric))}
                         >
-                            {metricsList.map(item => (
+                            {metrics.map(item => (
                                 <Option
                                     title={item.title}
                                     disabled={firstMetric.key === item.key}
@@ -160,13 +144,13 @@ const MetricsComparison = ({fetchingData, date}) => {
             </div>
 
             <Chart
-                data={chartType === 'daily' ? fakeDataDaily : fakeDataHourly}
+                data={data}
                 firstMetric={firstMetric}
                 secondMetric={secondMetric}
                 chartType={chartType}
             />
 
-            {(fetchingData || fetchingCampaignList) && <div className="disable-page-loading">
+            {(processing || !campaignId) && <div className="disable-page-loading">
                 <Spin size="large"/>
             </div>}
         </section>

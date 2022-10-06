@@ -153,6 +153,11 @@ export const daypartingUrls = {
 
     statisticDayByHour: 'dayparting/stats/by_day/by_hour',
     statisticDayByHourByPlacement: 'dayparting/stats/by_day/by_hour/by_placement',
+    chartDataByWeekday: 'dayparting/stats/by_weekday',
+    chartDataByHour: 'dayparting/stats/by_hour',
+    placementChartDataByWeekday: 'dayparting/stats/by_placement/by_weekday',
+    placementChartDataByHour: 'dayparting/stats/by_placement/by_hour',
+    placementMetricsData: 'dayparting/stats/by_placement',
 }
 
 export const zthUrls = {

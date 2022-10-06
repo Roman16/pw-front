@@ -49,10 +49,9 @@ const placementsEnums = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
+const HourDayStatistics = ({date, selectedCompareDate, campaignId, selectedMetric, onChangeMetric}) => {
     const [data, setData] = useState([]),
-        [fetchingData, setFetchingData] = useState(true),
-        [selectedMetric, setSelectedMetric] = useState('clicks')
+        [fetchingData, setFetchingData] = useState(true)
 
     const getData = async () => {
         source && source.cancel()
@@ -105,7 +104,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
                             value={selectedMetric}
                             dropdownClassName={'full-width-menu'}
                             className={'dark-mode'}
-                            onChange={value => setSelectedMetric(value)}
+                            onChange={value => onChangeMetric(value)}
                         >
                             {metrics.map((item, index) => (
                                 <Option
@@ -135,7 +134,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId}) => {
                             <div className="row">
                                 <div className="day">
                                     <InformationTooltip
-                                        getPopupContainer={() => document.querySelector('.dayparting-page')}
+                                        getPopupContainer={() => document.querySelector('.dayparting-page .spend-statistics')}
                                         type={'custom'}
                                         className={'chart-tooltip'}
                                         overlayClassName={'HourDayStatistics-tooltip'}
@@ -251,15 +250,15 @@ const percentColor = ({value, metric, data}) => {
     return {color, percent}
 }
 
-const renderMetricValue = ({value, metric}) => {
+export const renderMetricValue = ({value, metric, numberCut=1}) => {
     if (value) {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}%`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
-            if(value < 0) {
-                return (`-$${numberMask(Math.abs(value), 1, null, 2)}`)
+            if (value < 0) {
+                return (`-$${numberMask(Math.abs(value), numberCut, null, 2)}`)
             } else {
-                return (`$${numberMask(value, 1, null, 2)}`)
+                return (`$${numberMask(value, numberCut, null, 2)}`)
             }
         } else {
             return (numberMask(value))

@@ -77,19 +77,19 @@ const Filters = ({
                     />
                 </div>
 
-                <Dropdown
-                    visible={visibleDropdown}
-                    onVisibleChange={() => setVisibleDropdown(prevState => !prevState)}
+                {/*<Dropdown*/}
+                {/*    visible={visibleDropdown}*/}
+                {/*    onVisibleChange={() => setVisibleDropdown(prevState => !prevState)}*/}
 
-                    overlay={dropdownWindow}
-                    trigger={['click']}
-                    placement={'bottomRight'}
-                    getPopupContainer={triggerNode => triggerNode.parentNode}
-                >
-                    <button className={'filters'}>
-                        <SVG id={'filter-icon'}/>
-                    </button>
-                </Dropdown>
+                {/*    overlay={dropdownWindow}*/}
+                {/*    trigger={['click']}*/}
+                {/*    placement={'bottomRight'}*/}
+                {/*    getPopupContainer={triggerNode => triggerNode.parentNode}*/}
+                {/*>*/}
+                {/*    <button className={'filters'}>*/}
+                {/*        <SVG id={'filter-icon'}/>*/}
+                {/*    </button>*/}
+                {/*</Dropdown>*/}
             </div>
 
             <div className="row">

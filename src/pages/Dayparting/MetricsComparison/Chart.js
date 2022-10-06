@@ -3,6 +3,7 @@ import {CartesianGrid, Line, AreaChart, Area, ResponsiveContainer, Tooltip, XAxi
 import moment from "moment"
 import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
+import {renderMetricValue} from "../HourDayStatistics/HourDayStatistics"
 
 const weakDays = [
     {
@@ -113,7 +114,6 @@ export const Chart = ({data, chartType, firstMetric, secondMetric}) => {
                     />
 
                     {secondMetric.key !== 'nothing' && <Area
-
                         activeDot={{r: 4, fill: '#fff', stroke: '#FF5256'}}
                         type={chartType === 'daily' ? 'linear' : "monotone"}
                         isAnimationActive={false}
@@ -185,7 +185,7 @@ const ChartTooltip = ({payload, firstMetric, secondMetric, chartType}) => {
                                     stroke="#A292E2" stroke-width="1.5"/>
                             </svg>
 
-                            {firstMetric.type === 'currency' ? `$${numberMask(payload[0].payload[firstMetric.key], 2)}` : (firstMetric.type === 'percent' ? `${round(payload[0].payload[firstMetric.key], 3)} %` : round(payload[0].payload[firstMetric.key], 2))}
+                            {renderMetricValue({value:payload[0].payload[firstMetric.key], metric: firstMetric.key})}
                         </div>
                     </div>}
 
@@ -203,7 +203,7 @@ const ChartTooltip = ({payload, firstMetric, secondMetric, chartType}) => {
                                     stroke="#FF5256" stroke-width="1.5"/>
                             </svg>
 
-                            {secondMetric.type === 'currency' ? `$${numberMask(payload[0].payload[secondMetric.key], 2)}` : (secondMetric.type === 'percent' ? `${round(payload[0].payload[secondMetric.key], 3)} %` : round(payload[0].payload[secondMetric.key], 2))}
+                            {renderMetricValue({value:payload[0].payload[secondMetric.key], metric: secondMetric.key})}
                         </div>
                     </div>}
                 </div>

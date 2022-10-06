@@ -65,6 +65,19 @@
         stroke: #fff;
       }
 
+      &:nth-child(2) {
+        cursor: not-allowed;
+      }
+
+      &:hover:not(:nth-child(2)) {
+        color: #FF5256;
+
+        svg {
+          fill: #FF5256;
+          stroke: #FF5256;
+        }
+      }
+
       &.active {
         color: #FF5256;
 
