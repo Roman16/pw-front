@@ -266,7 +266,7 @@ export const renderMetricValue = ({value, metric, numberCut = 1}) => {
             return (numberMask(value))
         }
     } else {
-        return ''
+        return '-'
     }
 }
 

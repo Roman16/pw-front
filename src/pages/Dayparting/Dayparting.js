@@ -26,9 +26,10 @@ const Dayparting = () => {
 
     const timezone = activeAmazonMarketplace.timezone
 
-    const {campaignId, fetchingCampaignList} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList, activeTab} = useSelector(state => ({
         campaignId: state.dayparting.selectedCampaign.id,
         fetchingCampaignList: state.dayparting.fetchingCampaignList,
+        activeTab: state.dayparting.activeTab,
     }))
 
     const [selectedDate, setSelectedDate] = useState({

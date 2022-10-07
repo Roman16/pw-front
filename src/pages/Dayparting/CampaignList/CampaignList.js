@@ -12,7 +12,8 @@ import {daypartingActions} from "../../../actions/dayparting.actions"
 import {useDispatch, useSelector} from "react-redux"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import _ from 'lodash'
-import ProductItem from "../../../components/ProductList/ProductItem"
+import {CampaignItem} from "./CampaignItem"
+import {ProductItem} from "./ProductItem"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -29,6 +30,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
             campaign_status: 'all',
             campaign_type: 'all'
         }),
+        [openedVariations, setOpenedVariations] = useState(),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
             pageSize: 25
@@ -184,7 +186,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     {processing ?
                         <div className='fetching-data'><Spin size={'large'}/></div> :
                         campaignList && campaignList.map(item => <>
-                            {activeTab === 'campaigns' && <Campaign
+                            {activeTab === 'campaigns' && <CampaignItem
                                 campaign={item}
                                 selectedCampaign={selectedCampaign}
                                 onSelect={selectCampaignHandler}
@@ -192,8 +194,11 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
 
                             {activeTab === 'products' && <ProductItem
                                 product={item}
-                                selectedCampaign={selectedCampaign}
+                                selectedProduct={selectedCampaign}
+                                openedProduct={openedVariations}
                                 onSelect={selectCampaignHandler}
+                                onChildSelect={selectCampaignHandler}
+                                onOpenChild={setOpenedVariations}
                             />}
                         </>)}
                 </div>
@@ -220,25 +225,6 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         </Fragment>
     )
 }
-
-const Campaign = ({campaign, campaign: {id, name}, selectedCampaign, hasEnabledDayparting, onSelect}) => (
-    <div
-        key={id}
-        className={`campaign-item ${_.find(selectedCampaign, {id: id}) || selectedCampaign.id === id ? 'active' : ''} ${hasEnabledDayparting ? 'enabled-dayparting' : ''}`}
-        onClick={() => onSelect(campaign)}
-    >
-        <span className={'short-name'} title={name}>{name}</span>
-
-        {hasEnabledDayparting && <InformationTooltip
-            arrowPointAtCenter={true}
-            type={'custom'}
-            description={'Campaign on dayparting'}
-            position={'topRight'}
-        >
-            <div className='on-dayparting'/>
-        </InformationTooltip>}
-    </div>
-)
 
 
 export default CampaignList

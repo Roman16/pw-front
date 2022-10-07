@@ -24,7 +24,8 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         openedProductOnSetting
+                         openedProductOnSetting,
+                         onChildSelect
                      }) => {
 
     const switchList = (e) => {
@@ -80,7 +81,8 @@ const ProductItem = ({
 
             {variations?.length > 0 && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
-                    <div className={'children-product-item'}>
+                    <div className={'children-product-item'}
+                         onClick={() => onChildSelect && onChildSelect(childrenProduct)}>
                         <div className="children-indicator"/>
 
                         <div key={childrenProduct.id} className='children-information'>
