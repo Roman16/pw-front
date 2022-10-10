@@ -48,8 +48,8 @@ const Dayparting = () => {
                 attributionWindowValue={attributionWindow}
 
                 onChangeDate={setSelectedDate}
-                onChangeAttributionWindow={setAttributionWindow}
                 onChangeCompareDate={setSelectedCompareDate}
+                onChangeAttributionWindow={setAttributionWindow}
             />
 
             <div className="row">

@@ -14,6 +14,7 @@ import _ from 'lodash'
 import {analyticsAvailableMetricsList, metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
+import {RenderMetricChanges} from "../../Analytics/componentsV2/MainMetrics/MetricItem"
 
 
 const CancelToken = axios.CancelToken
@@ -51,8 +52,10 @@ const hours = Array.from({length: 24}, (item, index) => index)
 
 const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow}) => {
     const [data, setData] = useState([]),
+        [compareData, setCompareData] = useState([]),
         [selectedMetric, setSelectedMetric] = useState('clicks'),
-        [fetchingData, setFetchingData] = useState(true)
+        [fetchingData, setFetchingData] = useState(true),
+        [fetchingCompareData, setFetchingCompareData] = useState(false)
 
     const getData = async () => {
         source && source.cancel()
@@ -86,10 +89,32 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         }
     }
 
+    const getCompareData = async () => {
+        setFetchingCompareData(true)
+        try {
+            const {result} = await daypartingServices.getStatisticDayByHour({
+                campaignId,
+                date: selectedCompareDate,
+                attributionWindow,
+            })
+
+            await setCompareData([..._.values(result).map((day) => _.values(day).map((hour) => ({...hour})))])
+        } catch (e) {
+            console.log(e)
+        }
+
+        setFetchingCompareData(false)
+    }
+
     useEffect(() => {
         campaignId && getData()
     }, [campaignId, date, attributionWindow])
 
+    useEffect(() => {
+        campaignId && selectedCompareDate && getCompareData()
+    }, [campaignId, attributionWindow, selectedCompareDate])
+
+    console.log(compareData)
 
     return (
         <Fragment>
@@ -172,19 +197,21 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                 overlayClassName={'HourDayStatistics-tooltip'}
                                                 description={
                                                     <TooltipDescription
-                                                        value={fetchingData ? 0 : Object.values(data)[dayIndex][item][selectedMetric]}
+                                                        value={fetchingData ? null : data[dayIndex][item][selectedMetric]}
                                                         date={item.date}
                                                         data={data}
                                                         timeIndex={hourIndex}
                                                         outBudget={item.out_of_budget}
                                                         selectedMetric={selectedMetric}
-                                                        placements={fetchingData ? 0 : Object.values(data)[dayIndex][item].placements}
+                                                        placements={fetchingData ? null : data[dayIndex][item].placements}
                                                     />
                                                 }
                                             >
                                                 <StatisticItem
-                                                    value={fetchingData ? 0 : Object.values(data)[dayIndex][item][selectedMetric]}
+                                                    value={fetchingData ? null : data[dayIndex][item][selectedMetric]}
+                                                    comparedValue={compareData.length === 0 ? undefined : compareData[dayIndex][item][selectedMetric]}
                                                     data={data}
+                                                    selectedCompareDate={selectedCompareDate}
                                                     selectedMetric={selectedMetric}
                                                     outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
                                                     index={hourIndex}
@@ -221,7 +248,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                     </div>
                 </div>
 
-                {(fetchingData || !campaignId) && <div className="disable-page-loading">
+                {(fetchingData || fetchingCompareData || !campaignId) && <div className="disable-page-loading">
                     <Spin size="large"/>
                 </div>}
             </section>
@@ -253,7 +280,7 @@ const percentColor = ({value, metric, data}) => {
 }
 
 export const renderMetricValue = ({value, metric, numberCut = 1}) => {
-    if (value) {
+    if (value !== null && value !== undefined) {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}%`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
@@ -270,17 +297,28 @@ export const renderMetricValue = ({value, metric, numberCut = 1}) => {
     }
 }
 
+const MetricDiff = ({value, prevValue}) => {
+    const diff = (value / prevValue - 1) * 100 || 0
 
-const StatisticItem = ({value, data, index, outBudget, selectedCompareDate, selectedMetric}) => (
+    return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
+        {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
+        </svg>}
+
+        <span>{round(diff, 2)}</span> %
+    </div>)
+}
+
+const StatisticItem = ({value, comparedValue, data,selectedCompareDate, outBudget, selectedMetric}) => (
     <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
          style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
         <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
 
-        {selectedCompareDate && <div className={`diff-value`}>
-            <SVG id='upward-metric-changes'/>
-
-            10.8%
-        </div>}
+        {comparedValue !== undefined && <MetricDiff
+            value={value}
+            prevValue={comparedValue}
+        />}
     </div>
 )
 

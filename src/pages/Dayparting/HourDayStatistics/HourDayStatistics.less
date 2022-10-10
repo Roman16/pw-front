@@ -92,6 +92,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+
+        text-align: center;
       }
     }
 
@@ -166,19 +168,45 @@
     }
 
     .diff-value {
-      font-size: 0.7142857142857143rem;
-      line-height: 1.0714285714285714rem;
-      color: #7FD3A1;
+      max-width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      margin: 3px 0 0 0;
+      justify-content: flex-start;
+      font-size: 0.7142857142857143rem;
+      line-height: 1.0714285714285714rem;
+      position: relative;
+
+      span {
+        max-width: 95%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        display: block;
+      }
 
       svg {
-        fill: #7DD4A1;
-        margin: 0 3px 0 0;
+        min-width: 6px;
+        margin: 0 2px 0 0;
+      }
+
+      &.upward-changes {
+        color: #7FD3A1;
+
+        svg {
+          fill: #7FD3A1;
+        }
+      }
+
+      &.downward-changes {
+        color: #FFAF52;
+
+        svg {
+          fill: #FFAF52;
+          transform: rotate(180deg);
+        }
       }
     }
+
 
     .legend {
       display: flex;
