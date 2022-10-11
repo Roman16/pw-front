@@ -223,11 +223,11 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                             </div>
                         </div>
 
-                        <div className="out-budget">
-                            <div/>
+                        {/*<div className="out-budget">*/}
+                        {/*    <div/>*/}
 
-                            Out of Budget
-                        </div>
+                        {/*    Out of Budget*/}
+                        {/*</div>*/}
                     </div>
                 </div>
 
