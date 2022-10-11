@@ -79,6 +79,7 @@ const Dayparting = () => {
 
                     <PlacementsStatistics
                         date={selectedDate}
+                        selectedCompareDate={selectedCompareDate}
                         campaignId={campaignId}
                         attributionWindow={attributionWindow}
                     />

@@ -116,23 +116,50 @@
         justify-content: flex-end;
 
         &.value {
-          i {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+
+
+          .diff-value {
+            max-width: 100%;
             display: flex;
             align-items: center;
-            margin: 0 5px 0 0;
-          }
+            justify-content: flex-start;
+            font-size: 0.7142857142857143rem;
+            line-height: 1.0714285714285714rem;
+            position: relative;
 
-          .downward-changes {
+            span {
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              display: block;
+            }
+
             svg {
-              fill: #EC7F5C;
+              min-width: 6px;
+              margin: 0 2px 0 0;
+            }
+
+            &.upward-changes {
+              color: #7FD3A1;
+
+              svg {
+                fill: #7FD3A1;
+              }
+            }
+
+            &.downward-changes {
+              color: #FFAF52;
+
+              svg {
+                fill: #FFAF52;
+                transform: rotate(180deg);
+              }
             }
           }
 
-          .upward-changes {
-            svg {
-              fill: #7DD4A1;
-            }
-          }
         }
 
         &:first-of-type {

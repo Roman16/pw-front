@@ -11,10 +11,9 @@ import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
 import {metrics} from '../Placements/MetricsStatistics'
 import _ from 'lodash'
-import {analyticsAvailableMetricsList, metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
-import {RenderMetricChanges} from "../../Analytics/componentsV2/MainMetrics/MetricItem"
 
 
 const CancelToken = axios.CancelToken
@@ -57,51 +56,49 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         [fetchingData, setFetchingData] = useState(true),
         [fetchingCompareData, setFetchingCompareData] = useState(false)
 
-    const getData = async () => {
+
+    const getDataByDate = async (d) => {
         source && source.cancel()
         source = CancelToken.source()
-
-        setFetchingData(true)
 
         try {
             const requestParams = {
                 campaignId,
-                date,
+                date: d,
                 attributionWindow,
                 cancelToken: source.token
             }
 
             const [statisticDayByHour, statisticDayByHourByPlacement] = await Promise.all([daypartingServices.getStatisticDayByHour(requestParams), daypartingServices.getStatisticDayByHourByPlacement(requestParams)])
-
-            const result = _.values(statisticDayByHour.result).map((day, dayIndex) => _.values(day).map((hour, hourIndex) => {
+            return await _.values(statisticDayByHour.result).map((day, dayIndex) => _.values(day).map((hour, hourIndex) => {
 
                 return ({
                     ...hour,
                     placements: _.values(_.values(statisticDayByHourByPlacement.result)[dayIndex])[hourIndex]
                 })
             }))
-
-            await setData([...result])
-
-            setFetchingData(false)
         } catch (e) {
-            setFetchingData(false)
+            console.log(e)
+            return []
         }
+
+    }
+
+    const getData = async () => {
+        setFetchingData(true)
+
+        const res = await getDataByDate(date)
+
+        await setData([...res])
+
+        setFetchingData(false)
     }
 
     const getCompareData = async () => {
         setFetchingCompareData(true)
-        try {
-            const {result} = await daypartingServices.getStatisticDayByHour({
-                campaignId,
-                date: selectedCompareDate,
-                attributionWindow,
-            })
 
-            await setCompareData([..._.values(result).map((day) => _.values(day).map((hour) => ({...hour})))])
-        } catch (e) {
-            console.log(e)
-        }
+        const res = await getDataByDate(selectedCompareDate)
+        await setCompareData([...res])
 
         setFetchingCompareData(false)
     }
@@ -111,10 +108,12 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
     }, [campaignId, date, attributionWindow])
 
     useEffect(() => {
-        campaignId && selectedCompareDate && getCompareData()
+        if (selectedCompareDate) {
+            campaignId && getCompareData()
+        } else {
+            setCompareData([])
+        }
     }, [campaignId, attributionWindow, selectedCompareDate])
-
-    console.log(compareData)
 
     return (
         <Fragment>
@@ -170,56 +169,40 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                 date={moment(date.startDate).add(dayIndex)}
                                                 day={day}
                                                 data={data}
+                                                compareDate={compareData}
                                                 index={dayIndex}
                                                 selectedMetric={selectedMetric}
+                                                selectedCompareDate={selectedCompareDate}
                                             />
                                         }
                                     >
                                         <div className='day-name' key={shortid.generate()}>
                                             {day[0]}
 
-                                            {selectedCompareDate && <div className={`diff-value`}>
-                                                <SVG id='upward-metric-changes'/>
-
-                                                10.8%
-                                            </div>}
+                                            {selectedCompareDate && compareData.length > 0 && <MetricDiff
+                                                value={_.reduce(data[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
+                                                prevValue={_.reduce(compareData[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
+                                                metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                                            />}
                                         </div>
                                     </InformationTooltip>
                                 </div>
 
                                 {hours.map((item, hourIndex) => {
-                                    return (
-                                        <div className='statistic-item'>
-                                            <InformationTooltip
-                                                getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
-                                                type={'custom'}
-                                                className={'chart-tooltip'}
-                                                overlayClassName={'HourDayStatistics-tooltip'}
-                                                description={
-                                                    <TooltipDescription
-                                                        value={fetchingData ? null : data[dayIndex][item][selectedMetric]}
-                                                        date={item.date}
-                                                        data={data}
-                                                        timeIndex={hourIndex}
-                                                        outBudget={item.out_of_budget}
-                                                        selectedMetric={selectedMetric}
-                                                        placements={fetchingData ? null : data[dayIndex][item].placements}
-                                                    />
-                                                }
-                                            >
-                                                <StatisticItem
-                                                    value={fetchingData ? null : data[dayIndex][item][selectedMetric]}
-                                                    comparedValue={compareData.length === 0 ? undefined : compareData[dayIndex][item][selectedMetric]}
-                                                    data={data}
-                                                    selectedCompareDate={selectedCompareDate}
-                                                    selectedMetric={selectedMetric}
-                                                    outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
-                                                    index={hourIndex}
-                                                />
-                                            </InformationTooltip>
-                                        </div>
+                                    return (<StatisticItem
+                                        value={data[dayIndex]?.[item]?.[selectedMetric]}
+                                        comparedValue={compareData.length === 0 ? undefined : compareData[dayIndex][item][selectedMetric]}
+                                        placements={data[dayIndex]?.[item]?.placements}
+                                        comparedPlacements={compareData[dayIndex]?.[item]?.placements}
+                                        date={item.date}
 
-                                    )
+                                        data={data}
+
+                                        selectedCompareDate={selectedCompareDate}
+                                        selectedMetric={selectedMetric}
+                                        outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
+                                        index={hourIndex}
+                                    />)
                                 })}
                             </div>
                         ))}
@@ -297,32 +280,78 @@ export const renderMetricValue = ({value, metric, numberCut = 1}) => {
     }
 }
 
-const MetricDiff = ({value, prevValue}) => {
-    const diff = (value / prevValue - 1) * 100 || 0
+export const MetricDiff = ({value = 0, prevValue = 0, metricType}) => {
+    let diff
 
-    return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
-        {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-                d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
-        </svg>}
+    if (metricType === 'currency') {
+        diff = value - prevValue
 
-        <span>{round(diff, 2)}</span> %
-    </div>)
+        return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
+            {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
+            </svg>}
+
+            <span>${round(diff, 2)}</span>
+        </div>)
+
+    } else {
+        if (prevValue === value) {
+            diff = 0
+        } else if (prevValue === 0) {
+            diff = 100
+        } else {
+            diff = (value / prevValue - 1) * 100 || 0
+        }
+
+        return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
+            {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
+            </svg>}
+
+            <span>{round(diff, 2)}</span> %
+        </div>)
+    }
+
 }
 
-const StatisticItem = ({value, comparedValue, data,selectedCompareDate, outBudget, selectedMetric}) => (
-    <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
-         style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
-        <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
+const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudget, selectedMetric, date, index, selectedCompareDate, placements}) => (
+    <div className='statistic-item'>
+        <InformationTooltip
+            getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
+            type={'custom'}
+            className={'chart-tooltip'}
+            overlayClassName={'HourDayStatistics-tooltip'}
+            description={
+                <TooltipDescription
+                    value={value}
+                    comparedValue={comparedValue}
+                    date={date}
+                    data={data}
+                    timeIndex={index}
+                    selectedMetric={selectedMetric}
+                    selectedCompareDate={selectedCompareDate}
+                    placements={placements}
+                    comparedPlacements={comparedPlacements}
+                />
+            }
+        >
+            <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
+                 style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
+                <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
 
-        {comparedValue !== undefined && <MetricDiff
-            value={value}
-            prevValue={comparedValue}
-        />}
+                {comparedValue !== undefined && <MetricDiff
+                    value={value}
+                    prevValue={comparedValue}
+                    metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                />}
+            </div>
+        </InformationTooltip>
     </div>
 )
 
-const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMetric, selectedCompareDate, placements}) => {
+const TooltipDescription = ({value, comparedValue, timeIndex, date, outBudget, data, selectedMetric, selectedCompareDate, placements, comparedPlacements}) => {
     const percentByRange = percentColor({value, data, metric: selectedMetric})
 
     return (
@@ -341,12 +370,15 @@ const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMe
                 <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
                 <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
 
-                {selectedCompareDate && <div className="diff-value">
-                    <SVG id='upward-metric-changes'/>
-                    10.8%
+                {selectedCompareDate && <div className="changes-block">
+                    <MetricDiff
+                        value={value || 0}
+                        prevValue={comparedValue || 0}
+                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                    />
 
                     <div className="from">
-                        (from 200)
+                        (from {renderMetricValue({value: comparedValue, metric: selectedMetric})})
                     </div>
                 </div>}
             </div>
@@ -360,21 +392,23 @@ const TooltipDescription = ({value, timeIndex, date, outBudget, data, selectedMe
                         {placements?.[item.key]?.[selectedMetric] ? round(placements?.[item.key]?.[selectedMetric], 2) : '-'}
                     </div>
 
-                    {/*{selectedCompareDate && <div className="diff-value">*/}
-                    {/*    <SVG id='upward-metric-changes'/>*/}
-                    {/*    10.8%*/}
+                    {selectedCompareDate && <div className="changes-block">
+                        <MetricDiff
+                            value={placements?.[item.key]?.[selectedMetric] || 0}
+                            prevValue={comparedPlacements?.[item.key]?.[selectedMetric] || 0}
+                        />
 
-                    {/*    <div className="from">*/}
-                    {/*        (from 200)*/}
-                    {/*    </div>*/}
-                    {/*</div>}*/}
+                        <div className="from">
+                            (from {round(comparedPlacements?.[item.key]?.[selectedMetric] || 0, 2)})
+                        </div>
+                    </div>}
                 </div>
             ))}
         </Fragment>
     )
 }
 
-const DailyTooltipDescription = ({data, index, day, date, selectedMetric, selectedCompareDate}) => {
+const DailyTooltipDescription = ({data, compareDate, index, day, date, selectedMetric, selectedCompareDate}) => {
     return (
         <Fragment>
             <div className="tooltip-header">
@@ -392,12 +426,18 @@ const DailyTooltipDescription = ({data, index, day, date, selectedMetric, select
                     })}
                 </div>
 
-                {selectedCompareDate && <div className="diff-value">
-                    <SVG id='upward-metric-changes'/>
-                    10.8%
+                {selectedCompareDate && <div className="changes-block">
+                    <MetricDiff
+                        value={_.reduce(data[index], (sum, item) => sum + item[selectedMetric], 0) || 0}
+                        prevValue={_.reduce(compareDate[index], (sum, item) => sum + item[selectedMetric], 0) || 0}
+                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                    />
 
                     <div className="from">
-                        (from 200)
+                        (from {renderMetricValue({
+                        value: _.reduce(compareDate[index], (sum, item) => sum + item[selectedMetric], 0),
+                        metric: selectedMetric
+                    })})
                     </div>
                 </div>}
             </div>
@@ -411,14 +451,16 @@ const DailyTooltipDescription = ({data, index, day, date, selectedMetric, select
                         {round(_.reduce(data[index], (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0), 2)}
                     </div>
 
-                    {/*{selectedCompareDate && <div className="diff-value">*/}
-                    {/*    <SVG id='upward-metric-changes'/>*/}
-                    {/*    10.8%*/}
+                    {selectedCompareDate && <div className="changes-block">
+                        <MetricDiff
+                            value={_.reduce(data[index], (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0) || 0}
+                            prevValue={_.reduce(compareDate[index], (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0) || 0}
+                        />
 
-                    {/*    <div className="from">*/}
-                    {/*        (from 200)*/}
-                    {/*    </div>*/}
-                    {/*</div>}*/}
+                        <div className="from">
+                            (from {round(_.reduce(compareDate[index], (sum, i) => sum + i.placements?.[item.key][selectedMetric], 0), 2)})
+                        </div>
+                    </div>}
                 </div>
             ))}
         </Fragment>

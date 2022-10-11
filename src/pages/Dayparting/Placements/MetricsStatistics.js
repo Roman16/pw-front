@@ -4,8 +4,9 @@ import {SVG} from "../../../utils/icons"
 import {round} from "../../../utils/round"
 import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 import {numberMask} from "../../../utils/numberMask"
-import {metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
-import {renderMetricValue} from "../HourDayStatistics/HourDayStatistics"
+import {analyticsAvailableMetricsList, metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
+import {MetricDiff, renderMetricValue} from "../HourDayStatistics/HourDayStatistics"
+import _ from "lodash"
 
 const statisticParams = [
     {
@@ -59,7 +60,7 @@ export const metrics = [
 
 ]
 
-export const MetricsStatistics = ({data}) => {
+export const MetricsStatistics = ({data, comparedData}) => {
 
     return (
         <div className='metrics-statistics'>
@@ -91,6 +92,12 @@ export const MetricsStatistics = ({data}) => {
                         {metrics.map(metric => (
                             <div className="value">
                                 {renderMetricValue({value: data[item.key]?.[metric.key], metric: metric.key, numberCut: 2})}
+
+                                {comparedData && <MetricDiff
+                                    value={data[item.key]?.[metric.key]}
+                                    prevValue={comparedData[item.key]?.[metric.key]}
+                                    metricType={_.find(analyticsAvailableMetricsList, {key: metric.key}).type}
+                                />}
                             </div>
                         ))}
                     </div>

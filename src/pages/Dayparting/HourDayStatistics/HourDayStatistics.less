@@ -167,46 +167,6 @@
       }
     }
 
-    .diff-value {
-      max-width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: 0.7142857142857143rem;
-      line-height: 1.0714285714285714rem;
-      position: relative;
-
-      span {
-        max-width: 95%;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        display: block;
-      }
-
-      svg {
-        min-width: 6px;
-        margin: 0 2px 0 0;
-      }
-
-      &.upward-changes {
-        color: #7FD3A1;
-
-        svg {
-          fill: #7FD3A1;
-        }
-      }
-
-      &.downward-changes {
-        color: #FFAF52;
-
-        svg {
-          fill: #FFAF52;
-          transform: rotate(180deg);
-        }
-      }
-    }
-
 
     .legend {
       display: flex;
@@ -277,6 +237,46 @@
       }
     }
 
+  }
+
+  .diff-value {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.7142857142857143rem;
+    line-height: 1.0714285714285714rem;
+    position: relative;
+
+    span {
+      max-width: 95%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      display: block;
+    }
+
+    svg {
+      min-width: 6px;
+      margin: 0 2px 0 0;
+    }
+
+    &.upward-changes {
+      color: #7FD3A1;
+
+      svg {
+        fill: #7FD3A1;
+      }
+    }
+
+    &.downward-changes {
+      color: #FFAF52;
+
+      svg {
+        fill: #FFAF52;
+        transform: rotate(180deg);
+      }
+    }
   }
 }
 
@@ -423,7 +423,7 @@
   }
 
   .ant-popover-inner-content {
-    min-width: 300px;
+    min-width: 350px;
     border: 0;
     box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
     padding: 1.0714285714285714rem;
@@ -463,7 +463,6 @@
       margin-bottom: 5px;
     }
 
-
     .row {
       display: flex;
       align-items: center;
@@ -479,35 +478,37 @@
       .value {
         font-size: 0.8571428571428571rem;
         color: #6959AB;
-        margin: 0 20px 0 auto;
+        margin: 0 10px 0 auto;
       }
 
-      .diff-value {
-        display: flex;
-        align-items: center;
 
-        font-size: 0.8571428571428571rem;
-        font-weight: 500;
-        color: #7FD3A1;
 
-        svg {
-          fill: #7FD3A1;
-          margin: 0 3px 2px 0;
-        }
-
-        .from {
-          font-size: 0.7142857142857143rem;
-          color: #686868;
-          margin: 0 0 0 5px;
-        }
-      }
 
       &.main-metric {
         background: #F3F3F3;
         border-radius: 4px;
         padding: 10px 5px;
         font-weight: 600;
+
       }
     }
+
+    .changes-block {
+      width: 140px;
+
+      display: flex;
+      justify-content: flex-end;
+
+      .diff-value {
+        font-size: 0.8571428571428571rem;
+        margin: 0 5px 0 0;
+      }
+
+      .from {
+        font-size: 0.7142857142857143rem;
+        color: #686868;
+      }
+    }
+
   }
 }

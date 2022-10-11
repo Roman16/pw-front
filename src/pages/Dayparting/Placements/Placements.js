@@ -33,20 +33,26 @@ export const chartColors = [
 ]
 
 
-const Placements = ({date, campaignId, attributionWindow}) => {
+const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) => {
     let localFetching = false
 
     const [chartData, setChartData] = useState([]),
         [metricsData, setMetricsData] = useState({}),
+        [comparedMetricsData, setComparedMetricsData] = useState(),
         [processing, setProcessing] = useState(true),
         [selectedMetric, setSelectedMetric] = useState('clicks'),
         [chartType, setChartType] = useState('hourly')
 
     const getChartData = async () => {
         setProcessing(true)
+
         try {
             if (chartType === 'daily') {
-                const {result} = await daypartingServices.getPlacementChartDataByWeekday({date, campaignId, attributionWindow})
+                const {result} = await daypartingServices.getPlacementChartDataByWeekday({
+                    date,
+                    campaignId,
+                    attributionWindow
+                })
                 setChartData(_.values(result.top_of_search).map((i, index) => {
                     const resultObj = {
                         date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
@@ -61,7 +67,11 @@ const Placements = ({date, campaignId, attributionWindow}) => {
                     return ({...resultObj})
                 }))
             } else {
-                const {result} = await daypartingServices.getPlacementChartDataByHour({date, campaignId, attributionWindow})
+                const {result} = await daypartingServices.getPlacementChartDataByHour({
+                    date,
+                    campaignId,
+                    attributionWindow
+                })
 
                 setChartData(_.values(result.top_of_search).map((i, index) => {
                     const resultObj = {
@@ -96,6 +106,23 @@ const Placements = ({date, campaignId, attributionWindow}) => {
         }
     }
 
+    const getComparedMetricsData = async () => {
+        setProcessing(true)
+
+        try {
+            const {result} = await daypartingServices.getPlacementMetricsData({
+                date: selectedCompareDate,
+                campaignId,
+                attributionWindow
+            })
+            setComparedMetricsData(result)
+        } catch (e) {
+            console.log(e)
+        }
+
+        setProcessing(false)
+    }
+
     useEffect(() => {
         campaignId && getChartData()
     }, [date, campaignId, chartType, attributionWindow])
@@ -103,6 +130,14 @@ const Placements = ({date, campaignId, attributionWindow}) => {
     useEffect(() => {
         campaignId && getMetricsData()
     }, [date, campaignId, attributionWindow])
+
+    useEffect(() => {
+        if (selectedCompareDate) {
+            campaignId && getComparedMetricsData()
+        } else {
+            setComparedMetricsData(undefined)
+        }
+    }, [campaignId, attributionWindow, selectedCompareDate])
 
     return (
         <section
@@ -149,6 +184,7 @@ const Placements = ({date, campaignId, attributionWindow}) => {
 
             <MetricsStatistics
                 data={metricsData}
+                comparedData={comparedMetricsData}
             />
 
             {(processing || !campaignId) && <div className="disable-page-loading">
