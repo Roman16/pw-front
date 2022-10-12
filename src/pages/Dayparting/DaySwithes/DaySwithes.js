@@ -564,7 +564,7 @@ class DaySwitches extends Component {
     }
 }
 
-const SubscribeBlock =() => (
+export const SubscribeBlock =() => (
     <div className={'subscribe-block'}>
         <p>Oops! It looks like you’re not subscribed to use this feature </p>
         <Link to={'/account/subscriptions'} className={'btn default'}>subscribe now</Link>

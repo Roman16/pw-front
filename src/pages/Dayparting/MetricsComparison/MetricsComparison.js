@@ -3,12 +3,14 @@ import {Chart} from "./Chart"
 import './MetricsComparison.less'
 import CustomSelect from "../../../components/Select/Select"
 import {Select, Spin, Switch} from "antd"
-import {useSelector} from "react-redux"
 import {daypartingServices} from "../../../services/dayparting.services"
 import _ from 'lodash'
 import moment from 'moment'
 import {metrics} from "../Placements/MetricsStatistics"
+import axios from "axios"
 
+const CancelToken = axios.CancelToken
+let source = null
 const Option = Select.Option
 
 
@@ -21,18 +23,20 @@ const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
         [chartType, setChartType] = useState('hourly')
 
     const getData = async () => {
+        source && source.cancel()
+        source = CancelToken.source()
         setProcessing(true)
 
         try {
             if (chartType === 'daily') {
-                const {result} = await daypartingServices.getChartDataByWeekday({date, campaignId, attributionWindow})
+                const {result} = await daypartingServices.getChartDataByWeekday({date, campaignId, attributionWindow, cancelToken: source.token})
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,
                     date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
                 })))
             } else {
-                const {result} = await daypartingServices.getChartDataByHour({date, campaignId, attributionWindow})
+                const {result} = await daypartingServices.getChartDataByHour({date, campaignId, attributionWindow, cancelToken: source.token})
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,

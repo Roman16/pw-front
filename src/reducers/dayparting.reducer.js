@@ -38,7 +38,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: state.campaignList.map(item => {
                     if (item.id === action.payload) {
-                        item.hasEnabledDayparting = true
+                        item.has_active_dayparting = true
                     }
 
                     return item
@@ -56,7 +56,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: state.campaignList.map(item => {
                     if (item.id === action.payload) {
-                        item.hasEnabledDayparting = false
+                        item.has_active_dayparting = false
                     }
 
                     return item

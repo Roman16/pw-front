@@ -2,6 +2,7 @@ import React from "react"
 import noImage from "../../../assets/img/no-image-available.svg"
 import {SVG} from "../../../utils/icons"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
+import _ from "lodash"
 
 export const ProductItem = ({
                                 product: {id, asin, name, sku, image_url, variations},
@@ -19,7 +20,7 @@ export const ProductItem = ({
     }
 
     return (
-        <div className={`product-item ${selectedProduct.id === id ? 'active' : ''}`}>
+        <div className={`product-item ${_.find(selectedProduct, {id: id}) || selectedProduct.id === id ? 'active' : ''}`}>
             <div className={`product-information ${openedProduct === id && 'opened-child-list'}`}
                  onClick={() => onSelect(product)}>
                 <div className="image-block">
@@ -59,7 +60,7 @@ export const ProductItem = ({
 
             {variations?.length > 0 && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
-                    <div className={`children-product-item ${selectedProduct.id === childrenProduct.id ? 'active' : ''}`}
+                    <div className={`children-product-item ${_.find(selectedProduct, {id: childrenProduct.id}) || selectedProduct.id === childrenProduct.id ? 'active' : ''}`}
                          onClick={() => onChildSelect && onChildSelect(childrenProduct)}>
                         <div className="children-indicator"/>
 

@@ -139,14 +139,9 @@ export const adminUrls = {
 }
 
 export const daypartingUrls = {
-    outBudget: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/sales-oob` : 'ppc-automation/dayparting/campaigns/sales-oob',
-    recommendedBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/recommended-budget`,
-    dailyBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/daily-budget`,
-    dailyStatistic: (id) => `ppc-automation/dayparting/campaigns/${id}/chart-data`,
     getDayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : `ppc-automation/dayparting/campaigns/state`,
     dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements',
-    multiDayParting: 'ppc-automation/dayparting/campaigns/state',
 //    ------------------------
     campaigns: 'dayparting/campaigns',
     products: 'dayparting/products',
@@ -158,6 +153,9 @@ export const daypartingUrls = {
     placementChartDataByWeekday: 'dayparting/stats/by_placement/by_weekday',
     placementChartDataByHour: 'dayparting/stats/by_placement/by_hour',
     placementMetricsData: 'dayparting/stats/by_placement',
+
+    multiDayParting: 'ppc-automation/dayparting/campaigns/state',
+
 }
 
 export const zthUrls = {

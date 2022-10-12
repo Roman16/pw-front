@@ -62,6 +62,7 @@ const Dayparting = () => {
                 {multiselect ? <div className="col">
                     <DaySwitchesMulti
                         multiselect={multiselect}
+                        hasSubscriptions={subscription.active_subscription_type || subscription.trial.trial_active}
                     />
                 </div> : <div className="col">
                     <HourDayStatistics

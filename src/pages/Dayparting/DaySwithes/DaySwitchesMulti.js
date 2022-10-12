@@ -13,6 +13,7 @@ import {connect} from "react-redux"
 import {daypartingActions} from "../../../actions/dayparting.actions"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {activeTimezone} from "../../index"
+import {SubscribeBlock} from "./DaySwithes"
 
 
 const timeLineShift = 24 - (moment.tz.zone(activeTimezone).utcOffset(moment().utc()) / 60)
@@ -231,7 +232,7 @@ class DaySwitchesMulti extends Component {
     componentDidMount() {
         let status = 'false'
 
-        if (this.props.selectedCampaigns.every(i => i.hasEnabledDayparting) && !this.state.activeDayparting) {
+        if (this.props.selectedCampaigns.every(i => i.has_active_dayparting) && !this.state.activeDayparting) {
             this.setState({
                 activeDayparting: true,
             })
@@ -310,7 +311,7 @@ class DaySwitchesMulti extends Component {
                 hoursStatus: [...defaultList],
                 visibleWindow: false,
                 processing: false,
-                activeDayparting: this.props.selectedCampaigns.every(i => i.hasEnabledDayparting),
+                activeDayparting: this.props.selectedCampaigns.every(i => i.has_active_dayparting),
                 hasDayparting: false,
                 initialState: '',
                 fetchingData: false
@@ -320,7 +321,9 @@ class DaySwitchesMulti extends Component {
 
 
     render() {
-        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state
+        const {hoursStatus, activeDayparting, visibleWindow, processing, initialState, fetchingData} = this.state,
+            {hasSubscriptions} = this.props
+
 
         return (
             <Fragment>
@@ -329,36 +332,15 @@ class DaySwitchesMulti extends Component {
                     <div className="section-header">
                         <h2>Dayparting</h2>
 
-                        <div className="legend">
-                            <div className='active example'>
-                                <div/>
-                                Active
-                            </div>
-
-                            <div className='inactive example'>
-                                <div/>
-                                Inactive
-                            </div>
-                        </div>
-
-
                         <div className='actions'>
-                            <button
-                                data-intercom-target='switch-dayparting'
-                                className='btn default p15 switch-day-parting'
-                                onClick={this.switchDayPartingHandler}
-                                disabled={processing || !this.props.selectedCampaigns.length > 0}
-                            >
-                                {activeDayparting ? 'Disable Dayparting' : 'Enable Dayparting'}
-                            </button>
-
                             <div className={`reset-btn`} onClick={activeDayparting && this.handleReset}>
                                 <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <g>
                                         <path
                                             d="M1.875 11.5441C1.875 15.5238 5.13959 18.75 9.16667 18.75C13.1937 18.75 16.4583 15.5238 16.4583 11.5441C16.4583 7.56442 13.1937 4.33824 9.16667 4.33824H6.04167M6.04167 4.33824L9.16667 1.25M6.04167 4.33824L9.16667 7.42647"
-                                            stroke="#353A3E" stroke-width="2" stroke-linecap="round"
+                                            stroke-width="2" stroke-linecap="round"
+                                            fill='none'
                                             stroke-linejoin="round"/>
                                     </g>
                                 </svg>
@@ -366,16 +348,17 @@ class DaySwitchesMulti extends Component {
                                 Reset
                             </div>
 
+
                             <div className="copy-btn" onClick={this.copySettingsHandler}>
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <g>
                                         <path
                                             d="M2.34177 1H12.5696C12.7584 1 12.9114 1.15302 12.9114 1.34177V14.3544C12.9114 14.5432 12.7584 14.6962 12.5696 14.6962H2.34177C2.15302 14.6962 2 14.5432 2 14.3544V1.34177C2 1.15302 2.15302 1 2.34177 1Z"
-                                            stroke="#353A3E" stroke-width="2"/>
+                                            fill='none' stroke-width="2"/>
                                         <path
                                             d="M6.64548 5.30371H16.8733C17.0621 5.30371 17.2151 5.45673 17.2151 5.64548V18.6581C17.2151 18.8469 17.0621 18.9999 16.8733 18.9999H6.64548C6.45673 18.9999 6.30371 18.8469 6.30371 18.6581V5.64548C6.30371 5.45673 6.45673 5.30371 6.64548 5.30371Z"
-                                            fill="white" stroke="#353A3E" stroke-width="2"/>
+                                            fill="#3F4347" stroke-width="2"/>
                                     </g>
                                 </svg>
 
@@ -383,17 +366,17 @@ class DaySwitchesMulti extends Component {
                             </div>
 
 
-                            {this.props.copiedParams ? activeDayparting ?
+                            {this.props.copiedParams || activeDayparting ?
                                 <div className="past-btn" onClick={this.pasteSettingsHandler}>
                                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                                          xmlns="http://www.w3.org/2000/svg">
                                         <g>
                                             <path
                                                 d="M2.34177 1H12.5696C12.7584 1 12.9114 1.15302 12.9114 1.34177V14.3544C12.9114 14.5432 12.7584 14.6962 12.5696 14.6962H2.34177C2.15302 14.6962 2 14.5432 2 14.3544V1.34177C2 1.15302 2.15302 1 2.34177 1Z"
-                                                stroke="#353A3E" stroke-width="2"/>
+                                                fill='none' stroke-width="2"/>
                                             <path
                                                 d="M6.64548 5.30371H16.8733C17.0621 5.30371 17.2151 5.45673 17.2151 5.64548V18.6581C17.2151 18.8469 17.0621 18.9999 16.8733 18.9999H6.64548C6.45673 18.9999 6.30371 18.8469 6.30371 18.6581V5.64548C6.30371 5.45673 6.45673 5.30371 6.64548 5.30371Z"
-                                                fill="#353A3E" stroke="#353A3E" stroke-width="2"/>
+                                                stroke-width="2"/>
                                         </g>
                                     </svg>
 
@@ -412,17 +395,24 @@ class DaySwitchesMulti extends Component {
                                             <g>
                                                 <path
                                                     d="M2.34177 1H12.5696C12.7584 1 12.9114 1.15302 12.9114 1.34177V14.3544C12.9114 14.5432 12.7584 14.6962 12.5696 14.6962H2.34177C2.15302 14.6962 2 14.5432 2 14.3544V1.34177C2 1.15302 2.15302 1 2.34177 1Z"
-                                                    stroke="#353A3E" stroke-width="2"/>
+                                                    fill='none' stroke-width="2"/>
                                                 <path
                                                     d="M6.64548 5.30371H16.8733C17.0621 5.30371 17.2151 5.45673 17.2151 5.64548V18.6581C17.2151 18.8469 17.0621 18.9999 16.8733 18.9999H6.64548C6.45673 18.9999 6.30371 18.8469 6.30371 18.6581V5.64548C6.30371 5.45673 6.45673 5.30371 6.64548 5.30371Z"
-                                                    fill="#353A3E" stroke="#353A3E" stroke-width="2"/>
+                                                    stroke-width="2"/>
                                             </g>
                                         </svg>
 
                                         PASTE
                                     </div>
-                                </InformationTooltip>
-                                : ''}
+                                </InformationTooltip>}
+
+                            <button
+                                className={`btn default ${!hasSubscriptions ? 'not-access' : ''}`}
+                                onClick={this.switchDayPartingHandler}
+                                disabled={processing || !this.props.selectedCampaigns.length > 0 || !hasSubscriptions}
+                            >
+                                {activeDayparting ? 'Disable Dayparting' : 'Enable Dayparting'}
+                            </button>
                         </div>
                     </div>
 
@@ -434,12 +424,12 @@ class DaySwitchesMulti extends Component {
                     </div>
 
                     <div className="switches">
-                        <div className="row time-name">
-                            <div/>
+                        <div className="time-name">
                             {hours.map((status, timeIndex) => (
                                 <div key={shortid.generate()}>
                                     {moment(timeIndex, 'HH').format('hh A')}
                                     <Switch
+                                        className={'dark'}
                                         disabled={!activeDayparting}
                                         checked={[0, 1, 2, 3, 4, 5, 6].map(item => hoursStatus[24 * item + timeIndex]).every(item => item === '1')}
                                         onChange={(value) => this.handleSwitchColumn(timeIndex, value)}
@@ -457,18 +447,21 @@ class DaySwitchesMulti extends Component {
                                         key={shortid.generate()}
                                     >
                                         <Switch
+                                            className={'dark'}
                                             disabled={!activeDayparting}
                                             checked={hoursStatus.slice(24 * dayIndex, 24 * (dayIndex + 1)).every(item => item === '1')}
                                             onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                         />
                                         <span>
-                                       {window.devicePixelRatio === 2 ? day[0] : day}
+                                       {day[0]}
                                     </span>
                                     </div>
                                 ))}
                             </div>
 
                             <div className={`col multi-select ${activeDayparting ? 'enabled' : 'disabled'}`}>
+                                {!hasSubscriptions && <SubscribeBlock/>}
+
                                 {hoursStatus.map((value, hourIndex) => (
                                     <div className='statistic-item' key={shortid.generate()}>
                                         <div
@@ -500,7 +493,8 @@ class DaySwitchesMulti extends Component {
                         <p>
                             This will result in pausing the dayparting feature for this particular campaign. Your
                             settings will be saved. <br/> Please note, that this campaign will be set to its initial
-                            state.
+                            state:
+                            <b>{initialState}</b>
                         </p>
 
                         <div className="action">
