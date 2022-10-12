@@ -55,7 +55,6 @@ const Dayparting = () => {
             <div className="row">
                 <CampaignList
                     multiselect={multiselect}
-
                     onSetMultiselect={setMultiselect}
                 />
 
@@ -85,10 +84,10 @@ const Dayparting = () => {
                         attributionWindow={attributionWindow}
                     />
 
-                    <DaySwitches
+                    {activeTab === 'campaigns' && <DaySwitches
                         multiselect={multiselect}
                         hasSubscriptions={subscription.active_subscription_type || subscription.trial.trial_active}
-                    />
+                    />}
                 </div>}
             </div>
         </div>

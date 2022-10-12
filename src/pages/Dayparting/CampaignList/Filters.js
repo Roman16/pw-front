@@ -92,7 +92,7 @@ const Filters = ({
                 {/*</Dropdown>*/}
             </div>
 
-            <div className="row">
+            {tab === 'campaigns' && <div className="row buttons">
                 <div className={'multi-select-switch'}>
                     <button title={'Select all on this page'} className={`btn`} onClick={() => onSetMultiselect('all')}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -182,7 +182,7 @@ const Filters = ({
                     </div>}
                 </div>
 
-                {tab === 'campaigns' && <div className="active-only">
+                <div className="active-only">
                     <Switch
                         className={'dark'}
                         checked={onlyOndayparting}
@@ -191,7 +191,7 @@ const Filters = ({
 
                     <label htmlFor="">On dayparting only</label>
                 </div>
-                }            </div>
+            </div>}
         </div>
     )
 }
