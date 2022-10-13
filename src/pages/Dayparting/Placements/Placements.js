@@ -12,7 +12,8 @@ import moment from "moment"
 import CustomSelect from "../../../components/Select/Select"
 
 const CancelToken = axios.CancelToken
-let source = null
+let sourceChart = null,
+    sourceMetrics = null
 
 const Option = Select.Option
 
@@ -44,8 +45,9 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
         [chartType, setChartType] = useState('hourly')
 
     const getChartData = async () => {
-        source && source.cancel()
-        source = CancelToken.source()
+        sourceChart && sourceChart.cancel()
+        sourceChart = CancelToken.source()
+
         setProcessing(true)
 
         try {
@@ -54,7 +56,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
                     date,
                     campaignId,
                     attributionWindow,
-                    cancelToken: source.token
+                    cancelToken: sourceChart.token
                 })
 
                 setChartData(_.values(result.top_of_search).map((i, index) => {
@@ -75,7 +77,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
                     date,
                     campaignId,
                     attributionWindow,
-                    cancelToken: source.token
+                    cancelToken: sourceChart.token
                 })
 
                 setChartData(_.values(result.top_of_search).map((i, index) => {
@@ -103,11 +105,11 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
     }
 
     const getMetricsData = async () => {
-        source && source.cancel()
-        source = CancelToken.source()
+        sourceMetrics && sourceMetrics.cancel()
+        sourceMetrics = CancelToken.source()
 
         try {
-            const {result} = await daypartingServices.getPlacementMetricsData({date, campaignId, attributionWindow, cancelToken: source.token})
+            const {result} = await daypartingServices.getPlacementMetricsData({date, campaignId, attributionWindow, cancelToken: sourceMetrics.token})
             setMetricsData(result)
         } catch (e) {
             console.log(e)
@@ -115,8 +117,8 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
     }
 
     const getComparedMetricsData = async () => {
-        source && source.cancel()
-        source = CancelToken.source()
+        sourceMetrics && sourceMetrics.cancel()
+        sourceMetrics = CancelToken.source()
         setProcessing(true)
 
         try {
@@ -124,7 +126,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
                 date: selectedCompareDate,
                 campaignId,
                 attributionWindow,
-                cancelToken: source.token
+                cancelToken: sourceMetrics.token
             })
             setComparedMetricsData(result)
         } catch (e) {
