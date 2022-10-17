@@ -425,8 +425,8 @@ const RenderPageParts = (props) => {
                         filterBy: 'datetime',
                         type: 'range',
                         value: {
-                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff).format('YYYY-MM-DD'),
+                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days').format('YYYY-MM-DD')
                         }
                     },
                 ]
