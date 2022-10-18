@@ -29,7 +29,7 @@ export function dayparting(state = defaultState, action) {
         case daypartingConstants.SELECT_CAMPAIGN:
             return {
                 ...state,
-                selectedCampaign: action.payload,
+                selectedCampaign: state.activeTab==='account' ? {id: 1} : action.payload,
             }
 
 

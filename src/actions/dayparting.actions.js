@@ -27,6 +27,16 @@ function getDataList(requestParams, type) {
                         payload: res.result
                     })
                 })
+        } else if (type === 'account') {
+            dispatch({
+                type: daypartingConstants.SET_CAMPAIGN_LIST,
+                payload: {
+                    data: [{
+                        id: 1
+                    }],
+                    total: 0
+                }
+            })
         } else if (type === 'products') {
             daypartingServices.getProducts(requestParams)
                 .then((res) => {

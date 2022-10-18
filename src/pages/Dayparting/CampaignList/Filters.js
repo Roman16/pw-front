@@ -66,17 +66,16 @@ const Filters = ({
 
     return (
         <div className="filters-block">
-            <div className="row">
+            {tab !== 'account' && <div className="row">
                 <div className="form-group dark-mode">
                     <Search
                         className="search-field"
-                        placeholder={'Search by campaign name'}
+                        placeholder={tab === 'campaigns' ? 'Search by campaign name' : 'Search by product name'}
                         onChange={e => onSearch(e.target.value)}
                         data-intercom-target='search-field'
                         suffix={<SearchIcon/>}
                     />
                 </div>
-
                 {/*<Dropdown*/}
                 {/*    visible={visibleDropdown}*/}
                 {/*    onVisibleChange={() => setVisibleDropdown(prevState => !prevState)}*/}
@@ -90,7 +89,8 @@ const Filters = ({
                 {/*        <SVG id={'filter-icon'}/>*/}
                 {/*    </button>*/}
                 {/*</Dropdown>*/}
-            </div>
+            </div>}
+
 
             {tab === 'campaigns' && <div className="row buttons">
                 <div className={'multi-select-switch'}>

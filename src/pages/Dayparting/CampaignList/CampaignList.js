@@ -18,7 +18,7 @@ import {ProductItem} from "./ProductItem"
 const CancelToken = axios.CancelToken
 let source = null
 
-const navigationTabs = ['campaigns', 'accounts', 'products']
+const navigationTabs = ['campaigns', 'account', 'products']
 
 const CampaignList = ({multiselect, onSetMultiselect}) => {
     const dispatch = useDispatch()
@@ -148,8 +148,8 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         <Fragment>
             <div className={`campaign-list ${isOpenList ? '' : 'closed'}`}>
                 <div className="tabs">
-                    {navigationTabs.map((i, index) => (<div
-                        onClick={() => index !== 1 && setActiveTabHandler(i)}
+                    {navigationTabs.map(i => (<div
+                        onClick={() => setActiveTabHandler(i)}
                         className={`tab ${activeTab === i ? 'active' : ''}`}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
                              xmlns="http://www.w3.org/2000/svg">
@@ -182,6 +182,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     onSetMultiselect={setMultiselectHandler}
                 />
 
+                {activeTab !== 'account' && <>
                 <div className={`campaigns`}>
                     {processing ?
                         <div className='fetching-data'><Spin size={'large'}/></div> :
@@ -203,16 +204,17 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                         </>)}
                 </div>
 
-                <Pagination
-                    onChange={changePaginationHandler}
+                    <Pagination
+                        onChange={changePaginationHandler}
 
-                    page={paginationParams.page}
-                    pageSizeOptions={[25, 50, 100]}
-                    pageSize={paginationParams.pageSize}
-                    totalSize={totalSize}
-                    processing={processing}
-                    listLength={campaignList && campaignList.length}
-                />
+                        page={paginationParams.page}
+                        pageSizeOptions={[25, 50, 100]}
+                        pageSize={paginationParams.pageSize}
+                        totalSize={totalSize}
+                        processing={processing}
+                        listLength={campaignList && campaignList.length}
+                    />
+                </>}
             </div>
 
             <div className={`switch-list ${isOpenList ? 'opened' : 'closed'}`}>

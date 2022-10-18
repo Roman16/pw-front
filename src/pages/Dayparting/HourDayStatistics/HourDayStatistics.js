@@ -115,6 +115,8 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         }
     }, [campaignId, attributionWindow, selectedCompareDate])
 
+    console.log(campaignId)
+
     return (
         <Fragment>
             <section
