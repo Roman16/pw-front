@@ -154,7 +154,8 @@ export const RenderProduct = ({product, isParent = false}) => {
                     >
                         <h4 title={product.product_name}>{product.product_name}</h4>
                     </Link>
-                    <p>{product.product_price !== null && <CurrencyWithCode value={numberMask(product.product_price, 2)}/>}</p>
+                    <p>{product.product_price !== null &&
+                    <CurrencyWithCode value={numberMask(product.product_price, 2)}/>}</p>
                 </div>}
 
             {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
@@ -262,7 +263,7 @@ export const skuAsinColumn = {
         <div title={item.sku}><b>SKU:</b> {item.sku}</div>
         <div title={item.asin}><b>ASIN:</b>
             <a target={'_blank'}
-               href={`https://www.amazon.${item.product_marketplace_id ? amazonDomain() : 'com'}/dp/${item.asin}`}
+               href={`https://www.amazon.${amazonDomain()}/dp/${item.asin}`}
             >
                 <Popover
                     overlayClassName={'sku-asin-image-popover'}
