@@ -38,8 +38,14 @@ const stateIdValues = {
 const dateRangeFormatting = (dateRange) => {
     const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
 
-    if (dateRange.startDate === 'lifetime') return ''
-    else return encodeURIComponent(`${dateRange.startDate}${moment().tz(timezone).format('T00:00:00.000Z')},${dateRange.endDate}${moment().tz(timezone).format('T23:59:59.999Z')}`)
+    if (dateRange.startDate === 'lifetime') {
+        return ''
+    } else {
+        dateRange.startDate = moment(dateRange.startDate).format('YYYY-MM-DD')
+        dateRange.endDate = moment(dateRange.endDate).format('YYYY-MM-DD')
+
+        return encodeURIComponent(`${dateRange.startDate}${moment().tz(timezone).format('T00:00:00.000Z')},${dateRange.endDate}${moment().tz(timezone).format('T23:59:59.999Z')}`)
+    }
 }
 
 export const filtersHandler = (f) => {
