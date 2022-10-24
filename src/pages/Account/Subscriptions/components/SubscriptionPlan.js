@@ -268,7 +268,7 @@ const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrent
 
             <div className="row">
                 <div className="label">Last 30-days Ad Spend</div>
-                <div className="value">${numberMask(adSpend, 2)}</div>
+                <div className="value">${numberMask(adSpend, 0)}</div>
             </div>
             <div className="row coupon-row">
                 <div className="label">Coupon</div>

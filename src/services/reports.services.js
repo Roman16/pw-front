@@ -32,18 +32,16 @@ function getAllReports(type, options, cancelToken) {
     const parameters = []
 
     filters.forEach(({filterBy, type, value, requestValue = []}) => {
-        const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
-
         if (filterBy === 'datetime') {
-            parameters.push(`&datetime:range=${value.startDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.startDate).format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, timezone).toISOString()},${value.endDate === 'lifetime' ? 'lifetime' : moment.tz(`${moment(value.endDate).format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, timezone).toISOString()}`)
+            parameters.push(`&start_date=${value.startDate === 'lifetime' ? 'lifetime' : `${encodeURIComponent(moment(value.startDate).format('YYYY-MM-DDT00:00:00.000Z'))}`}&end_date=${value.endDate === 'lifetime' ? 'lifetime' : `${encodeURIComponent(moment(value.endDate).format('YYYY-MM-DDT23:59:59.999Z'))}`}`)
         } else if (type.key === 'except') {
-            if(filterBy === 'type') {
+            if (filterBy === 'type') {
                 parameters.push(`&type:in=${requestValue.map(item => reasonFilterParams[item].join(',')).join(',')}`)
             } else {
                 parameters.push(`&${filterBy}:in=${requestValue.join(',')}`)
             }
-        } else if(type.key === 'one_of') {
-            if(filterBy === 'type') {
+        } else if (type.key === 'one_of') {
+            if (filterBy === 'type') {
                 parameters.push(`&type:in=${value.map(item => reasonFilterParams[item].join(',')).join(',')}`)
             } else {
                 parameters.push(`&${filterBy}:in=${value.join(',')}`)
