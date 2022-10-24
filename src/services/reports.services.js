@@ -33,7 +33,13 @@ function getAllReports(type, options, cancelToken) {
 
     filters.forEach(({filterBy, type, value, requestValue = []}) => {
         if (filterBy === 'datetime') {
-            parameters.push(`&start_date=${value.startDate === 'lifetime' ? 'lifetime' : `${encodeURIComponent(moment(value.startDate).format('YYYY-MM-DDT00:00:00.000Z'))}`}&end_date=${value.endDate === 'lifetime' ? 'lifetime' : `${encodeURIComponent(moment(value.endDate).format('YYYY-MM-DDT23:59:59.999Z'))}`}`)
+            if (value.startDate === 'lifetime') {
+            } else {
+                value.startDate = moment(value.startDate).format('YYYY-MM-DD')
+                value.endDate = moment(value.endDate).format('YYYY-MM-DD')
+
+                parameters.push(`&start_date=${encodeURIComponent(moment(value.startDate).format('YYYY-MM-DDT00:00:00.000Z'))}&end_date=${encodeURIComponent(moment(value.endDate).format('YYYY-MM-DDT23:59:59.999Z'))}`)
+            }
         } else if (type.key === 'except') {
             if (filterBy === 'type') {
                 parameters.push(`&type:in=${requestValue.map(item => reasonFilterParams[item].join(',')).join(',')}`)

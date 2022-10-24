@@ -8,18 +8,7 @@ import DatePicker from "../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
 import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
-moment.locale('en')
 
-const ranges = {
-    'This week': [
-        moment().startOf('week'),
-        moment().endOf('week')
-    ],
-    'Past week': [
-        moment().startOf('week').subtract(1, 'weeks'),
-        moment().endOf('week').subtract(1, 'weeks')
-    ]
-}
 
 
 export const Header = ({
@@ -35,6 +24,18 @@ export const Header = ({
     const [visibleDatePickerDropdown, setVisibleDatePickerDropdown] = useState(false),
         [visibleCompareDatePickerDropdown, setVisibleCompareDatePickerDropdown] = useState(false)
 
+    moment.locale('en')
+
+    const ranges = {
+        'This week': [
+            moment().startOf('week'),
+            moment().endOf('week')
+        ],
+        'Past week': [
+            moment().startOf('week').subtract(1, 'weeks'),
+            moment().endOf('week').subtract(1, 'weeks')
+        ]
+    }
 
     const onChange = (date) => {
         setVisibleDatePickerDropdown(false)

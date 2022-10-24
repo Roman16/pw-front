@@ -15,11 +15,12 @@ import {activeTimezone} from "../../index"
 import {daypartingServices} from "../../services/dayparting.services"
 
 
-moment.locale('en')
-
 const Dayparting = () => {
     const [multiselect, setMultiselect] = useState(false),
         [attributionWindow, setAttributionWindow] = useState(30)
+
+    moment.locale('en')
+
 
     const activeAmazonMarketplace = useSelector(state => state.user.activeAmazonMarketplace),
         subscription = useSelector(state => state.user.subscription)
