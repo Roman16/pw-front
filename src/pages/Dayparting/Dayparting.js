@@ -17,7 +17,7 @@ import {daypartingServices} from "../../services/dayparting.services"
 
 const Dayparting = () => {
     const [multiselect, setMultiselect] = useState(false),
-        [attributionWindow, setAttributionWindow] = useState(30)
+        [attributionWindow, setAttributionWindow] = useState(7)
 
     moment.locale('en')
 
