@@ -62,6 +62,7 @@ const Dayparting = () => {
                 {multiselect ? <div className="col">
                     <DaySwitchesMulti
                         multiselect={multiselect}
+                        fetchingCampaignList={fetchingCampaignList}
                         hasSubscriptions={subscription.active_subscription_type || subscription.trial.trial_active}
                     />
                 </div> : <div className="col">
@@ -87,6 +88,7 @@ const Dayparting = () => {
 
                     {activeTab === 'campaigns' && <DaySwitches
                         multiselect={multiselect}
+                        fetchingCampaignList={fetchingCampaignList}
                         hasSubscriptions={subscription.active_subscription_type || subscription.trial.trial_active}
                     />}
                 </div>}

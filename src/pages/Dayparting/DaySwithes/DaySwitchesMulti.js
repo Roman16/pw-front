@@ -306,7 +306,7 @@ class DaySwitchesMulti extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.selectedCampaigns !== this.props.selectedCampaigns) {
+        if (prevProps.selectedCampaigns !== this.props.selectedCampaigns && !this.props.fetchingCampaignList) {
             this.setState({
                 hoursStatus: [...defaultList],
                 visibleWindow: false,

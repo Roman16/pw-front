@@ -68,7 +68,9 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 activeTab: action.payload,
                 campaignList: [],
-                totalSize: 0
+                totalSize: 0,
+                processing: true,
+                selectedCampaign: {id: null}
             }
 
 

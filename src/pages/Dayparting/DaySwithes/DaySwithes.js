@@ -357,7 +357,7 @@ class DaySwitches extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.campaignId !== this.props.campaignId) {
+        if (prevProps.campaignId !== this.props.campaignId && !this.props.fetchingCampaignList) {
             if (timeoutId) {
                 this.forceUpdateStatus(prevProps.campaignId, prevState.hoursStatus)
             }
