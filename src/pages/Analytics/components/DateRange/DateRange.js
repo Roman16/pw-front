@@ -53,8 +53,12 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
                 locale={locale}
                 allowClear={false}
                 disabled={current => {
-                    if (current && startDate) {
-                        return moment(current).endOf('day') > moment(startDate).add(62, 'days').tz(activeTimezone).endOf('day') || moment(current).endOf('day') < moment(startDate).subtract(61, 'days').tz(activeTimezone).endOf('day')
+                    if (current) {
+                        if (startDate) {
+                            return moment(current).endOf('day') > moment(startDate).add(62, 'days').tz(activeTimezone).endOf('day') || moment(current).endOf('day') < moment(startDate).subtract(61, 'days').tz(activeTimezone).endOf('day') || moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
+                        } else {
+                            return moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
+                        }
                     } else {
                         return false
                     }
