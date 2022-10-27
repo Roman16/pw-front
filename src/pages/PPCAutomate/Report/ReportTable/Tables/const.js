@@ -6,7 +6,6 @@ import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
 import {SVG} from "../../../../../utils/icons";
 import {numberMask} from "../../../../../utils/numberMask";
 import {round} from "../../../../../utils/round";
-import {activeTimezone} from "../../../../index"
 
 export const dateField = {
     title: 'Date',
@@ -14,7 +13,7 @@ export const dateField = {
     key: 'datetime',
     width: '16.428571428571427rem',
     render: date => <span>
-        {moment.utc(date).tz(activeTimezone).format('MMM DD, YYYY hh:mm:ss A')}
+        {moment.utc(date).format('MMM DD, YYYY hh:mm:ss A')}
     </span>,
     sorter: true,
     filter: true
