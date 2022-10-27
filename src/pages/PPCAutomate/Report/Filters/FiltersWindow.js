@@ -250,6 +250,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     }
     const changeDateHandler = (startDate, endDate) => {
+        console.log(startDate)
         if (startDate) {
             setFilterValue({
                 startDate,
@@ -322,10 +323,11 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
+                    placeholder={['lifetime', 'lifetime']}
                     getPopupContainer={trigger => document.querySelector('.filter-variables')}
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                     defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
-                    value={[filterValue.startDate, filterValue.endDate ]}
+                    value={[filterValue.startDate === 'lifetime' ? null : moment(filterValue.startDate), filterValue.endDate === 'lifetime' ? null : moment(filterValue.endDate)]}
                 />}
 
                 {(!filterType ||

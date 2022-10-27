@@ -50,32 +50,37 @@ class DatePicker extends Component {
 
     disabledDate = (current) => {
         if(this.props.disabled) {
-            return current && (moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day') || this.props.disabled(current))
+            return current && this.props.disabled(current)
         } else {
             return current && moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
         }
     }
 
     render() {
-        const {value, locale, ranges, allowClear=true, onCalendarChange} = this.props
+        const {value, locale, ranges, allowClear=true, onCalendarChange, className,dropdownClassName, format='DD/MM/YY', placeholder='', renderExtraFooter, open, onOpenChange} = this.props
 
         return (
             <div className="DatePicker">
                 <RangePicker
                     ranges={ranges || defaultRanges}
-                    className={'pw-range-date-picker'}
-                    dropdownClassName={'pw-date-picker-dropdown'}
+                    className={`pw-range-date-picker ${className || ''}`}
+                    dropdownClassName={`pw-date-picker-dropdown ${dropdownClassName || ''}`}
                     separator="-"
                     allowClear={allowClear}
-                    format="DD/MM/YY"
+                    format={format}
                     locale={locale}
                     suffixIcon={<SVG id={'select-icon'}/>}
-                    onChange={this.handleChange}
                     disabledDate={this.disabledDate}
                     value={value}
+                    placeholder={placeholder}
                     getCalendarContainer={(trigger) => trigger.parentNode}
                     getPopupContainer={trigger => trigger.parentNode}
                     onCalendarChange={onCalendarChange}
+                    renderExtraFooter={renderExtraFooter}
+                    {...open !== undefined && {open: open}}
+
+                    onOpenChange={onOpenChange}
+                    onChange={this.handleChange}
                 />
             </div>
         )
