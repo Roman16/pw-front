@@ -229,7 +229,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
             disabledDate={(date) => disabledStartDate(date, undefined)}
             value={value && value !== 'null' ? moment(value).tz(activeTimezone) : undefined}
             placeholder={value === 'null' ? 'No end date' : 'Select date'}
-            onChange={(date) => onChangeValue(dateRequestFormat(date))}
+            onChange={(date) => onChangeValue(dateFormatting(date))}
             open={visibleDatePopup}
             locale={locale}
             onOpenChange={(value) => setVisibleDatePopup(value)}

@@ -351,7 +351,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
                     allowClear={false}
                     className={`editable-date-picker ${newValue === 'null' ? 'no-date' : ''}`}
                     dropdownClassName={'edit-field-picker'}
-                    onChange={(date) => setNewValue(dateRequestFormat(date))}
+                    onChange={(date) => setNewValue(dateFormatting(date))}
                     format={'DD MMM YYYY'}
                     locale={locale}
                     placeholder={column === 'endDate' ? 'No end date' : 'No start date'}
