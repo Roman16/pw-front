@@ -305,7 +305,7 @@ const CampaignSettings = () => {
                             showToday={false}
                             allowClear={false}
                             value={settingParams.startDate && moment(settingParams.startDate).tz(activeTimezone)}
-                            onChange={(date) => changeSettingsHandler({startDate: dateRequestFormat(date)})}
+                            onChange={(date) => changeSettingsHandler({startDate: dateFormatting(date)})}
                             format={'MMM DD, YYYY'}
                             locale={locale}
                             dropdownClassName={`dropdown-with-timezone`}
@@ -321,7 +321,7 @@ const CampaignSettings = () => {
                             disabled={settingParams.state === 'archived'}
                             showToday={false}
                             allowClear={false}
-                            onChange={(date) => changeSettingsHandler({endDate: dateRequestFormat(date)})}
+                            onChange={(date) => changeSettingsHandler({endDate: dateFormatting(date)})}
                             format={'MMM DD, YYYY'}
                             locale={locale}
                             open={visibleDatePopup}

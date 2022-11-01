@@ -7,7 +7,7 @@ import _ from 'lodash'
 import moment from 'moment-timezone'
 import {round} from "../../../../../utils/round"
 import {useSelector} from "react-redux"
-import {dateRequestFormat} from "../../../../../utils/dateFormatting"
+import {dateFormatting, dateRequestFormat} from "../../../../../utils/dateFormatting"
 import locale from 'antd/lib/locale/en_US.js.map'
 import {activeTimezone} from "../../../../index"
 
@@ -143,7 +143,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">Start</label>
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({startDate: dateRequestFormat(date)})}
+                            onChange={(date) => onChange({startDate: dateFormatting(date)})}
                             value={moment(createData.startDate).tz(activeTimezone)}
                             showToday={false}
                             allowClear={false}
@@ -163,7 +163,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                             placeholder={'No end date'}
                             value={createData.endDate ? moment(createData.endDate).tz(activeTimezone) : undefined}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                            onChange={(date) => onChange({endDate: dateRequestFormat(date)})}
+                            onChange={(date) => onChange({endDate: dateFormatting(date)})}
                             showToday={false}
                             locale={locale}
                             format={'MMM DD, YYYY'}
