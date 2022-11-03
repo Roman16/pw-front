@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Dropdown, Input, Menu, Switch, Select} from "antd"
 import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
@@ -14,12 +14,14 @@ const Filters = ({
                      tab,
                      onSetMultiselect,
                      multiselect,
-                     selectedCampaign
+                     selectedCampaign,
+                     searchStr
                  }) => {
 
     const [visibleDropdown, setVisibleDropdown] = useState(false),
         [campaign_type, setCampaignType] = useState('all'),
-        [campaign_status, setCampaignStatus] = useState('all')
+        [campaign_status, setCampaignStatus] = useState('all'),
+        [searchValue, setSearchValue] = useState('')
 
     const applyFilterHandler = () => {
         onApplyFilter({
@@ -64,14 +66,25 @@ const Filters = ({
         </Menu>
     )
 
+    const changeSearchHandler = (e) => {
+        onSearch(e.target.value)
+        setSearchValue(e.target.value)
+    }
+
+    useEffect(() => {
+        setSearchValue(searchStr)
+    }, [searchStr])
+
     return (
         <div className="filters-block">
             {tab !== 'account' && <div className="row">
                 <div className="form-group dark-mode">
                     <Search
                         className="search-field"
-                        placeholder={tab === 'campaigns' ? 'Search by campaign name' : 'Search by product name'}
-                        onChange={e => onSearch(e.target.value)}
+                        placeholder={tab === 'campaigns' ? 'Search by campaign name, SKU or ASIN' : 'Search by product name, SKU or ASIN'}
+                        value={searchValue}
+
+                        onChange={changeSearchHandler}
                         data-intercom-target='search-field'
                         suffix={<SearchIcon/>}
                     />

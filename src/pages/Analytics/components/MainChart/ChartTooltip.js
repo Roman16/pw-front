@@ -4,7 +4,7 @@ import {round} from "../../../../utils/round"
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 export const days = [
     'Sunday',
@@ -23,7 +23,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
             if (metric.type === 'percent') {
                 return round(+payload[key], key === metricKeys['icvr'] || key === `${metricKeys['icvr']}_7d` ? 4 : 2) + '%'
             } else if (metric.type === 'currency') {
-                return <CurrencyWithCode value={numberMask(payload[key], key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 4 : 2, null, key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 2 : undefined)}/>
+                return currencyWithCode(numberMask(payload[key], key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 4 : 2, null, key === metricKeys['rpi'] || key === `${metricKeys['rpi']}_7d` ? 2 : undefined))
             } else if (metric.type === 'roas') {
                 return payload[key] !== null && `${round(payload[key], 2)}x`
             } else {

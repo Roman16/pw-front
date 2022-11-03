@@ -29,7 +29,7 @@ const Dayparting = () => {
 
     const {campaignId, fetchingCampaignList, activeTab} = useSelector(state => ({
         campaignId: state.dayparting.selectedCampaign.id,
-        fetchingCampaignList: state.dayparting.fetchingCampaignList,
+        fetchingCampaignList: state.dayparting.processing,
         activeTab: state.dayparting.activeTab,
     }))
 
@@ -71,12 +71,14 @@ const Dayparting = () => {
                         campaignId={campaignId}
                         selectedCompareDate={selectedCompareDate}
                         attributionWindow={attributionWindow}
+                        fetchingCampaignList={fetchingCampaignList}
                     />
 
                     <MetricsComparison
                         date={selectedDate}
                         campaignId={campaignId}
                         attributionWindow={attributionWindow}
+                        fetchingCampaignList={fetchingCampaignList}
                     />
 
                     <PlacementsStatistics
@@ -84,6 +86,7 @@ const Dayparting = () => {
                         selectedCompareDate={selectedCompareDate}
                         campaignId={campaignId}
                         attributionWindow={attributionWindow}
+                        fetchingCampaignList={fetchingCampaignList}
                     />
 
                     {activeTab === 'campaigns' && <DaySwitches

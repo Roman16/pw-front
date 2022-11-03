@@ -5,7 +5,7 @@ import '../CogsWindow/CogsWindow.less'
 import {SVG} from "../../../../utils/icons"
 import {numberMask} from "../../../../utils/numberMask"
 import {productsServices} from "../../../../services/products.services"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 
 const AmazonFeeWindow = ({visible, productId, product, onClose}) => {
@@ -52,7 +52,7 @@ const AmazonFeeWindow = ({visible, productId, product, onClose}) => {
                             </div>
 
                             <div className="value">{item.cogs_value &&
-                            <CurrencyWithCode value={numberMask(item.cogs_value, 2)}/>}</div>
+                            currencyWithCode(numberMask(item.cogs_value, 2))}</div>
                         </div>
 
                         <li>
@@ -61,8 +61,9 @@ const AmazonFeeWindow = ({visible, productId, product, onClose}) => {
                                 <div
                                     className="time">{moment(item.amazonGeneratedAtDateTime).format('DD MMM YYYY, HH:mm')},
                                 </div>
-                                <div className="value"><CurrencyWithCode
-                                    value={numberMask(item.TotalFeesEstimateValue, 2)}/></div>
+                                <div className="value">
+                                    {currencyWithCode(numberMask(item.TotalFeesEstimateValue, 2))}
+                                </div>
                             </>
                         </li>
                     </>)}

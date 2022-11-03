@@ -21,7 +21,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import CustomSelect from "../../../../components/Select/Select"
 import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 import {activeTimezone} from "../../../index"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 import {amazonDomain} from "../../../../utils/amazonDomain"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
@@ -77,10 +77,8 @@ export const RenderMetricValue = ({number, type, id}) => {
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? <>- <CurrencyWithCode
-                    value={numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}/></> :
-                <CurrencyWithCode
-                    value={numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)}/> : '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? <>- {currencyWithCode(numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined))} </> :
+                currencyWithCode(numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)): '-'))
     }
 }
 
@@ -155,7 +153,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                         <h4 title={product.product_name}>{product.product_name}</h4>
                     </Link>
                     <p>{product.product_price !== null &&
-                    <CurrencyWithCode value={numberMask(product.product_price, 2)}/>}</p>
+                    currencyWithCode(numberMask(product.product_price, 2))}</p>
                 </div>}
 
             {product.childs_sku_array && product.childs_sku_array.length > 0 && <Popover
@@ -354,7 +352,7 @@ export const EditableField = ({type, value, onUpdateField, id}) => {
                 <div className={'field-value'} onClick={() => setVisibleEditableWindow(prevState => !prevState)}>
                     {/*<InputCurrency disabled value={value}/>*/}
 
-                    {value ? <CurrencyWithCode value={value}/> : ''}
+                    {value ? currencyWithCode(value) : ''}
 
                     <i className={'edit'}><SVG id={'edit-pen-icon'}/></i>
                 </div>

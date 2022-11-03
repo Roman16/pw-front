@@ -14,6 +14,8 @@ import _ from 'lodash'
 import {analyticsAvailableMetricsList} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
+import {currencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
+import {renderToString} from 'react-dom/server'
 
 
 const CancelToken = axios.CancelToken
@@ -49,10 +51,10 @@ const placementsEnums = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow}) => {
+const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow, fetchingCampaignList}) => {
     const [data, setData] = useState([]),
         [compareData, setCompareData] = useState([]),
-        [selectedMetric, setSelectedMetric] = useState('clicks'),
+        [selectedMetric, setSelectedMetric] = useState(metrics[0].key),
         [fetchingData, setFetchingData] = useState(true),
         [fetchingCompareData, setFetchingCompareData] = useState(false)
 
@@ -74,7 +76,8 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
 
                 return ({
                     ...hour,
-                    placements: _.values(_.values(statisticDayByHourByPlacement.result)[dayIndex])[hourIndex]
+                    placements: _.values(_.values(statisticDayByHourByPlacement.result)[dayIndex])[hourIndex],
+                    date: _.keys(statisticDayByHour.result)[dayIndex]
                 })
             }))
         } catch (e) {
@@ -104,8 +107,15 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
     }
 
     useEffect(() => {
-        campaignId && getData()
-    }, [campaignId, date, attributionWindow])
+        if (!fetchingCampaignList) {
+            if (campaignId !== null) {
+                getData()
+            } else {
+                setFetchingData(false)
+                setData([])
+            }
+        }
+    }, [campaignId, date, attributionWindow, fetchingCampaignList])
 
     useEffect(() => {
         if (selectedCompareDate) {
@@ -115,11 +125,10 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         }
     }, [campaignId, attributionWindow, selectedCompareDate])
 
-
     return (
         <Fragment>
             <section
-                className={`spend-statistics ${(fetchingData || !campaignId) ? ' disabled' : ''}`}>
+                className={`spend-statistics ${(fetchingData || fetchingCampaignList) ? ' disabled' : ''}`}>
                 <div className="section-header">
                     <h2>
                         Stats by Hour & Day
@@ -167,7 +176,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                         overlayClassName={'HourDayStatistics-tooltip'}
                                         description={
                                             <DailyTooltipDescription
-                                                date={moment(date.startDate).add(dayIndex)}
+                                                date={data[dayIndex]?.[0]?.date}
                                                 day={day}
                                                 data={data}
                                                 compareDate={compareData}
@@ -195,14 +204,15 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                         comparedValue={compareData.length === 0 ? undefined : compareData[dayIndex][item][selectedMetric]}
                                         placements={data[dayIndex]?.[item]?.placements}
                                         comparedPlacements={compareData[dayIndex]?.[item]?.placements}
-                                        date={item.date}
 
+                                        date={data[dayIndex]?.[item]?.date}
                                         data={data}
-
                                         selectedCompareDate={selectedCompareDate}
                                         selectedMetric={selectedMetric}
                                         outBudget={item.out_of_budget || item.out_of_budget_account || item.out_of_budget_portfolio}
-                                        index={hourIndex}
+
+                                        hourIndex={hourIndex}
+                                        dayIndex={dayIndex}
                                     />)
                                 })}
                             </div>
@@ -232,7 +242,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                     </div>
                 </div>
 
-                {(fetchingData || fetchingCompareData || !campaignId) && <div className="disable-page-loading">
+                {(fetchingData || fetchingCompareData || fetchingCampaignList) && <div className="disable-page-loading">
                     <Spin size="large"/>
                 </div>}
             </section>
@@ -263,15 +273,19 @@ const percentColor = ({value, metric, data}) => {
     return {color, percent}
 }
 
-export const renderMetricValue = ({value, metric, numberCut = 1}) => {
+export const renderMetricValue = ({value, metric, numberCut = 1, widthIcon = true}) => {
     if (value !== null && value !== undefined) {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
-            return (`${round(value * 100, 2)}%`)
+            return (`${round(value * 100, 2)}${widthIcon && '%'}`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
+            const valueWidthMask = numberMask(Math.abs(value), numberCut, null, 2)
+
             if (value < 0) {
-                return (`-$${numberMask(Math.abs(value), numberCut, null, 2)}`)
+                return (`-${widthIcon ? currencyWithCode(valueWidthMask)
+                    : valueWidthMask}`)
             } else {
-                return (`$${numberMask(value, numberCut, null, 2)}`)
+                return (`${widthIcon ? currencyWithCode(valueWidthMask)
+                    : valueWidthMask}`)
             }
         } else {
             return (numberMask(value))
@@ -281,7 +295,7 @@ export const renderMetricValue = ({value, metric, numberCut = 1}) => {
     }
 }
 
-export const MetricDiff = ({value = 0, prevValue = 0, metricType}) => {
+export const MetricDiff = ({value = 0, prevValue = 0, metricType, widthIcon = true}) => {
     let diff
 
     if (metricType === 'currency') {
@@ -293,7 +307,7 @@ export const MetricDiff = ({value = 0, prevValue = 0, metricType}) => {
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>${round(diff, 2)}</span>
+            <span>{widthIcon ? currencyWithCode(round(diff, 2)) : round(diff, 2)}</span>
         </div>)
 
     } else {
@@ -311,13 +325,13 @@ export const MetricDiff = ({value = 0, prevValue = 0, metricType}) => {
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>{round(diff, 2)}</span> %
+            <span>{round(diff, 2)}</span> {widthIcon && '%'}
         </div>)
     }
 
 }
 
-const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudget, selectedMetric, date, index, selectedCompareDate, placements}) => (
+const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudget, selectedMetric, date, hourIndex, dayIndex, selectedCompareDate, placements}) => (
     <div className='statistic-item'>
         <InformationTooltip
             getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode}
@@ -330,20 +344,23 @@ const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudge
                     comparedValue={comparedValue}
                     date={date}
                     data={data}
-                    timeIndex={index}
                     selectedMetric={selectedMetric}
                     selectedCompareDate={selectedCompareDate}
                     placements={placements}
                     comparedPlacements={comparedPlacements}
+
+                    timeIndex={hourIndex}
+                    dayIndex={dayIndex}
                 />
             }
         >
             <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
                  style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
-                <div className="value">{renderMetricValue({value, metric: selectedMetric})}</div>
+                <div className="value">{renderMetricValue({value, metric: selectedMetric, widthIcon: false})}</div>
 
                 {comparedValue !== undefined && <MetricDiff
                     value={value}
+                    widthIcon={false}
                     prevValue={comparedValue}
                     metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
                 />}
@@ -352,14 +369,14 @@ const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudge
     </div>
 )
 
-const TooltipDescription = ({value, comparedValue, timeIndex, date, outBudget, data, selectedMetric, selectedCompareDate, placements, comparedPlacements}) => {
+const TooltipDescription = ({value, comparedValue, timeIndex, dayIndex, date, data, selectedMetric, selectedCompareDate, placements, comparedPlacements}) => {
     const percentByRange = percentColor({value, data, metric: selectedMetric})
 
     return (
         <Fragment>
             <div className="tooltip-header">
                 <h3 className="date">
-                    {days[Math.floor(timeIndex / 24)]}, {moment(date).format('DD MMM YYYY, HH A')} - {moment(date).add(1, 'h').format('HH A')}
+                    {days[dayIndex]}, {moment(date, 'YYYY-MM-DD').format('DD MMM YYYY')} {moment(timeIndex, 'HH').format('hh A')} - {moment(timeIndex + 1, 'HH').format('hh A')}
                 </h3>
 
                 <div className="percent" style={{background: percentByRange.color}}>

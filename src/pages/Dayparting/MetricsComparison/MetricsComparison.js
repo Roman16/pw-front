@@ -15,7 +15,7 @@ const Option = Select.Option
 
 
 
-const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
+const MetricsComparison = ({ date, campaignId, attributionWindow, fetchingCampaignList}) => {
     const [data, setData] = useState([]),
         [firstMetric, setFirstMetric] = useState(metrics[0]),
         [secondMetric, setSecondMetric] = useState(metrics[1]),
@@ -53,13 +53,19 @@ const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
     }
 
     useEffect(() => {
-        campaignId && getData()
-
-    }, [date, chartType, campaignId, attributionWindow])
+        if(!fetchingCampaignList) {
+            if (campaignId !== null) {
+                getData()
+            } else {
+                setProcessing(false)
+                setData([])
+            }
+        }
+    }, [date, chartType, campaignId, attributionWindow, fetchingCampaignList])
 
 
     return (
-        <section className={`metrics-comparison ${(processing || !campaignId) ? ' disabled' : ''}`}>
+        <section className={`metrics-comparison ${(processing || fetchingCampaignList) ? ' disabled' : ''}`}>
             <div className="section-header">
                 <h2>
                     Metrics Comparison
@@ -85,7 +91,11 @@ const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
                                 setFirstMetric(metrics.find(item => item.key === metric))
 
                                 if (metric === secondMetric.key) {
-                                    setSecondMetric(metrics[0])
+                                    if(metric === metrics[0].key) {
+                                        setSecondMetric(metrics[1])
+                                    } else {
+                                        setSecondMetric(metrics[0])
+                                    }
                                 }
                             }}
                         >
@@ -154,7 +164,7 @@ const MetricsComparison = ({ date, campaignId, attributionWindow}) => {
                 chartType={chartType}
             />
 
-            {(processing || !campaignId) && <div className="disable-page-loading">
+            {(processing || fetchingCampaignList) && <div className="disable-page-loading">
                 <Spin size="large"/>
             </div>}
         </section>

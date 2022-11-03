@@ -8,7 +8,7 @@ import ConfirmActionPopup from "../../../../components/ModalWindow/ConfirmAction
 import {productsActions} from "../../../../actions/products.actions"
 import {SVG} from "../../../../utils/icons"
 import CogsWindow from "./CogsWindow"
-import {CurrencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
 const Option = Select.Option
 
@@ -193,7 +193,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         <div className="label">Product Price</div>
 
                         <p className={'product-price'}>
-                            {product.default_variation && product.default_variation.item_price !== null && <CurrencyWithCode value={product.default_variation.item_price}/>} (retrieved
+                            {product.default_variation && product.default_variation.item_price !== null && currencyWithCode(product.default_variation.item_price)} (retrieved
                             from Amazon)</p>
                     </div>
 

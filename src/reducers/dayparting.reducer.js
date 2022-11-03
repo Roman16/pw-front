@@ -2,7 +2,7 @@ import {daypartingConstants} from "../constans/actions.type"
 
 const defaultState = {
     campaignList: [],
-    processing: false,
+    processing: true,
     totalSize: 0,
     copiedParams: undefined,
     selectedCampaign: {id: null},

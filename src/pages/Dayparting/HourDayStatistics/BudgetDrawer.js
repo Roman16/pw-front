@@ -5,7 +5,7 @@ import InputCurrency from "../../../components/Inputs/InputCurrency";
 import {daypartingServices} from "../../../services/dayparting.services";
 import {notification} from "../../../components/Notification";
 import {numberMask} from "../../../utils/numberMask"
-import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
+import {currencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
 
 const BudgetDrawer = ({onClose, onSave, processing}) => {
     const [selectedRadio, setRadio] = useState('recommend'),
@@ -50,7 +50,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                 <div className="current-budget">
                     Current budget
 
-                    <span className='value'><CurrencyWithCode value={dailyBudget}/></span>
+                    <span className='value'>{currencyWithCode(dailyBudget)}</span>
                 </div>
 
                 <div className="recommend-budget">
@@ -58,7 +58,7 @@ const BudgetDrawer = ({onClose, onSave, processing}) => {
                         Recommended budget
                     </Radio>
 
-                    <span className='value'>{recommendedBudget ? <CurrencyWithCode value={recommendedBudget}/> : <Spin size={"small"}/>}</span>
+                    <span className='value'>{recommendedBudget ? currencyWithCode(recommendedBudget)  : <Spin size={"small"}/>}</span>
                 </div>
 
                 <div className="custom-budget">

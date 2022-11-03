@@ -16,7 +16,12 @@ export const ProductItem = ({
                             }) => {
     const switchList = (e) => {
         e.stopPropagation()
-        onOpenChild(id)
+
+        if(openedProduct === id) {
+            onOpenChild(undefined)
+        } else {
+            onOpenChild(id)
+        }
     }
 
     return (

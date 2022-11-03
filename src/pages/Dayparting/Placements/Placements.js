@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react'
-
 import {daypartingServices} from "../../../services/dayparting.services"
-import {useSelector} from "react-redux"
 import axios from "axios"
 import {Select, Spin, Switch} from "antd"
 import './Placements.less'
@@ -24,24 +22,24 @@ export const chartColors = [
     },
 
     {
-        stroke: '#BA96F4',
+        stroke: '#A292E2',
         fill: '#d0c2f4'
     },
     {
-        stroke: '#9464B9',
+        stroke: '#9852CE',
         fill: '#a290b9'
     },
 ]
 
 
-const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) => {
+const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, fetchingCampaignList}) => {
     let localFetching = false
 
     const [chartData, setChartData] = useState([]),
         [metricsData, setMetricsData] = useState({}),
         [comparedMetricsData, setComparedMetricsData] = useState(),
         [processing, setProcessing] = useState(true),
-        [selectedMetric, setSelectedMetric] = useState('clicks'),
+        [selectedMetric, setSelectedMetric] = useState(metrics[0].key),
         [chartType, setChartType] = useState('hourly')
 
     const getChartData = async () => {
@@ -109,7 +107,12 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
         sourceMetrics = CancelToken.source()
 
         try {
-            const {result} = await daypartingServices.getPlacementMetricsData({date, campaignId, attributionWindow, cancelToken: sourceMetrics.token})
+            const {result} = await daypartingServices.getPlacementMetricsData({
+                date,
+                campaignId,
+                attributionWindow,
+                cancelToken: sourceMetrics.token
+            })
             setMetricsData(result)
         } catch (e) {
             console.log(e)
@@ -137,8 +140,16 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
     }
 
     useEffect(() => {
-        campaignId && getChartData()
-    }, [date, campaignId, chartType, attributionWindow])
+        if (!fetchingCampaignList) {
+            if (campaignId !== null) {
+                getChartData()
+            } else {
+                setProcessing(false)
+                setChartData([])
+                setMetricsData({})
+            }
+        }
+    }, [date, campaignId, chartType, attributionWindow, fetchingCampaignList])
 
     useEffect(() => {
         campaignId && getMetricsData()
@@ -154,7 +165,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
 
     return (
         <section
-            className={`placements ${(processing || !campaignId) ? 'disabled' : ''}`}>
+            className={`placements ${(processing || fetchingCampaignList) ? 'disabled' : ''}`}>
             <div className="section-header">
                 <h2>Placements</h2>
 
@@ -200,7 +211,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow}) 
                 comparedData={comparedMetricsData}
             />
 
-            {(processing || !campaignId) && <div className="disable-page-loading">
+            {(processing || fetchingCampaignList) && <div className="disable-page-loading">
                 <Spin size="large"/>
             </div>}
         </section>

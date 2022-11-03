@@ -121,6 +121,8 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     const setActiveTabHandler = (tab) => {
         dispatch(daypartingActions.setActiveTab(tab))
 
+        setSearchStr('')
+
         setPaginationParams(prevState => ({
             ...prevState,
             page: 1
@@ -176,6 +178,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     multiselect={multiselect}
                     selectedCampaign={selectedCampaign}
                     tab={activeTab}
+                    searchStr={searchStr}
 
                     onApplyFilter={changeSelectHandler}
                     onChangeSwitch={changeSwitchHandler}
@@ -183,26 +186,27 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                 />
 
                 {activeTab !== 'account' && <>
-                <div className={`campaigns`}>
-                    {processing ?
-                        <div className='fetching-data'><Spin size={'large'}/></div> :
-                        campaignList && campaignList.map(item => <>
-                            {activeTab === 'campaigns' && <CampaignItem
-                                campaign={item}
-                                selectedCampaign={selectedCampaign}
-                                onSelect={selectCampaignHandler}
-                            />}
+                    <div className={`campaigns`}>
+                        {processing ?
+                            <div className='fetching-data'><Spin size={'large'}/></div> :
+                            campaignList.length === 0 ? <NoData activeTab={activeTab}/> :
+                                campaignList && campaignList.map(item => <>
+                                    {activeTab === 'campaigns' && <CampaignItem
+                                        campaign={item}
+                                        selectedCampaign={selectedCampaign}
+                                        onSelect={selectCampaignHandler}
+                                    />}
 
-                            {activeTab === 'products' && <ProductItem
-                                product={item}
-                                selectedProduct={selectedCampaign}
-                                openedProduct={openedVariations}
-                                onSelect={selectCampaignHandler}
-                                onChildSelect={selectCampaignHandler}
-                                onOpenChild={setOpenedVariations}
-                            />}
-                        </>)}
-                </div>
+                                    {activeTab === 'products' && <ProductItem
+                                        product={item}
+                                        selectedProduct={selectedCampaign}
+                                        openedProduct={openedVariations}
+                                        onSelect={selectCampaignHandler}
+                                        onChildSelect={selectCampaignHandler}
+                                        onOpenChild={setOpenedVariations}
+                                    />}
+                                </>)}
+                    </div>
 
                     <Pagination
                         onChange={changePaginationHandler}
@@ -227,6 +231,9 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
         </Fragment>
     )
 }
+
+const NoData = ({activeTab}) => activeTab === 'campaigns' ? <div className="no-data">No campaigns</div> :
+    <div className="no-data">No products</div>
 
 
 export default CampaignList

@@ -1,10 +1,6 @@
-import React, {Fragment} from "react"
+import React from "react"
 import {chartColors} from "./Placements"
-import {SVG} from "../../../utils/icons"
-import {round} from "../../../utils/round"
-import {CurrencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
-import {numberMask} from "../../../utils/numberMask"
-import {analyticsAvailableMetricsList, metricKeys} from "../../Analytics/componentsV2/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 import {MetricDiff, renderMetricValue} from "../HourDayStatistics/HourDayStatistics"
 import _ from "lodash"
 
@@ -26,8 +22,28 @@ const statisticParams = [
 
 export const metrics = [
     {
+        title: 'Impressions',
+        key: 'impressions'
+    },
+    {
         title: 'Clicks',
         key: 'clicks'
+    },
+    {
+        title: 'Spend',
+        key: 'cost'
+    },
+    {
+        title: 'Ad Orders',
+        key: 'attributedConversions'
+    },
+    {
+        title: 'Ad Units',
+        key: 'attributedUnitsOrdered'
+    },
+    {
+        title: 'Ad Sales',
+        key: 'attributedSales'
     },
     // {
     //     title: 'CTR',
@@ -37,27 +53,6 @@ export const metrics = [
     //     title: 'ACoS',
     //     key: 'acos'
     // },
-    {
-        title: 'Ad Orders',
-        key: 'attributedConversions'
-    },
-    {
-        title: 'Spend',
-        key: 'cost'
-    },
-    {
-        title: 'Ad Sales',
-        key: 'attributedSales'
-    },
-    {
-        title: 'Ad Units',
-        key: 'attributedUnitsOrdered'
-    },
-    {
-        title: 'Impressions',
-        key: 'impressions'
-    },
-
 ]
 
 export const MetricsStatistics = ({data, comparedData}) => {

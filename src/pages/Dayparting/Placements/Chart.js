@@ -7,7 +7,6 @@ import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
 
 
-
 const weakDays = [
     {
         date: 'Sunday',
@@ -32,7 +31,7 @@ const weakDays = [
     },
 ]
 
-const chartLabel =(selectedMetric) => ({
+const chartLabel = (selectedMetric) => ({
     [`top_of_search_${selectedMetric}`]: 'Top of search',
     [`detail_page_${selectedMetric}`]: 'Product pages',
     [`other_${selectedMetric}`]: 'Rest of search'
@@ -51,23 +50,23 @@ export const Chart = ({data, chartType, selectedMetric}) => {
                     stackOffset="expand"
                     isAnimationActive={false}
                     margin={{
-                        top: 5, right: 20, left: -10, bottom: 15,
+                        top: 10, right: 20, left: -10, bottom: 15,
                     }}
                 >
                     <defs>
                         <linearGradient id="gradient33" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor='rgba(255, 168, 170)' stopOpacity='0.25'/>
-                            <stop offset="100%" stopColor='rgba(255, 168, 170)' stopOpacity='0'/>
+                            <stop offset="0%" stopColor='#FFA8AA' stopOpacity='0.4'/>
+                            <stop offset="100%" stopColor='#FFA8AA' stopOpacity='0'/>
                         </linearGradient>
 
                         <linearGradient id="gradient22" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(162, 146, 226)" stopOpacity='0.25'/>
-                            <stop offset="100%" stopColor="rgba(162, 146, 226)" stopOpacity='0'/>
+                            <stop offset="0%" stopColor="#A292E2" stopOpacity='0.4'/>
+                            <stop offset="100%" stopColor="#A292E2" stopOpacity='0'/>
                         </linearGradient>
 
                         <linearGradient id="gradient11" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="rgba(152, 82, 206)" stopOpacity='0.25'/>
-                            <stop offset="100%" stopColor="rgba(152, 82, 206)" stopOpacity='0'/>
+                            <stop offset="0%" stopColor='#9852CE' stopOpacity='0.4'/>
+                            <stop offset="100%" stopColor='#9852CE' stopOpacity='0'/>
                         </linearGradient>
                     </defs>
 

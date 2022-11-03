@@ -1,7 +1,7 @@
-import {useSelector} from "react-redux"
+import {store} from "../../store/store"
 
-export const CurrencyWithCode = ({value}) => {
-    const currency = useSelector(state => state.user.activeAmazonMarketplace.currency_code) || 'USD'
+export const currencyWithCode = (value) => {
+    const currency = store.getState().user.activeAmazonMarketplace.currency_code || 'USD'
 
     switch (currency) {
         case "USD":

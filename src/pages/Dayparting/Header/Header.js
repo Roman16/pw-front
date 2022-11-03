@@ -94,7 +94,10 @@ export const Header = ({
                     onOpenChange={open => setVisibleCompareDatePickerDropdown(open)}
                     allowClear={false}
 
-                    ranges={{'Do not compare': [undefined, undefined], ...ranges}}
+                    ranges={{'Do not compare': [undefined, undefined],    'Past week': [
+                            moment().startOf('week').subtract(1, 'weeks'),
+                            moment().endOf('week').subtract(1, 'weeks')
+                        ]}}
                     className={`dark-mode ${!selectedCompareDate ? 'full' : ''}`}
                     dropdownClassName={'dayparting-dropdown'}
                     renderExtraFooter={() => currentMarketplaceLabel(marketplace)}
