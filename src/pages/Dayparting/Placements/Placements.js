@@ -11,7 +11,9 @@ import CustomSelect from "../../../components/Select/Select"
 
 const CancelToken = axios.CancelToken
 let sourceChart = null,
-    sourceMetrics = null
+    sourceMainMetrics = null,
+    sourceCompareMetrics = null
+
 
 const Option = Select.Option
 
@@ -103,15 +105,15 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
     }
 
     const getMetricsData = async () => {
-        sourceMetrics && sourceMetrics.cancel()
-        sourceMetrics = CancelToken.source()
+        sourceMainMetrics && sourceMainMetrics.cancel()
+        sourceMainMetrics = CancelToken.source()
 
         try {
             const {result} = await daypartingServices.getPlacementMetricsData({
                 date,
                 campaignId,
                 attributionWindow,
-                cancelToken: sourceMetrics.token
+                cancelToken: sourceMainMetrics.token
             })
             setMetricsData(result)
         } catch (e) {
@@ -120,8 +122,8 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
     }
 
     const getComparedMetricsData = async () => {
-        sourceMetrics && sourceMetrics.cancel()
-        sourceMetrics = CancelToken.source()
+        sourceCompareMetrics && sourceCompareMetrics.cancel()
+        sourceCompareMetrics = CancelToken.source()
         setProcessing(true)
 
         try {
@@ -129,7 +131,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
                 date: selectedCompareDate,
                 campaignId,
                 attributionWindow,
-                cancelToken: sourceMetrics.token
+                cancelToken: sourceCompareMetrics.token
             })
             setComparedMetricsData(result)
         } catch (e) {

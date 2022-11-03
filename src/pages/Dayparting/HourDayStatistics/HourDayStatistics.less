@@ -236,11 +236,13 @@
         }
       }
     }
-
   }
+
+
 
   .diff-value {
     max-width: 100%;
+    min-width: 40px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -276,6 +278,13 @@
         fill: #FFAF52;
         transform: rotate(180deg);
       }
+    }
+  }
+
+  .statistic-information {
+    .diff-value {
+      width: 100%;
+      justify-content: center;
     }
   }
 }

@@ -39,7 +39,6 @@ const chartLabel = (selectedMetric) => ({
 
 export const Chart = ({data, chartType, selectedMetric}) => {
 
-
     return (
         <div className='chart'>
             <ResponsiveContainer height='99%' width='100%'>
@@ -197,27 +196,6 @@ const ChartTooltip = ({payload, chartType, selectedMetric}) => {
         )
     } else {
         return ''
-    }
-}
-
-const CustomizedAxisTick = ({x, y, payload, lastIndex}) => {
-    if (payload.index === 0) {
-        return (
-            <g transform={`translate(${x},${y})`}>
-                <text x={65} y={0} dy={16} textAnchor="end"
-                      fill="#666">{moment(payload.value).format('DD MMM YY')}</text>
-            </g>
-        )
-    } else if (payload.index === lastIndex) {
-        return (
-            <g transform={`translate(${x},${y})`}>
-                <text x={0} y={0} dy={16} textAnchor="end"
-                      fill="#666">{moment(payload.value).format('DD MMM YY')}</text>
-            </g>
-        )
-
-    } else {
-        return ('')
     }
 }
 

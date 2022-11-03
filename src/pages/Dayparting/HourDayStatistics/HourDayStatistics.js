@@ -15,12 +15,13 @@ import {analyticsAvailableMetricsList} from "../../Analytics/componentsV2/MainMe
 import {round} from "../../../utils/round"
 import {numberMask} from "../../../utils/numberMask"
 import {currencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
-import {renderToString} from 'react-dom/server'
 
 
 const CancelToken = axios.CancelToken
-let source = null
 const Option = Select.Option
+
+let mainDataRequest = null,
+    compareDataRequest = null
 
 
 const days = [
@@ -59,16 +60,13 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         [fetchingCompareData, setFetchingCompareData] = useState(false)
 
 
-    const getDataByDate = async (d) => {
-        source && source.cancel()
-        source = CancelToken.source()
-
+    const getDataByDate = async (d, cancelToken) => {
         try {
             const requestParams = {
                 campaignId,
                 date: d,
                 attributionWindow,
-                cancelToken: source.token
+                cancelToken
             }
 
             const [statisticDayByHour, statisticDayByHourByPlacement] = await Promise.all([daypartingServices.getStatisticDayByHour(requestParams), daypartingServices.getStatisticDayByHourByPlacement(requestParams)])
@@ -88,9 +86,12 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
     }
 
     const getData = async () => {
+        mainDataRequest && mainDataRequest.cancel()
+        mainDataRequest = CancelToken.source()
+
         setFetchingData(true)
 
-        const res = await getDataByDate(date)
+        const res = await getDataByDate(date, mainDataRequest.token)
 
         await setData([...res])
 
@@ -98,9 +99,12 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
     }
 
     const getCompareData = async () => {
+        compareDataRequest && compareDataRequest.cancel()
+        compareDataRequest = CancelToken.source()
+
         setFetchingCompareData(true)
 
-        const res = await getDataByDate(selectedCompareDate)
+        const res = await getDataByDate(selectedCompareDate, compareDataRequest.token)
         await setCompareData([...res])
 
         setFetchingCompareData(false)
@@ -190,6 +194,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                             {day[0]}
 
                                             {selectedCompareDate && compareData.length > 0 && <MetricDiff
+                                                widthIcon={false}
                                                 value={_.reduce(data[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
                                                 prevValue={_.reduce(compareData[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
                                                 metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
@@ -254,16 +259,16 @@ const percentColor = ({value, metric, data}) => {
     let color,
         percent
 
-    const percentParams = {
-        min: _.min(data.map(item => _.minBy(item, metric)?.[metric] || 0)),
-        max: _.max(data.map(item => _.maxBy(item, metric)?.[metric] || 0)),
-    }
+    const max = _.max(data.map(item => _.maxBy(item, metric)?.[metric] || 0))
 
     colorList.forEach(item => {
         if (value != null) {
-            percent = value ? (value - percentParams.min) / (percentParams.max - percentParams.min) * 100 : 0
+            percent = value ? ((value / max) * 100) : 0
 
-            if (percent >= item.min && percent <= item.max) {
+            if (value < 0) {
+                color = '#4A4C59'
+                return
+            } else if (percent >= item.min && percent <= item.max) {
                 color = item.color
                 return
             }
@@ -273,7 +278,7 @@ const percentColor = ({value, metric, data}) => {
     return {color, percent}
 }
 
-export const renderMetricValue = ({value, metric, numberCut = 1, widthIcon = true}) => {
+export const renderMetricValue = ({value, metric, numberCut = 2, widthIcon = true}) => {
     if (value !== null && value !== undefined) {
         if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}${widthIcon && '%'}`)
@@ -295,7 +300,7 @@ export const renderMetricValue = ({value, metric, numberCut = 1, widthIcon = tru
     }
 }
 
-export const MetricDiff = ({value = 0, prevValue = 0, metricType, widthIcon = true}) => {
+export const MetricDiff = ({value, prevValue, metricType, widthIcon = true}) => {
     let diff
 
     if (metricType === 'currency') {
@@ -307,16 +312,22 @@ export const MetricDiff = ({value = 0, prevValue = 0, metricType, widthIcon = tr
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>{widthIcon ? currencyWithCode(round(diff, 2)) : round(diff, 2)}</span>
+            <span>{widthIcon ? currencyWithCode(numberMask(diff, 2, null, 2)) : numberMask(diff, 2, null, 2)}</span>
         </div>)
 
+    } else if (prevValue === null) {
+        return <div className={`diff-value `}>N/A</div>
     } else {
         if (prevValue === value) {
             diff = 0
         } else if (prevValue === 0) {
-            diff = 100
+            if (value === null) {
+                diff = 0
+            } else {
+                diff = 100
+            }
         } else {
-            diff = (value / prevValue - 1) * 100 || 0
+            diff = (value / prevValue) * 100 || 0
         }
 
         return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
@@ -325,7 +336,7 @@ export const MetricDiff = ({value = 0, prevValue = 0, metricType, widthIcon = tr
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>{round(diff, 2)}</span> {widthIcon && '%'}
+            <span>{round(diff, 2)}</span> %
         </div>)
     }
 
@@ -356,7 +367,9 @@ const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudge
         >
             <div className={`statistic-information ${outBudget ? 'out-budget-item' : ''}`}
                  style={{background: percentColor({value, data, metric: selectedMetric}).color}}>
-                <div className="value">{renderMetricValue({value, metric: selectedMetric, widthIcon: false})}</div>
+                <div className="value">
+                    {renderMetricValue({value, metric: selectedMetric, widthIcon: false})}
+                </div>
 
                 {comparedValue !== undefined && <MetricDiff
                     value={value}
