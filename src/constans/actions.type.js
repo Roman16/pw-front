@@ -74,6 +74,7 @@ export const daypartingConstants = {
     ACTIVATED_DAYPARTING: 'ACTIVATED_DAYPARTING',
     DEACTIVATED_DAYPARTING: 'DEACTIVATED_DAYPARTING',
     COPY_PARAMS: 'COPY_PARAMS',
+    SET_ACTIVE_TAB: 'SET_ACTIVE_TAB',
 }
 
 //--------------------------------------------

@@ -37,7 +37,7 @@ export const userUrls = {
     amazonRegionAccounts: 'user/account/amazon-region-accounts',
 
     adsCredentials: 'user/account/amazon-region-accounts/amazon-ads-api-credentials',
-    spCredentials:  'user/account/amazon-region-accounts/amazon-sp-api-credentials',
+    spCredentials: 'user/account/amazon-region-accounts/amazon-sp-api-credentials',
 
     subscriptionList: `user/account/subscription/list`,
     subscribe: (subscriptionId) => `user/account/subscription/${subscriptionId}/subscribe`,
@@ -139,15 +139,23 @@ export const adminUrls = {
 }
 
 export const daypartingUrls = {
-    campaigns: 'ppc-automation/dayparting/campaigns',
-    outBudget: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/sales-oob` : 'ppc-automation/dayparting/campaigns/sales-oob',
-    recommendedBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/recommended-budget`,
-    dailyBudget: (id) => `ppc-automation/dayparting/campaigns/${id}/daily-budget`,
-    dailyStatistic: (id) => `ppc-automation/dayparting/campaigns/${id}/chart-data`,
     getDayParting: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/state` : `ppc-automation/dayparting/campaigns/state`,
     dayParting: (id) => `ppc-automation/dayparting/campaigns/${id}/state`,
     placements: (id) => id ? `ppc-automation/dayparting/campaigns/${id}/placements` : 'ppc-automation/dayparting/campaigns/placements',
-    multiDayParting: 'ppc-automation/dayparting/campaigns/state'
+//    ------------------------
+    campaigns: 'dayparting/campaigns',
+    products: 'dayparting/products',
+
+    statisticDayByHour: 'dayparting/stats/by_day/by_hour',
+    statisticDayByHourByPlacement: 'dayparting/stats/by_day/by_hour/by_placement',
+    chartDataByWeekday: 'dayparting/stats/by_weekday',
+    chartDataByHour: 'dayparting/stats/by_hour',
+    placementChartDataByWeekday: 'dayparting/stats/by_placement/by_weekday',
+    placementChartDataByHour: 'dayparting/stats/by_placement/by_hour',
+    placementMetricsData: 'dayparting/stats/by_placement',
+
+    multiDayParting: 'ppc-automation/dayparting/campaigns/state',
+
 }
 
 export const zthUrls = {

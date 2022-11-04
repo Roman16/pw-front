@@ -24,6 +24,7 @@ const Pagination = ({
         listLength
     })
 
+
     useEffect(() => {
         if (!processing) {
             setPaginationParams({
@@ -73,6 +74,7 @@ const Pagination = ({
         }
     }
 
+
     return (
         <div className={`pw-pagination ${disabled ? 'disabled' : ''}`}>
             <div className="page-size">
@@ -93,7 +95,9 @@ const Pagination = ({
             </div>
 
             <div className='items-count'>
-                <b>{listLength ? ((paginationParams.page - 1) * paginationParams.pageSize) + 1 : '0'} - {paginationParams.listLength && paginationParams.page * paginationParams.pageSize - paginationParams.pageSize + paginationParams.listLength}</b>
+                {totalSize > 0 ? <b>{ ((paginationParams.page - 1) * paginationParams.pageSize) + 1} - {paginationParams.page * paginationParams.pageSize > totalSize ? totalSize : paginationParams.page * paginationParams.pageSize}</b> :
+                <b>0 - 0</b>}
+
                 <span>of</span>
                 <b>{totalSize || 0}</b>
             </div>

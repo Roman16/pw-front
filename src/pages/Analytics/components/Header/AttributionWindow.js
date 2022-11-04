@@ -20,28 +20,35 @@ const AttributionWindow = () => {
         }, 10)
     }
 
-    return (<div className="attribution-window">
-        <div className="form-group">
-            <div className="label">
-                <InformationTooltip description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
-
-                Attribution window:
-            </div>
-
-            <CustomSelect
-                onChange={changeValueHandler}
-                getPopupContainer={trigger => trigger.parentNode}
-                optionFilterProp="children"
-                value={+value}
-            >
-                <Option value={1}>1 day</Option>
-                <Option value={7}>7 day</Option>
-                <Option value={14}>14 day</Option>
-                <Option value={30}>30 day</Option>
-            </CustomSelect>
-
-        </div>
-    </div>)
+    return (<AttributionWindowSelect
+        value={value}
+        onChange={changeValueHandler}
+    />)
 }
+
+export const AttributionWindowSelect = ({value, onChange, className=''}) => (<div className="attribution-window-block">
+    <div className="form-group">
+        <div className="label">
+            <InformationTooltip
+                description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
+
+            Attribution window:
+        </div>
+
+        <CustomSelect
+            onChange={onChange}
+            getPopupContainer={trigger => trigger.parentNode}
+            optionFilterProp="children"
+            value={+value}
+            className={className}
+        >
+            <Option value={1}>1 day</Option>
+            <Option value={7}>7 day</Option>
+            <Option value={14}>14 day</Option>
+            <Option value={30}>30 day</Option>
+        </CustomSelect>
+
+    </div>
+</div>)
 
 export default AttributionWindow

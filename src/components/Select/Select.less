@@ -62,6 +62,7 @@
       .ant-select-selection-selected-value {
         align-items: center;
         padding-left: 1.0714285714285714rem;
+        line-height: 100%;
       }
     }
   }
@@ -88,6 +89,37 @@
 
       use {
         stroke: #656A84;
+      }
+    }
+  }
+
+  &.dark-mode {
+    .ant-select-selection {
+      background: transparent;
+      border: 1px solid #898989;
+
+       .ant-select-selection__rendered {
+         .ant-select-selection-selected-value {
+           color: #FFFFFF;
+         }
+       }
+
+      .ant-select-arrow {
+        svg {
+          use {
+            stroke: #fff;
+          }
+        }
+      }
+
+      &:hover {
+        border: 1px solid #6959AB;
+      }
+    }
+
+    &.ant-select-open {
+      .ant-select-selection {
+        border: 1px solid #fff !important;
       }
     }
   }

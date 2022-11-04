@@ -45,12 +45,14 @@ export const mainMenu = [
             {
                 title: 'Products Info',
                 link: 'product-settings'
-            },
-            {
-                title: 'Dayparting',
-                link: 'dayparting',
             }
         ]
+    },
+    {
+        title: 'Dayparting',
+        key: 'dayparting',
+        icon: 'dayparting-icon-sidebar',
+        link: 'dayparting'
     },
     {
         title: 'PPC Audit',

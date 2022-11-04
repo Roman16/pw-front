@@ -1,11 +1,11 @@
-import React from 'react';
-import moment from 'moment';
-import {Menu, Dropdown} from 'antd';
+import React from 'react'
+import moment from 'moment'
+import {Menu, Dropdown} from 'antd'
 
-import TitleInfo from '../../../../../components/Table/renders/TitleInfo';
-import {SVG} from "../../../../../utils/icons";
-import {numberMask} from "../../../../../utils/numberMask";
-import {round} from "../../../../../utils/round";
+import TitleInfo from '../../../../../components/Table/renders/TitleInfo'
+import {SVG} from "../../../../../utils/icons"
+import {numberMask} from "../../../../../utils/numberMask"
+import {round} from "../../../../../utils/round"
 
 export const dateField = {
     title: 'Date',
@@ -13,11 +13,11 @@ export const dateField = {
     key: 'datetime',
     width: '16.428571428571427rem',
     render: date => <span>
-        {moment.utc(date).format('MMM DD, YYYY hh:mm:ss A')}
+        {moment(moment.utc(date).toDate()).local().format('MMM DD, YYYY hh:mm:ss A')}
     </span>,
     sorter: true,
     filter: true
-};
+}
 
 export const actionField = {
     title: 'Action',
@@ -37,21 +37,21 @@ export const actionField = {
                         <span className="current">${action.data.new_bid}</span>
                     </>}
                 </div>)
-                break;
+                break
 
             case 'CREATED':
                 return (<div className="action-field">Created</div>)
-                break;
+                break
 
             case 'PAUSED':
                 return (<div className="action-field">Paused</div>)
-                break;
+                break
 
             default:
-                return ('');
+                return ('')
         }
     }
-};
+}
 
 export const reasonField = {
     title: 'Reason',
@@ -63,103 +63,103 @@ export const reasonField = {
         switch (type) {
             case 'AddedCreatedKeywordAsNegative':
                 return (<span>Created negative keyword to prevent competition between new ads</span>)
-                break;
+                break
 
             case 'AddedCreatedPATAsNegative':
                 return (<span>Created negative PT to prevent competition between new ads</span>)
-                break;
+                break
 
             case 'ChangedKeywordBidACoS':
                 return (<span>Adjusting bid to maximize profits</span>)
-                break;
+                break
 
             case 'ChangedKeywordBidImpressions':
                 return (<span>Increasing bid to generate more clicks</span>)
-                break;
+                break
 
             case 'ChangedPATBidACoS':
                 return (<span>Adjusting bid to maximize profits</span>)
-                break;
+                break
 
             case 'ChangedPATBidImpressions':
                 return (<span>Increasing bid to generate more clicks</span>)
-                break;
+                break
 
             case 'CreatedAdGroup':
                 return (<span>Created ad group for new targetings from search terms</span>)
-                break;
+                break
 
             case 'CreatedCampaign':
                 return (<span>Created campaign for new targetings from search terms</span>)
-                break;
+                break
 
             case 'CreatedKeywordFromCST':
                 return (
                     <span>Detected new keyword opportunity from search terms. Created it with bid <b>${numberMask(item.bid, 2)}</b></span>)
-                break;
+                break
 
             case 'CreatedNegativeKeywordFromCSTHighACoS':
                 return (<span>Created negative keyword for unprofitable search term</span>)
-                break;
+                break
 
             case 'CreatedNegativeKeywordFromCSTNoSales':
                 return (<span>Created negative keyword to prevent loss</span>)
-                break;
+                break
 
             case 'CreatedNegativePATFromCSTHighACoS':
                 return (<span>Created negative PT for unprofitable search term</span>)
-                break;
+                break
 
             case 'CreatedNegativePATFromCSTNoSales':
                 return (<span>Created negative PT to prevent loss</span>)
-                break;
+                break
 
             case 'CreatedPATFromCST':
                 return (
                     <span>Detected new PT opportunity from search terms. Created it with bid <b>${numberMask(item.bid, 2)}</b></span>)
-                break;
+                break
 
             case 'CreatedProductAd':
                 return (<span>Created product ad for new targetings from search terms</span>)
-                break;
+                break
 
             case 'PausedKeywordDuplicateFromCustomerSearchTerm':
                 return (
                     <span>This keyword is a duplicate of another better performing keyword based on search terms</span>)
-                break;
+                break
 
             case 'PausedKeywordDuplicateOfPAT':
                 return (<span>This keyword is a duplicate of another better performing PT</span>)
-                break;
+                break
 
             case 'PausedKeywordDuplicate':
                 return (<span>This keyword is a duplicate of another better performing keyword</span>)
-                break;
+                break
 
             case 'PausedKeywordHighACoS':
             case 'PausedKeywordNoSales':
                 return (<span>Not profitable keyword</span>)
-                break;
+                break
 
             case 'PausedPATHighACoS':
             case 'PausedPATNoSales':
                 return (<span>Not profitable PT</span>)
-                break;
+                break
 
             case 'PausedPATDuplicate':
                 return (<span>This PT is a duplicate of another better performing PT</span>)
-                break;
+                break
 
             case 'RevertLastChangeKeywordNoSales':
             case 'RevertLastChangePATNoSales':
                 return (<span>Adjusting bid to maximize profits</span>)
-                break;
+                break
 
             default:
-                return ('');
+                return ('')
         }
     }
-};
+}
 
 export const infoField = {
     title: '',
@@ -169,7 +169,7 @@ export const infoField = {
     render: (text, item) => (
         <TitleInfo info={text} position="left" type="info"/>
     )
-};
+}
 
 
 export const sorterByKeywordField = (filterByKeyword, filtered) => ({
@@ -193,7 +193,7 @@ export const sorterByKeywordField = (filterByKeyword, filtered) => ({
                     Show all changes for this keyword
                 </Menu.Item>
             </Menu>
-        );
+        )
 
         return (
             <Dropdown disabled={id == null || filtered} overlay={menu} trigger={['click']}>
@@ -206,16 +206,16 @@ export const sorterByKeywordField = (filterByKeyword, filtered) => ({
                 </button>
             </Dropdown>)
     }
-});
+})
 
 
 export const renderCurrencyField = {
     render: (data) => (data !== null) ? (<span>${numberMask(data, 2)}</span>) : ''
-};
+}
 
 export const renderNumberField = {
     render: (data) => (data !== null) ? (<span>{numberMask(data, 0)}</span>) : ''
-};
+}
 export const renderPercentField = {
     render: (data) => (data !== null) ? (<span>{round(data * 100, 2)}%</span>) : ''
-};
+}

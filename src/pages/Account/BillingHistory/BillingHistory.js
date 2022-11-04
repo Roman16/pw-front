@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react"
 import CustomTable from "../../../components/Table/CustomTable"
-import visaLogo from '../../../assets/img/visa-logo.svg'
-import masterLogo from '../../../assets/img/mastercard.svg'
-import {Icon} from "antd"
 import moment from "moment"
 import {numberMask} from "../../../utils/numberMask"
 import Pagination from "../../../components/Pagination/Pagination"
@@ -85,7 +82,7 @@ const BillingHistory = () => {
                 totalSize: historyData.totalSize
             })
         } catch (e) {
-            console.log(e)
+            setHistoryList([])
         }
 
         setProcessing(false)
@@ -94,6 +91,7 @@ const BillingHistory = () => {
     useEffect(() => {
         getHistory()
     }, [paginationParams.page, paginationParams.pageSize])
+
 
     return (
         <section className='billing-history'>

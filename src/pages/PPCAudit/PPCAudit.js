@@ -92,6 +92,7 @@ const PPCAudit = () => {
             if (result.products.length > 0) selectProductHandler(result.products[0])
         } catch (e) {
             console.log(e)
+            setProducts([])
         }
 
         setProductsFetchProcessing(false)
@@ -234,6 +235,7 @@ const PPCAudit = () => {
             }))
         } catch (e) {
             console.log(e)
+            setAuditIssues([])
         }
         setGetIssuesProcessing(false)
     }

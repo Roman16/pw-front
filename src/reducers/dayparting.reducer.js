@@ -2,10 +2,11 @@ import {daypartingConstants} from "../constans/actions.type"
 
 const defaultState = {
     campaignList: [],
-    processing: false,
+    processing: true,
     totalSize: 0,
     copiedParams: undefined,
-    selectedCampaign: {id: null}
+    selectedCampaign: {id: null},
+    activeTab: 'campaigns'
 }
 
 export function dayparting(state = defaultState, action) {
@@ -13,9 +14,9 @@ export function dayparting(state = defaultState, action) {
         case daypartingConstants.SET_CAMPAIGN_LIST:
             return {
                 ...state,
-                campaignList: action.payload.response,
-                totalSize: action.payload.total_count,
-                selectedCampaign: action.payload.response[0] || {id: null},
+                campaignList: action.payload.data,
+                totalSize: action.payload.total,
+                selectedCampaign: action.payload?.data[0] || {id: null},
                 processing: false
             }
 
@@ -28,7 +29,7 @@ export function dayparting(state = defaultState, action) {
         case daypartingConstants.SELECT_CAMPAIGN:
             return {
                 ...state,
-                selectedCampaign: action.payload,
+                selectedCampaign: state.activeTab==='account' ? {id: 1} : action.payload,
             }
 
 
@@ -37,7 +38,7 @@ export function dayparting(state = defaultState, action) {
                 ...state,
                 campaignList: state.campaignList.map(item => {
                     if (item.id === action.payload) {
-                        item.hasEnabledDayparting = true
+                        item.has_active_dayparting = true
                     }
 
                     return item
@@ -50,17 +51,26 @@ export function dayparting(state = defaultState, action) {
                 copiedParams: action.payload
             }
 
-
         case daypartingConstants.DEACTIVATED_DAYPARTING:
             return {
                 ...state,
                 campaignList: state.campaignList.map(item => {
                     if (item.id === action.payload) {
-                        item.hasEnabledDayparting = false
+                        item.has_active_dayparting = false
                     }
 
                     return item
                 })
+            }
+
+        case daypartingConstants.SET_ACTIVE_TAB:
+            return {
+                ...state,
+                activeTab: action.payload,
+                campaignList: [],
+                totalSize: 0,
+                processing: true,
+                selectedCampaign: {id: null}
             }
 
 

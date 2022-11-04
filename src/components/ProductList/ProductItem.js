@@ -24,7 +24,8 @@ const ProductItem = ({
                          isActive,
                          onOpenChild,
                          openedProduct,
-                         openedProductOnSetting
+                         openedProductOnSetting,
+                         onChildSelect
                      }) => {
 
     const switchList = (e) => {
@@ -65,10 +66,10 @@ const ProductItem = ({
                 </div>
 
                 <div
-                    className={`open-children-list-button ${variations.length > 0 ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
-                    onClick={variations.length > 0 && switchList}
+                    className={`open-children-list-button ${variations?.length > 0 ? 'has-variations' : ''} ${(openedProduct === id || openedProductOnSetting === id) ? 'opened' : ''}`}
+                    onClick={variations?.length > 0 && switchList}
                 >
-                    {variations.length > 0 && <SVG id='select-icon'/>}
+                    {variations?.length > 0 && <SVG id='select-icon'/>}
                 </div>
 
                 {optimization_indicator_state && <div className='optimization-status'>
@@ -78,9 +79,10 @@ const ProductItem = ({
                 </div>}
             </div>
 
-            {variations.length > 0 && (openedProduct === id) && <div className='product-children-list'>
+            {variations?.length > 0 && (openedProduct === id) && <div className='product-children-list'>
                 {variations.map(childrenProduct => (
-                    <div className={'children-product-item'}>
+                    <div className={'children-product-item'}
+                         onClick={() => onChildSelect && onChildSelect(childrenProduct)}>
                         <div className="children-indicator"/>
 
                         <div key={childrenProduct.id} className='children-information'>

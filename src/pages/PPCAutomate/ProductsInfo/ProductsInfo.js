@@ -50,6 +50,7 @@ const ProductsInfo = () => {
             setTotalSize(totalSize)
         } catch (e) {
             console.log(e)
+            setProductsList([])
         }
 
         setProcessing(false)
@@ -71,7 +72,7 @@ const ProductsInfo = () => {
     const changeFiltersHandler = (data) => setRequestParams({...requestParams, ...data, page: 1})
     const changePaginationHandler = (data) => setRequestParams({...requestParams, ...data})
 
-    const updateFieldHandler = async (item, column, value=null, success, error, parentId) => {
+    const updateFieldHandler = async (item, column, value = null, success, error, parentId) => {
         const breakSubmit = (text) => {
             notification.warning({title: text})
             error()

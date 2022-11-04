@@ -399,6 +399,15 @@ const RenderPageParts = (props) => {
             setTableFetchingStatus(false)
         } catch (e) {
             console.log(e)
+
+            setPageData(prevState => ({
+                metrics: prevState.metrics,
+                chart:  prevState.chart,
+                table: {
+                    ...prevState.table,
+                    response: [],
+                }
+            }))
         }
     })
 

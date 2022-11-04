@@ -1,16 +1,17 @@
-import {daypartingConstants, productsConstants} from '../constans/actions.type';
-import {daypartingServices} from "../services/dayparting.services";
+import {daypartingConstants, productsConstants} from '../constans/actions.type'
+import {daypartingServices} from "../services/dayparting.services"
 
 export const daypartingActions = {
-    getCampaignList,
+    getDataList,
     selectCampaign,
     activateDayparing,
     deactivateDayparing,
     setCampaignList,
-    copyParams
-};
+    copyParams,
+    setActiveTab
+}
 
-function getCampaignList(parameters) {
+function getDataList(requestParams, type) {
 
     return dispatch => {
         dispatch({
@@ -18,14 +19,34 @@ function getCampaignList(parameters) {
             payload: true
         })
 
-        daypartingServices.getCampaigns(parameters)
-            .then((res) => {
-                dispatch({
-                    type: daypartingConstants.SET_CAMPAIGN_LIST,
-                    payload: res
-                });
-            });
-    };
+        if (type === 'campaigns') {
+            daypartingServices.getCampaigns(requestParams)
+                .then((res) => {
+                    dispatch({
+                        type: daypartingConstants.SET_CAMPAIGN_LIST,
+                        payload: res.result
+                    })
+                })
+        } else if (type === 'account') {
+            dispatch({
+                type: daypartingConstants.SET_CAMPAIGN_LIST,
+                payload: {
+                    data: [{
+                        id: 1
+                    }],
+                    total: 0
+                }
+            })
+        } else if (type === 'products') {
+            daypartingServices.getProducts(requestParams)
+                .then((res) => {
+                    dispatch({
+                        type: daypartingConstants.SET_CAMPAIGN_LIST,
+                        payload: res.result
+                    })
+                })
+        }
+    }
 }
 
 function setCampaignList(list) {
@@ -34,6 +55,7 @@ function setCampaignList(list) {
         payload: list
     })
 }
+
 function copyParams(params) {
     return ({
         type: daypartingConstants.COPY_PARAMS,
@@ -53,7 +75,7 @@ function activateDayparing(id) {
     return ({
         type: daypartingConstants.ACTIVATED_DAYPARTING,
         payload: id
-    });
+    })
 }
 
 
@@ -61,5 +83,12 @@ function deactivateDayparing(id) {
     return ({
         type: daypartingConstants.DEACTIVATED_DAYPARTING,
         payload: id
-    });
+    })
+}
+
+function setActiveTab(tab) {
+    return ({
+        type: daypartingConstants.SET_ACTIVE_TAB,
+        payload: tab
+    })
 }

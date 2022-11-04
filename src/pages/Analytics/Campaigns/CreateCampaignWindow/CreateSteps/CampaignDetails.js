@@ -144,7 +144,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <DatePicker
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                             onChange={(date) => onChange({startDate: dateFormatting(date)})}
-                            value={moment(createData.startDate).tz(activeTimezone)}
+                            value={moment(createData.startDate)}
                             showToday={false}
                             allowClear={false}
                             locale={locale}
@@ -161,7 +161,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                         <label htmlFor="">End</label>
                         <DatePicker
                             placeholder={'No end date'}
-                            value={createData.endDate ? moment(createData.endDate).tz(activeTimezone) : undefined}
+                            value={createData.endDate ? moment(createData.endDate) : undefined}
                             getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                             onChange={(date) => onChange({endDate: dateFormatting(date)})}
                             showToday={false}
