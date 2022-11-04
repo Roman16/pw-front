@@ -19,11 +19,11 @@ export const baseUrl =
 
 let lastError = null
 
-function handlerErrors(error) {
+function handlerErrors(error, type='error') {
     if (lastError !== error) {
         lastError = error
 
-        notification.error({
+        notification[type]({
             title: error,
         })
 
@@ -110,6 +110,8 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         localStorage.removeItem('adminToken')
                         localStorage.removeItem('activeRegion')
                         localStorage.removeItem('activeMarketplace')
+
+                        handlerErrors('Authorization has expired, please log in again', 'warning')
 
                         if (window.location.pathname !== '/login') {
                             history.push(`/login?redirect=${history.location.pathname + history.location.search}`)
