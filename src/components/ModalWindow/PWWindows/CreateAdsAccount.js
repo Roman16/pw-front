@@ -1,9 +1,48 @@
-import React from "react"
+import React, {useEffect, useRef} from "react"
 import ModalWindow from "../ModalWindow"
 import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
+import {userService} from "../../../services/user.services"
+import {userActions} from "../../../actions/user.actions"
+import {useDispatch} from "react-redux"
+
+let intervalId = null
+
 
 export const CreateAdsAccount = ({visible, container, marketplace}) => {
     const marketplaceName = marketplace?.marketplace_id ? marketplaceIdValues[marketplace.marketplace_id].countryName : ''
+    const prevVisibleRef = useRef()
+    const dispatch = useDispatch()
+
+    const checkStatus = async () => {
+        try {
+            const importStatus = await userService.checkImportStatus(marketplace.id)
+            dispatch(userActions.updateUser({importStatus: importStatus.result}))
+        } catch (e) {
+
+        }
+    }
+
+
+    useEffect(() => {
+        if (prevVisibleRef.current && !visible) document.location.reload()
+
+        prevVisibleRef.current = visible
+
+        visible && checkStatus()
+
+        intervalId = setInterval(() => {
+            if (visible) {
+                checkStatus()
+            } else {
+                clearInterval(intervalId)
+            }
+        }, 10000)
+
+        return (() => {
+            clearInterval(intervalId)
+        })
+    }, [visible])
+
 
     return (
         <ModalWindow
