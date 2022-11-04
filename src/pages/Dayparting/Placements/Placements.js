@@ -143,7 +143,7 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
 
     useEffect(() => {
         if (!fetchingCampaignList) {
-            if (campaignId !== null) {
+            if (campaignId !== undefined && campaignId !== null) {
                 getChartData()
             } else {
                 setProcessing(false)

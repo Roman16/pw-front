@@ -30,9 +30,13 @@
 
       section {
         margin-bottom: 10px;
-        min-width: 1000px;
+        min-width: 1400px;
 
-        &:last-of-type {
+        @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+          min-width: 1000px;
+        }
+
+          &:last-of-type {
           margin: 0;
         }
       }

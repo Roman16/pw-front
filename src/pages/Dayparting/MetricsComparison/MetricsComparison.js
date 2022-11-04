@@ -54,7 +54,7 @@ const MetricsComparison = ({ date, campaignId, attributionWindow, fetchingCampai
 
     useEffect(() => {
         if(!fetchingCampaignList) {
-            if (campaignId !== null) {
+            if (campaignId !== undefined && campaignId !== null) {
                 getData()
             } else {
                 setProcessing(false)

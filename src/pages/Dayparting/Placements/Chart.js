@@ -4,8 +4,6 @@ import moment from "moment"
 import {chartColors} from "./Placements"
 import {CustomizedTick} from "../MetricsComparison/Chart"
 import {round} from "../../../utils/round"
-import {numberMask} from "../../../utils/numberMask"
-
 
 const weakDays = [
     {
@@ -38,14 +36,27 @@ const chartLabel = (selectedMetric) => ({
 })
 
 export const Chart = ({data, chartType, selectedMetric}) => {
-
     return (
         <div className='chart'>
             <ResponsiveContainer height='99%' width='100%'>
                 <AreaChart
                     width={400}
                     height={200}
-                    data={data}
+                    data={data.map(i => {
+                        const obj = {
+                            dateRange: i.dateRange,
+                            date: i.date
+                        }
+
+                        Object.keys(i).forEach(key => {
+                            if (key !== 'dateRange' && key !== 'date') {
+                                obj[key] = i[key]
+                                obj[`${key}_abs`] = i[key] > 0 ? i[key] : 0
+                            }
+                        })
+
+                        return {...obj}
+                    })}
                     stackOffset="expand"
                     isAnimationActive={false}
                     margin={{
@@ -101,7 +112,7 @@ export const Chart = ({data, chartType, selectedMetric}) => {
                     />
 
                     <Area
-                        dataKey={`other_${selectedMetric}`}
+                        dataKey={`other_${selectedMetric}_abs`}
                         stackId="1"
                         strokeWidth={2}
                         stroke={chartColors[2].stroke}
@@ -116,7 +127,7 @@ export const Chart = ({data, chartType, selectedMetric}) => {
                     />
 
                     <Area
-                        dataKey={`detail_page_${selectedMetric}`}
+                        dataKey={`detail_page_${selectedMetric}_abs`}
                         stackId="1"
                         strokeWidth={2}
                         stroke={chartColors[1].stroke}
@@ -130,7 +141,7 @@ export const Chart = ({data, chartType, selectedMetric}) => {
                     />
 
                     <Area
-                        dataKey={`top_of_search_${selectedMetric}`}
+                        dataKey={`top_of_search_${selectedMetric}_abs`}
                         stackId="1"
                         strokeWidth={2}
                         fill="url(#gradient33)"
@@ -145,13 +156,12 @@ export const Chart = ({data, chartType, selectedMetric}) => {
                 </AreaChart>
             </ResponsiveContainer>
         </div>
-
     )
 }
 
 const ChartTooltip = ({payload, chartType, selectedMetric}) => {
     if (payload && payload.length > 0) {
-        const total = payload.reduce((result, entry) => (result + entry.value), 0)
+        const total = payload.reduce((result, entry) => (result + entry.payload[`${entry.dataKey.replace('_abs', '')}`]), 0)
 
         return (
             <div className='chart-tooltip'>
@@ -169,7 +179,7 @@ const ChartTooltip = ({payload, chartType, selectedMetric}) => {
                     {payload.reverse().map((entry, index) => (
                         <div className={'row'} key={`item-${index}`}>
                             <div className='name'>
-                                {chartLabel(selectedMetric)[entry.name]}
+                                {chartLabel(selectedMetric)[`${entry.name.replace('_abs', '')}`]}
                             </div>
 
                             <div className='value' style={{color: entry.color}}>
@@ -183,11 +193,11 @@ const ChartTooltip = ({payload, chartType, selectedMetric}) => {
                                         stroke={entry.color} stroke-width="1.5"/>
                                 </svg>
 
-                                {getPercent(entry.value, total)}
+                                {getPercent(entry.payload[`${entry.dataKey.replace('_abs', '')}`], total)}
                             </div>
 
                             <div className='current-value'>
-                                ({round(entry.value, 2)})
+                                ({round(entry.payload[`${entry.dataKey.replace('_abs', '')}`], 2)})
                             </div>
                         </div>
                     ))}

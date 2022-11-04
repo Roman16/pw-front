@@ -182,6 +182,8 @@ class DaySwitches extends Component {
 
                 this.localFetching = false
             } catch (e) {
+                console.log(e)
+
                 !this.localFetching && this.setState({
                     processing: false,
                     fetchingData: false

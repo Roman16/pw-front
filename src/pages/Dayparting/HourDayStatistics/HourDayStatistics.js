@@ -112,11 +112,12 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
 
     useEffect(() => {
         if (!fetchingCampaignList) {
-            if (campaignId !== null) {
+            if (campaignId !== undefined && campaignId !== null) {
                 getData()
             } else {
                 setFetchingData(false)
                 setData([])
+                setCompareData([])
             }
         }
     }, [campaignId, date, attributionWindow, fetchingCampaignList])
