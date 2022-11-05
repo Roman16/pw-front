@@ -25,7 +25,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
         <div className="row">
             <ApiAccess
                 title={'Amazon SP API access'}
-                status={account.is_amazon_sp_api_accessible}
+                status={account.amazon_sp_api_access_status}
                 isAttached={account.is_amazon_sp_api_attached}
 
                 onDisconnect={() => onDisconnect('sp', account.id)}
@@ -34,7 +34,7 @@ export const AccountDetails = ({account, updateProcessing, onUpdateAlias, onDisc
 
             <ApiAccess
                 title={'Amazon Ads API access'}
-                status={account.is_amazon_ads_api_accessible}
+                status={account.amazon_ads_api_access_status}
                 isAttached={account.is_amazon_ads_api_attached}
 
                 onDisconnect={() => onDisconnect('ads', account.id)}
@@ -101,7 +101,7 @@ const AliasEditPopup = ({alias, onSubmit, processing}) => {
 }
 
 const ApiAccess = ({title, status, isAttached, onDisconnect, onConnect}) => {
-    const success = status === true && isAttached
+    const success = status === 'CREDENTIALS_SUCCESS' && isAttached
 
     const [visible, setVisible] = useState(false)
 
