@@ -13,7 +13,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
 
     return (
         <ul className="accounts-list">
-            {accounts.map(({account_alias, seller_id, amazon_region_account_marketplaces,region_type, id, is_amazon_sp_api_accessible, is_amazon_ads_api_accessible, is_amazon_ads_api_attached, is_amazon_sp_api_attached}, index) => (
+            {accounts.map(({account_alias, seller_id, amazon_region_account_marketplaces,region_type, id, amazon_sp_api_access_status, amazon_ads_api_access_status, is_amazon_ads_api_attached, is_amazon_sp_api_attached}, index) => (
                 <li className={selectedAccount?.id === id && 'active'}>
                     <div className="account-name" onClick={() => onSelect(accounts[index])}>
                         <h3>
@@ -21,7 +21,7 @@ export const Accounts = ({accounts, selectedAccount, activeRegion, activeMarketp
                             {activeRegion.id === id && <span>(Active)</span>}
                         </h3>
 
-                        {(is_amazon_sp_api_accessible === false || is_amazon_ads_api_accessible === false || is_amazon_ads_api_attached === false || is_amazon_sp_api_attached === false) &&
+                        {(amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' || amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || is_amazon_ads_api_attached === false || is_amazon_sp_api_attached === false) &&
                         <InformationTooltip type={'custom'}
                                             description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your <b>Account -> Amazon Accounts</b> page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}>
                             <div className={'error'}>

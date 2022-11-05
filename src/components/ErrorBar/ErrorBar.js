@@ -57,7 +57,7 @@ const ErrorBar = () => {
             {/*    We are currently checking your Seller Central API connection.*/}
             {/*</div>}*/}
 
-            {region?.is_amazon_sp_api_accessible === false &&
+            {region?.amazon_sp_api_access_status && region?.amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong> Attention!</strong> Looks like your SP API access was revoked. Please go to your Seller
@@ -71,7 +71,7 @@ const ErrorBar = () => {
             </div>}
 
 
-            {region?.is_amazon_ads_api_accessible === false &&
+            {region?.amazon_ads_api_access_status && region?.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Looks like we don’t have permission for your Advertising Campaigns. It
