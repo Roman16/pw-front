@@ -9,7 +9,7 @@ import axios from "axios"
 import {Select, Spin} from "antd"
 import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
-import {metrics} from '../Placements/MetricsStatistics'
+import {getMetricValue, metrics} from '../Placements/MetricsStatistics'
 import _ from 'lodash'
 import {analyticsAvailableMetricsList} from "../../Analytics/componentsV2/MainMetrics/metricsList"
 import {round} from "../../../utils/round"
@@ -70,10 +70,16 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
             }
 
             const [statisticDayByHour, statisticDayByHourByPlacement] = await Promise.all([daypartingServices.getStatisticDayByHour(requestParams), daypartingServices.getStatisticDayByHourByPlacement(requestParams)])
-            return await _.values(statisticDayByHour.result).map((day, dayIndex) => _.values(day).map((hour, hourIndex) => {
 
+            return await _.values(statisticDayByHour.result).map((day, dayIndex) => _.values(day).map((hourItem, hourIndex) => {
                 return ({
-                    ...hour,
+                    ...hourItem,
+                    acos: getMetricValue(hourItem, 'acos'),
+                    roas: getMetricValue(hourItem, 'roas'),
+                    ctr: getMetricValue(hourItem, 'ctr'),
+                    cpc: getMetricValue(hourItem, 'cpc'),
+                    cvr: getMetricValue(hourItem, 'cvr'),
+                    cpa: getMetricValue(hourItem, 'cpa'),
                     placements: _.values(_.values(statisticDayByHourByPlacement.result)[dayIndex])[hourIndex],
                     date: _.keys(statisticDayByHour.result)[dayIndex]
                 })
@@ -281,8 +287,10 @@ const percentColor = ({value, metric, data}) => {
 
 export const renderMetricValue = ({value, metric, numberCut = 2, widthIcon = true}) => {
     if (value !== null && value !== undefined) {
-        if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
-            return (`${round(value * 100, 2)}${widthIcon && '%'}`)
+        if (metric === 'roas') {
+            return (`${round(value, 2)}${widthIcon ? 'x' : ''}`)
+        } else if (metric === 'cvr' || _.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
+            return (`${round(value * 100, 2)}${widthIcon ? '%' : ''}`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
             const valueWidthMask = numberMask(Math.abs(value), numberCut, null, 2)
 
@@ -441,6 +449,21 @@ const TooltipDescription = ({value, comparedValue, timeIndex, dayIndex, date, da
 }
 
 const DailyTooltipDescription = ({data, compareDate, index, day, date, selectedMetric, selectedCompareDate}) => {
+    let value
+
+    if (selectedMetric === 'acos' || selectedMetric === 'roas' || selectedMetric === 'ctr' || selectedMetric === 'cpc' || selectedMetric === 'cvr' || selectedMetric === 'cpa') {
+        value = getMetricValue({
+            impressions: _.reduce(data[index], (sum, item) => sum + item['impressions'], 0),
+            clicks: _.reduce(data[index], (sum, item) => sum + item['clicks'], 0),
+            cost: _.reduce(data[index], (sum, item) => sum + item['cost'], 0),
+            attributedConversions: _.reduce(data[index], (sum, item) => sum + item['attributedConversions'], 0),
+            attributedUnitsOrdered: _.reduce(data[index], (sum, item) => sum + item['attributedUnitsOrdered'], 0),
+            attributedSales: _.reduce(data[index], (sum, item) => sum + item['attributedSales'], 0),
+        }, selectedMetric)
+    } else {
+        value = _.reduce(data[index], (sum, item) => sum + item[selectedMetric], 0)
+    }
+
     return (
         <Fragment>
             <div className="tooltip-header">
@@ -453,7 +476,7 @@ const DailyTooltipDescription = ({data, compareDate, index, day, date, selectedM
                 <div className="name">{_.find(metrics, {key: selectedMetric}).title}</div>
                 <div className="value">
                     {renderMetricValue({
-                        value: _.reduce(data[index], (sum, item) => sum + item[selectedMetric], 0),
+                        value: value,
                         metric: selectedMetric
                     })}
                 </div>

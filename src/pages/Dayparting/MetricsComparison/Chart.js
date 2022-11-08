@@ -36,7 +36,7 @@ export const Chart = ({data, chartType, firstMetric, secondMetric}) => {
                 <AreaChart
                     data={data}
                     margin={{
-                        top: 5, right: -10, left: -10, bottom: 15,
+                        top: 5, right: 15, left: 15, bottom: 15,
                     }}
                 >
 

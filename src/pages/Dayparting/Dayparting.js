@@ -27,8 +27,9 @@ const Dayparting = () => {
 
     const timezone = activeAmazonMarketplace.timezone
 
-    const {campaignId, fetchingCampaignList, activeTab} = useSelector(state => ({
+    const {campaignId, fetchingCampaignList, activeTab, campaignType} = useSelector(state => ({
         campaignId: state.dayparting.selectedCampaign.id,
+        campaignType: state.dayparting.selectedCampaign.advertising_type,
         fetchingCampaignList: state.dayparting.processing,
         activeTab: state.dayparting.activeTab,
     }))
@@ -66,6 +67,11 @@ const Dayparting = () => {
                         hasSubscriptions={subscription.access.optimization}
                     />
                 </div> : <div className="col">
+                    {campaignId && activeTab === 'campaigns' && campaignType !== 'SponsoredProducts' && <section className={'not-sp-campaign'}>
+                        You have selected {campaignType?.replace(/([a-z])([A-Z])/g, '$1 $2')} campaign. Unfortunately, hourly metrics are only provided by Amazon for Sponsored Products campaigns only right now. <br/>
+                        Our Dayparting functionality is still available though and you can set up your settings at the bottom of this page.
+                    </section>}
+
                     <HourDayStatistics
                         date={selectedDate}
                         campaignId={campaignId}
