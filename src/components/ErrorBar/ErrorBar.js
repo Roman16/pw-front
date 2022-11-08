@@ -23,7 +23,8 @@ const ErrorBar = () => {
     const onTrial = useSelector(state => state.user.subscription.trial.trial_active),
         marketplace = useSelector(state => state.user.activeAmazonMarketplace),
         region = useSelector(state => state.user.activeAmazonRegion),
-        importStatus = useSelector(state => state.user.importStatus)
+        importStatus = useSelector(state => state.user.importStatus),
+        isAgencyClient = useSelector(state => state.user?.is_agency_client === 1)
 
     const marketplaceName = marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
 
@@ -37,9 +38,8 @@ const ErrorBar = () => {
                     description={'Hey there, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
-                Free Trial
-                <span> {trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span>
-                Days Left
+                {!isAgencyClient ? <>Contract with Agency expires in <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> days</> :
+                    <>Free Trial <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> Days Left</> }
             </div>}
 
             {marketplace && marketplace.profile_id === null && importStatus.common_resources?.required_parts_details.profiles.part_ready &&
@@ -57,37 +57,14 @@ const ErrorBar = () => {
             {/*    We are currently checking your Seller Central API connection.*/}
             {/*</div>}*/}
 
-            {region?.amazon_sp_api_access_status && region?.amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' &&
-            <div className={'error'}>
-                <SVG id={'error-bar-icon'}/>
-                <p><strong> Attention!</strong> Looks like your SP API access was revoked. Please go to your Seller
-                    Central
-                    account under settings, then user permissions, reinstate access, copy your new authorization token,
-                    and
-                    enter it on your Sponsoreds Account page. This will then reinstate access and your account synced
-                    again.</p>
-
-                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
-            </div>}
-
-
-            {region?.amazon_ads_api_access_status && region?.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' &&
-            <div className={'error'}>
-                <SVG id={'error-bar-icon'}/>
-                <p><strong>Attention!</strong> Looks like we don’t have permission for your Advertising Campaigns. It
-                    usually happens
-                    because of the wrong marketplace, wrong Amazon account, or you don’t have Amazon Advertising. Please
-                    update your Amazon Advertising credentials in your account or contact support.</p>
-
-                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
-            </div>}
-
             {region != null && region.is_amazon_ads_api_attached !== true &&
             <div className={'error'}>
                 <SVG id={'error-bar-icon'}/>
                 <p><strong>Attention!</strong> Amazon Ads API access is not granted or was revoked for this Amazon
                     account. Please go to your <b>Account -> Amazon Accounts</b> page and connect Amazon Ads API for
                     this account.</p>
+
+                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
             {region != null && region.is_amazon_sp_api_attached !== true &&
@@ -96,6 +73,8 @@ const ErrorBar = () => {
                 <p><strong>Attention!</strong> Amazon SP API access is not granted or was revoked for this Amazon
                     account. Please go to your <b>Account -> Amazon Accounts</b> page and connect Amazon SP API for
                     this account.</p>
+
+                <Link to={'/account/api-connections'} className={'btn white'}>Edit Credentials</Link>
             </div>}
 
             {/*{(accountLinks.amazon_mws.status === 'UNAUTHORIZED' && accountLinks.amazon_ppc.status === 'UNAUTHORIZED') ?*/}

@@ -48,7 +48,7 @@ const ConnectedRegions = ({popupRef, visible, collapsed, regions, onSet, activeM
                         <div className="text"
                              title={region.account_alias || region.region_type.replace(/_/g, ' ')}>{region.account_alias || region.region_type.replace(/_/g, ' ')}</div>
 
-                        {(region.amazon_sp_api_access_status !== 'CREDENTIALS_SUCCESS' || region.amazon_ads_api_access_status !== 'CREDENTIALS_SUCCESS' || region.is_amazon_ads_api_attached === false || region.is_amazon_sp_api_attached === false) &&
+                        {(region.is_amazon_sp_api_accessible === false || region.is_amazon_ads_api_accessible === false || region.is_amazon_ads_api_attached === false || region.is_amazon_sp_api_attached === false) &&
                         <InformationTooltip
                             type={'custom'}
                             description={`There is a problem with an API Access for this Seller account. It may hinder your experience using Sponsoreds services. Please go to your <b>Account -> Amazon Accounts</b> page, select this Seller account and reconnect your API Access. <br/><br/> If issue persists, please feel free to <a href="#" id="intercom-chat-launcher">contact support.</a>`}
