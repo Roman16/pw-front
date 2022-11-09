@@ -38,7 +38,7 @@ const ErrorBar = () => {
                     description={'Hey there, to make sure the software will continue to work after the free trial ends, please make sure that you have a valid credit card attached to the account.'}>
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
-                {!isAgencyClient ? <>Contract with Agency expires in <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> days</> :
+                {isAgencyClient ? <>Contract with Agency expires in <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> days</> :
                     <>Free Trial <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> Days Left</> }
             </div>}
 
