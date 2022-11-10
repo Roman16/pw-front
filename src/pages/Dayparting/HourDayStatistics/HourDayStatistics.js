@@ -328,7 +328,7 @@ export const MetricDiff = ({value, prevValue, metricType, widthIcon = true}) => 
                 diff = 100
             }
         } else {
-            diff = (value / prevValue) * 100 || 0
+            diff = ((value - prevValue) / prevValue) * 100 || 0
         }
 
         return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
