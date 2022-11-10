@@ -24,7 +24,7 @@ const ErrorBar = () => {
         marketplace = useSelector(state => state.user.activeAmazonMarketplace),
         region = useSelector(state => state.user.activeAmazonRegion),
         importStatus = useSelector(state => state.user.importStatus),
-        isAgencyClient = useSelector(state => state.user?.is_agency_client === 1)
+        isAgencyClient = useSelector(state => state.user.userDetails?.is_agency_client === 1)
 
     const marketplaceName = marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
 
