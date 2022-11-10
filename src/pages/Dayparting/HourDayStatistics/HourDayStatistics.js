@@ -373,9 +373,9 @@ const StatisticItem = ({value, comparedValue, data, comparedPlacements, outBudge
                 </div>
 
                 {comparedValue !== undefined && <MetricDiff
-                    value={value}
+                    value={value || 0}
                     widthIcon={false}
-                    prevValue={comparedValue}
+                    prevValue={comparedValue || 0}
                     metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
                 />}
             </div>
