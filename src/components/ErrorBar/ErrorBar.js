@@ -24,7 +24,7 @@ const ErrorBar = () => {
         marketplace = useSelector(state => state.user.activeAmazonMarketplace),
         region = useSelector(state => state.user.activeAmazonRegion),
         importStatus = useSelector(state => state.user.importStatus),
-        isAgencyClient = useSelector(state => state.user?.is_agency_client === 1)
+        isAgencyClient = useSelector(state => state.user.userDetails?.is_agency_client === 1)
 
     const marketplaceName = marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''
 
@@ -39,7 +39,7 @@ const ErrorBar = () => {
                     <SVG id={'attention-bar-icon'}/>
                 </InformationTooltip>
                 {isAgencyClient ? <>Contract with Agency expires in <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> days</> :
-                    <>Free Trial <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> Days Left</> }
+                <>Free Trial <span> {trialLeftDays && trialLeftDays >= 0 ? ` ${trialLeftDays} ` : 0} </span> Days Left</> }
             </div>}
 
             {marketplace && marketplace.profile_id === null && importStatus.common_resources?.required_parts_details.profiles.part_ready &&
