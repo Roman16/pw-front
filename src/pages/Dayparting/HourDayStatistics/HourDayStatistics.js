@@ -122,7 +122,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                 getData()
             } else {
                 setFetchingData(false)
-                setData([])
+                setData(days.map(() => hours))
                 setCompareData()
             }
         }
@@ -191,7 +191,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                             <TooltipDescription
                                                 percent={false}
                                                 time={false}
-                                                date={data[dayIndex][0].date}
+                                                date={data[dayIndex]?.[0].date}
                                                 data={{
                                                     ..._.mapValues(data[0][0], (value, key) => _.reduce(data[dayIndex], (sum, item) => sum + item[key], 0)),
                                                     placements: {
