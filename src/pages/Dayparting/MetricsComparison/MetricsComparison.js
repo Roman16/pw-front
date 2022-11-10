@@ -6,7 +6,7 @@ import {Select, Spin, Switch} from "antd"
 import {daypartingServices} from "../../../services/dayparting.services"
 import _ from 'lodash'
 import moment from 'moment'
-import {metrics} from "../Placements/MetricsStatistics"
+import {getMetricValue, metrics} from "../Placements/MetricsStatistics"
 import axios from "axios"
 
 const CancelToken = axios.CancelToken
@@ -33,6 +33,12 @@ const MetricsComparison = ({ date, campaignId, attributionWindow, fetchingCampai
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,
+                    acos: getMetricValue(i, 'acos'),
+                    roas: getMetricValue(i, 'roas'),
+                    ctr: getMetricValue(i, 'ctr'),
+                    cpc: getMetricValue(i, 'cpc'),
+                    cvr: getMetricValue(i, 'cvr'),
+                    cpa: getMetricValue(i, 'cpa'),
                     date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
                 })))
             } else {
@@ -40,6 +46,12 @@ const MetricsComparison = ({ date, campaignId, attributionWindow, fetchingCampai
 
                 setData(_.values(result).map((i, index) => ({
                     ...i,
+                    acos: getMetricValue(i, 'acos'),
+                    roas: getMetricValue(i, 'roas'),
+                    ctr: getMetricValue(i, 'ctr'),
+                    cpc: getMetricValue(i, 'cpc'),
+                    cvr: getMetricValue(i, 'cvr'),
+                    cpa: getMetricValue(i, 'cpa'),
                     date: index,
                     dateRange: {...date},
                 })))
@@ -62,7 +74,6 @@ const MetricsComparison = ({ date, campaignId, attributionWindow, fetchingCampai
             }
         }
     }, [date, chartType, campaignId, attributionWindow, fetchingCampaignList])
-
 
     return (
         <section className={`metrics-comparison ${(processing || fetchingCampaignList) ? ' disabled' : ''}`}>

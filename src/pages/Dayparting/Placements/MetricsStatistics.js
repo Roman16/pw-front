@@ -126,9 +126,6 @@ export const MetricsStatistics = ({data, comparedData}) => {
             key: 'key',
             align: 'right',
             render: (value) => {
-                console.log(data)
-                console.log(value)
-
                 return renderMetricValue({
                 value: data[value]?.[metric.key],
                 metric: metric.key,
