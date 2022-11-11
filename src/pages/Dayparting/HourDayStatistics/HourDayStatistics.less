@@ -438,6 +438,8 @@
 
   .ant-popover-inner-content {
     min-width: 380px;
+    max-width: max-content;
+    width: max-content;
     border: 0;
     box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
     padding: 1.0714285714285714rem;
@@ -471,6 +473,11 @@
       }
     }
 
+      .diff-value span {
+      max-width: 100%;
+       overflow: inherit;
+    }
+
     label {
       font-size: 0.7142857142857143rem;
       color: #686868;
@@ -496,8 +503,6 @@
       }
 
 
-
-
       &.main-metric {
         background: #F3F3F3;
         border-radius: 4px;
@@ -508,7 +513,7 @@
     }
 
     .changes-block {
-      width: 140px;
+      min-width: 140px;
 
       display: flex;
       justify-content: flex-end;
@@ -516,6 +521,7 @@
       .diff-value {
         font-size: 0.8571428571428571rem;
         margin: 0 5px 0 0;
+        justify-content: flex-end;
       }
 
       .from {
