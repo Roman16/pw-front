@@ -250,7 +250,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     }
     const changeDateHandler = (startDate, endDate) => {
-        console.log(startDate)
         if (startDate) {
             setFilterValue({
                 startDate,

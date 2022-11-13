@@ -136,8 +136,6 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         }
     }, [campaignId, attributionWindow, selectedCompareDate])
 
-    console.log(data)
-
     return (
         <Fragment>
             <section
@@ -219,7 +217,8 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                 widthIcon={false}
                                                 value={_.reduce(data[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
                                                 prevValue={_.reduce(compareData[dayIndex], (sum, item) => sum + item[selectedMetric], 0)}
-                                                metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                                                metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric})?.type}
+                                                metric={selectedMetric}
                                             />}
                                         </div>
                                     </InformationTooltip>
@@ -253,7 +252,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                          }).color
                                                      }}>
                                                     <div className="value">
-                                                        {valueCut(item[selectedMetric])}
+                                                        {valueCut(item[selectedMetric], selectedMetric)}
                                                     </div>
 
                                                     {selectedCompareDate && compareData && <MetricDiff
@@ -261,7 +260,8 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                         prevValue={compareData[dayIndex][hourIndex][selectedMetric] || 0}
                                                         widthIcon={false}
                                                         numberFormatting={true}
-                                                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                                                        metric={selectedMetric}
+                                                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric})?.type}
                                                     />}
                                                 </div>
                                             </InformationTooltip>
@@ -295,7 +295,11 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
     )
 }
 
-const valueCut = (value) => {
+const valueCut = (value, metric) => {
+    if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
+        value = value * 100
+    }
+
     if (value !== null && value !== undefined) {
         if (value >= 1000 && value < 1000000) {
             return `${Math.round(value / 1000)}K`
@@ -340,7 +344,7 @@ export const renderMetricValue = ({value, metric, numberCut = 2, widthIcon = tru
     if (value !== null && value !== undefined) {
         if (metric === 'roas') {
             return (`${round(value, 2)}${widthIcon ? 'x' : ''}`)
-        } else if (metric === 'cvr' || _.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
+        } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'percent') {
             return (`${round(value * 100, 2)}${widthIcon ? '%' : ''}`)
         } else if (_.find(analyticsAvailableMetricsList, {key: metric}).type === 'currency') {
             const valueWidthMask = numberMask(Math.abs(value), numberCut, null, 2)
@@ -360,10 +364,9 @@ export const renderMetricValue = ({value, metric, numberCut = 2, widthIcon = tru
     }
 }
 
-export const MetricDiff = ({value, prevValue, metricType, widthIcon = true, numberFormatting = false}) => {
+export const MetricDiff = ({value, prevValue, metricType, metric, widthIcon = true, numberFormatting = false}) => {
     let diff
-
-    if (metricType === 'currency') {
+    if (metric === 'roas') {
         diff = value - prevValue
 
         return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
@@ -372,7 +375,29 @@ export const MetricDiff = ({value, prevValue, metricType, widthIcon = true, numb
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>{widthIcon ? currencyWithCode(numberMask(diff, 2)) : numberFormatting ? valueCut(diff) : numberMask(diff, 2)}</span>
+            <span>{numberFormatting ? valueCut(diff, metric) : numberMask(diff, 2, null, 2)}x</span>
+        </div>)
+    } else if (metric === 'acos' || metric === 'ctr' || metric === 'cvr') {
+        diff = (value - prevValue) * 100
+
+        return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
+            {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
+            </svg>}
+
+            <span>{numberFormatting ? valueCut(diff, metric) : numberMask(diff, 2, null, 2)}%</span>
+        </div>)
+    } else if (metricType === 'currency') {
+        diff = value - prevValue
+
+        return (<div className={`diff-value ${diff === 0 ? '' : diff < 0 ? 'downward-changes' : 'upward-changes'}`}>
+            {diff !== 0 && <svg width="5" height="4" viewBox="0 0 5 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
+            </svg>}
+
+            <span>{widthIcon ? currencyWithCode(numberMask(diff, 2)) : numberFormatting ? valueCut(diff, metric) : numberMask(diff, 2)}</span>
         </div>)
 
     } else if (prevValue === null) {
@@ -396,7 +421,7 @@ export const MetricDiff = ({value, prevValue, metricType, widthIcon = true, numb
                     d="M1.90526 0.45C2.02073 0.25 2.3094 0.25 2.42487 0.45L4.07032 3.3C4.18579 3.5 4.04145 3.75 3.81051 3.75H0.519616C0.288675 3.75 0.144338 3.5 0.259808 3.3L1.90526 0.45Z"/>
             </svg>}
 
-            <span>{round(diff, 2)}</span> %
+            <span>{numberFormatting ? valueCut(diff, metric) : numberMask(diff, 2, null, 2)}</span> %
         </div>)
     }
 
@@ -438,7 +463,8 @@ const TooltipDescription = ({
                     <MetricDiff
                         value={value || 0}
                         prevValue={comparedValue || 0}
-                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                        metric={selectedMetric}
+                        metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric})?.type}
                     />
 
                     <div className="from">
@@ -462,13 +488,17 @@ const TooltipDescription = ({
 
                     {compareData && <div className="changes-block">
                         <MetricDiff
+                            metric={selectedMetric}
                             value={getMetricValue(data.placements?.[item.key], selectedMetric) || 0}
                             prevValue={getMetricValue(compareData.placements?.[item.key], selectedMetric) || 0}
-                            metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
+                            metricType={_.find(analyticsAvailableMetricsList, {key: selectedMetric})?.type}
                         />
 
                         <div className="from">
-                            (from {renderMetricValue({value: getMetricValue(compareData.placements?.[item.key], selectedMetric), metric: selectedMetric})})
+                            (from {renderMetricValue({
+                            value: getMetricValue(compareData.placements?.[item.key], selectedMetric),
+                            metric: selectedMetric
+                        })})
                         </div>
                     </div>}
                 </div>

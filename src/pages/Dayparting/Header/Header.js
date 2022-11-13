@@ -10,6 +10,7 @@ import {AttributionWindowSelect} from "../../Analytics/components/Header/Attribu
 import {activeTimezone} from "../../index"
 
 
+
 export const Header = ({
                            marketplace,
                            selectedDate,
@@ -20,8 +21,11 @@ export const Header = ({
                            selectedCompareDate,
                            onChangeCompareDate
                        }) => {
+    moment.tz.setDefault(activeTimezone);
+
     const [visibleDatePickerDropdown, setVisibleDatePickerDropdown] = useState(false),
         [visibleCompareDatePickerDropdown, setVisibleCompareDatePickerDropdown] = useState(false)
+
 
     const ranges = {
         'This week': [
@@ -56,8 +60,7 @@ export const Header = ({
             onChangeCompareDate(undefined)
         }
     }
-
-    const disabledDate = (current) => moment(current) > moment().tz(activeTimezone).endOf('week')
+    const disabledDate = (current) => moment(current).endOf('day') > moment().tz(activeTimezone).endOf('week')
 
     return (
         <div className="header">
@@ -69,7 +72,6 @@ export const Header = ({
                     value={[selectedDate.startDate, selectedDate.endDate]}
                     onCalendarChange={onChange}
                     timeRange={onChange}
-
                     className={'dark-mode'}
                     dropdownClassName={'dayparting-dropdown'}
                     format={'MMM DD'}

@@ -52,7 +52,6 @@ const Dayparting = () => {
         }),
         [selectedCompareDate, setSelectedCompareDate] = useState()
 
-
     return (
         <>
             <div className='dayparting-page dark-mode'>
