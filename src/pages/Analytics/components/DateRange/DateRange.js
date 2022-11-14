@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect} from "react"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import moment from 'moment-timezone'
 import {activeTimezone} from "../../../index"
@@ -27,8 +27,6 @@ const ranges = {
 let startDate
 
 const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
-    moment.tz.setDefault(activeTimezone);
-
     let dateDiff,
         endPrevDate,
         startPrevDate
@@ -40,6 +38,15 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
     }
 
     const onCalendarChangeHandler = (date) => startDate = date[0]
+
+    useEffect(() => {
+        moment.tz.setDefault(activeTimezone)
+
+        return (() => {
+            moment.tz.setDefault()
+        })
+    }, [])
+
 
     return (
         <div

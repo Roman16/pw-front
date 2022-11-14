@@ -10,7 +10,6 @@ import {AttributionWindowSelect} from "../../Analytics/components/Header/Attribu
 import {activeTimezone} from "../../index"
 
 
-
 export const Header = ({
                            marketplace,
                            selectedDate,
@@ -21,7 +20,6 @@ export const Header = ({
                            selectedCompareDate,
                            onChangeCompareDate
                        }) => {
-    moment.tz.setDefault(activeTimezone);
 
     const [visibleDatePickerDropdown, setVisibleDatePickerDropdown] = useState(false),
         [visibleCompareDatePickerDropdown, setVisibleCompareDatePickerDropdown] = useState(false)

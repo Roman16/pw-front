@@ -3,23 +3,17 @@ import './Dayparting.less'
 import HourDayStatistics from "./HourDayStatistics/HourDayStatistics"
 import DaySwitches from "./DaySwithes/DaySwithes"
 import PlacementsStatistics from "./Placements/Placements"
-import shortid from "shortid"
 import moment from "moment-timezone"
-import tz from 'moment-timezone'
 import {useSelector} from "react-redux"
 import CampaignList from "./CampaignList/CampaignList"
 import {Header} from "./Header/Header"
 import DaySwitchesMulti from "./DaySwithes/DaySwitchesMulti"
 import MetricsComparison from "./MetricsComparison/MetricsComparison"
-import {activeTimezone} from "../../index"
-import {daypartingServices} from "../../services/dayparting.services"
 import ModalWindow from "../../components/ModalWindow/ModalWindow"
 import {Checkbox} from "antd"
 
 
 const Dayparting = () => {
-    moment.locale('en')
-
     const [multiselect, setMultiselect] = useState(false),
         [attributionWindow, setAttributionWindow] = useState(7)
 
@@ -51,6 +45,15 @@ const Dayparting = () => {
             endDate: moment().endOf('week')
         }),
         [selectedCompareDate, setSelectedCompareDate] = useState()
+
+    useEffect(() => {
+        moment.tz.setDefault(timezone)
+
+        return (() => {
+            moment.tz.setDefault()
+        })
+    }, [])
+
 
     return (
         <>
