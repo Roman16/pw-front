@@ -16,6 +16,7 @@ export const Header = ({
                            onChangeDate,
                            attributionWindowValue,
                            onChangeAttributionWindow,
+                           timezone,
 
                            selectedCompareDate,
                            onChangeCompareDate
@@ -28,11 +29,11 @@ export const Header = ({
     const ranges = {
         'This week': [
             moment().tz(activeTimezone).startOf('week'),
-            moment().tz(activeTimezone).endOf('week')
+            moment().tz(activeTimezone).startOf('week').add(6, 'days')
         ],
         'Past week': [
             moment().tz(activeTimezone).startOf('week').subtract(1, 'weeks'),
-            moment().tz(activeTimezone).endOf('week').subtract(1, 'weeks')
+            moment().tz(activeTimezone).startOf('week').subtract(1, 'weeks').add(6, 'days'),
         ]
     }
 
@@ -78,6 +79,7 @@ export const Header = ({
                     open={visibleDatePickerDropdown}
                     renderExtraFooter={() => currentMarketplaceLabel(marketplace)}
                     onOpenChange={open => setVisibleDatePickerDropdown(open)}
+                    timezone={timezone}
                 />
 
                 <div className="dashed">
@@ -91,6 +93,7 @@ export const Header = ({
                     open={visibleCompareDatePickerDropdown}
                     onOpenChange={open => setVisibleCompareDatePickerDropdown(open)}
                     allowClear={false}
+                    timezone={timezone}
 
                     ranges={{
                         'Do not compare': [undefined, undefined], 'Past week': [

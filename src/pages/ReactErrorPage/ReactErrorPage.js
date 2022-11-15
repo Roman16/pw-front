@@ -45,9 +45,9 @@ export default class ErrorBoundary extends Component {
         const {hasError, error, info} = this.state
         const {children} = this.props
 
-        // if (hasError) {
+        if (hasError) {
             checkBuildVersion()
-        // }
+        }
 
         return hasError ? <ErrorTemplate
             onGoBack={this.goBackHandler}

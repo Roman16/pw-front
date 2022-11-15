@@ -41,8 +41,8 @@ const Dayparting = () => {
     }))
 
     const [selectedDate, setSelectedDate] = useState({
-            startDate: moment().startOf('week'),
-            endDate: moment().endOf('week')
+            startDate: moment().tz(timezone).startOf('week'),
+            endDate: moment().tz(timezone).startOf('week').add(6, 'days')
         }),
         [selectedCompareDate, setSelectedCompareDate] = useState()
 

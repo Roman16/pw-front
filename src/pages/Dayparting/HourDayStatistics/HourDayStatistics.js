@@ -86,7 +86,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
             }))
         } catch (e) {
             console.log(e)
-            return []
+            return false
         }
 
     }
@@ -99,7 +99,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
 
         const res = await getDataByDate(date, mainDataRequest.token)
 
-        await setData([...res])
+        await setData(res ? [...res] : days.map(() => hours))
 
         setFetchingData(false)
     }
@@ -111,7 +111,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
         setFetchingCompareData(true)
 
         const res = await getDataByDate(selectedCompareDate, compareDataRequest.token)
-        await setCompareData([...res])
+        await setCompareData(res ? [...res] : undefined)
 
         setFetchingCompareData(false)
     }
