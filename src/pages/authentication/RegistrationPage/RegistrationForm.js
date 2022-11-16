@@ -92,7 +92,7 @@ class RegistrationForm extends Component {
 
                 const ref = urlParams.get('ref') || localStorage.getItem('refId') || undefined
 
-                const res = await userService.regist({
+                const {result} = await userService.regist({
                     ...user,
                     ...this.props.match.params.tag === 'from-agency' ? {is_agency_client: 1} : {},
                     ...this.props.agency_token ? {agency_token: this.props.agency_token} : {},
@@ -102,7 +102,7 @@ class RegistrationForm extends Component {
 
                 this.props.setUser(user)
 
-                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('token', result.access_token)
                 localStorage.removeItem('refId')
 
                 seo({title: 'Sponsoreds'})

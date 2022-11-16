@@ -49,7 +49,7 @@ const Impersonations = (props) => {
 
         const user = await userService.getUserPersonalInformation()
 
-        dispatch(userActions.setInformation({userDetails: user}))
+        dispatch(userActions.setInformation({userDetails: user.result}))
 
         if (result.length > 0) {
             const importStatus = await userService.checkImportStatus(result[0].amazon_region_account_marketplaces[0].id)

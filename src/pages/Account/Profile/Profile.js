@@ -24,11 +24,11 @@ const Profile = () => {
 
     const getUserInformation = async () => {
         try {
-            const res = await userService.getUserPersonalInformation()
+            const {result} = await userService.getUserPersonalInformation()
 
-            setUserInformation({...res})
+            setUserInformation({...result})
 
-            dispatch(userActions.setInformation({userDetails: res}))
+            dispatch(userActions.setInformation({userDetails: result}))
         } catch (e) {
             console.log(e)
         }

@@ -60,13 +60,13 @@ const ResetPassword = (props) => {
             if (user.password !== user.password_confirmation) setFailedFields(prevState => [...prevState, 'password_confirmation'])
         } else {
             try {
-                const res = await userService.changeUserPassword({
+                const {result} = await userService.changeUserPassword({
                     token: props.match.params.token,
                     userId: props.match.params.userId,
                     newPassword: user
                 })
 
-                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('token', result.access_token)
 
                 setTimeout(() => {
                     history.push('/home')
