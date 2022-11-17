@@ -28,19 +28,15 @@ import {Switch} from "antd"
 
 export const columnList = (setStateHandler, selectedCampaign) => {
     const columns = [
-        // {
-        //     title: 'Active',
-        //     dataIndex: 'state',
-        //     key: 'state',
-        //     width: '65px',
-        //     noTotal: true,
-        //     render: (state) => <div className="switch-block">
-        //         <Switch
-        //             disabled={state === 'archived'}
-        //             checked={state === 'enabled'}
-        //         />
-        //     </div>
-        // },
+        {
+            title: 'Active',
+            dataIndex: 'state',
+            key: 'state',
+            width: '65px',
+            noTotal: true,
+            locked: true,
+            editType: 'switch',
+        },
         {
             title: 'Ad Group',
             dataIndex: 'name',
@@ -92,7 +88,6 @@ export const columnList = (setStateHandler, selectedCampaign) => {
             filter: true,
             fastUpdating: true,
             editType: 'currency',
-            disableField: () => true,
             ...renderNumberField('currency')
         },
         {

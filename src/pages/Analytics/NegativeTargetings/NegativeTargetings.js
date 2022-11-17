@@ -29,9 +29,11 @@ const NegativeTargetings = () => {
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
                 // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
-                // showRowSelection={false}
+                showRowSelection={true}
                 dateRange={false}
                 showOptions={false}
+
+                fixedColumns={[0]}
             />
 
 
