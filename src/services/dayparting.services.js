@@ -19,7 +19,8 @@ export const daypartingServices = {
     getChartDataByHour,
     getPlacementChartDataByWeekday,
     getPlacementChartDataByHour,
-    getPlacementMetricsData
+    getPlacementMetricsData,
+    getBudget
 
 }
 
@@ -105,4 +106,8 @@ function getPlacementChartDataByHour({cancelToken, campaignId, date, attribution
 
 function getPlacementMetricsData({cancelToken, campaignId, date, attributionWindow}) {
     return api('get', `${daypartingUrls.placementMetricsData}?attribution_window=${attributionWindow}${getIdKey(campaignId)}&date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}`, null, null, cancelToken)
+}
+
+function getBudget({cancelToken, campaignId, date}) {
+    return api('get', `${daypartingUrls.budget}?date_from=${moment(date.startDate).format('Y-MM-DD')}&date_to=${moment(date.endDate).format('Y-MM-DD')}${getIdKey(campaignId)}`, null, null, cancelToken)
 }

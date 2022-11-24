@@ -153,6 +153,7 @@ export const daypartingUrls = {
     placementChartDataByWeekday: 'dayparting/stats/by_placement/by_weekday',
     placementChartDataByHour: 'dayparting/stats/by_placement/by_hour',
     placementMetricsData: 'dayparting/stats/by_placement',
+    budget: 'dayparting/budget_usage',
 
     multiDayParting: 'ppc-automation/dayparting/campaigns/state',
 

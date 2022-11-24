@@ -168,6 +168,10 @@
             overflow: hidden;
             white-space: nowrap;
           }
+
+          &.out-budget {
+            border: 1px solid #FF7E81;
+          }
         }
       }
     }
@@ -242,7 +246,6 @@
       }
     }
   }
-
 
 
   .diff-value {
@@ -473,9 +476,9 @@
       }
     }
 
-      .diff-value span {
+    .diff-value span {
       max-width: 100%;
-       overflow: inherit;
+      overflow: inherit;
     }
 
     label {
@@ -527,6 +530,36 @@
       .from {
         font-size: 0.7142857142857143rem;
         color: #686868;
+      }
+    }
+
+    .budget {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #C9CBD4;
+      padding: 10px 0 0 0;
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+
+        &.out-budget {
+          .name, .value {
+            color: #FF7E81;
+          }
+        }
+      }
+
+      .name {
+        font-size: 0.85714286rem;
+        color: #353A3E;
+      }
+
+      .value {
+        margin: 0 10px 0 auto;
+
+        font-size: 0.85714286rem;
+        color: #6959AB;
       }
     }
 

@@ -97,9 +97,20 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
 
         setFetchingData(true)
 
-        const res = await getDataByDate(date, mainDataRequest.token)
+        const [res, budget] = await Promise.all([getDataByDate(date, mainDataRequest.token), daypartingServices.getBudget({
+            campaignId,
+            date,
+            cancelToken: mainDataRequest.token
+        })])
 
-        await setData(res ? [...res] : days.map(() => hours))
+        await setData(res ? [...res.map((day, dayIndex) => {
+            return day.map((hour, hourIndex) => {
+                return ({
+                    ...hour,
+                    budget: Object.values(Object.values(budget.result)[dayIndex])[hourIndex]
+                })
+            })
+        })] : days.map(() => hours))
 
         setFetchingData(false)
     }
@@ -240,17 +251,19 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                         compareData={compareData && !fetchingCompareData && compareData?.[dayIndex]?.[hourIndex]}
                                                         fullData={data}
                                                         date={moment(item.date).add(hourIndex, 'h')}
+                                                        budget
                                                     />
                                                 }
                                             >
-                                                <div className={`statistic-information`}
-                                                     style={{
-                                                         background: percentColor({
-                                                             value: item[selectedMetric],
-                                                             data,
-                                                             metric: selectedMetric
-                                                         }).color
-                                                     }}>
+                                                <div
+                                                    className={`statistic-information ${item?.budget?.budget_usage_percentage >= 90 ? 'out-budget' : ''}`}
+                                                    style={{
+                                                        background: percentColor({
+                                                            value: item[selectedMetric],
+                                                            data,
+                                                            metric: selectedMetric
+                                                        }).color
+                                                    }}>
                                                     <div className="value">
                                                         {valueCut(item[selectedMetric], selectedMetric)}
                                                     </div>
@@ -435,6 +448,7 @@ const TooltipDescription = ({
                                 selectedMetric,
                                 percent = true,
                                 time = true,
+                                budget = false
                             }) => {
     const value = getMetricValue(data, selectedMetric)
     let comparedValue
@@ -503,6 +517,29 @@ const TooltipDescription = ({
                     </div>}
                 </div>
             ))}
+
+            {budget && <div className={'budget'}>
+                <div className="row">
+                    <div className="name">
+                        Campaign budget
+                    </div>
+
+                    <div className="value">
+                        {currencyWithCode(numberMask(data?.budget?.budget, 2))}
+                    </div>
+                </div>
+
+
+                <div className={`row ${data?.budget?.budget_usage_percentage >= 90 ? 'out-budget' : ''}`}>
+                    <div className="name">
+                        Campaign budget usage
+                    </div>
+
+                    <div className="value">
+                        {currencyWithCode(numberMask(data?.budget?.budget_usage, 2))}
+                    </div>
+                </div>
+            </div>}
         </Fragment>
     )
 }
