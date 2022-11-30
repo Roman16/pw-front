@@ -146,14 +146,14 @@ export const daypartingUrls = {
     campaigns: 'dayparting/campaigns',
     products: 'dayparting/products',
 
-    statisticDayByHour: 'dayparting/stats/by_day/by_hour',
-    statisticDayByHourByPlacement: 'dayparting/stats/by_day/by_hour/by_placement',
-    chartDataByWeekday: 'dayparting/stats/by_weekday',
-    chartDataByHour: 'dayparting/stats/by_hour',
-    placementChartDataByWeekday: 'dayparting/stats/by_placement/by_weekday',
-    placementChartDataByHour: 'dayparting/stats/by_placement/by_hour',
-    placementMetricsData: 'dayparting/stats/by_placement',
-    budget: 'dayparting/budget_usage',
+    statisticDayByHour: 'dayparting/stats/by-day/by-hour',
+    statisticDayByHourByPlacement: 'dayparting/stats/by-day/by-hour/by-placement',
+    chartDataByWeekday: 'dayparting/stats/by-weekday',
+    chartDataByHour: 'dayparting/stats/by-hour',
+    placementChartDataByWeekday: 'dayparting/stats/by-placement/by-weekday',
+    placementChartDataByHour: 'dayparting/stats/by-placement/by-hour',
+    placementMetricsData: 'dayparting/stats/by-placement',
+    budget: 'dayparting/budget-usage',
 
     multiDayParting: 'ppc-automation/dayparting/campaigns/state',
 

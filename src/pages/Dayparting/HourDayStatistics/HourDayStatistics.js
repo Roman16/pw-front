@@ -521,22 +521,22 @@ const TooltipDescription = ({
             {budget && <div className={'budget'}>
                 <div className="row">
                     <div className="name">
-                        Campaign budget
+                        Daily Campaign Budget
                     </div>
 
                     <div className="value">
-                        {currencyWithCode(numberMask(data?.budget?.budget, 2))}
+                        {(data?.budget?.budget === null || data?.budget?.budget === 0) ? 'No Data' : currencyWithCode(numberMask(data?.budget?.budget, 2))}
                     </div>
                 </div>
 
 
                 <div className={`row ${data?.budget?.budget_usage_percentage >= 90 ? 'out-budget' : ''}`}>
                     <div className="name">
-                        Campaign budget usage
+                        Used Campaign Budget
                     </div>
 
                     <div className="value">
-                        {currencyWithCode(numberMask(data?.budget?.budget_usage, 2))}
+                        {(data?.budget?.budget === null || data?.budget?.budget === 0) ? 'No Data' : <>{currencyWithCode(numberMask(data?.budget?.budget_usage, 2))} ({data?.budget?.budget_usage_percentage}%)</>}
                     </div>
                 </div>
             </div>}

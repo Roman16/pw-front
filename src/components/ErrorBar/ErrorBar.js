@@ -30,7 +30,7 @@ const ErrorBar = () => {
 
     return (
         <div className='errors-bar'>
-            {onTrial && <div className={'on-trial'}>
+            {onTrial && (!isAgencyClient || localStorage.getItem('adminToken')) && <div className={'on-trial'}>
                 <InformationTooltip
                     position={'bottomRight'}
                     type={'custom'}
