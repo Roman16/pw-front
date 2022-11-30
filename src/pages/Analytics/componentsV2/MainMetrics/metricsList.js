@@ -39,6 +39,7 @@ export const metricKeys = {
     'organicUnits': 'organic_units',
     'cpm': 'cpm',
     'bidCPC': 'bidMinusCPC',
+    'cvr': 'cvr'
 }
 
 export const analyticsAvailableMetricsList = [
@@ -347,6 +348,13 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         tabs: ['ads', 'conversions']
     },
     //------------------------------------------------------------------------------------------------------------------
+    {
+        title: 'CVR',
+        key: metricKeys['cvr'],
+        label: 'Total',
+        type: 'percent',
+        tabs: []
+    },
 ]
 
 export const metricsKeysWithoutOrganic = analyticsAvailableMetricsList.filter(({key}) =>

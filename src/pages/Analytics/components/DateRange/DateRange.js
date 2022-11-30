@@ -1,11 +1,11 @@
-import React, {useState} from "react"
+import React, {useEffect} from "react"
 import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import moment from 'moment-timezone'
-import locale from 'antd/lib/locale/en_US.js.map'
 import {activeTimezone} from "../../../index"
 
+
 const ranges = {
-    Today: [moment(), moment()],
+    Today: [moment().tz(activeTimezone), moment().tz(activeTimezone)],
     Yesterday: [
         moment().tz(activeTimezone).add(-1, 'days'),
         moment().tz(activeTimezone).add(-1, 'days'),
@@ -39,6 +39,15 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
 
     const onCalendarChangeHandler = (date) => startDate = date[0]
 
+    useEffect(() => {
+        moment.tz.setDefault(activeTimezone)
+
+        return (() => {
+            moment.tz.setDefault()
+        })
+    }, [])
+
+
     return (
         <div
             className={`datepicker-block ${selectedRangeDate.startDate !== 'lifetime' && tableOptions.comparePreviousPeriod ? 'compare' : ''}`}>
@@ -50,12 +59,11 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
                 }}
                 ranges={ranges}
                 placeholder={'lifetime'}
-                locale={locale}
                 allowClear={false}
                 disabled={current => {
                     if (current) {
                         if (startDate) {
-                            return moment(current).endOf('day') > moment(startDate).add(62, 'days').tz(activeTimezone).endOf('day') || moment(current).endOf('day') < moment(startDate).subtract(61, 'days').tz(activeTimezone).endOf('day') || moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
+                            return moment(current).endOf('day') > moment(startDate).tz(activeTimezone).add(62, 'days').endOf('day') || moment(current).endOf('day') < moment(startDate).tz(activeTimezone).subtract(61, 'days').endOf('day') || moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
                         } else {
                             return moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
                         }

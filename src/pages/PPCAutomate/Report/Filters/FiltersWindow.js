@@ -8,6 +8,7 @@ import {dashboardActions} from "../../../../actions/dashboard.actions"
 import _ from 'lodash'
 import moment from "moment-timezone"
 import {dateRequestFormat} from "../../../../utils/dateFormatting"
+import {activeTimezone} from "../../../index"
 
 const Option = Select.Option
 
@@ -250,7 +251,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     }
     const changeDateHandler = (startDate, endDate) => {
-        console.log(startDate)
         if (startDate) {
             setFilterValue({
                 startDate,
@@ -327,6 +327,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     getPopupContainer={trigger => document.querySelector('.filter-variables')}
                     timeRange={(startDate, endDate) => changeDateHandler(startDate, endDate)}
                     defaultValue={filterValue && Object.keys(filterValue).map(key => filterValue[key])}
+                    disabled={(current) => moment(current).endOf('day') > moment().endOf('day')}
                     value={[filterValue.startDate === 'lifetime' ? null : moment(filterValue.startDate), filterValue.endDate === 'lifetime' ? null : moment(filterValue.endDate)]}
                 />}
 

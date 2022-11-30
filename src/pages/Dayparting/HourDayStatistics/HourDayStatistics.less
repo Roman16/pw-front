@@ -168,6 +168,10 @@
             overflow: hidden;
             white-space: nowrap;
           }
+
+          &.out-budget {
+            border: 1px solid #FF7E81;
+          }
         }
       }
     }
@@ -242,7 +246,6 @@
       }
     }
   }
-
 
 
   .diff-value {
@@ -438,6 +441,8 @@
 
   .ant-popover-inner-content {
     min-width: 380px;
+    max-width: max-content;
+    width: max-content;
     border: 0;
     box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
     padding: 1.0714285714285714rem;
@@ -471,6 +476,11 @@
       }
     }
 
+    .diff-value span {
+      max-width: 100%;
+      overflow: inherit;
+    }
+
     label {
       font-size: 0.7142857142857143rem;
       color: #686868;
@@ -496,8 +506,6 @@
       }
 
 
-
-
       &.main-metric {
         background: #F3F3F3;
         border-radius: 4px;
@@ -508,7 +516,7 @@
     }
 
     .changes-block {
-      width: 140px;
+      min-width: 140px;
 
       display: flex;
       justify-content: flex-end;
@@ -516,11 +524,42 @@
       .diff-value {
         font-size: 0.8571428571428571rem;
         margin: 0 5px 0 0;
+        justify-content: flex-end;
       }
 
       .from {
         font-size: 0.7142857142857143rem;
         color: #686868;
+      }
+    }
+
+    .budget {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid #C9CBD4;
+      padding: 10px 0 0 0;
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+
+        &.out-budget {
+          .name, .value {
+            color: #FF7E81;
+          }
+        }
+      }
+
+      .name {
+        font-size: 0.85714286rem;
+        color: #353A3E;
+      }
+
+      .value {
+        margin: 0 10px 0 auto;
+
+        font-size: 0.85714286rem;
+        color: #6959AB;
       }
     }
 

@@ -157,6 +157,10 @@ const Home = () => {
 
             <ul>
                 {services.map(i => <li>
+                    <ServiceLabel
+                        service={i.key}
+                    />
+
                     <h3>
                         {i.icon()}
                         {i.title}
@@ -173,8 +177,72 @@ const Home = () => {
                     </Link>
                 </li>)}
             </ul>
+
+            <div className="best-practice">
+                <h3>The Best Practice</h3>
+
+                <div className="steps">
+                    <div className="hr"/>
+
+                    <div className="step">
+                        <div className="counter">
+                           <span> 01</span>
+                        </div>
+
+                        <p>
+                            Create Amazon PPC <br/>
+                            Campaighs with <b>Zero to Hero</b>
+                        </p>
+                    </div>
+
+                    <div className="step">
+                        <div className="counter">
+                           <span> 02</span>
+                        </div>
+
+                        <p>
+                            Launch PPC <b>Automation</b>. <br/>
+                            Don’t forget to set goal and <br/>
+                            COGS
+                        </p>
+                    </div>
+
+                    <div className="step">
+                        <div className="counter">
+                            <span>03</span>
+                        </div>
+
+                        <p>
+                            Watch your results inside <br/>
+                            <b>Analytics</b> and <b>Dayparting</b>
+                        </p>
+                    </div>
+                </div>
+
+                <p className={'description'}>
+                    * You can also use each tool separately without using other tools.
+                </p>
+            </div>
         </div>
     )
+}
+
+
+const ServiceLabel = ({service}) => {
+    if(service === 'dayparting' || service === 'scanner') {
+        return (<div className="label free">
+            Free
+        </div>)
+    }else if(service === 'zth') {
+        return (<div className="label pay-per">
+            Pay-Per-Use
+        </div>)
+    } else {
+        return (<div className="label trial">
+            14-days free trial
+        </div>)
+
+    }
 }
 
 

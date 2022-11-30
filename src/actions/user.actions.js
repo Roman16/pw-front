@@ -33,11 +33,11 @@ function logOut() {
 function getUserInfo() {
     return dispatch => {
         userService.getUserPersonalInformation()
-            .then((res) => {
+            .then(({result}) => {
 
                 const user = store.getState().user.userDetails || null
 
-                if (user && (user.id !== res.id)) {
+                if (user && (user.id !== result.id)) {
                     dispatch({
                         type: productsConstants.SET_PRODUCT_LIST,
                         payload: {
@@ -58,9 +58,9 @@ function getUserInfo() {
                     })
                 }
 
-                localStorage.setItem('userId', res.id)
+                localStorage.setItem('userId', result.id)
 
-                dispatch(setInformation({userDetails: res}))
+                dispatch(setInformation({userDetails: result}))
             })
     }
 }

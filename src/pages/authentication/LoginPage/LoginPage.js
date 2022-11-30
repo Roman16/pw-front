@@ -40,13 +40,13 @@ const LoginPage = (props) => {
             try {
                 setLoginProcessing(true)
 
-                const res = await userService.login({
+                const {result} = await userService.login({
                     ...user,
                     ...props.location.search && {redirectLink: new URLSearchParams(props.location.search).get('redirect')},
                     ...Cookies.get('_ga') && {'ga_cid': Cookies.get('_ga')}
                 })
 
-                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('token', result.access_token)
 
                 // const importStatus = await userService.checkImportStatus()
                 // dispatch(userActions.setInformation({importStatus: importStatus.result}))

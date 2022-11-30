@@ -146,6 +146,13 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     }, [paginationParams, searchStr, filterParams, onlyOnDayparting])
 
 
+    useEffect(() => {
+        return (() => {
+            setActiveTabHandler('campaigns')
+        })
+    }, [])
+
+
     return (
         <Fragment>
             <div className={`campaign-list ${isOpenList ? '' : 'closed'}`}>

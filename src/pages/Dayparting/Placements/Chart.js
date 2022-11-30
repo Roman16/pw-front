@@ -4,6 +4,7 @@ import moment from "moment"
 import {chartColors} from "./Placements"
 import {CustomizedTick} from "../MetricsComparison/Chart"
 import {round} from "../../../utils/round"
+import {renderMetricValue} from "../HourDayStatistics/HourDayStatistics"
 
 const weakDays = [
     {
@@ -197,7 +198,10 @@ const ChartTooltip = ({payload, chartType, selectedMetric}) => {
                             </div>
 
                             <div className='current-value'>
-                                ({round(entry.payload[`${entry.dataKey.replace('_abs', '')}`], 2)})
+                                ({renderMetricValue({
+                                value: entry.payload[`${entry.dataKey.replace('_abs', '')}`] || 0,
+                                metric: selectedMetric
+                            })})
                             </div>
                         </div>
                     ))}

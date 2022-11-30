@@ -4,7 +4,7 @@ import axios from "axios"
 import {Select, Spin, Switch} from "antd"
 import './Placements.less'
 import {Chart} from "./Chart"
-import {metrics, MetricsStatistics} from "./MetricsStatistics"
+import {getMetricValue, metrics, MetricsStatistics} from "./MetricsStatistics"
 import _ from 'lodash'
 import moment from "moment"
 import CustomSelect from "../../../components/Select/Select"
@@ -35,10 +35,12 @@ export const chartColors = [
 
 
 const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, fetchingCampaignList}) => {
-    let localFetching = false
-
     const [chartData, setChartData] = useState([]),
-        [metricsData, setMetricsData] = useState({}),
+        [metricsData, setMetricsData] = useState({
+            'top_of_search': {},
+            'detail_page': {},
+            'other': {}
+        }),
         [comparedMetricsData, setComparedMetricsData] = useState(),
         [processing, setProcessing] = useState(true),
         [selectedMetric, setSelectedMetric] = useState(metrics[0].key),
@@ -64,10 +66,10 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
                         date: moment(date.startDate).add(index, 'days').format('YYYY-MM-DD')
                     }
 
-                    _.keys(i).forEach(key => {
-                        resultObj[`top_of_search_${key}`] = i[key]
-                        resultObj[`detail_page_${key}`] = result.detail_page[index][key]
-                        resultObj[`other_${key}`] = result.other[index][key]
+                    metrics.forEach(metric => {
+                        resultObj[`top_of_search_${metric.key}`] = getMetricValue(i, metric.key)
+                        resultObj[`detail_page_${metric.key}`] = getMetricValue(result.detail_page[index], metric.key)
+                        resultObj[`other_${metric.key}`] = getMetricValue(result.other[index], metric.key)
                     })
 
                     return ({...resultObj})
@@ -88,10 +90,10 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
                         },
                     }
 
-                    _.keys(i).forEach(key => {
-                        resultObj[`top_of_search_${key}`] = i[key]
-                        resultObj[`detail_page_${key}`] = result.detail_page[index][key]
-                        resultObj[`other_${key}`] = result.other[index][key]
+                    metrics.forEach(metric => {
+                        resultObj[`top_of_search_${metric.key}`] = getMetricValue(i, metric.key)
+                        resultObj[`detail_page_${metric.key}`] = getMetricValue(result.detail_page[index], metric.key)
+                        resultObj[`other_${metric.key}`] = getMetricValue(result.other[index], metric.key)
                     })
 
                     return ({...resultObj})
@@ -115,7 +117,20 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
                 attributionWindow,
                 cancelToken: sourceMainMetrics.token
             })
-            setMetricsData(result)
+
+            let resData = {
+                top_of_search: {},
+                detail_page: {},
+                other: {},
+            }
+
+            metrics.forEach(({key}) => {
+                resData.top_of_search[key] = getMetricValue(result.top_of_search, key)
+                resData.detail_page[key] = getMetricValue(result.top_of_search, key)
+                resData.other[key] = getMetricValue(result.top_of_search, key)
+            })
+
+            setMetricsData(resData)
         } catch (e) {
             console.log(e)
         }

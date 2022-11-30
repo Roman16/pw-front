@@ -7,8 +7,7 @@ import './Header.less'
 import DatePicker from "../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
 import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
-
-
+import {activeTimezone} from "../../index"
 
 
 export const Header = ({
@@ -17,23 +16,24 @@ export const Header = ({
                            onChangeDate,
                            attributionWindowValue,
                            onChangeAttributionWindow,
+                           timezone,
 
                            selectedCompareDate,
                            onChangeCompareDate
                        }) => {
+
     const [visibleDatePickerDropdown, setVisibleDatePickerDropdown] = useState(false),
         [visibleCompareDatePickerDropdown, setVisibleCompareDatePickerDropdown] = useState(false)
 
-    moment.locale('en')
 
     const ranges = {
         'This week': [
-            moment().startOf('week'),
-            moment().endOf('week')
+            moment().tz(activeTimezone).startOf('week'),
+            moment().tz(activeTimezone).startOf('week').add(6, 'days')
         ],
         'Past week': [
-            moment().startOf('week').subtract(1, 'weeks'),
-            moment().endOf('week').subtract(1, 'weeks')
+            moment().tz(activeTimezone).startOf('week').subtract(1, 'weeks'),
+            moment().tz(activeTimezone).startOf('week').subtract(1, 'weeks').add(6, 'days'),
         ]
     }
 
@@ -59,7 +59,7 @@ export const Header = ({
             onChangeCompareDate(undefined)
         }
     }
-
+    const disabledDate = (current) => moment(current).endOf('day') > moment().tz(activeTimezone).endOf('week')
 
     return (
         <div className="header">
@@ -71,15 +71,15 @@ export const Header = ({
                     value={[selectedDate.startDate, selectedDate.endDate]}
                     onCalendarChange={onChange}
                     timeRange={onChange}
-
                     className={'dark-mode'}
                     dropdownClassName={'dayparting-dropdown'}
                     format={'MMM DD'}
                     allowClear={false}
-                    disabled={() => false}
+                    disabled={disabledDate}
                     open={visibleDatePickerDropdown}
                     renderExtraFooter={() => currentMarketplaceLabel(marketplace)}
                     onOpenChange={open => setVisibleDatePickerDropdown(open)}
+                    timezone={timezone}
                 />
 
                 <div className="dashed">
@@ -93,18 +93,21 @@ export const Header = ({
                     open={visibleCompareDatePickerDropdown}
                     onOpenChange={open => setVisibleCompareDatePickerDropdown(open)}
                     allowClear={false}
+                    timezone={timezone}
 
-                    ranges={{'Do not compare': [undefined, undefined],    'Past week': [
+                    ranges={{
+                        'Do not compare': [undefined, undefined], 'Past week': [
                             moment().startOf('week').subtract(1, 'weeks'),
                             moment().endOf('week').subtract(1, 'weeks')
-                        ]}}
+                        ]
+                    }}
                     className={`dark-mode ${!selectedCompareDate ? 'full' : ''}`}
                     dropdownClassName={'dayparting-dropdown'}
                     renderExtraFooter={() => currentMarketplaceLabel(marketplace)}
                     placeholder={['Do not compare']}
                     picker="week"
                     format={'MMM DD'}
-                    disabled={() => false}
+                    disabled={disabledDate}
                 />
             </div>
 
