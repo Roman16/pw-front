@@ -9,18 +9,20 @@ import {useSelector} from "react-redux"
 import moment from "moment"
 import {notification} from "../../../components/Notification"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
+import {dateFormatting} from "../../../utils/dateFormatting"
 
 const Option = Select.Option
 let dataFromResponse = {
-    budget_policy: ''
+    budget_policy: '',
 }
 
 
 const PortfolioSettings = () => {
-    const mainState = useSelector(state => state.analytics.mainState)
+    const mainState = useSelector(state => state.analytics.mainState),
+        currencyCode = useSelector(state => state.user.activeAmazonMarketplace.currency_code || 'USD')
 
     const [settingParams, setSettingsParams] = useState({
-            budget_policy: ''
+            budget_policy: '',
         }),
         [saveProcessing, setSaveProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true)
@@ -30,8 +32,8 @@ const PortfolioSettings = () => {
         setFetchProcessing(true)
         try {
             const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
-            dataFromResponse = {...response}
-            setSettingsParams({...response})
+            dataFromResponse = {...response, bidding_strategy: 'legacyForSales'}
+            setSettingsParams({...response, bidding_strategy: 'legacyForSales'})
         } catch (e) {
             console.log(e)
         }
@@ -44,14 +46,53 @@ const PortfolioSettings = () => {
     }
 
     const submitHandler = async () => {
-        setSaveProcessing(true)
         try {
             if (settingParams.name?.length > 0) {
-                const res = await analyticsServices.exactUpdateField('portfolios', {
+                let requestData = {
                     portfolioId: settingParams.portfolioId,
                     portfolioName: settingParams.name
-                })
+                }
 
+                if (settingParams.budget_policy === 'MonthlyRecurring') {
+                    if (!settingParams.budget_amount) {
+                        notification.error({title: 'Budget field is required'})
+                        return
+                    }
+
+                    if (settingParams.bidding_strategy === 'autoForSales' && !settingParams.budget_endDate) {
+                        notification.error({title: 'End date field is required'})
+                        return
+                    }
+
+                    requestData.budget_policy = settingParams.budget_policy
+                    requestData.budget_amount = settingParams.budget_amount
+                    requestData.currencyCode = currencyCode
+                    requestData.budget_endDate = settingParams.bidding_strategy === 'legacyForSales' ? undefined : dateFormatting(settingParams.budget_endDate)
+                } else if (settingParams.budget_policy === 'dateRange') {
+                    if (!settingParams.budget_amount) {
+                        notification.error({title: 'Budget field is required'})
+                        return
+                    } else if (!settingParams.budget_startDate) {
+                        notification.error({title: 'Start date field is required'})
+                        return
+                    } else if (!settingParams.budget_endDate) {
+                        notification.error({title: 'End date field is required'})
+                        return
+                    }
+
+                    requestData.budget_policy = settingParams.budget_policy
+                    requestData.budget_amount = settingParams.budget_amount
+                    requestData.currencyCode = currencyCode
+                    requestData.budget_startDate = dateFormatting(settingParams.budget_startDate, 'start')
+                    requestData.budget_endDate = dateFormatting(settingParams.budget_endDate)
+                } else {
+                    requestData.budget_amount = null
+                }
+
+                setSaveProcessing(true)
+
+                await analyticsServices.exactUpdateField('portfolios', requestData)
+                notification.success({title: '1 entity updated'})
 
                 dataFromResponse = {...settingParams}
             } else {
@@ -144,7 +185,7 @@ const PortfolioSettings = () => {
 
                         <div className="value ends">
                             <Radio.Group
-                                value={settingParams.budget_endDate ? 'autoForSales' : 'legacyForSales'}
+                                value={settingParams.bidding_strategy}
                                 onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
                             >
                                 <Radio value={'legacyForSales'}>
@@ -156,6 +197,7 @@ const PortfolioSettings = () => {
 
                                     <DatePicker
                                         showToday={false}
+                                        disabled={settingParams.bidding_strategy === 'legacyForSales'}
                                         value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}
                                         onChange={(value) => changeSettingsHandler({budget_endDate: value})}
                                     />
