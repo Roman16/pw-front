@@ -17,6 +17,11 @@ const Portfolios = () => {
         location = 'portfolios',
         dispatch = useDispatch()
 
+    const setStateDetails = (data) => {
+        dispatch(analyticsActions.setStateDetails(data))
+    }
+
+
     const setStateHandler = (location, state, event) => {
         if (event.ctrlKey || event.metaKey) return
 
@@ -33,7 +38,7 @@ const Portfolios = () => {
                 fixedColumns={[0]}
                 showRowSelection={false}
 
-                columns={columnList(setStateHandler)}
+                columns={columnList(setStateHandler, setStateDetails)}
                 // moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             />
 

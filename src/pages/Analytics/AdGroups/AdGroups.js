@@ -17,6 +17,10 @@ const AdGroups = () => {
 
     const dispatch = useDispatch()
 
+    const setStateDetails = (data) => {
+        dispatch(analyticsActions.setStateDetails(data))
+    }
+
     const setStateHandler = (location, state, event) => {
         if (event.ctrlKey || event.metaKey) return
 
@@ -34,7 +38,7 @@ const AdGroups = () => {
                 showRowSelection={true}
                 rowKey={'adGroupId'}
 
-                columns={columnList(setStateHandler, selectedCampaign)}
+                columns={columnList(setStateHandler, selectedCampaign, setStateDetails)}
                 // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
 

@@ -26,7 +26,7 @@ import {
 } from "../../components/TableList/tableColumns"
 
 
-const getColumns = (setStateHandler) => ([
+const getColumns = (setStateHandler, setStateDetails) => ([
         {
             title: 'Portfolio',
             dataIndex: 'portfolioName',
@@ -35,17 +35,21 @@ const getColumns = (setStateHandler) => ([
             sorter: true,
             locked: true,
             search: true,
-            render: (portfolio, item) => (<Link
-                to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
+            editType: 'text',
+            redirectLink: (item) => `/analytics/campaigns?portfolioId=${item.portfolioId}`,
+            clickEvent: (item, e) => {
+                setStateHandler('campaigns', {
+                    name: {portfolioName: item},
+                    portfolioId: item.portfolioId
+                }, e)
+                setStateDetails(item)
+            },
+            render: (portfolio, item) => <div
                 className={'state-link'}
                 title={portfolio}
-                onClick={(e) => setStateHandler('campaigns', {
-                    name: {portfolioName: portfolio},
-                    portfolioId: item.portfolioId
-                }, e)}
             >
                 {portfolio}
-            </Link>)
+            </div>
         },
         {
             title: 'Campaigns',

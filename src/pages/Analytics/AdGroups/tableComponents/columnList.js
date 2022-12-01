@@ -26,7 +26,7 @@ import {
 import {Link} from "react-router-dom"
 import {Switch} from "antd"
 
-export const columnList = (setStateHandler, selectedCampaign) => {
+export const columnList = (setStateHandler, selectedCampaign, setStateDetails) => {
     const columns = [
         {
             title: 'Active',
@@ -45,21 +45,23 @@ export const columnList = (setStateHandler, selectedCampaign) => {
             sorter: true,
             locked: true,
             search: true,
-            render: (adGroup, item) => (
-                <Link
-                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
-                    title={item.name}
-                    className={'state-link'}
-                    onClick={(e) => setStateHandler('products', {
-                        name: {
-                            campaignName: item.campaignName,
-                            adGroupName: item.name
-                        }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                    }, e)}
-                >
-                    {adGroup}
-                </Link>
-            )
+            editType: 'text',
+            redirectLink: (item) => `/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
+            clickEvent: (item, e) => {
+                setStateHandler('products', {
+                    name: {
+                        campaignName: item.campaignName,
+                        adGroupName: item.name
+                    }, campaignId: item.campaignId, adGroupId: item.adGroupId
+                }, e)
+                setStateDetails(item)
+            },
+            render: (adGroup, item) => <div
+                className={'state-link'}
+                title={adGroup}
+            >
+                {adGroup}
+            </div>
         },
         {
             ...campaignColumn,
