@@ -3,6 +3,8 @@ import {columnList} from "./tableComponents/columnList"
 import RenderPageParts from "../componentsV2/RenderPageParts/RenderPageParts"
 import {useDispatch, useSelector} from "react-redux"
 import {analyticsActions} from "../../../actions/analytics.actions"
+import OpenCreateWindowButton from "../components/OpenCreateWindowButton/OpenCreateWindowButton"
+import CreateNegativeTargetingsWindow from "./CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
 const NegativeTargetings = () => {
     const location = 'negative-targetings'
@@ -29,9 +31,11 @@ const NegativeTargetings = () => {
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
                 // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
-                // showRowSelection={false}
+                showRowSelection={true}
                 dateRange={false}
                 showOptions={false}
+
+                fixedColumns={[0]}
             />
 
 

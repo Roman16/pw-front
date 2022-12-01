@@ -22,23 +22,17 @@ import {
     statusColumn
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
-import {Switch} from "antd"
 
 const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
-    // {
-    //     title: 'Active',
-    //     dataIndex: 'state',
-    //     key: 'state',
-    //     width: '65px',
-    //     noTotal: true,
-    //     locked: true,
-    //     render: (state) => <div className="switch-block">
-    //         <Switch
-    //             disabled={state === 'archived'}
-    //             checked={state === 'enabled'}
-    //         />
-    //     </div>
-    // },
+    {
+        title: 'Active',
+        dataIndex: 'state',
+        key: 'state',
+        width: '65px',
+        noTotal: true,
+        locked: true,
+        editType: 'switch',
+    },
     {
         title: 'Product',
         dataIndex: 'product_name_sku_asin',
@@ -47,11 +41,16 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         sorter: true,
         locked: true,
         search: true,
-        totalRender: value => value,
-        render: (name, item) => <RenderProduct
-            product={item}
-            setState={setStateHandler}
-        />
+        render: (name, item) => {
+            if (name.split(':')[0] === 'Total') {
+                return name
+            } else {
+                return <RenderProduct
+                    product={item}
+                    setState={setStateHandler}
+                />
+            }
+        }
     },
     {
         ...skuAsinColumn,
@@ -96,7 +95,6 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
     }] : [],
     {
         ...statusColumn,
-        locked: false,
     },
     impressionsColumn,
     clicksColumn,
@@ -122,3 +120,4 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
 ])
 
 export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})
+
