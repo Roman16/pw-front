@@ -7,9 +7,12 @@ import './PortfolioSettings.less'
 import {analyticsServices} from "../../../services/analytics.services"
 import {useSelector} from "react-redux"
 import moment from "moment"
+import {notification} from "../../../components/Notification"
 
 const Option = Select.Option
-let dataFromResponse = {}
+let dataFromResponse = {
+    budget_policy: ''
+}
 
 
 const PortfolioSettings = () => {
@@ -24,9 +27,8 @@ const PortfolioSettings = () => {
     const getSettingsDetails = async () => {
         try {
             const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
-            setSettingsParams(response)
             dataFromResponse = {...response}
-
+            setSettingsParams({...response})
         } catch (e) {
             console.log(e)
         }
@@ -37,11 +39,27 @@ const PortfolioSettings = () => {
     }
 
     const submitHandler = async () => {
+        setSaveProcessing(true)
+        try {
+            if (settingParams.name?.length > 0) {
+                const res = await analyticsServices.exactUpdateField('portfolios', {
+                    portfolioId: settingParams.portfolioId,
+                    portfolioName: settingParams.name
+                })
 
+
+                dataFromResponse = {...settingParams}
+            } else {
+                notification.error({title: 'Portfolio name field is required'})
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+        setSaveProcessing(false)
     }
 
     const refreshData = () => setSettingsParams({...dataFromResponse})
-
 
     useEffect(() => {
         if (mainState.portfolioId) {

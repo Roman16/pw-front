@@ -39,7 +39,7 @@ const getColumns = (setStateHandler, setStateDetails) => ([
             redirectLink: (item) => `/analytics/campaigns?portfolioId=${item.portfolioId}`,
             clickEvent: (item, e) => {
                 setStateHandler('campaigns', {
-                    name: {portfolioName: item},
+                    name: {portfolioName: item.portfolioName},
                     portfolioId: item.portfolioId
                 }, e)
                 setStateDetails(item)
