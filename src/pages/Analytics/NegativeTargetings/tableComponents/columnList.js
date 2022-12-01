@@ -16,6 +16,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         width: '65px',
         noTotal: true,
         locked: true,
+        disabled: true,
         editType: 'switch',
     },
     {
