@@ -8,6 +8,7 @@ import {analyticsServices} from "../../../services/analytics.services"
 import {useSelector} from "react-redux"
 import moment from "moment"
 import {notification} from "../../../components/Notification"
+import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 
 const Option = Select.Option
 let dataFromResponse = {
@@ -21,10 +22,12 @@ const PortfolioSettings = () => {
     const [settingParams, setSettingsParams] = useState({
             budget_policy: ''
         }),
-        [saveProcessing, setSaveProcessing] = useState(false)
+        [saveProcessing, setSaveProcessing] = useState(false),
+        [fetchProcessing, setFetchProcessing] = useState(true)
 
 
     const getSettingsDetails = async () => {
+        setFetchProcessing(true)
         try {
             const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
             dataFromResponse = {...response}
@@ -32,6 +35,8 @@ const PortfolioSettings = () => {
         } catch (e) {
             console.log(e)
         }
+
+        setFetchProcessing(false)
     }
 
     const changeSettingsHandler = (data) => {
@@ -101,9 +106,8 @@ const PortfolioSettings = () => {
 
                         <div className="form-group">
                             <CustomSelect
-                                disabled
                                 value={settingParams.budget_policy}
-                                onChange={(value) => setSettingsParams({...settingParams, budget_policy: value})}
+                                onChange={(value) => changeSettingsHandler({budget_policy: value})}
                                 placeholder={'Recurring monthly'}
                             >
                                 <Option value={'MonthlyRecurring'}>Recurring monthly</Option>
@@ -123,8 +127,8 @@ const PortfolioSettings = () => {
                         <div className="value monthly-budget-cap">
                             <div className="form-group">
                                 <InputCurrency
-                                    disabled
                                     value={settingParams.budget_amount}
+                                    onChange={(e) => changeSettingsHandler({budget_amount: e})}
                                 />
                             </div>
 
@@ -140,9 +144,8 @@ const PortfolioSettings = () => {
 
                         <div className="value ends">
                             <Radio.Group
-                                disabled
                                 value={settingParams.budget_endDate ? 'autoForSales' : 'legacyForSales'}
-                                // onChange={({target: {value}}) => changeBrandHandler({bidding_strategy: value})}
+                                onChange={({target: {value}}) => changeSettingsHandler({bidding_strategy: value})}
                             >
                                 <Radio value={'legacyForSales'}>
                                     Never
@@ -153,8 +156,8 @@ const PortfolioSettings = () => {
 
                                     <DatePicker
                                         showToday={false}
-                                        disabled
                                         value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}
+                                        onChange={(value) => changeSettingsHandler({budget_endDate: value})}
                                     />
                                 </Radio>
                             </Radio.Group>
@@ -173,8 +176,8 @@ const PortfolioSettings = () => {
                         <div className="value monthly-budget-cap">
                             <div className="form-group">
                                 <InputCurrency
-                                    disabled
                                     value={settingParams.budget_amount}
+                                    onChange={(e) => changeSettingsHandler({budget_amount: e})}
                                 />
                             </div>
 
@@ -190,8 +193,11 @@ const PortfolioSettings = () => {
 
                         <div className="value date">
                             <div className="form-group">
-                                <DatePicker disabled
-                                            value={settingParams.budget_startDate && moment(settingParams.budget_startDate, 'YYYYMMDD')}/>
+                                <DatePicker
+                                    value={settingParams.budget_startDate && moment(settingParams.budget_startDate, 'YYYYMMDD')}
+                                    showToday={false}
+                                    onChange={(value) => changeSettingsHandler({budget_startDate: value})}
+                                />
                             </div>
                         </div>
                     </div>
@@ -204,9 +210,11 @@ const PortfolioSettings = () => {
 
                         <div className="value date">
                             <div className="form-group">
-                                <DatePicker disabled
-                                            value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}/>
-
+                                <DatePicker
+                                    value={settingParams.budget_endDate && moment(settingParams.budget_endDate, 'YYYYMMDD')}
+                                    showToday={false}
+                                    onChange={(value) => changeSettingsHandler({budget_endDate: value})}
+                                />
                             </div>
                         </div>
                     </div>
@@ -236,6 +244,8 @@ const PortfolioSettings = () => {
                     {saveProcessing && <Spin size={'small'}/>}
                 </button>
             </div>
+
+            {fetchProcessing && <RouteLoader/>}
         </div>
     )
 }

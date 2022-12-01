@@ -269,7 +269,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType, loc
                 onChange={value => onChangeValue(value)}
                 value={value}
             >
-                {statusOptions.map(i => <Option value={i}>{i.toUpperCase()}</Option>)}
+                {statusOptions.map(i => <Option value={i}>{i.capitalize()}</Option>)}
             </CustomSelect>
         )
     } else if (selectedColumn === 'portfolioName') {
