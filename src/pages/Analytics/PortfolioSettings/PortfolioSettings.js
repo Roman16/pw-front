@@ -32,8 +32,8 @@ const PortfolioSettings = () => {
         setFetchProcessing(true)
         try {
             const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
-            dataFromResponse = {...response, bidding_strategy: 'legacyForSales'}
-            setSettingsParams({...response, bidding_strategy: 'legacyForSales'})
+            dataFromResponse = {...response, bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'}
+            setSettingsParams({...response, bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'})
         } catch (e) {
             console.log(e)
         }
@@ -86,7 +86,7 @@ const PortfolioSettings = () => {
                     requestData.budget_startDate = dateFormatting(settingParams.budget_startDate, 'start')
                     requestData.budget_endDate = dateFormatting(settingParams.budget_endDate)
                 } else {
-                    requestData.budget_amount = null
+                    requestData.budget = 'null'
                 }
 
                 setSaveProcessing(true)

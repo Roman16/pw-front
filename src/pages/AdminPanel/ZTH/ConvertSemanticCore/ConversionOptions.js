@@ -97,7 +97,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     }, [bulkUploadOptions])
 
     useEffect(() => {
-        getUsersList()
+        admin && getUsersList()
     }, [])
 
     useEffect(() => {
