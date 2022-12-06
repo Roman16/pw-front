@@ -136,6 +136,7 @@ export const adminUrls = {
     reportFileSize: `zero-to-hero/get-max-report-file-sizes`,
     createSemantic: `zero-to-hero/create`,
     analyzeReport: `zero-to-hero/analyze-search-term-report`,
+    agencyDashboardData: `agency/dashboard/data`,
 }
 
 export const daypartingUrls = {

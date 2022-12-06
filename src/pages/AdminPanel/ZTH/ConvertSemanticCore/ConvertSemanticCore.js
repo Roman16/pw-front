@@ -288,7 +288,7 @@ import _ from 'lodash'
 //     }
 // }
 
-const ConvertSemanticCore = () => {
+const ConvertSemanticCore = ({admin}) => {
     const [semanticInformation, setSemanticInformation] = useState(),
         [semanticUrl, setSemanticUrl] = useState(),
         [zthEnums, setZthEnums] = useState({
@@ -500,6 +500,7 @@ const ConvertSemanticCore = () => {
                 <ConversionOptions
                     zthEnums={zthEnums}
                     semanticData={semanticData}
+                    admin={admin}
 
                     uploadProcessing={uploadProcessing}
                     convertProcessing={convertProcessing}

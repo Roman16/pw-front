@@ -12,10 +12,18 @@ import CreateSemanticCore from "./CreateSemanticCore/CreateSemanticCore"
 import WordSorter from "./WordSorter/WordSorter"
 import STReportAnalyzer from "./STReportAnalyzer/STReportAnalyzer"
 
-const ZTH = () => {
+const ZTH = ({admin}) => {
     if (history.location.pathname === '/admin-panel/zth' || history.location.pathname === '/admin-panel/zth/') {
         history.push('/admin-panel/zth/create')
     }
+
+
+    if (history.location.pathname === '/advanced/zth' || history.location.pathname === '/advanced/zth/') {
+        history.push('/advanced/zth/create')
+    }
+
+
+    const baseUrl = admin ? 'admin-panel' : 'advanced'
 
     const token = localStorage.getItem('adminToken') ? localStorage.getItem('adminToken') : localStorage.getItem('token')
 
@@ -24,47 +32,47 @@ const ZTH = () => {
             <TokenBlock/>
 
             <div className="tabs">
-                <NavLink to={'/admin-panel/zth/create'}>
+                <NavLink to={`/${baseUrl}/zth/create`}>
                     Create Semantic Core
                 </NavLink>
 
-                <NavLink to={'/admin-panel/zth/convert'}>
+                <NavLink to={`/${baseUrl}/zth/convert`}>
                     Convert Semantic Core
                 </NavLink>
 
-                <NavLink to={'/admin-panel/zth/creation-jobs'}>
+                <NavLink to={`/${baseUrl}/zth/creation-jobs`}>
                     ZTH Creation Jobs
                 </NavLink>
 
-                <NavLink to={'/admin-panel/zth/jobs'}>
+                {admin && <NavLink to={`/${baseUrl}/zth/jobs`}>
                     ZTH Upload Jobs
-                </NavLink>
+                </NavLink>}
 
-                <NavLink to={'/admin-panel/zth/templates'}>
+                {admin && <NavLink to={`/${baseUrl}/zth/templates`}>
                     ZTH Templates
-                </NavLink>
+                </NavLink>}
 
-                <NavLink to={'/admin-panel/zth/asins-filtering'}>
+                <NavLink to={`/${baseUrl}/zth/asins-filtering`}>
                     ASINs Filtering
                 </NavLink>
 
-                <NavLink to={`/admin-panel/zth/word-sorter`}>
+                <NavLink to={`/${baseUrl}/zth/word-sorter`}>
                     WordSorter
                 </NavLink>
 
-                <NavLink to={`/admin-panel/zth/st-report-analyzer`}>
+                <NavLink to={`/${baseUrl}/zth/st-report-analyzer`}>
                     ST Report Analyzer
                 </NavLink>
             </div>
 
-            <Route path="/admin-panel/zth/convert" component={ConvertSemanticCore}/>
-            <Route path="/admin-panel/zth/jobs" component={Jobs}/>
-            <Route path="/admin-panel/zth/asins-filtering" component={AsinsSorter}/>
-            <Route path="/admin-panel/zth/word-sorter" component={WordSorter}/>
-            <Route path="/admin-panel/zth/templates" component={Templates}/>
-            <Route path="/admin-panel/zth/creation-jobs" component={CreationJobs}/>
-            <Route path="/admin-panel/zth/create" component={CreateSemanticCore}/>
-            <Route path="/admin-panel/zth/st-report-analyzer" component={STReportAnalyzer}/>
+            <Route path={`/${baseUrl}/zth/convert`} render={() => <ConvertSemanticCore admin={admin}/>}/>
+            {admin && <Route path={`/${baseUrl}/zth/jobs`} component={Jobs}/>}
+            {admin && <Route path={`/${baseUrl}/zth/templates`} component={Templates}/>}
+            <Route path={`/${baseUrl}/zth/asins-filtering`} component={AsinsSorter}/>
+            <Route path={`/${baseUrl}/zth/word-sorter`} component={WordSorter}/>
+            <Route path={`/${baseUrl}/zth/creation-jobs`} component={CreationJobs}/>
+            <Route path={`/${baseUrl}/zth/create`} component={CreateSemanticCore}/>
+            <Route path={`/${baseUrl}/zth/st-report-analyzer`} component={STReportAnalyzer}/>
         </section>
     )
 }

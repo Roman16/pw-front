@@ -14,10 +14,10 @@ import Campaigns from "../Analytics/Campaigns/Campaigns"
 import {NavLink, Route, Redirect} from "react-router-dom"
 import ZTH from "./ZTH/ZTH"
 import AgencyUsers from "./AgencyUsers/AgencyUsers"
+import {AgencyDashboard} from "./AgencyDashboard/AgencyDashboard"
 
-const AdminPanel = () => {
+const AdminPanel = ({admin = true}) => {
     const [selectedTab, setSelectedTab] = useState('genInfo')
-
     const [userInformation, setUserInformation] = useState(undefined)
     const [accountLinks, setAccountLinks] = useState(undefined)
     const [optimizationJobs, setOptimizationJobs] = useState(undefined)
@@ -117,7 +117,7 @@ const AdminPanel = () => {
 
     return (
         <div className="admin-panel">
-            <div className="tabs">
+            {admin && <div className="tabs">
                 <NavLink
                     to={'/admin-panel/general'}
                 >
@@ -153,19 +153,25 @@ const AdminPanel = () => {
                     Zero to Hero
                 </NavLink>
 
+                {/*<NavLink*/}
+                {/*    to={'/admin-panel/dashboard'}*/}
+                {/*>*/}
+                {/*    Dashboard*/}
+                {/*</NavLink>*/}
+
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
                 {/*    onClick={() => setSelectedTab('products')}>*/}
                 {/*    Products*/}
                 {/*</button>*/}
-            </div>
+            </div>}
 
             {/*{selectedTab === 'products' && <Products/>}*/}
 
-            <Route exact path="/admin-panel" render={() => <Redirect to={'/admin-panel/general'}/>}/>
+            {admin && <Route exact path="/admin-panel" render={() => <Redirect to={'/admin-panel/general'}/>}/>}
 
 
-            <Route exact path="/admin-panel/general" render={() => <>
+            {admin && <Route exact path="/admin-panel/general" render={() => <>
                 <GeneralUserInformation
                     data={userInformation}
                     onCheck={checkUserEmail}
@@ -198,15 +204,18 @@ const AdminPanel = () => {
 
                     onCheck={checkOptimizationConditions}
                 />
-            </>}/>
+            </>}/>}
 
-            <Route path="/admin-panel/reports" render={() => <Reports
+            {admin && <Route path="/admin-panel/reports" render={() => <Reports
                 userId={userInformation && userInformation.id}
-            />}/>
-            <Route path="/admin-panel/password" component={ChangePassword}/>
-            <Route path="/admin-panel/impersonate" component={Impersonations}/>
-            <Route path="/admin-panel/zth" component={ZTH}/>
-            <Route path="/admin-panel/registration-links" component={AgencyUsers}/>
+            />}/>}
+
+            {admin && <Route path="/admin-panel/password" component={ChangePassword}/>}
+            {admin && <Route path="/admin-panel/impersonate" component={Impersonations}/>}
+            {admin && <Route path="/admin-panel/zth" render={() => <ZTH admin={true}/>}/>}
+            <Route path="/advanced/zth" render={() => <ZTH admin={admin}/>}/>
+            {admin && <Route path="/admin-panel/registration-links" component={AgencyUsers}/>}
+            {admin && <Route path="/admin-panel/dashboard" component={AgencyDashboard}/>}
         </div>
     )
 }

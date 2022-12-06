@@ -38,8 +38,9 @@ export const adminServices = {
     fetchCreateParams,
     fetchReportFileSize,
     createZTH,
-    analyzeSTReport
+    analyzeSTReport,
 
+    getAgencyDashboardData
 }
 
 function checkUserEmail(email) {
@@ -99,7 +100,7 @@ function checkReports({userId, size, page, sorterColumn, sorterType, startDate, 
 
     filters.forEach(({filterBy, type, value}) => {
         if (filterBy === 'datetime') {
-            parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles' ).toISOString()},${moment.tz(`${moment(value.endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
+            parameters.push(`&datetime:range=${moment.tz(`${moment(value.startDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().startOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()},${moment.tz(`${moment(value.endDate, 'DD-MM-YY').format('YYYY-MM-DD')} ${moment().endOf('day').format('HH:mm:ss')}`, 'America/Los_Angeles').toISOString()}`)
         } else if (filterBy === 'object' || filterBy === 'keyword_pt' || filterBy === 'campaign_name' || filterBy === 'ad_group_name') {
             parameters.push(`&${filterBy === 'keyword_pt' ? 'object' : filterBy}:${type.key}=${value}`)
         } else if (filterBy === 'object_type' || filterBy === 'match_type') {
@@ -140,6 +141,11 @@ function changeUserPassword(type, user, password) {
     return api('post',
         type === 'email' ? adminUrls.userPasswordByEmail : `${adminUrls.userPasswordById(user)}`,
         type === 'email' ? {...password, email: user} : password)
+}
+
+
+function getAgencyDashboardData({attributionWindow, dateFrom, dateTo}) {
+    return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${dateFrom}&date_to=${dateTo}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 //----------------------------
@@ -246,6 +252,7 @@ function createZTH(data) {
 function analyzeSTReport(data) {
     return zthRequest('post', `${adminUrls.analyzeReport}`, data, 'multipart/form-data')
 }
+
 
 //
 // function createZTH(data) {
