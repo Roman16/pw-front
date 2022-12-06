@@ -51,6 +51,7 @@ const updateActions = {
     }]
 }
 
+
 const FastUpdateBlock = ({
                              totalSize,
                              location,
@@ -70,6 +71,7 @@ const FastUpdateBlock = ({
         [actionType, setActionType] = useState(),
         [changingValue, setChangingValue] = useState(),
         [submitProcessing, setSubmitProcessing] = useState(false)
+
 
     const selectAllItemsHandler = () => {
         onSelectAll()
@@ -182,6 +184,7 @@ const FastUpdateBlock = ({
                         value={changingValue}
                         actionType={actionType}
                         onChangeValue={setChangingValue}
+                        location={location}
                     />
                 </div>
 
@@ -210,8 +213,12 @@ const FastUpdateBlock = ({
     )
 }
 
-const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) => {
+const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType, location}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
+
+
+    const statusOptions = location === 'negative-targetings' ? ['archived'] : ['enabled', 'paused', 'archived']
+
 
     const [availablePortfolios, setAvailablePortfolios] = useState([]),
         [visibleDatePopup, setVisibleDatePopup] = useState(false)
@@ -262,9 +269,7 @@ const ChangeValueField = ({selectedColumn, value, onChangeValue, actionType}) =>
                 onChange={value => onChangeValue(value)}
                 value={value}
             >
-                <Option value={'enabled'}>Enabled</Option>
-                <Option value={'paused'}>Paused</Option>
-                <Option value={'archived'}>Archived</Option>
+                {statusOptions.map(i => <Option value={i}>{i.capitalize()}</Option>)}
             </CustomSelect>
         )
     } else if (selectedColumn === 'portfolioName') {

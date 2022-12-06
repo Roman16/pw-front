@@ -19,6 +19,8 @@ const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
 
+const advancedUserIds = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", "),
+    adminUserIds = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ")
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
@@ -43,6 +45,9 @@ const Sidebar = () => {
         activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
 
     const className = getClassNames(collapsed ? "open" : "closed")
+
+    const isAdvancedUser = advancedUserIds.includes(user.userDetails.id.toString()),
+        isAdminUser = adminUserIds.includes(user.userDetails.id.toString()) || localStorage.getItem('adminToken')
 
     const toggleSubMenu = (menu) => {
         setSubMenuState({
@@ -287,20 +292,33 @@ const Sidebar = () => {
                             </a>
                         </li>
 
-                        {(!production || user.userDetails.id === 714 || localStorage.getItem('adminToken')) &&
-                        <li className="bottom-nav-item">
-                            <Link
-                                className="menu-link"
-                                activeClassName="active"
-                                to={localStorage.getItem('adminToken') ? '/admin-panel/impersonate' : '/admin-panel/general'}
-                            >
-                                <div className="link-icon">
-                                    <SVG id='admin-panel-icon'/>
-                                </div>
+                        {isAdminUser ?
+                            <li className="bottom-nav-item">
+                                <Link
+                                    className="menu-link"
+                                    activeClassName="active"
+                                    to={localStorage.getItem('adminToken') ? '/admin-panel/impersonate' : '/admin-panel/general'}
+                                >
+                                    <div className="link-icon">
+                                        <SVG id='admin-panel-icon'/>
+                                    </div>
 
-                                <label>Admin Panel</label>
-                            </Link>
-                        </li>}
+                                    <label>Admin Panel</label>
+                                </Link>
+                            </li> : isAdvancedUser ?
+                                <li className="bottom-nav-item">
+                                    <Link
+                                        className="menu-link"
+                                        activeClassName="active"
+                                        to={'/advanced/zth'}
+                                    >
+                                        <div className="link-icon">
+                                            <SVG id='admin-panel-icon'/>
+                                        </div>
+
+                                        <label>Advanced tools</label>
+                                    </Link>
+                                </li> : ''}
 
                         <li className="bottom-nav-item log-out-item">
                             <Link

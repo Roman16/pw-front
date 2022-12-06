@@ -41,13 +41,13 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
         setProcessing(true)
 
         try {
-            const res = await zthServices.getAllProducts({
+            const {result} = await zthServices.getAllProducts({
                 ...paginationOptions,
                 searchStr: searchStr,
             })
 
-            setAllProducts(res.result || [])
-            setTotalSize(res.totalSize)
+            setAllProducts(result.products || [])
+            setTotalSize(result.totalSize)
         } catch (e) {
             setAllProducts([])
         }

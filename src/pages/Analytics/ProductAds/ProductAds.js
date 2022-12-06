@@ -25,22 +25,24 @@ const ProductAds = () => {
         dispatch(analyticsActions.setMainState(state))
     }
 
+    let columns = columnList(setStateHandler, selectedCampaign, selectedAdGroup, true)
+
     return (
         <div className={'product-ads-workplace'}>
             <RenderPageParts
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={[0]}
-                // fixedColumns={[0, 1]}
+                fixedColumns={[0, 1]}
+                showRowSelection={true}
+                rowKey={'adId'}
 
-                columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
+                columns={columns}
+
                 // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
-                // showRowSelection={true}
-                // rowKey={'adId'}
             />
 
-            <CreateProductAdsWindow/>
+            {/*<CreateProductAdsWindow/>*/}
         </div>
     )
 }

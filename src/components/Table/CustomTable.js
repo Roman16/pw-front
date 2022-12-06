@@ -387,7 +387,7 @@ export const EditableField = ({item, type, column, value, onUpdateField, render,
     } else if (type === 'switch') {
         return (<div className="switch-block">
             <Switch
-                disabled={item.state === 'archived' || processing}
+                disabled={item.state === 'archived' || processing || columnParams.disabled}
                 checked={item.state === 'enabled'}
                 loading={processing}
                 onChange={checked => submitFieldHandler(checked ? 'enabled' : 'paused')}

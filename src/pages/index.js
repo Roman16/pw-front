@@ -15,7 +15,7 @@ import PWWindows from "../components/ModalWindow/PWWindows"
 import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 import {history} from "../utils/history"
 import {amazonRegionsSort} from "../reducers/user.reducer"
-import ProductFruits from 'react-product-fruits';
+import ProductFruits from 'react-product-fruits'
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -32,8 +32,9 @@ const Account = React.lazy(() => import('./Account/Navigation/Navigation'))
 
 const Home = React.lazy(() => import('./Home/Home'))
 const Dayparting = React.lazy(() => import('./PPCAutomate/Dayparting/Dayparting'))
-const Dayparting2= React.lazy(() => import('./Dayparting/Dayparting'))
+const Dayparting2 = React.lazy(() => import('./Dayparting/Dayparting'))
 const AdminPanel = React.lazy(() => import('./AdminPanel/AdminPanel'))
+const ZTH = React.lazy(() => import('./AdminPanel/ZTH/ZTH'))
 const FullJourney = React.lazy(() => import('./authentication/AccountBinding/FullJourney/FullJourney'))
 const ConnectSpApiJourney = React.lazy(() => import('./authentication/AccountBinding/ConnectSpApiJourney/ConnectSpApiJourney'))
 const ConnectAdsApiJourney = React.lazy(() => import('./authentication/AccountBinding/ConnectAdsApiJourney/ConnectAdsApiJourney'))
@@ -74,18 +75,35 @@ const developer = (process.env.REACT_APP_ENV === "development" || process.env.RE
 export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
 const AdminRoute = (props) => {
+
     const {userId} = useSelector(state => ({
             userId: state.user.userDetails.id,
         })),
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
+    const isAdmin = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ").includes(userId.toString())
 
-    if ((!developer && userId === 714) || developer || isSuperAdmin) {
+    if (isAdmin || isSuperAdmin) {
         return <Route {...props} />
     } else {
         return <Redirect to={'/404'}/>
     }
 }
+
+const AdvancedRoute = (props) => {
+    const {userId} = useSelector(state => ({
+        userId: state.user.userDetails.id,
+    }))
+
+    const isAdvancedUser = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", ").includes(userId.toString())
+
+    if (isAdvancedUser) {
+        return <Route {...props} />
+    } else {
+        return <Redirect to={'/404'}/>
+    }
+}
+
 
 const ConnectedAmazonRoute = props => {
     const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
@@ -280,6 +298,10 @@ const AuthorizedUser = (props) => {
 
                                     {/*-------------------------------------------*/}
                                     <AdminRoute path="/admin-panel" component={AdminPanel}/>
+                                    {/*-------------------------------------------*/}
+
+                                    {/*-------------------------------------------*/}
+                                    <AdvancedRoute path="/advanced" render={() => <AdminPanel admin={false}/>}/>
                                     {/*-------------------------------------------*/}
 
                                     <Route exact path="/connect-amazon-account" component={FullJourney}/>

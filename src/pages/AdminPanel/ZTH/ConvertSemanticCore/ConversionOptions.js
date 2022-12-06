@@ -14,7 +14,7 @@ const Option = Select.Option
 
 let fullUsersList = []
 
-const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertProcessing, zthEnums, onUpload, onChange}) => {
+const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange}) => {
     const [actionType, setActionType] = useState('convert'),
         [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
@@ -97,7 +97,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
     }, [bulkUploadOptions])
 
     useEffect(() => {
-        getUsersList()
+        admin && getUsersList()
     }, [])
 
     useEffect(() => {
@@ -115,7 +115,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, convertPr
                 <h2>Select Operation</h2>
                 <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
                     <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
-                    <Radio value={'upload'}>Upload to Amazon Account</Radio>
+                    {admin && <Radio value={'upload'}>Upload to Amazon Account</Radio>}
                 </Radio.Group>
 
                 <h2>{actionType === 'convert' ? 'Conversion' : 'Upload'} options</h2>

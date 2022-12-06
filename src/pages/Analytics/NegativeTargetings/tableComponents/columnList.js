@@ -9,6 +9,16 @@ import {
 import {Link} from "react-router-dom"
 
 const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
+    // {
+    //     title: 'Active',
+    //     dataIndex: 'state',
+    //     key: 'state',
+    //     width: '65px',
+    //     noTotal: true,
+    //     locked: true,
+    //     disabled: true,
+    //     editType: 'switch',
+    // },
     {
         title: 'Keyword / PT',
         dataIndex: 'calculatedTargetingText',

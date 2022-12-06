@@ -17,6 +17,10 @@ const AdGroups = () => {
 
     const dispatch = useDispatch()
 
+    const setStateDetails = (data) => {
+        dispatch(analyticsActions.setStateDetails(data))
+    }
+
     const setStateHandler = (location, state, event) => {
         if (event.ctrlKey || event.metaKey) return
 
@@ -30,12 +34,11 @@ const AdGroups = () => {
                 location={location}
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
-                fixedColumns={[0]}
-                // fixedColumns={[0, 1]}
-                // showRowSelection={true}
-                // rowKey={'adGroupId'}
+                fixedColumns={[0, 1]}
+                showRowSelection={true}
+                rowKey={'adGroupId'}
 
-                columns={columnList(setStateHandler, selectedCampaign)}
+                columns={columnList(setStateHandler, selectedCampaign, setStateDetails)}
                 // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
 
