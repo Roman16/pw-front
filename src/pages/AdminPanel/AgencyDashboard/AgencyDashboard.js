@@ -6,17 +6,16 @@ import Pagination from "../../../components/Pagination/Pagination"
 import {adminServices} from "../../../services/admin.services"
 import {columns} from './columns'
 import {Filters} from "./Filters"
+import moment from "moment-timezone"
+import {activeTimezone} from "../../index"
 
 export const AgencyDashboard = () => {
     const [data, setData] = useState([]),
-        [totalCount, setTotalCount] = useState(0),
         [loading, setLoading] = useState(true),
         [requestData, setRequestData] = useState({
             attributionWindow: 7,
-            dateFrom: '',
-            dateTo: '',
-            page: 1,
-            pageSize: 10
+            dateFrom: moment().add(-6, 'days'),
+            dateTo: moment(),
         })
 
 
@@ -25,6 +24,7 @@ export const AgencyDashboard = () => {
         try {
             const {response} = await adminServices.getAgencyDashboardData(requestData)
             console.log(response)
+            setData(response)
         } catch (e) {
             console.log(e)
         }
@@ -32,18 +32,16 @@ export const AgencyDashboard = () => {
         setLoading(false)
     }
 
-    const paginationChangeHandler = () => {
-
-    }
-
+    const changeFiltersHandler = (data) => setRequestData(prevData => ({...prevData, ...data}))
 
     useEffect(() => {
         getDataHandler()
-    }, [])
+    }, [requestData])
 
     return (<section className={'agency-dashboard'}>
         <Filters
             {...requestData}
+            onChange={changeFiltersHandler}
         />
 
         <div className="table-block">

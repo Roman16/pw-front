@@ -97,10 +97,10 @@ const Impersonations = (props) => {
             }
 
             if (localStorage.getItem('adminToken')) {
-                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('token', res.result.access_token)
             } else {
                 localStorage.setItem('adminToken', localStorage.getItem('token'))
-                localStorage.setItem('token', res.access_token)
+                localStorage.setItem('token', res.result.access_token)
             }
 
             updateLocaleStorage()

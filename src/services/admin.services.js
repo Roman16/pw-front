@@ -130,7 +130,7 @@ function fetchUsers(isAgencyClient = true) {
 }
 
 function impersonateUser(value, type) {
-    return api('get', type === 'email' ? `${adminUrls.impersonateByEmail}?email=${value}` : adminUrls.impersonateById(value))
+    return api('get', type === 'email' ? `${adminUrls.impersonateByEmail}?email=${value}` : `${adminUrls.impersonateById(value)}?user_id=${value}`)
 }
 
 function fetchUserProducts(id) {
@@ -145,7 +145,7 @@ function changeUserPassword(type, user, password) {
 
 
 function getAgencyDashboardData({attributionWindow, dateFrom, dateTo}) {
-    return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${dateFrom}&date_to=${dateTo}`, undefined, undefined, undefined, undefined, undefined, false)
+    return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${moment(dateFrom).format('YYYY-MM-DD')}&date_to=${moment(dateTo).format('YYYY-MM-DD')}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 //----------------------------
