@@ -46,8 +46,8 @@ const Sidebar = () => {
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
-    const isAdvancedUser = advancedUserIds.includes(user.userDetails.id.toString()),
-        isAdminUser = adminUserIds.includes(user.userDetails.id.toString()) || localStorage.getItem('adminToken')
+    const isAdvancedUser = advancedUserIds.includes(user.userDetails.id?.toString()),
+        isAdminUser = adminUserIds.includes(user.userDetails.id?.toString()) || localStorage.getItem('adminToken')
 
     const toggleSubMenu = (menu) => {
         setSubMenuState({

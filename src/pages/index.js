@@ -81,7 +81,7 @@ const AdminRoute = (props) => {
         })),
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
-    const isAdmin = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ").includes(userId.toString())
+    const isAdmin = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ").includes(userId?.toString())
 
     if (isAdmin || isSuperAdmin) {
         return <Route {...props} />
@@ -95,7 +95,7 @@ const AdvancedRoute = (props) => {
         userId: state.user.userDetails.id,
     }))
 
-    const isAdvancedUser = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", ").includes(userId.toString())
+    const isAdvancedUser = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", ").includes(userId?.toString())
 
     if (isAdvancedUser) {
         return <Route {...props} />
