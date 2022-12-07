@@ -52,7 +52,7 @@ const placementsEnums = [
 const hours = Array.from({length: 24}, (item, index) => index)
 
 
-const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow, fetchingCampaignList}) => {
+const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWindow, fetchingCampaignList, activeTab}) => {
     const [data, setData] = useState(days.map(() => hours)),
         [compareData, setCompareData] = useState(),
         [selectedMetric, setSelectedMetric] = useState(metrics[0].key),
@@ -97,22 +97,36 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
 
         setFetchingData(true)
 
-        const [res, budget] = await Promise.all([getDataByDate(date, mainDataRequest.token), daypartingServices.getBudget({
-            campaignId,
-            date,
-            cancelToken: mainDataRequest.token
-        })])
+        if (activeTab === 'campaigns') {
+            const [res, budget] = await Promise.all([getDataByDate(date, mainDataRequest.token), daypartingServices.getBudget({
+                campaignId,
+                date,
+                cancelToken: mainDataRequest.token
+            })])
 
-        await setData(res ? [...res.map((day, dayIndex) => {
-            return day.map((hour, hourIndex) => {
-                return ({
-                    ...hour,
-                    budget: Object.values(Object.values(budget.result)[dayIndex])[hourIndex]
+            await setData(res ? [...res.map((day, dayIndex) => {
+                return day.map((hour, hourIndex) => {
+                    return ({
+                        ...hour,
+                        budget: Object.values(Object.values(budget.result)[dayIndex])[hourIndex]
+                    })
                 })
-            })
-        })] : days.map(() => hours))
+            })] : days.map(() => hours))
 
-        setFetchingData(false)
+            setFetchingData(false)
+        } else {
+            const res = await getDataByDate(date, mainDataRequest.token)
+
+            await setData(res ? [...res.map((day, dayIndex) => {
+                return day.map((hour, hourIndex) => {
+                    return ({
+                        ...hour,
+                    })
+                })
+            })] : days.map(() => hours))
+
+            setFetchingData(false)
+        }
     }
 
     const getCompareData = async () => {
@@ -251,7 +265,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                                         compareData={compareData && !fetchingCompareData && compareData?.[dayIndex]?.[hourIndex]}
                                                         fullData={data}
                                                         date={moment(item.date).add(hourIndex, 'h')}
-                                                        budget
+                                                        budget={activeTab === 'campaigns'}
                                                     />
                                                 }
                                             >
@@ -448,7 +462,7 @@ const TooltipDescription = ({
                                 selectedMetric,
                                 percent = true,
                                 time = true,
-                                budget = false
+                                budget = false,
                             }) => {
     const value = getMetricValue(data, selectedMetric)
     let comparedValue

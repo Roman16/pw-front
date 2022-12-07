@@ -32,6 +32,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
     ...!selectedCampaign ? [{
         ...campaignColumn,
         noTotal: true,
+        width: '260px',
         render: (campaign, item) => (<Link
             to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
             title={campaign}
@@ -47,6 +48,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
     ...!selectedAdGroup ? [{
         ...adGroupColumn,
         noTotal: true,
+        width: '260px',
         render: (adGroup, item) => (
             <Link
                 to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
@@ -63,8 +65,14 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
             </Link>
         )
     }] : [],
-    matchTypeColumn,
-    statusColumn
+    {
+        ...matchTypeColumn,
+        width: '200px',
+    },
+    {
+        ...statusColumn,
+        width: '150px',
+    }
 ])
 
 export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})
