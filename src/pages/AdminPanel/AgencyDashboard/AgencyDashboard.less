@@ -6,10 +6,77 @@
   padding: 20px 0 0 0;
 
   .filters-block {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0 20px 20px;
 
     .custom-tooltip {
+      margin: 0 5px 0 0;
+    }
+
+    .form-group {
+      height: 2.2857142857142856rem;
       margin: 0;
+      position: relative;
+
+      &.attribution-window-block {
+        margin: 0 20px 0 0;
+      }
+
+      .ant-select {
+        width: max-content;
+        height: 100%;
+
+        .ant-select-selection {
+          width: max-content;
+          padding: 0 0 0 10.5rem;
+          background: transparent;
+
+          .ant-select-selection__rendered {
+            width: max-content;
+          }
+
+          .ant-select-selection-selected-value {
+            width: max-content;
+          }
+        }
+      }
+
+      .DatePicker {
+        width: max-content;
+        max-width: max-content;
+        margin: 0;
+
+        .pw-range-date-picker {
+          width: max-content;
+        }
+
+        .ant-calendar-picker-input {
+          width: max-content;
+          padding: 0 30px 0 6rem;
+          background: transparent;
+
+          input {
+            width: 50px;
+            padding: 0;
+            height: 100%;
+            margin: 0;
+          }
+        }
+      }
+
+      .label {
+        position: absolute;
+        left: 5px;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        font-size: 0.85714286rem;
+        color: #686868;
+      }
+
     }
   }
 
@@ -23,9 +90,11 @@
 
       .table-head {
         border-top: 1px solid #c9cbd4;
+        background: #f0f0f0;
 
         .th {
           border-right: 1px solid #c9cbd4;
+          padding: 0 8px;
 
           &:last-of-type {
             border: 0;
