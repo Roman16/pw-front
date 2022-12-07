@@ -97,6 +97,7 @@ const Dayparting = () => {
                             selectedCompareDate={selectedCompareDate}
                             attributionWindow={attributionWindow}
                             fetchingCampaignList={fetchingCampaignList}
+                            activeTab={activeTab}
                         />
 
                         <MetricsComparison
