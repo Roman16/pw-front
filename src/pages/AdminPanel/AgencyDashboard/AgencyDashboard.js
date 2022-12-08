@@ -22,9 +22,9 @@ export const AgencyDashboard = () => {
     const getDataHandler = async () => {
         setLoading(true)
         try {
-            const {response} = await adminServices.getAgencyDashboardData(requestData)
-            console.log(response)
-            setData(response)
+            const {result} = await adminServices.getAgencyDashboardData(requestData)
+            console.log(result)
+            setData(result)
         } catch (e) {
             console.log(e)
         }

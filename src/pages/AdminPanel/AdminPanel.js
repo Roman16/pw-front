@@ -153,11 +153,11 @@ const AdminPanel = ({admin = true}) => {
                     Zero to Hero
                 </NavLink>
 
-                {/*<NavLink*/}
-                {/*    to={'/admin-panel/dashboard'}*/}
-                {/*>*/}
-                {/*    Dashboard*/}
-                {/*</NavLink>*/}
+                <NavLink
+                    to={'/admin-panel/dashboard'}
+                >
+                    Dashboard
+                </NavLink>
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
