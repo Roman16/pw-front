@@ -19,6 +19,8 @@ export const baseUrl =
 
 let lastError = null
 
+export const encodeString = (string) => encodeURIComponent(string)
+
 function handlerErrors(error, type='error') {
     if (lastError !== error) {
         lastError = error

@@ -14,13 +14,11 @@ import * as Sentry from "@sentry/browser"
 import AvailableMarketplaces from "./ConnectedRegions/ConnectedRegions"
 import {userActions} from "../../actions/user.actions"
 import $ from 'jquery'
+import {userTypeEnums} from "../../constans/userTypeEnums"
 
 const production = process.env.REACT_APP_ENV === "production"
 const DEMO = process.env.REACT_APP_ENV === "demo"
 const devicePixelRatio = window.devicePixelRatio
-
-const advancedUserIds = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", "),
-    adminUserIds = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ")
 
 const Sidebar = () => {
     const [collapsed, setCollapsed] = useState(false),
@@ -46,8 +44,8 @@ const Sidebar = () => {
 
     const className = getClassNames(collapsed ? "open" : "closed")
 
-    const isAdvancedUser = advancedUserIds.includes(user.userDetails.id?.toString()),
-        isAdminUser = adminUserIds.includes(user.userDetails.id?.toString()) || localStorage.getItem('adminToken')
+    const isAdvancedUser = user.userDetails.user_type === userTypeEnums.ADVANCED_CLIENT,
+        isAdminUser = user.userDetails.user_type === userTypeEnums.ADMIN || localStorage.getItem('adminToken')
 
     const toggleSubMenu = (menu) => {
         setSubMenuState({

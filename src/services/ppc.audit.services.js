@@ -1,4 +1,4 @@
-import api from "./request"
+import api, {encodeString} from "./request"
 import {ppcAuditUrls} from "../constans/api.urls"
 import {filtersHandler} from "./analytics.services"
 
@@ -16,7 +16,7 @@ const columnsKey = {
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, cancelToken}) {
-    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}${searchStr ? `&search_query=${searchStr}` : ''}&only_under_optimization=${onlyOptimization ? 1 : 0}`, null, null, cancelToken)
+    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}${searchStr ? `&search_query=${encodeString(searchStr)}` : ''}&only_under_optimization=${onlyOptimization ? 1 : 0}`, null, null, cancelToken)
 }
 
 function getAuditIssues({id, page, pageSize, sorterColumn, filters}, cancelToken) {

@@ -16,6 +16,7 @@ import {marketplaceIdValues} from "../constans/amazonMarketplaceIdValues"
 import {history} from "../utils/history"
 import {amazonRegionsSort} from "../reducers/user.reducer"
 import ProductFruits from 'react-product-fruits'
+import {userTypeEnums} from "../constans/userTypeEnums"
 
 const Payment = React.lazy(() => import('./ZeroToHero/Payment/Payment'))
 const ChooseCampaign = React.lazy(() => import('./ZeroToHero/ChooseCampaign/ChooseCampaign'))
@@ -70,18 +71,16 @@ function throttle(func, delay) {
 }
 
 
-const developer = (process.env.REACT_APP_ENV === "development" || process.env.REACT_APP_ENV === "demo")
-
 export const activeTimezone = JSON.parse(localStorage.getItem('activeMarketplace'))?.timezone || 'America/Los_Angeles'
 
 const AdminRoute = (props) => {
 
-    const {userId} = useSelector(state => ({
-            userId: state.user.userDetails.id,
+    const {userType} = useSelector(state => ({
+            userType: state.user.userDetails.user_type,
         })),
         isSuperAdmin = !!localStorage.getItem('adminToken')
 
-    const isAdmin = process.env.REACT_APP_ADMIN_USER_IDS?.split(", ").includes(userId?.toString())
+    const isAdmin = userType === userTypeEnums.ADMIN
 
     if (isAdmin || isSuperAdmin) {
         return <Route {...props} />
@@ -91,11 +90,11 @@ const AdminRoute = (props) => {
 }
 
 const AdvancedRoute = (props) => {
-    const {userId} = useSelector(state => ({
-        userId: state.user.userDetails.id,
+    const {userType} = useSelector(state => ({
+        userType: state.user.userDetails.user_type,
     }))
 
-    const isAdvancedUser = process.env.REACT_APP_ADVANCED_USER_IDS?.split(", ").includes(userId?.toString())
+    const isAdvancedUser = userType === userTypeEnums.ADVANCED_CLIENT
 
     if (isAdvancedUser) {
         return <Route {...props} />
