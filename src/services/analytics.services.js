@@ -1,4 +1,4 @@
-import api, {baseUrl} from "./request"
+import api, {baseUrl, encodeString} from "./request"
 import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
@@ -64,7 +64,7 @@ export const filtersHandler = (f) => {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
-            parameters.push(`&${filterBy}:contains=${value}`)
+            parameters.push(`&${filterBy}:contains=${encodeString(value)}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'budget_allocation' ||
@@ -80,7 +80,7 @@ export const filtersHandler = (f) => {
         } else if (typeof type === 'object') {
             parameters.push(`&${filterBy}:${type.key}=${value}`)
         } else if (filterBy !== 'name' && type !== 'search') {
-            parameters.push(`&${filterBy}:${type}=${value}`)
+            parameters.push(`&${filterBy}:${type}=${encodeString(value)}`)
         }
     })
 
