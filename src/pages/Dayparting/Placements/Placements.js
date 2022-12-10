@@ -126,8 +126,8 @@ const Placements = ({date, selectedCompareDate, campaignId, attributionWindow, f
 
             metrics.forEach(({key}) => {
                 resData.top_of_search[key] = getMetricValue(result.top_of_search, key)
-                resData.detail_page[key] = getMetricValue(result.top_of_search, key)
-                resData.other[key] = getMetricValue(result.top_of_search, key)
+                resData.detail_page[key] = getMetricValue(result.detail_page, key)
+                resData.other[key] = getMetricValue(result.other, key)
             })
 
             setMetricsData(resData)
