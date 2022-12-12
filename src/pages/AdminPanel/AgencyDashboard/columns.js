@@ -46,6 +46,13 @@ export const columns = [
         ...acosColumn, sorter: false,
     },
     {
-        ...cpcColumn, sorter: false,
+        title: 'CPC',
+        dataIndex: 'cpc',
+        key: 'cpc',
+        minWidth: '90px',
+        sorter: false,
+        filter: true,
+        align: 'right',
+        ...renderNumberField('currency', true, true)
     }
 ]
