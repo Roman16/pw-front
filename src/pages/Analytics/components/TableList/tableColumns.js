@@ -65,7 +65,7 @@ export const numberColumns = [
     'organic_profit'
 ]
 
-export const RenderMetricValue = ({number, type, id}) => {
+export const RenderMetricValue = ({number, type, id, currencyCode}) => {
     switch (type) {
         case 'number':
             return ((number !== null && number !== undefined ? numberMask(number, 0) : '-'))
@@ -77,16 +77,16 @@ export const RenderMetricValue = ({number, type, id}) => {
             return `${(number !== null ? `${round(+number, 2)}x` : '-')}`
 
         case 'currency':
-            return ((number !== null && number !== undefined ? number < 0 ? <>- {currencyWithCode(numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined))} </> :
-                currencyWithCode(numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined)): '-'))
+            return ((number !== null && number !== undefined ? number < 0 ? <>- {currencyWithCode(numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined), currencyCode)} </> :
+                currencyWithCode(numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined), currencyCode): '-'))
     }
 }
 
-export const renderNumberField = (type = 'number', showDiff = true) => {
+export const renderNumberField = (type = 'number', showDiff = true, currencyCodeFromItem) => {
     return ({
         render: (number, item, array, dataIndex) => {
             return (<div className={'metric-value'}>
-                <RenderMetricValue number={number} type={type} id={dataIndex}/>
+                <RenderMetricValue number={number} type={type} id={dataIndex} currencyCode={currencyCodeFromItem ? item.currency_code : undefined}/>
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
                     value={number}

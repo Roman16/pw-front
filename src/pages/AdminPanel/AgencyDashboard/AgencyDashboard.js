@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from "react"
 import './AgencyDashboard.less'
 import CustomTable from "../../../components/Table/CustomTable"
-import {numberColumns} from "../../Analytics/components/TableList/tableColumns"
-import Pagination from "../../../components/Pagination/Pagination"
 import {adminServices} from "../../../services/admin.services"
 import {columns} from './columns'
 import {Filters} from "./Filters"
 import moment from "moment-timezone"
-import {activeTimezone} from "../../index"
+import _ from 'lodash'
+
 
 export const AgencyDashboard = () => {
     const [data, setData] = useState([]),
@@ -16,15 +15,41 @@ export const AgencyDashboard = () => {
             attributionWindow: 7,
             dateFrom: moment().add(-6, 'days'),
             dateTo: moment(),
+            comparePreviousPeriod: false
         })
 
 
     const getDataHandler = async () => {
         setLoading(true)
         try {
-            const {result} = await adminServices.getAgencyDashboardData(requestData)
-            console.log(result)
-            setData(result)
+            let res
+
+            if (requestData.comparePreviousPeriod) {
+                const dateDiff = moment(requestData.dateTo).diff(moment(requestData.dateFrom), 'days')
+
+                const [currentData, previousData] = await Promise.all([adminServices.getAgencyDashboardData({..._.omit(requestData, 'comparePreviousPeriod')}), adminServices.getAgencyDashboardData({
+                    attributionWindow: requestData.attributionWindow,
+                    dateFrom: moment(requestData.dateFrom).add(-(dateDiff + 1), 'days'),
+                    dateTo: moment(requestData.dateFrom).add(-1, 'days'),
+                })])
+
+                res = currentData.result.map((i, index) => {
+                    const obj = {...i, compareWithPrevious: true}
+
+                    columns.forEach((column) => {
+                        if (column.key !== 'name') {
+                            obj[`${column.key}_prev`] = previousData.result[index][column.key]
+                        }
+                    })
+
+                    return (obj)
+                })
+            } else {
+                const {result} = await adminServices.getAgencyDashboardData({..._.omit(requestData, 'comparePreviousPeriod')})
+                res = result
+            }
+
+            setData(res)
         } catch (e) {
             console.log(e)
         }

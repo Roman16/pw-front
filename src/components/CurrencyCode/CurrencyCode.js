@@ -1,7 +1,7 @@
 import {store} from "../../store/store"
 
-export const currencyWithCode = (v) => {
-    const currency = store.getState().user.activeAmazonMarketplace.currency_code || 'USD'
+export const currencyWithCode = (v, currencyCode) => {
+    const currency = currencyCode || store.getState().user.activeAmazonMarketplace.currency_code || 'USD'
 
     const getCurrencyCode = (value) => {
         switch (currency) {
