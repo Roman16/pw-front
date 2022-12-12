@@ -52,13 +52,17 @@
           width: max-content;
         }
 
+        .ant-calendar-range-picker-separator {
+          padding: 4px 0 0 0;
+        }
+
         .ant-calendar-picker-input {
           width: max-content;
           padding: 0 30px 0 6rem;
           background: transparent;
 
           input {
-            width: 50px;
+            width: 60px;
             padding: 0;
             height: 100%;
             margin: 0;
@@ -77,6 +81,60 @@
         color: #686868;
       }
 
+      &.date-range {
+        border-right: 0.5px solid #C9CBD4;
+        padding: 0 20px 0 0;
+        margin: 0 20px 0 0;
+
+
+      }
+
+      &.compare {
+        .icon-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          color: #46435C;
+          font-size: 0.71428571rem;
+          text-transform: uppercase;
+
+          i {
+            width: 1.42857143rem;
+            height: 1.42857143rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          &:hover {
+            color: #FF5256;
+
+            svg {
+              fill: #FF5256;
+              stroke: #FF5256;
+            }
+          }
+        }
+
+        .table-options-popover {
+          .ant-popover-arrow {
+            right: 20px !important;
+          }
+
+          .ant-popover-inner-content {
+            width: max-content;
+
+            .switch-block {
+              display: flex;
+              align-items: center;
+
+              span {
+                margin: 0 0 0 10px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -123,6 +181,7 @@
 
         &:first-of-type {
           padding-left: 20px;
+          font-weight: 600;
         }
       }
     }

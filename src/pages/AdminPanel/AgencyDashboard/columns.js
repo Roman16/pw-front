@@ -1,9 +1,9 @@
+import React from "react"
 import {
     impressionsColumn,
     clicksColumn,
-    adSpendColumn,
     ctrColumn, acosColumn,
-    cpcColumn, adSalesColumn
+    cpcColumn, renderNumberField
 } from "../../Analytics/components/TableList/tableColumns"
 
 export const columns = [
@@ -11,7 +11,7 @@ export const columns = [
         title: 'Account Name',
         dataIndex: 'name',
         key: 'name',
-        render: (i, item) => `${item.account_alias || item.seller_id} ${item.marketplace_id}`
+        render: (i, item) => <b>{item.account_alias || item.seller_id} <br/> {item.marketplace_id}</b>
     },
     {
         ...impressionsColumn, sorter: false,
@@ -20,10 +20,24 @@ export const columns = [
         ...clicksColumn, sorter: false,
     },
     {
-        ...adSalesColumn, sorter: false,
+        title: 'Ad Sales',
+        dataIndex: 'attributedSales',
+        key: 'attributedSales',
+        minWidth: '150px',
+        sorter: false,
+        filter: true,
+        align: 'right',
+        ...renderNumberField('currency', true, true)
     },
     {
-        ...adSpendColumn, sorter: false,
+        title: 'Ad Spend',
+        dataIndex: 'cost',
+        key: 'cost',
+        minWidth: '130px',
+        sorter: false,
+        filter: true,
+        align: 'right',
+        ...renderNumberField('currency', true, true)
     },
     {
         ...ctrColumn, sorter: false,

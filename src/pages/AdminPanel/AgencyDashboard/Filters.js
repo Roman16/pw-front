@@ -1,11 +1,12 @@
 import React from "react"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import CustomSelect from "../../../components/Select/Select"
-import {Select} from "antd"
+import {Popover, Select, Switch} from "antd"
 import DateRange from "../../Analytics/components/DateRange/DateRange"
 import DatePicker from "../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
 import {activeTimezone} from "../../index"
+import {SVG} from "../../../utils/icons"
 
 const Option = Select.Option
 
@@ -30,7 +31,7 @@ const ranges = {
     ]
 }
 
-export const Filters = ({attributionWindow, dateFrom, dateTo, onChange}) => {
+export const Filters = ({attributionWindow, dateFrom, dateTo,comparePreviousPeriod, onChange}) => {
 
     return (<div className={'filters-block '}>
         <div className="form-group attribution-window-block">
@@ -68,8 +69,32 @@ export const Filters = ({attributionWindow, dateFrom, dateTo, onChange}) => {
                 allowClear={false}
                 value={[moment(dateFrom), moment(dateTo)]}
             />
-
         </div>
 
+        <div className="form-group compare">
+            <Popover
+                trigger="click"
+                placement="bottomRight"
+                overlayClassName={'table-options-popover'}
+                getPopupContainer={(node) => node.parentNode}
+                content={<div className="switches">
+                    <div className='switch-block optimization-switch'>
+                        <Switch
+                            checked={comparePreviousPeriod}
+                            onChange={e => onChange({comparePreviousPeriod: e})}
+                        />
+                        <span>Compare with previous period</span>
+                    </div>
+                </div>}
+            >
+                <button className={'table-options icon-btn'}>
+                    <i>
+                        <SVG id={'options-icon'}/>
+                    </i>
+
+                    options
+                </button>
+            </Popover>
+        </div>
     </div>)
 }
