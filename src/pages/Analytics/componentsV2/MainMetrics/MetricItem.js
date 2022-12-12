@@ -9,7 +9,7 @@ import {metricKeys} from "./metricsList"
 import {roundTo} from "../../../ZeroToHero/Payment/Summary"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
-const DiffTooltip = ({currentValue, diff, type, prevValue, name, percentRow = true}) => {
+const DiffTooltip = ({currentValue,currencyCode, diff, type, prevValue, name, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
 
     return (
@@ -20,12 +20,14 @@ const DiffTooltip = ({currentValue, diff, type, prevValue, name, percentRow = tr
                     value={prevValue}
                     type={type}
                     id={name}
+                    currencyCode={currencyCode}
                 />}
                 {`  to  `}
                 <b><RenderMetricValue
                     value={currentValue}
                     type={type}
                     id={name}
+                    currencyCode={currencyCode}
                 /></b>
             </p>
 
@@ -60,7 +62,7 @@ const metricsDifferentDiff = [
     metricKeys['cpc'],
 ]
 
-export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false}) => {
+export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false, currencyCode}) => {
     if (diff != null) {
         value = +value
         prevValue = +prevValue
@@ -88,6 +90,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                     type={type}
                     name={name}
                     percentRow={false}
+                    currencyCode={currencyCode}
                 />}>
                 <div className='metric-item__changes'>
                     {(value > prevValue) &&
@@ -95,7 +98,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='upward-metric-changes'/>
                         </i>
-                        {currencyWithCode(numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2))}
+                        {currencyWithCode(numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2), currencyCode)}
                     </div>}
 
                     {(value < prevValue) &&
@@ -103,7 +106,7 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
                         <i>
                             <SVG id='downward-metric-changes'/>
                         </i>
-                        {currencyWithCode(numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2))}
+                        {currencyWithCode(numberMask(diffValue, name === metricKeys['rpi'] ? 4 : 2), currencyCode)}
                     </div>}
 
                     {diffValue === 0 && <div className='down-changes'>
@@ -156,14 +159,14 @@ export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopu
     }
 }
 
-const RenderMetricValue = ({value, type, id}) => {
+const RenderMetricValue = ({value, type, id, currencyCode}) => {
     if (value != null && !isNaN(value)) {
         const number = +value
         if (type === 'currency') {
             if (id === metricKeys['rpi']) {
-                return currencyWithCode(numberMask(number, 4, null, 2))
+                return currencyWithCode(numberMask(number, 4, null, 2), currencyCode)
             } else {
-                return currencyWithCode(Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2))
+                return currencyWithCode(Math.round(number).toString().length > 4 ? numberMask(number) : numberMask(number, 2), currencyCode)
             }
         } else if (type === 'percent') {
             return (`${round(number * 100, id === metricKeys['icvr'] ? 4 : 2)}%`)
