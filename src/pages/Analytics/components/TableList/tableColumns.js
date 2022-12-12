@@ -85,10 +85,13 @@ export const RenderMetricValue = ({number, type, id, currencyCode}) => {
 export const renderNumberField = (type = 'number', showDiff = true, currencyCodeFromItem) => {
     return ({
         render: (number, item, array, dataIndex) => {
+            const currencyCode = item?.currency_code || 'USD'
+
             return (<div className={'metric-value'}>
-                <RenderMetricValue number={number} type={type} id={dataIndex} currencyCode={currencyCodeFromItem ? item.currency_code : undefined}/>
+                <RenderMetricValue number={number} type={type} id={dataIndex} currencyCode={currencyCode}/>
 
                 {item.compareWithPrevious && showDiff && <RenderMetricChanges
+                    currencyCode={currencyCode}
                     value={number}
                     prevValue={item[`${dataIndex}_prev`] || undefined}
                     diff={item[`${dataIndex}_prev`] ? +item[`${dataIndex}_prev`] === 0 ? null : (+number - +item[`${dataIndex}_prev`]) / +item[`${dataIndex}_prev`] : null}
