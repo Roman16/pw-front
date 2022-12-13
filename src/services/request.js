@@ -21,7 +21,7 @@ let lastError = null
 
 export const encodeString = (string) => encodeURIComponent(string)
 
-function handlerErrors(error, type='error') {
+function handlerErrors(error, type = 'error') {
     if (lastError !== error) {
         lastError = error
 
@@ -35,12 +35,16 @@ function handlerErrors(error, type='error') {
     }
 }
 
-const urlGenerator = ({url, withDefaultUrl, withMarketplace}) => {
+const urlGenerator = ({url, withDefaultUrl, withMarketplace, isAdminRequest}) => {
     if (withDefaultUrl) {
         if (withMarketplace) {
             const marketplace = JSON.parse(localStorage.getItem('activeMarketplace'))
 
-            if(marketplace) {
+            if (isAdminRequest) {
+                return `${baseUrl}/api/${url}`
+            }
+
+            if (marketplace) {
                 if (url.includes('?')) {
                     return `${baseUrl}/api/${url.split('?')[0]}?amazon_region_account_marketplace_id=${marketplace.id}&${url.split('?')[1]}`
                 } else {
@@ -66,7 +70,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
     return new Promise((resolve, reject) => {
         axios({
             method: method,
-            url: urlGenerator({url, withDefaultUrl, withMarketplace}),
+            url: urlGenerator({url, withDefaultUrl, withMarketplace, isAdminRequest}),
             data: data,
             headers: {
                 'Content-Type': type || 'application/json',
