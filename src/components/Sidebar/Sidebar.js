@@ -84,7 +84,7 @@ const Sidebar = () => {
 
 
     useEffect(() => {
-        if (user.userDetails.id === 714) setAdminStatus(true)
+        if (user.userDetails.user_type === userTypeEnums.ADMIN) setAdminStatus(true)
         else setAdminStatus(false)
 
         if (user.userDetails.is_agency_client) setAgencyUser(true)

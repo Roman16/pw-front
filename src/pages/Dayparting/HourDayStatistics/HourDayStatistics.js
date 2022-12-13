@@ -475,7 +475,7 @@ const TooltipDescription = ({
             <div className="tooltip-header">
                 <h3 className="date">
                     {moment(date).format('dddd')}, {moment(date, 'YYYY-MM-DD').format('DD MMM YYYY')}
-                    {time && <>{moment(date).format('hh A')} - {moment(date).add(1, 'h').format('hh A')} </>}
+                    {time && <> {moment(date).format('hh A')} - {moment(date).add(1, 'h').format('hh A')} </>}
                 </h3>
 
                 {percent && <div className="percent" style={{background: percentByRange.color}}>

@@ -125,8 +125,7 @@ const AuthorizedUser = (props) => {
 
     const dispatch = useDispatch()
     const pathname = props.location.pathname
-    const [loadingUserInformation, setLoadingUserInformation] = useState(false)
-    const [isSuperAdmin, setIsSuperAdmin] = useState(false)
+    const [loadingUserInformation, setLoadingUserInformation] = useState(true)
 
     const {user, lastStatusAction, fetchingAmazonRegionAccounts} = useSelector(state => ({
             user: state.user,
@@ -152,6 +151,8 @@ const AuthorizedUser = (props) => {
     )
 
     const loadUserData = async () => {
+        setLoadingUserInformation(true)
+
         try {
             const {result} = await userService.getAmazonRegionAccounts()
 
@@ -211,17 +212,10 @@ const AuthorizedUser = (props) => {
         amazonRegionAccounts.length > 0 && dispatch(userActions.actualizeActiveRegion())
     }, [amazonRegionAccounts])
 
-    useEffect(() => {
-        if (user.userDetails.id === 714) {
-            setIsSuperAdmin(true)
-        } else {
-            setIsSuperAdmin(false)
-        }
-    }, [user])
+    let isAgencyUser = user.userDetails.is_agency_client,
+        isAdmin = user.userDetails.user_type === userTypeEnums.ADMIN
 
-    let isAgencyUser = user.userDetails.is_agency_client
-
-    if (loadingUserInformation || fetchingAmazonRegionAccounts) {
+    if (loadingUserInformation || fetchingAmazonRegionAccounts || !user.userDetails.id) {
         return (
             <RouteLoader/>
         )
@@ -250,7 +244,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}
-                                    {(isSuperAdmin || isAgencyUser) &&
+                                    {(isAgencyUser) &&
                                     <ConnectedAmazonRoute path="/tableau" component={Tableau}/>}
                                     {/*-------------------------------------------*/}
 
@@ -296,7 +290,7 @@ const AuthorizedUser = (props) => {
                                     />
 
                                     {/*-------------------------------------------*/}
-                                    <AdminRoute path="/admin-panel" component={AdminPanel}/>
+                                    <AdminRoute path="/admin-panel" render={() => <AdminPanel admin={true}/>}/>
                                     {/*-------------------------------------------*/}
 
                                     {/*-------------------------------------------*/}
@@ -313,25 +307,25 @@ const AuthorizedUser = (props) => {
                                     <Route path="/account" component={Account}/>
 
                                     {/*ZERO TO HERO*/}
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/campaign"
                                         component={ChooseCampaign}
                                     />}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/ppc-structure"
                                         component={Marketing}
                                     />}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/creating"
                                         component={CreatingCampaign}
                                     />}
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/payment/:batchId?"
                                         component={Payment}
@@ -339,7 +333,7 @@ const AuthorizedUser = (props) => {
 
                                     <ConnectedAmazonRoute exact path="/zero-to-hero/success" component={ThankPage}/>
 
-                                    {(!isAgencyUser || isSuperAdmin) && <ConnectedAmazonRoute
+                                    {(!isAgencyUser || isAdmin) && <ConnectedAmazonRoute
                                         exact
                                         path="/zero-to-hero/settings/:status?"
                                         component={Settings}

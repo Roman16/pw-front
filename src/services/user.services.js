@@ -273,8 +273,7 @@ function updateAmazonAccount(data) {
 
 
 function getIndexHtml() {
-    // const url = `${window.location.origin}/index.html`
-    const url = 'https://dev.app.sponsoreds.com/index.html'
+    const url = `${window.location.origin}/index.html`
 
     return axios.get(url)
 }
