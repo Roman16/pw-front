@@ -207,7 +207,9 @@ function bulkUpdate(entity, data, idList, filters) {
 function downloadTableCSV(location, filtersWithState) {
     const token = localStorage.getItem('token')
 
-    if (location === 'products' && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
+    location = location === 'overview' ? 'products-parents' : location
+
+    if ((location === 'overview' || location === 'products') && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
         filtersWithState = [...filtersWithState.map(i => {
             if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
             return {...i}
@@ -216,7 +218,6 @@ function downloadTableCSV(location, filtersWithState) {
 
     const attributionWindow = localStorage.getItem('attributionWindow') || '7',
         marketplace = localStorage.getItem('activeMarketplace') && localStorage.getItem('activeMarketplace') !== 'undefined' ? JSON.parse(localStorage.getItem('activeMarketplace')) : null
-
 
     window.open(`${baseUrl}/api/analytics/${location}/csv${filtersHandler(filtersWithState)}&token=${token}&attribution_window=${+attributionWindow}&amazon_region_account_marketplace_id=${marketplace?.id}`)
 }

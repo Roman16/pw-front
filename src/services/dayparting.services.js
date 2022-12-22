@@ -43,7 +43,7 @@ function getDayPartingParams({campaignId, cancelToken}) {
 }
 
 function updateDayPartingParams({campaignId, state_encoded_string, status}) {
-    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string, status})
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string: state_encoded_string.slice(-24) + state_encoded_string.slice(0, -24), status})
 }
 
 function activateDayparting({campaignId}) {
