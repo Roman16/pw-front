@@ -28,13 +28,13 @@ const timeLineShift = 24 - (moment.tz.zone(activeTimezone).utcOffset(moment().ut
 const defaultList = Array.from({length: 168}, () => '1').join('')
 
 const days = [
-    'Sun',
     'Mon',
     'Tue',
     'Wed',
     'Thu',
     'Fri',
     'Sat',
+    'Sun',
 ]
 
 const hours = Array.from({length: 24}, (item, index) => index)
@@ -160,10 +160,9 @@ class DaySwitches extends Component {
                     cancelToken: source.token
                 })
 
-
                 if (res.response[0]) {
                     this.setState({
-                        hoursStatus: [...res.response[0].state_encoded_string.slice(168 - timeLineShift, 168), ...res.response[0].state_encoded_string.slice(0, 168 - timeLineShift)],
+                        hoursStatus: [...(res.response[0].state_encoded_string.substr(24) + res.response[0].state_encoded_string.substr(0, 24)).slice(168 - timeLineShift, 168), ...(res.response[0].state_encoded_string.substr(24) + res.response[0].state_encoded_string.substr(0, 24)).slice(0, 168 - timeLineShift)],
                         activeDayparting: this.props.campaignId ? res.response[0].status === 'ACTIVE' : false,
                         initialState: res.response[0].initial_campaign_state,
                         hasDayparting: true,
@@ -500,7 +499,7 @@ class DaySwitches extends Component {
                                             onChange={(value) => this.handleSwitchRow(dayIndex, value)}
                                         />
                                         <span>
-                                       {day[0]}
+                                       {day}
                                     </span>
                                     </div>
                                 ))}
