@@ -9,9 +9,9 @@ import {
 export const columns = [
     {
         title: 'Account Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (i, item) => <b>{item.account_alias || item.seller_id} <br/> {item.marketplace_id}</b>
+        dataIndex: 'marketplace_name',
+        key: 'marketplace_name',
+        render: (name, item) => <b>{name} <br/> {item.account_name}</b>
     },
     {
         ...impressionsColumn, sorter: false,

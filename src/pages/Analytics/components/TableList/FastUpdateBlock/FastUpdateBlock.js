@@ -127,7 +127,7 @@ const FastUpdateBlock = ({
             setChangingValue('null')
         } else if (selectedColumn === 'state') {
             setAvailableActions(updateActions.state)
-            setChangingValue('enabled')
+            setChangingValue(location === 'negative-targetings' ? 'archived' : 'enabled')
         } else {
             setAvailableActions(updateActions.state)
             setChangingValue(undefined)

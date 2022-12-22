@@ -5,6 +5,7 @@ import {Spin} from "antd"
 const countLabel = {
     campaigns: ['campaign', 'campaigns'],
     targetings: ['targeting', 'targetings'],
+    'negative-targetings': ['negative-targeting', 'negative-targetings'],
     'ad-groups': ['ad-group', 'ad-groups'],
     'product-ads': ['product-ad', 'product-ads'],
 }
