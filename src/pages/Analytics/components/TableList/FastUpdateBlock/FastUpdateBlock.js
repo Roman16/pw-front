@@ -103,7 +103,7 @@ const FastUpdateBlock = ({
                     action: actionType,
                     value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
                 }
-            }, () => setSubmitProcessing(false), () => setSubmitProcessing(false))
+            }, () => setSubmitProcessing(false), () => setVisibleConfirmWindow(false))
         }
     }
 
@@ -205,6 +205,7 @@ const FastUpdateBlock = ({
                 visible={visibleConfirmWindow}
                 count={selectedAll ? totalSize : selectedRows.length}
                 location={location}
+                submitProcessing={submitProcessing}
 
                 onCancel={() => setVisibleConfirmWindow(false)}
                 onSubmit={(e) => submitHandler(e, true)}

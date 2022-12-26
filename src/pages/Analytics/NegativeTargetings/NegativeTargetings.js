@@ -34,7 +34,7 @@ const NegativeTargetings = () => {
                 showRowSelection={true}
                 dateRange={false}
                 showOptions={false}
-
+                rowKey={'targetingId'}
                 fixedColumns={[0]}
             />
 
