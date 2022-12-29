@@ -62,7 +62,7 @@ const Payment = (props) => {
     }
 
     const handlePaymentError = ({response: {data}}, payment_method) => {
-        if (data.message === "Requires action") {
+        if (data?.message === "Requires action") {
             props.stripe.confirmCardPayment(
                 data.result.client_secret,
                 {
@@ -84,7 +84,6 @@ const Payment = (props) => {
                 })
                 .catch(e => {
                     notification.error({title: e.error.message})
-
                     setPayProcessing(false)
                 })
         } else {

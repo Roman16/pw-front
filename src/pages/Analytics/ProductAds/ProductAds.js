@@ -39,10 +39,10 @@ const ProductAds = () => {
 
                 columns={columns}
 
-                // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
             />
 
-            {/*<CreateProductAdsWindow/>*/}
+            <CreateProductAdsWindow/>
         </div>
     )
 }
