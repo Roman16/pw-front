@@ -3,7 +3,7 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Input, Radio, Select} from "antd"
+import {Input, Radio, Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import './CreatePortfolioWindow.less'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
@@ -13,14 +13,15 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const CreatePortfolioWindow = () => {
+const CreatePortfolioWindow = ({onReloadList}) => {
     const [createPortfolioData, setCreatePortfolioData] = useState({
-        name: '',
-        state: 'enabled',
-        budgetCap: 'no-budget',
-        budget_amount: 0,
-        create_ends_date: 'never'
-    })
+            portfolioName: '',
+            state: 'enabled',
+            budgetCap: 'no-budget',
+            budget_amount: 0,
+            create_ends_date: 'never'
+        }),
+        [createProcessing, setCreateProcessing] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -35,18 +36,20 @@ const CreatePortfolioWindow = () => {
     }
 
     const onCreate = async () => {
+        setCreateProcessing(true)
+
         try {
             let requestData
 
             if (createPortfolioData.budgetCap === 'no-budget') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
-                    budget_amount: null,
+                    budget: 'null',
                 }
             } else if (createPortfolioData.budgetCap === 'recurring-monthly') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
                     budget_startDate: null,
@@ -54,7 +57,7 @@ const CreatePortfolioWindow = () => {
                 }
             } else if (createPortfolioData.budgetCap === 'date-range') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
                     budget_startDate: createPortfolioData.budget_startDate,
@@ -63,10 +66,13 @@ const CreatePortfolioWindow = () => {
             }
             await analyticsServices.exactCreate('portfolios', requestData)
             closeWindowHandler()
+            onReloadList()
             notification.success({title: 'Portfolio created'})
         } catch (e) {
             console.log(e)
         }
+
+        setCreateProcessing(false)
     }
 
     return (<ModalWindow
@@ -87,8 +93,8 @@ const CreatePortfolioWindow = () => {
                             <label htmlFor="">Portfolio Name</label>
                             <Input
                                 placeholder={'Portfolio Name'}
-                                value={createPortfolioData.name}
-                                onChange={({target: {value}}) => changeCreateDataHandler({name: value})}
+                                value={createPortfolioData.portfolioName}
+                                onChange={({target: {value}}) => changeCreateDataHandler({portfolioName: value})}
                             />
                         </div>
                     </div>
@@ -260,8 +266,11 @@ const CreatePortfolioWindow = () => {
                 <button
                     className="btn default"
                     onClick={onCreate}
+                    disabled={createProcessing}
                 >
                     Create Portfolio
+
+                    {createProcessing && <Spin size={'small'}/>}
                 </button>
             </div>
         </ModalWindow>

@@ -43,7 +43,8 @@ const CreateAdGroupWindow = () => {
         [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
-        [finishedSteps, setFinishedSteps] = useState([])
+        [finishedSteps, setFinishedSteps] = useState([]),
+        [campaigns, setCampaigns] = useState([])
 
     const steps = [
         'Ad Group',
@@ -108,6 +109,30 @@ const CreateAdGroupWindow = () => {
         }
     }
 
+    const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
+        if (createAdGroupData.advertising_type) {
+            try {
+                const res = await analyticsServices.fetchCampaignsForTargeting({
+                    page,
+                    type: createAdGroupData.advertising_type,
+                    name: searchStr
+                })
+
+                if (page === 1) setCampaigns([...res.result])
+                else setCampaigns([...campaigns, ...res.result])
+                cb && cb(res.result.length !== 0)
+            } catch (e) {
+                console.log(e)
+            }
+        } else {
+            setCampaigns([])
+        }
+    }
+
+    useEffect(() => {
+        getCampaigns()
+    }, [createAdGroupData.advertising_type])
+
     useEffect(() => {
         if (mainState.campaignId) setCreateAdGroupData(prevState => ({...prevState, campaignId: '444'}))
     }, [mainState])
@@ -137,6 +162,9 @@ const CreateAdGroupWindow = () => {
                 <AdGroupDetails
                     selectedCampaign={mainState.campaignId}
                     createData={createAdGroupData}
+                    campaigns={campaigns}
+
+                    getCampaigns={getCampaigns}
                     onChange={changeCreateDataHandler}
                 />}
 

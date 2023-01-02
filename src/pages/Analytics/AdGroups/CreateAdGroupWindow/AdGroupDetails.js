@@ -2,10 +2,18 @@ import React from "react"
 import {Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 
 const Option = Select.Option
 
-const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
+const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getCampaigns}) => {
+    const changeCampaignHandler = value => {
+        onChange(({
+            ...createData,
+            campaignId: value,
+        }))
+    }
+
     return (<div className={'step step-2 ad-group-details-step'}>
         {!selectedCampaign && <>
             <div className={`row`}>
@@ -15,8 +23,8 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
                         <CustomSelect
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({advertisingType: value})}
-                            value={createData.advertisingType}
+                            onChange={(value) => onChange({advertising_type: value})}
+                            value={createData.advertising_type}
                         >
                             <Option value={'SponsoredProducts'}>
                                 Sponsored Products
@@ -41,18 +49,18 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign}) => {
             <div className={`row`}>
                 <div className="col">
                     <div className="form-group w-50">
-                        <label htmlFor="">Select Campaign</label>
-                        <CustomSelect
-                            placeholder={'Select by'}
-                            getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({campaignId: value})}
+                        <InfinitySelect
+                            label={'Select Campaign'}
+                            placeholder={'Select campaign'}
                             value={createData.campaignId}
-                            disabled={!createData.advertisingType}
-                        >
-                            <Option value={77}>
-                                Campaign
-                            </Option>
-                        </CustomSelect>
+                            onChange={changeCampaignHandler}
+                            disabled={!createData.advertising_type}
+                            children={campaigns}
+                            onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertising_type, page, cb, searchStr)}
+                            reloadPage={createData.advertising_type}
+                            dataKey={'campaignId'}
+                            notFoundContent={'No campaigns'}
+                        />
                     </div>
                 </div>
 

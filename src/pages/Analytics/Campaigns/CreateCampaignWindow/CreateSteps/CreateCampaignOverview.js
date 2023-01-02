@@ -72,12 +72,12 @@ const CreateCampaignOverview = ({createData}) => {
         bidsTopOfSearch: {
             title: 'Bids by placement: Top of Search (first page)',
             fieldKey: 'bidding_adjustments',
-            render: value => `${round(value[0].percentage, 2)}%`
+            render: value => value[0] ? `${round(value[0].percentage, 2)}%` : '-'
         },
         bidsProductPage: {
             title: 'Bids by placement: Product pages (competitors pages)',
             fieldKey: 'bidding_adjustments',
-            render: value => `${round(value[1].percentage, 2)}%`
+            render: value => value[1] ? `${round(value[1].percentage, 2)}%` : '-'
         },
         // adGroupName: {
         //     title: 'Ad Group Name',

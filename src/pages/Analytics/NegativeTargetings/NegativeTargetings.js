@@ -39,7 +39,7 @@ const NegativeTargetings = () => {
             />
 
 
-            <CreateNegativeTargetingsWindow/>
+            <CreateNegativeTargetingsWindow location={location}/>
         </div>
     )
 }
