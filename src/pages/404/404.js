@@ -22,7 +22,6 @@ const NotFound = () => (
                     Contact Us
                 </a>
             </div>
-
             <SocialLinks/>
         </div>
     </section>
