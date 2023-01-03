@@ -33,9 +33,8 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
     })
 
     const addAllProductAdsHandler = () => {
-        onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts.filter(item => !_.find(createData.selectedProductAds, {id: item.id}))]})
+        onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts.filter(product => product.eligibility_status === 'ELIGIBLE').filter(item => !_.find(createData.selectedProductAds, {id: item.id}))]})
     }
-
 
     const getProductsList = async () => {
         setProcessing(true)

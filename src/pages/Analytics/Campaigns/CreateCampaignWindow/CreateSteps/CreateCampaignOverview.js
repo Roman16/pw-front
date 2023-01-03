@@ -29,7 +29,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             campaignType: {
                 title: 'Campaign Type',
                 fieldKey: 'advertisingType',
-                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+                render: (value) => value === 'SponsoredProducts' ? 'Sponsored Products' : 'Sponsored Display'
             },
             campaignName: {
                 title: 'Campaign Name',
