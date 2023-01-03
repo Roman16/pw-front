@@ -110,11 +110,11 @@ const CreateAdGroupWindow = () => {
     }
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
-        if (createAdGroupData.advertising_type) {
+        if (createAdGroupData.advertisingType) {
             try {
                 const res = await analyticsServices.fetchCampaignsForTargeting({
                     page,
-                    type: createAdGroupData.advertising_type,
+                    type: createAdGroupData.advertisingType,
                     name: searchStr
                 })
 
@@ -131,7 +131,7 @@ const CreateAdGroupWindow = () => {
 
     useEffect(() => {
         getCampaigns()
-    }, [createAdGroupData.advertising_type])
+    }, [createAdGroupData.advertisingType])
 
     useEffect(() => {
         if (mainState.campaignId) setCreateAdGroupData(prevState => ({...prevState, campaignId: '444'}))
@@ -183,6 +183,7 @@ const CreateAdGroupWindow = () => {
                 {currentStep === 3 &&
                 <CreateCampaignOverview
                     createData={createAdGroupData}
+                    overviewType={'adGroups'}
                 />}
             </div>
 

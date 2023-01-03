@@ -23,8 +23,8 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                         <CustomSelect
                             placeholder={'Select by'}
                             getPopupContainer={trigger => trigger.parentNode}
-                            onChange={(value) => onChange({advertising_type: value})}
-                            value={createData.advertising_type}
+                            onChange={(value) => onChange({advertisingType: value})}
+                            value={createData.advertisingType}
                         >
                             <Option value={'SponsoredProducts'}>
                                 Sponsored Products
@@ -54,10 +54,10 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                             placeholder={'Select campaign'}
                             value={createData.campaignId}
                             onChange={changeCampaignHandler}
-                            disabled={!createData.advertising_type}
+                            disabled={!createData.advertisingType}
                             children={campaigns}
-                            onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertising_type, page, cb, searchStr)}
-                            reloadPage={createData.advertising_type}
+                            onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
+                            reloadPage={createData.advertisingType}
                             dataKey={'campaignId'}
                             notFoundContent={'No campaigns'}
                         />

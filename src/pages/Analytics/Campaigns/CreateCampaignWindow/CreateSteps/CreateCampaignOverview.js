@@ -7,7 +7,7 @@ import _ from 'lodash'
 import {activeTimezone} from "../../../../index"
 import {currencyWithCode} from "../../../../../components/CurrencyCode/CurrencyCode"
 
-const CreateCampaignOverview = ({createData}) => {
+const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
 
     const targetingsTypeEnum = {
@@ -25,60 +25,81 @@ const CreateCampaignOverview = ({createData}) => {
         }
 
     const fields = {
-        campaignType: {
-            title: 'Campaign Type',
-            fieldKey: 'advertisingType',
-            render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
-        },
-        campaignName: {
-            title: 'Campaign Name',
-            fieldKey: 'name'
-        },
-        portfolioName: {
-            title: 'Portfolio',
-            fieldKey: 'portfolioId',
-            render: value => value == null ? 'No Portfolio' : _.find(portfolioList, {portfolioId: value}).name
-        },
-        startDate: {
-            title: 'Start',
-            fieldKey: 'startDate',
-            render: value => value && moment(value).tz(activeTimezone).format('MMM DD, YYYY')
-        },
-        endDate: {
-            title: 'End',
-            fieldKey: 'endDate',
-            render: value => value ? moment(value).tz(activeTimezone).format('MMM DD, YYYY') : 'No end date'
-        },
-        dailyBudget: {
-            title: 'Daily Budget',
-            fieldKey: 'calculatedBudget',
-            render: value => currencyWithCode(numberMask(value, 2))
-        },
-        status: {
-            title: 'Status',
-            fieldKey: 'state',
-            render: value => value === 'enabled' ? 'Enabled' : 'Paused'
-        },
-        targeting: {
-            title: 'Targeting',
-            fieldKey: 'calculatedCampaignSubType',
-            render: value => targetingsTypeEnum[value]
-        },
-        biddingStrategy: {
-            title: 'Campaign bidding strategy',
-            fieldKey: 'bidding_strategy',
-            render: value => biddingStrategyEnum[value]
-        },
-        bidsTopOfSearch: {
-            title: 'Bids by placement: Top of Search (first page)',
-            fieldKey: 'bidding_adjustments',
-            render: value => value[0] ? `${round(value[0].percentage, 2)}%` : '-'
-        },
-        bidsProductPage: {
-            title: 'Bids by placement: Product pages (competitors pages)',
-            fieldKey: 'bidding_adjustments',
-            render: value => value[1] ? `${round(value[1].percentage, 2)}%` : '-'
-        },
+        ...overviewType === 'campaigns' ? {
+            campaignType: {
+                title: 'Campaign Type',
+                fieldKey: 'advertisingType',
+                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+            },
+            campaignName: {
+                title: 'Campaign Name',
+                fieldKey: 'name'
+            },
+            portfolioName: {
+                title: 'Portfolio',
+                fieldKey: 'portfolioId',
+                render: value => value == null ? 'No Portfolio' : _.find(portfolioList, {portfolioId: value}).name
+            },
+            startDate: {
+                title: 'Start',
+                fieldKey: 'startDate',
+                render: value => value && moment(value).tz(activeTimezone).format('MMM DD, YYYY')
+            },
+            endDate: {
+                title: 'End',
+                fieldKey: 'endDate',
+                render: value => value ? moment(value).tz(activeTimezone).format('MMM DD, YYYY') : 'No end date'
+            },
+            dailyBudget: {
+                title: 'Daily Budget',
+                fieldKey: 'calculatedBudget',
+                render: value => currencyWithCode(numberMask(value, 2))
+            },
+            status: {
+                title: 'Status',
+                fieldKey: 'state',
+                render: value => value === 'enabled' ? 'Enabled' : 'Paused'
+            },
+            targeting: {
+                title: 'Targeting',
+                fieldKey: 'calculatedCampaignSubType',
+                render: value => targetingsTypeEnum[value]
+            },
+            biddingStrategy: {
+                title: 'Campaign bidding strategy',
+                fieldKey: 'bidding_strategy',
+                render: value => biddingStrategyEnum[value]
+            },
+            bidsTopOfSearch: {
+                title: 'Bids by placement: Top of Search (first page)',
+                fieldKey: 'bidding_adjustments',
+                render: value => value && value[0] ? `${round(value[0].percentage, 2)}%` : '-'
+            },
+            bidsProductPage: {
+                title: 'Bids by placement: Product pages (competitors pages)',
+                fieldKey: 'bidding_adjustments',
+                render: value => value && value[1] ? `${round(value[1].percentage, 2)}%` : '-'
+            },
+        } : {
+            campaignType: {
+                title: 'Campaign Type',
+                fieldKey: 'advertisingType',
+                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+            },
+            campaignName: {
+                title: 'Campaign Name',
+                fieldKey: 'name'
+            },
+            adGroupName: {
+                title: 'Ad Group Name',
+                fieldKey: 'ad_group_name'
+            },
+            adGroupBid: {
+                title: 'Default Bid',
+                fieldKey: 'defaultBid',
+                render: value => value ? `${numberMask(value, 2)}$` : '-'
+            },
+        }
         // adGroupName: {
         //     title: 'Ad Group Name',
         //     fieldKey: 'ad_group_name'
