@@ -1,4 +1,17 @@
 import {userService} from "../services/user.services"
+import {notification} from "../components/Notification"
+
+window.onload = function () {
+    const reloading = sessionStorage.getItem("reloading")
+    if (reloading) {
+        sessionStorage.removeItem("reloading")
+        notification.success({
+            title: 'Congratulations!',
+            description: 'Your app has just been updated to the latest version!',
+            autoClose: 10000
+        })
+    }
+}
 
 export const checkBuildVersion = async () => {
     try {
@@ -11,6 +24,7 @@ export const checkBuildVersion = async () => {
             localStorage.removeItem('analyticsColumnsOrder')
             localStorage.removeItem('analyticsSorterColumn')
 
+            sessionStorage.setItem("reloading", "true")
             document.location.reload()
         }
     } catch (e) {
