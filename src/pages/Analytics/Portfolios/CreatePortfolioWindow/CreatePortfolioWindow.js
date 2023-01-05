@@ -49,6 +49,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                 }
             } else if (createPortfolioData.budgetCap === 'recurring-monthly') {
                 requestData = {
+                    budget_policy: 'MonthlyRecurring',
                     portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
@@ -57,6 +58,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                 }
             } else if (createPortfolioData.budgetCap === 'date-range') {
                 requestData = {
+                    budget_policy: 'dateRange',
                     portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
@@ -99,13 +101,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                         </div>
                     </div>
 
-                    <div className="col description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                        duis
-                        tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                        justo.
-                        Sed et orci tortor pellentesque sed
-                    </div>
+                    <div className="col description"/>
                 </div>
 
                 <div className="row">
@@ -130,13 +126,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                         </div>
                     </div>
 
-                    <div className="col description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                        duis
-                        tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                        justo.
-                        Sed et orci tortor pellentesque sed
-                    </div>
+                    <div className="col description"/>
                 </div>
 
                 {createPortfolioData.budgetCap === 'recurring-monthly' && <>
@@ -152,13 +142,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
 
                     <div className="row">
@@ -186,13 +170,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </Radio.Group>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
                 </>}
 
@@ -209,13 +187,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
 
                     <div className="row">
@@ -230,13 +202,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
 
                     <div className="row">
@@ -251,13 +217,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
                 </>}
             </div>

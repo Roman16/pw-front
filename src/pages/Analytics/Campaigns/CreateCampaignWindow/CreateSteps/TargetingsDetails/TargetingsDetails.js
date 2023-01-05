@@ -118,12 +118,7 @@ const TargetingsDetails = ({createData, onChange}) => {
                         </div>
                     </div>
                 </div>
-                <div className="col description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                    consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                    massa
-                    faucibus blandit justo. Sed et orci tortor pellentesque sed
-                </div>
+                <div className="col description"/>
             </div>
 
             <NegativeKeywords
@@ -164,6 +159,7 @@ const TargetingsDetails = ({createData, onChange}) => {
                 <div className="col">
                     <Radio.Group
                         value={createData.t_targeting_type}
+                        disabled={disabledBlock}
                         onChange={({target: {value}}) => onChange({t_targeting_type: value})}
                     >
                         <h4>Targeting type</h4>
@@ -189,17 +185,12 @@ const TargetingsDetails = ({createData, onChange}) => {
 
                         <div className="form-group row">
                             <label htmlFor="">Bid</label>
-                            <InputCurrency/>
+                            <InputCurrency disabled={disabledBlock}/>
                         </div>
                     </div>
                 </div>
 
-                <div className="col description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                    consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                    massa
-                    faucibus blandit justo. Sed et orci tortor pellentesque sed
-                </div>
+                <div className="col description"/>
             </div>
 
             <KeywordTargetingsList

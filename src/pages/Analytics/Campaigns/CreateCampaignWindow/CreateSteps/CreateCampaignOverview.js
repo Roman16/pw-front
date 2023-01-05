@@ -24,8 +24,8 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             'product': 'Product Targeting',
         }
 
-    const fields = {
-        ...overviewType === 'campaigns' ? {
+    let fields = {
+        'campaigns': {
             campaignType: {
                 title: 'Campaign Type',
                 fieldKey: 'advertisingType',
@@ -80,7 +80,8 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'bidding_adjustments',
                 render: value => value && value[1] ? `${round(value[1].percentage, 2)}%` : '-'
             },
-        } : {
+        },
+        'product-ads': {
             campaignType: {
                 title: 'Campaign Type',
                 fieldKey: 'advertisingType',
@@ -88,16 +89,30 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             },
             campaignName: {
                 title: 'Campaign Name',
-                fieldKey: 'name'
+                fieldKey: 'campaignName'
             },
             adGroupName: {
                 title: 'Ad Group Name',
-                fieldKey: 'ad_group_name'
+                fieldKey: 'adGroupName'
             },
-            adGroupBid: {
-                title: 'Default Bid',
-                fieldKey: 'defaultBid',
-                render: value => value ? `${numberMask(value, 2)}$` : '-'
+            productAds: {
+                title: 'Product Ads',
+                fieldKey: 'selectedProductAds',
+                render: value => <div
+                    className={'overflow-text'}
+                >
+                    SKU: {createData.selectedProductAds[0].sku}
+                </div>
+            },
+            keywordTargeting: {
+                title: 'Keyword targeting',
+                fieldKey: 'keyword_targetings',
+                render: value => value.length > 0 && `${value.length} keywords`
+            },
+            negativeKeywordTargeting: {
+                title: 'Negative Keyword Targeting',
+                fieldKey: 'keyword_targetings',
+                render: value => value.length > 0 && `${value.length} keywords`
             },
         }
         // adGroupName: {
@@ -165,6 +180,8 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
         //     render: value => value.length > 0 && `${value.length} keywords`
         // },
     }
+
+    fields = fields[overviewType]
 
     const allFields = Object.keys(fields),
         automaticTargetingFields = Object.keys(fields).filter(item => item !== 'targetCloseMatch' || item !== 'targetLooseMatch' || item !== 'targetSubstitutes' || item !== 'targetComplements'),

@@ -9,8 +9,7 @@ const AdGroupDetails = ({createData, onChange}) => {
             <div className="col">
                 <Radio.Group
                     value={createData.create_ad_group}
-                    disabled={true}
-                    // onChange={({target: {value}}) => onChange({create_ad_group: value})}
+                    onChange={({target: {value}}) => onChange({create_ad_group: value})}
                 >
                     <h4>Ad Group</h4>
 

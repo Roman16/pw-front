@@ -12,15 +12,33 @@ import './CreateProductAdsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {notification} from "../../../../components/Notification"
+import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
+import TargetingsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails"
+import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
+import _ from 'lodash'
 
 const Option = Select.Option
 
+const steps = [
+    'Product Ads',
+    'Targetings',
+    'Overview',
+]
+
 const CreateProductAdsWindow = ({location, onReloadList}) => {
-    const [createData, setCreateData] = useState({
+    const [currentStep, setCurrentStep] = useState(0),
+        [skippedSteps, setSkippedSteps] = useState([]),
+        [finishedSteps, setFinishedSteps] = useState([]),
+        [processSteps, setProcessSteps] = useState([]),
+        [createData, setCreateData] = useState({
             selectedProductAds: [],
             campaignId: undefined,
             adGroupId: undefined,
-            advertisingType: undefined
+            advertisingType: undefined,
+            create_targetings: true,
+            calculatedTargetingType: 'manual',
+            keyword_targetings: [],
+            negative_keywords: []
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
@@ -38,6 +56,19 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
 
     const changeCreateDataHandler = (value) => {
         setCreateData(prevState => ({...prevState, ...value}))
+    }
+
+    const goToSelectStep = (step) => {
+        if (finishedSteps.includes(step) || processSteps.includes(step)) {
+            setProcessSteps(prevState => [...prevState, currentStep])
+            setCurrentStep(step)
+        }
+    }
+
+    const goToNextStepHandler = () => {
+        setFinishedSteps(prevState => [...prevState, currentStep])
+
+        setCurrentStep(prevState => prevState + 1)
     }
 
     const onCreate = async () => {
@@ -67,15 +98,20 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         setCreateData(prevState => ({
             ...prevState,
             campaignId: value,
+            campaignName: _.find(campaigns, {campaignId: value}).name,
             adGroupId: undefined
         }))
     }
+
     const changeAdGroupHandler = value => {
         setCreateData(prevState => ({
             ...prevState,
-            adGroupId: value
+            adGroupId: value,
+            adGroupName: _.find(adGroups, {adGroupId: value}).name
         }))
     }
+
+    const changeDataHandler = data => setCreateData(prevState => ({...prevState, ...data}))
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         if (createData.advertisingType) {
@@ -143,7 +179,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
     }, [createData.campaignId])
 
     return (<ModalWindow
-            className={'create-campaign-window create-portfolio-window create-product-ads-window'}
+            className={'create-campaign-window create-product-ads-window'}
             visible={visibleWindow}
             footer={false}
             handleCancel={closeWindowHandler}
@@ -153,44 +189,46 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                 onClose={closeWindowHandler}
             />
 
-            <div className="create-steps">
-                {!mainState.adGroupId && <>
-                    {!mainState.campaignId && <>
-                        <div className={`row`}>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label htmlFor="">Advertising Type</label>
-                                    <CustomSelect
-                                        placeholder={'Select by'}
-                                        getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={(value) => changeCreateDataHandler({advertisingType: value})}
-                                        value={createData.advertisingType}
-                                    >
-                                        <Option value={'SponsoredProducts'}>
-                                            Sponsored Products
-                                        </Option>
+            <CreateProcessing
+                steps={steps}
+                step={currentStep}
+                skippedSteps={skippedSteps}
+                finishedSteps={finishedSteps}
+                processSteps={processSteps}
+                setStep={goToSelectStep}
+            />
 
-                                        <Option value={'SponsoredDisplay'}>
-                                            Sponsored Display
-                                        </Option>
-                                    </CustomSelect>
+            <div className="create-steps">
+                {currentStep === 0 && <>
+                    {!mainState.adGroupId && <>
+                        {!mainState.campaignId && <>
+                            <div className={`row`}>
+                                <div className="col">
+                                    <div className="form-group">
+                                        <label htmlFor="">Advertising Type</label>
+                                        <CustomSelect
+                                            placeholder={'Select by'}
+                                            getPopupContainer={trigger => trigger.parentNode}
+                                            onChange={(value) => changeCreateDataHandler({advertisingType: value})}
+                                            value={createData.advertisingType}
+                                        >
+                                            <Option value={'SponsoredProducts'}>
+                                                Sponsored Products
+                                            </Option>
+
+                                            <Option value={'SponsoredDisplay'}>
+                                                Sponsored Display
+                                            </Option>
+                                        </CustomSelect>
+                                    </div>
+
                                 </div>
 
+                                <div className="col description"/>
                             </div>
 
-                            <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
-                            </div>
-                        </div>
-
-                        <div className={`row`}>
-                            <div className="col">
-                                <div className="form-group">
+                            <div className={`row`}>
+                                <div className="col">
                                     <InfinitySelect
                                         label={'Select Campaign'}
                                         placeholder={'Select campaign'}
@@ -204,22 +242,13 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                                         notFoundContent={'No campaigns'}
                                     />
                                 </div>
-                            </div>
 
-                            <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
+                                <div className="col description"/>
                             </div>
-                        </div>
-                    </>}
+                        </>}
 
-                    <div className={`row`}>
-                        <div className="col">
-                            <div className="form-group">
+                        <div className={`row`}>
+                            <div className="col">
                                 <InfinitySelect
                                     label={'Ad Group'}
                                     placeholder={'Select ad group'}
@@ -233,41 +262,49 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                                     notFoundContent={'No ad groups'}
                                 />
                             </div>
-                        </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                            consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna.
-                            Aliquam
-                            massa
-                            faucibus blandit justo. Sed et orci tortor pellentesque sed
+                            <div className="col description"/>
+                        </div>
+                    </>}
+
+                    <div className="product-ads-details-step">
+                        <h3>Products</h3>
+
+                        <div className={`row  ${!createData.adGroupId ? 'disabled' : ''}`}>
+                            <AllProducts
+                                createData={createData}
+                                disabledBlock={!createData.adGroupId}
+
+                                onChange={changeCreateDataHandler}
+                            />
+
+                            <SelectedProduct
+                                selectedProducts={createData.selectedProductAds}
+
+                                onChange={changeCreateDataHandler}
+                            />
                         </div>
                     </div>
                 </>}
 
-                <div className="product-ads-details-step">
-                    <h3>Products</h3>
 
-                    <div className={`row  ${!createData.adGroupId ? 'disabled' : ''}`}>
-                        <AllProducts
-                            createData={createData}
-                            disabledBlock={!createData.adGroupId}
+                {currentStep === 1 && <TargetingsDetails createData={createData} onChange={changeDataHandler}/>}
 
-                            onChange={changeCreateDataHandler}
-                        />
-
-                        <SelectedProduct
-                            selectedProducts={createData.selectedProductAds}
-
-                            onChange={changeCreateDataHandler}
-                        />
-                    </div>
-                </div>
+                {currentStep === 2 && <CreateCampaignOverview createData={createData} overviewType={location}/>}
             </div>
 
             <div className="window-footer">
+
+                {currentStep > 0 && <button
+                    className="btn white"
+                    onClick={() => setCurrentStep(prevState => prevState - 1)}
+                    disabled={createProcessing}
+                >
+                    Previous
+                </button>}
+
                 <button
-                    className="btn default"
+                    className={`btn ${currentStep < 2 ? 'white' : 'default'}`}
                     onClick={onCreate}
                     disabled={createProcessing || createData.selectedProductAds.length === 0}
                 >
@@ -275,6 +312,14 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
 
                     {createProcessing && <Spin size={'small'}/>}
                 </button>
+
+                {currentStep < 2 && <button
+                    className="btn default"
+                    onClick={goToNextStepHandler}
+                    disabled={createProcessing || createData.selectedProductAds.length === 0}
+                >
+                    Next
+                </button>}
             </div>
         </ModalWindow>
     )
