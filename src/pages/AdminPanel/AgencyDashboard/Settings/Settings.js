@@ -62,11 +62,6 @@ export const Settings = () => {
         getDataHandler()
     }, [])
 
-
-    useEffect(() => {
-        console.log(updateData)
-    }, [updateData])
-
     return <div className={'settings-section'}>
         <div className="table-block">
             <CustomTable
