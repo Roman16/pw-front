@@ -4,7 +4,7 @@ import {
     clicksColumn,
     ctrColumn, acosColumn,
     cpcColumn, renderNumberField
-} from "../../Analytics/components/TableList/tableColumns"
+} from "../../../Analytics/components/TableList/tableColumns"
 
 export const columns = [
     {

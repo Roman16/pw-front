@@ -154,7 +154,7 @@ const AdminPanel = ({admin = true}) => {
                 </NavLink>
 
                 <NavLink
-                    to={'/admin-panel/dashboard'}
+                    to={'/admin-panel/agency-dashboard'}
                 >
                     Dashboard
                 </NavLink>
@@ -215,7 +215,7 @@ const AdminPanel = ({admin = true}) => {
             {admin && <Route path="/admin-panel/zth" render={() => <ZTH admin={true}/>}/>}
             <Route path="/advanced/zth" render={() => <ZTH admin={admin}/>}/>
             {admin && <Route path="/admin-panel/registration-links" component={AgencyUsers}/>}
-            {admin && <Route path="/admin-panel/dashboard" component={AgencyDashboard}/>}
+            {admin && <Route path="/admin-panel/agency-dashboard" component={AgencyDashboard}/>}
         </div>
     )
 }

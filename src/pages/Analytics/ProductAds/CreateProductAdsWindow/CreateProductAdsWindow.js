@@ -38,7 +38,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             create_targetings: true,
             calculatedTargetingType: 'manual',
             keyword_targetings: [],
-            negative_keywords: []
+            negative_keywords: [],
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),

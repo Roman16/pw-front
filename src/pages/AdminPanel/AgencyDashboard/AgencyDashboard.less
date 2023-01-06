@@ -3,9 +3,22 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  padding: 20px 0 0 0;
+  padding: 0;
   overflow: hidden;
   flex-wrap: nowrap;
+
+  .tabs {
+    border-top: 1px solid #c9cbd4;
+    margin: 0 0 20px;
+    overflow: hidden;
+  }
+
+  .metrics-section, .settings-section {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
 
   .filters-block {
     display: flex;
@@ -152,6 +165,7 @@
       .table-head {
         border-top: 1px solid #c9cbd4;
         background: #f0f0f0;
+        z-index: 1111;
 
         .th {
           border-right: 1px solid #c9cbd4;
@@ -242,6 +256,29 @@
     .pw-pagination {
       padding: 0 20px;
       border-top: 1px solid #c9cbd4;
+    }
+  }
+
+  .settings-section {
+    .custom-select {
+      width: 100%;
+    }
+
+    .actions {
+      max-height: 0;
+      border-top: 1px solid #c9cbd4;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0 20px;
+      overflow: hidden;
+
+      &.visible {
+        max-height: max-content;
+      }
+
+      .btn {
+        margin: 10px 0;
+      }
     }
   }
 }

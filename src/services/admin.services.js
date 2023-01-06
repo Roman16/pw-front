@@ -40,7 +40,10 @@ export const adminServices = {
     createZTH,
     analyzeSTReport,
 
-    getAgencyDashboardData
+    getAgencyDashboardData,
+    getAgencyDashboardSettings,
+    setAgencyDashboardSettings,
+    getUsers
 }
 
 function checkUserEmail(email) {
@@ -146,6 +149,20 @@ function changeUserPassword(type, user, password) {
 
 function getAgencyDashboardData({attributionWindow, dateFrom, dateTo}) {
     return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${moment(dateFrom).format('YYYY-MM-DD')}&date_to=${moment(dateTo).format('YYYY-MM-DD')}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function getAgencyDashboardSettings() {
+    return api('get', `${adminUrls.agencyDashboardSettings}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function setAgencyDashboardSettings(data) {
+    return api('put', `${adminUrls.agencyDashboardSettings}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+function getUsers(type) {
+    const typeStr = type.length > 0 ? type.map(i => `user_type[]=${i}`).join('&') : undefined
+
+    return api('get', `${adminUrls.usersByType}?${typeStr}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 //----------------------------
