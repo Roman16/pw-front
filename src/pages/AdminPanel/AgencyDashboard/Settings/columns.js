@@ -1,6 +1,6 @@
 import React from "react"
 import CustomSelect from "../../../../components/Select/Select"
-import {Select} from "antd"
+import {Select, Switch} from "antd"
 
 const Option = Select.Option
 
@@ -12,17 +12,28 @@ export const columns = (users, onChange) => [
         render: (name, item) => <b>{name} <br/> {item.account_name}</b>
     },
     {
+        title: 'Status',
+        dataIndex: 'active',
+        key: 'active',
+        width: '150px',
+        render: (value, item, rowIndex) => <div className={'switch-block'}>
+            <span>Inactive</span>
+            <Switch
+                checked={value}
+                onChange={checked => onChange(rowIndex, {active: checked})}
+            />
+            <span>Active</span>
+        </div>
+    },
+    {
         title: 'Project Manager',
         dataIndex: 'project_manager_id',
         key: 'project_manager_id',
         width: '300px',
-        render: (id, item) => <CustomSelect
+        render: (id, item, rowIndex) => <CustomSelect
             getPopupContainer={trigger => trigger}
-            defaultValue={id}
-            onChange={(value) => onChange({
-                amazon_region_account_marketplace_id: item.amazon_region_account_marketplace_id,
-                project_manager_id: value
-            })}
+            value={id}
+            onChange={(value) => onChange(rowIndex, {project_manager_id: value})}
         >
             <Option value={null}>No Manager</Option>
 
@@ -40,13 +51,10 @@ export const columns = (users, onChange) => [
         dataIndex: 'ppc_manager_id',
         key: 'ppc_manager_id',
         width: '300px',
-        render: (id, item) => <CustomSelect
+        render: (id, item, rowIndex) => <CustomSelect
             getPopupContainer={trigger => trigger}
-            defaultValue={id}
-            onChange={(value) => onChange({
-                amazon_region_account_marketplace_id: item.amazon_region_account_marketplace_id,
-                ppc_manager_id: value
-            })}
+            value={id}
+            onChange={(value) => onChange(rowIndex, {ppc_manager_id: value})}
         >
             <Option value={null}>No Manager</Option>
 

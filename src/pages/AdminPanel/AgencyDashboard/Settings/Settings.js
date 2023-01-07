@@ -7,10 +7,13 @@ import {userTypeEnums} from "../../../../constans/userTypeEnums"
 import _ from 'lodash'
 import {notification} from "../../../../components/Notification"
 
+
+let dataFromRequest = []
+
 export const Settings = () => {
     const [loading, setLoading] = useState(true),
         [submitProcessing, setSubmitProcessing] = useState(false),
-        [updateData, setUpdateData] = useState(),
+        [updateDataRow, setUpdateDataRow] = useState(),
         [data, setData] = useState([]),
         [users, setUsers] = useState([])
 
@@ -19,6 +22,8 @@ export const Settings = () => {
 
         try {
             const [settings, users] = await Promise.all([adminServices.getAgencyDashboardSettings(), adminServices.getUsers([userTypeEnums.ADMIN, userTypeEnums.ADVANCED_CLIENT])])
+
+            dataFromRequest = [...settings.result]
 
             setData(settings.result)
             setUsers(users.result)
@@ -33,16 +38,17 @@ export const Settings = () => {
         setSubmitProcessing(true)
         try {
             await adminServices.setAgencyDashboardSettings({
-                settings: updateData.map(i => ({
-                    amazon_region_account_marketplace_id: i.amazon_region_account_marketplace_id,
-                    active: 1,
-                    project_manager_id: i.project_manager_id === undefined ? _.find(data, {amazon_region_account_marketplace_id: i.amazon_region_account_marketplace_id}).project_manager_id : i.project_manager_id,
-                    ppc_manager_id: i.ppc_manager_id === undefined ? _.find(data, {amazon_region_account_marketplace_id: i.amazon_region_account_marketplace_id}).ppc_manager_id : i.ppc_manager_id
+                settings: updateDataRow.map(indexRow => ({
+                    amazon_region_account_marketplace_id: data[indexRow].amazon_region_account_marketplace_id,
+                    active: data[indexRow].active ? 1 : 0,
+                    project_manager_id: data[indexRow].project_manager_id,
+                    ppc_manager_id: data[indexRow].ppc_manager_id
                 }))
             })
 
             notification.success({title: 'Success!'})
-            setUpdateData()
+            setUpdateDataRow()
+            dataFromRequest = [...data]
         } catch (e) {
             console.log(e)
         }
@@ -50,12 +56,9 @@ export const Settings = () => {
         setSubmitProcessing(false)
     }
 
-    const onChangeHandler = (value) => {
-        if (_.findIndex(updateData, {amazon_region_account_marketplace_id: value.amazon_region_account_marketplace_id}) !== -1) {
-            setUpdateData(prevState => prevState.map(i => i.amazon_region_account_marketplace_id === value.amazon_region_account_marketplace_id ? {...i, ...value} : i))
-        } else {
-            setUpdateData((prevState = []) => [...prevState, value])
-        }
+    const onChangeHandler = (rowIndex, value) => {
+        setData(prevState => prevState.map((i, index) => index === rowIndex ? {...i, ...value} : i))
+        setUpdateDataRow((prevState = []) => [...new Set([...prevState, rowIndex])])
     }
 
     useEffect(() => {
@@ -71,11 +74,11 @@ export const Settings = () => {
             />
         </div>
 
-        <div className={`actions ${updateData ? 'visible' : ''}`}>
+        <div className={`actions ${JSON.stringify(dataFromRequest) !== JSON.stringify(data) ? 'visible' : ''}`}>
             <button
                 className="btn default"
                 onClick={onSubmitHandler}
-                disabled={submitProcessing || !updateData}
+                disabled={submitProcessing}
             >
                 Submit
 
