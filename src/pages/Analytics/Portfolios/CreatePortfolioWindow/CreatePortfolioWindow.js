@@ -126,7 +126,10 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                         </div>
                     </div>
 
-                    <div className="col description"/>
+                    <div className="col description">
+                        Set a budget cap for a date range or to recur monthly. Your campaigns will stop delivering when
+                        your spend reaches the budget cap amount or the budget end date is reached.
+                    </div>
                 </div>
 
                 {createPortfolioData.budgetCap === 'recurring-monthly' && <>
@@ -142,7 +145,10 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description"/>
+                        <div className="col description">
+                            The maximum spend for all campaigns in the portfolio for the current month. When the budget
+                            cap is reached, all campaigns in the portfolio will stop delivering.
+                        </div>
                     </div>
 
                     <div className="row">
@@ -178,7 +184,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                     <div className="row">
                         <div className="col">
                             <div className="form-group">
-                                <label htmlFor="">Monthly Budget Cap</label>
+                                <label htmlFor="">Date Range Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
                                     value={createPortfolioData.budget_amount}
@@ -187,7 +193,10 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             </div>
                         </div>
 
-                        <div className="col description"/>
+                        <div className="col description">
+                            The maximum spend by all campaigns in your portfolio for the budget date range. When the
+                            budget cap is reached, all campaigns in the portfolio will stop delivering.
+                        </div>
                     </div>
 
                     <div className="row">
@@ -210,6 +219,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                             <div className="form-group">
                                 <label htmlFor="">Budget End</label>
                                 <DatePicker
+                                    placeholder={'No end date'}
                                     getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                                     onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
                                     showToday={false}

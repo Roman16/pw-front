@@ -17,8 +17,8 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
     return (<div className={'step step-2 ad-group-details-step'}>
         {!selectedCampaign && <>
             <div className={`row`}>
-                <div className="col">
-                    <div className="form-group w-50">
+                <div className="col w-p">
+                    <div className="form-group">
                         <label htmlFor="">Advertising Type</label>
                         <CustomSelect
                             placeholder={'Select by'}
@@ -39,16 +39,13 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                 </div>
 
                 <div className="col description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                    consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                    massa
-                    faucibus blandit justo. Sed et orci tortor pellentesque sed
+
                 </div>
             </div>
 
             <div className={`row`}>
-                <div className="col">
-                    <div className="form-group w-50">
+                <div className="col w-p">
+                    <div className="form-group">
                         <InfinitySelect
                             label={'Select Campaign'}
                             placeholder={'Select campaign'}
@@ -65,17 +62,14 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                 </div>
 
                 <div className="col description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                    consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                    massa
-                    faucibus blandit justo. Sed et orci tortor pellentesque sed
+
                 </div>
             </div>
         </>}
 
         <div className={`row`}>
-            <div className="col">
-                <div className="form-group w-50">
+            <div className="col w-p">
+                <div className="form-group ">
                     <label htmlFor="">Ad Group Name</label>
                     <Input
                         placeholder={'Ad Group Name'}
@@ -86,10 +80,7 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
 
@@ -108,10 +99,7 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
             </div>
 
             <div className="col description">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam
-                massa
-                faucibus blandit justo. Sed et orci tortor pellentesque sed
+
             </div>
         </div>
     </div>)

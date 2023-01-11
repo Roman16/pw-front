@@ -320,6 +320,7 @@
               font-weight: 400;
             }
           }
+
           .ant-checkbox {
             width: 18px;
             height: 18px;
@@ -495,7 +496,8 @@
 
       & > .row {
         display: grid;
-        grid-template-columns: 1fr 40%;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 20px;
 
         &.disable {
           .form-group {
@@ -519,8 +521,8 @@
           display: flex;
           flex-direction: column;
 
-          &:first-child {
-            padding-right: 40px;
+          &.w-p {
+            padding-right: 22%;
           }
 
           &.description {

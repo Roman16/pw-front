@@ -203,7 +203,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     {!mainState.adGroupId && <>
                         {!mainState.campaignId && <>
                             <div className={`row`}>
-                                <div className="col">
+                                <div className="col w-p">
                                     <div className="form-group">
                                         <label htmlFor="">Advertising Type</label>
                                         <CustomSelect
@@ -228,7 +228,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                             </div>
 
                             <div className={`row`}>
-                                <div className="col">
+                                <div className="col w-p">
                                     <InfinitySelect
                                         label={'Select Campaign'}
                                         placeholder={'Select campaign'}
@@ -248,7 +248,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                         </>}
 
                         <div className={`row`}>
-                            <div className="col">
+                            <div className="col w-p">
                                 <InfinitySelect
                                     label={'Ad Group'}
                                     placeholder={'Select ad group'}

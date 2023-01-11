@@ -15,7 +15,7 @@ export const columns = (users, onChange) => [
         title: 'Status',
         dataIndex: 'active',
         key: 'active',
-        width: '150px',
+        width: '13rem',
         render: (value, item, rowIndex) => <div className={'switch-block'}>
             <span>Inactive</span>
             <Switch

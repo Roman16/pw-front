@@ -265,6 +265,7 @@ const RenderPageParts = (props) => {
                 },
             ]
         }
+        https://dev.api.sponsoreds.com/api/analytics/products-parents/csv?datetime:range=2022-12-13T00%3A00%3A00.000-08%3A00%2C2023-01-11T23%3A59%3A59.999-08%3A00&isParent:eq=true&productId:eq=5&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vZGV2LmFwaS5zcG9uc29yZWRzLmNvbS9hcGkvdXNlci9sb2dpbiIsImlhdCI6MTY3MzM3NTU4MiwiZXhwIjoxNjczNDYxOTgyLCJuYmYiOjE2NzMzNzU1ODIsImp0aSI6ImZHdkN4RGpvYlFtVjMwbG8iLCJzdWIiOjEsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.t7EaDQaBngN3d6_vcYpFap5RVbnPXIc35fZG7Anngo0&attribution_window=7&amazon_region_account_marketplace_id=4
         analyticsServices.downloadTableCSV(location, filtersWithState)
     }
 

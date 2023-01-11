@@ -207,13 +207,17 @@ function bulkUpdate(entity, data, idList, filters) {
 function downloadTableCSV(location, filtersWithState) {
     const token = localStorage.getItem('token')
 
-    location = location === 'overview' ? 'products-parents' : location
+    if (location === 'overview') {
+        if (_.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
+            location = 'products-parents'
 
-    if ((location === 'overview' || location === 'products') && _.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
-        filtersWithState = [...filtersWithState.map(i => {
-            if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
-            return {...i}
-        })]
+            filtersWithState = [...filtersWithState.map(i => {
+                if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
+                return {...i}
+            })]
+        } else {
+            location = 'products'
+        }
     }
 
     const attributionWindow = localStorage.getItem('attributionWindow') || '7',
