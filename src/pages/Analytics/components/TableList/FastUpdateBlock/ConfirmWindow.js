@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import ModalWindow from "../../../../../components/ModalWindow/ModalWindow"
 import {Spin} from "antd"
 
 const countLabel = {
     campaigns: ['campaign', 'campaigns'],
     targetings: ['targeting', 'targetings'],
+    'negative-targetings': ['negative-targeting', 'negative-targetings'],
     'ad-groups': ['ad-group', 'ad-groups'],
     'product-ads': ['product-ad', 'product-ads'],
 }
@@ -14,18 +15,13 @@ const ConfirmWindow = ({
                            count,
                            onSubmit,
                            onCancel,
-                           location
+                           location,
+                           submitProcessing
                        }) => {
-    const [processing, setProcessing] = useState(false)
 
     const submitHandler = (e) => {
-        setProcessing(true)
         onSubmit(e)
     }
-
-    useEffect(() => {
-        if (!visible) setProcessing(false)
-    }, [visible])
 
     return (<ModalWindow
             footer={false}
@@ -35,16 +31,20 @@ const ConfirmWindow = ({
         >
             <h1>Permanently archive {count} {count === 1 ? countLabel[location][0] : countLabel[location][1]}?</h1>
 
-            <p>Once an entity is archived, it can't be re-enabled. Instead of archiving, you can pause entities to stop
-                accumulating new charges. Paused entities can be re-enabled at any time.</p>
+            {location === 'negative-targetings' ? <p>Once an entity is archived, it can't be re-enabled. </p>
+                :
+                <p>
+                    Once an entity is archived, it can't be re-enabled. Instead of archiving, you can pause entities to
+                    stop accumulating new charges. Paused entities can be re-enabled at any time.
+                </p>}
 
             <form className="actions" onSubmit={submitHandler}>
-                <button className={'btn white'} disabled={processing}>
+                <button className={'btn white'} disabled={submitProcessing}>
                     Confirm
-                    {processing && <Spin size={'small'}/>}
+                    {submitProcessing && <Spin size={'small'}/>}
                 </button>
 
-                <button type={'button'} className={'btn default'} onClick={onCancel}>
+                <button type={'button'} className={'btn default'} onClick={onCancel} disabled={submitProcessing}>
                     Cancel
                 </button>
             </form>

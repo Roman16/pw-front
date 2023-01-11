@@ -53,6 +53,7 @@ const defaultState = {
     negative_pats: [],
     keyword_targetings: [],
     t_targeting_type: 'keyword',
+    calculatedTargetingType: 'manual',
     targeting_bid: 0,
     enabled_target_close_match: true,
     target_close_match: 0,
@@ -64,6 +65,15 @@ const defaultState = {
     target_complements: 0,
 }
 
+const steps = [
+    'Advertising Type',
+    'Campaign',
+    'Ad Group',
+    'Product Ads',
+    'Targetings',
+    'Overview',
+]
+
 const CreateCampaignWindow = ({onReloadList}) => {
     const [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
@@ -74,15 +84,6 @@ const CreateCampaignWindow = ({onReloadList}) => {
         [createProcessing, setCreateProcessing] = useState(false)
 
 
-    const steps = [
-        'Advertising Type',
-        'Campaign',
-        'Ad Group',
-        'Product Ads',
-        'Targetings',
-        'Overview',
-    ]
-
     const dispatch = useDispatch()
 
     const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.campaign)
@@ -90,12 +91,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
     const goToNextStepHandler = () => {
         setFinishedSteps(prevState => [...prevState, currentStep])
 
-        if (currentStep === 2 && !createCampaignData.create_ad_group) {
-            setSkippedSteps([3, 4])
-            setCurrentStep(5)
-        } else {
-            setCurrentStep(prevState => prevState + 1)
-        }
+        setCurrentStep(prevState => prevState + 1)
     }
 
     const goToPreviousStepHandler = () => {
@@ -159,7 +155,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
                 setDisableNextStep(true)
             }
 
-            if(failed > 0 || notApplicable > 0) {
+            if (failed > 0 || notApplicable > 0) {
                 notification.error({title: `${failed + notApplicable} ${failed + notApplicable === 1 ? 'entity' : 'entities'} failed to create`})
             }
         } catch (e) {

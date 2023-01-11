@@ -8,7 +8,8 @@
 
     .create-steps > .row {
       display: grid;
-      grid-template-columns: 1fr 52%;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 20px;
       margin-bottom: 20px;
 
       .col {
@@ -43,7 +44,7 @@
         font-size: 1rem;
         font-weight: 500;
         color: #343C5A;
-        margin-bottom: 8px;
+        margin-bottom: 5px;
       }
 
       input, .InputCurrency, .custom-select {
@@ -58,6 +59,10 @@
 
       .InputCurrency {
         width: 120px;
+
+        input {
+          height: 100%;
+        }
       }
 
       .pw-date-picker {
@@ -98,8 +103,11 @@
       .pw-date-picker {
         margin: 0 0 0 15px;
       }
+
+      .ant-calendar {
+        box-shadow: 0 2px 8px rgb(0 0 0 / 15%) !important;
+      }
     }
   }
-
 
 }

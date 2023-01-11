@@ -32,7 +32,8 @@ const ProductItem = ({
                         <div className="sku"><b>SKU:</b> {product.sku}</div>
 
                         {isAdded && <div className="added">Added</div>}
-                        {!onRemove && !isAdded && !onRemove && !disabledBlock && <button className="btn default add" onClick={onAdd}>Add</button>}
+                        {product.eligibility_status !== 'ELIGIBLE' && <div className="ineligible">Ineligible</div>}
+                        {!onRemove && !isAdded && !onRemove && !disabledBlock && product.eligibility_status === 'ELIGIBLE' && <button className="btn default add" onClick={onAdd}>Add</button>}
                     </div>
                 </div>
             </div>

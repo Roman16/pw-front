@@ -7,7 +7,7 @@ import _ from 'lodash'
 import {activeTimezone} from "../../../../index"
 import {currencyWithCode} from "../../../../../components/CurrencyCode/CurrencyCode"
 
-const CreateCampaignOverview = ({createData}) => {
+const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
     const portfolioList = useSelector(state => state.analytics.portfolioList)
 
     const targetingsTypeEnum = {
@@ -24,61 +24,97 @@ const CreateCampaignOverview = ({createData}) => {
             'product': 'Product Targeting',
         }
 
-    const fields = {
-        campaignType: {
-            title: 'Campaign Type',
-            fieldKey: 'advertisingType',
-            render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+    let fields = {
+        'campaigns': {
+            campaignType: {
+                title: 'Campaign Type',
+                fieldKey: 'advertisingType',
+                render: (value) => value === 'SponsoredProducts' ? 'Sponsored Products' : 'Sponsored Display'
+            },
+            campaignName: {
+                title: 'Campaign Name',
+                fieldKey: 'name'
+            },
+            portfolioName: {
+                title: 'Portfolio',
+                fieldKey: 'portfolioId',
+                render: value => value == null ? 'No Portfolio' : _.find(portfolioList, {portfolioId: value}).name
+            },
+            startDate: {
+                title: 'Start',
+                fieldKey: 'startDate',
+                render: value => value && moment(value).tz(activeTimezone).format('MMM DD, YYYY')
+            },
+            endDate: {
+                title: 'End',
+                fieldKey: 'endDate',
+                render: value => value ? moment(value).tz(activeTimezone).format('MMM DD, YYYY') : 'No end date'
+            },
+            dailyBudget: {
+                title: 'Daily Budget',
+                fieldKey: 'calculatedBudget',
+                render: value => currencyWithCode(numberMask(value, 2))
+            },
+            status: {
+                title: 'Status',
+                fieldKey: 'state',
+                render: value => value === 'enabled' ? 'Enabled' : 'Paused'
+            },
+            targeting: {
+                title: 'Targeting',
+                fieldKey: 'calculatedCampaignSubType',
+                render: value => targetingsTypeEnum[value]
+            },
+            biddingStrategy: {
+                title: 'Campaign bidding strategy',
+                fieldKey: 'bidding_strategy',
+                render: value => biddingStrategyEnum[value]
+            },
+            bidsTopOfSearch: {
+                title: 'Bids by placement: Top of Search (first page)',
+                fieldKey: 'bidding_adjustments',
+                render: value => value && value[0] ? `${round(value[0].percentage, 2)}%` : '-'
+            },
+            bidsProductPage: {
+                title: 'Bids by placement: Product pages (competitors pages)',
+                fieldKey: 'bidding_adjustments',
+                render: value => value && value[1] ? `${round(value[1].percentage, 2)}%` : '-'
+            },
         },
-        campaignName: {
-            title: 'Campaign Name',
-            fieldKey: 'name'
-        },
-        portfolioName: {
-            title: 'Portfolio',
-            fieldKey: 'portfolioId',
-            render: value => value == null ? 'No Portfolio' : _.find(portfolioList, {portfolioId: value}).name
-        },
-        startDate: {
-            title: 'Start',
-            fieldKey: 'startDate',
-            render: value => value && moment(value).tz(activeTimezone).format('MMM DD, YYYY')
-        },
-        endDate: {
-            title: 'End',
-            fieldKey: 'endDate',
-            render: value => value ? moment(value).tz(activeTimezone).format('MMM DD, YYYY') : 'No end date'
-        },
-        dailyBudget: {
-            title: 'Daily Budget',
-            fieldKey: 'calculatedBudget',
-            render: value => currencyWithCode(numberMask(value, 2))
-        },
-        status: {
-            title: 'Status',
-            fieldKey: 'state',
-            render: value => value === 'enabled' ? 'Enabled' : 'Paused'
-        },
-        targeting: {
-            title: 'Targeting',
-            fieldKey: 'calculatedCampaignSubType',
-            render: value => targetingsTypeEnum[value]
-        },
-        biddingStrategy: {
-            title: 'Campaign bidding strategy',
-            fieldKey: 'bidding_strategy',
-            render: value => biddingStrategyEnum[value]
-        },
-        bidsTopOfSearch: {
-            title: 'Bids by placement: Top of Search (first page)',
-            fieldKey: 'bidding_adjustments',
-            render: value => `${round(value[0].percentage, 2)}%`
-        },
-        bidsProductPage: {
-            title: 'Bids by placement: Product pages (competitors pages)',
-            fieldKey: 'bidding_adjustments',
-            render: value => `${round(value[1].percentage, 2)}%`
-        },
+        'product-ads': {
+            campaignType: {
+                title: 'Campaign Type',
+                fieldKey: 'advertisingType',
+                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+            },
+            campaignName: {
+                title: 'Campaign Name',
+                fieldKey: 'campaignName'
+            },
+            adGroupName: {
+                title: 'Ad Group Name',
+                fieldKey: 'adGroupName'
+            },
+            productAds: {
+                title: 'Product Ads',
+                fieldKey: 'selectedProductAds',
+                render: value => <div
+                    className={'overflow-text'}
+                >
+                    SKU: {createData.selectedProductAds[0].sku}
+                </div>
+            },
+            keywordTargeting: {
+                title: 'Keyword targeting',
+                fieldKey: 'keyword_targetings',
+                render: value => value.length > 0 && `${value.length} keywords`
+            },
+            negativeKeywordTargeting: {
+                title: 'Negative Keyword Targeting',
+                fieldKey: 'keyword_targetings',
+                render: value => value.length > 0 && `${value.length} keywords`
+            },
+        }
         // adGroupName: {
         //     title: 'Ad Group Name',
         //     fieldKey: 'ad_group_name'
@@ -144,6 +180,8 @@ const CreateCampaignOverview = ({createData}) => {
         //     render: value => value.length > 0 && `${value.length} keywords`
         // },
     }
+
+    fields = fields[overviewType]
 
     const allFields = Object.keys(fields),
         automaticTargetingFields = Object.keys(fields).filter(item => item !== 'targetCloseMatch' || item !== 'targetLooseMatch' || item !== 'targetSubstitutes' || item !== 'targetComplements'),

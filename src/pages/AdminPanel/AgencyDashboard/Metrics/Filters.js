@@ -1,12 +1,12 @@
 import React from "react"
-import InformationTooltip from "../../../components/Tooltip/Tooltip"
-import CustomSelect from "../../../components/Select/Select"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import CustomSelect from "../../../../components/Select/Select"
 import {Popover, Select, Switch} from "antd"
-import DateRange from "../../Analytics/components/DateRange/DateRange"
-import DatePicker from "../../../components/DatePicker/DatePickerRange"
+import DateRange from "../../../Analytics/components/DateRange/DateRange"
+import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
-import {activeTimezone} from "../../index"
-import {SVG} from "../../../utils/icons"
+import {activeTimezone} from "../../../index"
+import {SVG} from "../../../../utils/icons"
 
 const Option = Select.Option
 

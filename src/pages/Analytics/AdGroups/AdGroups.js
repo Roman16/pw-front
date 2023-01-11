@@ -42,7 +42,7 @@ const AdGroups = () => {
                 // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
 
-            {/*<CreateAdGroupWindow/>*/}
+            <CreateAdGroupWindow/>
         </div>
     )
 }

@@ -2,16 +2,30 @@ import React from "react"
 import {
     impressionsColumn,
     clicksColumn,
-    ctrColumn, acosColumn,
-    cpcColumn, renderNumberField
-} from "../../Analytics/components/TableList/tableColumns"
+    ctrColumn, acosColumn, renderNumberField
+} from "../../../Analytics/components/TableList/tableColumns"
 
 export const columns = [
     {
         title: 'Account Name',
-        dataIndex: 'name',
-        key: 'name',
-        render: (i, item) => <b>{item.account_alias || item.seller_id} <br/> {item.marketplace_id}</b>
+        dataIndex: 'marketplace_name',
+        key: 'marketplace_name',
+        width: '250px',
+        render: (name, item) => <b>{name} <br/> {item.account_name}</b>
+    },
+    {
+        title: 'Project Manager',
+        dataIndex: 'project_manager_email',
+        key: 'project_manager_email',
+        width: '200px',
+        render: email => email || '-'
+    },
+    {
+        title: 'PPC Manager',
+        dataIndex: 'ppc_manager_email',
+        key: 'ppc_manager_email',
+        width: '200px',
+        render: email => email || '-'
     },
     {
         ...impressionsColumn, sorter: false,

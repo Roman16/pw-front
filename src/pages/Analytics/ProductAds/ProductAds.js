@@ -40,9 +40,12 @@ const ProductAds = () => {
                 columns={columns}
 
                 // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
-            />
-
-            {/*<CreateProductAdsWindow/>*/}
+            >
+                {successCreate => <CreateProductAdsWindow
+                    location={location}
+                    onReloadList={successCreate}
+                />}
+            </RenderPageParts>
         </div>
     )
 }

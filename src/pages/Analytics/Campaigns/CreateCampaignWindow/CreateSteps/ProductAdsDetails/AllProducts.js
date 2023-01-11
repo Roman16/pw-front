@@ -33,9 +33,8 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
     })
 
     const addAllProductAdsHandler = () => {
-        onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts.filter(item => !_.find(createData.selectedProductAds, {id: item.id}))]})
+        onChange({selectedProductAds: [...createData.selectedProductAds, ...allProducts.filter(product => product.eligibility_status === 'ELIGIBLE').filter(item => !_.find(createData.selectedProductAds, {id: item.id}))]})
     }
-
 
     const getProductsList = async () => {
         setProcessing(true)
@@ -80,7 +79,7 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
 
                     <div className="products-actions">
                         <button
-                            disabled={allProducts.length === 0 || disabledBlock || allProducts.length === createData.selectedProductAds.length}
+                            disabled={allProducts.length === 0 || disabledBlock || allProducts.length === createData.selectedProductAds.length || createData.selectedProductAds.length > 0}
                             className={'btn default p15'}
                             onClick={addAllProductAdsHandler}
                         >
@@ -96,7 +95,7 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
                         key={product.id}
                         product={product}
                         isAdded={!!_.find(createData.selectedProductAds, {id: product.id})}
-                        disabledBlock={disabledBlock}
+                        disabledBlock={disabledBlock || createData.selectedProductAds.length > 0}
 
                         onAdd={() => onChange({selectedProductAds: [...createData.selectedProductAds, product]})}
                     />

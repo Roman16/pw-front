@@ -103,7 +103,7 @@ const FastUpdateBlock = ({
                     action: actionType,
                     value: actionType === 'subPercent' || actionType === 'addPercent' ? changingValue / 100 : changingValue
                 }
-            }, () => setSubmitProcessing(false), () => setSubmitProcessing(false))
+            }, () => setSubmitProcessing(false), () => setVisibleConfirmWindow(false))
         }
     }
 
@@ -127,7 +127,7 @@ const FastUpdateBlock = ({
             setChangingValue('null')
         } else if (selectedColumn === 'state') {
             setAvailableActions(updateActions.state)
-            setChangingValue('enabled')
+            setChangingValue(location === 'negative-targetings' ? 'archived' : 'enabled')
         } else {
             setAvailableActions(updateActions.state)
             setChangingValue(undefined)
@@ -205,6 +205,7 @@ const FastUpdateBlock = ({
                 visible={visibleConfirmWindow}
                 count={selectedAll ? totalSize : selectedRows.length}
                 location={location}
+                submitProcessing={submitProcessing}
 
                 onCancel={() => setVisibleConfirmWindow(false)}
                 onSubmit={(e) => submitHandler(e, true)}

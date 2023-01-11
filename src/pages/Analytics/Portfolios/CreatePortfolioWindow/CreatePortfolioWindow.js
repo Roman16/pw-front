@@ -3,7 +3,7 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Input, Radio, Select} from "antd"
+import {Input, Radio, Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import './CreatePortfolioWindow.less'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
@@ -13,14 +13,15 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const CreatePortfolioWindow = () => {
+const CreatePortfolioWindow = ({onReloadList}) => {
     const [createPortfolioData, setCreatePortfolioData] = useState({
-        name: '',
-        state: 'enabled',
-        budgetCap: 'no-budget',
-        budget_amount: 0,
-        create_ends_date: 'never'
-    })
+            portfolioName: '',
+            state: 'enabled',
+            budgetCap: 'no-budget',
+            budget_amount: 0,
+            create_ends_date: 'never'
+        }),
+        [createProcessing, setCreateProcessing] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -35,18 +36,21 @@ const CreatePortfolioWindow = () => {
     }
 
     const onCreate = async () => {
+        setCreateProcessing(true)
+
         try {
             let requestData
 
             if (createPortfolioData.budgetCap === 'no-budget') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
-                    budget_amount: null,
+                    budget: 'null',
                 }
             } else if (createPortfolioData.budgetCap === 'recurring-monthly') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    budget_policy: 'MonthlyRecurring',
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
                     budget_startDate: null,
@@ -54,7 +58,8 @@ const CreatePortfolioWindow = () => {
                 }
             } else if (createPortfolioData.budgetCap === 'date-range') {
                 requestData = {
-                    name: createPortfolioData.name,
+                    budget_policy: 'dateRange',
+                    portfolioName: createPortfolioData.portfolioName,
                     state: createPortfolioData.state,
                     budget_amount: createPortfolioData.budget_amount,
                     budget_startDate: createPortfolioData.budget_startDate,
@@ -63,10 +68,13 @@ const CreatePortfolioWindow = () => {
             }
             await analyticsServices.exactCreate('portfolios', requestData)
             closeWindowHandler()
+            onReloadList()
             notification.success({title: 'Portfolio created'})
         } catch (e) {
             console.log(e)
         }
+
+        setCreateProcessing(false)
     }
 
     return (<ModalWindow
@@ -87,19 +95,13 @@ const CreatePortfolioWindow = () => {
                             <label htmlFor="">Portfolio Name</label>
                             <Input
                                 placeholder={'Portfolio Name'}
-                                value={createPortfolioData.name}
-                                onChange={({target: {value}}) => changeCreateDataHandler({name: value})}
+                                value={createPortfolioData.portfolioName}
+                                onChange={({target: {value}}) => changeCreateDataHandler({portfolioName: value})}
                             />
                         </div>
                     </div>
 
-                    <div className="col description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                        duis
-                        tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                        justo.
-                        Sed et orci tortor pellentesque sed
-                    </div>
+                    <div className="col description"/>
                 </div>
 
                 <div className="row">
@@ -125,11 +127,8 @@ const CreatePortfolioWindow = () => {
                     </div>
 
                     <div className="col description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                        duis
-                        tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                        justo.
-                        Sed et orci tortor pellentesque sed
+                        Set a budget cap for a date range or to recur monthly. Your campaigns will stop delivering when
+                        your spend reaches the budget cap amount or the budget end date is reached.
                     </div>
                 </div>
 
@@ -147,11 +146,8 @@ const CreatePortfolioWindow = () => {
                         </div>
 
                         <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
+                            The maximum spend for all campaigns in the portfolio for the current month. When the budget
+                            cap is reached, all campaigns in the portfolio will stop delivering.
                         </div>
                     </div>
 
@@ -180,13 +176,7 @@ const CreatePortfolioWindow = () => {
                             </Radio.Group>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
                 </>}
 
@@ -194,7 +184,7 @@ const CreatePortfolioWindow = () => {
                     <div className="row">
                         <div className="col">
                             <div className="form-group">
-                                <label htmlFor="">Monthly Budget Cap</label>
+                                <label htmlFor="">Date Range Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
                                     value={createPortfolioData.budget_amount}
@@ -204,11 +194,8 @@ const CreatePortfolioWindow = () => {
                         </div>
 
                         <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
+                            The maximum spend by all campaigns in your portfolio for the budget date range. When the
+                            budget cap is reached, all campaigns in the portfolio will stop delivering.
                         </div>
                     </div>
 
@@ -224,13 +211,7 @@ const CreatePortfolioWindow = () => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
 
                     <div className="row">
@@ -238,6 +219,7 @@ const CreatePortfolioWindow = () => {
                             <div className="form-group">
                                 <label htmlFor="">Budget End</label>
                                 <DatePicker
+                                    placeholder={'No end date'}
                                     getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
                                     onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
                                     showToday={false}
@@ -245,13 +227,7 @@ const CreatePortfolioWindow = () => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet
-                            duis
-                            tellus dignissim nisl rhoncus. Adipiscing at dis a id urna. Aliquam massa faucibus blandit
-                            justo.
-                            Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
                 </>}
             </div>
@@ -260,8 +236,11 @@ const CreatePortfolioWindow = () => {
                 <button
                     className="btn default"
                     onClick={onCreate}
+                    disabled={createProcessing}
                 >
                     Create Portfolio
+
+                    {createProcessing && <Spin size={'small'}/>}
                 </button>
             </div>
         </ModalWindow>

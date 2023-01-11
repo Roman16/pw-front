@@ -137,6 +137,8 @@ export const adminUrls = {
     createSemantic: `zero-to-hero/create`,
     analyzeReport: `zero-to-hero/analyze-search-term-report`,
     agencyDashboardData: `agency/dashboard/data`,
+    agencyDashboardSettings: `agency/dashboard/settings`,
+    usersByType: 'admin/users/list'
 }
 
 export const daypartingUrls = {
