@@ -39,7 +39,7 @@ const AdGroups = () => {
                 rowKey={'adGroupId'}
 
                 columns={columnList(setStateHandler, selectedCampaign, setStateDetails)}
-                moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
             />
 
             <CreateAdGroupWindow/>

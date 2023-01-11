@@ -30,7 +30,7 @@ const NegativeTargetings = () => {
                 availableParts={['table']}
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
-                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={'negativeTargetings'}/>}
                 showRowSelection={true}
                 dateRange={false}
                 showOptions={false}
