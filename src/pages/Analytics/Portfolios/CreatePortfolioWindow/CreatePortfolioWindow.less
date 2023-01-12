@@ -25,8 +25,7 @@
           padding-left: 10px;
           border-left: 0.5px solid #C9CBD4;
 
-          font-size: 0.8571428571428571rem;
-          line-height: 1rem;
+          font-size: 1rem;
           color: #656A84;
         }
       }
@@ -57,6 +56,32 @@
         }
       }
 
+      .error-message {
+        margin: 0;
+        opacity: 0;
+        height: 0;
+      }
+
+      &.error-field {
+        position: relative;
+
+        .error-message {
+          color: #EC7F5C;
+          bottom: -20px;
+          opacity: 1;
+          height: max-content;
+        }
+
+        & > {
+          .InputCurrency .ant-input-number,
+          .multi-text-area,
+          .custom-select .ant-select-selection,
+          .ant-input {
+            border-color: #EC7F5C;
+          }
+        }
+      }
+
       .InputCurrency {
         width: 120px;
 
@@ -80,8 +105,11 @@
       margin: 0;
     }
 
+    .radio-row {
+      display: flex;
+    }
+
     .ant-radio-wrapper {
-      width: 100%;
       display: flex;
       align-items: center;
 

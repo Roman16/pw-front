@@ -91,7 +91,12 @@ const CreateCampaignWindow = ({onReloadList}) => {
     const goToNextStepHandler = () => {
         setFinishedSteps(prevState => [...prevState, currentStep])
 
-        setCurrentStep(prevState => prevState + 1)
+        if (currentStep === 2 && !createCampaignData.create_ad_group) {
+            setSkippedSteps([3, 4])
+            setCurrentStep(5)
+        } else {
+            setCurrentStep(prevState => prevState + 1)
+        }
     }
 
     const goToPreviousStepHandler = () => {

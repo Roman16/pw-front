@@ -519,11 +519,7 @@ img {
   display: flex;
   align-items: center;
 
-  * {
-    outline: none !important;
-    box-shadow: none !important;
-    animation: none !important;
-  }
+
 
   .ant-radio-input:focus + .ant-radio-inner {
     border-color: #6959AB;
@@ -533,6 +529,12 @@ img {
   .ant-radio {
     width: 18px;
     height: 18px;
+
+    * {
+      outline: none !important;
+      box-shadow: none !important;
+      animation: none !important;
+    }
 
     @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
       width: 14px;

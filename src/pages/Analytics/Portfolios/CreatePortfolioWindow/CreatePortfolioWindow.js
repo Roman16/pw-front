@@ -21,7 +21,8 @@ const CreatePortfolioWindow = ({onReloadList}) => {
             budget_amount: 0,
             create_ends_date: 'never'
         }),
-        [createProcessing, setCreateProcessing] = useState(false)
+        [createProcessing, setCreateProcessing] = useState(false),
+        [errorFields, setErrorFields] = useState([])
 
     const dispatch = useDispatch()
 
@@ -32,6 +33,8 @@ const CreatePortfolioWindow = ({onReloadList}) => {
     }
 
     const changeCreateDataHandler = (value) => {
+        setErrorFields(errorFields.filter(i => i !== Object.keys(value)[0]))
+
         setCreatePortfolioData(prevState => ({...prevState, ...value}))
     }
 
@@ -48,6 +51,12 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                     budget: 'null',
                 }
             } else if (createPortfolioData.budgetCap === 'recurring-monthly') {
+                if (createPortfolioData.budget_amount < 1) {
+                    setErrorFields(['budget_amount'])
+                    setCreateProcessing(false)
+                    return
+                }
+
                 requestData = {
                     budget_policy: 'MonthlyRecurring',
                     portfolioName: createPortfolioData.portfolioName,
@@ -57,6 +66,12 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                     budget_endDate: createPortfolioData.create_ends_date === 'never' ? null : createPortfolioData.budget_endDate,
                 }
             } else if (createPortfolioData.budgetCap === 'date-range') {
+                if (createPortfolioData.budget_amount < 1) {
+                    setErrorFields(['budget_amount'])
+                    setCreateProcessing(false)
+                    return
+                }
+
                 requestData = {
                     budget_policy: 'dateRange',
                     portfolioName: createPortfolioData.portfolioName,
@@ -127,27 +142,32 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                     </div>
 
                     <div className="col description">
-                        Set a budget cap for a date range or to recur monthly. Your campaigns will stop delivering when
-                        your spend reaches the budget cap amount or the budget end date is reached.
+                        Set a budget cap for a date range or to recur monthly. <br/>
+                        Your campaigns will stop delivering when your spend reaches <br/>
+                        the budget cap amount or the budget end date is reached.
                     </div>
                 </div>
 
                 {createPortfolioData.budgetCap === 'recurring-monthly' && <>
                     <div className="row">
                         <div className="col">
-                            <div className="form-group">
+                            <div className={`form-group ${errorFields.includes('budget_amount') ? 'error-field' : ''}`}>
                                 <label htmlFor="">Monthly Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
                                     value={createPortfolioData.budget_amount}
                                     onChange={(value) => changeCreateDataHandler({budget_amount: value})}
                                 />
+
+                                <p className="error-message">
+                                    Monthly Budget Cap should be at least $1.00
+                                </p>
                             </div>
                         </div>
 
                         <div className="col description">
-                            The maximum spend for all campaigns in the portfolio for the current month. When the budget
-                            cap is reached, all campaigns in the portfolio will stop delivering.
+                            The maximum spend for all campaigns in the portfolio for the current month. <br/>
+                            When the budget cap is reached, all campaigns in the portfolio will stop delivering.
                         </div>
                     </div>
 
@@ -163,8 +183,10 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                                     Never
                                 </Radio>
 
-                                <Radio value={'on'}>
-                                    On
+                                <div className="radio-row">
+                                    <Radio value={'on'}>
+                                        On
+                                    </Radio>
 
                                     <DatePicker
                                         getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
@@ -172,7 +194,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                                         showToday={false}
                                         disabled={createPortfolioData.create_ends_date === 'never'}
                                     />
-                                </Radio>
+                                </div>
                             </Radio.Group>
                         </div>
 
@@ -183,19 +205,22 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                 {createPortfolioData.budgetCap === 'date-range' && <>
                     <div className="row">
                         <div className="col">
-                            <div className="form-group">
+                            <div className={`form-group ${errorFields.includes('budget_amount') ? 'error-field' : ''}`}>
                                 <label htmlFor="">Date Range Budget Cap</label>
                                 <InputCurrency
                                     step={0.01}
                                     value={createPortfolioData.budget_amount}
                                     onChange={(value) => changeCreateDataHandler({budget_amount: value})}
                                 />
+                                <p className="error-message">
+                                    Date Range Budget Cap should be at least $1.00
+                                </p>
                             </div>
                         </div>
 
                         <div className="col description">
-                            The maximum spend by all campaigns in your portfolio for the budget date range. When the
-                            budget cap is reached, all campaigns in the portfolio will stop delivering.
+                            The maximum spend by all campaigns in your portfolio for the budget date range. <br/>
+                            When the budget cap is reached, all campaigns in the portfolio will stop delivering.
                         </div>
                     </div>
 
@@ -236,7 +261,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={createProcessing}
+                    disabled={createProcessing || !createPortfolioData.portfolioName}
                 >
                     Create Portfolio
 
