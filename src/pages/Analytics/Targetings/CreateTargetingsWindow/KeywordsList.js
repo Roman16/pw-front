@@ -1,13 +1,13 @@
 import React, {useState} from "react"
 import {uniqueArrOfObj} from "../../../../utils/unique"
-import {Radio, Spin} from "antd"
+import {Popconfirm, Radio, Spin} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import _ from 'lodash'
 
 let allKeywords = []
 
-const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate}) => {
+const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate, disabled}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('exact'),
         [keywordsCount, setKeywordsCount] = useState(null),
@@ -127,7 +127,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
     }
 
     return (
-        <div className={`negative-keywords keyword-targetings`}>
+        <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
             <div className="bid-block">
                 <h3>Keywords</h3>
 
@@ -136,6 +136,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                     <InputCurrency
                         value={defaultBid}
                         onChange={(value) => setDefaultBid(value)}
+                        disabled={disabled}
                     />
                 </div>
             </div>
@@ -148,6 +149,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                         <Radio.Group
                             value={keywordType}
                             onChange={({target: {value}}) => setKeywordType(value)}
+                            disabled={disabled}
                         >
                             <Radio value={'broad'}>
                                 Broad
@@ -168,7 +170,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value.toLowerCase())}
                                 required
-                                disabled={validationProcessing}
+                                disabled={validationProcessing || disabled}
                                 placeholder={'Enter your list and separate each item with a new line'}
                             />
                     </div>
@@ -182,7 +184,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                             <button type={'button'} onClick={downloadReport}>Download report</button>
                         </p>}
 
-                        <button className={'btn default p15 add'} disabled={validationProcessing}>
+                        <button className={'btn default p15 add'} disabled={validationProcessing || disabled}>
                             <SVG id={'plus-icon'}/>
                             Add Keywords
 
@@ -195,7 +197,18 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> keywords added</div>
                         {keywords.length > 0 &&
-                        <button onClick={clearKeywordsListHandler} disabled={validationProcessing}>Remove All</button>}
+                        <Popconfirm
+                            title="Are you sure to delete all keyword?"
+                            onConfirm={clearKeywordsListHandler}
+                            getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
+                            okButtonProps={{className: 'default'}}
+                            cancelButtonProps={{className: 'white'}}
+                            placement="topRight"
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <button disabled={validationProcessing}>Remove All</button>
+                        </Popconfirm>}
                     </div>
 
                     <div className="keywords-list">
@@ -234,7 +247,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
                                     <button
                                         className={'btn icon'}
                                         onClick={() => removeKeywordHandler(index)}
-                                        disabled={validationProcessing}
+                                        disabled={validationProcessing || disabled}
                                     >
                                         <SVG id={'remove-filter-icon'}/>
                                     </button>

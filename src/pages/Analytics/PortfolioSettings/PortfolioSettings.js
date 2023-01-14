@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {Input, Radio, Select, Spin} from "antd"
+import {Input, Radio, Select, Spin, Switch} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import InputCurrency from "../../../components/Inputs/InputCurrency"
 import DatePicker from "../../../components/DatePicker/DatePicker"
@@ -23,6 +23,7 @@ const PortfolioSettings = () => {
 
     const [settingParams, setSettingsParams] = useState({
             budget_policy: '',
+            status: false
         }),
         [saveProcessing, setSaveProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true)
@@ -32,8 +33,14 @@ const PortfolioSettings = () => {
         setFetchProcessing(true)
         try {
             const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
-            dataFromResponse = {...response, bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'}
-            setSettingsParams({...response, bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'})
+            dataFromResponse = {
+                ...response,
+                bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'
+            }
+            setSettingsParams({
+                ...response,
+                bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'
+            })
         } catch (e) {
             console.log(e)
         }
@@ -116,7 +123,6 @@ const PortfolioSettings = () => {
     return (
         <div className={'portfolio-settings-workplace'}>
             <div className="container">
-
                 <div className="row">
                     <div className="label">
                         Portfolio Name
@@ -262,6 +268,50 @@ const PortfolioSettings = () => {
                     </div>
 
                 </>}
+            </div>
+
+            <div className="container daily-moving-budget">
+                <h2>Daily moving budget</h2>
+
+                <div className="row">
+                    <div className="label">
+                        Status
+                    </div>
+
+                    <div className="value status">
+                        <span className={!settingParams.status && 'inactive'}>Inactive</span>
+                        <Switch
+                            checked={settingParams.status}
+                            onChange={checked => changeSettingsHandler({status: checked})}
+                        />
+                        <span className={settingParams.status && 'active'}>Active</span>
+                    </div>
+                </div>
+
+                <div className="row">
+                    <div className="label">
+                        Budget
+                    </div>
+
+                    <div className="value name">
+                        <div className="form-group">
+                            <InputCurrency
+                                disabled={!settingParams.status}
+                                // value={settingParams.budget_amount}
+                                // onChange={(e) => changeSettingsHandler({budget_amount: e})}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="label">
+                        Next Budget Reset
+                    </div>
+
+                    <div className="value date">
+                        24/24/2424
+                    </div>
+                </div>
             </div>
 
             <div

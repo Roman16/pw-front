@@ -452,13 +452,13 @@ export const InfinitySelect = React.memo((props) => {
     )
 })
 
-const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate, disabledTargetingType}) => {
+export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate, disabledTargetingType, disabled}) => {
     return (<div className="targetings-details-step">
         <div className={`row `}>
             <div className="col">
                 <Radio.Group
                     value={targetingType}
-                    disabled={disabledTargetingType}
+                    disabled={disabledTargetingType || disabled}
                     onChange={({target: {value}}) => onUpdate({targetingType: value})}
                 >
                     <h4>Targeting type</h4>
@@ -495,12 +495,14 @@ const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidat
             keywords={createData.keywords}
             onUpdate={(value) => onUpdate({keywords: value})}
             onValidate={onValidate}
+            disabled={disabled}
         /> : <TargetsList
             createData={createData}
             targetingType={targetingType}
             keywords={createData.targets}
             onUpdate={(value) => onUpdate({targets: value})}
             onValidate={onValidate}
+            disabled={disabled}
         />}
     </div>)
 }

@@ -3,17 +3,16 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../Campaigns/CreateCampaignWindow/WindowHeader"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
-import {Select, Spin} from "antd"
+import {Radio, Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import AllProducts from "../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/AllProducts"
 import SelectedProduct from "../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/SelectedProduct"
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/ProductAdsDetails.less'
 import './CreateProductAdsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
-import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {InfinitySelect, RenderTargetingsDetails} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {notification} from "../../../../components/Notification"
 import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
-import TargetingsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails"
 import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
 import _ from 'lodash'
 
@@ -35,10 +34,12 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             campaignId: undefined,
             adGroupId: undefined,
             advertisingType: undefined,
-            create_targetings: true,
+            create_targetings: false,
             calculatedTargetingType: 'manual',
             keyword_targetings: [],
             negative_keywords: [],
+            keywords: [],
+            targets: [],
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
@@ -54,10 +55,6 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         dispatch(analyticsActions.setVisibleCreateWindow({productAds: false}))
     }
 
-    const changeCreateDataHandler = (value) => {
-        setCreateData(prevState => ({...prevState, ...value}))
-    }
-
     const goToSelectStep = (step) => {
         if (finishedSteps.includes(step) || processSteps.includes(step)) {
             setProcessSteps(prevState => [...prevState, currentStep])
@@ -69,6 +66,20 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         setFinishedSteps(prevState => [...prevState, currentStep])
 
         setCurrentStep(prevState => prevState + 1)
+    }
+
+    const goToPreviousStepHandler = () => {
+        setProcessSteps(prevState => [...prevState, currentStep])
+
+        const checkStep = (step) => {
+            if (skippedSteps.includes(step)) {
+                checkStep(step - 1)
+            } else {
+                setCurrentStep(step)
+            }
+        }
+
+        checkStep(currentStep - 1)
     }
 
     const onCreate = async () => {
@@ -93,7 +104,14 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         setCreateProcessing(false)
     }
 
+    const resetFinishedSteps = () => {
+        setFinishedSteps(finishedSteps.filter(i => i < currentStep))
+        setProcessSteps(processSteps.filter(i => i < currentStep))
+    }
+
     const changeCampaignHandler = value => {
+        resetFinishedSteps()
+
         setAdGroups([])
         setCreateData(prevState => ({
             ...prevState,
@@ -103,15 +121,46 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         }))
     }
 
-    const changeAdGroupHandler = value => {
-        setCreateData(prevState => ({
-            ...prevState,
-            adGroupId: value,
-            adGroupName: _.find(adGroups, {adGroupId: value}).name
-        }))
+    const targetingsValidation = async (data) => {
+        try {
+            const res = analyticsServices.targetingsValidation(data)
+
+            return res
+        } catch (e) {
+            console.log(e)
+        }
     }
 
-    const changeDataHandler = data => setCreateData(prevState => ({...prevState, ...data}))
+    const changeAdGroupHandler = async id => {
+        resetFinishedSteps()
+
+        setCreateData(prevState => ({
+            ...prevState,
+            adGroupId: id,
+            adGroupName: _.find(adGroups, {adGroupId: id}).name
+        }))
+
+        try {
+            const res = await analyticsServices.fetchAdGroupDetails(id)
+
+            const type = res.result.adGroupTargetingType
+
+            setCreateData(prevState => ({
+                ...prevState,
+                targetingType: type === 'any' ? 'keywords' : type,
+                disabledTargetingType: type !== 'any'
+            }))
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+    const changeDataHandler = data => {
+        resetFinishedSteps()
+
+        setCreateData(prevState => ({...prevState, ...data}))
+    }
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         if (createData.advertisingType) {
@@ -153,6 +202,12 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         } else {
             setAdGroups([])
         }
+    }
+
+    const nextStepValidation = () => {
+        if (currentStep === 0 && createData.selectedProductAds.length === 0) return true
+        else if (currentStep === 1 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else return false
     }
 
 
@@ -209,7 +264,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                                         <CustomSelect
                                             placeholder={'Select by'}
                                             getPopupContainer={trigger => trigger.parentNode}
-                                            onChange={(value) => changeCreateDataHandler({advertisingType: value})}
+                                            onChange={(value) => changeDataHandler({advertisingType: value})}
                                             value={createData.advertisingType}
                                         >
                                             <Option value={'SponsoredProducts'}>
@@ -275,37 +330,55 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                                 createData={createData}
                                 disabledBlock={!createData.adGroupId}
 
-                                onChange={changeCreateDataHandler}
+                                onChange={changeDataHandler}
                             />
 
                             <SelectedProduct
                                 selectedProducts={createData.selectedProductAds}
 
-                                onChange={changeCreateDataHandler}
+                                onChange={changeDataHandler}
                             />
                         </div>
                     </div>
                 </>}
 
 
-                {currentStep === 1 && <TargetingsDetails createData={createData} onChange={changeDataHandler}/>}
+                {currentStep === 1 && <div className={'step step-4 targetings-details-step'}>
+                    <div className="row">
+                        <div className="col">
+                            <Radio.Group value={createData.create_targetings}
+                                         onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
+                                <h4>Targetings</h4>
+
+                                <Radio value={true}>
+                                    Create Targetings
+                                </Radio>
+
+                                <Radio value={false}>
+                                    Do not create Targetings
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                    </div>
+
+                    <RenderTargetingsDetails
+                        createData={createData}
+                        targetingType={createData.targetingType}
+                        disabledTargetingType={createData.disabledTargetingType}
+                        disabled={!createData.create_targetings}
+                        onUpdate={changeDataHandler}
+                        onValidate={targetingsValidation}
+                    />
+                </div>
+                }
 
                 {currentStep === 2 && <CreateCampaignOverview createData={createData} overviewType={location}/>}
             </div>
 
             <div className="window-footer">
-
-                {currentStep > 0 && <button
-                    className="btn white"
-                    onClick={() => setCurrentStep(prevState => prevState - 1)}
-                    disabled={createProcessing}
-                >
-                    Previous
-                </button>}
-
                 <button
                     className={`btn ${currentStep < 2 ? 'white' : 'default'}`}
-                    onClick={onCreate}
+                    onClick={currentStep < 2 ? goToNextStepHandler : onCreate}
                     disabled={createProcessing || createData.selectedProductAds.length === 0}
                 >
                     Create Product Ads
@@ -313,10 +386,19 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     {createProcessing && <Spin size={'small'}/>}
                 </button>
 
+                {currentStep > 0 && <button
+                    className="btn white"
+                    onClick={goToPreviousStepHandler}
+                    disabled={createProcessing}
+                >
+                    Previous
+                </button>}
+
+
                 {currentStep < 2 && <button
                     className="btn default"
                     onClick={goToNextStepHandler}
-                    disabled={createProcessing || createData.selectedProductAds.length === 0}
+                    disabled={createProcessing || nextStepValidation()}
                 >
                     Next
                 </button>}

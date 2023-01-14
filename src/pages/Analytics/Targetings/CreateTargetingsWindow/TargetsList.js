@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {uniqueArrOfObj} from "../../../../utils/unique"
-import {Radio} from "antd"
+import {Popconfirm, Radio} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {Spin} from "antd/es"
@@ -8,7 +8,7 @@ import _ from "lodash"
 
 let allKeywords = []
 
-const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}) => {
+const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate, disabled}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('asins'),
         [keywordsCount, setKeywordsCount] = useState(null),
@@ -129,7 +129,7 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
     }
 
     return (
-        <div className={`negative-keywords keyword-targetings asins`}>
+        <div className={`negative-keywords keyword-targetings asins ${disabled ? 'disabled' : ''}`}>
             <div className="bid-block">
                 <h3>Product Targetings</h3>
 
@@ -194,7 +194,18 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> product targetings</div>
                         {keywords.length > 0 &&
-                        <button onClick={clearKeywordsListHandler} disabled={validationProcessing}>Remove All</button>}
+                        <Popconfirm
+                            title="Are you sure to delete all keyword?"
+                            onConfirm={clearKeywordsListHandler}
+                            getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
+                            okButtonProps={{className: 'default'}}
+                            cancelButtonProps={{className: 'white'}}
+                            placement="topRight"
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <button disabled={validationProcessing}>Remove All</button>
+                        </Popconfirm>}
                     </div>
 
                     <div className="keywords-list">

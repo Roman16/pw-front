@@ -77,15 +77,15 @@ const AllProducts = ({onChange, createData, disabledBlock}) => {
                         />
                     </div>
 
-                    <div className="products-actions">
-                        <button
-                            disabled={allProducts.length === 0 || disabledBlock || allProducts.length === createData.selectedProductAds.length || createData.selectedProductAds.length > 0}
-                            className={'btn default p15'}
-                            onClick={addAllProductAdsHandler}
-                        >
-                            Add all on this page
-                        </button>
-                    </div>
+                    {/*<div className="products-actions">*/}
+                    {/*    <button*/}
+                    {/*        disabled={allProducts.length === 0 || disabledBlock || allProducts.length === createData.selectedProductAds.length || createData.selectedProductAds.length > 0}*/}
+                    {/*        className={'btn default p15'}*/}
+                    {/*        onClick={addAllProductAdsHandler}*/}
+                    {/*    >*/}
+                    {/*        Add all on this page*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
             </div>
 
