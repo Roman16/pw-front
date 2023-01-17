@@ -98,17 +98,48 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             {
                 title: 'Product Ads',
                 fieldKey: 'selectedProductAds',
-                render: value => <div
-                    className={'overflow-text'}
-                >
-                    SKU: {createData.selectedProductAds[0].sku}
-                </div>
+                render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
             },
             ...createData.create_targetings ? [createData.targetingType === 'keywords' ? {
-                title: 'Keyword Targeting',
-                fieldKey: 'keywords',
-                render: value => value.length > 0 && `${value.length} keywords`
-            } :
+                    title: 'Keyword Targeting',
+                    fieldKey: 'keywords',
+                    render: value => value.length > 0 && `${value.length} keywords`
+                } :
+                {
+                    title: 'Product Targeting',
+                    fieldKey: 'targets',
+                    render: value => value.length > 0 && `${value.length} keywords`
+                }] : []
+        ],
+        'adGroups': [
+            {
+                title: 'Campaign Type',
+                fieldKey: 'advertisingType',
+                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
+            },
+            {
+                title: 'Campaign Name',
+                fieldKey: 'campaignName'
+            },
+            {
+                title: 'Ad Group Name',
+                fieldKey: 'name'
+            },
+            {
+                title: 'Default Bid',
+                fieldKey: 'defaultBid',
+                render: value => currencyWithCode(numberMask(value, 2))
+            },
+            ...createData.create_product_ads ? [{
+                title: 'Product Ads',
+                fieldKey: 'selectedProductAds',
+                render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
+            }] : [],
+            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? {
+                    title: 'Keyword Targeting',
+                    fieldKey: 'keywords',
+                    render: value => value.length > 0 && `${value.length} keywords`
+                } :
                 {
                     title: 'Product Targeting',
                     fieldKey: 'targets',

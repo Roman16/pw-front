@@ -6,8 +6,6 @@ import SelectedProduct from "./SelectedProduct"
 
 
 const ProductAdsDetails = ({onChange, createData}) => {
-
-
     return (<div className={'step step-3 product-ads-details-step'}>
         <Radio.Group
             value={createData.create_product_ads}

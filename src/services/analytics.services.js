@@ -18,6 +18,9 @@ export const analyticsServices = {
     fetchCampaignsForTargeting,
     fetchAdGroupsForTargeting,
     fetchAdGroupDetails,
+    fetchMovingBudget,
+    updateMovingBudget,
+    deleteMovingBudget,
     targetingsValidation,
 
     exactCreate,
@@ -181,6 +184,18 @@ function fetchAdGroupsForTargeting({page, id, name}) {
 
 function fetchAdGroupDetails(id) {
     return api('get', `${analyticsUrls.adGroupDetails(id)}`)
+}
+
+function fetchMovingBudget(id) {
+    return api('get', `${analyticsUrls.movingBudget(id)}`)
+}
+
+function updateMovingBudget(id, data) {
+    return api('post', `${analyticsUrls.movingBudget(id)}`, data)
+}
+
+function deleteMovingBudget(id) {
+    return api('delete', `${analyticsUrls.movingBudget(id)}`)
 }
 
 function exactCreate(entity, data) {

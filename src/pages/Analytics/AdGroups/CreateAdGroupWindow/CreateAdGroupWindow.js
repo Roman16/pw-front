@@ -6,15 +6,16 @@ import {useDispatch, useSelector} from "react-redux"
 import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
 import WindowFooter from "../../Campaigns/CreateCampaignWindow/WindowFooter"
 import ProductAdsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/ProductAdsDetails"
-import TargetingsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails"
 import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
 import AdGroupDetails from "./AdGroupDetails"
 import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
+import {Radio} from "antd"
+import {RenderTargetingsDetails} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 
 
 const CreateAdGroupWindow = () => {
-    const [createAdGroupData, setCreateAdGroupData] = useState({
+    const [createData, setCreateData] = useState({
             advertisingType: undefined,
             name: '',
             defaultBid: 0,
@@ -22,14 +23,18 @@ const CreateAdGroupWindow = () => {
             state: 'enabled',
             calculatedTargetingType: 'auto',
             //product ads
-            create_product_ads: true,
+            create_product_ads: false,
             selectedProductAds: [],
             //targetings
-            create_targetings: true,
+            create_targetings: false,
+            keywords: [],
+            targets: [],
+
             negative_keywords: [],
             negative_pats: [],
             keyword_targetings: [],
-            t_targeting_type: 'keyword',
+            targetingType: 'keywords',
+            disabledTargetingType: false,
             targeting_bid: 0,
             enabled_target_close_match: true,
             target_close_match: 0,
@@ -63,6 +68,11 @@ const CreateAdGroupWindow = () => {
         dispatch(analyticsActions.setVisibleCreateWindow({adGroup: false}))
     }
 
+    const resetFinishedSteps = () => {
+        setFinishedSteps(finishedSteps.filter(i => i < currentStep))
+        setProcessSteps(processSteps.filter(i => i < currentStep))
+    }
+
     const goToSelectStep = (step) => {
         if (finishedSteps.includes(step) || processSteps.includes(step)) {
             setProcessSteps(prevState => [...prevState, currentStep])
@@ -90,17 +100,19 @@ const CreateAdGroupWindow = () => {
     }
 
     const changeCreateDataHandler = (value) => {
-        setCreateAdGroupData(prevState => ({...prevState, ...value}))
+        resetFinishedSteps()
+
+        setCreateData(prevState => ({...prevState, ...value}))
     }
 
     const createAdGroupHandler = async () => {
         try {
             await analyticsServices.exactCreate('ad-groups', {
-                advertisingType: createAdGroupData.advertisingType,
-                name: createAdGroupData.name,
-                defaultBid: createAdGroupData.defaultBid,
-                campaignId: createAdGroupData.campaignId,
-                state: createAdGroupData.state,
+                advertisingType: createData.advertisingType,
+                name: createData.name,
+                defaultBid: createData.defaultBid,
+                campaignId: createData.campaignId,
+                state: createData.state,
             })
             closeWindowHandler()
             notification.success({title: 'Ad Group created'})
@@ -109,12 +121,23 @@ const CreateAdGroupWindow = () => {
         }
     }
 
+    const targetingsValidation = async (data) => {
+        try {
+            const res = analyticsServices.targetingsValidation(data)
+
+            return res
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
-        if (createAdGroupData.advertisingType) {
+        if (createData.advertisingType) {
             try {
                 const res = await analyticsServices.fetchCampaignsForTargeting({
                     page,
-                    type: createAdGroupData.advertisingType,
+                    type: createData.advertisingType,
                     name: searchStr
                 })
 
@@ -129,12 +152,20 @@ const CreateAdGroupWindow = () => {
         }
     }
 
-    useEffect(() => {
-        getCampaigns()
-    }, [createAdGroupData.advertisingType])
+    const nextStepValidation = () => {
+        if (currentStep === 0 && (!createData.name || createData.defaultBid === 0)) return true
+        else if (currentStep === 1 && createData.create_product_ads && createData.selectedProductAds.length === 0) return true
+        else if (currentStep === 2 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else return false
+    }
+
 
     useEffect(() => {
-        if (mainState.campaignId) setCreateAdGroupData(prevState => ({...prevState, campaignId: '444'}))
+        getCampaigns()
+    }, [createData.advertisingType])
+
+    useEffect(() => {
+        if (mainState.campaignId) setCreateData(prevState => ({...prevState, campaignId: '444'}))
     }, [mainState])
 
     return (<ModalWindow
@@ -161,7 +192,7 @@ const CreateAdGroupWindow = () => {
                 {currentStep === 0 &&
                 <AdGroupDetails
                     selectedCampaign={mainState.campaignId}
-                    createData={createAdGroupData}
+                    createData={createData}
                     campaigns={campaigns}
 
                     getCampaigns={getCampaigns}
@@ -170,19 +201,41 @@ const CreateAdGroupWindow = () => {
 
                 {currentStep === 1 &&
                 <ProductAdsDetails
-                    createData={createAdGroupData}
+                    createData={createData}
                     onChange={changeCreateDataHandler}
                 />}
 
-                {currentStep === 2 &&
-                <TargetingsDetails
-                    createData={createAdGroupData}
-                    onChange={changeCreateDataHandler}
-                />}
+                {currentStep === 2 && <div className={'step step-4 targetings-details-step'}>
+                    <div className="row">
+                        <div className="col">
+                            <Radio.Group value={createData.create_targetings}
+                                         onChange={({target: {value}}) => changeCreateDataHandler({create_targetings: value})}>
+                                <h4>Targetings</h4>
+
+                                <Radio value={true}>
+                                    Create Targetings
+                                </Radio>
+
+                                <Radio value={false}>
+                                    Do not create Targetings
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                    </div>
+
+                    <RenderTargetingsDetails
+                        createData={createData}
+                        targetingType={createData.targetingType}
+                        disabledTargetingType={createData.disabledTargetingType}
+                        disabled={!createData.create_targetings}
+                        onUpdate={changeCreateDataHandler}
+                        onValidate={targetingsValidation}
+                    />
+                </div>}
 
                 {currentStep === 3 &&
                 <CreateCampaignOverview
-                    createData={createAdGroupData}
+                    createData={createData}
                     overviewType={'adGroups'}
                 />}
             </div>
@@ -193,6 +246,7 @@ const CreateAdGroupWindow = () => {
                 goNext={goToNextStepHandler}
                 goPrevious={goToPreviousStepHandler}
                 onCreate={createAdGroupHandler}
+                disableNextStep={nextStepValidation()}
                 createButtonTitle={'Create Ad Group'}
             />
         </ModalWindow>

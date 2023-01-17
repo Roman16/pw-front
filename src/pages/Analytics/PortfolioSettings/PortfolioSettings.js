@@ -10,6 +10,7 @@ import moment from "moment"
 import {notification} from "../../../components/Notification"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import {dateFormatting} from "../../../utils/dateFormatting"
+import {activeTimezone} from "../../index"
 
 const Option = Select.Option
 let dataFromResponse = {
@@ -23,7 +24,9 @@ const PortfolioSettings = () => {
 
     const [settingParams, setSettingsParams] = useState({
             budget_policy: '',
-            status: false
+            movingBudget: {
+                status: false,
+            }
         }),
         [saveProcessing, setSaveProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true)
@@ -32,14 +35,21 @@ const PortfolioSettings = () => {
     const getSettingsDetails = async () => {
         setFetchProcessing(true)
         try {
-            const {response} = await analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId)
+            const [mainSettings, movingBudget] = await Promise.all([analyticsServices.fetchSettingsDetails('portfolios', mainState.portfolioId), analyticsServices.fetchMovingBudget(mainState.portfolioId)])
+
             dataFromResponse = {
-                ...response,
-                bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'
+                ...mainSettings.response,
+                movingBudget: movingBudget.result === null ? {
+                    status: false
+                } : {...movingBudget.result, status: true},
+                bidding_strategy: mainSettings.response.budget_endDate ? 'autoForSales' : 'legacyForSales'
             }
             setSettingsParams({
-                ...response,
-                bidding_strategy: response.budget_endDate ? 'autoForSales' : 'legacyForSales'
+                ...mainSettings.response,
+                movingBudget: movingBudget.result === null ? {
+                    status: false
+                } : {...movingBudget.result, status: true},
+                bidding_strategy: mainSettings.response.budget_endDate ? 'autoForSales' : 'legacyForSales'
             })
         } catch (e) {
             console.log(e)
@@ -96,12 +106,42 @@ const PortfolioSettings = () => {
                     requestData.budget = 'null'
                 }
 
+                if (settingParams.movingBudget.status && (!settingParams.movingBudget.budget_amount || settingParams.movingBudget.budget_amount <= 1)) {
+                    notification.error({title: 'Daily moving budget should be greater than or equal to 1$'})
+                    return
+                }
+
                 setSaveProcessing(true)
 
                 await analyticsServices.exactUpdateField('portfolios', requestData)
+
+                if (settingParams.movingBudget.status) {
+                    const {result} = await analyticsServices.updateMovingBudget(settingParams.portfolioId, {
+                        budget_amount: settingParams.movingBudget.budget_amount,
+                        interval: "+1 day",
+                        start_date: moment().tz(activeTimezone).format('YYYY-MM-DD')
+                    })
+
+                    changeSettingsHandler({
+                        movingBudget: {
+                            status: true,
+                            ...result
+                        }
+                    })
+
+                    dataFromResponse = {...settingParams, movingBudget: { status: true,
+                            ...result}}
+                } else {
+                    await analyticsServices.deleteMovingBudget(settingParams.portfolioId)
+                    changeSettingsHandler({
+                        movingBudget: {status: false}
+                    })
+
+                    dataFromResponse = {...settingParams, movingBudget: {status: false}}
+                }
+
                 notification.success({title: '1 entity updated'})
 
-                dataFromResponse = {...settingParams}
             } else {
                 notification.error({title: 'Portfolio name field is required'})
             }
@@ -281,8 +321,13 @@ const PortfolioSettings = () => {
                     <div className="value status">
                         <span className={!settingParams.status && 'inactive'}>Inactive</span>
                         <Switch
-                            checked={settingParams.status}
-                            onChange={checked => changeSettingsHandler({status: checked})}
+                            checked={settingParams.movingBudget.status}
+                            onChange={checked => changeSettingsHandler({
+                                movingBudget: {
+                                    ...settingParams.movingBudget,
+                                    status: checked
+                                }
+                            })}
                         />
                         <span className={settingParams.status && 'active'}>Active</span>
                     </div>
@@ -296,9 +341,14 @@ const PortfolioSettings = () => {
                     <div className="value name">
                         <div className="form-group">
                             <InputCurrency
-                                disabled={!settingParams.status}
-                                // value={settingParams.budget_amount}
-                                // onChange={(e) => changeSettingsHandler({budget_amount: e})}
+                                disabled={!settingParams.movingBudget.status}
+                                value={settingParams.movingBudget.budget_amount}
+                                onChange={(e) => changeSettingsHandler({
+                                    movingBudget: {
+                                        ...settingParams.movingBudget,
+                                        budget_amount: e
+                                    }
+                                })}
                             />
                         </div>
                     </div>
@@ -309,7 +359,7 @@ const PortfolioSettings = () => {
                     </div>
 
                     <div className="value date">
-                        24/24/2424
+                        {settingParams.movingBudget.next_update ? moment(settingParams.movingBudget.next_update).format('DD.MM.YYYY') : '-'}
                     </div>
                 </div>
             </div>
