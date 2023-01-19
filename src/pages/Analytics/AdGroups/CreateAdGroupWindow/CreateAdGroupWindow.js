@@ -49,7 +49,8 @@ const CreateAdGroupWindow = () => {
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
         [finishedSteps, setFinishedSteps] = useState([]),
-        [campaigns, setCampaigns] = useState([])
+        [campaigns, setCampaigns] = useState([]),
+        [createProcessing, setCreateProcessing] = useState(false)
 
     const steps = [
         'Ad Group',
@@ -106,19 +107,60 @@ const CreateAdGroupWindow = () => {
     }
 
     const createAdGroupHandler = async () => {
+        setCreateProcessing(true)
+
         try {
-            await analyticsServices.exactCreate('ad-groups', {
+            const res = await analyticsServices.exactCreate('ad-groups', {
                 advertisingType: createData.advertisingType,
                 name: createData.name,
                 defaultBid: createData.defaultBid,
                 campaignId: createData.campaignId,
                 state: createData.state,
             })
+
+            if (createData.create_product_ads) {
+                await analyticsServices.exactCreate('product-ads', {
+                    campaignId: createData.campaignId,
+                    adGroupId: res.adGroupId,
+                    advertisingType: createData.advertisingType,
+                    sku: createData.selectedProductAds[0].sku,
+                    state: 'enabled'
+                })
+            }
+
+            if (createData.create_targetings) {
+                const targetingType = createData.targetingType
+
+                await analyticsServices.exactCreate('targetings', {
+                    targetings: createData[`${targetingType}`].map(i => ({
+                            advertisingType: createData.advertisingType,
+                            campaignId: createData.campaignId || mainState.campaignId,
+                            adGroupId: res.adGroupId,
+                            state: 'enabled',
+                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
+                            calculatedBid: i.calculatedBid,
+                            ...targetingType === 'keywords' ? {
+                                calculatedTargetingText: i.keywordText,
+                                calculatedTargetingMatchType: i.matchType
+                            } : {
+                                expressionType: 'manual',
+                                expression: [{
+                                    "type": "asinSameAs",
+                                    "value": i.text
+                                }]
+                            }
+                        }
+                    ))
+                })
+            }
+
             closeWindowHandler()
             notification.success({title: 'Ad Group created'})
         } catch (e) {
             console.log(e)
         }
+
+        setCreateProcessing(false)
     }
 
     const targetingsValidation = async (data) => {
@@ -241,6 +283,7 @@ const CreateAdGroupWindow = () => {
             </div>
 
             <WindowFooter
+                processing={createProcessing}
                 steps={steps}
                 currentStep={currentStep}
                 goNext={goToNextStepHandler}

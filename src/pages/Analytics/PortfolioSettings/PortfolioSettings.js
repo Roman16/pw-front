@@ -11,6 +11,7 @@ import {notification} from "../../../components/Notification"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import {dateFormatting} from "../../../utils/dateFormatting"
 import {activeTimezone} from "../../index"
+import InformationTooltip from "../../../components/Tooltip/Tooltip"
 
 const Option = Select.Option
 let dataFromResponse = {
@@ -71,7 +72,7 @@ const PortfolioSettings = () => {
                 }
 
                 if (settingParams.movingBudget.status) {
-                    if (settingParams.movingBudget.status && (!settingParams.movingBudget.budget_amount || settingParams.movingBudget.budget_amount <= 1)) {
+                    if (settingParams.movingBudget.status && (!settingParams.movingBudget.budget_amount || settingParams.movingBudget.budget_amount < 1)) {
                         notification.error({title: 'Daily moving budget should be greater than or equal to 1$'})
                         return
                     }
@@ -188,9 +189,11 @@ const PortfolioSettings = () => {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                     <div className="label">
                         Budget Cap
+
+                        <InformationTooltip type={'warning'}/>
                     </div>
 
                     <div className="value budget-cap">
@@ -216,9 +219,10 @@ const PortfolioSettings = () => {
                 </div>
 
                 {settingParams.budget_policy === 'MonthlyRecurring' && <>
-                    <div className="row">
+                    <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Monthly Budget Cap
+                            <InformationTooltip type={'warning'}/>
                         </div>
 
                         <div className="value monthly-budget-cap">
@@ -234,10 +238,10 @@ const PortfolioSettings = () => {
                         </div>
                     </div>
 
-
-                    <div className="row">
+                    <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Ends
+                            <InformationTooltip type={'warning'}/>
                         </div>
 
                         <div className="value ends">
@@ -268,9 +272,10 @@ const PortfolioSettings = () => {
 
 
                 {settingParams.budget_policy === 'dateRange' && <>
-                    <div className="row">
+                    <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Date Range Budget Cap
+                            <InformationTooltip type={'warning'}/>
                         </div>
 
                         <div className="value monthly-budget-cap">
@@ -286,11 +291,11 @@ const PortfolioSettings = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Budget Start
+                            <InformationTooltip type={'warning'}/>
                         </div>
-
 
                         <div className="value date">
                             <div className="form-group">
@@ -304,11 +309,11 @@ const PortfolioSettings = () => {
                         </div>
                     </div>
 
-                    <div className="row">
+                    <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Budget End
+                            <InformationTooltip type={'warning'}/>
                         </div>
-
 
                         <div className="value date">
                             <div className="form-group">
@@ -321,7 +326,6 @@ const PortfolioSettings = () => {
                             </div>
                         </div>
                     </div>
-
                 </>}
             </div>
 

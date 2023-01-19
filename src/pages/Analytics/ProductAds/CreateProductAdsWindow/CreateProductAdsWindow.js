@@ -62,10 +62,14 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         }
     }
 
-    const goToNextStepHandler = () => {
-        setFinishedSteps(prevState => [...prevState, currentStep])
-
-        setCurrentStep(prevState => prevState + 1)
+    const goToNextStepHandler = (step) => {
+        if (step) {
+            setFinishedSteps([...Array(3).keys()].filter(i => i < step))
+            setCurrentStep(step)
+        } else {
+            setFinishedSteps(prevState => [...prevState, currentStep])
+            setCurrentStep(prevState => prevState + 1)
+        }
     }
 
     const goToPreviousStepHandler = () => {
@@ -93,6 +97,32 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                 sku: createData.selectedProductAds[0].sku,
                 state: 'enabled'
             })
+
+            if (createData.create_targetings) {
+                const targetingType = createData.targetingType
+
+                await analyticsServices.exactCreate('targetings', {
+                    targetings: createData[`${targetingType}`].map(i => ({
+                            advertisingType: createData.advertisingType,
+                            campaignId: createData.campaignId || mainState.campaignId,
+                            adGroupId: createData.adGroupId || mainState.adGroupId,
+                            state: 'enabled',
+                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
+                            calculatedBid: i.calculatedBid,
+                            ...targetingType === 'keywords' ? {
+                                calculatedTargetingText: i.keywordText,
+                                calculatedTargetingMatchType: i.matchType
+                            } : {
+                                expressionType: 'manual',
+                                expression: [{
+                                    "type": "asinSameAs",
+                                    "value": i.text
+                                }]
+                            }
+                        }
+                    ))
+                })
+            }
 
             closeWindowHandler()
             onReloadList()
@@ -376,15 +406,13 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             </div>
 
             <div className="window-footer">
-                <button
-                    className={`btn ${currentStep < 2 ? 'white' : 'default'}`}
-                    onClick={currentStep < 2 ? goToNextStepHandler : onCreate}
+                {currentStep === 0 && <button
+                    className={`btn white`}
+                    onClick={() => goToNextStepHandler(2)}
                     disabled={createProcessing || createData.selectedProductAds.length === 0}
                 >
                     Create Product Ads
-
-                    {createProcessing && <Spin size={'small'}/>}
-                </button>
+                </button>}
 
                 {currentStep > 0 && <button
                     className="btn white"
@@ -394,13 +422,22 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     Previous
                 </button>}
 
-
                 {currentStep < 2 && <button
                     className="btn default"
-                    onClick={goToNextStepHandler}
+                    onClick={() => goToNextStepHandler()}
                     disabled={createProcessing || nextStepValidation()}
                 >
                     Next
+                </button>}
+
+                {currentStep === 2 && <button
+                    className={`btn default`}
+                    onClick={onCreate}
+                    disabled={createProcessing || createData.selectedProductAds.length === 0}
+                >
+                    Create Product Ads
+
+                    {createProcessing && <Spin size={'small'}/>}
                 </button>}
             </div>
         </ModalWindow>

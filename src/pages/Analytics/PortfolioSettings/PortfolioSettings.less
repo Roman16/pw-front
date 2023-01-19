@@ -42,6 +42,27 @@
       flex: 1;
       padding: 14px 0 14px 20px;
     }
+
+    &.disabled {
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #C9CBD4;
+        opacity: 0.2;
+        border-radius: 4px;
+        z-index: 110;
+      }
+
+      .custom-tooltip {
+        z-index: 111;
+      }
+    }
   }
 
   .custom-select {

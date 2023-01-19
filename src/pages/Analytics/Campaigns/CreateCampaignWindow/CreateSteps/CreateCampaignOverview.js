@@ -24,6 +24,22 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             'product': 'Product Targeting',
         }
 
+    const keywordTargetingField = {
+            title: 'Keyword Targeting',
+            fieldKey: 'keywords',
+            render: value => value.length > 0 ? value.length === 1 ? `${value.length} keyword` : `${value.length} keywords` : '-'
+        },
+        productTargetingField = {
+            title: 'Product Targeting',
+            fieldKey: 'targets',
+            render: value => value.length > 0 ? value.length === 1 ? `${value.length} keyword` : `${value.length} keywords` : '-'
+        },
+        productAdsField = {
+            title: 'Product Ads',
+            fieldKey: 'selectedProductAds',
+            render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
+        }
+
     let fields = {
         'campaigns': [
             {
@@ -75,11 +91,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'bidding_adjustments',
                 render: value => value && value[0] ? `${round(value[0].percentage, 2)}%` : '-'
             },
-            {
-                title: 'Bids by placement: Product pages (competitors pages)',
-                fieldKey: 'bidding_adjustments',
-                render: value => value && value[1] ? `${round(value[1].percentage, 2)}%` : '-'
-            },
+            productAdsField,
         ],
         'product-ads': [
             {
@@ -95,21 +107,9 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 title: 'Ad Group Name',
                 fieldKey: 'adGroupName'
             },
-            {
-                title: 'Product Ads',
-                fieldKey: 'selectedProductAds',
-                render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
-            },
-            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? {
-                    title: 'Keyword Targeting',
-                    fieldKey: 'keywords',
-                    render: value => value.length > 0 && `${value.length} keywords`
-                } :
-                {
-                    title: 'Product Targeting',
-                    fieldKey: 'targets',
-                    render: value => value.length > 0 && `${value.length} keywords`
-                }] : []
+            productAdsField,
+            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? keywordTargetingField :
+                productTargetingField] : []
         ],
         'adGroups': [
             {
@@ -130,21 +130,9 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'defaultBid',
                 render: value => currencyWithCode(numberMask(value, 2))
             },
-            ...createData.create_product_ads ? [{
-                title: 'Product Ads',
-                fieldKey: 'selectedProductAds',
-                render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
-            }] : [],
-            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? {
-                    title: 'Keyword Targeting',
-                    fieldKey: 'keywords',
-                    render: value => value.length > 0 && `${value.length} keywords`
-                } :
-                {
-                    title: 'Product Targeting',
-                    fieldKey: 'targets',
-                    render: value => value.length > 0 && `${value.length} keywords`
-                }] : []
+            ...createData.create_product_ads ? [productAdsField] : [],
+            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? keywordTargetingField :
+                productTargetingField] : []
         ]
     }
     // adGroupName: {
