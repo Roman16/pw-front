@@ -110,7 +110,7 @@ const CreateAdGroupWindow = () => {
         setCreateProcessing(true)
 
         try {
-            const res = await analyticsServices.exactCreate('ad-groups', {
+            const {result} = await analyticsServices.exactCreate('ad-groups', {
                 advertisingType: createData.advertisingType,
                 name: createData.name,
                 defaultBid: createData.defaultBid,
@@ -121,7 +121,7 @@ const CreateAdGroupWindow = () => {
             if (createData.create_product_ads) {
                 await analyticsServices.exactCreate('product-ads', {
                     campaignId: createData.campaignId,
-                    adGroupId: res.adGroupId,
+                    adGroupId: result.entities[0].adGroupId,
                     advertisingType: createData.advertisingType,
                     sku: createData.selectedProductAds[0].sku,
                     state: 'enabled'
@@ -135,7 +135,7 @@ const CreateAdGroupWindow = () => {
                     targetings: createData[`${targetingType}`].map(i => ({
                             advertisingType: createData.advertisingType,
                             campaignId: createData.campaignId || mainState.campaignId,
-                            adGroupId: res.adGroupId,
+                            adGroupId: result.entities[0].adGroupId,
                             state: 'enabled',
                             entityType: targetingType === 'keywords' ? 'keyword' : 'target',
                             calculatedBid: i.calculatedBid,
