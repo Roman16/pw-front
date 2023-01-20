@@ -5,12 +5,11 @@ import {analyticsActions} from "../../../../actions/analytics.actions"
 import {useDispatch, useSelector} from "react-redux"
 import {Select, Spin} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
-import '../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/ProductAdsDetails.less'
+import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
+import '../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
-import TargetingsDetails from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails"
-import NegativeKeywords from "../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/NegativeKeywords"
-import '../../Campaigns/CreateCampaignWindow/CreateSteps/TargetingsDetails/TargetingsDetails.less'
+import {NegativeTargetingsDetails} from "./NegativeTargetingsDetails"
 
 const Option = Select.Option
 
@@ -19,12 +18,15 @@ const CreateNegativeTargetingsWindow = ({location}) => {
             campaignId: undefined,
             adGroupId: undefined,
             advertisingType: undefined,
-            negative_keywords: [],
-
+            targetingType: '',
+            disabledTargetingType: true,
+            targets: [],
+            keywords: [],
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
-        [createProcessing, setCreateProcessing] = useState(false)
+        [createProcessing, setCreateProcessing] = useState(false),
+        [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -39,6 +41,26 @@ const CreateNegativeTargetingsWindow = ({location}) => {
     const changeCreateDataHandler = (value) => {
         setCreateData(prevState => ({...prevState, ...value}))
     }
+
+    const getAdGroupDetails = async (id) => {
+        setFetchAdGroupDetailsProcessing(true)
+
+        try {
+            const res = await analyticsServices.fetchAdGroupDetails(id)
+
+            const type = res.result.adGroupTargetingType
+
+            changeCreateDataHandler({
+                targetingType: type === 'any' ? 'keywords' : type,
+                disabledTargetingType: type !== 'any'
+            })
+        } catch (e) {
+            console.log(e)
+        }
+
+        setFetchAdGroupDetailsProcessing(false)
+    }
+
 
     const onCreate = async () => {
         setCreateProcessing(true)
@@ -64,11 +86,13 @@ const CreateNegativeTargetingsWindow = ({location}) => {
             adGroupId: undefined
         }))
     }
-    const changeAdGroupHandler = value => {
+    const changeAdGroupHandler = id => {
         setCreateData(prevState => ({
             ...prevState,
-            adGroupId: value
+            adGroupId: id
         }))
+
+        getAdGroupDetails(id)
     }
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
@@ -113,6 +137,15 @@ const CreateNegativeTargetingsWindow = ({location}) => {
         }
     }
 
+    const targetingsValidation = async (data) => {
+        try {
+            const res = analyticsServices.targetingsValidation(data)
+
+            return res
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         if (mainState.adGroupId) setCreateData(prevState => ({
@@ -172,14 +205,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
 
                             </div>
 
-                            <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
-                            </div>
+                            <div className="col description"/>
                         </div>
 
                         <div className={`row`}>
@@ -200,14 +226,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
                                 </div>
                             </div>
 
-                            <div className="col description">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                                consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id
-                                urna.
-                                Aliquam
-                                massa
-                                faucibus blandit justo. Sed et orci tortor pellentesque sed
-                            </div>
+                            <div className="col description"/>
                         </div>
                     </>}
 
@@ -229,32 +248,26 @@ const CreateNegativeTargetingsWindow = ({location}) => {
                             </div>
                         </div>
 
-                        <div className="col description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus
-                            consequat ornare laoreet duis tellus dignissim nisl rhoncus. Adipiscing at dis a id urna.
-                            Aliquam
-                            massa
-                            faucibus blandit justo. Sed et orci tortor pellentesque sed
-                        </div>
+                        <div className="col description"/>
                     </div>
                 </>}
 
-                <div className="targetings-details-step">
-                    <NegativeKeywords
-                        disabled={!createData.adGroupId}
-                        keywords={createData.negative_keywords}
-                        onUpdate={changeCreateDataHandler}
-                        withMatchType={createData.t_targeting_type === 'keyword'}
-                        title={'Negative Keyword Targeting'}
+                {fetchAdGroupDetailsProcessing ? <div className="targeting-type-loading">
+                    Loading ad group information
+                    <Spin/>
+                </div> : createData.targetingType ?
+                    <NegativeTargetingsDetails
+                        createData={createData}
+                        onValidate={targetingsValidation}
                     />
-                </div>
+                    : ''}
             </div>
 
             <div className="window-footer">
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={createProcessing || createData.negative_keywords.length === 0}
+                    disabled={createProcessing}
                 >
                     Create Negative Targetings
 

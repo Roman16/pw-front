@@ -34,6 +34,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             campaignId: undefined,
             adGroupId: undefined,
             advertisingType: undefined,
+
             create_targetings: false,
             calculatedTargetingType: 'manual',
             keyword_targetings: [],
@@ -167,7 +168,8 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         setCreateData(prevState => ({
             ...prevState,
             adGroupId: id,
-            adGroupName: _.find(adGroups, {adGroupId: id}).name
+            adGroupName: _.find(adGroups, {adGroupId: id}).name,
+            adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
         }))
 
         try {

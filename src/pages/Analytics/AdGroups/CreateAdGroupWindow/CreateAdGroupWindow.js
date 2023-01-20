@@ -18,7 +18,7 @@ const CreateAdGroupWindow = () => {
     const [createData, setCreateData] = useState({
             advertisingType: undefined,
             name: '',
-            defaultBid: 0,
+            adGroupBid: 0,
             campaignId: undefined,
             state: 'enabled',
             calculatedTargetingType: 'auto',
@@ -113,7 +113,7 @@ const CreateAdGroupWindow = () => {
             const {result} = await analyticsServices.exactCreate('ad-groups', {
                 advertisingType: createData.advertisingType,
                 name: createData.name,
-                defaultBid: createData.defaultBid,
+                defaultBid: createData.adGroupBid,
                 campaignId: createData.campaignId,
                 state: createData.state,
             })
@@ -195,7 +195,7 @@ const CreateAdGroupWindow = () => {
     }
 
     const nextStepValidation = () => {
-        if (currentStep === 0 && (!createData.name || createData.defaultBid === 0)) return true
+        if (currentStep === 0 && (!createData.name || createData.adGroupBid === 0)) return true
         else if (currentStep === 1 && createData.create_product_ads && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 2 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
         else return false

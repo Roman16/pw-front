@@ -338,7 +338,7 @@ const PortfolioSettings = () => {
                     </div>
 
                     <div className="value status">
-                        <span className={!settingParams.status && 'inactive'}>Inactive</span>
+                        <span className={!settingParams.movingBudget.status && 'inactive'}>Inactive</span>
                         <Switch
                             checked={settingParams.movingBudget.status}
                             onChange={checked => changeSettingsHandler({
@@ -348,7 +348,7 @@ const PortfolioSettings = () => {
                                 }
                             })}
                         />
-                        <span className={settingParams.status && 'active'}>Active</span>
+                        <span className={settingParams.movingBudget.status && 'active'}>Active</span>
                     </div>
                 </div>
 

@@ -1,6 +1,6 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {uniqueArrOfObj} from "../../../../utils/unique"
-import {Popconfirm, Radio, Spin} from "antd"
+import {Checkbox, Popconfirm, Radio, Spin} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import _ from 'lodash'
@@ -13,8 +13,9 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         [keywordsCount, setKeywordsCount] = useState(null),
         [validKeywordsCount, setValidKeywordsCount] = useState(null),
         [validationProcessing, setValidationProcessing] = useState(false),
-        [defaultBid, setDefaultBid] = useState(1),
-        [invalidDetails, setInvalidDetails] = useState()
+        [defaultBid, setDefaultBid] = useState(createData.adGroupBid),
+        [invalidDetails, setInvalidDetails] = useState(),
+        [disabledBidField, setDisabledBidField] = useState(true)
 
     const addKeywordsHandler = async (e) => {
         e.preventDefault()
@@ -126,18 +127,36 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
         hiddenElement.click()
     }
 
+    useEffect(() => {
+        if (disabledBidField) {
+            setDefaultBid(createData.adGroupBid)
+        }
+    }, [createData.adGroupBid])
+
     return (
         <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
             <div className="bid-block">
                 <h3>Keywords</h3>
 
-                <div className="form-group row">
-                    <label htmlFor="">Bid</label>
-                    <InputCurrency
-                        value={defaultBid}
-                        onChange={(value) => setDefaultBid(value)}
-                        disabled={disabled}
-                    />
+                <div className="row">
+                    <div className="form-group">
+                        <label htmlFor="">Bid</label>
+                        <InputCurrency
+                            value={defaultBid}
+                            onChange={(value) => setDefaultBid(value)}
+                            disabled={disabled || disabledBidField}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <Checkbox
+                            disabled={disabled}
+                            checked={disabledBidField}
+                            onChange={({target: {checked}}) => setDisabledBidField(checked)}
+                        >
+                            Use bid from Ad Group
+                        </Checkbox>
+                    </div>
                 </div>
             </div>
 

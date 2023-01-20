@@ -127,7 +127,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             },
             {
                 title: 'Default Bid',
-                fieldKey: 'defaultBid',
+                fieldKey: 'adGroupBid',
                 render: value => currencyWithCode(numberMask(value, 2))
             },
             ...createData.create_product_ads ? [productAdsField] : [],

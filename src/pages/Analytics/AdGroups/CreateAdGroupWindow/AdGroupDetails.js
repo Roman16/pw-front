@@ -92,8 +92,8 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                     <label htmlFor="">Default bid</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.defaultBid}
-                        onChange={(value) => onChange({defaultBid: value})}
+                        value={createData.adGroupBid}
+                        onChange={(value) => onChange({adGroupBid: value})}
                         disabled={!createData.campaignId}
                     />
                 </div>

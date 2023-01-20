@@ -11,6 +11,7 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import KeywordsList from "./KeywordsList"
 import TargetsList from "./TargetsList"
 import {notification} from "../../../../components/Notification"
+import _ from "lodash"
 
 const Option = Select.Option
 
@@ -242,13 +243,14 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         }))
     }
 
-    const changeAdGroupHandler = value => {
+    const changeAdGroupHandler = id => {
         setCreateData(prevState => ({
             ...prevState,
-            adGroupId: value,
+            adGroupId: id,
+            adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
         }))
 
-        getAdGroupDetails(value)
+        getAdGroupDetails(id)
     }
 
     return (<ModalWindow
