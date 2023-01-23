@@ -284,9 +284,6 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                                         <Option value={'SponsoredDisplay'}>
                                             Sponsored Display
                                         </Option>
-                                        <Option value={'SponsoredBrands'}>
-                                            Sponsored Brands
-                                        </Option>
                                     </CustomSelect>
                                 </div>
 

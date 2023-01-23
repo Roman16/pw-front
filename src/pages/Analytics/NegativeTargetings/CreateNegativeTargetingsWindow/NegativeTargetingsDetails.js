@@ -1,11 +1,10 @@
 import React from "react"
 import {Radio} from "antd"
-import KeywordsList from "../../Targetings/CreateTargetingsWindow/KeywordsList"
-import TargetsList from "../../Targetings/CreateTargetingsWindow/TargetsList"
+import {MultiTextarea} from "./MultiTextarea"
 
-export const NegativeTargetingsDetails = ({createData, onChange, disabled, onValidate}) => {
+export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
 
-    return(<div className={'targetings-details-step'}>
+    return (<div className={'targetings-details-step'}>
         <div className={`row `}>
             <div className="col">
                 <Radio.Group
@@ -41,21 +40,94 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled, onVal
             </div>
         </div>
 
-        {createData.targetingType === 'keywords' ? <KeywordsList
-            createData={createData}
-            targetingType={createData.targetingType}
-            keywords={createData.keywords}
-            onUpdate={(value) => onChange({keywords: value})}
-            onValidate={onValidate}
-            disabled={disabled}
-        /> : <TargetsList
-            createData={createData}
-            targetingType={createData.targetingType}
-            keywords={createData.targets}
-            onUpdate={(value) => onChange({targets: value})}
-            onValidate={onValidate}
-            disabled={disabled}
-        />}
+        {createData.targetingType === 'keywords' ? <>
+            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+                <div className="bid-block">
+                    <h3>Negative Keywords</h3>
+                </div>
 
+                <MultiTextarea
+                    keywords={createData.negativeKeywords}
+                    keywordTypeEnums={[{
+                        key: 'broad',
+                        name: 'Broad'
+                    },
+                        {
+                            key: 'phrase',
+                            name: 'Phrase'
+                        },
+                        {
+                            key: 'exact',
+                            name: 'Exact'
+                        }
+                    ]}
+                    onChange={(arr) => onChange({negativeKeywords: arr})}
+                />
+            </div>
+            <br/>
+            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+                <div className="bid-block">
+                    <h3>Negative Campaign Keywords</h3>
+                </div>
+
+                <MultiTextarea
+                    keywords={createData.negativeCampaignKeywords}
+                    keywordTypeEnums={[{
+                        key: 'broad',
+                        name: 'Broad'
+                    },
+                        {
+                            key: 'phrase',
+                            name: 'Phrase'
+                        },
+                        {
+                            key: 'exact',
+                            name: 'Exact'
+                        }
+                    ]}
+                    onChange={(arr) => onChange({negativeCampaignKeywords: arr})}
+                />
+            </div>
+        </> : <>
+            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+                <div className="bid-block">
+                    <h3>Negative Targetings</h3>
+                </div>
+
+                <MultiTextarea
+                    keywords={createData.negativeTargets}
+                    keywordTypeEnums={[{
+                        key: 'asins',
+                        name: 'ASINs'
+                    },
+                        {
+                            key: 'categories',
+                            name: 'Categories'
+                        },
+                    ]}
+                    onChange={(arr) => onChange({negativeTargets: arr})}
+                />
+            </div>
+            <br/>
+            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+                <div className="bid-block">
+                    <h3>Negative Campaign Targetings</h3>
+                </div>
+
+                <MultiTextarea
+                    keywords={createData.negativeCampaignTargets}
+                    keywordTypeEnums={[{
+                        key: 'asins',
+                        name: 'ASINs'
+                    },
+                        {
+                            key: 'categories',
+                            name: 'Categories'
+                        },
+                    ]}
+                    onChange={(arr) => onChange({negativeCampaignTargets: arr})}
+                />
+            </div>
+        </>}
     </div>)
 }

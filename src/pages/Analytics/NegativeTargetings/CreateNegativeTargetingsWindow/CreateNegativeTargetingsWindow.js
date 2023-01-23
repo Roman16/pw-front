@@ -20,8 +20,11 @@ const CreateNegativeTargetingsWindow = ({location}) => {
             advertisingType: undefined,
             targetingType: '',
             disabledTargetingType: true,
-            targets: [],
-            keywords: [],
+            negativeTargets: [],
+            negativeCampaignTargets: [],
+
+            negativeKeywords: [],
+            negativeCampaignKeywords: [],
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
@@ -137,16 +140,6 @@ const CreateNegativeTargetingsWindow = ({location}) => {
         }
     }
 
-    const targetingsValidation = async (data) => {
-        try {
-            const res = analyticsServices.targetingsValidation(data)
-
-            return res
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     useEffect(() => {
         if (mainState.adGroupId) setCreateData(prevState => ({
             ...prevState,
@@ -170,7 +163,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
     }, [createData.campaignId])
 
     return (<ModalWindow
-            className={'create-campaign-window create-portfolio-window create-campaign-window'}
+            className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
             visible={visibleWindow}
             footer={false}
             handleCancel={closeWindowHandler}
@@ -258,7 +251,8 @@ const CreateNegativeTargetingsWindow = ({location}) => {
                 </div> : createData.targetingType ?
                     <NegativeTargetingsDetails
                         createData={createData}
-                        onValidate={targetingsValidation}
+                        widthBid={false}
+                        onChange={changeCreateDataHandler}
                     />
                     : ''}
             </div>
