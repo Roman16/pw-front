@@ -10,7 +10,11 @@ import SelectedProduct from "../../Campaigns/CreateCampaignWindow/CreateSteps/Pr
 import '../../Campaigns/CreateCampaignWindow/CreateSteps/ProductAdsDetails/ProductAdsDetails.less'
 import './CreateProductAdsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
-import {InfinitySelect, RenderTargetingsDetails} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {
+    InfinitySelect,
+    mapTargetingsDataRequest,
+    RenderTargetingsDetails
+} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {notification} from "../../../../components/Notification"
 import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
 import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
@@ -108,28 +112,8 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             })
 
             if (createData.create_targetings) {
-                const targetingType = createData.targetingType
-
-                await analyticsServices.exactCreate('targetings', {
-                    targetings: createData[`${targetingType}`].map(i => ({
-                            advertisingType: createData.advertisingType,
-                            campaignId: createData.campaignId || mainState.campaignId,
-                            adGroupId: createData.adGroupId || mainState.adGroupId,
-                            state: 'enabled',
-                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
-                            calculatedBid: i.calculatedBid,
-                            ...targetingType === 'keywords' ? {
-                                calculatedTargetingText: i.keywordText,
-                                calculatedTargetingMatchType: i.matchType
-                            } : {
-                                expressionType: 'manual',
-                                expression: [{
-                                    "type": "asinSameAs",
-                                    "value": i.text
-                                }]
-                            }
-                        }
-                    ))
+                await analyticsServices.bulkCreate('targetings', {
+                    targetings: mapTargetingsDataRequest(createData)
                 })
             }
 

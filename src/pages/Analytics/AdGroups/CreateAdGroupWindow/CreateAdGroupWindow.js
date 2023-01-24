@@ -11,7 +11,10 @@ import AdGroupDetails from "./AdGroupDetails"
 import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import {Radio} from "antd"
-import {RenderTargetingsDetails} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {
+    mapTargetingsDataRequest,
+    RenderTargetingsDetails
+} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {NegativeTargetingsDetails} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/NegativeTargetingsDetails"
 import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
@@ -26,33 +29,26 @@ const steps = [
 const CreateAdGroupWindow = () => {
     const [createData, setCreateData] = useState({
             advertisingType: undefined,
+            campaignId: undefined,
             name: '',
             adGroupBid: 0,
-            campaignId: undefined,
             state: 'enabled',
-            calculatedTargetingType: 'auto',
             //product ads
             create_product_ads: false,
             selectedProductAds: [],
             //targetings
             create_targetings: false,
+            targetingType: 'keywords',
             keywords: [],
             targets: [],
+            //negative targetings
+            createNegativeTargetings: false,
+            negativeTargetingType: 'keywords',
+            negativeTargets: [],
+            negativeCampaignTargets: [],
 
-            negative_keywords: [],
-            negative_pats: [],
-            keyword_targetings: [],
-            targetingType: 'keywords',
-            disabledTargetingType: false,
-            targeting_bid: 0,
-            enabled_target_close_match: true,
-            target_close_match: 0,
-            enabled_target_loose_match: true,
-            target_loose_match: 0,
-            enabled_target_substitutes: true,
-            target_substitutes: 0,
-            enabled_target_complements: true,
-            target_complements: 0,
+            negativeKeywords: [],
+            negativeCampaignKeywords: []
         }),
         [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
@@ -131,28 +127,8 @@ const CreateAdGroupWindow = () => {
             }
 
             if (createData.create_targetings) {
-                const targetingType = createData.targetingType
-
-                await analyticsServices.exactCreate('targetings', {
-                    targetings: createData[`${targetingType}`].map(i => ({
-                            advertisingType: createData.advertisingType,
-                            campaignId: createData.campaignId || mainState.campaignId,
-                            adGroupId: result.entities[0].adGroupId,
-                            state: 'enabled',
-                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
-                            calculatedBid: i.calculatedBid,
-                            ...targetingType === 'keywords' ? {
-                                calculatedTargetingText: i.keywordText,
-                                calculatedTargetingMatchType: i.matchType
-                            } : {
-                                expressionType: 'manual',
-                                expression: [{
-                                    "type": "asinSameAs",
-                                    "value": i.text
-                                }]
-                            }
-                        }
-                    ))
+                await analyticsServices.bulkCreate('targetings', {
+                    targetings: mapTargetingsDataRequest(createData)
                 })
             }
 
@@ -260,7 +236,7 @@ const CreateAdGroupWindow = () => {
 
                 {currentStep === 2 && <div className={'step step-4 targetings-details-step'}>
                     <div className="row">
-                        <div className="col">
+                        <div className="col create-switch">
                             <Radio.Group value={createData.create_targetings}
                                          onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
                                 <h4>Targetings</h4>

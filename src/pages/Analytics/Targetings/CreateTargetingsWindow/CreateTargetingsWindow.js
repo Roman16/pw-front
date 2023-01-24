@@ -99,7 +99,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
         setCreateProcessing(true)
 
         try {
-            const res = await analyticsServices.bulkCreate('targetings', {
+            const res = await analyticsServices.bulkCreate(location, {
                     targetings: mapTargetingsDataRequest(createData)
                 }
             )

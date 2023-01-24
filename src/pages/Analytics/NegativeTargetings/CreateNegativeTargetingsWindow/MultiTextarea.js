@@ -8,7 +8,8 @@ export const MultiTextarea = ({
                                   keywords,
                                   disabled,
                                   keywordTypeEnums,
-                                  onChange
+                                  onChange,
+                                  disabledKeywordType = false
                               }) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState(keywordTypeEnums[0].key)
@@ -66,7 +67,7 @@ export const MultiTextarea = ({
                     <Radio.Group
                         value={keywordType}
                         onChange={({target: {value}}) => setKeywordType(value)}
-                        disabled={disabled}
+                        disabled={disabled || disabledKeywordType}
                     >
                         {keywordTypeEnums.map(({key, name}) => <Radio value={key}>
                             {name}

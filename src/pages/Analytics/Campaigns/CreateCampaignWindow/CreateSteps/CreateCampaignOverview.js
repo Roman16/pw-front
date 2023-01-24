@@ -94,19 +94,6 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             },
             productAdsField,
         ],
-        'product-ads': [
-            advertisingTypeField,
-            {
-                title: 'Campaign Name',
-                fieldKey: 'campaignName'
-            },
-            {
-                title: 'Ad Group Name',
-                fieldKey: 'adGroupName'
-            },
-            productAdsField,
-            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}
-        ],
         'adGroups': [
             advertisingTypeField,
             {
@@ -122,9 +109,22 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupBid',
                 render: value => currencyWithCode(numberMask(value, 2))
             },
-            ...createData.create_product_ads ? [productAdsField] : [],
+            createData.create_product_ads && productAdsField,
+            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')},
+            ...createData.createNegativeTargetings && [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')]
+        ],
+        'product-ads': [
+            advertisingTypeField,
+            {
+                title: 'Campaign Name',
+                fieldKey: 'campaignName'
+            },
+            {
+                title: 'Ad Group Name',
+                fieldKey: 'adGroupName'
+            },
+            productAdsField,
             createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}
-
         ],
         'targetings': [
             advertisingTypeField,

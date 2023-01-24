@@ -93,6 +93,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                 <MultiTextarea
                     keywords={createData.negativeTargets}
                     disabled={disabled}
+                    disabledKeywordType={true}
                     keywordTypeEnums={[{
                         key: 'asins',
                         name: 'ASINs'
@@ -114,6 +115,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                 <MultiTextarea
                     keywords={createData.negativeCampaignTargets}
                     disabled={disabled}
+                    disabledKeywordType={true}
                     keywordTypeEnums={[{
                         key: 'asins',
                         name: 'ASINs'
