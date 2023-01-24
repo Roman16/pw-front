@@ -3,6 +3,12 @@
     margin: 0 !important;
   }
 
+  .campaign-overview-step {
+    h3 {
+      margin-bottom: 12px !important;
+    }
+  }
+
   .targetings-details-step .negative-keywords > .row .added-keywords > .row button {
     &:disabled {
       color: #C9CBD4;
@@ -43,7 +49,6 @@
     }
 
     .radio-description {
-      margin: 0 0 0 32px;
       font-size: 0.8571428571428571rem;
       line-height: 1rem;
 
@@ -52,8 +57,37 @@
     }
   }
 
-  .negative-keywords {
+  .step-0 {
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 20px;
+    margin-bottom: 20px;
 
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-column-gap: 20px;
+    }
+  }
+
+  .bid-block {
+    .form-group {
+      label {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #343C5A;
+        margin-bottom: 5px;
+        display: block;
+      }
+    }
+
+    .InputCurrency {
+      height: 2.28571429rem;
+      width: 120px;
+    }
+  }
+
+  .negative-keywords {
     &.asins {
       textarea {
         text-transform: uppercase;
@@ -168,6 +202,10 @@
       }
     }
   }
+}
+
+.create-negative-targetings-window {
+  max-width: 1000px;
 }
 
 .infinity-select-popup {

@@ -15,12 +15,15 @@ import {notification} from "../../../../components/Notification"
 import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
 import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
 import _ from 'lodash'
+import {NegativeTargetingsDetails} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/NegativeTargetingsDetails"
+import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
 const Option = Select.Option
 
 const steps = [
     'Product Ads',
     'Targetings',
+    'Negative Targetings',
     'Overview',
 ]
 
@@ -30,17 +33,22 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         [finishedSteps, setFinishedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
         [createData, setCreateData] = useState({
-            selectedProductAds: [],
             campaignId: undefined,
             adGroupId: undefined,
             advertisingType: undefined,
 
+            selectedProductAds: [],
+
             create_targetings: false,
-            calculatedTargetingType: 'manual',
-            keyword_targetings: [],
-            negative_keywords: [],
             keywords: [],
             targets: [],
+
+            createNegativeTargetings: false,
+            negativeTargets: [],
+            negativeCampaignTargets: [],
+
+            negativeKeywords: [],
+            negativeCampaignKeywords: [],
         }),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
@@ -124,6 +132,11 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     ))
                 })
             }
+
+            if (createData.createNegativeTargetings) {
+                await analyticsServices.bulkCreate('negative-targetings', {negativeTargetings: mapNegativeTargetings(createData)})
+            }
+
 
             closeWindowHandler()
             onReloadList()
@@ -239,6 +252,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
     const nextStepValidation = () => {
         if (currentStep === 0 && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 1 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 2 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
         else return false
     }
 
@@ -377,7 +391,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
 
                 {currentStep === 1 && <div className={'step step-4 targetings-details-step'}>
                     <div className="row">
-                        <div className="col">
+                        <div className="col create-switch">
                             <Radio.Group value={createData.create_targetings}
                                          onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
                                 <h4>Targetings</h4>
@@ -401,16 +415,40 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                         onUpdate={changeDataHandler}
                         onValidate={targetingsValidation}
                     />
-                </div>
-                }
+                </div>}
 
-                {currentStep === 2 && <CreateCampaignOverview createData={createData} overviewType={location}/>}
+                {currentStep === 2 && <div className={'step step-4 targetings-details-step'}>
+                    <div className="row">
+                        <div className="col create-switch">
+                            <Radio.Group value={createData.createNegativeTargetings}
+                                         onChange={({target: {value}}) => changeDataHandler({createNegativeTargetings: value})}>
+                                <h4>Negative Targetings</h4>
+
+                                <Radio value={true}>
+                                    Create Negative Targetings
+                                </Radio>
+
+                                <Radio value={false}>
+                                    Do not create Negative Targetings
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                    </div>
+
+                    <NegativeTargetingsDetails
+                        createData={createData}
+                        onChange={changeDataHandler}
+                        disabled={!createData.createNegativeTargetings}
+                    />
+                </div>}
+
+                {currentStep === 3 && <CreateCampaignOverview createData={createData} overviewType={location}/>}
             </div>
 
             <div className="window-footer">
                 {currentStep === 0 && <button
                     className={`btn white`}
-                    onClick={() => goToNextStepHandler(2)}
+                    onClick={() => goToNextStepHandler(3)}
                     disabled={createProcessing || createData.selectedProductAds.length === 0}
                 >
                     Create Product Ads

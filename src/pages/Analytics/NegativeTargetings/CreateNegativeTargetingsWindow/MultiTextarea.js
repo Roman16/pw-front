@@ -47,7 +47,7 @@ export const MultiTextarea = ({
     }
 
     const removeKeywordHandler = (index) => {
-        if (index) {
+        if (index !== undefined) {
             onChange(keywords.filter((item, itemIndex) => itemIndex !== index))
         } else {
             onChange([])

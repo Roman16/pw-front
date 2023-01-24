@@ -12,27 +12,69 @@ import KeywordsList from "./KeywordsList"
 import TargetsList from "./TargetsList"
 import {notification} from "../../../../components/Notification"
 import _ from "lodash"
+import CreateProcessing from "../../Campaigns/CreateCampaignWindow/CreateProcessing"
+import WindowFooter from "../../Campaigns/CreateCampaignWindow/WindowFooter"
+import CreateCampaignOverview from "../../Campaigns/CreateCampaignWindow/CreateSteps/CreateCampaignOverview"
+import {NegativeTargetingsDetails} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/NegativeTargetingsDetails"
+import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
 const Option = Select.Option
 
 const defaultState = {
-    targets: [],
-    keywords: [],
     advertisingType: undefined,
     campaignId: undefined,
     adGroupId: undefined,
-    calculatedBid: undefined
+    calculatedBid: undefined,
+
+    targets: [],
+    keywords: [],
+
+    createNegativeTargetings: false,
+    negativeTargets: [],
+    negativeCampaignTargets: [],
+
+    negativeKeywords: [],
+    negativeCampaignKeywords: [],
 }
 
-const CreateTargetingsWindow = ({onReloadList}) => {
+const steps = [
+    'Targetings',
+    'Negative Targetings',
+    'Overview',
+]
+
+
+export const mapTargetingsDataRequest = (createData) => createData[`${createData.targetingType}`].map(i => ({
+        advertisingType: createData.advertisingType,
+        campaignId: createData.campaignId,
+        adGroupId: createData.adGroupId,
+        state: 'enabled',
+        entityType: createData.targetingType === 'keywords' ? 'keyword' : 'target',
+        calculatedBid: i.calculatedBid,
+        ...createData.targetingType === 'keywords' ? {
+            calculatedTargetingText: i.keywordText,
+            calculatedTargetingMatchType: i.matchType
+        } : {
+            expressionType: 'manual',
+            expression: [{
+                "type": "asinSameAs",
+                "value": i.text
+            }]
+        }
+    }
+))
+
+const CreateTargetingsWindow = ({onReloadList, location}) => {
     const [createData, setCreateData] = useState({...defaultState}),
         [createProcessing, setCreateProcessing] = useState(false),
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
-        [targetingType, setTargetingType] = useState(),
-        [disabledTargetingType, setDisabledTargetingType] = useState(true)
-
+        [disabledTargetingType, setDisabledTargetingType] = useState(true),
+        [currentStep, setCurrentStep] = useState(0),
+        [skippedSteps, setSkippedSteps] = useState([]),
+        [processSteps, setProcessSteps] = useState([]),
+        [finishedSteps, setFinishedSteps] = useState([])
 
     const dispatch = useDispatch()
 
@@ -44,13 +86,12 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
     }
 
-    const changeCreateDataHandler = (value) => {
-        if (value.targetingType) setTargetingType(value.targetingType)
-        else setCreateData(prevState => ({...prevState, ...value}))
+    const changeDataHandler = (value) => {
+        setCreateData(prevState => ({...prevState, ...value}))
     }
 
     const onCreate = async () => {
-        if (createData[targetingType].some(i => i.calculatedBid > 1000 || i.calculatedBid < 0.02)) {
+        if (createData[createData.targetingType].some(i => i.calculatedBid > 1000 || i.calculatedBid < 0.02)) {
             notification.error({title: 'Targeting bid should be greater than $0.02 and less than $1,000'})
             return
         }
@@ -59,27 +100,14 @@ const CreateTargetingsWindow = ({onReloadList}) => {
 
         try {
             const res = await analyticsServices.bulkCreate('targetings', {
-                    targetings: createData[`${targetingType}`].map(i => ({
-                            advertisingType: createData.advertisingType,
-                            campaignId: createData.campaignId || mainState.campaignId,
-                            adGroupId: createData.adGroupId || mainState.adGroupId,
-                            state: 'enabled',
-                            entityType: targetingType === 'keywords' ? 'keyword' : 'target',
-                            calculatedBid: i.calculatedBid,
-                            ...targetingType === 'keywords' ? {
-                                calculatedTargetingText: i.keywordText,
-                                calculatedTargetingMatchType: i.matchType
-                            } : {
-                                expressionType: 'manual',
-                                expression: [{
-                                    "type": "asinSameAs",
-                                    "value": i.text
-                                }]
-                            }
-                        }
-                    ))
+                    targetings: mapTargetingsDataRequest(createData)
                 }
             )
+
+            if (createData.createNegativeTargetings) {
+                await analyticsServices.bulkCreate('negative-targetings', {negativeTargetings: mapNegativeTargetings(createData)})
+            }
+
             const success = res.result.success,
                 failed = res.result.failed,
                 notApplicable = res.result.notApplicable
@@ -112,10 +140,8 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                         advertisingType: stateDetails.advertisingType,
                         adGroupId: undefined
                     })
-                    setTargetingType(undefined)
                 } else {
                     setCreateData({...defaultState})
-                    setTargetingType(undefined)
                 }
             }
 
@@ -168,8 +194,12 @@ const CreateTargetingsWindow = ({onReloadList}) => {
 
             const type = res.result.adGroupTargetingType
 
-            setTargetingType(type === 'any' ? 'keywords' : type)
-            setDisabledTargetingType(type !== 'any')
+            changeDataHandler({
+                negativeTargetingType: type === 'any' ? 'keywords' : type,
+                disabledNegativeTargetingType: type !== 'any',
+                targetingType: type === 'any' ? 'keywords' : type,
+                disabledTargetingType: type !== 'any'
+            })
         } catch (e) {
             console.log(e)
         }
@@ -221,7 +251,6 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         if (!mainState.campaignId) {
             setCampaigns([])
             setAdGroups([])
-            setTargetingType(undefined)
             setCreateData(prevState => ({
                 ...prevState,
                 advertisingType: value,
@@ -235,10 +264,10 @@ const CreateTargetingsWindow = ({onReloadList}) => {
 
     const changeCampaignHandler = value => {
         setAdGroups([])
-        setTargetingType(undefined)
         setCreateData(prevState => ({
             ...prevState,
             campaignId: value,
+            campaignName: _.find(campaigns, {campaignId: value}).name,
             adGroupId: undefined
         }))
     }
@@ -247,14 +276,47 @@ const CreateTargetingsWindow = ({onReloadList}) => {
         setCreateData(prevState => ({
             ...prevState,
             adGroupId: id,
+            adGroupName: _.find(adGroups, {adGroupId: id}).name,
             adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
         }))
 
         getAdGroupDetails(id)
     }
 
+    const goToSelectStep = (step) => {
+        if (finishedSteps.includes(step) || processSteps.includes(step)) {
+            setProcessSteps(prevState => [...prevState, currentStep])
+            setCurrentStep(step)
+        }
+    }
+
+    const goToNextStepHandler = () => {
+        setFinishedSteps(prevState => [...prevState, currentStep])
+        setCurrentStep(prevState => prevState + 1)
+    }
+
+    const goToPreviousStepHandler = () => {
+        setProcessSteps(prevState => [...prevState, currentStep])
+
+        const checkStep = (step) => {
+            if (skippedSteps.includes(step)) {
+                checkStep(step - 1)
+            } else {
+                setCurrentStep(step)
+            }
+        }
+
+        checkStep(currentStep - 1)
+    }
+
+    const nextStepValidation = () => {
+        if (currentStep === 0 && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 1 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
+        else return false
+    }
+
     return (<ModalWindow
-            className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
+            className={'create-campaign-window create-targetings-window'}
             visible={visibleWindow}
             footer={false}
             destroyOnClose={true}
@@ -265,103 +327,144 @@ const CreateTargetingsWindow = ({onReloadList}) => {
                 onClose={closeWindowHandler}
             />
 
+            <CreateProcessing
+                steps={steps}
+                step={currentStep}
+                skippedSteps={skippedSteps}
+                finishedSteps={finishedSteps}
+                processSteps={processSteps}
+                setStep={goToSelectStep}
+            />
+
             <div className="create-steps">
-                {!mainState.adGroupId && <>
-                    {!mainState.campaignId && <>
-                        <div className={`row`}>
-                            <div className="col">
-                                <div className="form-group">
-                                    <label htmlFor="">Advertising Type</label>
-                                    <CustomSelect
-                                        placeholder={'Select type'}
-                                        getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={changeAdvertisingTypeHandler}
-                                        value={createData.advertisingType}
-                                    >
-                                        <Option value={'SponsoredProducts'}>
-                                            Sponsored Products
-                                        </Option>
-                                        <Option value={'SponsoredDisplay'}>
-                                            Sponsored Display
-                                        </Option>
-                                    </CustomSelect>
+                {currentStep === 0 && <>
+                    <div className="step step-0">
+                        {!mainState.adGroupId && <>
+                            {!mainState.campaignId && <>
+                                <div className={`row`}>
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label htmlFor="">Advertising Type</label>
+                                            <CustomSelect
+                                                placeholder={'Select type'}
+                                                getPopupContainer={trigger => trigger.parentNode}
+                                                onChange={changeAdvertisingTypeHandler}
+                                                value={createData.advertisingType}
+                                            >
+                                                <Option value={'SponsoredProducts'}>
+                                                    Sponsored Products
+                                                </Option>
+                                                <Option value={'SponsoredDisplay'}>
+                                                    Sponsored Display
+                                                </Option>
+                                            </CustomSelect>
+                                        </div>
+
+                                    </div>
+
+                                    <div className="col description">
+
+                                    </div>
                                 </div>
 
+                                <div className={`row`}>
+                                    <div className="col">
+                                        <InfinitySelect
+                                            label={'Campaign'}
+                                            placeholder={'Select campaign'}
+                                            value={createData.campaignId}
+                                            onChange={changeCampaignHandler}
+                                            disabled={!createData.advertisingType}
+                                            children={campaigns}
+                                            onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
+                                            reloadPage={createData.advertisingType}
+                                            dataKey={'campaignId'}
+                                            notFoundContent={'No campaigns'}
+                                        />
+                                    </div>
+
+                                    <div className="col description">
+
+                                    </div>
+                                </div>
+                            </>}
+
+                            <div className={`row`}>
+                                <div className="col">
+                                    <InfinitySelect
+                                        label={'Ad Group'}
+                                        placeholder={'Select ad group'}
+                                        value={createData.adGroupId}
+                                        onChange={changeAdGroupHandler}
+                                        disabled={!createData.campaignId}
+                                        reloadPage={createData.campaignId}
+                                        children={adGroups}
+                                        onLoadMore={(page, cb, searchStr) => getAdGroups(createData.campaignId, page, cb, searchStr)}
+                                        dataKey={'adGroupId'}
+                                        notFoundContent={'No ad groups'}
+                                    />
+                                </div>
+
+                                <div className="col description">
+
+                                </div>
                             </div>
-
-                            <div className="col description">
-
-                            </div>
-                        </div>
-
-                        <div className={`row`}>
-                            <div className="col">
-                                <InfinitySelect
-                                    label={'Campaign'}
-                                    placeholder={'Select campaign'}
-                                    value={createData.campaignId}
-                                    onChange={changeCampaignHandler}
-                                    disabled={!createData.advertisingType}
-                                    children={campaigns}
-                                    onLoadMore={(page, cb, searchStr) => getCampaigns(createData.advertisingType, page, cb, searchStr)}
-                                    reloadPage={createData.advertisingType}
-                                    dataKey={'campaignId'}
-                                    notFoundContent={'No campaigns'}
-                                />
-                            </div>
-
-                            <div className="col description">
-
-                            </div>
-                        </div>
-                    </>}
-
-                    <div className={`row`}>
-                        <div className="col">
-                            <InfinitySelect
-                                label={'Ad Group'}
-                                placeholder={'Select ad group'}
-                                value={createData.adGroupId}
-                                onChange={changeAdGroupHandler}
-                                disabled={!createData.campaignId}
-                                reloadPage={createData.campaignId}
-                                children={adGroups}
-                                onLoadMore={(page, cb, searchStr) => getAdGroups(createData.campaignId, page, cb, searchStr)}
-                                dataKey={'adGroupId'}
-                                notFoundContent={'No ad groups'}
-                            />
-                        </div>
-
-                        <div className="col description">
-
-                        </div>
+                        </>}
                     </div>
+
+                    {fetchAdGroupDetailsProcessing ? <div className="targeting-type-loading">
+                        Loading ad group information
+                        <Spin/>
+                    </div> : createData.targetingType ?
+                        <RenderTargetingsDetails
+                            createData={createData}
+                            targetingType={createData.targetingType}
+                            disabledTargetingType={disabledTargetingType}
+                            onUpdate={changeDataHandler}
+                            onValidate={targetingsValidation}
+                        />
+                        : ''}
                 </>}
 
-                {fetchAdGroupDetailsProcessing ? <div className="targeting-type-loading">
-                    Loading ad group information
-                    <Spin/>
-                </div> : targetingType ?
-                    <RenderTargetingsDetails
+                {currentStep === 1 && <div className={'step step-4 targetings-details-step'}>
+                    <div className="row">
+                        <div className="col create-switch">
+                            <Radio.Group value={createData.createNegativeTargetings}
+                                         onChange={({target: {value}}) => changeDataHandler({createNegativeTargetings: value})}>
+                                <h4>Negative Targetings</h4>
+
+                                <Radio value={true}>
+                                    Create Negative Targetings
+                                </Radio>
+
+                                <Radio value={false}>
+                                    Do not create Negative Targetings
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                    </div>
+
+                    <NegativeTargetingsDetails
                         createData={createData}
-                        targetingType={targetingType}
-                        disabledTargetingType={disabledTargetingType}
-                        onUpdate={changeCreateDataHandler}
-                        onValidate={targetingsValidation}
+                        onChange={changeDataHandler}
+                        disabled={!createData.createNegativeTargetings}
                     />
-                    : ''}
+                </div>}
+
+                {currentStep === 2 &&
+                <CreateCampaignOverview createData={createData} overviewType={location}/>}
             </div>
 
-            <div className="window-footer">
-                <button
-                    className="btn default"
-                    onClick={onCreate}
-                    disabled={!targetingType || (targetingType && createData[targetingType].length === 0) || createProcessing}
-                >
-                    Create Targetings
-                    {createProcessing && <Spin size={'small'}/>}
-                </button>
-            </div>
+            <WindowFooter
+                processing={createProcessing}
+                steps={steps}
+                currentStep={currentStep}
+                goNext={goToNextStepHandler}
+                goPrevious={goToPreviousStepHandler}
+                onCreate={onCreate}
+                disableNextStep={nextStepValidation()}
+                createButtonTitle={'Create Targetings'}
+            />
         </ModalWindow>
     )
 }
@@ -458,6 +561,7 @@ export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, on
                 <Radio.Group
                     value={targetingType}
                     disabled={disabledTargetingType || disabled}
+                    className={'targeting-type-radio'}
                     onChange={({target: {value}}) => onUpdate({targetingType: value})}
                 >
                     <h4>Targeting type</h4>
@@ -472,7 +576,7 @@ export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, on
                     <div className="radio-description">
                         Choose keywords to help your products appear in shopper searches.
                     </div>
-
+                    <br/>
                     <Radio value={'targets'}>
                         Product Targeting
                     </Radio>

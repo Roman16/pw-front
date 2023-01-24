@@ -2,20 +2,20 @@ import React from "react"
 import {Radio} from "antd"
 import {MultiTextarea} from "./MultiTextarea"
 
-export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
-
-    return (<div className={'targetings-details-step'}>
+export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
+    <div className={'targetings-details-step'}>
         <div className={`row `}>
             <div className="col">
                 <Radio.Group
-                    value={createData.targetingType}
-                    disabled={createData.disabledTargetingType}
-                    onChange={({target: {value}}) => onChange({targetingType: value})}
+                    value={createData.negativeTargetingType}
+                    disabled={createData.disabledNegativeTargetingType || disabled}
+                    className={'targeting-type-radio'}
+                    onChange={({target: {value}}) => onChange({negativeTargetingType: value})}
                 >
                     <h4>Targeting type</h4>
                     <p className={'block-description'}>
                         Can't be changed since ad group already
-                        has {createData.targetingType === 'keywords' ? 'keyword' : 'product'} targetings
+                        has {createData.negativeTargetingType === 'keywords' ? 'keyword' : 'product'} targetings
                     </p>
 
                     <Radio value={'keywords'}>
@@ -24,7 +24,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
                     <div className="radio-description">
                         Choose keywords to help your products appear in shopper searches.
                     </div>
-
+                    <br/>
                     <Radio value={'targets'}>
                         Product Targeting
                     </Radio>
@@ -40,7 +40,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
             </div>
         </div>
 
-        {createData.targetingType === 'keywords' ? <>
+        {createData.negativeTargetingType === 'keywords' ? <>
             <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
                 <div className="bid-block">
                     <h3>Negative Keywords</h3>
@@ -48,16 +48,14 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
 
                 <MultiTextarea
                     keywords={createData.negativeKeywords}
-                    keywordTypeEnums={[{
-                        key: 'broad',
-                        name: 'Broad'
-                    },
+                    disabled={disabled}
+                    keywordTypeEnums={[
                         {
-                            key: 'phrase',
+                            key: 'negativePhrase',
                             name: 'Phrase'
                         },
                         {
-                            key: 'exact',
+                            key: 'negativeExact',
                             name: 'Exact'
                         }
                     ]}
@@ -72,16 +70,14 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
 
                 <MultiTextarea
                     keywords={createData.negativeCampaignKeywords}
-                    keywordTypeEnums={[{
-                        key: 'broad',
-                        name: 'Broad'
-                    },
+                    disabled={disabled}
+                    keywordTypeEnums={[
                         {
-                            key: 'phrase',
+                            key: 'negativePhrase',
                             name: 'Phrase'
                         },
                         {
-                            key: 'exact',
+                            key: 'negativeExact',
                             name: 'Exact'
                         }
                     ]}
@@ -96,6 +92,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
 
                 <MultiTextarea
                     keywords={createData.negativeTargets}
+                    disabled={disabled}
                     keywordTypeEnums={[{
                         key: 'asins',
                         name: 'ASINs'
@@ -116,6 +113,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
 
                 <MultiTextarea
                     keywords={createData.negativeCampaignTargets}
+                    disabled={disabled}
                     keywordTypeEnums={[{
                         key: 'asins',
                         name: 'ASINs'
@@ -129,5 +127,4 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) => {
                 />
             </div>
         </>}
-    </div>)
-}
+    </div>

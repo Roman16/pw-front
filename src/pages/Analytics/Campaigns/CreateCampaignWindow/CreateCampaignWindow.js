@@ -71,6 +71,7 @@ const steps = [
     'Ad Group',
     'Product Ads',
     'Targetings',
+    'Negative Targetings',
     'Overview',
 ]
 

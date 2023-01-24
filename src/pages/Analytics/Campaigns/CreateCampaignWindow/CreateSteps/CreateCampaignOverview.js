@@ -22,31 +22,32 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
         TTargetingTypeEnum = {
             'keyword': 'Keyword Targeting',
             'product': 'Product Targeting',
+        },
+        advertisingTypeEnum = {
+            'SponsoredProducts': 'Sponsored Products',
+            'SponsoredDisplay': 'Sponsored Display',
+            'SponsoredBrands': 'Sponsored Brands',
         }
 
-    const keywordTargetingField = {
-            title: 'Keyword Targeting',
-            fieldKey: 'keywords',
+    const targetingField = (key = '', title = '') => ({
+            title: title,
+            fieldKey: key,
             render: value => value.length > 0 ? value.length === 1 ? `${value.length} keyword` : `${value.length} keywords` : '-'
-        },
-        productTargetingField = {
-            title: 'Product Targeting',
-            fieldKey: 'targets',
-            render: value => value.length > 0 ? value.length === 1 ? `${value.length} keyword` : `${value.length} keywords` : '-'
-        },
+        }),
         productAdsField = {
             title: 'Product Ads',
             fieldKey: 'selectedProductAds',
             render: () => <div className={'overflow-text'}>SKU: {createData.selectedProductAds[0].sku}</div>
+        },
+        advertisingTypeField = {
+            title: 'Campaign Type',
+            fieldKey: 'advertisingType',
+            render: type => advertisingTypeEnum[type]
         }
 
     let fields = {
         'campaigns': [
-            {
-                title: 'Campaign Type',
-                fieldKey: 'advertisingType',
-                render: (value) => value === 'SponsoredProducts' ? 'Sponsored Products' : 'Sponsored Display'
-            },
+            advertisingTypeField,
             {
                 title: 'Campaign Name',
                 fieldKey: 'name'
@@ -94,11 +95,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             productAdsField,
         ],
         'product-ads': [
-            {
-                title: 'Campaign Type',
-                fieldKey: 'advertisingType',
-                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
-            },
+            advertisingTypeField,
             {
                 title: 'Campaign Name',
                 fieldKey: 'campaignName'
@@ -108,15 +105,10 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupName'
             },
             productAdsField,
-            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? keywordTargetingField :
-                productTargetingField] : []
+            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}
         ],
         'adGroups': [
-            {
-                title: 'Campaign Type',
-                fieldKey: 'advertisingType',
-                render: (value) => value === 'SponsoredProducts' && 'Sponsored Products'
-            },
+            advertisingTypeField,
             {
                 title: 'Campaign Name',
                 fieldKey: 'campaignName'
@@ -131,8 +123,21 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 render: value => currencyWithCode(numberMask(value, 2))
             },
             ...createData.create_product_ads ? [productAdsField] : [],
-            ...createData.create_targetings ? [createData.targetingType === 'keywords' ? keywordTargetingField :
-                productTargetingField] : []
+            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}
+
+        ],
+        'targetings': [
+            advertisingTypeField,
+            {
+                title: 'Campaign Name',
+                fieldKey: 'campaignName'
+            },
+            {
+                title: 'Ad Group Name',
+                fieldKey: 'adGroupName'
+            },
+            targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings'),
+            ...createData.createNegativeTargetings && [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')]
         ]
     }
     // adGroupName: {

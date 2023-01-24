@@ -43,7 +43,7 @@ const Targetings = () => {
                 showRowSelection={true}
                 rowKey={'targetingId'}
             >
-                {successCreate => <CreateTargetingsWindow onReloadList={successCreate}/>}
+                {successCreate => <CreateTargetingsWindow onReloadList={successCreate} location={location}/>}
             </RenderPageParts>
 
         </div>

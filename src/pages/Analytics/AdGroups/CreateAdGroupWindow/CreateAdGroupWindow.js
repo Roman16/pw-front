@@ -12,7 +12,16 @@ import {analyticsServices} from "../../../../services/analytics.services"
 import {notification} from "../../../../components/Notification"
 import {Radio} from "antd"
 import {RenderTargetingsDetails} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {NegativeTargetingsDetails} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/NegativeTargetingsDetails"
+import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
+const steps = [
+    'Ad Group',
+    'Product Ads',
+    'Targetings',
+    'Negative Targetings',
+    'Overview',
+]
 
 const CreateAdGroupWindow = () => {
     const [createData, setCreateData] = useState({
@@ -51,13 +60,6 @@ const CreateAdGroupWindow = () => {
         [finishedSteps, setFinishedSteps] = useState([]),
         [campaigns, setCampaigns] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false)
-
-    const steps = [
-        'Ad Group',
-        'Product Ads',
-        'Targetings',
-        'Overview',
-    ]
 
 
     const dispatch = useDispatch()
@@ -100,7 +102,7 @@ const CreateAdGroupWindow = () => {
         checkStep(currentStep - 1)
     }
 
-    const changeCreateDataHandler = (value) => {
+    const changeDataHandler = (value) => {
         resetFinishedSteps()
 
         setCreateData(prevState => ({...prevState, ...value}))
@@ -154,6 +156,15 @@ const CreateAdGroupWindow = () => {
                 })
             }
 
+            if (createData.createNegativeTargetings) {
+                await analyticsServices.bulkCreate('negative-targetings', {
+                    negativeTargetings: mapNegativeTargetings({
+                        ...createData,
+                        adGroupId: result.entities[0].adGroupId
+                    })
+                })
+            }
+
             closeWindowHandler()
             notification.success({title: 'Ad Group created'})
         } catch (e) {
@@ -172,7 +183,6 @@ const CreateAdGroupWindow = () => {
             console.log(e)
         }
     }
-
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         if (createData.advertisingType) {
@@ -198,6 +208,7 @@ const CreateAdGroupWindow = () => {
         if (currentStep === 0 && (!createData.name || createData.adGroupBid === 0)) return true
         else if (currentStep === 1 && createData.create_product_ads && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 2 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 3 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
         else return false
     }
 
@@ -238,20 +249,20 @@ const CreateAdGroupWindow = () => {
                     campaigns={campaigns}
 
                     getCampaigns={getCampaigns}
-                    onChange={changeCreateDataHandler}
+                    onChange={changeDataHandler}
                 />}
 
                 {currentStep === 1 &&
                 <ProductAdsDetails
                     createData={createData}
-                    onChange={changeCreateDataHandler}
+                    onChange={changeDataHandler}
                 />}
 
                 {currentStep === 2 && <div className={'step step-4 targetings-details-step'}>
                     <div className="row">
                         <div className="col">
                             <Radio.Group value={createData.create_targetings}
-                                         onChange={({target: {value}}) => changeCreateDataHandler({create_targetings: value})}>
+                                         onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
                                 <h4>Targetings</h4>
 
                                 <Radio value={true}>
@@ -270,12 +281,37 @@ const CreateAdGroupWindow = () => {
                         targetingType={createData.targetingType}
                         disabledTargetingType={createData.disabledTargetingType}
                         disabled={!createData.create_targetings}
-                        onUpdate={changeCreateDataHandler}
+                        onUpdate={changeDataHandler}
                         onValidate={targetingsValidation}
                     />
                 </div>}
 
-                {currentStep === 3 &&
+                {currentStep === 3 && <div className={'step step-4 targetings-details-step'}>
+                    <div className="row">
+                        <div className="col create-switch">
+                            <Radio.Group value={createData.createNegativeTargetings}
+                                         onChange={({target: {value}}) => changeDataHandler({createNegativeTargetings: value})}>
+                                <h4>Negative Targetings</h4>
+
+                                <Radio value={true}>
+                                    Create Negative Targetings
+                                </Radio>
+
+                                <Radio value={false}>
+                                    Do not create Negative Targetings
+                                </Radio>
+                            </Radio.Group>
+                        </div>
+                    </div>
+
+                    <NegativeTargetingsDetails
+                        createData={createData}
+                        onChange={changeDataHandler}
+                        disabled={!createData.createNegativeTargetings}
+                    />
+                </div>}
+
+                {currentStep === 4 &&
                 <CreateCampaignOverview
                     createData={createData}
                     overviewType={'adGroups'}

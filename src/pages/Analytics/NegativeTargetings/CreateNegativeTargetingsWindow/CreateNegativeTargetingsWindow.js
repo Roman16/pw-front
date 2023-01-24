@@ -10,15 +10,63 @@ import '../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow.less'
 import {analyticsServices} from "../../../../services/analytics.services"
 import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {NegativeTargetingsDetails} from "./NegativeTargetingsDetails"
+import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-const CreateNegativeTargetingsWindow = ({location}) => {
+export const mapNegativeTargetings = (createData) => (createData.negativeTargetingType === 'keywords' ?
+        [
+            ...createData.negativeKeywords.map(i => ({
+                campaignId: createData.campaignId,
+                adGroupId: createData.adGroupId,
+                state: 'enabled',
+                advertisingType: createData.advertisingType,
+
+                entityType: 'negativeKeyword',
+                calculatedTargetingText: i.keywordText,
+                calculatedTargetingMatchType: i.matchType,
+            })),
+            ...createData.negativeCampaignKeywords.map(i => ({
+                campaignId: createData.campaignId,
+                state: 'enabled',
+                advertisingType: createData.advertisingType,
+
+                entityType: 'campaignNegativeKeyword',
+                calculatedTargetingText: i.keywordText,
+                calculatedTargetingMatchType: i.matchType,
+
+                ...createData.advertisingType !== 'SponsoredProducts' && {
+                    adGroupId: createData.adGroupId
+                }
+            }))
+        ] :
+        [
+            ...createData.negativeTargets.map(i => ({
+                campaignId: createData.campaignId,
+                adGroupId: createData.adGroupId,
+                state: 'enabled',
+                advertisingType: createData.advertisingType,
+                calculatedTargetingText: i.keywordText,
+                calculatedTargetingMatchType: i.matchType
+            })),
+            ...createData.negativeCampaignTargets.map(i => ({
+                campaignId: createData.campaignId,
+                adGroupId: createData.adGroupId,
+                state: 'enabled',
+                advertisingType: createData.advertisingType,
+                calculatedTargetingText: i.keywordText,
+                calculatedTargetingMatchType: i.matchType
+            }))
+        ]
+)
+
+const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
     const [createData, setCreateData] = useState({
             campaignId: undefined,
             adGroupId: undefined,
             advertisingType: undefined,
-            targetingType: '',
+
+            negativeTargetingType: '',
             disabledTargetingType: true,
             negativeTargets: [],
             negativeCampaignTargets: [],
@@ -33,12 +81,12 @@ const CreateNegativeTargetingsWindow = ({location}) => {
 
     const dispatch = useDispatch()
 
-    const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.negativeTargetings),
+    const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows[location]),
         mainState = useSelector(state => state.analytics.mainState),
         stateDetails = useSelector(state => state.analytics.stateDetails)
 
     const closeWindowHandler = () => {
-        dispatch(analyticsActions.setVisibleCreateWindow({negativeTargetings: false}))
+        dispatch(analyticsActions.setVisibleCreateWindow({[`${location}`]: false}))
     }
 
     const changeCreateDataHandler = (value) => {
@@ -54,7 +102,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
             const type = res.result.adGroupTargetingType
 
             changeCreateDataHandler({
-                targetingType: type === 'any' ? 'keywords' : type,
+                negativeTargetingType: type === 'any' ? 'keywords' : type,
                 disabledTargetingType: type !== 'any'
             })
         } catch (e) {
@@ -69,11 +117,20 @@ const CreateNegativeTargetingsWindow = ({location}) => {
         setCreateProcessing(true)
 
         try {
-            await analyticsServices.exactCreate(location, {
-                campaignId: createData.campaignId,
-                adGroupId: createData.adGroupId,
-                negative_keywords: createData.negative_keywords.map(i => i.text)
-            })
+            const res = await analyticsServices.bulkCreate(location, {negativeTargetings: mapNegativeTargetings(createData)})
+
+            const success = res.result.success,
+                failed = res.result.failed,
+                notApplicable = res.result.notApplicable
+
+            if (failed > 0 || notApplicable > 0) {
+                notification.error({title: `${failed + notApplicable} ${failed + notApplicable === 1 ? 'entity' : 'entities'} failed to create`})
+            }
+
+            if (success > 0) {
+                notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
+                onReloadList()
+            }
         } catch (e) {
             console.log(e)
         }
@@ -162,8 +219,13 @@ const CreateNegativeTargetingsWindow = ({location}) => {
         getAdGroups()
     }, [createData.campaignId])
 
+    const nextStepValidation = () => {
+        if (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0)) return true
+        else return false
+    }
+
     return (<ModalWindow
-            className={'create-campaign-window create-portfolio-window create-campaign-window create-targetings-window exact-create-window'}
+            className={'create-campaign-window  create-targetings-window create-negative-targetings-window'}
             visible={visibleWindow}
             footer={false}
             handleCancel={closeWindowHandler}
@@ -174,7 +236,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
             />
 
             <div className="create-steps">
-                {!mainState.adGroupId && <>
+                {!mainState.adGroupId && <div className={'step step-0'}>
                     {!mainState.campaignId && <>
                         <div className={`row`}>
                             <div className="col">
@@ -243,12 +305,12 @@ const CreateNegativeTargetingsWindow = ({location}) => {
 
                         <div className="col description"/>
                     </div>
-                </>}
+                </div>}
 
                 {fetchAdGroupDetailsProcessing ? <div className="targeting-type-loading">
                     Loading ad group information
                     <Spin/>
-                </div> : createData.targetingType ?
+                </div> : createData.negativeTargetingType ?
                     <NegativeTargetingsDetails
                         createData={createData}
                         widthBid={false}
@@ -261,7 +323,7 @@ const CreateNegativeTargetingsWindow = ({location}) => {
                 <button
                     className="btn default"
                     onClick={onCreate}
-                    disabled={createProcessing}
+                    disabled={createProcessing || nextStepValidation()}
                 >
                     Create Negative Targetings
 
