@@ -49,7 +49,7 @@ function fetchProducts({page, pageSize = 10, searchText, onlyOptimization, start
         advertisingType ? `&advertising_type=${advertisingType}` : '',
     ]
 
-    return api('get', `${dashboardUrls.products}?size=${pageSize}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&is_active=${onlyActive ? 1 : 0}&search_query=${searchText}${parameters.join('')}`, false, false, cancelToken)
+    return api('get', `${dashboardUrls.products}?size=${pageSize}&page=${page}&only_under_optimization=${onlyOptimization ? 1 : 0}&is_active=${onlyActive ? 1 : 0}&search[]=${searchText}${parameters.join('')}`, false, false, cancelToken)
 }
 
 function fetchBarChartData({startDate, endDate, selectedProduct, advertisingType}) {

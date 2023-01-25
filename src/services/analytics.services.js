@@ -64,7 +64,7 @@ export const filtersHandler = (f) => {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
-            parameters.push(`&${filterBy}:contains=${encodeString(value)}`)
+            parameters.push(`&${filterBy}:like[]=${encodeString(value)}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'budget_allocation' ||

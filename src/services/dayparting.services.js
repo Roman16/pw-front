@@ -66,7 +66,7 @@ function deactivateMultiDayparting(data) {
 
 function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting}) {
     const parameters = [
-        searchStr ? `&search=${encodeString(searchStr)}` : '',
+        searchStr ? `&search[]=${encodeString(searchStr)}` : '',
     ]
 
     return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${parameters.join('')}`, null, null, cancelToken)
@@ -74,7 +74,7 @@ function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDa
 
 function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
     const parameters = [
-        searchStr ? `&search=${encodeString(searchStr)}` : '',
+        searchStr ? `&search[]=${encodeString(searchStr)}` : '',
     ]
 
     return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${parameters.join('')}`, null, null, cancelToken)
