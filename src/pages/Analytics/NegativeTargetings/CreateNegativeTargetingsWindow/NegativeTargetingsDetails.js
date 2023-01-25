@@ -40,7 +40,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
             </div>
         </div>
 
-        {createData.negativeTargetingType === 'keywords' ? <>
+        {createData.negativeTargetingType === 'keywords' ?
             <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
                 <div className="bid-block">
                     <h3>Negative Keywords</h3>
@@ -62,29 +62,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                     onChange={(arr) => onChange({negativeKeywords: arr})}
                 />
             </div>
-            <br/>
-            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
-                <div className="bid-block">
-                    <h3>Negative Campaign Keywords</h3>
-                </div>
-
-                <MultiTextarea
-                    keywords={createData.negativeCampaignKeywords}
-                    disabled={disabled}
-                    keywordTypeEnums={[
-                        {
-                            key: 'negativePhrase',
-                            name: 'Phrase'
-                        },
-                        {
-                            key: 'negativeExact',
-                            name: 'Exact'
-                        }
-                    ]}
-                    onChange={(arr) => onChange({negativeCampaignKeywords: arr})}
-                />
-            </div>
-        </> : <>
+            :
             <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
                 <div className="bid-block">
                     <h3>Negative Targetings</h3>
@@ -95,7 +73,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                     disabled={disabled}
                     disabledKeywordType={true}
                     keywordTypeEnums={[{
-                        key: 'asins',
+                        key: 'asinSameAs',
                         name: 'ASINs'
                     },
                         {
@@ -105,28 +83,30 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                     ]}
                     onChange={(arr) => onChange({negativeTargets: arr})}
                 />
-            </div>
-            <br/>
-            <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
-                <div className="bid-block">
-                    <h3>Negative Campaign Targetings</h3>
-                </div>
+            </div>}
 
-                <MultiTextarea
-                    keywords={createData.negativeCampaignTargets}
-                    disabled={disabled}
-                    disabledKeywordType={true}
-                    keywordTypeEnums={[{
-                        key: 'asins',
-                        name: 'ASINs'
-                    },
-                        {
-                            key: 'categories',
-                            name: 'Categories'
-                        },
-                    ]}
-                    onChange={(arr) => onChange({negativeCampaignTargets: arr})}
-                />
+        <br/>
+
+        {createData.advertisingType === 'SponsoredProducts' &&
+        <div className={`negative-keywords keyword-targetings ${disabled ? 'disabled' : ''}`}>
+            <div className="bid-block">
+                <h3>Negative Campaign Keywords</h3>
             </div>
-        </>}
+
+            <MultiTextarea
+                keywords={createData.negativeCampaignKeywords}
+                disabled={disabled}
+                keywordTypeEnums={[
+                    {
+                        key: 'negativePhrase',
+                        name: 'Phrase'
+                    },
+                    {
+                        key: 'negativeExact',
+                        name: 'Exact'
+                    }
+                ]}
+                onChange={(arr) => onChange({negativeCampaignKeywords: arr})}
+            />
+        </div>}
     </div>

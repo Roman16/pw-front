@@ -3,6 +3,7 @@ import {Popconfirm, Radio} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {uniqueArrOfObj} from "../../../../utils/unique"
 import _ from "lodash"
+import {usePrevious} from "../../../../utils/hooks/usePrevious"
 
 export const MultiTextarea = ({
                                   keywords,
@@ -12,7 +13,8 @@ export const MultiTextarea = ({
                                   disabledKeywordType = false
                               }) => {
     const [newKeyword, setNewKeyword] = useState(''),
-        [keywordType, setKeywordType] = useState(keywordTypeEnums[0].key)
+        [keywordType, setKeywordType] = useState(keywordTypeEnums[0].key),
+        prevTypeEnums = usePrevious(keywordTypeEnums)
 
     const addKeywordsHandler = (e) => {
         e.preventDefault()
@@ -56,7 +58,9 @@ export const MultiTextarea = ({
     }
 
     useEffect(() => {
-        setKeywordType(keywordTypeEnums[0].key)
+        if (JSON.stringify(prevTypeEnums) !== JSON.stringify(keywordTypeEnums)) {
+            setKeywordType(keywordTypeEnums[0].key)
+        }
     }, [keywordTypeEnums])
 
     return (<div className="row">

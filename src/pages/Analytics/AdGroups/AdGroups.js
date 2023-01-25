@@ -40,9 +40,9 @@ const AdGroups = () => {
 
                 columns={columnList(setStateHandler, selectedCampaign, setStateDetails)}
                 moreActions={<OpenCreateWindowButton title={'Add Ad Group'} window={'adGroup'}/>}
-            />
-
-            <CreateAdGroupWindow/>
+            >
+                {successCreate => <CreateAdGroupWindow onReloadList={successCreate} location={location}/>}
+            </RenderPageParts>
         </div>
     )
 }

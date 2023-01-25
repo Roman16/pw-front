@@ -26,7 +26,7 @@ const steps = [
     'Overview',
 ]
 
-const CreateAdGroupWindow = () => {
+const CreateAdGroupWindow = ({onReloadList}) => {
     const [createData, setCreateData] = useState({
             advertisingType: undefined,
             campaignId: undefined,
@@ -34,10 +34,10 @@ const CreateAdGroupWindow = () => {
             adGroupBid: 0,
             state: 'enabled',
             //product ads
-            create_product_ads: false,
+            createProductAds: false,
             selectedProductAds: [],
             //targetings
-            create_targetings: false,
+            createTargetings: false,
             targetingType: 'keywords',
             keywords: [],
             targets: [],
@@ -116,7 +116,7 @@ const CreateAdGroupWindow = () => {
                 state: createData.state,
             })
 
-            if (createData.create_product_ads) {
+            if (createData.createProductAds) {
                 await analyticsServices.exactCreate('product-ads', {
                     campaignId: createData.campaignId,
                     adGroupId: result.entities[0].adGroupId,
@@ -126,7 +126,7 @@ const CreateAdGroupWindow = () => {
                 })
             }
 
-            if (createData.create_targetings) {
+            if (createData.createTargetings) {
                 await analyticsServices.bulkCreate('targetings', {
                     targetings: mapTargetingsDataRequest(createData)
                 })
@@ -141,6 +141,7 @@ const CreateAdGroupWindow = () => {
                 })
             }
 
+            onReloadList()
             closeWindowHandler()
             notification.success({title: 'Ad Group created'})
         } catch (e) {
@@ -148,16 +149,6 @@ const CreateAdGroupWindow = () => {
         }
 
         setCreateProcessing(false)
-    }
-
-    const targetingsValidation = async (data) => {
-        try {
-            const res = analyticsServices.targetingsValidation(data)
-
-            return res
-        } catch (e) {
-            console.log(e)
-        }
     }
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
@@ -182,8 +173,8 @@ const CreateAdGroupWindow = () => {
 
     const nextStepValidation = () => {
         if (currentStep === 0 && (!createData.name || createData.adGroupBid === 0)) return true
-        else if (currentStep === 1 && createData.create_product_ads && createData.selectedProductAds.length === 0) return true
-        else if (currentStep === 2 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 1 && createData.createProductAds && createData.selectedProductAds.length === 0) return true
+        else if (currentStep === 2 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
         else if (currentStep === 3 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
         else return false
     }
@@ -237,8 +228,8 @@ const CreateAdGroupWindow = () => {
                 {currentStep === 2 && <div className={'step step-4 targetings-details-step'}>
                     <div className="row">
                         <div className="col create-switch">
-                            <Radio.Group value={createData.create_targetings}
-                                         onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
+                            <Radio.Group value={createData.createTargetings}
+                                         onChange={({target: {value}}) => changeDataHandler({createTargetings: value})}>
                                 <h4>Targetings</h4>
 
                                 <Radio value={true}>
@@ -256,9 +247,8 @@ const CreateAdGroupWindow = () => {
                         createData={createData}
                         targetingType={createData.targetingType}
                         disabledTargetingType={createData.disabledTargetingType}
-                        disabled={!createData.create_targetings}
+                        disabled={!createData.createTargetings}
                         onUpdate={changeDataHandler}
-                        onValidate={targetingsValidation}
                     />
                 </div>}
 

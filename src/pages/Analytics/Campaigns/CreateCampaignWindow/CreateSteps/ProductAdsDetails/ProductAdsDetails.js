@@ -8,8 +8,8 @@ import SelectedProduct from "./SelectedProduct"
 const ProductAdsDetails = ({onChange, createData}) => {
     return (<div className={'step step-3 product-ads-details-step'}>
         <Radio.Group
-            value={createData.create_product_ads}
-            onChange={({target: {value}}) => onChange({create_product_ads: value})}
+            value={createData.createProductAds}
+            onChange={({target: {value}}) => onChange({createProductAds: value})}
         >
             <h4>Product Ads</h4>
 
@@ -22,20 +22,18 @@ const ProductAdsDetails = ({onChange, createData}) => {
             </Radio>
         </Radio.Group>
 
+        <h3 className={!createData.createProductAds ? `disabled` : ''}>Products</h3>
 
-        <h3 className={!createData.create_product_ads ? `disabled` : ''}>Products</h3>
-
-        <div className={`row ${!createData.create_product_ads ? 'disabled' : ''}`}>
+        <div className={`row ${!createData.createProductAds ? 'disabled' : ''}`}>
             <AllProducts
                 createData={createData}
-                disabledBlock={!createData.create_product_ads}
+                disabledBlock={!createData.createProductAds}
 
                 onChange={onChange}
             />
 
             <SelectedProduct
                 selectedProducts={createData.selectedProductAds}
-
                 onChange={onChange}
             />
         </div>

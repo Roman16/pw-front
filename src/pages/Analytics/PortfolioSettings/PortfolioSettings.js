@@ -18,7 +18,6 @@ let dataFromResponse = {
     budget_policy: '',
 }
 
-
 const PortfolioSettings = () => {
     const mainState = useSelector(state => state.analytics.mainState),
         currencyCode = useSelector(state => state.user.activeAmazonMarketplace.currency_code || 'USD')
@@ -193,7 +192,7 @@ const PortfolioSettings = () => {
                     <div className="label">
                         Budget Cap
 
-                        <InformationTooltip type={'warning'}/>
+                        <DisabledTooltip/>
                     </div>
 
                     <div className="value budget-cap">
@@ -222,7 +221,7 @@ const PortfolioSettings = () => {
                     <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Monthly Budget Cap
-                            <InformationTooltip type={'warning'}/>
+                            <DisabledTooltip/>
                         </div>
 
                         <div className="value monthly-budget-cap">
@@ -241,7 +240,7 @@ const PortfolioSettings = () => {
                     <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Ends
-                            <InformationTooltip type={'warning'}/>
+                            <DisabledTooltip/>
                         </div>
 
                         <div className="value ends">
@@ -275,7 +274,7 @@ const PortfolioSettings = () => {
                     <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Date Range Budget Cap
-                            <InformationTooltip type={'warning'}/>
+                            <DisabledTooltip/>
                         </div>
 
                         <div className="value monthly-budget-cap">
@@ -294,7 +293,7 @@ const PortfolioSettings = () => {
                     <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Budget Start
-                            <InformationTooltip type={'warning'}/>
+                            <DisabledTooltip/>
                         </div>
 
                         <div className="value date">
@@ -312,7 +311,7 @@ const PortfolioSettings = () => {
                     <div className={`row ${settingParams.movingBudget.status ? 'disabled' : ''}`}>
                         <div className="label">
                             Budget End
-                            <InformationTooltip type={'warning'}/>
+                            <DisabledTooltip/>
                         </div>
 
                         <div className="value date">
@@ -378,7 +377,7 @@ const PortfolioSettings = () => {
                     </div>
 
                     <div className="value date">
-                        {settingParams.movingBudget.next_update ?  moment(settingParams.movingBudget.next_update).format('YYYY-MM-DD') : '-'}
+                        {settingParams.movingBudget.next_update ? moment(settingParams.movingBudget.next_update).format('YYYY-MM-DD') : '-'}
                     </div>
                 </div>
             </div>
@@ -410,5 +409,8 @@ const PortfolioSettings = () => {
         </div>
     )
 }
+
+const DisabledTooltip = () => <InformationTooltip type={'warning'}
+                                                  description={'This field is not editable while the "Daily moving budget" feature is enabled.'}/>
 
 export default PortfolioSettings

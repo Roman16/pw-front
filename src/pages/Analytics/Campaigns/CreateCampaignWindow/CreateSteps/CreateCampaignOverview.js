@@ -77,22 +77,18 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'state',
                 render: value => value === 'enabled' ? 'Enabled' : 'Paused'
             },
-            {
-                title: 'Targeting',
-                fieldKey: 'calculatedCampaignSubType',
-                render: value => targetingsTypeEnum[value]
+            ...createData.createAdGroup ? [ {
+                title: 'Ad Group Name',
+                fieldKey: 'name'
             },
-            {
-                title: 'Campaign bidding strategy',
-                fieldKey: 'bidding_strategy',
-                render: value => biddingStrategyEnum[value]
-            },
-            {
-                title: 'Bids by placement: Top of Search (first page)',
-                fieldKey: 'bidding_adjustments',
-                render: value => value && value[0] ? `${round(value[0].percentage, 2)}%` : '-'
-            },
-            productAdsField,
+                {
+                    title: 'Default Bid',
+                    fieldKey: 'adGroupBid',
+                    render: value => currencyWithCode(numberMask(value, 2))
+                }] : [],
+            ...createData.createProductAds ? [productAdsField] : [],
+            ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
         ],
         'adGroups': [
             advertisingTypeField,
@@ -109,9 +105,9 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupBid',
                 render: value => currencyWithCode(numberMask(value, 2))
             },
-            createData.create_product_ads && productAdsField,
-            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')},
-            ...createData.createNegativeTargetings && [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')]
+            ...createData.createProductAds ? [productAdsField] : [],
+            ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
         ],
         'product-ads': [
             advertisingTypeField,
@@ -124,7 +120,8 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupName'
             },
             productAdsField,
-            createData.create_targetings && {...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}
+            ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
         ],
         'targetings': [
             advertisingTypeField,
@@ -137,73 +134,9 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupName'
             },
             targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings'),
-            ...createData.createNegativeTargetings && [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')]
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
         ]
     }
-    // adGroupName: {
-    //     title: 'Ad Group Name',
-    //     fieldKey: 'ad_group_name'
-    // },
-    // adGroupBid: {
-    //     title: 'Default Bid',
-    //     fieldKey: 'ad_group_default_bid',
-    //     render: value => `${numberMask(value, 2)}$`
-    // },
-    // productAds: {
-    //     title: 'Product Ads',
-    //     fieldKey: 'selectedProductAds',
-    //     render: value => value.length > 0 && <div
-    //         className={'overflow-text'}
-    //         title={value.map(item => item.asin).join(', ')}
-    //     >
-    //         {value.length} products: {value.map(item => item.asin).join(', ')}
-    //     </div>
-    // },
-    // targetCloseMatch: {
-    //     title: 'Targeting Groups: Close match',
-    //     fieldKey: 'target_close_match',
-    //     render: value => `${numberMask(value, 2)}$`
-    // },
-    // targetLooseMatch: {
-    //     title: 'Targeting Groups: Loose match',
-    //     fieldKey: 'target_loose_match',
-    //     render: value => `${numberMask(value, 2)}$`
-    // },
-    // targetSubstitutes: {
-    //     title: 'Targeting Groups: Substitutes',
-    //     fieldKey: 'target_substitutes',
-    //     render: value => `${numberMask(value, 2)}$`
-    // },
-    // targetComplements: {
-    //     title: 'Targeting Groups: Complements',
-    //     fieldKey: 'target_complements',
-    //     render: value => `${numberMask(value, 2)}$`
-    // },
-    // negativeKeywords: {
-    //     title: 'Negative Keywords',
-    //     fieldKey: 'negative_keywords',
-    //     render: value => value.length > 0 && `${value.length} keywords`
-    // },
-    // negativePATs: {
-    //     title: 'Negative PATs',
-    //     fieldKey: 'negative_pats',
-    //     render: value => value.length > 0 && `${value.length} ASINs`
-    // },
-    // targetingType: {
-    //     title: 'Targeting Type',
-    //     fieldKey: 't_targeting_type',
-    //     render: value => TTargetingTypeEnum[value]
-    // },
-    // keywordTargeting: {
-    //     title: 'Keyword targeting',
-    //     fieldKey: 'keyword_targetings',
-    //     render: value => value.length > 0 && `${value.length} keywords`
-    // },
-    // negativeKeywordTargeting: {
-    //     title: 'Negative Keyword Targeting',
-    //     fieldKey: 'keyword_targetings',
-    //     render: value => value.length > 0 && `${value.length} keywords`
-    // },
 
 
     fields = fields[overviewType]

@@ -43,7 +43,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
 
             selectedProductAds: [],
 
-            create_targetings: false,
+            createTargetings: false,
             keywords: [],
             targets: [],
 
@@ -111,7 +111,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                 state: 'enabled'
             })
 
-            if (createData.create_targetings) {
+            if (createData.createTargetings) {
                 await analyticsServices.bulkCreate('targetings', {
                     targetings: mapTargetingsDataRequest(createData)
                 })
@@ -177,7 +177,9 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             setCreateData(prevState => ({
                 ...prevState,
                 targetingType: type === 'any' ? 'keywords' : type,
-                disabledTargetingType: type !== 'any'
+                disabledTargetingType: type !== 'any',
+                negativeTargetingType: type === 'any' ? 'keywords' : type,
+                disabledNegativeTargetingType: type !== 'any',
             }))
         } catch (e) {
             console.log(e)
@@ -235,7 +237,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
 
     const nextStepValidation = () => {
         if (currentStep === 0 && createData.selectedProductAds.length === 0) return true
-        else if (currentStep === 1 && createData.create_targetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 1 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
         else if (currentStep === 2 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
         else return false
     }
@@ -376,8 +378,8 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                 {currentStep === 1 && <div className={'step step-4 targetings-details-step'}>
                     <div className="row">
                         <div className="col create-switch">
-                            <Radio.Group value={createData.create_targetings}
-                                         onChange={({target: {value}}) => changeDataHandler({create_targetings: value})}>
+                            <Radio.Group value={createData.createTargetings}
+                                         onChange={({target: {value}}) => changeDataHandler({createTargetings: value})}>
                                 <h4>Targetings</h4>
 
                                 <Radio value={true}>
@@ -395,7 +397,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                         createData={createData}
                         targetingType={createData.targetingType}
                         disabledTargetingType={createData.disabledTargetingType}
-                        disabled={!createData.create_targetings}
+                        disabled={!createData.createTargetings}
                         onUpdate={changeDataHandler}
                         onValidate={targetingsValidation}
                     />
@@ -446,7 +448,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     Previous
                 </button>}
 
-                {currentStep < 2 && <button
+                {currentStep < 3 && <button
                     className="btn default"
                     onClick={() => goToNextStepHandler()}
                     disabled={createProcessing || nextStepValidation()}
@@ -454,7 +456,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                     Next
                 </button>}
 
-                {currentStep === 2 && <button
+                {currentStep === 3 && <button
                     className={`btn default`}
                     onClick={onCreate}
                     disabled={createProcessing || createData.selectedProductAds.length === 0}

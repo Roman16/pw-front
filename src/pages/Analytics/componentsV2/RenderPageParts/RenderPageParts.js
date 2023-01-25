@@ -24,6 +24,7 @@ const idSelectors = {
     'ad-groups': 'adGroupId',
     'portfolios': 'portfolioId',
     'targetings': 'targetingId',
+    'negative-targetings': 'targetingId',
     'product-ads': 'adId',
     'products-parents': 'productId',
     'products': 'productId',

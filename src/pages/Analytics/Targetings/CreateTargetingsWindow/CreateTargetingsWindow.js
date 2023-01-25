@@ -31,8 +31,6 @@ const defaultState = {
 
     createNegativeTargetings: false,
     negativeTargets: [],
-    negativeCampaignTargets: [],
-
     negativeKeywords: [],
     negativeCampaignKeywords: [],
 }
@@ -207,16 +205,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
         setFetchAdGroupDetailsProcessing(false)
     }
 
-    const targetingsValidation = async (data) => {
-        try {
-            const res = analyticsServices.targetingsValidation(data)
-
-            return res
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
     useEffect(() => {
         if (mainState.adGroupId) {
             getAdGroupDetails(mainState.adGroupId)
@@ -311,7 +299,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
 
     const nextStepValidation = () => {
         if (currentStep === 0 && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
-        else if (currentStep === 1 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
+        else if (currentStep === 1 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0))) return true
         else return false
     }
 
@@ -421,7 +409,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
                             targetingType={createData.targetingType}
                             disabledTargetingType={disabledTargetingType}
                             onUpdate={changeDataHandler}
-                            onValidate={targetingsValidation}
                         />
                         : ''}
                 </>}
@@ -554,7 +541,17 @@ export const InfinitySelect = React.memo((props) => {
     )
 })
 
-export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, onValidate, disabledTargetingType, disabled}) => {
+export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, disabledTargetingType, disabled}) => {
+    const targetingsValidation = async (data) => {
+        try {
+            const res = analyticsServices.targetingsValidation(data)
+
+            return res
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (<div className="targetings-details-step">
         <div className={`row `}>
             <div className="col">
@@ -597,14 +594,14 @@ export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, on
             targetingType={targetingType}
             keywords={createData.keywords}
             onUpdate={(value) => onUpdate({keywords: value})}
-            onValidate={onValidate}
+            onValidate={targetingsValidation}
             disabled={disabled}
         /> : <TargetsList
             createData={createData}
             targetingType={targetingType}
             keywords={createData.targets}
             onUpdate={(value) => onUpdate({targets: value})}
-            onValidate={onValidate}
+            onValidate={targetingsValidation}
             disabled={disabled}
         />}
     </div>)

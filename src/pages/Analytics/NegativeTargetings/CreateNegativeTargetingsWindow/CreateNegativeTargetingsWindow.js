@@ -14,51 +14,48 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
-export const mapNegativeTargetings = (createData) => (createData.negativeTargetingType === 'keywords' ?
-        [
-            ...createData.negativeKeywords.map(i => ({
-                campaignId: createData.campaignId,
-                adGroupId: createData.adGroupId,
-                state: 'enabled',
-                advertisingType: createData.advertisingType,
+export const mapNegativeTargetings = (createData) => {
+    const defaultData = {
+        campaignId: createData.campaignId,
+        adGroupId: createData.adGroupId,
+        state: 'enabled',
+        expressionType: 'manual',
+        advertisingType: createData.advertisingType,
+    }
 
+    if (createData.negativeTargetingType === 'keywords') {
+        return ([
+            ...createData.negativeKeywords.map(i => ({
+                ...defaultData,
                 entityType: 'negativeKeyword',
                 calculatedTargetingText: i.keywordText,
                 calculatedTargetingMatchType: i.matchType,
             })),
             ...createData.negativeCampaignKeywords.map(i => ({
-                campaignId: createData.campaignId,
-                state: 'enabled',
-                advertisingType: createData.advertisingType,
-
+                ...defaultData,
                 entityType: 'campaignNegativeKeyword',
                 calculatedTargetingText: i.keywordText,
                 calculatedTargetingMatchType: i.matchType,
-
-                ...createData.advertisingType !== 'SponsoredProducts' && {
-                    adGroupId: createData.adGroupId
-                }
             }))
-        ] :
-        [
+        ])
+    } else {
+        return ([
             ...createData.negativeTargets.map(i => ({
-                campaignId: createData.campaignId,
-                adGroupId: createData.adGroupId,
-                state: 'enabled',
-                advertisingType: createData.advertisingType,
+                ...defaultData,
+                entityType: 'negativeTarget',
                 calculatedTargetingText: i.keywordText,
-                calculatedTargetingMatchType: i.matchType
+                calculatedTargetingMatchType: i.matchType,
             })),
-            ...createData.negativeCampaignTargets.map(i => ({
-                campaignId: createData.campaignId,
-                adGroupId: createData.adGroupId,
-                state: 'enabled',
-                advertisingType: createData.advertisingType,
+
+            ...createData.advertisingType === 'SponsoredProducts' ? createData.negativeCampaignKeywords.map(i => ({
+                ...defaultData,
+                entityType: 'campaignNegativeKeyword',
                 calculatedTargetingText: i.keywordText,
-                calculatedTargetingMatchType: i.matchType
-            }))
-        ]
-)
+                calculatedTargetingMatchType: i.matchType,
+            })) : []
+        ])
+    }
+}
 
 const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
     const [createData, setCreateData] = useState({
@@ -68,9 +65,8 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
 
             negativeTargetingType: '',
             disabledTargetingType: true,
-            negativeTargets: [],
-            negativeCampaignTargets: [],
 
+            negativeTargets: [],
             negativeKeywords: [],
             negativeCampaignKeywords: [],
         }),
@@ -103,7 +99,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
 
             changeCreateDataHandler({
                 negativeTargetingType: type === 'any' ? 'keywords' : type,
-                disabledTargetingType: type !== 'any'
+                disabledNegativeTargetingType: type !== 'any'
             })
         } catch (e) {
             console.log(e)
@@ -131,6 +127,10 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
                 notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
                 onReloadList()
             }
+
+            if (failed === 0) {
+                closeWindowHandler()
+            }
         } catch (e) {
             console.log(e)
         }
@@ -143,7 +143,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
         setCreateData(prevState => ({
             ...prevState,
             campaignId: value,
-            adGroupId: undefined
+            adGroupId: undefined,
         }))
     }
     const changeAdGroupHandler = id => {
@@ -220,7 +220,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
     }, [createData.campaignId])
 
     const nextStepValidation = () => {
-        if (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0)) return true
+        if (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0)) return true
         else return false
     }
 
@@ -245,7 +245,12 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
                                     <CustomSelect
                                         placeholder={'Select by'}
                                         getPopupContainer={trigger => trigger.parentNode}
-                                        onChange={(value) => changeCreateDataHandler({advertisingType: value})}
+                                        onChange={(value) => changeCreateDataHandler({
+                                            advertisingType: value,
+                                            negativeTargetingType: undefined,
+                                            campaignId: undefined,
+                                            adGroupId: undefined
+                                        })}
                                         value={createData.advertisingType}
                                     >
                                         <Option value={'SponsoredProducts'}>
@@ -254,6 +259,10 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
 
                                         <Option value={'SponsoredDisplay'}>
                                             Sponsored Display
+                                        </Option>
+
+                                        <Option value={'SponsoredBrands'}>
+                                            Sponsored Brands
                                         </Option>
                                     </CustomSelect>
                                 </div>

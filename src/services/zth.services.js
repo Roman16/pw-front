@@ -20,11 +20,11 @@ export const zthServices = {
 }
 
 function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
-    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}${searchStr && `&search_query=${encodeString(searchStr)}`}${sorting ? `&order_by:${sorting}=product_name` : ''}`, false, false, cancelToken)
+    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}${sorting ? `&order_by:${sorting}=product_name` : ''}`, false, false, cancelToken)
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
-    return api('get', `${zthUrls.zthProductsList}?search_query=${encodeString(searchStr)}&page=${page}&size=${pageSize}`, false, false, cancelToken)
+    return api('get', `${zthUrls.zthProductsList}?search[]=${encodeString(searchStr)}&page=${page}&size=${pageSize}`, false, false, cancelToken)
 }
 
 
