@@ -17,6 +17,7 @@ import {
 } from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {NegativeTargetingsDetails} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/NegativeTargetingsDetails"
 import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
+import _ from "lodash"
 
 const steps = [
     'Ad Group',
@@ -61,7 +62,8 @@ const CreateAdGroupWindow = ({onReloadList}) => {
     const dispatch = useDispatch()
 
     const visibleWindow = useSelector(state => state.analytics.visibleCreationWindows.adGroup),
-        mainState = useSelector(state => state.analytics.mainState)
+        mainState = useSelector(state => state.analytics.mainState),
+        stateDetails = useSelector(state => state.analytics.stateDetails)
 
     const closeWindowHandler = () => {
         dispatch(analyticsActions.setVisibleCreateWindow({adGroup: false}))
@@ -185,8 +187,28 @@ const CreateAdGroupWindow = ({onReloadList}) => {
     }, [createData.advertisingType])
 
     useEffect(() => {
-        if (mainState.campaignId) setCreateData(prevState => ({...prevState, campaignId: '444'}))
-    }, [mainState])
+        if (mainState.campaignId) {
+            setCreateData(prevState => ({
+                ...prevState,
+                campaignId: mainState.campaignId,
+                campaignName: stateDetails.name,
+                advertisingType: stateDetails.advertisingType,
+            }))
+        }
+    }, [mainState, stateDetails])
+
+    useEffect(() => {
+        if (createData.createTargetings) {
+            changeDataHandler({
+                negativeTargetingType: createData.targetingType,
+                disabledNegativeTargetingType: true,
+            })
+        } else {
+            changeDataHandler({
+                disabledNegativeTargetingType: false
+            })
+        }
+    }, [createData.createTargetings, createData.targetingType])
 
     return (<ModalWindow
             className={'create-campaign-window create-ad-group-window'}

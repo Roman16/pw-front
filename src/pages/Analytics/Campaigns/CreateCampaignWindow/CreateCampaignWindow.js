@@ -19,6 +19,8 @@ import moment from "moment"
 import {dateFormatting} from "../../../../utils/dateFormatting"
 import {activeTimezone} from "../../../index"
 import {NegativeTargetingsDetails} from "./CreateSteps/NegativeTargetingsDetails"
+import {mapTargetingsDataRequest} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {mapNegativeTargetings} from "../../NegativeTargetings/CreateNegativeTargetingsWindow/CreateNegativeTargetingsWindow"
 
 const defaultState = {
     //campaign
@@ -130,7 +132,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
         setCreateProcessing(true)
 
         try {
-            const res = await analyticsServices.exactCreate('campaigns', {
+            const campaignRes = await analyticsServices.exactCreate('campaigns', {
                 name: createData.name,
                 portfolioId: createData.portfolioId,
                 startDate: createData.startDate,
@@ -144,20 +146,48 @@ const CreateCampaignWindow = ({onReloadList}) => {
                 calculatedBudgetType: createData.calculatedBudgetType,
             })
 
-            const failed = res.result.failed,
-                success = res.result.success,
-                notApplicable = res.result.notApplicable
+            if (createData.createAdGroup) {
+                const adGroupRes = await analyticsServices.exactCreate('ad-groups', {
+                    advertisingType: createData.advertisingType,
+                    name: createData.adGroupName,
+                    defaultBid: createData.adGroupBid,
+                    campaignId: campaignRes.entities[0].campaignId,
+                    state: createData.state,
+                })
 
-            if (success > 0) {
-                notification.success({title: `${success} ${success === 1 ? 'entity' : 'entities'} created`})
-                closeWindowHandler()
-                onReloadList()
-                setCreateData({...defaultState})
+                if (createData.createProductAds) {
+                    await analyticsServices.exactCreate('product-ads', {
+                        campaignId: campaignRes.entities[0].campaignId,
+                        adGroupId: adGroupRes.entities[0].adGroupId,
+                        advertisingType: createData.advertisingType,
+                        sku: createData.selectedProductAds[0].sku,
+                        state: createData.state,
+                    })
+                }
+
+                if (createData.createTargetings) {
+                    await analyticsServices.bulkCreate('targetings', {
+                        targetings: mapTargetingsDataRequest({
+                            ...createData,
+                            campaignId: campaignRes.entities[0].campaignId,
+                            adGroupId: adGroupRes.entities[0].adGroupId,
+                        })
+                    })
+                }
+
+                if (createData.createNegativeTargetings) {
+                    await analyticsServices.bulkCreate('negative-targetings', {
+                        negativeTargetings: mapNegativeTargetings({
+                            ...createData,
+                            campaignId: campaignRes.entities[0].campaignId,
+                            adGroupId: adGroupRes.entities[0].adGroupId,
+                        })
+                    })
+                }
             }
 
-            if (failed > 0 || notApplicable > 0) {
-                notification.error({title: `${failed + notApplicable} ${failed + notApplicable === 1 ? 'entity' : 'entities'} failed to create`})
-            }
+            closeWindowHandler()
+            onReloadList()
         } catch (e) {
             console.log(e)
         }
@@ -189,6 +219,19 @@ const CreateCampaignWindow = ({onReloadList}) => {
     useEffect(() => {
         dispatch(analyticsActions.setPortfolioList())
     }, [])
+
+    useEffect(() => {
+        if (createData.createTargetings) {
+            changeCampaignDataHandler({
+                negativeTargetingType: createData.targetingType,
+                disabledNegativeTargetingType: true,
+            })
+        } else {
+            changeCampaignDataHandler({
+                disabledNegativeTargetingType: false
+            })
+        }
+    }, [createData.createTargetings, createData.targetingType])
 
     const nextStepValidation = () => {
         if (currentStep === 1 && (!createData.name || !createData.calculatedBudget)) return true

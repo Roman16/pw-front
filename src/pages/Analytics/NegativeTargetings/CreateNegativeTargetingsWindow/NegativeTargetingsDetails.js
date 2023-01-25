@@ -8,7 +8,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
             <div className="col">
                 <Radio.Group
                     value={createData.negativeTargetingType}
-                    disabled={createData.disabledNegativeTargetingType || disabled}
+                    disabled={createData.disabledNegativeTargetingType || disabled || createData.createTargetings}
                     className={'targeting-type-radio'}
                     onChange={({target: {value}}) => onChange({negativeTargetingType: value})}
                 >

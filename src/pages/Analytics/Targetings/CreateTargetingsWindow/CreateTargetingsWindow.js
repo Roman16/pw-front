@@ -25,6 +25,7 @@ const defaultState = {
     campaignId: undefined,
     adGroupId: undefined,
     calculatedBid: undefined,
+    createTargetings: true,
 
     targets: [],
     keywords: [],
@@ -68,7 +69,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
         [fetchAdGroupDetailsProcessing, setFetchAdGroupDetailsProcessing] = useState(false),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
-        [disabledTargetingType, setDisabledTargetingType] = useState(true),
         [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
@@ -129,8 +129,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
                         adGroupId: mainState.adGroupId,
                         advertisingType: stateDetails.advertisingType
                     })
-
-                    setDisabledTargetingType(true)
                 } else if (mainState.campaignId) {
                     setCreateData({
                         ...defaultState,
@@ -205,35 +203,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
         setFetchAdGroupDetailsProcessing(false)
     }
 
-    useEffect(() => {
-        if (mainState.adGroupId) {
-            getAdGroupDetails(mainState.adGroupId)
 
-            setCreateData({
-                ...createData,
-                campaignId: mainState.campaignId,
-                adGroupId: mainState.adGroupId
-            })
-        }
-
-        if (mainState.campaignId) setCreateData({
-            ...createData,
-            campaignId: mainState.campaignId,
-            adGroupId: undefined
-        })
-    }, [mainState.adGroupId, mainState.campaignId])
-
-    useEffect(() => {
-        if (mainState.campaignId) setCreateData({
-            ...createData,
-            campaignId: mainState.campaignId,
-            advertisingType: stateDetails.advertisingType
-        })
-    }, [stateDetails])
-
-    useEffect(() => {
-        if (createData.campaignId) getAdGroups(createData.campaignId)
-    }, [createData.campaignId])
 
     const changeAdvertisingTypeHandler = value => {
         if (!mainState.campaignId) {
@@ -297,6 +267,45 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
         checkStep(currentStep - 1)
     }
 
+    useEffect(() => {
+        if (mainState.adGroupId) {
+            getAdGroupDetails(mainState.adGroupId)
+
+            setCreateData({
+                ...createData,
+                campaignId: mainState.campaignId,
+                adGroupId: mainState.adGroupId
+            })
+        }
+
+        if (mainState.campaignId) setCreateData({
+            ...createData,
+            campaignId: mainState.campaignId,
+            adGroupId: undefined
+        })
+    }, [mainState.adGroupId, mainState.campaignId])
+
+    useEffect(() => {
+        if (mainState.adGroupId) setCreateData(prevState => ({
+            ...prevState,
+            advertisingType: stateDetails.advertisingType,
+            campaignId: mainState.campaignId,
+            adGroupId: mainState.adGroupId,
+            campaignName: stateDetails.campaignName,
+            adGroupName: stateDetails.adGroupName,
+        }))
+        else if (mainState.campaignId) setCreateData(prevState => ({
+            ...prevState,
+            advertisingType: stateDetails.advertisingType,
+            campaignId: mainState.campaignId,
+            campaignName: stateDetails.name,
+        }))
+    }, [mainState, stateDetails])
+
+    useEffect(() => {
+        if (createData.campaignId) getAdGroups(createData.campaignId)
+    }, [createData.campaignId])
+
     const nextStepValidation = () => {
         if (currentStep === 0 && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
         else if (currentStep === 1 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0))) return true
@@ -344,6 +353,9 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
                                                 </Option>
                                                 <Option value={'SponsoredDisplay'}>
                                                     Sponsored Display
+                                                </Option>
+                                                <Option value={'SponsoredBrands'}>
+                                                    Sponsored Brands
                                                 </Option>
                                             </CustomSelect>
                                         </div>
@@ -407,7 +419,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
                         <RenderTargetingsDetails
                             createData={createData}
                             targetingType={createData.targetingType}
-                            disabledTargetingType={disabledTargetingType}
+                            disabledTargetingType={createData.disabledTargetingType}
                             onUpdate={changeDataHandler}
                         />
                         : ''}

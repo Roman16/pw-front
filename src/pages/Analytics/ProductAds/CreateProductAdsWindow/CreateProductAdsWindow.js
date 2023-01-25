@@ -242,20 +242,22 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         else return false
     }
 
-
     useEffect(() => {
         if (mainState.adGroupId) setCreateData(prevState => ({
             ...prevState,
             advertisingType: stateDetails.advertisingType,
             campaignId: mainState.campaignId,
-            adGroupId: mainState.adGroupId
+            adGroupId: mainState.adGroupId,
+            campaignName: stateDetails.campaignName,
+            adGroupName: stateDetails.adGroupName,
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
             advertisingType: stateDetails.advertisingType,
             campaignId: mainState.campaignId,
+            campaignName: stateDetails.name,
         }))
-    }, [mainState])
+    }, [mainState, stateDetails])
 
     useEffect(() => {
         getCampaigns()
@@ -264,6 +266,19 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
     useEffect(() => {
         getAdGroups()
     }, [createData.campaignId])
+
+    useEffect(() => {
+        if (createData.createTargetings) {
+            changeDataHandler({
+                negativeTargetingType: createData.targetingType,
+                disabledNegativeTargetingType: true,
+            })
+        } else {
+            changeDataHandler({
+                disabledNegativeTargetingType: false
+            })
+        }
+    }, [createData.createTargetings, createData.targetingType])
 
     return (<ModalWindow
             className={'create-campaign-window create-product-ads-window'}

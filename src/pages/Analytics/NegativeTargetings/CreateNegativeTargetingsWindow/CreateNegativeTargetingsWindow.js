@@ -202,14 +202,17 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
             ...prevState,
             advertisingType: stateDetails.advertisingType,
             campaignId: mainState.campaignId,
-            adGroupId: mainState.adGroupId
+            adGroupId: mainState.adGroupId,
+            campaignName: stateDetails.campaignName,
+            adGroupName: stateDetails.adGroupName,
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
             advertisingType: stateDetails.advertisingType,
             campaignId: mainState.campaignId,
+            campaignName: stateDetails.name,
         }))
-    }, [mainState])
+    }, [mainState, stateDetails])
 
     useEffect(() => {
         getCampaigns()
