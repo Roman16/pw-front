@@ -24,7 +24,7 @@ function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
-    return api('get', `${zthUrls.zthProductsList}?search[]=${encodeString(searchStr)}&page=${page}&size=${pageSize}`, false, false, cancelToken)
+    return api('get', `${zthUrls.zthProductsList}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}`, false, false, cancelToken)
 }
 
 
