@@ -4,6 +4,7 @@ import moment from "moment"
 import {reasonFilterParams} from "./reports.services"
 import axios from "axios"
 import {notification} from "../components/Notification"
+import {filtersHandler} from "./analytics.services"
 
 export const adminServices = {
     checkUserEmail,
@@ -147,8 +148,8 @@ function changeUserPassword(type, user, password) {
 }
 
 
-function getAgencyDashboardData({attributionWindow, dateFrom, dateTo}) {
-    return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${moment(dateFrom).format('YYYY-MM-DD')}&date_to=${moment(dateTo).format('YYYY-MM-DD')}`, undefined, undefined, undefined, undefined, undefined, false)
+function getAgencyDashboardData({attributionWindow, dateFrom, dateTo, sorterColumn, filters}) {
+    return api('get', `${adminUrls.agencyDashboardData}?attribution_window=${attributionWindow}&date_from=${moment(dateFrom).format('YYYY-MM-DD')}&date_to=${moment(dateTo).format('YYYY-MM-DD')}${sorterColumn.column ? `&order_by[]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getAgencyDashboardSettings() {

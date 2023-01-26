@@ -7,6 +7,7 @@ import DatePicker from "../../../../components/DatePicker/DatePickerRange"
 import moment from "moment-timezone"
 import {activeTimezone} from "../../../index"
 import {SVG} from "../../../../utils/icons"
+import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
 
 const Option = Select.Option
 
@@ -31,9 +32,18 @@ const ranges = {
     ]
 }
 
-export const Filters = ({attributionWindow, dateFrom, dateTo,comparePreviousPeriod, onChange}) => {
+export const Filters = ({attributionWindow, dateFrom,filters,  dateTo, comparePreviousPeriod,columns, onChange}) => {
 
     return (<div className={'filters-block '}>
+        <div className="filters">
+            <TableFilters
+                columns={columns}
+                searchField
+                filters={filters}
+                onChange={filters => onChange({filters})}
+            />
+        </div>
+
         <div className="form-group attribution-window-block">
             <div className="label">
                 <InformationTooltip

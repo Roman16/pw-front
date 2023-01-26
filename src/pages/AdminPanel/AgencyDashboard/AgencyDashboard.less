@@ -22,12 +22,42 @@
 
   .filters-block {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
+    align-items: flex-start;
     padding: 0 20px 20px;
 
     .custom-tooltip {
       margin: 0 5px 0 0;
+    }
+
+    .list-filters-block {
+      padding: 0;
+      margin: 0;
+
+      input {
+        margin: 0;
+      }
+
+      button {
+        margin: 0 0 0 10px;
+      }
+    }
+
+    .current-filters {
+      display: flex;
+      margin: 10px 0 0 0;
+    }
+
+    .filter-popover {
+      input {
+        min-width: inherit;
+        width: 200px;
+      }
+
+      .filter-variables {
+        .row {
+          grid-column-gap: 10px;
+        }
+      }
     }
 
     .form-group {
@@ -36,24 +66,24 @@
       position: relative;
 
       &.attribution-window-block {
-        margin: 0 20px 0 0;
-      }
+        margin: 0 20px 0 auto;
 
-      .ant-select {
-        width: max-content;
-        height: 100%;
-
-        .ant-select-selection {
+        .ant-select {
           width: max-content;
-          padding: 0 0 0 10.5rem;
-          background: transparent;
+          height: 100%;
 
-          .ant-select-selection__rendered {
+          .ant-select-selection {
             width: max-content;
-          }
+            padding: 0 0 0 10.5rem;
+            background: transparent;
 
-          .ant-select-selection-selected-value {
-            width: max-content;
+            .ant-select-selection__rendered {
+              width: max-content;
+            }
+
+            .ant-select-selection-selected-value {
+              width: max-content;
+            }
           }
         }
       }
@@ -290,6 +320,16 @@
 
       .btn {
         margin: 10px 0;
+      }
+    }
+
+    .ant-select-selection-selected-value {
+      br {
+        display: none;
+      }
+
+      b {
+        margin: 0 5px 0 0;
       }
     }
   }

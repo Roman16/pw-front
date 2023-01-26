@@ -13,9 +13,13 @@ export const Metrics = () => {
             attributionWindow: 7,
             dateFrom: moment().add(-6, 'days'),
             dateTo: moment(),
-            comparePreviousPeriod: false
+            comparePreviousPeriod: false,
+            filters: []
+        }),
+        [sorterColumn, setSorterColumn] = useState({
+            column: undefined,
+            type: undefined
         })
-
 
     const getDataHandler = async () => {
         setLoading(true)
@@ -25,10 +29,12 @@ export const Metrics = () => {
             if (requestData.comparePreviousPeriod) {
                 const dateDiff = moment(requestData.dateTo).diff(moment(requestData.dateFrom), 'days')
 
-                const [currentData, previousData] = await Promise.all([adminServices.getAgencyDashboardData({..._.omit(requestData, 'comparePreviousPeriod')}), adminServices.getAgencyDashboardData({
+                const [currentData, previousData] = await Promise.all([adminServices.getAgencyDashboardData({..._.omit({...requestData, sorterColumn}, 'comparePreviousPeriod')}), adminServices.getAgencyDashboardData({
                     attributionWindow: requestData.attributionWindow,
                     dateFrom: moment(requestData.dateFrom).add(-(dateDiff + 1), 'days'),
                     dateTo: moment(requestData.dateFrom).add(-1, 'days'),
+                    sorterColumn,
+                    filters: requestData.filters
                 })])
 
                 res = currentData.result.map((i, index) => {
@@ -43,7 +49,7 @@ export const Metrics = () => {
                     return (obj)
                 })
             } else {
-                const {result} = await adminServices.getAgencyDashboardData({..._.omit(requestData, 'comparePreviousPeriod')})
+                const {result} = await adminServices.getAgencyDashboardData({..._.omit({...requestData, sorterColumn}, 'comparePreviousPeriod')})
                 res = result
             }
 
@@ -57,13 +63,36 @@ export const Metrics = () => {
 
     const changeFiltersHandler = (data) => setRequestData(prevData => ({...prevData, ...data}))
 
+    const changeSorterHandler = (column) => {
+        if (sorterColumn && sorterColumn.column === column) {
+            if (sorterColumn.type === 'asc') {
+                setSorterColumn({
+                    column: column,
+                    type: 'desc'
+
+                })
+            } else if (sorterColumn.type === 'desc') {
+                setSorterColumn({
+                    column: null,
+                    type: 'asc'
+                })
+            }
+        } else {
+            setSorterColumn({
+                column: column,
+                type: 'asc'
+            })
+        }
+    }
+
     useEffect(() => {
         getDataHandler()
-    }, [requestData])
+    }, [requestData, sorterColumn])
 
     return <div className={'metrics-section'}>
         <Filters
             {...requestData}
+            columns={columns}
             onChange={changeFiltersHandler}
         />
 
@@ -72,6 +101,9 @@ export const Metrics = () => {
                 loading={loading}
                 dataSource={data}
                 columns={columns}
+                sorterColumn={sorterColumn}
+
+                onChangeSorter={changeSorterHandler}
             />
 
             {/*<Pagination*/}
