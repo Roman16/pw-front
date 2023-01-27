@@ -237,8 +237,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
             adGroupName: _.find(adGroups, {adGroupId: id}).name,
             adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
         }))
-
-        getAdGroupDetails(id)
     }
 
     const goToSelectStep = (step) => {
@@ -293,6 +291,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
             adGroupId: mainState.adGroupId,
             campaignName: stateDetails.campaignName,
             adGroupName: stateDetails.adGroupName,
+            adGroupBid: stateDetails.defaultBid
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
@@ -305,6 +304,10 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
     useEffect(() => {
         if (createData.campaignId) getAdGroups(createData.campaignId)
     }, [createData.campaignId])
+
+    useEffect(() => {
+        if(createData.adGroupId) getAdGroupDetails(createData.adGroupId)
+    }, [createData.adGroupId])
 
     const nextStepValidation = () => {
         if (currentStep === 0 && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
@@ -556,7 +559,7 @@ export const InfinitySelect = React.memo((props) => {
 export const RenderTargetingsDetails = ({createData, onUpdate, targetingType, disabledTargetingType, disabled}) => {
     const targetingsValidation = async (data) => {
         try {
-            const res = analyticsServices.targetingsValidation(data)
+            const res = analyticsServices.keywordValidation('targetings', data)
 
             return res
         } catch (e) {

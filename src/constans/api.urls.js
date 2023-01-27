@@ -198,7 +198,7 @@ export const analyticsUrls = {
     bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
     bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
-    targetingsValidation: `dynamic-analytics/targetings/bulk-validate`,
+    keywordValidation: type =>  `dynamic-analytics/${type}/bulk-validate`,
 }
 
 export const tableauUrls = {

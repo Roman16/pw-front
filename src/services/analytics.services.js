@@ -21,7 +21,7 @@ export const analyticsServices = {
     fetchMovingBudget,
     updateMovingBudget,
     deleteMovingBudget,
-    targetingsValidation,
+    keywordValidation,
 
     exactCreate,
     bulkCreate,
@@ -206,8 +206,8 @@ function bulkCreate(entity, data) {
     return api('post', analyticsUrls.bulkCreateUrl(entity), data)
 }
 
-function targetingsValidation(data) {
-    return api('post', analyticsUrls.targetingsValidation, data)
+function keywordValidation(type, data) {
+    return api('post', analyticsUrls.keywordValidation(type), data)
 }
 
 function exactUpdateField(entity, data) {

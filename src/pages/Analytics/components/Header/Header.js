@@ -46,7 +46,7 @@ const Header = ({location}) => {
                 stateNameValue[`${key.split('Id')[0]}Name`] = res[index].response.name
             })
 
-            dispatch(analyticsActions.setStateDetails(res.reduce((total, item) => ({...total.response, ...item.response, ...stateNameValue}), {})))
+            dispatch(analyticsActions.setStateDetails(res.reduce((total, item) => ({...total, ...item.response, ...stateNameValue}), {})))
 
             setStateName(stateNameValue)
         } catch (e) {

@@ -14,6 +14,19 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
+const defaultState = {
+    campaignId: undefined,
+    adGroupId: undefined,
+    advertisingType: undefined,
+
+    negativeTargetingType: '',
+    disabledTargetingType: true,
+
+    negativeTargets: [],
+    negativeKeywords: [],
+    negativeCampaignKeywords: [],
+}
+
 export const mapNegativeTargetings = (createData) => {
     const defaultData = {
         campaignId: createData.campaignId,
@@ -58,18 +71,7 @@ export const mapNegativeTargetings = (createData) => {
 }
 
 const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
-    const [createData, setCreateData] = useState({
-            campaignId: undefined,
-            adGroupId: undefined,
-            advertisingType: undefined,
-
-            negativeTargetingType: '',
-            disabledTargetingType: true,
-
-            negativeTargets: [],
-            negativeKeywords: [],
-            negativeCampaignKeywords: [],
-        }),
+    const [createData, setCreateData] = useState({...defaultState}),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false),
@@ -130,6 +132,8 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
 
             if (failed === 0) {
                 closeWindowHandler()
+
+                setCreateData({...defaultState})
             }
         } catch (e) {
             console.log(e)
@@ -151,8 +155,6 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
             ...prevState,
             adGroupId: id
         }))
-
-        getAdGroupDetails(id)
     }
 
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
@@ -204,7 +206,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
             campaignId: mainState.campaignId,
             adGroupId: mainState.adGroupId,
             campaignName: stateDetails.campaignName,
-            adGroupName: stateDetails.adGroupName,
+            adGroupName: stateDetails.adGroupName
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
@@ -221,6 +223,10 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
     useEffect(() => {
         getAdGroups()
     }, [createData.campaignId])
+
+    useEffect(() => {
+        if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
+    }, [createData.adGroupId])
 
     const nextStepValidation = () => {
         if (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0)) return true

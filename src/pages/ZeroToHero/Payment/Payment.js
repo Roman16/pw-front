@@ -173,8 +173,7 @@ const Payment = (props) => {
                         })
                 }, 1500)
             }
-        } catch ({response: {data}}) {
-            console.log(data)
+        } catch (error) {
             setPayProcessing(false)
         }
     }

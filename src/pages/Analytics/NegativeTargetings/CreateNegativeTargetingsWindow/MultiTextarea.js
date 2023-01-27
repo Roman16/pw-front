@@ -1,9 +1,24 @@
 import React, {useEffect, useState} from "react"
-import {Popconfirm, Radio} from "antd"
+import {Popconfirm, Radio, Spin} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {uniqueArrOfObj} from "../../../../utils/unique"
 import _ from "lodash"
 import {usePrevious} from "../../../../utils/hooks/usePrevious"
+import {analyticsServices} from "../../../../services/analytics.services"
+
+let allKeywords = []
+
+
+const negativeTargetingsValidation = async (data) => {
+    try {
+        const res = analyticsServices.keywordValidation('negative-targetings', data)
+
+        return res
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 
 export const MultiTextarea = ({
                                   keywords,
@@ -14,9 +29,13 @@ export const MultiTextarea = ({
                               }) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState(keywordTypeEnums[0].key),
+        [validationProcessing, setValidationProcessing] = useState(false),
+        [keywordsCount, setKeywordsCount] = useState(null),
+        [validKeywordsCount, setValidKeywordsCount] = useState(null),
+        [invalidDetails, setInvalidDetails] = useState(),
         prevTypeEnums = usePrevious(keywordTypeEnums)
 
-    const addKeywordsHandler = (e) => {
+    const addKeywordsHandler = async (e) => {
         e.preventDefault()
 
         try {
@@ -26,7 +45,7 @@ export const MultiTextarea = ({
                 .map(i => i.replace(/ +/g, ' '))
                 .map(item => ({
                     keywordText: item,
-                    matchType: keywordType
+                    matchType: keywordType,
                 }))
             ]
 
@@ -35,18 +54,48 @@ export const MultiTextarea = ({
                 keywordText: item.keywordText
             }))
 
-            let resArr = []
+            allKeywords = [...keywordsList.map(i => ({...i}))]
 
-            keywordTypeEnums.forEach(({key}) => {
-                resArr = [...resArr, ...uniqueArrOfObj([...keywords, ...keywordsList].filter(item => item.matchType === key), 'keywordText')]
-            })
+            if (keywordsList.length === 0) {
+                setNewKeyword('')
+                return
+            } else {
+                setValidationProcessing(true)
 
-            onChange([...resArr])
+                const res = await negativeTargetingsValidation({
+                    entityType: 'keywords',
+                    keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
+                })
 
-            setNewKeyword('')
+                setInvalidDetails(res.result)
+
+                let validKeywords = [],
+                    invalidKeywords = []
+
+                if (res.result.invalidCount > 0) {
+                    res.result.invalidDetails.forEach(i => {
+                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                    })
+
+                    res.result.invalidDetails.reverse().forEach(i => {
+                        keywordsList.splice(i.entityRequestIndex, 1)
+                    })
+                }
+
+                validKeywords = keywordsList
+
+                onChange([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText')])
+
+                setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
+                setValidKeywordsCount(validKeywords.length)
+
+                setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
+            }
         } catch (e) {
             console.log(e)
         }
+
+        setValidationProcessing(false)
     }
 
     const removeKeywordHandler = (index) => {
@@ -84,15 +133,17 @@ export const MultiTextarea = ({
                                 value={newKeyword}
                                 onChange={({target: {value}}) => setNewKeyword(value.toLowerCase())}
                                 required
-                                disabled={disabled}
+                                disabled={disabled || validationProcessing}
                                 placeholder={'Enter your list and separate each item with a new line'}
                             />
                 </div>
 
                 <div className="actions">
-                    <button className={'btn default p15 add'} disabled={disabled}>
+                    <button className={'btn default p15 add'} disabled={disabled || validationProcessing}>
                         <SVG id={'plus-icon'}/>
                         Add Keywords
+
+                        {validationProcessing && <Spin/>}
                     </button>
                 </div>
             </form>

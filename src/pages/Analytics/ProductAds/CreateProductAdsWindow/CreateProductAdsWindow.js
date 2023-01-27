@@ -31,29 +31,31 @@ const steps = [
     'Overview',
 ]
 
+const defaultState = {
+    campaignId: undefined,
+    adGroupId: undefined,
+    advertisingType: undefined,
+
+    selectedProductAds: [],
+
+    createTargetings: false,
+    keywords: [],
+    targets: [],
+
+    createNegativeTargetings: false,
+    negativeTargets: [],
+    negativeCampaignTargets: [],
+
+    negativeKeywords: [],
+    negativeCampaignKeywords: [],
+}
+
 const CreateProductAdsWindow = ({location, onReloadList}) => {
     const [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [finishedSteps, setFinishedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
-        [createData, setCreateData] = useState({
-            campaignId: undefined,
-            adGroupId: undefined,
-            advertisingType: undefined,
-
-            selectedProductAds: [],
-
-            createTargetings: false,
-            keywords: [],
-            targets: [],
-
-            createNegativeTargetings: false,
-            negativeTargets: [],
-            negativeCampaignTargets: [],
-
-            negativeKeywords: [],
-            negativeCampaignKeywords: [],
-        }),
+        [createData, setCreateData] = useState({...defaultState}),
         [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([]),
         [createProcessing, setCreateProcessing] = useState(false)
@@ -121,9 +123,9 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                 await analyticsServices.bulkCreate('negative-targetings', {negativeTargetings: mapNegativeTargetings(createData)})
             }
 
-
             closeWindowHandler()
             onReloadList()
+            setCreateData({...defaultState})
             notification.success({title: 'Product Ads created'})
         } catch (e) {
             console.log(e)
@@ -149,26 +151,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         }))
     }
 
-    const targetingsValidation = async (data) => {
-        try {
-            const res = analyticsServices.targetingsValidation(data)
-
-            return res
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    const changeAdGroupHandler = async id => {
-        resetFinishedSteps()
-
-        setCreateData(prevState => ({
-            ...prevState,
-            adGroupId: id,
-            adGroupName: _.find(adGroups, {adGroupId: id}).name,
-            adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
-        }))
-
+    const getAdGroupDetails = async (id) => {
         try {
             const res = await analyticsServices.fetchAdGroupDetails(id)
 
@@ -184,7 +167,17 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         } catch (e) {
             console.log(e)
         }
+    }
 
+    const changeAdGroupHandler = async id => {
+        resetFinishedSteps()
+
+        setCreateData(prevState => ({
+            ...prevState,
+            adGroupId: id,
+            adGroupName: _.find(adGroups, {adGroupId: id}).name,
+            adGroupBid: _.find(adGroups, {adGroupId: id}).defaultBid
+        }))
     }
 
     const changeDataHandler = data => {
@@ -235,6 +228,11 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
         }
     }
 
+    useEffect(() => {
+        if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
+    }, [createData.adGroupId])
+
+
     const nextStepValidation = () => {
         if (currentStep === 0 && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 1 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
@@ -250,6 +248,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
             adGroupId: mainState.adGroupId,
             campaignName: stateDetails.campaignName,
             adGroupName: stateDetails.adGroupName,
+            adGroupBid: stateDetails.defaultBid
         }))
         else if (mainState.campaignId) setCreateData(prevState => ({
             ...prevState,
@@ -414,7 +413,6 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
                         disabledTargetingType={createData.disabledTargetingType}
                         disabled={!createData.createTargetings}
                         onUpdate={changeDataHandler}
-                        onValidate={targetingsValidation}
                     />
                 </div>}
 
