@@ -49,6 +49,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                 <MultiTextarea
                     keywords={createData.negativeKeywords}
                     disabled={disabled}
+                    entityType={'negativeKeyword'}
                     keywordTypeEnums={[
                         {
                             key: 'negativePhrase',
@@ -71,6 +72,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
                 <MultiTextarea
                     keywords={createData.negativeTargets}
                     disabled={disabled}
+                    widthValidation={false}
                     disabledKeywordType={true}
                     keywordTypeEnums={[{
                         key: 'asinSameAs',
@@ -96,6 +98,7 @@ export const NegativeTargetingsDetails = ({createData, onChange, disabled}) =>
             <MultiTextarea
                 keywords={createData.negativeCampaignKeywords}
                 disabled={disabled}
+                entityType={'campaignNegativeKeyword'}
                 keywordTypeEnums={[
                     {
                         key: 'negativePhrase',

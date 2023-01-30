@@ -25,7 +25,9 @@ export const MultiTextarea = ({
                                   disabled,
                                   keywordTypeEnums,
                                   onChange,
-                                  disabledKeywordType = false
+                                  widthValidation = true,
+                                  disabledKeywordType = false,
+                                  entityType
                               }) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState(keywordTypeEnums[0].key),
@@ -60,36 +62,50 @@ export const MultiTextarea = ({
                 setNewKeyword('')
                 return
             } else {
-                setValidationProcessing(true)
+                let resArr = []
 
-                const res = await negativeTargetingsValidation({
-                    entityType: 'keywords',
-                    keywords: [...keywordsList.map(i => ({keywordText: i.keywordText, matchType: i.matchType}))]
-                })
+                if (widthValidation) {
+                    setValidationProcessing(true)
 
-                setInvalidDetails(res.result)
+                    const res = await negativeTargetingsValidation({
+                        negativeTargetings: [...keywordsList.map(i => ({
+                            calculatedTargetingText: i.keywordText,
+                            calculatedTargetingMatchType: i.matchType,
+                            entityType: entityType
+                        }))]
+                    })
+                    setInvalidDetails(res.result)
 
-                let validKeywords = [],
-                    invalidKeywords = []
+                    let validKeywords = [],
+                        invalidKeywords = []
 
-                if (res.result.invalidCount > 0) {
-                    res.result.invalidDetails.forEach(i => {
-                        invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                    if (res.result.invalidCount > 0) {
+                        res.result.invalidDetails.forEach(i => {
+                            invalidKeywords.push(keywordsList[i.entityRequestIndex])
+                        })
+
+                        res.result.invalidDetails.reverse().forEach(i => {
+                            keywordsList.splice(i.entityRequestIndex, 1)
+                        })
+                    }
+                    validKeywords = keywordsList
+
+                    keywordTypeEnums.forEach(({key}) => {
+                        resArr = [...resArr, ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === key), 'keywordText')]
                     })
 
-                    res.result.invalidDetails.reverse().forEach(i => {
-                        keywordsList.splice(i.entityRequestIndex, 1)
+                    setValidKeywordsCount(validKeywords.length)
+
+                    setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
+                } else {
+                    keywordTypeEnums.forEach(({key}) => {
+                        resArr = [...resArr, ...uniqueArrOfObj([...keywords, ...keywordsList].filter(item => item.matchType === key), 'keywordText')]
                     })
                 }
 
-                validKeywords = keywordsList
+                onChange([...resArr])
 
-                onChange([...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'broad'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'phrase'), 'keywordText'), ...uniqueArrOfObj([...keywords, ...validKeywords].filter(item => item.matchType === 'exact'), 'keywordText')])
-
-                setKeywordsCount(newKeyword.split('\n').filter(item => item !== '').length)
-                setValidKeywordsCount(validKeywords.length)
-
-                setNewKeyword(invalidKeywords.map(i => i.keywordText).join('\n'))
+                setNewKeyword('')
             }
         } catch (e) {
             console.log(e)
