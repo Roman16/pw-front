@@ -88,7 +88,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 }] : [],
             ...createData.createProductAds ? [productAdsField] : [],
             ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
-            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField('negativeCampaignKeywords',  'Negative Campaign Keywords')] : []
         ],
         'adGroups': [
             advertisingTypeField,
@@ -107,7 +107,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             },
             ...createData.createProductAds ? [productAdsField] : [],
             ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
-            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField( 'negativeCampaignKeywords', 'Negative Campaign Keywords')] : []
         ],
         'product-ads': [
             advertisingTypeField,
@@ -121,7 +121,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
             },
             productAdsField,
             ...createData.createTargetings ? [{...targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings')}] : [],
-            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField('negativeCampaignKeywords',  'Negative Campaign Keywords')] : []
         ],
         'targetings': [
             advertisingTypeField,
@@ -134,7 +134,7 @@ const CreateCampaignOverview = ({createData, overviewType = 'campaigns'}) => {
                 fieldKey: 'adGroupName'
             },
             targetingField(createData.targetingType, createData.targetingType === 'keywords' ? 'Keywords' : 'Targetings'),
-            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeCampaignKeywords' : 'negativeCampaignTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Campaign Keywords' : 'Negative Campaign Targetings')] : []
+            ...createData.createNegativeTargetings ? [targetingField(createData.negativeTargetingType === 'keywords' ? 'negativeKeywords' : 'negativeTargets', createData.negativeTargetingType === 'keywords' ? 'Negative Keywords' : 'Negative Targetings'), targetingField( 'negativeCampaignKeywords',  'Negative Campaign Keywords')] : []
         ]
     }
 

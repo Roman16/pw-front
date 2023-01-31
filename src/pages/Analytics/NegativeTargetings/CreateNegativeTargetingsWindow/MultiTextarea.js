@@ -171,10 +171,10 @@ export const MultiTextarea = ({
                     <Popconfirm
                         title="Are you sure to delete all keyword?"
                         onConfirm={() => removeKeywordHandler()}
-                        getPopupContainer={triggerNode => document.querySelector('.ant-modal-body')}
+                        getPopupContainer={triggerNode => triggerNode.parentNode.parentNode}
                         okButtonProps={{className: 'default'}}
                         cancelButtonProps={{className: 'white'}}
-                        placement="topRight"
+                        placement="bottomRight"
                         okText="Yes"
                         cancelText="No"
                     >

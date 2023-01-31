@@ -44,7 +44,6 @@ const defaultState = {
 
     createNegativeTargetings: false,
     negativeTargets: [],
-    negativeCampaignTargets: [],
 
     negativeKeywords: [],
     negativeCampaignKeywords: [],
@@ -236,7 +235,7 @@ const CreateProductAdsWindow = ({location, onReloadList}) => {
     const nextStepValidation = () => {
         if (currentStep === 0 && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 1 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
-        else if (currentStep === 2 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
+        else if (currentStep === 2 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0))) return true
         else return false
     }
 

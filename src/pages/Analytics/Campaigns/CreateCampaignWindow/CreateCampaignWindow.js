@@ -238,6 +238,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
         else if (currentStep === 2 && createData.createAdGroup && (!createData.adGroupName || !createData.adGroupBid)) return true
         else if (currentStep === 3 && createData.createProductAds && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 4 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
+        else if (currentStep === 5 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0))) return true
         else return false
     }
 

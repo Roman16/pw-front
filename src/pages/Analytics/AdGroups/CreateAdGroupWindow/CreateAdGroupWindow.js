@@ -46,7 +46,6 @@ const CreateAdGroupWindow = ({onReloadList}) => {
             createNegativeTargetings: false,
             negativeTargetingType: 'keywords',
             negativeTargets: [],
-            negativeCampaignTargets: [],
 
             negativeKeywords: [],
             negativeCampaignKeywords: []
@@ -177,7 +176,7 @@ const CreateAdGroupWindow = ({onReloadList}) => {
         if (currentStep === 0 && (!createData.name || createData.adGroupBid === 0)) return true
         else if (currentStep === 1 && createData.createProductAds && createData.selectedProductAds.length === 0) return true
         else if (currentStep === 2 && createData.createTargetings && (createData.targetingType === 'keywords' ? createData.keywords.length === 0 : createData.targets.length === 0)) return true
-        else if (currentStep === 3 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignTargets.length === 0))) return true
+        else if (currentStep === 3 && createData.createNegativeTargetings && (createData.negativeTargetingType === 'keywords' ? (createData.negativeKeywords.length === 0 && createData.negativeCampaignKeywords.length === 0) : (createData.negativeTargets.length === 0 && createData.negativeCampaignKeywords.length === 0))) return true
         else return false
     }
 
