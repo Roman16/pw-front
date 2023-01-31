@@ -236,7 +236,7 @@ const HourDayStatistics = ({date, selectedCompareDate, campaignId, attributionWi
                                         }
                                     >
                                         <div className='day-name' key={shortid.generate()}>
-                                            {day[0]}
+                                            {day.slice(0, 3)}
 
                                             {selectedCompareDate && compareData && <MetricDiff
                                                 widthIcon={false}

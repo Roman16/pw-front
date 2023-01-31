@@ -192,12 +192,13 @@ export const analyticsUrls = {
     campaigns: 'analytics/entities/campaigns',
     adGroups: 'analytics/entities/ad-groups',
     adGroupDetails: id => `analytics/entities/ad-groups/${id}/targeting-type`,
+    movingBudget: id => `settings/moving-budget/portfolio/${id}`,
 
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
     bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
     bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
-    targetingsValidation: `dynamic-analytics/targetings/bulk-validate`,
+    keywordValidation: type =>  `dynamic-analytics/${type}/bulk-validate`,
 }
 
 export const tableauUrls = {

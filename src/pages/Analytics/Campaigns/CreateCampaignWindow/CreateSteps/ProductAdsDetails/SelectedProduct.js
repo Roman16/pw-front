@@ -17,12 +17,12 @@ const SelectedProduct = ({selectedProducts, onChange}) => {
                     <div className='selected-products-count'>
                         <div className={'added-count'}><b>{selectedProducts.length}</b> products added</div>
 
-                        {selectedProducts.length > 0 && <button
-                            className="remove-all-btn"
-                            onClick={() => onChange({selectedProductAds: []})}
-                        >
-                            Remove all
-                        </button>}
+                        {/*{selectedProducts.length > 0 && <button*/}
+                        {/*    className="remove-all-btn"*/}
+                        {/*    onClick={() => onChange({selectedProductAds: []})}*/}
+                        {/*>*/}
+                        {/*    Remove all*/}
+                        {/*</button>}*/}
                     </div>
                 </div>
 

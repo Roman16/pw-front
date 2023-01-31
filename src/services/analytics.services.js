@@ -18,7 +18,10 @@ export const analyticsServices = {
     fetchCampaignsForTargeting,
     fetchAdGroupsForTargeting,
     fetchAdGroupDetails,
-    targetingsValidation,
+    fetchMovingBudget,
+    updateMovingBudget,
+    deleteMovingBudget,
+    keywordValidation,
 
     exactCreate,
     bulkCreate,
@@ -183,6 +186,18 @@ function fetchAdGroupDetails(id) {
     return api('get', `${analyticsUrls.adGroupDetails(id)}`)
 }
 
+function fetchMovingBudget(id) {
+    return api('get', `${analyticsUrls.movingBudget(id)}`)
+}
+
+function updateMovingBudget(id, data) {
+    return api('post', `${analyticsUrls.movingBudget(id)}`, data)
+}
+
+function deleteMovingBudget(id) {
+    return api('delete', `${analyticsUrls.movingBudget(id)}`)
+}
+
 function exactCreate(entity, data) {
     return api('post', analyticsUrls.createUrl(entity), data)
 }
@@ -191,8 +206,8 @@ function bulkCreate(entity, data) {
     return api('post', analyticsUrls.bulkCreateUrl(entity), data)
 }
 
-function targetingsValidation(data) {
-    return api('post', analyticsUrls.targetingsValidation, data)
+function keywordValidation(type, data) {
+    return api('post', analyticsUrls.keywordValidation(type), data)
 }
 
 function exactUpdateField(entity, data) {

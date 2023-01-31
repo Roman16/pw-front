@@ -12,7 +12,7 @@ import _ from 'lodash'
 
 const {Search} = Input
 
-const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
+const TableFilters = ({columns, filters = [], locationKey, searchField, onChange}) => {
     const [visibleFilterPopover, setVisibleFilterPopover] = useState(false),
         [indexSelectedFilter, setIndexSelectedFilter] = useState(null),
         [editFilter, setEditFilter] = useState(undefined),
@@ -26,7 +26,11 @@ const TableFilters = ({columns, filters = [], locationKey, searchField}) => {
     }
 
     const updateFilterListHandler = (filters) => {
-        dispatch(analyticsActions.updateFiltersList(filters))
+        if (onChange) {
+            onChange(filters)
+        } else {
+            dispatch(analyticsActions.updateFiltersList(filters))
+        }
     }
 
     const addFilterHandler = (filter) => {

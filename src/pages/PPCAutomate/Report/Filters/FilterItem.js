@@ -249,6 +249,8 @@ const columnTitle = {
     'issueObjectType': 'Object Type',
     'issueType': 'Type',
     'total_returns_count': 'Returns',
+
+    'margin_percent': 'Margin Percent'
 }
 
 
@@ -324,6 +326,7 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'calculatedBudget' ||
         filter.filterBy === 'product_ads_count' ||
         filter.filterBy === 'total_returns_count' ||
+        filter.filterBy === 'margin_percent' ||
         filter.filterBy === 'profit') {
         return (
             <>

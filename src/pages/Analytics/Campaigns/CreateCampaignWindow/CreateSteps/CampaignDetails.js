@@ -43,8 +43,6 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
         if (!createData.calculatedBudget || createData.calculatedBudget < 1 || createData.calculatedBudget > 1000000) {
             setFailedFields(prevState => [...prevState, 'calculatedBudget'])
         }
-
-        stepValidation()
     }
 
     const campaignNameValidation = () => {
@@ -52,8 +50,6 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
         if (!createData.name || createData.name.trim().length > 128) {
             setFailedFields(prevState => [...prevState, 'name'])
         }
-
-        stepValidation()
     }
 
     useEffect(() => {
@@ -67,14 +63,6 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
             campaignBudgetValidation()
         }
     }, [createData.calculatedBudget])
-
-    const stepValidation = () => {
-        if (createData.name && createData.calculatedBudget && failedFields.length === 0) {
-            confirmValidation(true)
-        } else {
-            confirmValidation(false)
-        }
-    }
 
     useEffect(() => {
         setAvailablePortfolios([...portfolioList])
@@ -115,15 +103,11 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                                 return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0 || option.props.children === 'No Portfolio'
                             }}
                         >
-                            <Option
-                                value={null}
-                            >
+                            <Option value={null}>
                                 No Portfolio
                             </Option>
 
-                            {availablePortfolios.map(portfolio => <Option
-                                value={portfolio.portfolioId}
-                            >
+                            {availablePortfolios.map(portfolio => <Option value={portfolio.portfolioId}>
                                 {portfolio.name}
                             </Option>)}
                         </CustomSelect>
@@ -234,7 +218,9 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
             <div className="col">
                 <Radio.Group
                     value={createData.calculatedCampaignSubType}
-                    onChange={({target: {value}}) => onChange({calculatedCampaignSubType: value})}
+                    onChange={({target: {value}}) => onChange({
+                        calculatedCampaignSubType: value,
+                    })}
                 >
                     <h4>Targeting:</h4>
 
@@ -244,7 +230,7 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <div className="radio-description">
                         Amazon will target keywords and products that are similar to the product in your ad.
                     </div>
-
+                    <br/>
                     <Radio value={'Manual'}>
                         Manual Targeting
                     </Radio>
@@ -274,20 +260,18 @@ const CampaignDetails = ({createData, onChange, confirmValidation}) => {
                     <div className="radio-description">
                         Amazon will lower your bids in real time when your ad may be less likely to convert to a sale.
                     </div>
-
+                    <br/>
                     <Radio value={'autoForSales'}>
                         Dynamic bids - up and down
                     </Radio>
-
                     <div className="radio-description">
                         Amazon will raise your bids (by a maximum of 100%) in real time when your ad may be more likely
                         to convert to a sale, and lower your bids when less likely to convert to a sale.
                     </div>
-
+                    <br/>
                     <Radio value={'manual'}>
                         Fixed bids
                     </Radio>
-
                     <div className="radio-description">
                         Amazon will use your exact bid and any manual adjustments you set, and won’t change your bids
                         based on likelihood of a sale.

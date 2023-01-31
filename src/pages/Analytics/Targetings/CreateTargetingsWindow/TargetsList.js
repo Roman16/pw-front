@@ -1,6 +1,6 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {uniqueArrOfObj} from "../../../../utils/unique"
-import {Radio} from "antd"
+import {Checkbox, Popconfirm, Radio} from "antd"
 import {SVG} from "../../../../utils/icons"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {Spin} from "antd/es"
@@ -8,14 +8,15 @@ import _ from "lodash"
 
 let allKeywords = []
 
-const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}) => {
+const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate, disabled}) => {
     const [newKeyword, setNewKeyword] = useState(''),
         [keywordType, setKeywordType] = useState('asins'),
         [keywordsCount, setKeywordsCount] = useState(null),
         [validKeywordsCount, setValidKeywordsCount] = useState(null),
         [validationProcessing, setValidationProcessing] = useState(false),
-        [defaultBid, setDefaultBid] = useState(1),
-        [invalidDetails, setInvalidDetails] = useState()
+        [defaultBid, setDefaultBid] = useState(createData.adGroupBid),
+        [invalidDetails, setInvalidDetails] = useState(),
+        [disabledBidField, setDisabledBidField] = useState(true)
 
     const addKeywordsHandler = async (e) => {
         e.preventDefault()
@@ -128,17 +129,36 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
         hiddenElement.click()
     }
 
+    useEffect(() => {
+        if (disabledBidField) {
+            setDefaultBid(createData.adGroupBid)
+        }
+    }, [createData.adGroupBid])
+
     return (
-        <div className={`negative-keywords keyword-targetings asins`}>
+        <div className={`negative-keywords keyword-targetings asins ${disabled ? 'disabled' : ''}`}>
             <div className="bid-block">
                 <h3>Product Targetings</h3>
 
-                <div className="form-group row">
-                    <label htmlFor="">Bid</label>
-                    <InputCurrency
-                        value={defaultBid}
-                        onChange={(value) => setDefaultBid(value)}
-                    />
+                <div className="row">
+                    <div className="form-group">
+                        <label htmlFor="">Bid</label>
+                        <InputCurrency
+                            value={defaultBid}
+                            onChange={(value) => setDefaultBid(value)}
+                            disabled={disabled || disabledBidField}
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <Checkbox
+                            disabled={disabled}
+                            checked={disabledBidField}
+                            onChange={({target: {checked}}) => setDisabledBidField(checked)}
+                        >
+                            Use bid from Ad Group
+                        </Checkbox>
+                    </div>
                 </div>
             </div>
 
@@ -194,7 +214,18 @@ const TargetsList = ({keywords, onUpdate, targetingType, createData, onValidate}
                     <div className="row">
                         <div className="count"><b>{keywords.length || 0}</b> product targetings</div>
                         {keywords.length > 0 &&
-                        <button onClick={clearKeywordsListHandler} disabled={validationProcessing}>Remove All</button>}
+                        <Popconfirm
+                            title="Are you sure to delete all keyword?"
+                            onConfirm={clearKeywordsListHandler}
+                            getPopupContainer={triggerNode => triggerNode.parentNode.parentNode}
+                            okButtonProps={{className: 'default'}}
+                            cancelButtonProps={{className: 'white'}}
+                            placement="bottomRight"
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <button disabled={validationProcessing}>Remove All</button>
+                        </Popconfirm>}
                     </div>
 
                     <div className="keywords-list">

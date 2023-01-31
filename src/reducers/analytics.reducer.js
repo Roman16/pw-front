@@ -40,7 +40,7 @@ const initialState = {
     visibleCreationWindows: {
         campaign: false,
         portfolio: false,
-        negativeTargetings: false,
+        'negative-targetings': false,
     },
     mainState: {
         campaignId: undefined,

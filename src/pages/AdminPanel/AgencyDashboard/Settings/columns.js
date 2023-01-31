@@ -35,7 +35,7 @@ export const columns = (users, onChange) => [
             value={id}
             onChange={(value) => onChange(rowIndex, {project_manager_id: value})}
         >
-            <Option value={null}>No Manager</Option>
+            <Option value={null}><b>No Manager</b></Option>
 
             {users.map(user => (
                 <Option value={user.id}>
@@ -56,7 +56,7 @@ export const columns = (users, onChange) => [
             value={id}
             onChange={(value) => onChange(rowIndex, {ppc_manager_id: value})}
         >
-            <Option value={null}>No Manager</Option>
+            <Option value={null}><b>No Manager</b></Option>
 
             {users.map(user => (
                 <Option value={user.id}>

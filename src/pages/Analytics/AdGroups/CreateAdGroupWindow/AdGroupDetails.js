@@ -3,6 +3,7 @@ import {Input, Select} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {InfinitySelect} from "../../Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import _ from "lodash"
 
 const Option = Select.Option
 
@@ -11,6 +12,7 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
         onChange(({
             ...createData,
             campaignId: value,
+            campaignName: _.find(campaigns, {campaignId: value}).name,
         }))
     }
 
@@ -80,7 +82,7 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
             </div>
 
             <div className="col description">
-
+                Choose an ad group name that you can easily identify and refer to later.
             </div>
         </div>
 
@@ -90,16 +92,15 @@ const AdGroupDetails = ({createData, onChange, selectedCampaign, campaigns, getC
                     <label htmlFor="">Default bid</label>
                     <InputCurrency
                         step={0.01}
-                        value={createData.defaultBid}
-                        onChange={(value) => onChange({defaultBid: value})}
+                        value={createData.adGroupBid}
+                        onChange={(value) => onChange({adGroupBid: value})}
                         disabled={!createData.campaignId}
                     />
                 </div>
-
             </div>
 
             <div className="col description">
-
+                Default bid applies to all clicks unless you set a different bid for a keyword.
             </div>
         </div>
     </div>)

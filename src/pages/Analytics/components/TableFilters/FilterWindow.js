@@ -173,6 +173,7 @@ const containsVariations = {
     'calculatedBid': numberVariations,
     'calculatedBudget': numberVariations,
     'total_returns_count': numberVariations,
+    'margin_percent': numberVariations,
     [metricKeys['icvr']]: numberVariations,
     [metricKeys['rpc']]: numberVariations,
     [metricKeys['rpi']]: numberVariations,
@@ -526,6 +527,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'sales_share' ||
                     filterBy === 'conversion_rate' ||
                     filterBy === 'macos' ||
+                    filterBy === 'margin_percent' ||
                     filterBy === metricKeys['icvr'] ||
                     filterBy === 'ctr' ||
                     filterBy === 'budget_allocation'
