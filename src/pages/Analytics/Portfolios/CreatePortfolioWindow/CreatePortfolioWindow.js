@@ -13,14 +13,16 @@ import {notification} from "../../../../components/Notification"
 
 const Option = Select.Option
 
+const defaultState = {
+    portfolioName: '',
+    state: 'enabled',
+    budgetCap: 'no-budget',
+    budget_amount: 0,
+    create_ends_date: 'never'
+}
+
 const CreatePortfolioWindow = ({onReloadList}) => {
-    const [createPortfolioData, setCreatePortfolioData] = useState({
-            portfolioName: '',
-            state: 'enabled',
-            budgetCap: 'no-budget',
-            budget_amount: 0,
-            create_ends_date: 'never'
-        }),
+    const [createPortfolioData, setCreatePortfolioData] = useState({...defaultState}),
         [createProcessing, setCreateProcessing] = useState(false),
         [errorFields, setErrorFields] = useState([])
 
@@ -84,6 +86,7 @@ const CreatePortfolioWindow = ({onReloadList}) => {
             await analyticsServices.exactCreate('portfolios', requestData)
             closeWindowHandler()
             onReloadList()
+            setCreatePortfolioData({...defaultState})
             notification.success({title: 'Portfolio created'})
         } catch (e) {
             console.log(e)
