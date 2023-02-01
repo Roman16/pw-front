@@ -8,6 +8,7 @@ const AdGroupDetails = ({createData, onChange}) => {
         <div className="row">
             <div className="col create-switch">
                 <Radio.Group
+                    disabled
                     value={createData.createAdGroup}
                     onChange={({target: {value}}) => onChange({createAdGroup: value})}
                 >

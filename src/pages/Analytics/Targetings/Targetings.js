@@ -39,11 +39,11 @@ const Targetings = () => {
                 fixedColumns={[0, 1]}
 
                 columns={columns}
-                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
                 showRowSelection={true}
                 rowKey={'targetingId'}
             >
-                {successCreate => <CreateTargetingsWindow onReloadList={successCreate} location={location}/>}
+                {/*{successCreate => <CreateTargetingsWindow onReloadList={successCreate} location={location}/>}*/}
             </RenderPageParts>
 
         </div>
