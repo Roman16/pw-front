@@ -188,6 +188,7 @@ const CreateCampaignWindow = ({onReloadList}) => {
 
             closeWindowHandler()
             onReloadList()
+            setCreateData({...defaultState})
         } catch (e) {
             console.log(e)
         }

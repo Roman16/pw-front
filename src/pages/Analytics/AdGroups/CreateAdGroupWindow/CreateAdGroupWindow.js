@@ -27,29 +27,31 @@ const steps = [
     'Overview',
 ]
 
-const CreateAdGroupWindow = ({onReloadList}) => {
-    const [createData, setCreateData] = useState({
-            advertisingType: undefined,
-            campaignId: undefined,
-            name: '',
-            adGroupBid: 0,
-            state: 'enabled',
-            //product ads
-            createProductAds: false,
-            selectedProductAds: [],
-            //targetings
-            createTargetings: false,
-            targetingType: 'keywords',
-            keywords: [],
-            targets: [],
-            //negative targetings
-            createNegativeTargetings: false,
-            negativeTargetingType: 'keywords',
-            negativeTargets: [],
+const defaultState = {
+    advertisingType: undefined,
+    campaignId: undefined,
+    name: '',
+    adGroupBid: 0,
+    state: 'enabled',
+    //product ads
+    createProductAds: false,
+    selectedProductAds: [],
+    //targetings
+    createTargetings: false,
+    targetingType: 'keywords',
+    keywords: [],
+    targets: [],
+    //negative targetings
+    createNegativeTargetings: false,
+    negativeTargetingType: 'keywords',
+    negativeTargets: [],
 
-            negativeKeywords: [],
-            negativeCampaignKeywords: []
-        }),
+    negativeKeywords: [],
+    negativeCampaignKeywords: []
+}
+
+const CreateAdGroupWindow = ({onReloadList}) => {
+    const [createData, setCreateData] = useState({...defaultState}),
         [currentStep, setCurrentStep] = useState(0),
         [skippedSteps, setSkippedSteps] = useState([]),
         [processSteps, setProcessSteps] = useState([]),
@@ -144,6 +146,7 @@ const CreateAdGroupWindow = ({onReloadList}) => {
 
             onReloadList()
             closeWindowHandler()
+            setCreateData({...defaultState})
             notification.success({title: 'Ad Group created'})
         } catch (e) {
             console.log(e)
