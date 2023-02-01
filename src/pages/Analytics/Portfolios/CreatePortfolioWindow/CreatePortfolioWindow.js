@@ -166,12 +166,14 @@ const CreatePortfolioWindow = ({onReloadList}) => {
                                 <Radio value={'on'}>
                                     On
 
-                                    <DatePicker
-                                        getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode}
-                                        onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
-                                        showToday={false}
-                                        disabled={createPortfolioData.create_ends_date === 'never'}
-                                    />
+                                    <div className="form-group">
+                                        <DatePicker
+                                            getCalendarContainer={(trigger) => trigger.parentNode.parentNode.parentNode.parentNode.parentNode}
+                                            onChange={(date) => changeCreateDataHandler({budget_endDate: date})}
+                                            showToday={false}
+                                            disabled={createPortfolioData.create_ends_date === 'never'}
+                                        />
+                                    </div>
                                 </Radio>
                             </Radio.Group>
                         </div>
