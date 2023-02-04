@@ -203,7 +203,7 @@ const LoadingAmazonAccount = ({visible, pathname, importStatus, firstName, lastN
 
             <p>
                 We’re currently retrieving Amazon data for your {marketplaceName} marketplace. <br/>
-                It only needs to be completed once and may take up to 24 hours. <br/>
+                It only needs to be completed once and may take up to 48 hours. <br/>
                 See the table below for import progress and start using features whenever they’re ready!
             </p>
 
