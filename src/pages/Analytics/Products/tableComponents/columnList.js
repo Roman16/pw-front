@@ -32,6 +32,7 @@ const getColumns = (location) => [
         locked: true,
         sorter: true,
         search: true,
+        filter: true,
         render: (name, item) => <RenderProduct
             product={item}
             isParent={location === 'products-parents'}

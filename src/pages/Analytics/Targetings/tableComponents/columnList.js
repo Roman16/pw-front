@@ -51,6 +51,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
         sorter: true,
         locked: true,
         search: true,
+        filter: true,
         ...keywordPTColumn
     },
     ...!selectedCampaign ? [{

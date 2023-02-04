@@ -17,6 +17,13 @@ const numberVariations = [
     {label: 'Not equals', key: 'neq'}
 ]
 
+export const stringVariations = [
+    {label: 'Contains', key: 'contains'},
+    {label: 'Matches', key: 'matches'},
+    {label: 'Not contains', key: 'not_contains'},
+    {label: 'Not matches', key: 'not_matches'}
+]
+
 const reasonList = [
     {
         label: 'Added Created Keyword As Negative',
@@ -123,14 +130,19 @@ const reasonList = [
 
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
-    'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'campaignName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'adGroupName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'portfolioName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
 
+    'object': stringVariations,
+    'keyword_pt': stringVariations,
+    'campaignName': stringVariations,
+    'adGroupName': stringVariations,
+    'campaign_name': stringVariations,
+    'portfolioName': stringVariations,
+    'ad_group_name': stringVariations,
+
+    'name': stringVariations,
+    'product_name_sku_asin': stringVariations,
+    'calculatedTargetingText': stringVariations,
+    'query': stringVariations,
 
     'impressions': numberVariations,
     'clicks': numberVariations,
@@ -528,7 +540,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                             {column.title}
                         </Option>
                     ))}
-
                 </CustomSelect>
             </div>
 
@@ -556,20 +567,23 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
+                    disabled={!filterType?.key}
                     timeRange={(startDate, endDate) => changeValueHandler({startDate, endDate})}
                 />}
 
                 {(!filterType ||
+                    !filterType.key ||
                     filterBy === 'object' ||
                     filterBy === 'keyword_pt' ||
                     filterBy === 'campaignName' ||
                     filterBy === 'adGroupName' ||
                     filterBy === 'portfolioName' ||
                     filterBy === 'campaign_name' ||
-                    filterBy === 'ad_group_name'
+                    filterBy === 'ad_group_name' ||
+                    stringVariations.some(i => i.key === filterType.key)
                 ) &&
                 <Input
-                    disabled={!filterBy}
+                    disabled={!filterType?.key}
                     placeholder={'Type'}
                     value={filterValue}
                     onChange={(e) => changeValueHandler(e.target.value)}
@@ -594,7 +608,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === metricKeys['organicUnits'] ||
                     filterBy === 'impressions') &&
                 <Input
-                    disabled={!filterBy}
+                    disabled={!filterType?.key}
                     value={filterValue}
                     placeholder={'Enter number'}
                     type={'number'}
@@ -616,6 +630,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     value={filterValue}
                     onChange={changeValueHandler}
                     step={0.01}
+                    disabled={!filterType?.key}
                 />}
 
                 {(filterBy === 'spend' ||
@@ -652,6 +667,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     placeholder={'Enter number'}
                     onChange={changeValueHandler}
                     step={0.01}
+                    disabled={!filterType?.key}
                 />}
 
                 {filterBy && (filterType.key === 'one_of' || filterType.key === 'except') &&
@@ -663,6 +679,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     showSearch={false}
                     placeholder={'Type'}
                     onChange={changeValueHandler}
+                    disabled={!filterType?.key}
                 />}
             </div>
         </div>
