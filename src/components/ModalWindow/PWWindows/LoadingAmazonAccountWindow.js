@@ -45,7 +45,7 @@ const tools = [
     {
         key: 'dayparting',
         title: 'Dayparting',
-        link: '/ppc/dayparting'
+        link: '/dayparting'
     },
     // {
     //     key: 'products_info',
