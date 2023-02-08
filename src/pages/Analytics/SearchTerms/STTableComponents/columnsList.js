@@ -30,6 +30,7 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
         sorter: true,
         locked: true,
         search: true,
+        filter: true,
         render: (text, item) => (
             <div className="query-field">
                 <span className={'overflow-text'}>{text}</span>

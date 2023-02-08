@@ -45,6 +45,7 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
             sorter: true,
             locked: true,
             search: true,
+            filter: true,
             editType: 'text',
             redirectLink: (item) => `/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
             clickEvent: (item, e) => {

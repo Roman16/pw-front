@@ -35,6 +35,7 @@ const getColumns = (setStateHandler, setStateDetails) => ([
             sorter: true,
             locked: true,
             search: true,
+            filter: true,
             editType: 'text',
             redirectLink: (item) => `/analytics/campaigns?portfolioId=${item.portfolioId}`,
             clickEvent: (item, e) => {

@@ -17,6 +17,13 @@ const numberVariations = [
     {label: 'Not equals', key: 'neq'}
 ]
 
+export const stringVariations = [
+    {label: 'Contains', key: 'contains'},
+    {label: 'Matches', key: 'matches'},
+    {label: 'Not contains', key: 'not_contains'},
+    {label: 'Not matches', key: 'not_matches'}
+]
+
 const reasonList = [
     {
         label: 'Added Created Keyword As Negative',
@@ -123,14 +130,19 @@ const reasonList = [
 
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
-    'object': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'campaignName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'adGroupName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'keyword_pt': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'campaign_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'portfolioName': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
-    'ad_group_name': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}],
 
+    'object': stringVariations,
+    'keyword_pt': stringVariations,
+    'campaignName': stringVariations,
+    'adGroupName': stringVariations,
+    'campaign_name': stringVariations,
+    'portfolioName': stringVariations,
+    'ad_group_name': stringVariations,
+
+    'name': stringVariations,
+    'product_name_sku_asin': stringVariations,
+    'calculatedTargetingText': stringVariations,
+    'query': stringVariations,
 
     'impressions': numberVariations,
     'clicks': numberVariations,
@@ -281,13 +293,25 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Customer Search Term', key: 'CustomerSearchTerm', value: 'CustomerSearchTerm'},
         ],
         'issueType': [
-            {title: 'Ad Group Does Not Have All Negatives', key: 'AdGroupDoesNotHaveAllNegatives', value: 'AdGroupDoesNotHaveAllNegatives'},
-            {title: 'Ad Group With Foreign Products', key: 'AdGroupWithForeignProducts', value: 'AdGroupWithForeignProducts'},
+            {
+                title: 'Ad Group Does Not Have All Negatives',
+                key: 'AdGroupDoesNotHaveAllNegatives',
+                value: 'AdGroupDoesNotHaveAllNegatives'
+            },
+            {
+                title: 'Ad Group With Foreign Products',
+                key: 'AdGroupWithForeignProducts',
+                value: 'AdGroupWithForeignProducts'
+            },
             {title: 'Average ASIN PTs', key: 'AverageASINPTs', value: 'AverageASINPTs'},
             {title: 'Average Broad Keywords', key: 'AverageBroadKeywords', value: 'AverageBroadKeywords'},
             {title: 'Average Keywords', key: 'AverageKeywords', value: 'AverageKeywords'},
             {title: 'Average Long Tail Keywords', key: 'AverageLongTailKeywords', value: 'AverageLongTailKeywords'},
-            {title: 'Found Ad Groups With Foreign Products', key: 'FoundAdGroupsWithForeignProducts', value: 'FoundAdGroupsWithForeignProducts'},
+            {
+                title: 'Found Ad Groups With Foreign Products',
+                key: 'FoundAdGroupsWithForeignProducts',
+                value: 'FoundAdGroupsWithForeignProducts'
+            },
             {title: 'Low ASIN PTs', key: 'LowASINPTs', value: 'LowASINPTs'},
             {title: 'Low Broad Keywords', key: 'LowBroadKeywords', value: 'LowBroadKeywords'},
             {title: 'Low Keywords', key: 'LowKeywords', value: 'LowKeywords'},
@@ -300,21 +324,73 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'No Keywords', key: 'NoKeywords', value: 'NoKeywords'},
             {title: 'No Long Tail Keywords', key: 'NoLongTailKeywords', value: 'NoLongTailKeywords'},
             {title: 'Obsolete Auto Campaign', key: 'ObsoleteAutoCampaign', value: 'ObsoleteAutoCampaign'},
-            {title: 'Should Change Keyword Bid ACoS', key: 'ShouldChangeKeywordBidACoS', value: 'ShouldChangeKeywordBidACoS'},
-            {title: 'Should Change Keyword Bid Impressions', key: 'ShouldChangeKeywordBidImpressions', value: 'ShouldChangeKeywordBidImpressions'},
+            {
+                title: 'Should Change Keyword Bid ACoS',
+                key: 'ShouldChangeKeywordBidACoS',
+                value: 'ShouldChangeKeywordBidACoS'
+            },
+            {
+                title: 'Should Change Keyword Bid Impressions',
+                key: 'ShouldChangeKeywordBidImpressions',
+                value: 'ShouldChangeKeywordBidImpressions'
+            },
             {title: 'Should Change PT Bid ACoS', key: 'ShouldChangePTBidACoS', value: 'ShouldChangePTBidACoS'},
-            {title: 'Should Change PT Bid Impressions', key: 'ShouldChangePTBidImpressions', value: 'ShouldChangePTBidImpressions'},
-            {title: 'Should Create Keyword From CST', key: 'ShouldCreateKeywordFromCST', value: 'ShouldCreateKeywordFromCST'},
-            {title: 'Should Create Negative Keyword From CST High ACoS', key: 'ShouldCreateNegativeKeywordFromCSTHighACoS', value: 'ShouldCreateNegativeKeywordFromCSTHighACoS'},
-            {title: 'Should Create Negative Keyword From CST No Sales', key: 'ShouldCreateNegativeKeywordFromCSTNoSales', value: 'ShouldCreateNegativeKeywordFromCSTNoSales'},
-            {title: 'Should Create Negative PT From CST High ACoS', key: 'ShouldCreateNegativePTFromCSTHighACoS', value: 'ShouldCreateNegativePTFromCSTHighACoS'},
-            {title: 'Should Create Negative PT From CST No Sales', key: 'ShouldCreateNegativePTFromCSTNoSales', value: 'ShouldCreateNegativePTFromCSTNoSales'},
+            {
+                title: 'Should Change PT Bid Impressions',
+                key: 'ShouldChangePTBidImpressions',
+                value: 'ShouldChangePTBidImpressions'
+            },
+            {
+                title: 'Should Create Keyword From CST',
+                key: 'ShouldCreateKeywordFromCST',
+                value: 'ShouldCreateKeywordFromCST'
+            },
+            {
+                title: 'Should Create Negative Keyword From CST High ACoS',
+                key: 'ShouldCreateNegativeKeywordFromCSTHighACoS',
+                value: 'ShouldCreateNegativeKeywordFromCSTHighACoS'
+            },
+            {
+                title: 'Should Create Negative Keyword From CST No Sales',
+                key: 'ShouldCreateNegativeKeywordFromCSTNoSales',
+                value: 'ShouldCreateNegativeKeywordFromCSTNoSales'
+            },
+            {
+                title: 'Should Create Negative PT From CST High ACoS',
+                key: 'ShouldCreateNegativePTFromCSTHighACoS',
+                value: 'ShouldCreateNegativePTFromCSTHighACoS'
+            },
+            {
+                title: 'Should Create Negative PT From CST No Sales',
+                key: 'ShouldCreateNegativePTFromCSTNoSales',
+                value: 'ShouldCreateNegativePTFromCSTNoSales'
+            },
             {title: 'Should Create PT From CST', key: 'ShouldCreatePTFromCST', value: 'ShouldCreatePTFromCST'},
-            {title: 'Should Pause Keyword Duplicate From Customer Search Term', key: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm', value: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm'},
-            {title: 'Should Pause Keyword Duplicate', key: 'ShouldPauseKeywordDuplicate', value: 'ShouldPauseKeywordDuplicate'},
-            {title: 'Should Pause Keyword Duplicate Of PT', key: 'ShouldPauseKeywordDuplicateOfPT', value: 'ShouldPauseKeywordDuplicateOfPT'},
-            {title: 'Should Pause Keyword High ACoS', key: 'ShouldPauseKeywordHighACoS', value: 'ShouldPauseKeywordHighACoS'},
-            {title: 'Should Pause Keyword No Sales', key: 'ShouldPauseKeywordNoSales', value: 'ShouldPauseKeywordNoSales'},
+            {
+                title: 'Should Pause Keyword Duplicate From Customer Search Term',
+                key: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm',
+                value: 'ShouldPauseKeywordDuplicateFromCustomerSearchTerm'
+            },
+            {
+                title: 'Should Pause Keyword Duplicate',
+                key: 'ShouldPauseKeywordDuplicate',
+                value: 'ShouldPauseKeywordDuplicate'
+            },
+            {
+                title: 'Should Pause Keyword Duplicate Of PT',
+                key: 'ShouldPauseKeywordDuplicateOfPT',
+                value: 'ShouldPauseKeywordDuplicateOfPT'
+            },
+            {
+                title: 'Should Pause Keyword High ACoS',
+                key: 'ShouldPauseKeywordHighACoS',
+                value: 'ShouldPauseKeywordHighACoS'
+            },
+            {
+                title: 'Should Pause Keyword No Sales',
+                key: 'ShouldPauseKeywordNoSales',
+                value: 'ShouldPauseKeywordNoSales'
+            },
             {title: 'Should Pause PT Duplicate', key: 'ShouldPausePTDuplicate', value: 'ShouldPausePTDuplicate'},
             {title: 'Should Pause PT High ACoS', key: 'ShouldPausePTHighACoS', value: 'ShouldPausePTHighACoS'},
             {title: 'Should Pause PT No Sales', key: 'ShouldPausePTNoSales', value: 'ShouldPausePTNoSales'},
@@ -336,7 +412,11 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     {title: 'Negative Exact', key: 'negativeExact', value: 'negativeExact'},
                     {title: 'Negative Phrase', key: 'negativePhrase', value: 'negativePhrase'},
                     {title: 'Campaign Negative Exact', key: 'campaign_negativeExact', value: 'campaign_negativeExact'},
-                    {title: 'Campaign Negative Phrase', key: 'campaign_negativePhrase', value: 'campaign_negativePhrase'},
+                    {
+                        title: 'Campaign Negative Phrase',
+                        key: 'campaign_negativePhrase',
+                        value: 'campaign_negativePhrase'
+                    },
                     {title: 'ASIN', key: 'asin', value: 'asin'},
                     {title: 'Brand', key: 'brand', value: 'brand'},
 
@@ -414,14 +494,17 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
 
     const changeFilterByHandler = (value) => {
         setFilterBy(value)
-        setFilterType(containsVariations[value][0])
+        setFilterType({
+            key: undefined,
+            type: undefined
+        })
         setFilterValue(null)
     }
 
     const changeTypeHandler = (value) => {
         setFilterType(containsVariations[filterBy].find(item => item.key === value))
-
     }
+
     const changeValueHandler = (value) => {
         setFilterValue(value)
     }
@@ -453,10 +536,10 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     getPopupContainer={trigger => trigger.parentNode}
                 >
                     {columns.map(column => (column.filter &&
-                        <Option value={column.dataIndex}
-                                disabled={filters.find(item => item.filterBy === column.dataIndex)}>{column.title}</Option>
+                        <Option value={column.dataIndex}>
+                            {column.title}
+                        </Option>
                     ))}
-
                 </CustomSelect>
             </div>
 
@@ -470,7 +553,13 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     disabled={!filterBy}
                 >
                     {filterBy && containsVariations[filterBy].map((item, index) => (
-                        <Option value={item.key} title={item.label}>{item.label}</Option>
+                        <Option
+                            value={item.key}
+                            title={item.label}
+                            disabled={filters.find(i => i.filterBy === filterBy && item.key === i.type.key)}
+                        >
+                            {item.label}
+                        </Option>
                     ))}
                 </CustomSelect>
             </div>
@@ -478,20 +567,23 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
+                    disabled={!filterType?.key}
                     timeRange={(startDate, endDate) => changeValueHandler({startDate, endDate})}
                 />}
 
                 {(!filterType ||
+                    !filterType.key ||
                     filterBy === 'object' ||
                     filterBy === 'keyword_pt' ||
                     filterBy === 'campaignName' ||
                     filterBy === 'adGroupName' ||
                     filterBy === 'portfolioName' ||
                     filterBy === 'campaign_name' ||
-                    filterBy === 'ad_group_name'
+                    filterBy === 'ad_group_name' ||
+                    stringVariations.some(i => i.key === filterType.key)
                 ) &&
                 <Input
-                    disabled={!filterBy}
+                    disabled={!filterType?.key}
                     placeholder={'Type'}
                     value={filterValue}
                     onChange={(e) => changeValueHandler(e.target.value)}
@@ -516,7 +608,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === metricKeys['organicUnits'] ||
                     filterBy === 'impressions') &&
                 <Input
-                    disabled={!filterBy}
+                    disabled={!filterType?.key}
                     value={filterValue}
                     placeholder={'Enter number'}
                     type={'number'}
@@ -538,6 +630,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     value={filterValue}
                     onChange={changeValueHandler}
                     step={0.01}
+                    disabled={!filterType?.key}
                 />}
 
                 {(filterBy === 'spend' ||
@@ -558,15 +651,15 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'dailyBudget' ||
                     filterBy === 'calculatedBudget' ||
                     filterBy === 'calculatedBid' ||
-                    filterBy === metricKeys['rpc']  ||
-                    filterBy === metricKeys['rpi']  ||
-                    filterBy === metricKeys['SPAdSales']  ||
-                    filterBy === metricKeys['SDAdSales']  ||
-                    filterBy === metricKeys['SBAdSales']  ||
-                    filterBy === metricKeys['adSalesSameSKU']  ||
-                    filterBy === metricKeys['adSalesOtherSKU']  ||
-                    filterBy === metricKeys['bidCPC']  ||
-                    filterBy === metricKeys['cpm']  ||
+                    filterBy === metricKeys['rpc'] ||
+                    filterBy === metricKeys['rpi'] ||
+                    filterBy === metricKeys['SPAdSales'] ||
+                    filterBy === metricKeys['SDAdSales'] ||
+                    filterBy === metricKeys['SBAdSales'] ||
+                    filterBy === metricKeys['adSalesSameSKU'] ||
+                    filterBy === metricKeys['adSalesOtherSKU'] ||
+                    filterBy === metricKeys['bidCPC'] ||
+                    filterBy === metricKeys['cpm'] ||
                     filterBy === 'sales'
                 ) &&
                 <InputCurrency
@@ -574,6 +667,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     placeholder={'Enter number'}
                     onChange={changeValueHandler}
                     step={0.01}
+                    disabled={!filterType?.key}
                 />}
 
                 {filterBy && (filterType.key === 'one_of' || filterType.key === 'except') &&
@@ -585,6 +679,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     showSearch={false}
                     placeholder={'Type'}
                     onChange={changeValueHandler}
+                    disabled={!filterType?.key}
                 />}
             </div>
         </div>

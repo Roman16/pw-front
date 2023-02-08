@@ -26,6 +26,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         sorter: true,
         locked: true,
         search: true,
+        filter: true,
         width: '300px',
         ...keywordPTColumn
     },
