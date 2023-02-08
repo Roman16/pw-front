@@ -20,14 +20,14 @@ export const columns = [
         dataIndex: 'project_manager_email',
         key: 'project_manager_email',
         width: '200px',
-        render: email => email || '-'
+        render: email => email ? <span title={email} className="trim-text">{email}</span> : '-'
     },
     {
         title: 'PPC Manager',
         dataIndex: 'ppc_manager_email',
         key: 'ppc_manager_email',
         width: '200px',
-        render: email => email || '-'
+        render: email => email ? <span title={email} className="trim-text">{email}</span> : '-'
     },
     {
         ...impressionsColumn,

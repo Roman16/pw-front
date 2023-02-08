@@ -1,0 +1,54 @@
+.form-group.multi-search-field {
+  position: relative;
+
+  .switch-multi-search,
+  .on-search-btn,
+  .line-break {
+    width: 2.142857142857143rem;
+    height: 2.142857142857143rem;
+    position: absolute;
+    right: 2px;
+    top: 1px;
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 1.4285714285714286rem;
+      height: 1.4285714285714286rem;
+      stroke: #353A3E;
+      fill: #353A3E;
+    }
+
+    &:hover {
+      svg {
+        stroke: #FF5256;
+      }
+    }
+
+    &.active {
+      svg {
+        stroke: #FF5256;
+      }
+    }
+  }
+
+  .on-search-btn {
+    right: 2.4285714285714284rem;
+  }
+
+  .line-break {
+    top: 2.4285714285714284rem;
+  }
+
+  input {
+    height: 2.2857142857142856rem;
+  }
+
+  textarea {
+    resize: none;
+    height: 80px;
+    padding: 5px 1.07142857rem;
+  }
+
+
+}

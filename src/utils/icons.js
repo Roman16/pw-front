@@ -554,7 +554,7 @@ const files = {
             width: 18,
             height: 18,
             viewBox: [0, 0, 18, 18],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="18" height="18" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#4F0505" d="M0 0H18V18H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#656A84" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16.9422L12.0962 12.0561M12.0962 12.0561C13.2725 10.8841 14 9.26498 14 7.47654C14 3.89964 11.0899 1 7.5 1C3.91015 1 1 3.89964 1 7.47654C1 11.0534 3.91015 13.9531 7.5 13.9531C9.29493 13.9531 10.9199 13.2282 12.0962 12.0561Z"/></g>'
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="18" height="18" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#4F0505" d="M0 0H18V18H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16.9422L12.0962 12.0561M12.0962 12.0561C13.2725 10.8841 14 9.26498 14 7.47654C14 3.89964 11.0899 1 7.5 1C3.91015 1 1 3.89964 1 7.47654C1 11.0534 3.91015 13.9531 7.5 13.9531C9.29493 13.9531 10.9199 13.2282 12.0962 12.0561Z"/></g>'
         },
         'scanner-warning': {
             width: 41,
@@ -1353,6 +1353,25 @@ const files = {
 </g>
 </svg>`
         },
+        'multi-search-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g >
+<path d="M17.875 4.42857H7.75M7.75 4.42857C7.75 6.32212 6.23896 7.85714 4.375 7.85714C2.51104 7.85714 1 6.32212 1 4.42857C1 2.53502 2.51104 1 4.375 1C6.23896 1 7.75 2.53502 7.75 4.42857ZM2.125 15.5714H12.25M12.25 15.5714C12.25 17.465 13.761 19 15.625 19C17.489 19 19 17.465 19 15.5714C19 13.6779 17.489 12.1429 15.625 12.1429C13.761 12.1429 12.25 13.6779 12.25 15.5714Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>`
+        }, 'line-break': {
+            width: 896,
+            height: 896,
+            viewBox: [0, 0, 896, 896],
+            data: `<svg viewBox="64 64 896 896" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M864 170h-60c-4.4 0-8 3.6-8 8v518H310v-73c0-6.7-7.8-10.5-13-6.3l-141.9 112a8 8 0 000 12.6l141.9 112c5.3 4.2 13 .4 13-6.3v-75h498c35.3 0 64-28.7 64-64V178c0-4.4-3.6-8-8-8z" stroke-width="2" ></path>
+</g>
+</svg>`
+        },
         'dayparting-icon-sidebar': {
             width: 20,
             height: 20,
@@ -1372,6 +1391,8 @@ const files = {
         },
     },
     allIds: [
+        'line-break',
+        'multi-search-icon',
         'check-icon',
         'dayparting-icon-sidebar',
         'full-plan-icon',

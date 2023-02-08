@@ -564,7 +564,12 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 </CustomSelect>
             </div>
 
-            <div className="form-group">
+            {!filterType?.key ? <div className="form-group">
+                <Input
+                    disabled
+                    placeholder={'Type'}
+                />
+            </div> : <div className="form-group">
                 {filterBy === 'datetime' &&
                 <DatePicker
                     disabled={!filterType?.key}
@@ -572,7 +577,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 />}
 
                 {(!filterType ||
-                    !filterType.key ||
                     filterBy === 'object' ||
                     filterBy === 'keyword_pt' ||
                     filterBy === 'campaignName' ||
@@ -681,7 +685,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     onChange={changeValueHandler}
                     disabled={!filterType?.key}
                 />}
-            </div>
+            </div>}
         </div>
 
         <div className="buttons">
