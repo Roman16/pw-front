@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {Input, Switch} from "antd"
 import {SVG} from "../../utils/icons"
+import {SearchField} from "../SearchField/SearchField"
 
 const {Search} = Input
 
@@ -33,13 +34,10 @@ const ProductFilters = ({
     return (
         <div className="products-filters">
             <div className="form-group">
-                <Search
-                    className="search-field"
+                <SearchField
                     placeholder={'Search by product name, ASIN or SKU'}
-                    onChange={e => changeSearchHandler(e.target.value)}
                     value={search}
-                    data-intercom-target='search-field'
-                    suffix={<SVG id={'search'}/>}
+                    onSearch={changeSearchHandler}
                 />
             </div>
 

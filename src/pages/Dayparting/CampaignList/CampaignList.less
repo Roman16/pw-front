@@ -100,6 +100,42 @@
     flex-direction: column;
     padding: 0 1.4285714285714286rem;
 
+    .multi-search-field {
+      textarea {
+        background: transparent;
+        color: #fff;
+
+        &::placeholder {
+          color: #B7B7B7;
+        }
+      }
+
+      .btn {
+        svg {
+          stroke: #FFFFFF;
+        }
+
+        &:hover {
+          background: rgba(105, 89, 171, 0.15);
+
+          svg {
+            stroke: #6959AB;
+          }
+        }
+
+        &:focus {
+          background: rgba(105, 89, 171, 0.15);
+        }
+
+        &.active {
+          svg {
+            stroke: #6959AB;
+          }
+        }
+      }
+    }
+
+
     .row {
       display: flex;
       align-items: center;
@@ -112,8 +148,6 @@
         }
 
         button {
-          width: 32px;
-          height: 32px;
           display: flex;
           align-items: center;
           justify-content: center;

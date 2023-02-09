@@ -16,7 +16,19 @@ const columnsKey = {
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, cancelToken}) {
-    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}${searchStr ? `&search[]=${encodeString(searchStr)}` : ''}&only_under_optimization=${onlyOptimization ? 1 : 0}`, null, null, cancelToken)
+    let searchParams = []
+
+    if (searchStr) {
+        if (typeof searchStr === 'string') {
+            searchParams.push(`&search[]=${encodeString(searchStr)}`)
+        } else {
+            searchStr.forEach(i => {
+                searchParams.push(`&search[]=${encodeString(i)}`)
+            })
+        }
+    }
+
+    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchParams.join('')}`, null, null, cancelToken)
 }
 
 function getAuditIssues({id, page, pageSize, sorterColumn, filters}, cancelToken) {

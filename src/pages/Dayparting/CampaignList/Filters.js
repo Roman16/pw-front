@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react"
 import {Dropdown, Input, Menu, Switch, Select} from "antd"
 import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
+import {SearchField} from "../../../components/SearchField/SearchField"
 
 const {Search} = Input,
     Option = Select.Option
@@ -66,9 +67,9 @@ const Filters = ({
         </Menu>
     )
 
-    const changeSearchHandler = (e) => {
-        onSearch(e.target.value)
-        setSearchValue(e.target.value)
+    const changeSearchHandler = (value) => {
+        onSearch(value)
+        setSearchValue(value)
     }
 
     useEffect(() => {
@@ -79,14 +80,10 @@ const Filters = ({
         <div className="filters-block">
             {tab !== 'account' && <div className="row">
                 <div className="form-group dark-mode">
-                    <Search
-                        className="search-field"
+                    <SearchField
                         placeholder={tab === 'campaigns' ? 'Search by campaign name, SKU or ASIN' : 'Search by product name, SKU or ASIN'}
                         value={searchValue}
-
-                        onChange={changeSearchHandler}
-                        data-intercom-target='search-field'
-                        suffix={<SearchIcon/>}
+                        onSearch={changeSearchHandler}
                     />
                 </div>
                 {/*<Dropdown*/}

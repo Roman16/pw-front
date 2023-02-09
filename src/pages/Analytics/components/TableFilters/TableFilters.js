@@ -60,7 +60,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField, onChange
     }
 
 
-    const searchHandler = (value, type) => {
+    const searchHandler = (value) => {
         setSearchValue(value)
 
         const filterIndex = _.findIndex(filters, {type: 'search'})
@@ -68,7 +68,7 @@ const TableFilters = ({columns, filters = [], locationKey, searchField, onChange
         const filter = {
             filterBy: columns.find(column => column.search).dataIndex,
             type: 'search',
-            value: type === 'multi' ? value.split('\n').map(i => i.trim()).filter(item => item !== '') : value
+            value: value
         }
 
         if (filterIndex === -1 && !value) {

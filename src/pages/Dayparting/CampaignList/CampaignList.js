@@ -121,7 +121,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     const setActiveTabHandler = (tab) => {
         dispatch(daypartingActions.setActiveTab(tab))
 
-        setSearchStr('')
+        setSearchStr(undefined)
 
         setPaginationParams(prevState => ({
             ...prevState,

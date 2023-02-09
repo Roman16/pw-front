@@ -21,7 +21,7 @@ export const SearchField = ({
     }
 
     const searchHandler = () => {
-        onSearch(searchValue, multiSearch ? 'multi' : 'mono')
+        if (searchValue !== value) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
     }
 
     const keydownHandler = (e) => {
@@ -29,17 +29,26 @@ export const SearchField = ({
     }
 
     useEffect(() => {
-        if (typeof value === 'string') {
-            setSearchValue(value)
+        if (value) {
+            if (typeof value === 'string') {
+                setSearchValue(value)
+            } else {
+                setSearchValue(value.join('\r\n'))
+                setMultiSearch(true)
+            }
         } else {
-            setSearchValue(value.join('\r\n'))
-            setMultiSearch(true)
+            setSearchValue()
+            setMultiSearch(false)
         }
     }, [value])
 
     useEffect(() => {
+        document.removeEventListener('keydown', keydownHandler)
         document.addEventListener('keydown', keydownHandler)
-    }, [])
+
+        return (() => document.removeEventListener('keydown', keydownHandler))
+    }, [searchValue])
+
 
     return (<div className={`form-group multi-search-field ${multiSearch ? 'multi-search' : ''}`}>
         {multiSearch ?
