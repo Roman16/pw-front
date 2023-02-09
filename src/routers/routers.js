@@ -28,7 +28,7 @@ const routers = () => {
                     <Route exact path="/registration/:tag?" component={RegistrationPage}/>
                     <Route exact path="/agency-registration/:token" component={AgencyRegistrationPage}/>
 
-                    {/*<Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>*/}
+                    <Route exact path="/confirm-email/:token?" component={ConfirmEmailPage}/>
                     <Route exact path="/reset-password/:userId?/:token?" component={ResetPassword}/>
                     <Route path="/login/amazon/rcallback" component={LoginWithAmazon}/>
                     <Route path="/success-connect" component={ThankPage}/>
