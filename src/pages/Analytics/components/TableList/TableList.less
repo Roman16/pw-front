@@ -564,10 +564,17 @@
 
             .state-link {
               color: #46435C;
-              width: 100%;
               text-overflow: ellipsis;
               overflow: hidden;
               white-space: nowrap;
+              display: flex;
+
+              a {
+                color: #46435C;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+              }
 
               &:hover {
                 text-decoration: underline;
@@ -937,20 +944,44 @@
             }
 
             .status {
+              display: flex;
+              align-items: center;
+              color: #353A3E;
+
+              i {
+                width: 12px;
+                height: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 7px 0 0;
+              }
+
               &.active {
-                color: #259B25;
+                //color: #259B25;
+
+                svg {
+                  fill: #7FD3A1;
+                }
               }
 
               &.inactive {
-                color: #D66744;
+                //color: #D66744;
               }
 
               &.paused {
-                color: #EEBB81;
+                //color: #EEBB81;
+
+                svg {
+                  fill: #353A3E;
+                }
               }
 
               &.archived {
-                color: #656A84;
+                //color: #656A84;
+                svg {
+                  fill: #C9CBD4;
+                }
               }
             }
 

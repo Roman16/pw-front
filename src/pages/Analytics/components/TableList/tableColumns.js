@@ -78,9 +78,10 @@ export const RenderMetricValue = ({number, type, id, currencyCode}) => {
 
         case 'currency':
             return ((number !== null && number !== undefined ? number < 0 ? <>- {currencyWithCode(numberMask(Math.abs(number), id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined), currencyCode)} </> :
-                currencyWithCode(numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined), currencyCode): '-'))
+                currencyWithCode(numberMask(number, id === metricKeys['rpi'] ? 4 : 2, null, id === metricKeys['rpi'] ? 2 : undefined), currencyCode) : '-'))
     }
 }
+
 
 export const renderNumberField = (type = 'number', showDiff = true, currencyCodeFromItem) => {
     return ({
@@ -104,15 +105,31 @@ export const renderNumberField = (type = 'number', showDiff = true, currencyCode
     })
 }
 
+
+export const ParentStatus = ({status}) => {
+    switch (status) {
+        case 'enabled':
+            return <span className={'status active'}><i title={'Enabled'}><SVG id={'enabled-status'}/></i></span>
+        case 'paused':
+            return <span className={'status paused'}><i title={'Paused'}><SVG id={'paused-status'}/></i></span>
+        case 'archived':
+            return <span className={'status archived'}><i title={'Archived'}><SVG id={'archived-status'}/></i></span>
+        default:
+            return ''
+    }
+}
+
 export const statusColumn = {
     title: 'Status',
     dataIndex: 'state',
     key: 'state',
     width: '150px',
-    render: (status, item) => (<>{status === 'enabled' && <span className={'status active'}>Enabled</span>}
+    render: (status, item) => (<>{status === 'enabled' &&
+    <span className={'status active'}><i><SVG id={'enabled-status'}/></i>Enabled</span>}
         {status === 'inactive' && <span className={'status inactive'}>Inactive</span>}
-        {status === 'paused' && <span className={'status paused'}>Paused</span>}
-        {status === 'archived' && <span className={'status archived'}>Archived</span>}
+        {status === 'paused' && <span className={'status paused'}><i><SVG id={'paused-status'}/></i> Paused</span>}
+        {status === 'archived' &&
+        <span className={'status archived'}><i><SVG id={'archived-status'}/></i>Archived</span>}
     </>),
     sorter: true,
     filter: true,

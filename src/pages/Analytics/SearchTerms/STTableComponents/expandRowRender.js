@@ -14,7 +14,7 @@ import {
     ICVRColumn,
     impressionsColumn,
     keywordPTColumn,
-    matchTypeColumn,
+    matchTypeColumn, ParentStatus,
     roasColumn,
     RPCColumn,
     RPIColumn,
@@ -39,35 +39,38 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
             {
                 dataIndex: 'campaignName',
                 width: '250px',
-                render: (campaign, item) => (<Link
-                    to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                    title={campaign}
-                    className={'state-link'}
-                    onClick={() => setStateHandler('ad-groups', {
-                        name: {campaignName: item.campaignName},
-                        campaignId: item.campaignId
-                    })}
-                >
-                    {campaign}
-                </Link>)
+                render: (campaign, item) => (<div className={'state-link'}>
+                    <ParentStatus status={item.campaignState}/>
+
+                    <Link
+                        to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                        title={campaign}
+                        onClick={() => setStateHandler('ad-groups', {
+                            name: {campaignName: item.campaignName},
+                            campaignId: item.campaignId
+                        })}
+                    >
+                        {campaign}
+                    </Link></div>)
             },
             {
                 dataIndex: 'adGroupName',
                 width: '250px',
-                render: (adGroup, item) => (
-                    <Link
-                        to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
-                        title={item.adGroupName}
-                        className={'state-link'}
-                        onClick={() => setStateHandler('products', {
-                            name: {
-                                campaignName: item.campaignName,
-                                adGroupName: item.adGroupName
-                            }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                        })}
-                    >
-                        {item.adGroupName}
-                    </Link>
+                render: (adGroup, item) => (<div className={'state-link'}>
+                        <ParentStatus status={item.adGroupState}/>
+
+                        <Link
+                            to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                            title={item.adGroupName}
+                            onClick={() => setStateHandler('products', {
+                                name: {
+                                    campaignName: item.campaignName,
+                                    adGroupName: item.adGroupName
+                                }, campaignId: item.campaignId, adGroupId: item.adGroupId
+                            })}
+                        >
+                            {item.adGroupName}
+                        </Link></div>
                 )
             },
             {
