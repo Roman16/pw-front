@@ -174,7 +174,11 @@ const SearchTerms = () => {
                                     })
 
                                     targetObj.campaignId = item.campaignId[index]
+                                    targetObj.campaignState = item.campaignState[index]
+
                                     targetObj.adGroupId = item.adGroupId[index]
+                                    targetObj.adGroupState = item.adGroupState[index]
+
                                     targetObj.calculatedTargetingText = item.calculatedTargetingText_segmented[index]
 
                                     return targetObj
