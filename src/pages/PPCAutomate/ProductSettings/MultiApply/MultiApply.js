@@ -37,7 +37,7 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
     }
 
     return (
-        <div className={`multi-apply-setting ${visible ? 'visible' : ''}`}>
+        <div className={`multi-apply-setting ${visible ? 'visible' : ''}`} style={{height: `${document.querySelector('.filters')?.clientHeight || 0}px`}}>
             {(selectedAll || selectedRows.length == totalSize) ?
                 <p><b>All {totalSize}</b> selected</p>
                 :
