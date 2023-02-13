@@ -21,7 +21,7 @@ export const SearchField = ({
     }
 
     const searchHandler = () => {
-        if(value.join) {
+        if(value && value.join) {
             if (searchValue !== value.join('\r\n')) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
         } else {
             if (searchValue !== value) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
