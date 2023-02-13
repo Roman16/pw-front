@@ -1,5 +1,6 @@
 import api, {encodeString} from './request'
 import {zthUrls} from '../constans/api.urls'
+import {searchStrWrap} from "./products.services"
 
 export const zthServices = {
     getAllProducts,
@@ -20,11 +21,11 @@ export const zthServices = {
 }
 
 function getAllProducts({pageSize, page, searchStr, cancelToken, sorting}) {
-    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}${sorting ? `&order_by:${sorting}=product_name` : ''}`, false, false, cancelToken)
+    return api('get', `${zthUrls.productsList}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${sorting ? `&order_by:${sorting}=product_name` : ''}`, false, false, cancelToken)
 }
 
 function getZthProducts({pageSize, page, searchStr = '', cancelToken}) {
-    return api('get', `${zthUrls.zthProductsList}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}`, false, false, cancelToken)
+    return api('get', `${zthUrls.zthProductsList}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}`, false, false, cancelToken)
 }
 
 

@@ -27,7 +27,8 @@ function handlerErrors(error, type = 'error') {
 
         notification[type]({
             title: error,
-        })
+            // autoClose: false
+        },)
 
         setTimeout(() => {
             lastError = null
@@ -100,7 +101,6 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                 }
             })
             .catch(error => {
-
                 if (!error.response && !('message' in error)) {
                     localStorage.removeItem('token')
                     localStorage.removeItem('adminToken')
@@ -139,11 +139,8 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         reject(error)
                     } else if (typeof error.response.data === 'object') {
                         reject(error)
-                        if (error.response.status === 401) {
-                            if (error.response.data) {
-                                handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
-                            }
-                        } else if (error.response.status === 429) {
+
+                        if (error.response.status === 429) {
                             handlerErrors('This request is throttled, please try again later')
                         } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.data.message === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
                         } else if (error.response.data.message !== 'Product not found') {

@@ -1,7 +1,7 @@
 import React from "react"
 import {toast} from 'react-toastify'
 
-const ErrorNotification = ({title, description}) => (
+const ErrorNotification = ({title, description, autoClose = 4000}) => (
     toast.error(
         <>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,6 +20,7 @@ const ErrorNotification = ({title, description}) => (
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
+            autoClose: autoClose
         })
 )
 

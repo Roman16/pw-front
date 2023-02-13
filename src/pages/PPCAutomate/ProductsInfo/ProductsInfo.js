@@ -148,7 +148,7 @@ const ProductsInfo = () => {
             await productsServices.updateProductSettingsByIdList({
                 [data.field]: data[data.field],
                 ...data.product_id && {product_id: data.product_id}
-            })
+            }, requestParams.searchStr)
 
             if (data.product_id) {
                 const newList = [...productsList.map(item => {

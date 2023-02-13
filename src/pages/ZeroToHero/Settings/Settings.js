@@ -11,6 +11,7 @@ import {history} from "../../../utils/history"
 import PaymentSuccessWindow from "./PaymentSuccessWindow"
 import {Link} from "react-router-dom"
 import {notification} from "../../../components/Notification"
+import {SearchField} from "../../../components/SearchField/SearchField"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -22,15 +23,14 @@ let intervalId = null
 let pagination = {
         page: 1,
         pageSize: 10
-    },
-    search = ''
+    }
 
 const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
         [productsList, setList] = useState([]),
         [processing, setProcessing] = useState(false),
         [deleteProcessing, setDeleteProcessing] = useState(false),
-        [searchStr, setSearchStr] = useState(''),
+        [searchStr, setSearchStr] = useState(),
         [tokens, setTokens] = useState(null),
         [totalSize, setTotalSize] = useState(0),
         [visibleSuccessCreateWindow, setVisibleSuccessCreateWindow] = useState(props.match.params.status === 'create-success'),
@@ -43,7 +43,7 @@ const Settings = (props) => {
 
     const changeSearchHandler = debounce(500, false, str => {
         setSearchStr(str)
-        search = str
+
         setPaginationOptions({
             ...paginationOptions,
             page: 1
@@ -73,7 +73,7 @@ const Settings = (props) => {
         setList([])
 
         setTab(tab)
-        setSearchStr('')
+        setSearchStr()
         setPaginationOptions({
             ...paginationOptions,
             page: 1
@@ -89,7 +89,7 @@ const Settings = (props) => {
             setProcessing(true)
             const res = await zthServices[selectedTab === 'zth-products' ? 'getZthProducts' : 'getAllProducts']({
                 ...pagination,
-                searchStr: searchStr || search,
+                searchStr: searchStr,
                 ungroupVariations: 0,
                 cancelToken: source.token
             })
@@ -150,12 +150,10 @@ const Settings = (props) => {
 
             <div className="filters">
                 <div className="form-group">
-                    <Search
-                        className="search-field"
+                    <SearchField
                         placeholder={'Search'}
-                        onChange={e => changeSearchHandler(e.target.value)}
-                        data-intercom-target='search-field'
-                        suffix={<SVG id={'search'}/>}
+                        value={searchStr}
+                        onSearch={changeSearchHandler}
                     />
                 </div>
 

@@ -16,16 +16,28 @@ export const SearchField = ({
     const textAreaRef = useRef(null)
 
     const addNevLine = () => {
-        setSearchValue(searchValue + '\r\n')
+        setSearchValue((prevState = '') => prevState + '\r\n')
         textAreaRef.current.focus()
     }
 
     const searchHandler = () => {
-        if (searchValue !== value) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
+        if(value.join) {
+            if (searchValue !== value.join('\r\n')) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
+        } else {
+            if (searchValue !== value) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
+        }
     }
 
     const keydownHandler = (e) => {
         if (e.keyCode === 13 && e.ctrlKey) searchHandler()
+    }
+
+    const changeInputTypeHandler = (e) => {
+        e.stopPropagation()
+        e.preventDefault()
+
+        setSearchValue()
+        setMultiSearch(prevState => !prevState)
     }
 
     useEffect(() => {
@@ -67,13 +79,13 @@ export const SearchField = ({
 
                 onChange={e => setSearchValue(e.target.value)}
                 onPressEnter={searchHandler}
-                onBlur={searchHandler}
+                // onBlur={searchHandler}
             />}
 
         {<button className="btn icon on-search-btn" onClick={searchHandler}><SVG id={'search'}/></button>}
 
         {<button className={`btn icon switch-multi-search ${multiSearch ? 'active' : ''}`}
-                 onClick={() => setMultiSearch(prevState => !prevState)}>
+                 onClick={changeInputTypeHandler}>
             <SVG id={'multi-search-icon'}/>
         </button>}
 
