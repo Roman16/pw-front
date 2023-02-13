@@ -9,6 +9,7 @@ import {FilterItem} from "../../../PPCAutomate/Report/Filters/FilterItem"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import FilterWindow from "./FilterWindow"
 import _ from 'lodash'
+import {SearchField} from "../../../../components/SearchField/SearchField"
 
 const {Search} = Input
 
@@ -59,7 +60,9 @@ const TableFilters = ({columns, filters = [], locationKey, searchField, onChange
     }
 
 
-    const searchHandler = ({target: {value}}) => {
+    const searchHandler = (value) => {
+        setSearchValue(value)
+
         const filterIndex = _.findIndex(filters, {type: 'search'})
 
         const filter = {
@@ -94,16 +97,12 @@ const TableFilters = ({columns, filters = [], locationKey, searchField, onChange
     return (
         <>
             <div className="list-filters-block">
-                {searchField && <div className="form-group search-block">
-                    <Search
+                {searchField && <div className="search-block">
+                    <SearchField
                         className="search-field"
                         placeholder={`Search by ${columns.find(column => column.search).dataIndex === 'product_name_sku_asin' ? 'Product, SKU or ASIN' : columns.find(column => column.search).title}`}
-                        onChange={e => setSearchValue(e.target.value)}
-                        onPressEnter={searchHandler}
-                        onBlur={searchHandler}
                         value={searchValue}
-                        data-intercom-target='search-field'
-                        suffix={<SVG id={'search'}/>}
+                        onSearch={searchHandler}
                     />
                 </div>}
 

@@ -44,6 +44,7 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
         width: '350px',
         sorter: true,
         locked: true,
+        filter: true,
         search: true,
         editType: 'text',
         clickEvent: (item, e) => {

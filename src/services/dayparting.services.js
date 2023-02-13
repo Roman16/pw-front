@@ -43,7 +43,10 @@ function getDayPartingParams({campaignId, cancelToken}) {
 }
 
 function updateDayPartingParams({campaignId, state_encoded_string, status}) {
-    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {state_encoded_string: state_encoded_string.slice(-24) + state_encoded_string.slice(0, -24), status})
+    return api('post', `${daypartingUrls.dayParting(campaignId)}`, {
+        state_encoded_string: state_encoded_string.slice(-24) + state_encoded_string.slice(0, -24),
+        status
+    })
 }
 
 function activateDayparting({campaignId}) {
@@ -65,19 +68,35 @@ function deactivateMultiDayparting(data) {
 //-----------------
 
 function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting}) {
-    const parameters = [
-        searchStr ? `&search[]=${encodeString(searchStr)}` : '',
-    ]
+    let searchParams = []
 
-    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${parameters.join('')}`, null, null, cancelToken)
+    if (searchStr) {
+        if (typeof searchStr === 'string') {
+            searchParams.push(`&search[]=${encodeString(searchStr)}`)
+        } else {
+            searchStr.forEach(i => {
+                searchParams.push(`&search[]=${encodeString(i)}`)
+            })
+        }
+    }
+
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${searchParams.join('')}`, null, null, cancelToken)
 }
 
 function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
-    const parameters = [
-        searchStr ? `&search[]=${encodeString(searchStr)}` : '',
-    ]
+    let searchParams = []
 
-    return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${parameters.join('')}`, null, null, cancelToken)
+    if (searchStr) {
+        if (typeof searchStr === 'string') {
+            searchParams.push(`&search[]=${encodeString(searchStr)}`)
+        } else {
+            searchStr.forEach(i => {
+                searchParams.push(`&search[]=${encodeString(i)}`)
+            })
+        }
+    }
+
+    return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${searchParams.join('')}`, null, null, cancelToken)
 }
 
 function getStatisticDayByHour({cancelToken, campaignId, date, attributionWindow}) {

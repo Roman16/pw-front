@@ -1,8 +1,7 @@
 import React, {useState} from "react"
-import {SVG} from "../../../utils/icons"
-import {Input, Switch} from "antd"
+import {Switch} from "antd"
+import {SearchField} from "../../../components/SearchField/SearchField"
 
-const {Search} = Input
 let timeoutId
 
 const Filters = ({requestParams, onChangeFilter}) => {
@@ -20,13 +19,10 @@ const Filters = ({requestParams, onChangeFilter}) => {
     return (
         <div className="filters">
             <div className="form-group">
-                <Search
-                    className="search-field"
+                <SearchField
                     placeholder={'Search'}
-                    onChange={e => changeSearchHandler(e.target.value)}
                     value={searchStr}
-                    data-intercom-target='search-field'
-                    suffix={<SVG id={'search'}/>}
+                    onSearch={changeSearchHandler}
                 />
             </div>
 

@@ -18,13 +18,11 @@ import {
     campaignColumn,
     statusColumn,
     renderNumberField,
-    EditableField,
     adSalesSameSKUColumn,
     adSalesOtherSKUColumn,
-    RPCColumn, RPIColumn, ICVRColumn, CPMColumn,
+    RPCColumn, RPIColumn, ICVRColumn, CPMColumn, ParentStatus,
 } from "../../components/TableList/tableColumns"
 import {Link} from "react-router-dom"
-import {Switch} from "antd"
 
 export const columnList = (setStateHandler, selectedCampaign, setStateDetails) => {
     const columns = [
@@ -45,6 +43,7 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
             sorter: true,
             locked: true,
             search: true,
+            filter: true,
             editType: 'text',
             redirectLink: (item) => `/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
             clickEvent: (item, e) => {
@@ -66,17 +65,20 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
         {
             ...campaignColumn,
             locked: false,
-            render: (campaign, item) => (<Link
-                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-                className={'state-link'}
-                title={campaign}
-                onClick={(e) => setStateHandler('ad-groups', {
-                    name: {campaignName: item.campaignName},
-                    campaignId: item.campaignId
-                }, e)}
-            >
-                {campaign}
-            </Link>)
+            render: (campaign, item) => (<div className={'state-link'}>
+                <ParentStatus status={item.campaignState}/>
+
+                <Link
+                    to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                    title={campaign}
+                    onClick={(e) => setStateHandler('ad-groups', {
+                        name: {campaignName: item.campaignName},
+                        campaignId: item.campaignId
+                    }, e)}
+                >
+                    {campaign}
+                </Link>
+            </div>)
         },
         {...statusColumn, locked: false},
         {

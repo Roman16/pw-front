@@ -554,7 +554,7 @@ const files = {
             width: 18,
             height: 18,
             viewBox: [0, 0, 18, 18],
-            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="18" height="18" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#4F0505" d="M0 0H18V18H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path stroke="#656A84" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16.9422L12.0962 12.0561M12.0962 12.0561C13.2725 10.8841 14 9.26498 14 7.47654C14 3.89964 11.0899 1 7.5 1C3.91015 1 1 3.89964 1 7.47654C1 11.0534 3.91015 13.9531 7.5 13.9531C9.29493 13.9531 10.9199 13.2282 12.0962 12.0561Z"/></g>'
+            data: '<mask xmlns="http://www.w3.org/2000/svg" id="a" width="18" height="18" x="0" y="0" maskUnits="userSpaceOnUse"><path fill="#4F0505" d="M0 0H18V18H0z"/></mask><g xmlns="http://www.w3.org/2000/svg" mask="url(#a)"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16.9422L12.0962 12.0561M12.0962 12.0561C13.2725 10.8841 14 9.26498 14 7.47654C14 3.89964 11.0899 1 7.5 1C3.91015 1 1 3.89964 1 7.47654C1 11.0534 3.91015 13.9531 7.5 13.9531C9.29493 13.9531 10.9199 13.2282 12.0962 12.0561Z"/></g>'
         },
         'scanner-warning': {
             width: 41,
@@ -1353,6 +1353,49 @@ const files = {
 </g>
 </svg>`
         },
+        'multi-search-icon': {
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: `<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g >
+<path d="M17.875 4.42857H7.75M7.75 4.42857C7.75 6.32212 6.23896 7.85714 4.375 7.85714C2.51104 7.85714 1 6.32212 1 4.42857C1 2.53502 2.51104 1 4.375 1C6.23896 1 7.75 2.53502 7.75 4.42857ZM2.125 15.5714H12.25M12.25 15.5714C12.25 17.465 13.761 19 15.625 19C17.489 19 19 17.465 19 15.5714C19 13.6779 17.489 12.1429 15.625 12.1429C13.761 12.1429 12.25 13.6779 12.25 15.5714Z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>`
+        }, 'line-break': {
+            width: 896,
+            height: 896,
+            viewBox: [0, 0, 896, 896],
+            data: `<svg viewBox="64 64 896 896" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M864 170h-60c-4.4 0-8 3.6-8 8v518H310v-73c0-6.7-7.8-10.5-13-6.3l-141.9 112a8 8 0 000 12.6l141.9 112c5.3 4.2 13 .4 13-6.3v-75h498c35.3 0 64-28.7 64-64V178c0-4.4-3.6-8-8-8z" stroke-width="2" ></path>
+</g>
+</svg>`
+        },
+        'paused-status': {
+            width: 6,
+            height: 10,
+            viewBox: [0, 0, 6, 10],
+            data: `<svg width="6" height="10" viewBox="0 0 6 10" xmlns="http://www.w3.org/2000/svg">
+<path d="M0.45 0.800003C0.201472 0.800003 0 1.00147 0 1.25V8.75C0 8.99853 0.201472 9.2 0.45 9.2H1.35C1.59853 9.2 1.8 8.99853 1.8 8.75V1.25C1.8 1.00147 1.59853 0.800003 1.35 0.800003H0.45Z" stroke="none"/>
+<path d="M4.65 0.800003C4.40147 0.800003 4.2 1.00147 4.2 1.25V8.75C4.2 8.99853 4.40147 9.2 4.65 9.2H5.55C5.79853 9.2 6 8.99853 6 8.75V1.25C6 1.00147 5.79853 0.800003 5.55 0.800003H4.65Z" stroke="none"/>
+</svg>`
+        },
+        'enabled-status': {
+            width: 8,
+            height: 10,
+            viewBox: [0, 0, 8, 10],
+            data: `<svg width="8" height="10" viewBox="0 0 8 10" xmlns="http://www.w3.org/2000/svg">
+<path d="M1.77997 0.704348C1.18066 0.326521 0.4 0.757212 0.4 1.46568V8.53437C0.4 9.24284 1.18066 9.67353 1.77997 9.2957L7.38617 5.76136C7.94621 5.40829 7.94621 4.59176 7.38617 4.23869L1.77997 0.704348Z" />
+</svg>`
+        },'archived-status': {
+            width: 10,
+            height: 12,
+            viewBox: [0, 0, 10, 12],
+            data: `<svg width="10" height="12" viewBox="0 0 10 12" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M4.99999 0.6C3.50882 0.6 2.29999 1.80883 2.29999 3.3V5.4H1.99999C1.33725 5.4 0.799988 5.93726 0.799988 6.6V10.2C0.799988 10.8627 1.33725 11.4 1.99999 11.4H7.99999C8.66273 11.4 9.19999 10.8627 9.19999 10.2V6.6C9.19999 5.93726 8.66273 5.4 7.99999 5.4H7.69999V3.3C7.69999 1.80883 6.49116 0.6 4.99999 0.6ZM6.79999 5.4V3.3C6.79999 2.30589 5.9941 1.5 4.99999 1.5C4.00588 1.5 3.19999 2.30589 3.19999 3.3V5.4H6.79999Z"/>
+</svg>`
+        },
         'dayparting-icon-sidebar': {
             width: 20,
             height: 20,
@@ -1372,6 +1415,11 @@ const files = {
         },
     },
     allIds: [
+        'paused-status',
+        'enabled-status',
+        'archived-status',
+        'line-break',
+        'multi-search-icon',
         'check-icon',
         'dayparting-icon-sidebar',
         'full-plan-icon',

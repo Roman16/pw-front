@@ -23,13 +23,13 @@ const ProductList = ({pathname}) => {
         [searchParams, setSearchParams] = useState(queryString.parse(history.location.search).searchStr ? {
             page: 1,
             pageSize: 10,
-            searchStr: queryString.parse(history.location.search).searchStr || ''
+            searchStr: queryString.parse(history.location.search).searchStr || '',
         } : localStorage.getItem('productsSearchParams') ?
             JSON.parse(localStorage.getItem('productsSearchParams')) :
             {
                 page: 1,
                 pageSize: 10,
-                searchStr: ''
+                searchStr: '',
             })
 
     const {selectedAll, selectedProduct, onlyOptimization, productList, totalSize, fetching} = useSelector(state => ({
@@ -72,8 +72,7 @@ const ProductList = ({pathname}) => {
         })
     }
 
-    const changeSearchHandler = str => {
-
+    const changeSearchHandler = (str) => {
         setSearchParams({
             ...searchParams,
             searchStr: str,
@@ -142,7 +141,6 @@ const ProductList = ({pathname}) => {
     return (
         <Fragment>
             <div className={`${isOpenList ? 'product-list' : 'product-list closed'}`}>
-
                 <ProductFilters
                     selectedAll={selectedAll}
                     selectedProduct={selectedProduct}
@@ -161,7 +159,6 @@ const ProductList = ({pathname}) => {
 
 
                 <div className={`products`}>
-
                     {productList && productList.map(product => (
                         <ProductItem
                             key={product.id}

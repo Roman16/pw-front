@@ -3,6 +3,8 @@ import moment from "moment"
 import './Filters.less'
 import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
 import _ from 'lodash'
+import {useSelector} from "react-redux"
+import {stringVariations} from '../../../Analytics/components/TableFilters/FilterWindow'
 
 export const valueTile = {
     'keyword': 'Keyword',
@@ -170,7 +172,7 @@ const numberMark = {
     'neq': '!=',
 }
 
-const columnTitle = {
+const columnTitle = (location) => ({
     'object': 'Object',
     'keyword_pt': 'Keyword / PT',
     'object_type': 'Object Type',
@@ -250,11 +252,17 @@ const columnTitle = {
     'issueType': 'Type',
     'total_returns_count': 'Returns',
 
-    'margin_percent': 'Margin Percent'
-}
+    'margin_percent': 'Margin Percent',
+    'name': location === 'ad-groups' ? 'Ad Group' : 'Campaign',
+    'product_name_sku_asin': 'Product',
+    'calculatedTargetingText': 'Keyword / PT',
+    'query': 'Query',
+})
 
 
 export const FilterItem = ({filter}) => {
+    const location = useSelector(state => state.analytics.location)
+
     if (filter.filterBy === 'datetime') {
         return (
             <>
@@ -268,10 +276,10 @@ export const FilterItem = ({filter}) => {
                 of: {filter.value.map(item => _.find(issuesTypeEnums, {key: item}).title).join(', ')}
             </>
         )
-    } else if (filter.filterBy === 'object' || filter.filterBy === 'campaignName' || filter.filterBy === 'adGroupName' || filter.filterBy === 'keyword_pt' || filter.filterBy === 'portfolioName' || filter.filterBy === 'campaign_name' || filter.filterBy === 'ad_group_name') {
+    } else if (stringVariations.some(i => i.key === filter.type.key)) {
         return (
             <>
-                {`${columnTitle[filter.filterBy]} ${filter.type.key}: ${filter.value}`}
+                {`${columnTitle(location)[filter.filterBy]} ${filter.type.key.replace('_', ' ')}: ${filter.value}`}
             </>
         )
     } else if (filter.filterBy === 'impressions' ||
@@ -330,25 +338,25 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === 'profit') {
         return (
             <>
-                {`${columnTitle[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
+                {`${columnTitle()[filter.filterBy]} ${numberMark[filter.type.key]} ${filter.value}`}
             </>
         )
     } else if (filter.filterBy === 'keyword_id' || filter.filterBy === 'problemLevel') {
         return (
             <>
-                {`${columnTitle[filter.filterBy]} = ${filter.value}`}
+                {`${columnTitle()[filter.filterBy]} = ${filter.value}`}
             </>
         )
     } else if (filter.type.key === 'one_of') {
         return (
             <>
-                {columnTitle[filter.filterBy]} is one of: {filter.value.map(item => valueTile[item]).join(', ')}
+                {columnTitle()[filter.filterBy]} is one of: {filter.value.map(item => valueTile[item]).join(', ')}
             </>
         )
     } else if (filter.type.key === 'except') {
         return (
             <>
-                {columnTitle[filter.filterBy]} except: {filter.value.map(item => valueTile[item]).join(', ')}
+                {columnTitle()[filter.filterBy]} except: {filter.value.map(item => valueTile[item]).join(', ')}
             </>
         )
     }

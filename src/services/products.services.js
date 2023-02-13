@@ -27,8 +27,25 @@ export const productsServices = {
     startProductOptimization
 }
 
+
+export const searchStrWrap = (searchStr) => {
+    let searchParams = []
+
+    if (searchStr) {
+        if (typeof searchStr === 'string') {
+            searchParams.push(`&search[]=${encodeString(searchStr)}`)
+        } else {
+            searchStr.forEach(i => {
+                searchParams.push(`&search[]=${encodeString(i)}`)
+            })
+        }
+    }
+
+    return searchParams
+}
+
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
-    return api('get', `${productsUrls.allProducts}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}`, null, null, cancelToken)
+    return api('get', `${productsUrls.allProducts}?page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
 }
 
 function getProductDetails(id, cancelToken) {
@@ -73,7 +90,7 @@ function stopProductOptimization(productId) {
 }
 
 function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {
-    return api('get', `${productsUrls.productsSettingsList}?page=${page}&size=${pageSize}${searchStr && `&search[]=${encodeString(searchStr)}`}&is_active=${onlyActive ? 1 : 0}&only_under_optimization=${onlyOptimization ? 1 : 0}`, false, false, cancelToken)
+    return api('get', `${productsUrls.productsSettingsList}?page=${page}&size=${pageSize}&is_active=${onlyActive ? 1 : 0}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchStrWrap(searchStr).join('')}`, false, false, cancelToken)
 }
 
 function updateProductSettings(parameters) {
@@ -110,8 +127,8 @@ function updateProductSettingsById(parameters) {
     })
 }
 
-function updateProductSettingsByIdList(params) {
-    return api('post', `${productsUrls.updateSettings}`, params)
+function updateProductSettingsByIdList(params, searchStr='') {
+    return api('post', `${productsUrls.updateSettings}?${searchStrWrap(searchStr).join('')}`.replace(/[^=&]+=(?:&|$)/g, ""), params)
 }
 
 function updateProductTargetAcos(acos) {

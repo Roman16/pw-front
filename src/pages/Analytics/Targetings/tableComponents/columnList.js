@@ -15,7 +15,7 @@ import {
     EditableField, ICVRColumn,
     impressionsColumn,
     keywordPTColumn,
-    matchTypeColumn, renderNumberField,
+    matchTypeColumn, ParentStatus, renderNumberField,
     roasColumn, RPCColumn, RPIColumn,
     salesShareColumn,
     statusColumn
@@ -51,6 +51,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
         sorter: true,
         locked: true,
         search: true,
+        filter: true,
         ...keywordPTColumn
     },
     ...!selectedCampaign ? [{
@@ -58,17 +59,19 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
         locked: false,
         noTotal: true,
         width: '250px',
-        render: (campaign, item) => (<Link
-            to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
-            title={campaign}
-            className={'state-link'}
-            onClick={(e) => setStateHandler('ad-groups', {
-                name: {campaignName: item.campaignName},
-                campaignId: item.campaignId
-            }, e)}
-        >
-            {campaign}
-        </Link>)
+        render: (campaign, item) => (<div className={'state-link'}>
+            <ParentStatus status={item.campaignState}/>
+
+            <Link
+                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                title={campaign}
+                onClick={(e) => setStateHandler('ad-groups', {
+                    name: {campaignName: item.campaignName},
+                    campaignId: item.campaignId
+                }, e)}
+            >
+                {campaign}
+            </Link></div>)
     }] : [],
     ...!selectedAdGroup ? [{
         title: 'Ad Group',
@@ -79,20 +82,21 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
         filter: true,
         locked: false,
         noTotal: true,
-        render: (adGroup, item) => (
-            <Link
-                to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
-                title={item.adGroupName}
-                className={'state-link'}
-                onClick={(e) => setStateHandler('products', {
-                    name: {
-                        campaignName: item.campaignName,
-                        adGroupName: item.adGroupName
-                    }, campaignId: item.campaignId, adGroupId: item.adGroupId
-                }, e)}
-            >
-                {item.adGroupName}
-            </Link>
+        render: (adGroup, item) => (<div className={'state-link'}>
+                <ParentStatus status={item.adGroupState}/>
+
+                <Link
+                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                    title={item.adGroupName}
+                    onClick={(e) => setStateHandler('products', {
+                        name: {
+                            campaignName: item.campaignName,
+                            adGroupName: item.adGroupName
+                        }, campaignId: item.campaignId, adGroupId: item.adGroupId
+                    }, e)}
+                >
+                    {item.adGroupName}
+                </Link></div>
         )
     }] : [],
     matchTypeColumn,

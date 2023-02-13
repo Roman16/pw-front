@@ -1,6 +1,7 @@
 import React, {useState} from "react"
 import {SVG} from "../../../../utils/icons"
 import {Input, Switch} from "antd"
+import {SearchField} from "../../../../components/SearchField/SearchField"
 
 const {Search} = Input
 let timeoutId
@@ -8,7 +9,9 @@ let timeoutId
 const Filters = ({onChangeSearch, onChangeSwitch, requestParams}) => {
     const [searchStr, setSearchStr] = useState(requestParams.searchStr)
 
-    const changeSearchHandler = (value) => {
+    const changeSearchHandler = (value, type) => {
+        value = type === 'multi' ? value.split('\n').map(i => i.trim()).filter(item => item !== '') : value
+
         setSearchStr(value)
 
         clearTimeout(timeoutId)
@@ -20,13 +23,10 @@ const Filters = ({onChangeSearch, onChangeSwitch, requestParams}) => {
     return (
         <div className="filters">
             <div className="form-group">
-                <Search
-                    className="search-field"
+                <SearchField
                     placeholder={'Search'}
-                    onChange={e => changeSearchHandler(e.target.value)}
                     value={searchStr}
-                    data-intercom-target='search-field'
-                    suffix={<SVG id={'search'}/>}
+                    onSearch={changeSearchHandler}
                 />
             </div>
 
