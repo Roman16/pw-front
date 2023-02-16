@@ -1,6 +1,6 @@
 import React from "react"
 
-const InputParameters = ({onUpload}) => {
+const InputParameters = ({onUpload, label = 'Choose input-parameters.json file to upload settings'}) => {
 
     const changeUploadHandler = ({target: {files}}) => {
         const file = files.item(files.length - 1)
@@ -10,7 +10,7 @@ const InputParameters = ({onUpload}) => {
 
     return (
         <div className={'choose-input-parameters form-group'}>
-            <label htmlFor="myFile">Choose input-parameters.json file to upload settings</label>
+            <label htmlFor="myFile">{label}</label>
             <input
                 name="myFile"
                 id={'myFile'}

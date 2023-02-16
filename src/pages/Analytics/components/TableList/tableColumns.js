@@ -23,6 +23,7 @@ import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 import {activeTimezone} from "../../../index"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 import {amazonDomain} from "../../../../utils/amazonDomain"
+import {store} from "../../../../store/store"
 
 const asinImageUrl = asin => `https://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=US&ASIN=${asin}&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=SL150`
 
@@ -83,10 +84,10 @@ export const RenderMetricValue = ({number, type, id, currencyCode}) => {
 }
 
 
-export const renderNumberField = (type = 'number', showDiff = true, currencyCodeFromItem) => {
+export const renderNumberField = (type = 'number', showDiff = true) => {
     return ({
         render: (number, item, array, dataIndex) => {
-            const currencyCode = item?.currency_code || 'USD'
+            const currencyCode = item?.currency_code || store.getState().user.activeAmazonMarketplace.currency_code || 'USD'
 
             return (<div className={'metric-value'}>
                 <RenderMetricValue number={number} type={type} id={dataIndex} currencyCode={currencyCode}/>

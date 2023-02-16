@@ -82,20 +82,20 @@
     }
 
     .state {
+      display: flex;
+
       .switch-block {
         display: flex;
-        align-items: center;
+        margin: 0 15px 0 0;
+      }
 
-        & > span {
-          margin: 0 0 0 15px;
+      span {
+        &.active {
+          color: #7DD4A1;
+        }
 
-          &.active {
-            color: #7DD4A1;
-          }
-
-          &.paused {
-            color: #EEBB81;
-          }
+        &.paused {
+          color: #EEBB81;
         }
       }
 
@@ -104,10 +104,10 @@
         color: #343C5A;
       }
 
-      a {
+      .archived-link {
         font-size: 0.8571428571428571rem;
         text-decoration-line: underline;
-        color: #6D6DF6;
+        cursor: pointer;
       }
     }
 

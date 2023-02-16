@@ -18,6 +18,7 @@ import {Prompt} from "react-router-dom"
 import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import locale from 'antd/lib/locale/en_US.js.map'
 import {activeTimezone} from "../../index"
+import ConfirmWindow from "../components/TableList/FastUpdateBlock/ConfirmWindow"
 
 const Option = Select.Option
 
@@ -51,7 +52,8 @@ const CampaignSettings = () => {
         [editFields, setEditFields] = useState([]),
         [saveProcessing, setSaveProcessing] = useState(false),
         [fetchProcessing, setFetchProcessing] = useState(true),
-        [visibleDatePopup, setVisibleDatePopup] = useState(false)
+        [visibleDatePopup, setVisibleDatePopup] = useState(false),
+        [visibleConfirmChangeStateWindow, setVisibleConfirmChangeStateWindow] = useState(false)
 
 
     const changeSettingsHandler = (data) => {
@@ -269,18 +271,30 @@ const CampaignSettings = () => {
                     </div>
 
                     <div className="value state">
-                        {settingParams.state === 'archived' ? <span className={'archived'}>Archived</span> :
+                        {dataFromResponse.state === 'archived' ? <span className={'archived'}>Archived</span> : <>
                             <div className='switch-block'>
                                 <Switch
                                     checked={settingParams.state === 'enabled'}
                                     disabled={settingParams.state === 'archived'}
                                     onChange={checked => changeSettingsHandler({'state': checked ? 'enabled' : 'paused'})}
                                 />
-
+                            </div>
+                            <div className="col">
                                 {settingParams.state === 'paused' && <span className={'paused'}>Paused</span>}
-                                {settingParams.state === 'enabled' && <span className={'active'}>Active</span>}
+                                {settingParams.state === 'enabled' && <span className={'active'}>Enabled</span>}
                                 {settingParams.state === 'archived' && <span>Archived</span>}
-                            </div>}
+
+                                <div className="archived-link"
+                                     onClick={() => {
+                                         if (settingParams.state === 'archived') changeSettingsHandler({'state': dataFromResponse.state})
+                                         else setVisibleConfirmChangeStateWindow(true)
+                                     }}>
+
+                                    {settingParams.state === 'archived' ? 'Cancel archiving' : 'Archive'}
+                                </div>
+                            </div>
+
+                        </>}
                     </div>
                 </div>
 
@@ -498,7 +512,7 @@ const CampaignSettings = () => {
                 {fetchProcessing && <RouteLoader/>}
             </div>
 
-            {(settingParams.state !== 'archived') && <div
+            {(dataFromResponse.state !== 'archived') && <div
                 className={`actions ${(JSON.stringify(dataFromResponse) !== JSON.stringify(settingParams) && failedFields.length === 0 && settingParams.portfolioId) ? 'visible' : ''}`}>
                 <p>{saveProcessing ? 'Saving changes' : 'You have unsaved changes'}</p>
 
@@ -520,6 +534,19 @@ const CampaignSettings = () => {
                     {saveProcessing && <Spin size={'small'}/>}
                 </button>
             </div>}
+
+            <ConfirmWindow
+                visible={visibleConfirmChangeStateWindow}
+                count={1}
+                location={'campaigns'}
+
+                onCancel={() => setVisibleConfirmChangeStateWindow(false)}
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    setVisibleConfirmChangeStateWindow(false)
+                    changeSettingsHandler({'state': 'archived'})
+                }}
+            />
 
 
             <Prompt

@@ -30,7 +30,6 @@ const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange, ca
         <div className="core-information">
             <br/>
             <br/>
-
             <h2>Semantic Core Information</h2>
 
             <div>Template version: <b>{`  ${semanticInfo.markupVersion}`}</b></div>

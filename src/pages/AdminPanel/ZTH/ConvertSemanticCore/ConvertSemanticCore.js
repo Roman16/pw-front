@@ -7,8 +7,11 @@ import Variations from "./Variations"
 import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
 import {notification} from "../../../../components/Notification"
-import {saveFile, saveGoogleSpreadsheet, saveWorkbook} from "../../../../utils/saveFile"
+import {saveFile, saveGoogleSpreadsheet, saveWorkbook, saveInputParameters} from "../../../../utils/saveFile"
+
 import _ from 'lodash'
+import InputParameters from "../CreateSemanticCore/InputParameters"
+import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -313,7 +316,8 @@ const ConvertSemanticCore = ({admin}) => {
         [loadingInformation, setLoadingInformation] = useState(false),
         [semanticData, setSemanticData] = useState({}),
         [uploadProcessing, setUploadProcessing] = useState(false),
-        [convertProcessing, setConvertProcessing] = useState(false)
+        [convertProcessing, setConvertProcessing] = useState(false),
+        [parseProcessing, setParseProcessing] = useState(false)
 
     const changeUploadDataHandler = (value) => {
         setSemanticData({
@@ -416,6 +420,7 @@ const ConvertSemanticCore = ({admin}) => {
             notification.error({title: 'Error!'})
         }
     }
+
     const uploadSemanticHandler = async (userId) => {
         setUploadProcessing(true)
 
@@ -453,6 +458,44 @@ const ConvertSemanticCore = ({admin}) => {
         }
     }
 
+    const parseInputParametersFile = (file) => {
+        setParseProcessing(true)
+        console.log(file)
+
+        if (file) {
+            const reader = new FileReader()
+            reader.readAsText(file, 'UTF-8')
+            reader.onload = (event) => {
+                const ips = JSON.parse((event.target).result)
+                console.log(ips)
+
+                setSemanticData({
+                    ...ips,
+                    url: semanticUrl,
+                    conversionOptions: {
+                        ...ips.conversionOptions,
+
+                        converter: {
+                            ...ips.conversionOptions.converter,
+                            semanticCoreUrls: [semanticUrl]
+                        }
+                    }
+                })
+
+                setParseProcessing(false)
+            }
+            reader.onerror = (event) => {
+                console.log(event)
+                setParseProcessing(false)
+            }
+        }
+    }
+
+
+    const downloadInputParams = () => {
+        saveInputParameters(semanticData, 'conversion-settings')
+    }
+
     useEffect(() => {
         getZthEnums()
     }, [])
@@ -477,7 +520,13 @@ const ConvertSemanticCore = ({admin}) => {
                 </button>
             </form>
 
-            {semanticInformation && <>
+            {/*{semanticInformation &&*/}
+            {/*<InputParameters*/}
+            {/*    onUpload={parseInputParametersFile}*/}
+            {/*    label={'Choose conversion-settings.json file to upload settings'}*/}
+            {/*/>}*/}
+
+            {semanticInformation && !parseProcessing && <>
                 <SemanticInformation
                     semanticInfo={semanticInformation}
                     semanticData={semanticData}
@@ -505,7 +554,7 @@ const ConvertSemanticCore = ({admin}) => {
                     uploadProcessing={uploadProcessing}
                     convertProcessing={convertProcessing}
 
-
+                    onGetParams={downloadInputParams}
                     onChange={(data) => setSemanticData(data)}
                     onConvert={convertSemanticHandler}
                     onUpload={uploadSemanticHandler}
