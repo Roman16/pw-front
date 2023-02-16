@@ -7,8 +7,11 @@ import Variations from "./Variations"
 import ConversionOptions from "./ConversionOptions"
 import {adminServices} from "../../../../services/admin.services"
 import {notification} from "../../../../components/Notification"
-import {saveFile, saveGoogleSpreadsheet, saveWorkbook} from "../../../../utils/saveFile"
+import {saveFile, saveGoogleSpreadsheet, saveWorkbook, saveInputParameters} from "../../../../utils/saveFile"
+
 import _ from 'lodash'
+import InputParameters from "../CreateSemanticCore/InputParameters"
+
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -291,6 +294,7 @@ import _ from 'lodash'
 const ConvertSemanticCore = ({admin}) => {
     const [semanticInformation, setSemanticInformation] = useState(),
         [semanticUrl, setSemanticUrl] = useState(),
+
         [zthEnums, setZthEnums] = useState({
             enums: {
                 CampaignType: [],
@@ -311,9 +315,12 @@ const ConvertSemanticCore = ({admin}) => {
             }
         }),
         [loadingInformation, setLoadingInformation] = useState(false),
-        [semanticData, setSemanticData] = useState({}),
+
+        [semanticData, setSemanticData] = useState(),
+
         [uploadProcessing, setUploadProcessing] = useState(false),
-        [convertProcessing, setConvertProcessing] = useState(false)
+        [convertProcessing, setConvertProcessing] = useState(false),
+        [parseProcessing, setParseProcessing] = useState(false)
 
     const changeUploadDataHandler = (value) => {
         setSemanticData({
@@ -340,8 +347,7 @@ const ConvertSemanticCore = ({admin}) => {
         setLoadingInformation(true)
 
         try {
-            const res = await adminServices.fetchSemanticInformation({url: semanticUrl}),
-                semanticData = res.semanticData
+            const {semanticData} = await adminServices.fetchSemanticInformation({url: semanticUrl})
 
             setSemanticData({
                 url: semanticUrl,
@@ -374,7 +380,6 @@ const ConvertSemanticCore = ({admin}) => {
                 markupVersion: semanticData.markupVersion,
                 zeroToHeroVersion: semanticData.zeroToHeroVersion
             })
-
         } catch (e) {
             console.log(e)
         }
@@ -416,6 +421,7 @@ const ConvertSemanticCore = ({admin}) => {
             notification.error({title: 'Error!'})
         }
     }
+
     const uploadSemanticHandler = async (userId) => {
         setUploadProcessing(true)
 
@@ -453,6 +459,44 @@ const ConvertSemanticCore = ({admin}) => {
         }
     }
 
+    const parseInputParametersFile = (file) => {
+        setParseProcessing(true)
+        console.log(file)
+
+        if (file) {
+            const reader = new FileReader()
+            reader.readAsText(file, 'UTF-8')
+            reader.onload = (event) => {
+                const ips = JSON.parse((event.target).result)
+                console.log(ips)
+
+                setSemanticData({
+                    ...ips,
+                    url: semanticUrl,
+                    conversionOptions: {
+                        ...ips.conversionOptions,
+
+                        converter: {
+                            ...ips.conversionOptions.converter,
+                            semanticCoreUrls: [semanticUrl]
+                        }
+                    }
+                })
+
+                setParseProcessing(false)
+            }
+            reader.onerror = (event) => {
+                console.log(event)
+                setParseProcessing(false)
+            }
+        }
+    }
+
+
+    const downloadInputParams = () => {
+        saveInputParameters(semanticData, 'conversion-settings')
+    }
+
     useEffect(() => {
         getZthEnums()
     }, [])
@@ -477,13 +521,19 @@ const ConvertSemanticCore = ({admin}) => {
                 </button>
             </form>
 
-            {semanticInformation && <>
+            {/*{semanticInformation &&*/}
+            {/*<InputParameters*/}
+            {/*    onUpload={parseInputParametersFile}*/}
+            {/*    label={'Choose conversion-settings.json file to upload settings'}*/}
+            {/*/>}*/}
+
+            {semanticInformation && !parseProcessing && <>
                 <SemanticInformation
                     semanticInfo={semanticInformation}
                     semanticData={semanticData}
                     campaignsCompressionStrategyEnums={zthEnums.enums.CampaignsCompressionStrategy}
 
-                    onChange={(data) => setSemanticData(data)}
+                    onChange={setSemanticData}
                 />
 
                 <CampaignsBids
@@ -505,7 +555,7 @@ const ConvertSemanticCore = ({admin}) => {
                     uploadProcessing={uploadProcessing}
                     convertProcessing={convertProcessing}
 
-
+                    onGetParams={downloadInputParams}
                     onChange={(data) => setSemanticData(data)}
                     onConvert={convertSemanticHandler}
                     onUpload={uploadSemanticHandler}

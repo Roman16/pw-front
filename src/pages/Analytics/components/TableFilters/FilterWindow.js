@@ -199,6 +199,7 @@ const containsVariations = {
     [metricKeys['cpm']]: numberVariations,
     [metricKeys['bidCPC']]: numberVariations,
     [metricKeys['organicUnits']]: numberVariations,
+    [metricKeys['margin']]: numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'severity': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -625,6 +626,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     filterBy === 'macos' ||
                     filterBy === 'margin_percent' ||
                     filterBy === metricKeys['icvr'] ||
+                    filterBy === metricKeys['margin'] ||
                     filterBy === 'ctr' ||
                     filterBy === 'budget_allocation'
                 ) &&

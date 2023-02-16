@@ -257,6 +257,7 @@ const columnTitle = (location) => ({
     'product_name_sku_asin': 'Product',
     'calculatedTargetingText': 'Keyword / PT',
     'query': 'Query',
+    'margin': 'Margin',
 })
 
 
@@ -303,6 +304,7 @@ export const FilterItem = ({filter}) => {
         filter.filterBy === metricKeys['cpm'] ||
         filter.filterBy === metricKeys['bidCPC'] ||
         filter.filterBy === metricKeys['organicUnits'] ||
+        filter.filterBy === metricKeys['margin'] ||
         filter.filterBy === 'cpa' ||
         filter.filterBy === 'cpc' ||
         filter.filterBy === 'cost' ||

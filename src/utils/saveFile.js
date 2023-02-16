@@ -9,10 +9,10 @@ export const saveFile = (file, type) => {
     // }
 }
 
-export const saveInputParameters = (objs) => {
+export const saveInputParameters = (objs, name='input-parameters') => {
     const textFile = _makeTextFile(JSON.stringify(objs, null, 2))
     const link = document.createElement('a')
-    link.download = `input-parameters.json`
+    link.download = `${name}.json`
     link.href = textFile
     const el = document.querySelector('body')
     el.appendChild(link)

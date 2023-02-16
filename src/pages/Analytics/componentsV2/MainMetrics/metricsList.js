@@ -39,7 +39,8 @@ export const metricKeys = {
     'organicUnits': 'organic_units',
     'cpm': 'cpm',
     'bidCPC': 'bidMinusCPC',
-    'cvr': 'cvr'
+    'cvr': 'cvr',
+    'margin': 'margin'
 }
 
 export const analyticsAvailableMetricsList = [

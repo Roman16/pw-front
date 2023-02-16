@@ -13,6 +13,9 @@ import {marketplaceTimezone} from "../../../../components/Sidebar/ConnectedRegio
 import {currencyName, currencySymbol} from "../../../../components/CurrencyCode/CurrencyCode"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import {Checkbox} from "antd"
+import {AdBlockWindow} from "./AdBlockWindow"
 
 let newState = undefined
 
@@ -24,7 +27,8 @@ const Header = ({location}) => {
 
     const visibleNavigation = useSelector(state => state.analytics.visibleNavigation)
 
-    const [stateName, setStateName] = useState(mainState.name)
+    const [stateName, setStateName] = useState(mainState.name),
+        [visibleAdBlockWindow, setVisibleAdBlockWindow] = useState(false)
 
     const setMainState = (state, location, event) => {
         if (event.ctrlKey || event.metaKey) return
@@ -54,6 +58,22 @@ const Header = ({location}) => {
         }
     }
 
+    async function detectAdBlock() {
+        let adBlockEnabled = false
+
+        const googleAdUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+
+        try {
+            await fetch(new Request(googleAdUrl)).catch(_ => adBlockEnabled = true)
+        } catch (e) {
+            adBlockEnabled = true
+        } finally {
+            if (adBlockEnabled) {
+                setVisibleAdBlockWindow(true)
+            }
+        }
+    }
+
     useEffect(() => {
         if (mainState.name) {
             setStateName(mainState.name)
@@ -72,6 +92,11 @@ const Header = ({location}) => {
             newState = undefined
         }
     }, [history.location])
+
+    useEffect(() => {
+        detectAdBlock()
+
+    }, [])
 
     const StepsRender = () => {
         if (mainState.adGroupId && mainState.campaignId) {
@@ -219,7 +244,9 @@ const Header = ({location}) => {
                             fill="#6959AB" stroke="#6959AB" stroke-width="0.4"/>
                     </svg>
 
-                    {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)}) <InformationTooltip position={'bottomLeft'} description={`All date-based campaign management and reporting are currently using ${marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''} marketplace's local time zone: ${marketplace?.timezone} (GMT ${marketplaceTimezone(marketplace.timezone)})`}/></>}
+                    {marketplace?.timezone && <>{marketplace?.timezone} (GMT {marketplaceTimezone(marketplace.timezone)}) <InformationTooltip
+                        position={'bottomLeft'}
+                        description={`All date-based campaign management and reporting are currently using ${marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''} marketplace's local time zone: ${marketplace?.timezone} (GMT ${marketplaceTimezone(marketplace.timezone)})`}/></>}
                 </div>
 
                 <div className="currency">
@@ -232,10 +259,17 @@ const Header = ({location}) => {
                             fill="#6959AB" stroke="#6959AB" stroke-width="0.5"/>
                     </svg>
 
-                    {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]}) <InformationTooltip position={'bottomLeft'} description={`All monetary values are currently shown in ${marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''} marketplace's local currency: ${currencyName[marketplace?.currency_code]} (${marketplace?.currency_code} - ${currencySymbol[marketplace?.currency_code]})`}/></>}
+                    {marketplace?.currency_code && <> {currencyName[marketplace?.currency_code]} ({marketplace?.currency_code} - {currencySymbol[marketplace?.currency_code]}) <InformationTooltip
+                        position={'bottomLeft'}
+                        description={`All monetary values are currently shown in ${marketplaceIdValues[marketplace?.marketplace_id]?.countryName || ''} marketplace's local currency: ${currencyName[marketplace?.currency_code]} (${marketplace?.currency_code} - ${currencySymbol[marketplace?.currency_code]})`}/></>}
                 </div>
             </div>
 
+            {/*<AdBlockWindow*/}
+            {/*    visible={visibleAdBlockWindow}*/}
+
+            {/*    setVisibleWindow={setVisibleAdBlockWindow}*/}
+            {/*/>*/}
         </section>
     )
 }

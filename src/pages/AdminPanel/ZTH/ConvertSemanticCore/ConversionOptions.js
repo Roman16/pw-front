@@ -14,7 +14,7 @@ const Option = Select.Option
 
 let fullUsersList = []
 
-const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange}) => {
+const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange, onGetParams}) => {
     const [actionType, setActionType] = useState('convert'),
         [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
@@ -240,20 +240,28 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     <br/>
                 </>}
 
-                {actionType === 'convert' ?
-                    <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>
-                        Convert semantics
+                <div className="row actions">
+                    {/*<button*/}
+                    {/*    className={'btn default submit'}*/}
+                    {/*    onClick={onGetParams}*/}
+                    {/*>*/}
+                    {/*    Save conversion settings*/}
+                    {/*</button>*/}
 
-                        {convertProcessing && <Spin size={'small'}/>}
-                    </button>
-                    :
-                    <button
-                        disabled={!selectedUserId}
-                        className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
-                    >
-                        Upload semantics
-                    </button>
-                }
+                    {actionType === 'convert' ?
+                        <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>
+                            Convert semantics
+
+                            {convertProcessing && <Spin size={'small'}/>}
+                        </button>
+                        :
+                        <button
+                            disabled={!selectedUserId}
+                            className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
+                        >
+                            Upload semantics
+                        </button>}
+                </div>
             </div>
 
             <ConfirmUploadWindow

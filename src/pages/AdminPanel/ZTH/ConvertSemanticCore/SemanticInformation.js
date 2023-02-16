@@ -4,33 +4,33 @@ import CustomSelect from "../../../../components/Select/Select"
 
 const Option = Select.Option
 
-const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange, campaignsCompressionStrategyEnums}) => {
-    const [productName, setProductName] = useState(semanticData.conversionOptions.productInformation.productName),
-        [campaignsCompressionStrategy, setCampaignsCompressionStrategy] = useState(semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy)
-
-    useEffect(() => {
-        onChange({
-            ...semanticData,
-            conversionOptions: {
-                ...semanticData.conversionOptions,
-                productInformation: {
-                    ...semanticData.conversionOptions.productInformation,
-                    productName
-                },
-                zeroToHero: {
-                    ...semanticData.conversionOptions.zeroToHero,
-                    campaignsCompressionStrategy
-                }
+const SemanticInformation = ({semanticInfo, semanticData, onChange, campaignsCompressionStrategyEnums}) => {
+    const changeNameHandler = (value) => onChange({
+        ...semanticData,
+        conversionOptions: {
+            ...semanticData.conversionOptions,
+            productInformation: {
+                ...semanticData.conversionOptions.productInformation,
+                productName: value
             }
-        })
+        }
+    })
 
-    }, [productName, campaignsCompressionStrategy])
+    const changeCompressionStrategyHandler = (value) => onChange({
+        ...semanticData,
+        conversionOptions: {
+            ...semanticData.conversionOptions,
+            zeroToHero: {
+                ...semanticData.conversionOptions.zeroToHero,
+                campaignsCompressionStrategy: value
+            }
+        }
+    })
 
     return (
         <div className="core-information">
             <br/>
             <br/>
-
             <h2>Semantic Core Information</h2>
 
             <div>Template version: <b>{`  ${semanticInfo.markupVersion}`}</b></div>
@@ -45,8 +45,8 @@ const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange, ca
                     id="{{'product-name-' + sheetData.id}}"
                     type="text"
                     className="form-control"
-                    value={productName}
-                    onChange={({target: {value}}) => setProductName(value)}
+                    value={semanticData.conversionOptions.productInformation.productName}
+                    onChange={({target: {value}}) => changeNameHandler(value)}
                 />
             </div>
 
@@ -55,8 +55,8 @@ const SemanticInformation = ({semanticInfo = {}, semanticData = {}, onChange, ca
 
                 <CustomSelect
                     className="form-control"
-                    value={campaignsCompressionStrategy}
-                    onChange={value => setCampaignsCompressionStrategy(value)}
+                    value={semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy}
+                    onChange={changeCompressionStrategyHandler}
                     getPopupContainer={trigger => trigger}
                 >
                     {campaignsCompressionStrategyEnums.map(item => (
