@@ -11,7 +11,7 @@ import {saveFile, saveGoogleSpreadsheet, saveWorkbook, saveInputParameters} from
 
 import _ from 'lodash'
 import InputParameters from "../CreateSemanticCore/InputParameters"
-import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
+
 //
 // interface ConvertSemanticDataRequest {
 //     url: string;
@@ -294,6 +294,7 @@ import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 const ConvertSemanticCore = ({admin}) => {
     const [semanticInformation, setSemanticInformation] = useState(),
         [semanticUrl, setSemanticUrl] = useState(),
+
         [zthEnums, setZthEnums] = useState({
             enums: {
                 CampaignType: [],
@@ -314,7 +315,9 @@ const ConvertSemanticCore = ({admin}) => {
             }
         }),
         [loadingInformation, setLoadingInformation] = useState(false),
-        [semanticData, setSemanticData] = useState({}),
+
+        [semanticData, setSemanticData] = useState(),
+
         [uploadProcessing, setUploadProcessing] = useState(false),
         [convertProcessing, setConvertProcessing] = useState(false),
         [parseProcessing, setParseProcessing] = useState(false)
@@ -344,8 +347,7 @@ const ConvertSemanticCore = ({admin}) => {
         setLoadingInformation(true)
 
         try {
-            const res = await adminServices.fetchSemanticInformation({url: semanticUrl}),
-                semanticData = res.semanticData
+            const {semanticData} = await adminServices.fetchSemanticInformation({url: semanticUrl})
 
             setSemanticData({
                 url: semanticUrl,
@@ -378,7 +380,6 @@ const ConvertSemanticCore = ({admin}) => {
                 markupVersion: semanticData.markupVersion,
                 zeroToHeroVersion: semanticData.zeroToHeroVersion
             })
-
         } catch (e) {
             console.log(e)
         }
@@ -532,7 +533,7 @@ const ConvertSemanticCore = ({admin}) => {
                     semanticData={semanticData}
                     campaignsCompressionStrategyEnums={zthEnums.enums.CampaignsCompressionStrategy}
 
-                    onChange={(data) => setSemanticData(data)}
+                    onChange={setSemanticData}
                 />
 
                 <CampaignsBids

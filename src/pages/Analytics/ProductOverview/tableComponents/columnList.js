@@ -20,6 +20,7 @@ import {
     skuAsinColumn,
 } from "../../components/TableList/tableColumns"
 import './ProductMetrics.less'
+import {metricKeys} from "../../componentsV2/MainMetrics/metricsList"
 
 const getColumns = (location, isParent) => [
     ...isParent ? [
@@ -172,7 +173,18 @@ const getColumns = (location, isParent) => [
 
     netProfitColumn,
     grossProfitColumn,
-    adProfitColumn
+    adProfitColumn,
+
+    {
+        title: 'Margin',
+        dataIndex: metricKeys['margin'],
+        key: metricKeys['margin'],
+        width: '150px',
+        sorter: true,
+        filter: true,
+        align: 'right',
+        ...renderNumberField('percent')
+    }
 ]
 
 export const columnList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns()})

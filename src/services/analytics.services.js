@@ -85,6 +85,7 @@ export const filtersHandler = (f) => {
             filterBy === 'macos' ||
             filterBy === 'ctr' ||
             filterBy === metricKeys['icvr'] ||
+            filterBy === metricKeys['margin'] ||
             filterBy === 'ctr'
         ) {
             parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
