@@ -11,6 +11,7 @@ import {saveFile, saveGoogleSpreadsheet, saveWorkbook, saveInputParameters} from
 
 import _ from 'lodash'
 import InputParameters from "../CreateSemanticCore/InputParameters"
+import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 
 //
 // interface ConvertSemanticDataRequest {
@@ -293,7 +294,7 @@ import InputParameters from "../CreateSemanticCore/InputParameters"
 
 const ConvertSemanticCore = ({admin}) => {
     const [semanticInformation, setSemanticInformation] = useState(),
-        [semanticUrl, setSemanticUrl] = useState(),
+        [semanticUrl, setSemanticUrl] = useState(''),
 
         [zthEnums, setZthEnums] = useState({
             enums: {
@@ -322,16 +323,6 @@ const ConvertSemanticCore = ({admin}) => {
         [convertProcessing, setConvertProcessing] = useState(false),
         [parseProcessing, setParseProcessing] = useState(false)
 
-    const changeUploadDataHandler = (value) => {
-        setSemanticData({
-            ...semanticData,
-            conversionOptions: {
-                ...semanticData.conversionOptions,
-                upload: value
-            }
-        })
-    }
-
     const getZthEnums = async () => {
         try {
             const resEnums = await adminServices.fetchEnums()
@@ -349,7 +340,17 @@ const ConvertSemanticCore = ({admin}) => {
         try {
             const {semanticData} = await adminServices.fetchSemanticInformation({url: semanticUrl})
 
-            setSemanticData({
+            await setSemanticData({
+                settings: {
+                    manuallySetExactBid: false,
+                    manuallyBudgets: false,
+                    exactBid: 1,
+                    ppcPlan: semanticData.ppcPlan,
+                    budgetMultiplier: 1,
+                    actionType: 'convert'
+                },
+
+
                 url: semanticUrl,
                 convertToXLSXWorkBook: false,
                 convertToAmazonBulkUpload: true,
@@ -358,7 +359,8 @@ const ConvertSemanticCore = ({admin}) => {
                         useInputParametersProductName: true,
                         campaignsStatus: zthEnums.enums.Status[0],
                         convertForAmazonRegion: zthEnums.enums.AmazonRegion[0],
-                        semanticCoreUrls: [semanticUrl]
+                        semanticCoreUrls: [semanticUrl],
+                        generateBulkUploadForCampaignTypes: [...zthEnums.aggregates.spCampaignTypesOrdered]
                     },
                     productInformation: {
                         productName: semanticData.productName,
@@ -366,6 +368,13 @@ const ConvertSemanticCore = ({admin}) => {
                     },
                     saver: {
                         saveBulkUploadAs: 'xlsx'
+                    },
+                    upload: {
+                        bidsTemplate: {
+                            adGroups: {},
+                            campaigns: {}
+                        },
+                        budgetsTemplate: {}
                     },
                     zeroToHero: {
                         campaignsCompressionStrategy: semanticData.campaignsCompressionStrategy,
@@ -391,7 +400,9 @@ const ConvertSemanticCore = ({admin}) => {
 
         try {
             const res = await adminServices.convertSemantic({
-                ...semanticData,
+                url: semanticData.url,
+                convertToXLSXWorkBook: semanticData.convertToXLSXWorkBook,
+                convertToAmazonBulkUpload: semanticData.convertToAmazonBulkUpload,
                 conversionOptions: {
                     ...semanticData.conversionOptions,
                     productInformation: {
@@ -403,7 +414,7 @@ const ConvertSemanticCore = ({admin}) => {
                                 relatedValues: [...value.relatedValues.filter(i => !!i)]
                             }))
                         }))
-                    }
+                    },
                 }
             })
 
@@ -461,8 +472,6 @@ const ConvertSemanticCore = ({admin}) => {
 
     const parseInputParametersFile = (file) => {
         setParseProcessing(true)
-        console.log(file)
-
         if (file) {
             const reader = new FileReader()
             reader.readAsText(file, 'UTF-8')
@@ -492,7 +501,6 @@ const ConvertSemanticCore = ({admin}) => {
         }
     }
 
-
     const downloadInputParams = () => {
         saveInputParameters(semanticData, 'conversion-settings')
     }
@@ -503,6 +511,8 @@ const ConvertSemanticCore = ({admin}) => {
 
     return (
         <section className={'convert-semantic-core'}>
+            {/*{parseProcessing && <RouteLoader/>}*/}
+
             <h2>Convert Semantic Core</h2>
 
             <form className="step step-1" onSubmit={loadSemanticInformation}>
@@ -521,11 +531,11 @@ const ConvertSemanticCore = ({admin}) => {
                 </button>
             </form>
 
-            {/*{semanticInformation &&*/}
-            {/*<InputParameters*/}
-            {/*    onUpload={parseInputParametersFile}*/}
-            {/*    label={'Choose conversion-settings.json file to upload settings'}*/}
-            {/*/>}*/}
+            {semanticInformation &&
+            <InputParameters
+                onUpload={parseInputParametersFile}
+                label={'Choose conversion-settings.json file to upload settings'}
+            />}
 
             {semanticInformation && !parseProcessing && <>
                 <SemanticInformation
@@ -539,12 +549,13 @@ const ConvertSemanticCore = ({admin}) => {
                 <CampaignsBids
                     zthEnums={zthEnums}
                     semanticData={semanticData}
-                    onChange={changeUploadDataHandler}
+
+                    onChange={setSemanticData}
                 />
 
                 <Variations
                     semanticData={semanticData}
-                    onChange={(data) => setSemanticData(data)}
+                    onChange={setSemanticData}
                 />
 
                 <ConversionOptions
@@ -556,7 +567,7 @@ const ConvertSemanticCore = ({admin}) => {
                     convertProcessing={convertProcessing}
 
                     onGetParams={downloadInputParams}
-                    onChange={(data) => setSemanticData(data)}
+                    onChange={setSemanticData}
                     onConvert={convertSemanticHandler}
                     onUpload={uploadSemanticHandler}
                 />
