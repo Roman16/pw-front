@@ -472,8 +472,6 @@ const ConvertSemanticCore = ({admin}) => {
 
     const parseInputParametersFile = (file) => {
         setParseProcessing(true)
-        console.log(file)
-
         if (file) {
             const reader = new FileReader()
             reader.readAsText(file, 'UTF-8')

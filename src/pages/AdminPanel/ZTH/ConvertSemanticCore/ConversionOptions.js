@@ -16,7 +16,8 @@ let fullUsersList = []
 
 const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange, onGetParams}) => {
     const [visibleConfirm, setVisibleConfirm] = useState(false),
-        [usersList, setUsersList] = useState([])
+        [usersList, setUsersList] = useState([]),
+        [selectedUserId, setSelectedUserId] = useState()
 
     const getUsersList = async () => {
         try {
@@ -44,13 +45,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     }
 
     const searchHandler = (text) => {
-        onChange({
-            ...semanticData,
-            settings: {
-                ...semanticData.settings,
-                selectedUserId: undefined
-            }
-        })
+        setSelectedUserId(undefined)
 
         if (text.length > 2) {
             setUsersList(fullUsersList.filter(user => {
@@ -216,14 +211,8 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                         optionFilterProp={false}
                         onSearch={searchHandler}
                         filterOption={false}
-                        onChange={value => onChange({
-                            ...semanticData,
-                            settings: {
-                                ...semanticData.settings,
-                                selectedUserId: value
-                            }
-                        })}
-                        value={semanticData.settings.selectedUserId}
+                        onChange={value => setSelectedUserId(value)}
+                        value={selectedUserId}
                         getPopupContainer={trigger => trigger}
                     >
                         {usersList.map(user => (
@@ -271,7 +260,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                         </button>
                         :
                         <button
-                            disabled={!semanticData.settings.selectedUserId}
+                            disabled={!selectedUserId}
                             className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
                         >
                             Upload semantics
@@ -281,11 +270,11 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
 
             <ConfirmUploadWindow
                 visible={visibleConfirm}
-                user={_.find(usersList, {id: semanticData.settings.selectedUserId})}
+                user={_.find(usersList, {id: selectedUserId})}
                 semanticName={semanticData.conversionOptions.productInformation.productName}
                 uploadProcessing={uploadProcessing}
 
-                onSubmit={() => onUpload(semanticData.settings.selectedUserId)}
+                onSubmit={() => onUpload(selectedUserId)}
                 onCancel={() => setVisibleConfirm(false)}
             />
         </>
