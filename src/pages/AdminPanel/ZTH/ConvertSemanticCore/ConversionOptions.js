@@ -15,15 +15,8 @@ const Option = Select.Option
 let fullUsersList = []
 
 const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange, onGetParams}) => {
-    const [actionType, setActionType] = useState('convert'),
-        [visibleConfirm, setVisibleConfirm] = useState(false),
-        [usersList, setUsersList] = useState([]),
-        [selectedUserId, setSelectedUserId] = useState(),
-        [merchantWordsCategories, setMerchantWordsCategories] = useState([]),
-        [bulkUploadOptions, setBulkUploadOptions] = useState([...zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
-            campaignType: key,
-            generateBulkUpload: true
-        }))])
+    const [visibleConfirm, setVisibleConfirm] = useState(false),
+        [usersList, setUsersList] = useState([])
 
     const getUsersList = async () => {
         try {
@@ -37,21 +30,27 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     }
 
     const switchAllOptions = () => {
-        if (_.some(bulkUploadOptions, {generateBulkUpload: true})) {
-            setBulkUploadOptions(bulkUploadOptions.map(item => ({
-                ...item,
+        if (semanticData.conversionOptions.converter.generateBulkUploadForCampaignTypes.length > 0) {
+            changeBulkUploadOptionsHandler(zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
+                campaignType: key,
                 generateBulkUpload: false
             })))
         } else {
-            setBulkUploadOptions(bulkUploadOptions.map(item => ({
-                ...item,
+            changeBulkUploadOptionsHandler(zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
+                campaignType: key,
                 generateBulkUpload: true
             })))
         }
     }
 
     const searchHandler = (text) => {
-        setSelectedUserId(undefined)
+        onChange({
+            ...semanticData,
+            settings: {
+                ...semanticData.settings,
+                selectedUserId: undefined
+            }
+        })
 
         if (text.length > 2) {
             setUsersList(fullUsersList.filter(user => {
@@ -63,7 +62,16 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     }
 
     const changeBulkUploadOptionsHandler = (data) => {
-        setBulkUploadOptions(data)
+        onChange({
+            ...semanticData,
+            conversionOptions: {
+                ...semanticData.conversionOptions,
+                converter: {
+                    ...semanticData.conversionOptions.converter,
+                    generateBulkUploadForCampaignTypes: _.filter(data, {generateBulkUpload: true}).map(item => item.campaignType)
+                }
+            }
+        })
     }
 
     const changeConversionOptionsHandler = (object, name, value) => {
@@ -84,19 +92,6 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     }
 
     useEffect(() => {
-        onChange({
-            ...semanticData,
-            conversionOptions: {
-                ...semanticData.conversionOptions,
-                converter: {
-                    ...semanticData.conversionOptions.converter,
-                    generateBulkUploadForCampaignTypes: _.filter(bulkUploadOptions, {generateBulkUpload: true}).map(item => item.campaignType)
-                }
-            }
-        })
-    }, [bulkUploadOptions])
-
-    useEffect(() => {
         admin && getUsersList()
     }, [])
 
@@ -113,19 +108,29 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
         <>
             <div className={'conversion-options'}>
                 <h2>Select Operation</h2>
-                <Radio.Group onChange={({target: {value}}) => setActionType(value)} value={actionType}>
+                <Radio.Group
+                    onChange={({target: {value}}) => onChange({
+                        ...semanticData,
+                        settings: {
+                            ...semanticData.settings,
+                            actionType: value
+                        }
+                    })}
+                    value={semanticData.settings.actionType}
+                >
                     <Radio value={'convert'}>Convert to Bulk Upload File</Radio>
                     {admin && <Radio value={'upload'}>Upload to Amazon Account</Radio>}
                 </Radio.Group>
 
-                <h2>{actionType === 'convert' ? 'Conversion' : 'Upload'} options</h2>
+                <h2>{semanticData.settings.actionType === 'convert' ? 'Conversion' : 'Upload'} options</h2>
                 <h3>Select advertising types to convert</h3>
 
                 <Checkbox
                     checked={semanticData.conversionOptions.zeroToHero.createSponsoredProductsSemanticCore}
                     onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredProductsSemanticCore', checked)}
                 >
-                    {actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Products Semantic core
+                    {semanticData.settings.actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Products Semantic
+                    core
                 </Checkbox>
                 <br/>
                 <br/>
@@ -133,23 +138,26 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     checked={semanticData.conversionOptions.zeroToHero.createSponsoredDisplaySemanticCore}
                     onChange={({target: {checked}}) => changeConversionOptionsHandler('zeroToHero', 'createSponsoredDisplaySemanticCore', checked)}
                 >
-                    {actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Display Semantic
-                    Core {actionType === 'convert' && '(not available for Amazon Bulk Upload files)'}
+                    {semanticData.settings.actionType === 'convert' ? 'Convert' : 'Upload'} Sponsored Display Semantic
+                    Core {semanticData.settings.actionType === 'convert' && '(not available for Amazon Bulk Upload files)'}
                 </Checkbox>
                 <br/>
                 <br/>
 
-                {actionType === 'convert' && <>
+                {semanticData.settings.actionType === 'convert' && <>
                     <h3>Generate bulk upload for campaign types:</h3>
 
                     <button className="btn default" onClick={switchAllOptions}>
-                        {_.some(bulkUploadOptions, {generateBulkUpload: true}) ? 'Disable' : 'Enable'} all
+                        {semanticData.conversionOptions.converter.generateBulkUploadForCampaignTypes.length > 0 ? 'Disable' : 'Enable'} all
                     </button>
 
                     <br/>
 
                     <ExcelTable
-                        data={bulkUploadOptions}
+                        data={[...zthEnums.aggregates.spCampaignTypesOrdered.map(key => ({
+                            campaignType: key,
+                            generateBulkUpload: semanticData.conversionOptions.converter.generateBulkUploadForCampaignTypes.includes(key)
+                        }))]}
                         columns={columns}
                         onChange={changeBulkUploadOptionsHandler}
                     />
@@ -158,7 +166,8 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
 
                 <div className="form-group  w-25">
                     <label htmlFor="">
-                        Campaigns status {actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
+                        Campaigns
+                        status {semanticData.settings.actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
                     </label>
                     <CustomSelect
                         getPopupContainer={trigger => trigger}
@@ -171,7 +180,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     </CustomSelect>
                 </div>
 
-                {actionType === 'convert' && <>
+                {semanticData.settings.actionType === 'convert' && <>
                     <div className="form-group  w-25">
                         <label htmlFor="">Output type</label>
                         <CustomSelect
@@ -199,7 +208,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     </div>
                 </>}
 
-                {actionType === 'upload' && <div className="form-group  w-25 users">
+                {semanticData.settings.actionType === 'upload' && <div className="form-group  w-25 users">
                     <label htmlFor="">Select a user</label>
 
                     <CustomSelect
@@ -207,8 +216,14 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                         optionFilterProp={false}
                         onSearch={searchHandler}
                         filterOption={false}
-                        onChange={value => setSelectedUserId(value)}
-                        value={selectedUserId}
+                        onChange={value => onChange({
+                            ...semanticData,
+                            settings: {
+                                ...semanticData.settings,
+                                selectedUserId: value
+                            }
+                        })}
+                        value={semanticData.settings.selectedUserId}
                         getPopupContainer={trigger => trigger}
                     >
                         {usersList.map(user => (
@@ -221,7 +236,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     </CustomSelect>
                 </div>}
 
-                {actionType === 'convert' && <>
+                {semanticData.settings.actionType === 'convert' && <>
                     <Checkbox
                         checked={semanticData.convertToXLSXWorkBook}
                         onChange={({target: {checked}}) => changeConversionOptionsHandler(undefined, 'convertToXLSXWorkBook', checked)}
@@ -241,14 +256,14 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                 </>}
 
                 <div className="row actions">
-                    {/*<button*/}
-                    {/*    className={'btn default submit'}*/}
-                    {/*    onClick={onGetParams}*/}
-                    {/*>*/}
-                    {/*    Save conversion settings*/}
-                    {/*</button>*/}
+                    <button
+                        className={'btn default submit'}
+                        onClick={onGetParams}
+                    >
+                        Save conversion settings
+                    </button>
 
-                    {actionType === 'convert' ?
+                    {semanticData.settings.actionType === 'convert' ?
                         <button disabled={convertProcessing} className={'btn default submit'} onClick={onConvert}>
                             Convert semantics
 
@@ -256,7 +271,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                         </button>
                         :
                         <button
-                            disabled={!selectedUserId}
+                            disabled={!semanticData.settings.selectedUserId}
                             className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
                         >
                             Upload semantics
@@ -266,11 +281,11 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
 
             <ConfirmUploadWindow
                 visible={visibleConfirm}
-                user={_.find(usersList, {id: selectedUserId})}
+                user={_.find(usersList, {id: semanticData.settings.selectedUserId})}
                 semanticName={semanticData.conversionOptions.productInformation.productName}
                 uploadProcessing={uploadProcessing}
 
-                onSubmit={() => onUpload(selectedUserId)}
+                onSubmit={() => onUpload(semanticData.settings.selectedUserId)}
                 onCancel={() => setVisibleConfirm(false)}
             />
         </>
