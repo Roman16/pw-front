@@ -356,6 +356,14 @@ Payment failures and orders that are cancelled within 72 hours will be removed f
         type: 'percent',
         tabs: []
     },
+    //------------------------------------------------------------------------------------------------------------------
+    {
+        title: 'Margin',
+        key: metricKeys['margin'],
+        label: 'Average',
+        type: 'percent',
+        tabs: ['performance']
+    },
 ]
 
 export const metricsKeysWithoutOrganic = analyticsAvailableMetricsList.filter(({key}) =>
