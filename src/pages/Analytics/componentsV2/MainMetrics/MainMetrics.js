@@ -7,7 +7,6 @@ import {SVG} from "../../../../utils/icons"
 import MetricModal from "./MetricModal"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 import _ from 'lodash'
-import {availableMetrics} from './metricsList'
 
 let activeMetricIndexTurn = [0, 1]
 
