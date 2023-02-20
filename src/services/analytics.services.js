@@ -233,7 +233,7 @@ function downloadTableCSV(location, filtersWithState) {
 
     if (location === 'overview') {
         if (_.find(filtersWithState, {filterBy: 'isParent'}) && _.find(filtersWithState, {filterBy: 'isParent'}).value === 'true') {
-            location = 'products-parents'
+            location = 'products'
 
             filtersWithState = [...filtersWithState.map(i => {
                 if (i.filterBy === 'productId') i.filterBy = 'parent_productId'
