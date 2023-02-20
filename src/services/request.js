@@ -66,7 +66,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
     const token = localStorage.getItem('token'),
         adminToken = localStorage.getItem('adminToken')
 
-    const isAdminRequest = url.split('/')[0] === 'admin'
+    const isAdminRequest = url.split('/')[0] === 'admin' || url.split('/')[0] === 'agency'
 
     return new Promise((resolve, reject) => {
         axios({
