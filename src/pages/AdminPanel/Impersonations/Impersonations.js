@@ -12,6 +12,15 @@ import {amazonRegionsSort} from "../../../reducers/user.reducer"
 const {Option} = Select
 let fullUsersList = []
 
+export const updateLocaleStorage = () => {
+    if (localStorage.getItem('productsSearchParams')) {
+        localStorage.setItem('productsSearchParams', JSON.stringify({
+            ...JSON.parse(localStorage.getItem('productsSearchParams')),
+            page: 1,
+        }))
+    }
+}
+
 const Impersonations = (props) => {
     const [userList, setUserList] = useState([]),
         [selectedUserId, setSelectedUserId] = useState(undefined),
@@ -74,15 +83,6 @@ const Impersonations = (props) => {
         notification.success({title: 'Success!'})
     }
 
-    const updateLocaleStorage = () => {
-        if (localStorage.getItem('productsSearchParams')) {
-            localStorage.setItem('productsSearchParams', JSON.stringify({
-                ...JSON.parse(localStorage.getItem('productsSearchParams')),
-                page: 1,
-            }))
-        }
-
-    }
 
     const impersonateHandler = async (e) => {
         e.preventDefault()

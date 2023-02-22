@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from "react"
 import {Filters} from "./Filters"
 import CustomTable from "../../../../components/Table/CustomTable"
-import {columns} from "./columns"
+import {columns as col} from "./columns"
 import moment from "moment-timezone"
 import {adminServices} from "../../../../services/admin.services"
 import _ from "lodash"
+import {updateLocaleStorage, updateUserInformation} from "../../Impersonations/Impersonations"
+import {useDispatch} from "react-redux"
+import {userService} from "../../../../services/user.services"
+import {amazonRegionsSort} from "../../../../reducers/user.reducer"
+import {userActions} from "../../../../actions/user.actions"
+import {notification} from "../../../../components/Notification"
 
 export const Metrics = () => {
     const [data, setData] = useState([]),
@@ -21,6 +27,67 @@ export const Metrics = () => {
             type: undefined
         })
 
+    const dispatch = useDispatch()
+
+    const updateUserInformation = async (marketplace, regionId) => {
+        const {result} = await userService.getAmazonRegionAccounts()
+
+        result.forEach(item => ({
+            ...item,
+            amazon_region_account_marketplaces: amazonRegionsSort(item.amazon_region_account_marketplaces)
+        }))
+
+        const user = await userService.getUserPersonalInformation()
+
+        dispatch(userActions.setInformation({userDetails: user.result}))
+
+        if (result.length > 0) {
+            const importStatus = await userService.checkImportStatus(regionId)
+
+            dispatch(userActions.setInformation({importStatus: importStatus.result}))
+
+            dispatch(userActions.setActiveRegion({
+                region: result.find(i => i.amazon_region_account_marketplaces.find(m => m.marketplace_id === marketplace)),
+                marketplace: result.find(i => i.amazon_region_account_marketplaces.find(m => m.marketplace_id === marketplace)).amazon_region_account_marketplaces.find(m => m.marketplace_id === marketplace)
+            }))
+        } else if (result.length === 0) {
+            dispatch(userActions.setActiveRegion({
+                region: null,
+                marketplace: null
+            }))
+        }
+
+        dispatch(userActions.setAmazonRegionAccounts(result))
+
+        notification.success({title: 'Success!'})
+
+        window.location.reload();
+    }
+
+
+    const impersonateHandler = async (email, marketplace, regionId) => {
+        try {
+
+            const res = await adminServices.impersonateUser(email, 'email')
+
+            if (localStorage.getItem('adminToken')) {
+                localStorage.setItem('token', res.result.access_token)
+            } else {
+                localStorage.setItem('adminToken', localStorage.getItem('token'))
+                localStorage.setItem('token', res.result.access_token)
+            }
+
+            updateLocaleStorage()
+
+            updateUserInformation(marketplace, regionId)
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+
+    const columns = col(impersonateHandler)
+
     const getDataHandler = async () => {
         setLoading(true)
         try {
@@ -29,7 +96,12 @@ export const Metrics = () => {
             if (requestData.comparePreviousPeriod) {
                 const dateDiff = moment(requestData.dateTo).diff(moment(requestData.dateFrom), 'days')
 
-                const [currentData, previousData] = await Promise.all([adminServices.getAgencyDashboardData({..._.omit({...requestData, sorterColumn}, 'comparePreviousPeriod')}), adminServices.getAgencyDashboardData({
+                const [currentData, previousData] = await Promise.all([adminServices.getAgencyDashboardData({
+                    ..._.omit({
+                        ...requestData,
+                        sorterColumn
+                    }, 'comparePreviousPeriod')
+                }), adminServices.getAgencyDashboardData({
                     attributionWindow: requestData.attributionWindow,
                     dateFrom: moment(requestData.dateFrom).add(-(dateDiff + 1), 'days'),
                     dateTo: moment(requestData.dateFrom).add(-1, 'days'),
@@ -49,7 +121,12 @@ export const Metrics = () => {
                     return (obj)
                 })
             } else {
-                const {result} = await adminServices.getAgencyDashboardData({..._.omit({...requestData, sorterColumn}, 'comparePreviousPeriod')})
+                const {result} = await adminServices.getAgencyDashboardData({
+                    ..._.omit({
+                        ...requestData,
+                        sorterColumn
+                    }, 'comparePreviousPeriod')
+                })
                 res = result
             }
 

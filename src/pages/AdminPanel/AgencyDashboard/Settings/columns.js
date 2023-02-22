@@ -9,7 +9,13 @@ export const columns = (users, onChange) => [
         title: 'Account Name',
         dataIndex: 'marketplace_name',
         key: 'marketplace_name',
-        render: (name, item) => <b>{name} <br/> {item.account_name}</b>
+        render: (name, item) => <div className={'account-name'}>
+            <div className="col">
+                <span title={name}><b>{name}</b></span>
+                <span title={item.account_name}><b>{item.account_name}</b></span>
+                <span title={item.user_email}>{item.user_email}</span>
+            </div>
+        </div>
     },
     {
         title: 'Status',
