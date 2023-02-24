@@ -6,14 +6,24 @@ import {
 } from "../../../Analytics/components/TableList/tableColumns"
 import {metricKeys} from "../../../Analytics/componentsV2/MainMetrics/metricsList"
 
-export const columns = [
+export const columns = (onImpersonate) => [
     {
         title: 'Account Name',
         dataIndex: 'marketplace_name',
         key: 'marketplace_name',
-        width: '250px',
+        width: '400px',
         search: true,
-        render: (name, item) => <b>{name} <br/> {item.account_name}</b>
+        render: (name, item) => <div className={'account-name'}>
+            <div className="col">
+                <span title={name}><b>{name}</b></span>
+                <span title={item.account_name}><b>{item.account_name}</b></span>
+                <span title={item.user_email}>{item.user_email}</span>
+            </div>
+
+            <button className="btn default" onClick={() => onImpersonate(item.user_email, item.marketplace_id, item.amazon_region_account_marketplace_id)}>
+                Impersonate
+            </button>
+        </div>
     },
     {
         title: 'Project Manager',
