@@ -265,11 +265,11 @@ const Header = ({location}) => {
                 </div>
             </div>
 
-            {/*<AdBlockWindow*/}
-            {/*    visible={visibleAdBlockWindow}*/}
+            <AdBlockWindow
+                visible={visibleAdBlockWindow}
 
-            {/*    setVisibleWindow={setVisibleAdBlockWindow}*/}
-            {/*/>*/}
+                setVisibleWindow={setVisibleAdBlockWindow}
+            />
         </section>
     )
 }
