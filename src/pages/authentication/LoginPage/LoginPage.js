@@ -31,7 +31,8 @@ const LoginPage = (props) => {
     const loginHandler = async (e) => {
         e.preventDefault()
 
-        const fieldEmailValid = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z0-9_\.-]+)\.([a-zA-Z\.]{2,6})$/.test(user.email)
+        // const fieldEmailValid = /^([a-zA-Z0-9_\.-\.+])@([a-zA-Z0-9_\.-\.+])\.([a-zA-Z\.]{2,6})$/.test(user.email)
+        const fieldEmailValid = true
 
         if (user.password.length < 6 || user.email.length === 0 || !fieldEmailValid) {
             if (user.password.length < 6) setFailedFields(prevState => [...prevState, 'password'])
