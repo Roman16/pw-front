@@ -1402,6 +1402,25 @@ const files = {
             data: `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.6817 6.23211H14.0101V6.23092M1.98926 13.0961V9.76767M1.98926 9.76767L5.31768 9.76767M1.98926 9.76767L4.10985 11.8896C4.7702 12.5512 5.60824 13.0532 6.57607 13.3125C9.51014 14.0987 12.526 12.3575 13.3122 9.4234M2.68699 6.57639C3.47317 3.64233 6.48902 1.90113 9.42308 2.68731C10.3909 2.94664 11.229 3.44858 11.8893 4.11017L14.0101 6.23092M14.0101 2.90371V6.23092" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`
+        },'list': {
+            width: 20,
+            height: 20,
+            viewBox: [0, 0, 20, 20],
+            data: `                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <g>
+                        <rect x="2.5" y="9.5" width="2.15789" height="2.15789" rx="0.5"/>
+                        <rect x="2.5" y="3.5" width="2.15789" height="2.15789" rx="0.5"/>
+                        <rect x="2.5" y="15.0264" width="2.15789" height="2.15789" rx="0.5"/>
+                        <path d="M8.31543 10.5791L16.9996 10.5791" fill='none' stroke-width="2"
+                              stroke-linecap="round"/>
+                        <path d="M8.31543 4.5791L16.9996 4.5791" fill='none' stroke-width="2"
+                              stroke-linecap="round"/>
+                        <path d="M8.31592 16.1055L17.0001 16.1055" fill='none' stroke-width="2"
+                              stroke-linecap="round"/>
+                    </g>
+                </svg>
+`
         },
         'dayparting-icon-sidebar': {
             width: 20,
@@ -1422,6 +1441,7 @@ const files = {
         },
     },
     allIds: [
+        'list',
         'rotate-arrows-icon',
         'paused-status',
         'enabled-status',

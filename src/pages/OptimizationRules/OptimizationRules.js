@@ -6,15 +6,21 @@ import {RulesList} from "./RulesList/RulesList"
 
 
 const OptimizationRules = () => {
-    const [visibleCreateRuleWindow, setVisibleCreateRuleWindow] = useState(true)
+    const [visibleCreateRuleWindow, setVisibleCreateRuleWindow] = useState(false),
+        [activeTab, setActiveTab] = useState('rules')
 
     const closeWindowHandler = () => setVisibleCreateRuleWindow(false)
 
     return (<div className={'optimization-rules-page'}>
-        <Header/>
+        <Header
+            onCreate={() => setVisibleCreateRuleWindow(true)}
+        />
 
         <div className="container">
-            <RulesList/>
+            <RulesList
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+            />
         </div>
 
         <CreateRulesWindow

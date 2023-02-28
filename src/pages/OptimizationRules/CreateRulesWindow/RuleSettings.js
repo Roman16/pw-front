@@ -2,127 +2,235 @@ import React, {useState} from "react"
 import CustomSelect from "../../../components/Select/Select"
 import {Select} from "antd"
 import {SVG} from "../../../utils/icons"
+import _ from 'lodash'
+import InputCurrency from "../../../components/Inputs/InputCurrency"
 
 const Option = Select.Option
 
+const metrics = [
+    {
+        title: 'Impressions',
+        key: 'impressions',
+        type: 'number'
+        // type: 'number'
+    },
+    {
+        title: 'Ad Spend',
+        key: 'cost',
+        type: 'number'
+        // type: 'currency'
+    },
+    {
+        title: 'Clicks',
+        key: 'clicks',
+        type: 'number'
+        // type: 'number'
+    },
+    {
+        title: 'Ad Orders',
+        key: 'attributedConversions',
+        type: 'number'
+        // type: 'number'
+    },
+    {
+        title: 'ACoS',
+        key: 'acos',
+        type: 'number'
+        // type: 'percent'
+    },
+    {
+        title: 'Ad Sales',
+        key: 'attributedSales',
+        type: 'number'
+        // type: 'currency'
+    },
+    {
+        title: 'CTR',
+        key: 'ctr',
+        type: 'number'
+        // type: 'percent'
+    },
+    {
+        title: 'Ad CVR',
+        key: 'conversion_rate',
+        type: 'number'
+        // type: 'percent'
+    },
+    {
+        title: 'Bid',
+        key: 'bid',
+        type: 'number'
+        // type: 'currency'
+    },
+    {
+        title: 'CPC',
+        key: 'cpc',
+        type: 'number'
+        // type: 'currency'
+    },
+    {
+        title: 'Bid - CPC',
+        key: 'bid_cpc',
+        type: 'number'
+        // type: 'currency'
+    },
+    {
+        title: 'Match Type',
+        key: 'matchType',
+        type: 'enums'
+    },
+]
 
-const RenderRules = ({rule, onChange}) => {
-    const [isHover, setIsHover] = useState(false)
+const conditionsByMetric = {
+    number: [
+        {title: 'Equals', key: 'eq'},
+        {title: 'Greater than', key: 'gt'},
+        {title: 'Less than', key: 'lt'},
+        {title: 'Greater than or equal to', key: 'gte'},
+        {title: 'Less than or equal to', key: 'lte'},
+    ],
+    enums: [
+        {title: 'Equals', key: 'eq'},
+        {title: 'Not equals', key: 'neq'}
+    ]
+}
 
-    const handleMouseEnter = (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        setIsHover(true)
-    }
+const timelineEnums = [
+    {
+        title: 'today',
+        key: 'today'
+    },
+    {
+        title: 'yesterday',
+        key: 'yesterday'
+    },
+    {
+        title: 'last 3 days',
+        key: 'last_3'
+    },
+    {
+        title: 'last 7 days',
+        key: 'last_7'
+    },
+    {
+        title: 'last 14 days',
+        key: 'last_14'
+    },
+    {
+        title: 'last 30 days',
+        key: 'last_30'
+    },
+    {
+        title: 'last 65 days',
+        key: 'last_65'
+    },
+]
 
-    const handleMouseLeave = (e) => {
-        e.stopPropagation()
-        e.preventDefault()
-        setIsHover(false)
-    }
+const actionsEnums = [
+    {
+        title: 'Set - Bid',
+        key: 'set_bid'
+    },
+    {
+        title: 'Set - Status',
+        key: 'set_status'
+    },
+    {
+        title: 'Decrease - Bid',
+        key: 'decrease_bid'
+    },
+    {
+        title: 'Increase - Bid',
+        key: 'increase_bid'
+    },
+]
 
-    if (rule.type === 'rule') {
-        return (<div className="rule">
-            <div className="form-group">
-                <label htmlFor="">Metric</label>
-                <CustomSelect
-                    getPopupContainer={trigger => trigger}
-                    value={rule.metric}
-                    // onChange={}
-                >
-                    <Option value={'days'}>Days</Option>
-                </CustomSelect>
-            </div>
+const defaultRule = {
+    "type": "rule",
+    "metric": "impressions",
+    "operator": "eq",
+    "value": 1
+}
 
-            <div className="form-group">
-                <label htmlFor="">Condition</label>
-                <CustomSelect
-                    getPopupContainer={trigger => trigger}
-                    value={rule.operator}
-                    // onChange={}
-                >
-                    <Option value={'>'}>Less then</Option>
-                </CustomSelect>
-            </div>
+const defaultGroup = {
+    "type": "array",
+    "glue": "AND",
+    "rules": [
+        defaultRule,
+        defaultRule
+    ]
+}
 
-            <div className="form-group">
-                <label htmlFor="">Value</label>
-                <input
-                    value={rule.value}
-                    onChange={({target: {value}}) => onChange({...rule, value})}
-                />
-            </div>
-        </div>)
+
+const addConditionHandler = (data) => {
+    if (data.type === 'array') {
+        return ({
+            ...data,
+            rules: [
+                ..._.filter(data.rules, {'type': 'rule'}),
+                defaultRule,
+                ..._.filter(data.rules, {'type': 'array'}),
+            ]
+        })
     } else {
-        return (<div
-            className={`group ${isHover ? 'hover' : ''}`}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
-            <div className={`glue ${rule.glue}`}>
-                <div>{rule.glue}</div>
-            </div>
-
-            <div className="rules">
-                {rule.rules.map((i, index) => <RenderRules
-                    rule={i}
-                    onChange={(data) => onChange({
-                        ...rule,
-                        rules: [...rule.rules.map((item, index2) => index2 === index ? data : item)]
-                    })}
-                />)}
-            </div>
-        </div>)
+        return ({
+            "type": "array",
+            "glue": "AND",
+            "rules": [
+                data,
+                defaultRule,
+            ]
+        })
     }
 }
 
-const AddActions = ({onAddFilter, onAddGroup}) => {
-    return (<div className="add-actions">
-        <button onClick={onAddFilter}>
-            <SVG id={'plus-icon'}/>
-            Add filter
-        </button>
+const addGroupHandler = (data) => {
+    if (data.type === 'array') {
+        return ({
+            ...data,
+            rules: [
+                ...data.rules,
+                defaultGroup,
+            ]
+        })
+    } else {
+        return ({
+            "type": "array",
+            "glue": "AND",
+            "rules": [
+                data,
+                defaultGroup,
+            ]
+        })
+    }
+}
 
-        <button onClick={onAddGroup}>
-            <SVG id={'plus-icon'}/>
-            Add group
-        </button>
-    </div>)
+const removeConditionHandler = (group, index) => {
+    if (group.rules.length === 2) {
+        const rule = group.rules.filter((item, i) => i !== index)[0]
+
+        return ({
+            "type": "rule",
+            "metric": rule.metric,
+            "operator": rule.operator,
+            "value": rule.value
+        })
+    } else {
+        return ({
+            "type": "array",
+            "glue": group.glue,
+            "rules": [...group.rules.filter((item, i) => i !== index)]
+        })
+    }
 }
 
 export const RuleSettings = ({data, onChange}) => {
-
     const changeSettingsHandler = (settings) => {
         onChange({settings})
     }
 
-    const addFilterHandler = () => {
-        if (data.settings.type === 'array') {
-            changeSettingsHandler({
-                ...data.settings,
-                rules: [
-                    {
-                        "type": "rule",
-                        "metric": "days",
-                        "operator": ">",
-                        "value": 1
-                    },
-                    ...data.settings.rules
-                ]
-            })
-        } else {
-
-        }
-    }
-
-    const addGroupHandler = () => {
-
-    }
-
     return (<div className="step rule-settings">
-        <h3>RuleOnly for big Campaigns rule</h3>
-
-        <div className="when-line line">
+        <div className="when-line line active">
             <div>when</div>
         </div>
 
@@ -131,43 +239,214 @@ export const RuleSettings = ({data, onChange}) => {
                 rule={data.settings}
                 onChange={changeSettingsHandler}
             />
-            {/*{renderRules(data.settings, changeSettingsHandler)}*/}
 
             <AddActions
-                onAddFilter={addFilterHandler}
-                onAddGroup={addGroupHandler}
+                onAddCondition={() => changeSettingsHandler(addConditionHandler(data.settings))}
+                onAddGroup={() => changeSettingsHandler(addGroupHandler(data.settings))}
             />
         </div>
 
-        <div className="time-line line">
+        <div className={`time-line line ${data.timeline ? 'active' : ''}`}>
             <div>
                 <CustomSelect
-                    getPopupContainer={trigger => trigger}
+                    getPopupContainer={trigger => trigger.parentNode}
                     placeholder={'SELECT TIMELINE'}
                     value={data.timeline}
-                    onChange={value => onChange({timeline: value})}
+                    onChange={timeline => onChange({timeline})}
                 >
-                    <Option value={'lastDays_3'}>Last 3 days</Option>
+                    {[...timelineEnums, ...!data.automatic ? [{title: 'lifetime', key: 'lifetime'}] : []].map(i =>
+                        <Option value={i.key}>{i.title}</Option>)}
+
                 </CustomSelect>
             </div>
 
-            {data.timeline ? <p className={'active'}>Your rule will be executed within the <b>last 3 days</b></p> :
+            {data.timeline ? <p className={'active'}>Your rule will be executed within
+                    the <b>{_.find([...timelineEnums, {
+                        title: 'lifetime',
+                        key: 'lifetime'
+                    }], {key: data.timeline}).title}</b></p> :
                 <p>Please, select timeline</p>}
         </div>
 
-        <div className="action-line line">
+        <div className={`action-line line ${data.action ? 'active' : ''}`}>
             <div>
                 <CustomSelect
-                    getPopupContainer={trigger => trigger}
+                    getPopupContainer={trigger => trigger.parentNode}
                     placeholder={'SELECT ACTION'}
-                    // value={rule.operator}
-                    // onChange={}
+                    value={data.action}
+                    onChange={action => onChange({action})}
                 >
-                    <Option value={'decreaseBid'}>Decrease bid</Option>
+                    {actionsEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
+
                 </CustomSelect>
             </div>
 
-            <p>Please, select action to create a rule</p>
+            {!data.action && <p>Please, select action to create a rule</p>}
         </div>
+
+        <ActionValue
+            action={data.action}
+        />
     </div>)
+}
+
+
+const RenderRules = ({rule, onChange, showActions = false, showRemove = false, onRemove}) => {
+    if (rule.type === 'rule') {
+        return (<>
+            <div className="rule">
+                <div className="form-group">
+                    <label htmlFor="">Metric</label>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger}
+                        value={rule.metric}
+                        onChange={metric => onChange({...rule, metric})}
+                    >
+                        {metrics.map(metric => <Option value={metric.key}>{metric.title}</Option>)}
+                    </CustomSelect>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Condition</label>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger}
+                        value={rule.operator}
+                        onChange={operator => onChange({...rule, operator})}
+                    >
+                        {conditionsByMetric[_.find(metrics, {key: rule.metric}).type].map(i =>
+                            <Option value={i.key}>{i.title}</Option>)}
+                    </CustomSelect>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Value</label>
+                    <input
+                        value={rule.value}
+                        onChange={({target: {value}}) => onChange({...rule, value})}
+                    />
+                </div>
+
+                {showRemove && <button className="btn icon" onClick={onRemove}>
+                    <SVG id={'close-window-icon'}/>
+                </button>}
+            </div>
+        </>)
+    } else {
+        return (<div className={`group`}>
+            <div className={`glue ${rule.glue}`}>
+                <div>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger}
+                        value={rule.glue}
+                        onChange={glue => onChange({...rule, glue})}
+                    >
+                        <Option value={'AND'}>AND</Option>
+                        <Option value={'OR'}>OR</Option>
+                    </CustomSelect>
+                </div>
+            </div>
+
+            <div className="rules">
+                {rule.rules.map((i, index) => <RenderRules
+                    showActions={true}
+                    showRemove={true}
+                    rule={i}
+
+                    onRemove={() => onChange(removeConditionHandler(rule, index))}
+                    onChange={(data) => onChange({
+                        ...rule,
+                        rules: [...rule.rules.map((item, index2) => index2 === index ? data : item)]
+                    })}
+                />)}
+            </div>
+
+            {showActions && <AddActions
+                onAddCondition={() => onChange(addConditionHandler(rule))}
+                onAddGroup={() => onChange(addGroupHandler(rule))}
+
+                addGroupBtnText={'Add inner group'}
+            />}
+        </div>)
+    }
+}
+
+const AddActions = ({onAddCondition, onAddGroup, addGroupBtnText = 'Add group'}) => {
+    return (<div className="add-actions">
+        <button onClick={onAddCondition}>
+            <SVG id={'plus-icon'}/>
+            Add condition
+        </button>
+
+        <button onClick={onAddGroup}>
+            <SVG id={'plus-icon'}/>
+            {addGroupBtnText}
+        </button>
+    </div>)
+}
+
+const ActionValue = ({action}) => {
+    switch (action) {
+        case 'set_bid':
+            return <div className={`action-value ${action ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Value</label>
+                    <InputCurrency
+                        // value={min_bid}
+                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                    />
+                </div>
+            </div>
+        case 'set_status':
+            return <div className={`action-value ${action ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Value</label>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        // value={data.action}
+                        // onChange={action => onChange({action})}
+                    >
+                        <Option value={'enabled'}>Enabled</Option>
+                        <Option value={'paused'}>Paused</Option>
+                        <Option value={'archived'}>Archived</Option>
+                    </CustomSelect>
+                </div>
+            </div>
+        case 'decrease_bid':
+            return <div className={`action-value ${action ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Value</label>
+                    <InputCurrency
+                        // value={min_bid}
+                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Up to minimum</label>
+                    <InputCurrency
+                        // value={min_bid}
+                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                    />
+                </div>
+            </div>
+
+        default:
+            return <div className={`action-value ${action ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Value</label>
+                    <InputCurrency
+                        // value={min_bid}
+                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Up to minimum</label>
+                    <InputCurrency
+                        // value={min_bid}
+                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                    />
+                </div>
+            </div>
+    }
 }
