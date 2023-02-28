@@ -42,6 +42,7 @@ const ConnectAdsApiJourney = React.lazy(() => import('./authentication/AccountBi
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
+const OptimizationRules = React.lazy(() => import('./OptimizationRules/OptimizationRules.js'))
 
 const localStorageVersion = '4.05'
 
@@ -340,6 +341,8 @@ const AuthorizedUser = (props) => {
                                     />}
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/home" component={Home}/>
+                                    {/*-------------------------------------------*/}
+                                    <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
                                     {/*-------------------------------------------*/}
 
 

@@ -1,0 +1,124 @@
+.optimization-rules-page .rules-list {
+  flex: 1;
+  max-width: 395px;
+  background: #fff;
+  border-radius: 4px;
+
+  .tabs {
+    height: 4.285714285714286rem;
+    padding: 0 1.4285714285714286rem;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.22);
+    margin-bottom: 1.0714285714285714rem;
+
+    .tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7142857142857143rem;
+      line-height: 1.0714285714285714rem;
+      text-transform: uppercase;
+      color: #353A3E;
+      cursor: pointer;
+      position: relative;
+
+      svg {
+        width: 1.4285714285714286rem;
+        height: 1.4285714285714286rem;
+        margin-bottom: 2px;
+        fill: #353A3E;
+        stroke: #353A3E;
+      }
+
+      &:hover {
+        color: #FF5256;
+
+        svg {
+          fill: #FF5256;
+          stroke: #FF5256;
+        }
+      }
+
+      &.active {
+        color: #FF5256;
+
+        svg {
+          fill: #FF5256;
+          stroke: #FF5256;
+        }
+
+        &::before {
+          height: 4px;
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: #FF5256;
+        }
+      }
+    }
+  }
+
+  .search-block {
+    margin: 0 1.4285714285714286rem 1.4285714285714286rem;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    border-top: 0.5px solid #C9CBD4;
+
+    .item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 10px 1.42857143rem;
+      border-bottom: 0.5px solid #C9CBD4;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: transparent;
+        transition: 0.2s ease-in-out;
+      }
+
+      &.active::before {
+        background: #FF5256;
+      }
+
+      .name {
+        font-weight: 600;
+        font-size: 1rem;
+        color: #353A3E;
+      }
+
+      .description {
+        font-size: 0.8571428571428571rem;
+        line-height: 1rem;
+        color: #353A3E;
+        margin: 4px 0 10px;
+      }
+
+      .details-row {
+        display: flex;
+        align-items: center;
+        font-size: 0.8571428571428571rem;
+        line-height: 1rem;
+        color: #353A3E;
+
+        .status {
+          margin: 0 auto 0 14px;
+        }
+      }
+    }
+  }
+}
