@@ -198,7 +198,7 @@ export const analyticsUrls = {
     bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
     bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
-    keywordValidation: type =>  `dynamic-analytics/${type}/bulk-validate`,
+    keywordValidation: type => `dynamic-analytics/${type}/bulk-validate`,
 }
 
 export const tableauUrls = {
@@ -213,4 +213,9 @@ export const ppcAuditUrls = {
     startScanning: id => `ppc-audit/products/${id}/request-audit`,
     stopScanning: id => `ppc-audit/products/${id}/cancel-audit`
 
+}
+
+export const optimizationRulesUrls = {
+    campaigns: 'rules-based-optimization/campaigns',
+    rules: 'rules-based-optimization/rules',
 }

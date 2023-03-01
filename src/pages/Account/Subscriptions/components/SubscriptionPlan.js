@@ -223,9 +223,10 @@ const Price = ({isActivePlan, plan, subscriptionState}) => {
     }
 
     return <div className={`price ${(subscriptionsStateCurrentPlan?.coupon && isActivePlan) ? 'discount' : ''}`}>
-        {plan.key === 'full' && <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
+        {plan.key === 'full' && (sumPrice() > subscriptionsStateCurrentPlan.next_invoice.payment.total / 100) &&
+        <b className={'old-price'}>$<span>{sumPrice()}</span></b>}
 
-        {(subscriptionsStateCurrentPlan.coupon && isActivePlan && plan.key !== 'full') &&
+        {(subscriptionsStateCurrentPlan.coupon && isActivePlan && plan.key !== 'full') && (subscriptionsStateCurrentPlan.next_invoice.payment.subtotal > subscriptionsStateCurrentPlan.next_invoice.payment.total) &&
         <b className={'old-price'}>$<span>{subscriptionsStateCurrentPlan.next_invoice.payment.subtotal / 100}</span></b>}
 
         <b>
