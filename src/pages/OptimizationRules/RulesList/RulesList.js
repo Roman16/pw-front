@@ -57,34 +57,37 @@ export const RulesList = ({activeTab, setActiveTab}) => {
         </div>
 
         <div className="list">
-            <div className="item rule active">
-                <div className="name">Only for big Campaigns rule</div>
-                <div className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut
-                </div>
-                <div className="details-row">
-                    <div className="timeline">Last 3 days</div>
-                    <div className="status">Auto • Lifetime</div>
-                    <div className="campaigns-count">
-                        Campaigns: <b>76</b>
+            {activeTab === 'rules' ? <>
+                <div className="item rule active">
+                    <div className="name">Only for big Campaigns rule</div>
+                    <div className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut
+                    </div>
+                    <div className="details-row">
+                        <div className="timeline">Last 3 days</div>
+                        <div className="status">Auto • Lifetime</div>
+                        <div className="campaigns-count">
+                            Campaigns: <b>76</b>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="item rule">
-                <div className="running-status"/>
 
-                <div className="name">Only for big Campaigns rule</div>
-                <div className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                    tempor incididunt ut
-                </div>
-                <div className="details-row">
-                    <div className="timeline">Last 3 days</div>
-                    <div className="status">Auto • Lifetime</div>
-                    <div className="campaigns-count">
-                        Campaigns: <b>76</b>
+                <div className="item rule">
+                    <div className="running-status"/>
+
+                    <div className="name">Only for big Campaigns rule</div>
+                    <div className="description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                        tempor incididunt ut
+                    </div>
+                    <div className="details-row">
+                        <div className="timeline">Last 3 days</div>
+                        <div className="status">Auto • Lifetime</div>
+                        <div className="campaigns-count">
+                            Campaigns: <b>76</b>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </> : ''}
         </div>
     </div>)
 }

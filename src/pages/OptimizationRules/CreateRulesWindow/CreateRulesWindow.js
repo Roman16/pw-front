@@ -11,17 +11,19 @@ const createSteps = ['Information', 'Settings', 'Compare']
 
 export const CreateRulesWindow = ({
                                       visible,
-                                      onClose
+                                      onClose,
+                                      onCreate
                                   }) => {
     const [currentStep, setCurrentStep] = useState(0),
         [createData, setCreateData] = useState({
             name: '',
             description: '',
-            automatic: false,
+            type: 'manual',
+
             automaticPeriod: 'lifetime',
             timeline: undefined,
             action: undefined,
-            settings: {
+            condition: {
                 "type": "array",
                 "glue": "AND",
                 "rules": [
@@ -75,8 +77,15 @@ export const CreateRulesWindow = ({
         setCreateData(prevState => ({...prevState, ...data}))
     }
 
+    const createValidator = () => {
+        if (currentStep === 0 && !createData.name) return true
+        else if (currentStep === 1 && !createData.timeline && !createData.action) return true
+        else return false
+    }
+
     const nextStepHandler = () => setCurrentStep(prevStep => prevStep + 1)
     const previousStepHandler = () => setCurrentStep(prevStep => prevStep - 1)
+
 
     return (<ModalWindow
             visible={visible}
@@ -111,8 +120,10 @@ export const CreateRulesWindow = ({
                 currentStep={currentStep}
                 steps={createSteps}
                 createButtonTitle={'Create Rule'}
+                disableNextStep={createValidator()}
                 goNext={nextStepHandler}
                 goPrevious={previousStepHandler}
+                onCreate={() => onCreate(createData)}
             />
         </ModalWindow>
     )

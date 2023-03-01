@@ -209,12 +209,19 @@ const removeConditionHandler = (group, index) => {
     if (group.rules.length === 2) {
         const rule = group.rules.filter((item, i) => i !== index)[0]
 
-        return ({
-            "type": "rule",
-            "metric": rule.metric,
-            "operator": rule.operator,
-            "value": rule.value
-        })
+        if (rule.type === 'array') {
+            return ({
+                ...rule
+            })
+
+        } else {
+            return ({
+                "type": "rule",
+                "metric": rule.metric,
+                "operator": rule.operator,
+                "value": rule.value
+            })
+        }
     } else {
         return ({
             "type": "array",
@@ -225,8 +232,8 @@ const removeConditionHandler = (group, index) => {
 }
 
 export const RuleSettings = ({data, onChange}) => {
-    const changeSettingsHandler = (settings) => {
-        onChange({settings})
+    const changeSettingsHandler = (condition) => {
+        onChange({condition})
     }
 
     return (<div className="step rule-settings">
@@ -236,13 +243,13 @@ export const RuleSettings = ({data, onChange}) => {
 
         <div className="conditions">
             <RenderRules
-                rule={data.settings}
+                rule={data.condition}
                 onChange={changeSettingsHandler}
             />
 
             <AddActions
-                onAddCondition={() => changeSettingsHandler(addConditionHandler(data.settings))}
-                onAddGroup={() => changeSettingsHandler(addGroupHandler(data.settings))}
+                onAddCondition={() => changeSettingsHandler(addConditionHandler(data.condition))}
+                onAddGroup={() => changeSettingsHandler(addGroupHandler(data.condition))}
             />
         </div>
 
@@ -277,7 +284,6 @@ export const RuleSettings = ({data, onChange}) => {
                     onChange={action => onChange({action})}
                 >
                     {actionsEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
-
                 </CustomSelect>
             </div>
 
