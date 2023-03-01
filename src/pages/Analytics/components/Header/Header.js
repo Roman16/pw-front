@@ -13,8 +13,6 @@ import {marketplaceTimezone} from "../../../../components/Sidebar/ConnectedRegio
 import {currencyName, currencySymbol} from "../../../../components/CurrencyCode/CurrencyCode"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
 import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
-import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
-import {Checkbox} from "antd"
 import {AdBlockWindow} from "./AdBlockWindow"
 
 let newState = undefined
