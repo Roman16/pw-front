@@ -7,6 +7,9 @@ export const RuleDetails = ({}) => {
     const [rule, setRule] = useState({
         name: 'Only for big Campaigns rule',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
+        actions: {
+            type: undefined,
+        },
         condition: {
             "type": "array",
             "glue": "AND",

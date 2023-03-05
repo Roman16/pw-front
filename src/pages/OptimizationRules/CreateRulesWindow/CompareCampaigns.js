@@ -3,11 +3,13 @@ import CustomTable from "../../../components/Table/CustomTable"
 import {columnList} from "../../Analytics/Campaigns/tableComponents/columnList"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
+import Pagination from "../../../components/Pagination/Pagination"
 
 
 export const CompareCampaigns = ({data, onChange}) => {
     const [campaigns, setCampaigns] = useState([]),
         [processing, setProcessing] = useState(true),
+        [totalSize, setTotalSize] = useState(0),
         [requestParams, setRequestParams] = useState({
             page: 1,
             pageSize: 30,
@@ -20,13 +22,28 @@ export const CompareCampaigns = ({data, onChange}) => {
 
         try {
             const {result} = await optimizationRulesServices.getCampaigns(requestParams)
-            setCampaigns(result.response)
+            setCampaigns(result.data)
+            setTotalSize(result.total_count)
         } catch (e) {
 
         }
 
         setProcessing(false)
     }
+
+    const changePagination = (data) => {
+        setRequestParams(prevState => ({
+            ...prevState,
+            ...data
+        }))
+    }
+
+    const rowSelection = {
+        onChange: (rowsList) => {
+            onChange({campaignsId: rowsList})
+        }
+    }
+
 
     useEffect(() => {
         getCampaigns()
@@ -45,13 +62,25 @@ export const CompareCampaigns = ({data, onChange}) => {
         <div className="table-block">
             <CustomTable
                 key={'table'}
-                rowKey="id"
+                rowKey="campaignId"
                 dataSource={campaigns}
                 columns={columnList().allColumns}
                 loading={processing}
                 fixedColumns={[0]}
-                // rowSelection={rowSelection}
+                selectedRows={data.campaignsId}
+                rowSelection={rowSelection}
             />
+
+            <Pagination
+                onChange={changePagination}
+                page={requestParams.page}
+                pageSizeOptions={[10, 30, 50]}
+                pageSize={requestParams.pageSize}
+                totalSize={totalSize}
+                listLength={campaigns.length}
+                processing={processing}
+            />
+
         </div>
     </div>)
 }
