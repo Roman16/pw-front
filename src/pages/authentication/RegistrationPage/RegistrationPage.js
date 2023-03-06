@@ -44,7 +44,10 @@ const RegistrationPage = (props) => {
                         />
                     </Elements>
                 </StripeProvider>
-                <PageDescription/>
+
+                <PageDescription
+                    location={'registration'}
+                />
             </div>
 
         </div>

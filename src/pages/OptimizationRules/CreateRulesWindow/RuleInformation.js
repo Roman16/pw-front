@@ -28,9 +28,9 @@ export const RuleInformation = ({data, onChange}) => {
         <div className="row form-group">
             <label htmlFor="">Automatic <SVG id='rotate-arrows-icon'/></label>
             <div className="switch-group">
-                <Switch checked={data.automatic} onChange={value => onChange({'automatic': value})}/>
+                <Switch checked={data.type === 'auto'} onChange={checked => onChange({'type': checked ? 'auto' : 'manual'})}/>
 
-                {data.automatic && <CustomSelect
+                {data.type === 'auto' && <CustomSelect
                     getPopupContainer={trigger => trigger}
                     value={data.automaticPeriod}
                     onChange={(value) => onChange({'automaticPeriod': value})}
