@@ -22,13 +22,29 @@ const OptimizationRules = () => {
         try {
             const {result} = await optimizationRulesServices.createRule(rule)
 
+            if (rule.campaignsId.length > 0) {
+                await attachRulesByCampaignHandler({
+                    rules: [result.id],
+                    campaigns: rule.campaignsId
+                })
+            }
             notification.success({title: 'Rule success created!'})
             setVisibleCreateRuleWindow(false)
+
+            setSelectedRule({result, campaigns_count: rule.campaignsId.length})
         } catch (e) {
             console.log(e)
         }
 
         setCreateProcessing(false)
+    }
+
+    const attachRulesByCampaignHandler = async (data) => {
+        try {
+            await optimizationRulesServices.attachRules(data)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (<div className={'optimization-rules-page'}>

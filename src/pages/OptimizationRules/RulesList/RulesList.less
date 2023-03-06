@@ -121,6 +121,23 @@
         transition: 0.2s ease-in-out;
       }
 
+      .status {
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        border-radius: 50%;
+
+        &.enabled {
+          background: #7DD4A1;
+        }
+
+        &.paused {
+          background: #FFAF52;
+        }
+      }
+
       &.active {
         background: rgba(255, 250, 250, 0.8);
 
@@ -149,7 +166,7 @@
         line-height: 1rem;
         color: #353A3E;
 
-        .status {
+        .type {
           margin: 0 auto 0 14px;
         }
       }

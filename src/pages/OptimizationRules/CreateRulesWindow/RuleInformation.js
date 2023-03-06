@@ -5,6 +5,45 @@ import {SVG} from "../../../utils/icons"
 
 const Option = Select.Option
 
+export const periodEnums = [
+    {
+        title: 'Every 3 hours',
+        key: '+3 hours'
+    },
+    {
+        title: 'Every 6 hours',
+        key: '+6 hours'
+    },
+    {
+        title: 'Every 12 hours',
+        key: '+12 hours'
+    },
+    {
+        title: 'Everyday',
+        key: '+1 day'
+    },
+    {
+        title: 'Every 3 days',
+        key: '+3 day'
+    },
+    {
+        title: 'Every 7 days',
+        key: '+7 day'
+    },
+    {
+        title: 'Every 14 days',
+        key: '+14 day'
+    },
+    {
+        title: 'Every 30 days',
+        key: '+30 day'
+    },
+    {
+        title: 'Every 65 days',
+        key: '+65 day'
+    },
+]
+
 export const RuleInformation = ({data, onChange}) => {
 
     return (<div className="step rule-information">
@@ -32,11 +71,11 @@ export const RuleInformation = ({data, onChange}) => {
 
                 {data.type === 'auto' && <CustomSelect
                     getPopupContainer={trigger => trigger}
-                    value={data.automaticPeriod}
-                    onChange={(value) => onChange({'automaticPeriod': value})}
+                    value={data.period}
+                    placeholder={'Select period'}
+                    onChange={period => onChange({period})}
                 >
-                    <Option value={'lifetime'}>Lifetime</Option>
-                    <Option value={'daily'}>Daily</Option>
+                    {periodEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
                 </CustomSelect>}
             </div>
 

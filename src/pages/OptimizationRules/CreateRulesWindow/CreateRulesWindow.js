@@ -5,9 +5,9 @@ import WindowHeader from "../../Analytics/Campaigns/CreateCampaignWindow/WindowH
 import {RuleInformation} from "./RuleInformation"
 import WindowFooter from "../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
 import {RuleSettings} from "./RuleSettings"
-import {CompareCampaigns} from "./CompareCampaigns"
+import {AttachCampaigns} from "./AttachCampaigns"
 
-const createSteps = ['Information', 'Settings', 'Compare']
+const createSteps = ['Information', 'Settings', 'Attach']
 
 const defaultState = {
     attribution_window: '7',
@@ -15,8 +15,8 @@ const defaultState = {
     description: '',
     type: 'manual',
     active: true,
-    automaticPeriod: 'lifetime',
     interval: undefined,
+    period: '+1 day',
     actions: {
         type: undefined,
     },
@@ -33,7 +33,7 @@ export const CreateRulesWindow = ({
                                       visible,
                                       processing,
                                       onClose,
-                                      onCreate
+                                      onCreate,
                                   }) => {
     const [currentStep, setCurrentStep] = useState(0),
         [createData, setCreateData] = useState({...defaultState})
@@ -44,7 +44,7 @@ export const CreateRulesWindow = ({
 
     const createValidator = () => {
         if (currentStep === 0 && !createData.name) return true
-        else if (currentStep === 1 && !createData.interval && !createData.actions.valie) return true
+        else if (currentStep === 1 && (!createData.interval || !createData.actions.value)) return true
         else return false
     }
 
@@ -91,7 +91,7 @@ export const CreateRulesWindow = ({
                 onChange={changeCreateDataHandler}
             />}
 
-            {currentStep === 2 && <CompareCampaigns
+            {currentStep === 2 && <AttachCampaigns
                 data={createData}
 
                 onChange={changeCreateDataHandler}

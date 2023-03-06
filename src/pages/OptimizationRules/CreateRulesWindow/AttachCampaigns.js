@@ -6,7 +6,7 @@ import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../components/Pagination/Pagination"
 
 
-export const CompareCampaigns = ({data, onChange}) => {
+export const AttachCampaigns = ({data, onChange}) => {
     const [campaigns, setCampaigns] = useState([]),
         [processing, setProcessing] = useState(true),
         [totalSize, setTotalSize] = useState(0),
@@ -49,7 +49,7 @@ export const CompareCampaigns = ({data, onChange}) => {
         getCampaigns()
     }, [requestParams])
 
-    return (<div className="compare-campaigns">
+    return (<div className="attach-campaigns">
         <div className="filters">
             <TableFilters
                 columns={columnList().columnsWithFilters}

@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import {Settings} from "./Settings"
 import './RuleDetails.less'
-import {Compare} from "./Compare"
+import {Attach} from "./Attach"
 
 export const RuleDetails = ({}) => {
     const [rule, setRule] = useState({
@@ -66,6 +66,6 @@ export const RuleDetails = ({}) => {
             data={rule}
         />
 
-        <Compare/>
+        <Attach/>
     </div>)
 }

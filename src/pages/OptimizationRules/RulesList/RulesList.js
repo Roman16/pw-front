@@ -5,6 +5,9 @@ import {SearchField} from "../../../components/SearchField/SearchField"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import {Spin} from "antd"
 import Pagination from "../../../components/Pagination/Pagination"
+import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import _ from 'lodash'
+import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
 
 const navigationTabs = ['rules', 'campaigns']
 
@@ -52,6 +55,17 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
         getList()
     }, [requestParams, activeTab])
 
+    useEffect(() => {
+        if (selectedRule?.id && _.findIndex(list, {id: selectedRule.id}) === -1) {
+            setList([
+                selectedRule,
+                ...list.splice(0, list.length - 1)
+            ])
+
+            setTotalSize(prevState => prevState + 1)
+        }
+    }, [selectedRule])
+
     return (<div className="rules-list">
         <div className="tabs">
             {navigationTabs.map(i => (<div
@@ -75,13 +89,15 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
 
             {list.map(item => activeTab === 'rules' ? <div onClick={() => onSelect(item)}
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
+                    <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name">{item.name}</div>
                     <div className="description">{item.description}</div>
                     <div className="details-row">
-                        <div className="timeline">Last 3 days</div>
-                        <div className="status">Auto • Lifetime</div>
+                        <div className="timeline">{_.find(intervalEnums, {key: item.interval})?.title}</div>
+                        <div
+                            className="type">{item.type} {item.type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`} </div>
                         <div className="campaigns-count">
-                            Campaigns: <b>76</b>
+                            Campaigns: <b>{item.campaigns_count}</b>
                         </div>
                     </div>
                 </div>
