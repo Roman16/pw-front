@@ -342,7 +342,7 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
-                                    <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
+                                    {/*<ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>*/}
                                     {/*-------------------------------------------*/}
 
 
