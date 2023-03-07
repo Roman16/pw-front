@@ -1,24 +1,33 @@
 import api from "./request"
 import {optimizationRulesUrls} from "../constans/api.urls"
 import {searchStrWrap} from "./products.services"
+import {filtersHandler} from "./analytics.services"
 
 export const optimizationRulesServices = {
     getCampaigns,
     getRules,
     createRule,
+    updateRule,
+    deleteRule,
     attachRules
 }
 
-function getCampaigns({pageSize, page, searchStr}) {
-    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}&page=${page}&size=${pageSize}&date_from=2023-01-30&date_to=2023-02-28`)
+function getCampaigns({pageSize, page, filters}) {
+    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}&date_from=2023-01-30&date_to=2023-02-28${filtersHandler(filters)}`)
 }
 
 function getRules({pageSize, page, searchStr}) {
-    return api('get', `${optimizationRulesUrls.rules}?table[page]=${page}&table[size]=${pageSize}&page=${page}&size=${pageSize}&date_from=2023-01-30&date_to=2023-02-28`)
+    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}&date_from=2023-01-30&date_to=2023-02-28`)
 }
 
 function createRule(rule) {
     return api('post', `${optimizationRulesUrls.rules}`, rule)
+}
+function updateRule(rule) {
+    return api('put', `${optimizationRulesUrls.rules}/${rule.id}`, rule)
+}
+function deleteRule(id) {
+    return api('delete', `${optimizationRulesUrls.rules}/${id}`,)
 }
 
 function attachRules(data) {

@@ -11,7 +11,7 @@ import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
 
 const navigationTabs = ['rules', 'campaigns']
 
-export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => {
+export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDelete}) => {
     const [list, setList] = useState([]),
         [processing, setProcessing] = useState(true),
         [totalSize, setTotalSize] = useState(0),
@@ -20,6 +20,14 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
             pageSize: 10,
             searchStr: ''
         })
+
+    const selectRuleHandler = (rule) => {
+        onSelect({
+            ...rule,
+            condition: JSON.parse(rule.condition),
+            actions: JSON.parse(rule.actions)
+        })
+    }
 
     const getList = async () => {
         setProcessing(true)
@@ -41,7 +49,7 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
 
             setList(arr)
             setTotalSize(totalSize)
-            onSelect(arr[0])
+            selectRuleHandler(arr[0])
         } catch (e) {
 
         }
@@ -63,7 +71,13 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
             ])
 
             setTotalSize(prevState => prevState + 1)
+        } else {
+            setList([
+                ...list.map(i => i.id === selectedRule.id ? ({...i, name: selectedRule.name}) : i)
+            ])
         }
+
+
     }, [selectedRule])
 
     return (<div className="rules-list">
@@ -87,15 +101,18 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
         <div className="list">
             {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-            {list.map(item => activeTab === 'rules' ? <div onClick={() => onSelect(item)}
+            {list.map(item => activeTab === 'rules' ? <div onClick={() => selectRuleHandler(item)}
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
                     <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name">{item.name}</div>
                     <div className="description">{item.description}</div>
                     <div className="details-row">
+                        <SVG id={'calendar'}/>
+
                         <div className="timeline">{_.find(intervalEnums, {key: item.interval})?.title}</div>
-                        <div
-                            className="type">{item.type} {item.type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`} </div>
+                        <div className="type">
+                            <span>{item.type}</span> {item.type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}
+                        </div>
                         <div className="campaigns-count">
                             Campaigns: <b>{item.campaigns_count}</b>
                         </div>

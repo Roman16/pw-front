@@ -24,23 +24,23 @@ export const periodEnums = [
     },
     {
         title: 'Every 3 days',
-        key: '+3 day'
+        key: '+3 days'
     },
     {
         title: 'Every 7 days',
-        key: '+7 day'
+        key: '+7 days'
     },
     {
         title: 'Every 14 days',
-        key: '+14 day'
+        key: '+14 days'
     },
     {
         title: 'Every 30 days',
-        key: '+30 day'
+        key: '+30 days'
     },
     {
         title: 'Every 65 days',
-        key: '+65 day'
+        key: '+65 days'
     },
 ]
 

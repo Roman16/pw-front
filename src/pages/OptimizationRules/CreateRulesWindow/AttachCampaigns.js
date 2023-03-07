@@ -38,6 +38,14 @@ export const AttachCampaigns = ({data, onChange}) => {
         }))
     }
 
+    const changeFiltersHandler = (filters) => {
+        setRequestParams(prevState => ({
+            ...prevState,
+            page: 1,
+            filters
+        }))
+    }
+
     const rowSelection = {
         onChange: (rowsList) => {
             onChange({campaignsId: rowsList})
@@ -56,6 +64,7 @@ export const AttachCampaigns = ({data, onChange}) => {
                 filters={requestParams.filters}
                 locationKey={'campaigns'}
                 searchField={true}
+                onChange={changeFiltersHandler}
             />
         </div>
 
@@ -64,7 +73,7 @@ export const AttachCampaigns = ({data, onChange}) => {
                 key={'table'}
                 rowKey="campaignId"
                 dataSource={campaigns}
-                columns={columnList().allColumns}
+                columns={columnList().allColumns.map(i => ({...i, sorter: false}))}
                 loading={processing}
                 fixedColumns={[0]}
                 selectedRows={data.campaignsId}
@@ -80,7 +89,6 @@ export const AttachCampaigns = ({data, onChange}) => {
                 listLength={campaigns.length}
                 processing={processing}
             />
-
         </div>
     </div>)
 }

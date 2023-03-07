@@ -6,6 +6,7 @@ import {RulesList} from "./RulesList/RulesList"
 import {optimizationRulesServices} from "../../services/optimization.rules.services"
 import {RuleDetails} from "./RuleDetails/RuleDetails"
 import {notification} from "../../components/Notification"
+import RouteLoader from "../../components/RouteLoader/RouteLoader"
 
 
 const OptimizationRules = () => {
@@ -39,12 +40,38 @@ const OptimizationRules = () => {
         setCreateProcessing(false)
     }
 
+    const deleteRuleHandler = async (ruleId) => {
+        try {
+            await optimizationRulesServices.deleteRule(ruleId)
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const attachRulesByCampaignHandler = async (data) => {
         try {
             await optimizationRulesServices.attachRules(data)
         } catch (e) {
             console.log(e)
         }
+    }
+
+    const updateRuleHandler = async (rule, cb) => {
+        try {
+            const {result} = await optimizationRulesServices.updateRule(rule)
+            setSelectedRule({
+                ...result,
+                condition: JSON.parse(result.condition),
+                actions: JSON.parse(result.actions)
+            })
+
+            notification.success({title: 'Rule success updated!'})
+        } catch (e) {
+
+        }
+
+        cb()
     }
 
     return (<div className={'optimization-rules-page'}>
@@ -59,10 +86,20 @@ const OptimizationRules = () => {
                 selectedRule={selectedRule}
 
                 onSelect={setSelectedRule}
+                onDelete={deleteRuleHandler}
             />
 
-            {activeTab === 'rules' && <RuleDetails/>}
+            <div className="work-container">
+                {!selectedRule?.id && <RouteLoader/>}
+
+                {(selectedRule?.id && activeTab === 'rules') && <RuleDetails
+                    rule={selectedRule}
+
+                    onUpdate={updateRuleHandler}
+                />}
+            </div>
         </div>
+
 
         <CreateRulesWindow
             visible={visibleCreateRuleWindow}
