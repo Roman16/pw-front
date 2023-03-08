@@ -117,6 +117,78 @@
       }
     }
   }
+
+  .create-rule-overview {
+    h3 {
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      font-weight: 500;
+      color: #343C5A;
+      margin-bottom: 12px;
+      padding: 0 0 0 1.4285714285714286rem;
+    }
+
+    .row {
+      display: flex;
+      min-height: 2.857142857142857rem;
+      border-bottom: 0.5px solid #C9CBD4;
+
+      &:last-child {
+        border: 0;
+      }
+
+      &:first-of-type {
+        border-top: 0.5px solid #C9CBD4;
+      }
+
+
+      .label {
+        width: 45%;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #343C5A;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 1.4285714285714286rem;
+        border-right: 0.5px solid #C9CBD4;
+      }
+
+      .value {
+        flex: 1;
+        font-size: 1rem;
+        color: #343C5A;
+        display: flex;
+        align-items: center;
+        padding: 0 0 0 1.4285714285714286rem;
+
+        .overflow-text {
+          flex: 1;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+
+
+
+        .type {
+          display: flex;
+
+          span {
+              text-transform: capitalize;
+            margin: 0 5px 0 0;
+          }
+        }
+
+        hr {
+          width: 15px;
+          height: 2px;
+          border: 0;
+          background: #343C5A;
+        }
+      }
+    }
+  }
 }
 
 .create-rules-window .attach-campaigns,
@@ -207,6 +279,13 @@
     }
 
     .table-body {
+      .checked-row {
+        .table-body__field.fixed,
+        .table-body__field.checkbox-column {
+          background: #FFFAFA;
+        }
+      }
+
       .table-body__field {
         border-right: 0.5px solid #C9CBD4;
 

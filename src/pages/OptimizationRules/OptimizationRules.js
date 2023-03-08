@@ -24,7 +24,7 @@ const OptimizationRules = () => {
             const {result} = await optimizationRulesServices.createRule(rule)
 
             if (rule.campaignsId.length > 0) {
-                await attachRulesByCampaignHandler({
+                await attachRulesByCampaignsHandler({
                     rules: [result.id],
                     campaigns: rule.campaignsId
                 })
@@ -49,12 +49,31 @@ const OptimizationRules = () => {
         }
     }
 
-    const attachRulesByCampaignHandler = async (data) => {
+    const attachRulesByCampaignsHandler = async (data, cb) => {
         try {
             await optimizationRulesServices.attachRules(data)
+            setSelectedRule({
+                ...selectedRule,
+                campaigns_count: data.campaigns.length
+            })
         } catch (e) {
             console.log(e)
         }
+
+        cb && cb()
+    }
+    const detachRulesByCampaignsHandler = async (data, cb) => {
+        try {
+            await optimizationRulesServices.detachRules(data)
+            setSelectedRule({
+                ...selectedRule,
+                campaigns_count: data.campaigns.length
+            })
+        } catch (e) {
+            console.log(e)
+        }
+
+        cb && cb()
     }
 
     const updateRuleHandler = async (rule, cb) => {
@@ -65,13 +84,11 @@ const OptimizationRules = () => {
                 condition: JSON.parse(result.condition),
                 actions: JSON.parse(result.actions)
             })
-
-            notification.success({title: 'Rule success updated!'})
         } catch (e) {
 
         }
 
-        cb()
+        cb && cb()
     }
 
     return (<div className={'optimization-rules-page'}>
@@ -96,6 +113,8 @@ const OptimizationRules = () => {
                     rule={selectedRule}
 
                     onUpdate={updateRuleHandler}
+                    onAttach={attachRulesByCampaignsHandler}
+                    onDetach={detachRulesByCampaignsHandler}
                 />}
             </div>
         </div>

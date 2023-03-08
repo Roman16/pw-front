@@ -4,6 +4,7 @@ import {SVG} from "../../../utils/icons"
 import _ from "lodash"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
+import {notification} from "../../../components/Notification"
 
 
 export const Settings = ({rule, onUpdate}) => {
@@ -25,7 +26,10 @@ export const Settings = ({rule, onUpdate}) => {
             ...ruleData,
             condition: JSON.stringify(ruleData.condition),
             actions: JSON.stringify(ruleData.actions),
-        }, () => setSaveProcessing(false))
+        }, () => {
+            setSaveProcessing(false)
+            notification.success({title: 'Rule success updated!'})
+        })
     }
 
     useEffect(() => {

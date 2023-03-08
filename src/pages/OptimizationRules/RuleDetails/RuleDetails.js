@@ -3,7 +3,7 @@ import {Settings} from "./Settings"
 import './RuleDetails.less'
 import {Attach} from "./Attach"
 
-export const RuleDetails = ({rule, onUpdate}) => {
+export const RuleDetails = ({rule, onUpdate, onAttach,onDetach }) => {
 
     return (<div className="rule-details">
         <Settings
@@ -14,6 +14,9 @@ export const RuleDetails = ({rule, onUpdate}) => {
 
         <Attach
             id={rule.id}
+
+            onAttach={onAttach}
+            onDetach={onDetach}
         />
     </div>)
 }

@@ -126,7 +126,7 @@ export const intervalEnums = [
     },
 ]
 
-const actionsEnums = [
+export const actionsEnums = [
     {
         title: 'Set - Bid',
         key: 'set_bid'

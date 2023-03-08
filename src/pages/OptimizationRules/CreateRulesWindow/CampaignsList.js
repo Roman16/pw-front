@@ -6,56 +6,24 @@ import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../components/Pagination/Pagination"
 
 
-export const AttachCampaigns = ({data, onChange}) => {
-    const [campaigns, setCampaigns] = useState([]),
-        [processing, setProcessing] = useState(true),
-        [totalSize, setTotalSize] = useState(0),
-        [requestParams, setRequestParams] = useState({
-            page: 1,
-            pageSize: 30,
-            filters: [],
-            searchStr: ''
-        })
-
-    const getCampaigns = async () => {
-        setProcessing(true)
-
-        try {
-            const {result} = await optimizationRulesServices.getCampaigns(requestParams)
-            setCampaigns(result.data)
-            setTotalSize(result.total_count)
-        } catch (e) {
-
-        }
-
-        setProcessing(false)
-    }
-
+export const CampaignsList = ({list, totalSize, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList}) => {
     const changePagination = (data) => {
-        setRequestParams(prevState => ({
-            ...prevState,
-            ...data
-        }))
+        onChangeRequestParams(data)
     }
 
     const changeFiltersHandler = (filters) => {
-        setRequestParams(prevState => ({
-            ...prevState,
+        onChangeRequestParams({
             page: 1,
             filters
-        }))
+        })
     }
 
     const rowSelection = {
         onChange: (rowsList) => {
-            onChange({campaignsId: rowsList})
+            onChangeAttachedList(rowsList)
         }
     }
 
-
-    useEffect(() => {
-        getCampaigns()
-    }, [requestParams])
 
     return (<div className="attach-campaigns">
         <div className="filters">
@@ -72,11 +40,11 @@ export const AttachCampaigns = ({data, onChange}) => {
             <CustomTable
                 key={'table'}
                 rowKey="campaignId"
-                dataSource={campaigns}
+                dataSource={list}
                 columns={columnList().allColumns.map(i => ({...i, sorter: false}))}
                 loading={processing}
                 fixedColumns={[0]}
-                selectedRows={data.campaignsId}
+                selectedRows={attachedList}
                 rowSelection={rowSelection}
             />
 
@@ -86,7 +54,7 @@ export const AttachCampaigns = ({data, onChange}) => {
                 pageSizeOptions={[10, 30, 50]}
                 pageSize={requestParams.pageSize}
                 totalSize={totalSize}
-                listLength={campaigns.length}
+                listLength={list.length}
                 processing={processing}
             />
         </div>

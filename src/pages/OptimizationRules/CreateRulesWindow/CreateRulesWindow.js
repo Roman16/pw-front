@@ -5,9 +5,11 @@ import WindowHeader from "../../Analytics/Campaigns/CreateCampaignWindow/WindowH
 import {RuleInformation} from "./RuleInformation"
 import WindowFooter from "../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
 import {RuleSettings} from "./RuleSettings"
-import {AttachCampaigns} from "./AttachCampaigns"
+import {CampaignsList} from "./CampaignsList"
+import {optimizationRulesServices} from "../../../services/optimization.rules.services"
+import {Overview} from "./Overview"
 
-const createSteps = ['Information', 'Settings', 'Attach']
+const createSteps = ['Information', 'Settings', 'Attach', 'Overview']
 
 const defaultState = {
     attribution_window: '7',
@@ -36,7 +38,16 @@ export const CreateRulesWindow = ({
                                       onCreate,
                                   }) => {
     const [currentStep, setCurrentStep] = useState(0),
-        [createData, setCreateData] = useState({...defaultState})
+        [createData, setCreateData] = useState({...defaultState}),
+        [campaigns, setCampaigns] = useState([]),
+        [totalSize, setTotalSize] = useState(0),
+        [getProcessing, setGetProcessing] = useState(false),
+        [requestParams, setRequestParams] = useState({
+            page: 1,
+            pageSize: 30,
+            filters: [],
+            searchStr: ''
+        })
 
     const changeCreateDataHandler = (data) => {
         setCreateData(prevState => ({...prevState, ...data}))
@@ -59,6 +70,21 @@ export const CreateRulesWindow = ({
     const nextStepHandler = () => setCurrentStep(prevStep => prevStep + 1)
     const previousStepHandler = () => setCurrentStep(prevStep => prevStep - 1)
 
+    const getCampaigns = async (campaignsId = []) => {
+        setGetProcessing(true)
+
+        try {
+            const {result} = await optimizationRulesServices.getCampaigns({...requestParams, campaignsId})
+            setCampaigns(result.data)
+            setTotalSize(result.total_count)
+        } catch (e) {
+            console.log(e)
+        }
+
+        setGetProcessing(false)
+    }
+
+
     useEffect(() => {
         if (!visible) {
             setTimeout(() => {
@@ -67,6 +93,10 @@ export const CreateRulesWindow = ({
             }, 1000)
         }
     }, [visible])
+
+    useEffect(() => {
+        getCampaigns()
+    }, [requestParams])
 
     return (<ModalWindow
             visible={visible}
@@ -91,10 +121,19 @@ export const CreateRulesWindow = ({
                 onChange={changeCreateDataHandler}
             />}
 
-            {currentStep === 2 && <AttachCampaigns
-                data={createData}
+            {currentStep === 2 && <CampaignsList
+                list={campaigns}
+                totalSize={totalSize}
+                requestParams={requestParams}
+                attachedList={createData.campaignsId}
+                processing={getProcessing}
 
-                onChange={changeCreateDataHandler}
+                onChangeRequestParams={(data) => setRequestParams(prevState => ({...prevState, ...data}))}
+                onChangeAttachedList={(campaignsId) => changeCreateDataHandler({campaignsId})}
+            />}
+
+            {currentStep === 3 && <Overview
+                data={createData}
             />}
 
             <WindowFooter

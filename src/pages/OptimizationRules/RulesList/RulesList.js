@@ -73,7 +73,7 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
             setTotalSize(prevState => prevState + 1)
         } else {
             setList([
-                ...list.map(i => i.id === selectedRule.id ? ({...i, name: selectedRule.name}) : i)
+                ...list.map(i => i.id === selectedRule.id ? ({...i, name: selectedRule.name, campaigns_count: selectedRule.campaigns_count}) : i)
             ])
         }
 
