@@ -220,5 +220,6 @@ export const optimizationRulesUrls = {
     rules: 'rules-based-optimization/rules',
     attach: 'rules-based-optimization/rules/attach',
     detach: 'rules-based-optimization/rules/detach',
-    attachedCampaigns: 'rules-based-optimization/rules/campaigns'
+    attachedCampaigns: 'rules-based-optimization/rules/campaigns',
+    attachedRules: 'rules-based-optimization/campaigns/rules',
 }

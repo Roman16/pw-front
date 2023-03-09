@@ -107,14 +107,14 @@ export const renderNumberField = (type = 'number', showDiff = true) => {
 }
 
 
-export const ParentStatus = ({status}) => {
+export const ParentStatus = ({status, widthLabel=false}) => {
     switch (status) {
         case 'enabled':
-            return <span className={'status active'}><i title={'Enabled'}><SVG id={'enabled-status'}/></i></span>
+            return <span className={'status active'}><i title={'Enabled'}><SVG id={'enabled-status'}/></i> {widthLabel && 'Enabled'}</span>
         case 'paused':
-            return <span className={'status paused'}><i title={'Paused'}><SVG id={'paused-status'}/></i></span>
+            return <span className={'status paused'}><i title={'Paused'}><SVG id={'paused-status'}/></i> {widthLabel && 'Paused'}</span>
         case 'archived':
-            return <span className={'status archived'}><i title={'Archived'}><SVG id={'archived-status'}/></i></span>
+            return <span className={'status archived'}><i title={'Archived'}><SVG id={'archived-status'}/></i> {widthLabel && 'Archived'}</span>
         default:
             return ''
     }

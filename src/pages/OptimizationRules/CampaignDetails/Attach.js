@@ -5,13 +5,13 @@ import {Spin} from "antd"
 import _ from 'lodash'
 import {notification} from "../../../components/Notification"
 
-const tabs = ['campaigns used it', 'all campaigns']
+const tabs = ['rules used it', 'all rules']
 
 let attachedListFromRequest = []
 
 export const Attach = ({id, onAttach, onDetach}) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
-        [attachedCampaigns, setAttachedCampaigns] = useState([]),
+        [attachedRules, setAttachedRules] = useState([]),
         [campaigns, setCampaigns] = useState([]),
         [totalSize, setTotalSize] = useState(0),
         [processing, setProcessing] = useState(false),
@@ -28,28 +28,28 @@ export const Attach = ({id, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getAttachedCampaigns([id])
+            const {result} = await optimizationRulesServices.getAttachedRules([id])
 
             if (result[id].length > 0 && activeTab === tabs[0]) {
-                getCampaigns(result[id])
+                getRules(result[id])
             } else if (activeTab === tabs[0]) {
                 setProcessing(false)
                 setCampaigns([])
                 setTotalSize(0)
             }
 
-            setAttachedCampaigns(result[id].map(i => `${i}`))
+            setAttachedRules(result[id].map(i => `${i}`))
             attachedListFromRequest = result[id].map(i => `${i}`)
         } catch (e) {
             console.log(e)
         }
     }
 
-    const getCampaigns = async (campaignsId = []) => {
+    const getRules = async (id = []) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getCampaigns({...requestParams, campaignsId})
+            const {result} = await optimizationRulesServices.getRules({...requestParams, id})
             setCampaigns(result.data)
             setTotalSize(result.total_count)
         } catch (e) {
@@ -64,54 +64,54 @@ export const Attach = ({id, onAttach, onDetach}) => {
     }
 
     const changeAttachedList = (list) => {
-        setAttachedCampaigns(list)
+        setAttachedRules(list)
     }
 
     const resetHandler = () => {
-        setAttachedCampaigns([...attachedListFromRequest])
+        setAttachedRules([...attachedListFromRequest])
     }
 
     const saveHandler = () => {
         setSaveProcessing(true)
 
-        const differenceList = _.difference(attachedListFromRequest, attachedCampaigns)
+        const differenceList = _.difference(attachedListFromRequest, attachedRules)
 
         if (activeTab === tabs[0]) {
             onDetach({
-                rules: [id],
-                campaigns: differenceList,
-                rulesNewLength: attachedCampaigns.length,
+                rules: differenceList,
+                rulesNewLength: attachedRules.length,
+                campaigns: [id]
             }, () => {
                 setSaveProcessing(false)
-                setCampaigns(campaigns.filter(i => attachedCampaigns.includes(i.campaignId)))
-                notification.success({title: 'Rule success updated!'})
+                setCampaigns(campaigns.filter(i => attachedRules.includes(i.id)))
+                notification.success({title: 'Campaign success updated!'})
             })
         } else {
             if (differenceList.length > 0) {
                 onDetach({
-                    rules: [id],
-                    campaigns: differenceList,
-                    rulesNewLength: attachedCampaigns.length,
+                    rules: differenceList,
+                    rulesNewLength: attachedRules.length,
+                    campaigns: [id]
                 })
             }
 
             onAttach({
-                rules: [id],
-                campaigns: attachedCampaigns
+                rules: attachedRules,
+                campaigns: [id]
             }, () => {
                 setSaveProcessing(false)
-                notification.success({title: 'Rule success updated!'})
+                notification.success({title: 'Campaign success updated!'})
             })
         }
 
-        attachedListFromRequest = [...attachedCampaigns]
+        attachedListFromRequest = [...attachedRules]
     }
 
     useEffect(() => {
         getAttachedCampaigns()
 
         if (activeTab === tabs[1]) {
-            getCampaigns()
+            getRules()
         }
     }, [activeTab, id, requestParams])
 
@@ -136,18 +136,19 @@ export const Attach = ({id, onAttach, onDetach}) => {
 
 
         <CampaignsList
-            attachedList={attachedCampaigns}
+            attachedList={attachedRules}
             list={campaigns}
             processing={processing}
             totalSize={totalSize}
             requestParams={requestParams}
+            location={'rules'}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}
         />
 
         <div
-            className={`save-actions ${((_.difference(attachedListFromRequest, attachedCampaigns).length > 0 || attachedCampaigns.length > attachedListFromRequest.length) && !processing) ? 'visible' : ''}`}>
+            className={`save-actions ${((_.difference(attachedListFromRequest, attachedRules).length > 0 || attachedRules.length > attachedListFromRequest.length) && !processing) ? 'visible' : ''}`}>
             <button className="btn white" onClick={resetHandler}>
                 Reset All
             </button>

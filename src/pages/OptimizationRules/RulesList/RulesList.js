@@ -8,6 +8,7 @@ import Pagination from "../../../components/Pagination/Pagination"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import _ from 'lodash'
 import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
+import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
 
 const navigationTabs = ['rules', 'campaigns']
 
@@ -24,15 +25,14 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
     const selectRuleHandler = (rule) => {
         onSelect({
             ...rule,
-            condition: JSON.parse(rule.condition),
-            actions: JSON.parse(rule.actions)
+            condition: rule.condition && JSON.parse(rule.condition),
+            actions: rule.actions && JSON.parse(rule.actions)
         })
     }
 
     const getList = async () => {
         setProcessing(true)
         setList([])
-
         try {
             let arr = [],
                 totalSize = 0
@@ -42,6 +42,7 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
                 arr = result.data
                 totalSize = result.total_count
             } else {
+
                 const {result} = await optimizationRulesServices.getCampaigns(requestParams)
                 arr = result.data
                 totalSize = result.total_count
@@ -51,7 +52,7 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
             setTotalSize(totalSize)
             selectRuleHandler(arr[0])
         } catch (e) {
-
+            console.log(e)
         }
 
         setProcessing(false)
@@ -64,21 +65,34 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
     }, [requestParams, activeTab])
 
     useEffect(() => {
-        if (selectedRule?.id && _.findIndex(list, {id: selectedRule.id}) === -1) {
-            setList([
-                selectedRule,
-                ...list.splice(0, list.length - 1)
-            ])
+        if (activeTab === navigationTabs[0]) {
+            if (selectedRule?.id && _.findIndex(list, {id: selectedRule.id}) === -1) {
+                setList([
+                    selectedRule,
+                    ...list.splice(0, list.length - 1)
+                ])
 
-            setTotalSize(prevState => prevState + 1)
-        } else {
+                setTotalSize(prevState => prevState + 1)
+            } else {
+                setList([
+                    ...list.map(i => i.id === selectedRule.id ? ({
+                        ...i,
+                        name: selectedRule.name,
+                        campaigns_count: selectedRule.campaigns_count || 0,
+                        rules_count: selectedRule.rules_count || 0,
+                    }) : i)
+                ])
+            }
+        } else if (activeTab === navigationTabs[1] && selectedRule.campaignId) {
             setList([
-                ...list.map(i => i.id === selectedRule.id ? ({...i, name: selectedRule.name, campaigns_count: selectedRule.campaigns_count}) : i)
+                ...list.map(i => i.campaignId === selectedRule.campaignId ? ({
+                    ...i,
+                    rules_count: selectedRule.rules_count || 0,
+                }) : i)
             ])
         }
-
-
     }, [selectedRule])
+
 
     return (<div className="rules-list">
         <div className="tabs">
@@ -121,13 +135,17 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
 
                 :
 
-                <div className={'item campaign'}>
-                    <div className="name">{item.name}</div>
-                    <div className="description">{item.description}</div>
+                <div className={`item campaign ${item.campaignId === selectedRule?.campaignId ? 'active' : ''}`}
+                     onClick={() => selectRuleHandler(item)}>
+                    <div className="row">
+                        <div className="name">{item.name}</div>
+
+                        <ParentStatus status={item.state} widthLabel={true}/>
+                    </div>
+
                     <div className="details-row">
-                        <div className="status">Auto • Lifetime</div>
                         <div className="campaigns-count">
-                            Rules: <b>76</b>
+                            Rules: <b>{item.rules_count}</b>
                         </div>
                     </div>
                 </div>

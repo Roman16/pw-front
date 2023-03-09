@@ -7,6 +7,7 @@ import {optimizationRulesServices} from "../../services/optimization.rules.servi
 import {RuleDetails} from "./RuleDetails/RuleDetails"
 import {notification} from "../../components/Notification"
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
+import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
 
 
 const OptimizationRules = () => {
@@ -54,7 +55,8 @@ const OptimizationRules = () => {
             await optimizationRulesServices.attachRules(data)
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: data.campaigns.length
+                campaigns_count: data.campaigns.length,
+                rules_count: data.rules.length,
             })
         } catch (e) {
             console.log(e)
@@ -62,12 +64,14 @@ const OptimizationRules = () => {
 
         cb && cb()
     }
+
     const detachRulesByCampaignsHandler = async (data, cb) => {
         try {
             await optimizationRulesServices.detachRules(data)
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: data.campaigns.length
+                campaigns_count: data.rulesNewLength,
+                rules_count: data.rulesNewLength,
             })
         } catch (e) {
             console.log(e)
@@ -91,6 +95,7 @@ const OptimizationRules = () => {
         cb && cb()
     }
 
+
     return (<div className={'optimization-rules-page'}>
         <Header
             onCreate={() => setVisibleCreateRuleWindow(true)}
@@ -107,10 +112,18 @@ const OptimizationRules = () => {
             />
 
             <div className="work-container">
-                {!selectedRule?.id && <RouteLoader/>}
+                {(!selectedRule?.id && !selectedRule?.campaignId) && <RouteLoader/>}
 
                 {(selectedRule?.id && activeTab === 'rules') && <RuleDetails
                     rule={selectedRule}
+
+                    onUpdate={updateRuleHandler}
+                    onAttach={attachRulesByCampaignsHandler}
+                    onDetach={detachRulesByCampaignsHandler}
+                />}
+
+                {(selectedRule?.campaignId && activeTab === 'campaigns') && <CampaignDetails
+                    campaign={selectedRule}
 
                     onUpdate={updateRuleHandler}
                     onAttach={attachRulesByCampaignsHandler}

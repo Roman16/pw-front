@@ -4,9 +4,32 @@ import {columnList} from "../../Analytics/Campaigns/tableComponents/columnList"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../components/Pagination/Pagination"
+import _ from "lodash"
+import {periodEnums} from "./RuleInformation"
 
+const ruleColumns = [
+    {
+        title: 'Rule name',
+        key: 'name',
+        dataIndex: 'name',
+        search: true
+    },
 
-export const CampaignsList = ({list, totalSize, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList}) => {
+    {
+        title: 'Description',
+        key: 'description',
+        dataIndex: 'description',
+    },
+    {
+        title: 'Optimization type',
+        key: 'type',
+        dataIndex: 'type',
+        render: (type, item) => <div className="type"><span>{type}</span> {type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}</div>
+    },
+
+]
+
+export const CampaignsList = ({list, totalSize, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
     const changePagination = (data) => {
         onChangeRequestParams(data)
     }
@@ -28,9 +51,12 @@ export const CampaignsList = ({list, totalSize, requestParams, attachedList, pro
     return (<div className="attach-campaigns">
         <div className="filters">
             <TableFilters
-                columns={columnList().columnsWithFilters}
+                columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
+                    ...i,
+                    sorter: false
+                })) : ruleColumns}
                 filters={requestParams.filters}
-                locationKey={'campaigns'}
+                locationKey={location}
                 searchField={true}
                 onChange={changeFiltersHandler}
             />
@@ -39,9 +65,12 @@ export const CampaignsList = ({list, totalSize, requestParams, attachedList, pro
         <div className="table-block">
             <CustomTable
                 key={'table'}
-                rowKey="campaignId"
+                rowKey={location === 'campaigns' ? "campaignId" : 'id'}
                 dataSource={list}
-                columns={columnList().allColumns.map(i => ({...i, sorter: false}))}
+                columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
+                    ...i,
+                    sorter: false
+                })) : ruleColumns}
                 loading={processing}
                 fixedColumns={[0]}
                 selectedRows={attachedList}

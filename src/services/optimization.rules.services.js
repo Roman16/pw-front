@@ -11,15 +11,17 @@ export const optimizationRulesServices = {
     deleteRule,
     attachRules,
     detachRules,
-    getAttachedCampaigns
+    getAttachedCampaigns,
+    getAttachedRules,
+
 }
 
-function getCampaigns({pageSize, page, filters, campaignsId}) {
-    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}&date_from=2023-01-30&date_to=2023-02-28${filtersHandler(filters)}${campaignsId.length>0 ? `&campaigns[]=${campaignsId.join('&campaigns[]=')}` : ''}`)
+function getCampaigns({pageSize, page, filters = [], campaignsId = []}) {
+    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}&date_from=2023-01-30&date_to=2023-02-28${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaigns[]=${campaignsId.join('&campaigns[]=')}` : ''}`)
 }
 
-function getRules({pageSize, page, searchStr}) {
-    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}&date_from=2023-01-30&date_to=2023-02-28`)
+function getRules({pageSize, page, searchStr, id=[]}) {
+    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`)
 }
 
 function createRule(rule) {
@@ -37,10 +39,14 @@ function deleteRule(id) {
 function attachRules(data) {
     return api('post', `${optimizationRulesUrls.attach}`, data)
 }
+
 function detachRules(data) {
     return api('post', `${optimizationRulesUrls.detach}`, data)
 }
 
 function getAttachedCampaigns(rulesId) {
     return api('get', `${optimizationRulesUrls.attachedCampaigns}?rules[]=${rulesId.join('&rules[]=')}`)
+}
+function getAttachedRules(campaignId) {
+    return api('get', `${optimizationRulesUrls.attachedRules}?campaigns[]=${campaignId.join('&campaigns[]=')}`)
 }

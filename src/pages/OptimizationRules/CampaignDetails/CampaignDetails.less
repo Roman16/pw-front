@@ -1,0 +1,62 @@
+.optimization-rules-page .campaign-details {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .short-info {
+    width: 100%;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 10px;
+    border-radius: 4px;
+    padding: 20px 20px 50px;
+
+    h2 {
+      height: 2.28571429rem;
+      font-weight: 600;
+      font-size: 1.4285714285714286rem;
+      line-height: 1.7142857142857142rem;
+      color: #353A3E;
+      margin-bottom: 0.8571428571428571rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .status {
+      margin: 0 0 0 auto;
+      font-size: 0.8571428571428571rem;
+      color: #353A3E;
+
+      svg {
+        margin: 0 3px 0 0;
+      }
+
+
+      &.active {
+        svg {
+          fill: #7FD3A1;
+        }
+      }
+
+      &.paused {
+        svg {
+          fill: #353A3E;
+        }
+      }
+
+      &.archived {
+        svg {
+          fill: #C9CBD4;
+        }
+      }
+    }
+  }
+
+  .custom-table .table-overflow .table-body .table-body__row > div:last-child {
+    justify-content: flex-start;
+
+    span {
+      text-transform: capitalize;
+    }
+  }
+}
