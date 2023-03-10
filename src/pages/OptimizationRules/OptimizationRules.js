@@ -8,10 +8,15 @@ import {RuleDetails} from "./RuleDetails/RuleDetails"
 import {notification} from "../../components/Notification"
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
+import {NoFoundData} from "../../components/Table/CustomTable"
+import {SVG} from "../../utils/icons"
+import {Link, Route} from "react-router-dom"
+import {AttachSettings} from "./AttachSettings/AttachSettings"
 
 
 const OptimizationRules = () => {
     const [visibleCreateRuleWindow, setVisibleCreateRuleWindow] = useState(false),
+        [visibleRouteLoader, setVisibleRouteLoader] = useState(true),
         [createProcessing, setCreateProcessing] = useState(false),
         [activeTab, setActiveTab] = useState('rules'),
         [selectedRule, setSelectedRule] = useState()
@@ -39,6 +44,16 @@ const OptimizationRules = () => {
         }
 
         setCreateProcessing(false)
+    }
+
+    const changeRuleHandler = (rule) => {
+        setSelectedRule(rule)
+        setVisibleRouteLoader(false)
+    }
+    const changeActiveTabHandler = (tab) => {
+        setActiveTab(tab)
+        setSelectedRule({})
+        setVisibleRouteLoader(true)
     }
 
     const deleteRuleHandler = async (ruleId) => {
@@ -89,7 +104,7 @@ const OptimizationRules = () => {
                 actions: JSON.parse(result.actions)
             })
         } catch (e) {
-
+            console.log(e)
         }
 
         cb && cb()
@@ -98,21 +113,30 @@ const OptimizationRules = () => {
 
     return (<div className={'optimization-rules-page'}>
         <Header
-            onCreate={() => setVisibleCreateRuleWindow(true)}
+            actions={() => <>
+                <button className="btn default" onClick={() => setVisibleCreateRuleWindow(true)}>
+                    <SVG id={'plus-icon'}/>
+                    Create Rule
+                </button>
+
+                <Link to={'/optimization-rules/attach-settings'} className="btn default">
+                    <SVG id={'admin-panel-icon'}/>
+                    Attach Settings
+                </Link> </>}
         />
 
         <div className="container">
             <RulesList
                 activeTab={activeTab}
-                setActiveTab={setActiveTab}
                 selectedRule={selectedRule}
 
-                onSelect={setSelectedRule}
+                onSelect={changeRuleHandler}
                 onDelete={deleteRuleHandler}
+                onSetActiveTab={changeActiveTabHandler}
             />
 
             <div className="work-container">
-                {(!selectedRule?.id && !selectedRule?.campaignId) && <RouteLoader/>}
+                {(!selectedRule?.id && !selectedRule?.campaignId) && visibleRouteLoader && <RouteLoader/>}
 
                 {(selectedRule?.id && activeTab === 'rules') && <RuleDetails
                     rule={selectedRule}
@@ -128,6 +152,10 @@ const OptimizationRules = () => {
                     onUpdate={updateRuleHandler}
                     onAttach={attachRulesByCampaignsHandler}
                     onDetach={detachRulesByCampaignsHandler}
+                />}
+
+                {!selectedRule?.id && !selectedRule?.campaignId && !visibleRouteLoader && <NoFoundData
+                    title={'No data'}
                 />}
             </div>
         </div>

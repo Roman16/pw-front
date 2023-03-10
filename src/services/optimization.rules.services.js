@@ -16,12 +16,12 @@ export const optimizationRulesServices = {
 
 }
 
-function getCampaigns({pageSize, page, filters = [], campaignsId = []}) {
-    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}&date_from=2023-01-30&date_to=2023-02-28${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaigns[]=${campaignsId.join('&campaigns[]=')}` : ''}`)
+function getCampaigns({pageSize, page,searchStr, filters = [], campaignsId = []}) {
+    return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}${searchStrWrap(searchStr).join('')}&date_from=2023-01-30&date_to=2023-02-28${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaigns[]=${campaignsId.join('&campaigns[]=')}` : ''}`)
 }
 
 function getRules({pageSize, page, searchStr, id=[]}) {
-    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`)
+    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`)
 }
 
 function createRule(rule) {

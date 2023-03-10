@@ -24,12 +24,13 @@ const ruleColumns = [
         title: 'Optimization type',
         key: 'type',
         dataIndex: 'type',
-        render: (type, item) => <div className="type"><span>{type}</span> {type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}</div>
+        render: (type, item) => <div className="type">
+            <span>{type}</span> {type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}</div>
     },
 
 ]
 
-export const CampaignsList = ({list, totalSize, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
+export const CampaignsList = ({list, totalSize, filters = true, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
     const changePagination = (data) => {
         onChangeRequestParams(data)
     }
@@ -49,7 +50,7 @@ export const CampaignsList = ({list, totalSize, requestParams, attachedList, pro
 
 
     return (<div className="attach-campaigns">
-        <div className="filters">
+        {filters && <div className="filters">
             <TableFilters
                 columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
                     ...i,
@@ -60,7 +61,7 @@ export const CampaignsList = ({list, totalSize, requestParams, attachedList, pro
                 searchField={true}
                 onChange={changeFiltersHandler}
             />
-        </div>
+        </div>}
 
         <div className="table-block">
             <CustomTable

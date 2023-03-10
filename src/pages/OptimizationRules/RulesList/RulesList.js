@@ -12,7 +12,7 @@ import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
 
 const navigationTabs = ['rules', 'campaigns']
 
-export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDelete}) => {
+export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, onDelete}) => {
     const [list, setList] = useState([]),
         [processing, setProcessing] = useState(true),
         [totalSize, setTotalSize] = useState(0),
@@ -50,7 +50,7 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
 
             setList(arr)
             setTotalSize(totalSize)
-            selectRuleHandler(arr[0])
+            selectRuleHandler(arr[0] || {})
         } catch (e) {
             console.log(e)
         }
@@ -58,7 +58,16 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
         setProcessing(false)
     }
 
-    const changePaginationHandler = (data) => setRequestParams(prevState => ({...prevState, data}))
+    const changePaginationHandler = (data) => setRequestParams(prevState => ({...prevState, ...data}))
+
+    const changeTabHandler = (tab) => {
+        onSetActiveTab(tab)
+
+        changePaginationHandler({
+            page: 1,
+            searchStr: ''
+        })
+    }
 
     useEffect(() => {
         getList()
@@ -93,11 +102,10 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
         }
     }, [selectedRule])
 
-
     return (<div className="rules-list">
         <div className="tabs">
             {navigationTabs.map(i => (<div
-                onClick={() => setActiveTab(i)}
+                onClick={() => changeTabHandler(i)}
                 className={`tab ${activeTab === i ? 'active' : ''}`}>
                 <SVG id={'list'}/>
                 {i}
@@ -107,8 +115,8 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect, onDe
         <div className="search-block">
             <SearchField
                 placeholder={activeTab === 'campaigns' ? 'Search by campaign name' : 'Search by rule’s name'}
-                // value={searchValue}
-                // onSearch={changeSearchHandler}
+                value={requestParams.searchStr}
+                onSearch={searchStr => changePaginationHandler({searchStr, page: 1})}
             />
         </div>
 

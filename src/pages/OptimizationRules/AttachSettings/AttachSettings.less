@@ -1,0 +1,68 @@
+.optimization-rules-page .attach-settings-page {
+  width: 100%;
+  flex: 1;
+  padding: 10px 10px 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .row {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    overflow: hidden;
+    margin: 0 0 10px;
+  }
+
+  .section {
+    width: 100%;
+    flex: 1;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+      font-weight: 600;
+      font-size: 1.7142857142857142rem;
+      color: #353A3E;
+      margin: 1.4285714285714286rem 1.4285714285714286rem 0;
+    }
+
+    .search-block {
+      width: 40%;
+      padding: 1.4285714285714286rem;
+    }
+
+    .attach-campaigns {
+      flex: 1;
+    }
+  }
+
+  .save-actions {
+    display: flex;
+    justify-content: center;
+    padding: 0 1.4285714285714286rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: .2s;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+
+    .btn {
+      height: 2.2857142857142856rem;
+      padding: 0 15px;
+      margin: 0 0 0 10px;
+    }
+
+    &.visible {
+      max-height: 60px;
+      padding: 1rem 1.4285714285714286rem;
+      margin: 0 0 10px;
+    }
+  }
+}

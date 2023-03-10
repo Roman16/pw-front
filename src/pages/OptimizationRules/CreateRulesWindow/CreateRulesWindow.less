@@ -169,13 +169,11 @@
         }
 
 
-
-
         .type {
           display: flex;
 
           span {
-              text-transform: capitalize;
+            text-transform: capitalize;
             margin: 0 5px 0 0;
           }
         }
@@ -193,6 +191,7 @@
 
 .create-rules-window .attach-campaigns,
 .campaign-details .attach-campaigns,
+.attach-settings-page .attach-campaigns,
 .rule-details .attach-campaigns {
   flex: 1;
   display: flex;
@@ -271,6 +270,10 @@
       .th {
         border-right: 0.5px solid #C9CBD4;
 
+        &:last-of-type {
+          border: 0;
+        }
+
         .title {
           font-weight: 600;
           font-size: 1rem;
@@ -292,6 +295,10 @@
 
         font-size: 1rem;
         color: #353A3E;
+
+        &:last-of-type {
+          border: 0;
+        }
 
         i.edit {
           display: none;
