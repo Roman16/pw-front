@@ -9,8 +9,12 @@ import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import _ from 'lodash'
 import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
 import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
+import axios from "axios"
 
 const navigationTabs = ['rules', 'campaigns']
+
+const CancelToken = axios.CancelToken
+let source = null
 
 export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, onDelete}) => {
     const [list, setList] = useState([]),
@@ -33,17 +37,21 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
     const getList = async () => {
         setProcessing(true)
         setList([])
+
+        source && source.cancel()
+        source = CancelToken.source()
+
         try {
             let arr = [],
                 totalSize = 0
 
             if (activeTab === 'rules') {
-                const {result} = await optimizationRulesServices.getRules(requestParams)
+                const {result} = await optimizationRulesServices.getRules(requestParams, source.token)
                 arr = result.data
                 totalSize = result.total_count
             } else {
 
-                const {result} = await optimizationRulesServices.getCampaigns(requestParams)
+                const {result} = await optimizationRulesServices.getCampaignsPreview(requestParams, source.token)
                 arr = result.data
                 totalSize = result.total_count
             }

@@ -217,6 +217,7 @@ export const ppcAuditUrls = {
 
 export const optimizationRulesUrls = {
     campaigns: 'rules-based-optimization/campaigns',
+    campaignsPreview: 'rules-based-optimization/campaigns/preview',
     rules: 'rules-based-optimization/rules',
     attach: 'rules-based-optimization/rules/attach',
     detach: 'rules-based-optimization/rules/detach',

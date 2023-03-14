@@ -452,6 +452,7 @@ const ActionValue = ({actions, onChange}) => {
                     <InputCurrency
                         value={actions.value}
                         onChange={(value) => onChange({actions: {...actions, value}})}
+                        typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
 
@@ -484,6 +485,7 @@ const ActionValue = ({actions, onChange}) => {
                     <InputCurrency
                         value={actions.value}
                         onChange={(value) => onChange({actions: {...actions, value}})}
+                        typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
 

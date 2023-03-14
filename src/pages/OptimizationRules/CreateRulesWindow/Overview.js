@@ -9,14 +9,24 @@ const fields = [
         fieldKey: 'name'
     },
     {
+        title: 'Attribution window',
+        fieldKey: 'attribution_window'
+    },
+    {
         title: 'Description',
         fieldKey: 'description',
         render: value => value || <hr/>
     },
     {
+        title: 'Status',
+        fieldKey: 'active',
+        render: value => value ? 'Enabled' : 'Disabled'
+    },
+    {
         title: 'Optimization type',
         fieldKey: 'type',
-        render: (type, item) => <div className="type"><span>{type}</span> {type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}</div>
+        render: (type, item) => <div className="type">
+            <span>{type}</span> {type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}</div>
     },
     {
         title: 'Timeline',

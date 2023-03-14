@@ -2,6 +2,7 @@ import React from "react"
 import {Select, Switch} from "antd"
 import CustomSelect from "../../../components/Select/Select"
 import {SVG} from "../../../utils/icons"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 const Option = Select.Option
 
@@ -57,6 +58,16 @@ export const RuleInformation = ({data, onChange}) => {
                 onChange={({target: {value}}) => onChange({'name': value})}
             />
         </div>
+
+        <div className="row form-group">
+            <label htmlFor="">Attribution window</label>
+
+            <AttributionWindowSelect
+                value={data.attribution_window}
+                onChange={(attribution_window) => onChange({attribution_window})}
+            />
+        </div>
+
         <div className="row form-group">
             <label htmlFor="">Description</label>
             <textarea
@@ -64,10 +75,19 @@ export const RuleInformation = ({data, onChange}) => {
                 onChange={({target: {value}}) => onChange({'description': value})}
             />
         </div>
+
+        <div className="row form-group">
+            <label htmlFor="">{data.active ? 'Enabled' : 'Disabled'}</label>
+            <div className="switch-group">
+                <Switch checked={data.active} onChange={active => onChange({active})}/>
+            </div>
+        </div>
+
         <div className="row form-group">
             <label htmlFor="">Automatic <SVG id='rotate-arrows-icon'/></label>
             <div className="switch-group">
-                <Switch checked={data.type === 'auto'} onChange={checked => onChange({'type': checked ? 'auto' : 'manual'})}/>
+                <Switch checked={data.type === 'auto'}
+                        onChange={checked => onChange({'type': checked ? 'auto' : 'manual'})}/>
 
                 {data.type === 'auto' && <CustomSelect
                     getPopupContainer={trigger => trigger}
@@ -84,5 +104,6 @@ export const RuleInformation = ({data, onChange}) => {
                 digni
             </p>
         </div>
+
     </div>)
 }

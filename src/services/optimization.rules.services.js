@@ -5,6 +5,7 @@ import {filtersHandler} from "./analytics.services"
 
 export const optimizationRulesServices = {
     getCampaigns,
+    getCampaignsPreview,
     getRules,
     createRule,
     updateRule,
@@ -20,8 +21,12 @@ function getCampaigns({pageSize, page,searchStr, filters = [], campaignsId = []}
     return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=7&table[page]=${page}&table[size]=${pageSize}${searchStrWrap(searchStr).join('')}&date_from=2023-01-30&date_to=2023-02-28${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaigns[]=${campaignsId.join('&campaigns[]=')}` : ''}`)
 }
 
-function getRules({pageSize, page, searchStr, id=[]}) {
-    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`)
+function getCampaignsPreview({pageSize, page,searchStr}, cancelToken) {
+    return api('get', `${optimizationRulesUrls.campaignsPreview}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}`, undefined, undefined, cancelToken)
+}
+
+function getRules({pageSize, page, searchStr, id=[]}, cancelToken) {
+    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`, undefined, undefined, cancelToken)
 }
 
 function createRule(rule) {

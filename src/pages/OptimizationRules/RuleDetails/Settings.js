@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react"
 import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
-import {SVG} from "../../../utils/icons"
 import _ from "lodash"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
 import {notification} from "../../../components/Notification"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 
 export const Settings = ({rule, onUpdate}) => {
@@ -37,45 +37,49 @@ export const Settings = ({rule, onUpdate}) => {
         setVisibleEditNameField(false)
     }, [rule])
 
-    return (<div className="settings">
-        <div className="rule-info">
-            <h2>
-                {visibleEditNameField ? <div className="form-group">
-                    <input
-                        value={ruleData.name}
-                        onChange={({target: {value}}) => changeRuleDataHandler({name: value})}
-                    />
-                </div> : ruleData.name}
-                <div className="edit-btn" onClick={() => setVisibleEditNameField(prevState => !prevState)}>
-                    <div/>
-                </div>
-            </h2>
-            {rule.description && <p>{rule.description}</p>}
+    return (<>
+        <section className="rule-info">
+            <div className="col">
+                <h2>
+                    {ruleData.name}
+                </h2>
 
-            <div className="details-row">
-                <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
-                <div className="type">
-                    <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
+                {rule.description && <p>{rule.description}</p>}
+
+                <div className="details-row">
+                    <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
+                    <div className="type">
+                        <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <AttributionWindowSelect
+                value={ruleData.attribution_window}
+                onChange={attribution_window => changeRuleDataHandler({attribution_window})}
+            />
+
+            <button className="btn default">Edit</button>
+        </section>
 
 
-        <RuleSettings
-            data={ruleData}
-            onChange={changeRuleDataHandler}
-        />
+        <section className="settings">
+            <RuleSettings
+                data={ruleData}
+                onChange={changeRuleDataHandler}
+            />
 
-        <div className={`save-actions ${JSON.stringify(rule) !== JSON.stringify(ruleData) ? 'visible' : ''}`}>
-            <button className="btn white" onClick={resetHandler}>
-                Reset All
-            </button>
+            <div className={`save-actions ${JSON.stringify(rule) !== JSON.stringify(ruleData) ? 'visible' : ''}`}>
+                <button className="btn white" onClick={resetHandler}>
+                    Reset All
+                </button>
 
-            <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
-                Save Changes
+                <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
+                    Save Changes
 
-                {saveProcessing && <Spin size={'small'}/>}
-            </button>
-        </div>
-    </div>)
+                    {saveProcessing && <Spin size={'small'}/>}
+                </button>
+            </div>
+        </section>
+    </>)
 }

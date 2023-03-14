@@ -19,6 +19,7 @@ const ruleColumns = [
         title: 'Description',
         key: 'description',
         dataIndex: 'description',
+        render: (text) => <div className="description">{text}</div>
     },
     {
         title: 'Optimization type',
