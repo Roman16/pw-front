@@ -30,6 +30,7 @@ export const AttributionWindowSelect = ({value, onChange, className=''}) => (<di
     <div className="form-group">
         <div className="label">
             <InformationTooltip
+                getPopupContainer={trigger => trigger.parentNode.parentNode}
                 description={`<b>Sponsored Brands</b> metrics are always displayed using 14 days attribution window, since Amazon does not provide performance information for <b>Sponsored Brands</b> for other windows.`}/>
 
             Attribution window:

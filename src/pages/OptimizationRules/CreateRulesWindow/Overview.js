@@ -53,13 +53,15 @@ export const Overview = ({data}) => {
     return (<div className="create-rule-overview">
         <h3>Overview</h3>
 
-        {fields.map((field) => (
-            <div className="row">
-                <div className="label">{field.title}</div>
-                <div className="value">
-                    {field.render ? field.render(data[field.fieldKey], data) : data[field.fieldKey]}
+        <div className="scroll-container">
+            {fields.map((field) => (
+                <div className="row">
+                    <div className="label">{field.title}</div>
+                    <div className="value">
+                        {field.render ? field.render(data[field.fieldKey], data) : data[field.fieldKey]}
+                    </div>
                 </div>
-            </div>
-        ))}
+            ))}
+        </div>
     </div>)
 }

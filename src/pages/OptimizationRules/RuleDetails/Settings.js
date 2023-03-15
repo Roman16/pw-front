@@ -3,13 +3,11 @@ import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
 import _ from "lodash"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
-import {notification} from "../../../components/Notification"
 import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 
-export const Settings = ({rule, onUpdate}) => {
+export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttributionWindow, onEdit}) => {
     const [ruleData, setRuleData] = useState({...rule}),
-        [visibleEditNameField, setVisibleEditNameField] = useState(false),
         [saveProcessing, setSaveProcessing] = useState(false)
 
     const changeRuleDataHandler = (data) => {
@@ -24,17 +22,17 @@ export const Settings = ({rule, onUpdate}) => {
         setSaveProcessing(true)
         onUpdate({
             ...ruleData,
+            active: ruleData.active || false,
+            attribution_window: attributionWindow,
             condition: JSON.stringify(ruleData.condition),
             actions: JSON.stringify(ruleData.actions),
         }, () => {
             setSaveProcessing(false)
-            notification.success({title: 'Rule success updated!'})
         })
     }
 
     useEffect(() => {
         setRuleData({...rule})
-        setVisibleEditNameField(false)
     }, [rule])
 
     return (<>
@@ -55,11 +53,11 @@ export const Settings = ({rule, onUpdate}) => {
             </div>
 
             <AttributionWindowSelect
-                value={ruleData.attribution_window}
-                onChange={attribution_window => changeRuleDataHandler({attribution_window})}
+                value={attributionWindow}
+                onChange={onChangeAttributionWindow}
             />
 
-            <button className="btn default">Edit</button>
+            <button className="btn default" onClick={onEdit}>Edit</button>
         </section>
 
 

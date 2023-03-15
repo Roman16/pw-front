@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react"
 import {CampaignsList} from "../CreateRulesWindow/CampaignsList"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
-import {SearchField} from "../../../components/SearchField/SearchField"
+import moment from "moment"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 export const List = ({attachedList, label, type, onChange}) => {
     const [list, setList] = useState([]),
@@ -11,7 +12,12 @@ export const List = ({attachedList, label, type, onChange}) => {
             page: 1,
             pageSize: 30,
             filters: [],
-            searchStr: ''
+            searchStr: '',
+            attributionWindow: '7',
+            selectedRangeDate: {
+                startDate: moment().add(-29, 'days').toISOString(),
+                endDate: moment().toISOString()
+            }
         })
 
 
@@ -40,6 +46,9 @@ export const List = ({attachedList, label, type, onChange}) => {
         setProcessing(false)
     }
 
+    const selectAllHandler = () => {
+        onChange('all', totalSize)
+    }
 
     const changeRequestParamsHandler = (data) => {
         setRequestParams(prevState => ({...prevState, ...data}))
@@ -53,15 +62,23 @@ export const List = ({attachedList, label, type, onChange}) => {
         getList()
     }, [requestParams])
 
-    return (<div className="rules section">
-            <h2>{label}</h2>
+    useEffect(() => {
+        onChange(attachedList, totalSize)
+    }, [totalSize])
 
-            <div className="search-block">
-                <SearchField
-                    placeholder={type === 'campaigns' ? 'Search by campaign name' : 'Search by rule’s name'}
-                    value={requestParams.searchStr}
-                    onSearch={searchStr => changeRequestParamsHandler({searchStr, page: 1})}
-                />
+    return (<div className={`rules section type-${type}`}>
+            <div className="row">
+                <h2>{label}</h2>
+
+                {type === 'campaigns' && <AttributionWindowSelect
+                    value={requestParams.attributionWindow}
+                    onChange={(attributionWindow) => changeRequestParamsHandler({attributionWindow})}
+                />}
+            </div>
+
+            <div className={`selected-count ${attachedList.length > 0 ? 'visible' : ''}`}>
+                Selected <b>{attachedList === 'all' ? totalSize : attachedList.length}</b> (or <span
+                onClick={selectAllHandler}>select all <b>{totalSize}</b></span>)
             </div>
 
             <CampaignsList
@@ -71,7 +88,7 @@ export const List = ({attachedList, label, type, onChange}) => {
                 totalSize={totalSize}
                 requestParams={requestParams}
                 location={type}
-                filters={false}
+                filters={true}
 
                 onChangeRequestParams={changeRequestParamsHandler}
                 onChangeAttachedList={changeAttachedList}

@@ -6,6 +6,8 @@ import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../components/Pagination/Pagination"
 import _ from "lodash"
 import {periodEnums} from "./RuleInformation"
+import DateRange from "../../Analytics/components/DateRange/DateRange"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
 const ruleColumns = [
     {
@@ -19,7 +21,7 @@ const ruleColumns = [
         title: 'Description',
         key: 'description',
         dataIndex: 'description',
-        render: (text) => <div className="description">{text}</div>
+        render: (text) => <div className="description" title={text}>{text}</div>
     },
     {
         title: 'Optimization type',
@@ -31,7 +33,7 @@ const ruleColumns = [
 
 ]
 
-export const CampaignsList = ({list, totalSize, filters = true, requestParams, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
+export const CampaignsList = ({list, totalSize, filters = true, requestParams, widthAttributionWindow = false, widthDateRange = true, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
     const changePagination = (data) => {
         onChangeRequestParams(data)
     }
@@ -51,19 +53,31 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, a
 
 
     return (<div className="attach-campaigns">
-        {filters && <div className="filters">
-            <TableFilters
-                columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
-                    ...i,
-                    sorter: false
-                })) : ruleColumns}
-                filters={requestParams.filters}
-                locationKey={location}
-                searchField={true}
-                onChange={changeFiltersHandler}
-            />
-        </div>}
+        <div className="row">
+            {filters && <div className="filters">
+                <TableFilters
+                    columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
+                        ...i,
+                        sorter: false
+                    })) : ruleColumns}
+                    filters={requestParams.filters}
+                    locationKey={location}
+                    searchField={true}
+                    onChange={changeFiltersHandler}
+                />
+            </div>}
 
+            {widthAttributionWindow && <AttributionWindowSelect
+                value={requestParams.attributionWindow}
+                onChange={(attributionWindow) => changePagination({attributionWindow})}
+            />}
+
+            {widthDateRange && <DateRange
+                tableOptions={{comparePreviousPeriod: false}}
+                onChange={(startDate, endDate) => changePagination({selectedRangeDate: {startDate, endDate}})}
+                selectedRangeDate={requestParams.selectedRangeDate}
+            />}
+        </div>
         <div className="table-block">
             <CustomTable
                 key={'table'}
@@ -75,8 +89,9 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, a
                 })) : ruleColumns}
                 loading={processing}
                 fixedColumns={[0]}
-                selectedRows={attachedList}
+                selectedRows={attachedList === 'all' ? [] : attachedList}
                 rowSelection={rowSelection}
+                selectedAll={attachedList === 'all'}
             />
 
             <Pagination

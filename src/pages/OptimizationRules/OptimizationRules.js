@@ -10,14 +10,17 @@ import RouteLoader from "../../components/RouteLoader/RouteLoader"
 import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
 import {NoFoundData} from "../../components/Table/CustomTable"
 import {SVG} from "../../utils/icons"
-import {Link, Route} from "react-router-dom"
+import {Link} from "react-router-dom"
 import {AttachSettings} from "./AttachSettings/AttachSettings"
+import {EditRuleWindow} from "./EditRuleWindow/EditRuleWindow"
 
 
 const OptimizationRules = () => {
     const [visibleCreateRuleWindow, setVisibleCreateRuleWindow] = useState(false),
+        [visibleEditRuleWindow, setVisibleEditRuleWindow] = useState(false),
         [visibleRouteLoader, setVisibleRouteLoader] = useState(true),
         [createProcessing, setCreateProcessing] = useState(false),
+        [updateProcessing, setUpdateProcessing] = useState(false),
         [activeTab, setActiveTab] = useState('rules'),
         [selectedRule, setSelectedRule] = useState()
 
@@ -35,10 +38,16 @@ const OptimizationRules = () => {
                     campaigns: rule.campaignsId
                 })
             }
+            setSelectedRule({
+                ...result,
+                campaigns_count: rule.campaignsId.length,
+                new: true,
+                condition: JSON.parse(result.condition),
+                actions: JSON.parse(result.actions)
+            })
+
             notification.success({title: 'Rule success created!'})
             setVisibleCreateRuleWindow(false)
-
-            setSelectedRule({result, campaigns_count: rule.campaignsId.length})
         } catch (e) {
             console.log(e)
         }
@@ -96,6 +105,8 @@ const OptimizationRules = () => {
     }
 
     const updateRuleHandler = async (rule, cb) => {
+        setUpdateProcessing(true)
+
         try {
             const {result} = await optimizationRulesServices.updateRule(rule)
             setSelectedRule({
@@ -103,13 +114,17 @@ const OptimizationRules = () => {
                 condition: JSON.parse(result.condition),
                 actions: JSON.parse(result.actions)
             })
+
+            notification.success({title: 'Rule success updated!'})
+
+            setVisibleEditRuleWindow(false)
         } catch (e) {
             console.log(e)
         }
 
         cb && cb()
+        setUpdateProcessing(false)
     }
-
 
     return (<div className={'optimization-rules-page'}>
         <Header
@@ -142,8 +157,13 @@ const OptimizationRules = () => {
                     rule={selectedRule}
 
                     onUpdate={updateRuleHandler}
+                    onChangeAttributionWindow={(attribution_window) => setSelectedRule({
+                        ...selectedRule,
+                        attribution_window
+                    })}
                     onAttach={attachRulesByCampaignsHandler}
                     onDetach={detachRulesByCampaignsHandler}
+                    onEdit={() => setVisibleEditRuleWindow(true)}
                 />}
 
                 {(selectedRule?.campaignId && activeTab === 'campaigns') && <CampaignDetails
@@ -167,6 +187,15 @@ const OptimizationRules = () => {
 
             onCreate={createRuleHandler}
             onClose={closeWindowHandler}
+        />
+
+        <EditRuleWindow
+            visible={visibleEditRuleWindow}
+            processing={updateProcessing}
+            rule={selectedRule}
+
+            onSave={updateRuleHandler}
+            onClose={() => setVisibleEditRuleWindow(false)}
         />
     </div>)
 }

@@ -45,7 +45,7 @@ export const periodEnums = [
     },
 ]
 
-export const RuleInformation = ({data, onChange}) => {
+export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange}) => {
 
     return (<div className="step rule-information">
         <div className="row form-group">
@@ -86,8 +86,11 @@ export const RuleInformation = ({data, onChange}) => {
         <div className="row form-group">
             <label htmlFor="">Automatic <SVG id='rotate-arrows-icon'/></label>
             <div className="switch-group">
-                <Switch checked={data.type === 'auto'}
-                        onChange={checked => onChange({'type': checked ? 'auto' : 'manual'})}/>
+                <Switch
+                    disabled={disabledAutomaticSwitch}
+                    checked={data.type === 'auto'}
+                    onChange={checked => onChange({'type': checked ? 'auto' : 'manual'})}
+                />
 
                 {data.type === 'auto' && <CustomSelect
                     getPopupContainer={trigger => trigger}

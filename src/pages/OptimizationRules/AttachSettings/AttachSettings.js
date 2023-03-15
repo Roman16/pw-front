@@ -23,7 +23,12 @@ const AttachSettings = () => {
 
         try {
             try {
-                await optimizationRulesServices.attachRules(attachedLis)
+                // if(attachedLis.campaigns === 'all') {
+                //
+                // } else {
+                //     await optimizationRulesServices.attachRules(attachedLis)
+                // }
+
                 setAttachedList({
                     rules: [],
                     campaigns: []
@@ -55,14 +60,19 @@ const AttachSettings = () => {
                     label={'Rules'}
                     type={'rules'}
                     attachedList={attachedLis.rules}
-                    onChange={(rules) => setAttachedList({...attachedLis, rules})}
+                    onChange={(rules, rulesCount) => setAttachedList({...attachedLis, rules, rulesCount})}
                 />
 
                 <List
                     label={'Campaigns'}
                     type={'campaigns'}
+                    widthAttributionWindow
                     attachedList={attachedLis.campaigns}
-                    onChange={(campaigns) => setAttachedList({...attachedLis, campaigns})}
+                    onChange={(campaigns, campaignsCount) => setAttachedList({
+                        ...attachedLis,
+                        campaigns,
+                        campaignsCount
+                    })}
                 />
             </div>
 
@@ -70,7 +80,8 @@ const AttachSettings = () => {
                 className={`save-actions ${attachedLis.rules.length > 0 && attachedLis.campaigns.length > 0 ? 'visible' : ''}`}>
 
                 <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
-                    Pair the selected components ({attachedLis.rules.length}/{attachedLis.campaigns.length})
+                    Pair the selected components
+                    ({attachedLis.rules === 'all' ? attachedLis.rulesCount : attachedLis.rules.length}/{attachedLis.campaigns === 'all' ? attachedLis.campaignsCount : attachedLis.campaigns.length})
 
                     {saveProcessing && <Spin size={'small'}/>}
                 </button>

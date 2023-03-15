@@ -4,12 +4,13 @@ import {optimizationRulesServices} from "../../../services/optimization.rules.se
 import {Spin} from "antd"
 import _ from 'lodash'
 import {notification} from "../../../components/Notification"
+import moment from "moment"
 
 const tabs = ['campaigns used it', 'all campaigns']
 
 let attachedListFromRequest = []
 
-export const Attach = ({id, onAttach, onDetach}) => {
+export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
         [attachedCampaigns, setAttachedCampaigns] = useState([]),
         [campaigns, setCampaigns] = useState([]),
@@ -20,7 +21,11 @@ export const Attach = ({id, onAttach, onDetach}) => {
             page: 1,
             pageSize: 30,
             filters: [],
-            searchStr: ''
+            searchStr: '',
+            selectedRangeDate: {
+                startDate: moment().add(-29, 'days').toISOString(),
+                endDate: moment().toISOString()
+            }
         })
 
 
@@ -49,7 +54,7 @@ export const Attach = ({id, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getCampaigns({...requestParams, campaignsId})
+            const {result} = await optimizationRulesServices.getCampaigns({...requestParams, campaignsId, attributionWindow})
             setCampaigns(result.data)
             setTotalSize(result.total_count)
         } catch (e) {
@@ -113,7 +118,7 @@ export const Attach = ({id, onAttach, onDetach}) => {
         if (activeTab === tabs[1]) {
             getCampaigns()
         }
-    }, [activeTab, id, requestParams])
+    }, [activeTab, id, requestParams, attributionWindow])
 
     useEffect(() => {
         attachedListFromRequest = []

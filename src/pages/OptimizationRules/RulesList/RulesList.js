@@ -83,20 +83,28 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
 
     useEffect(() => {
         if (activeTab === navigationTabs[0]) {
-            if (selectedRule?.id && _.findIndex(list, {id: selectedRule.id}) === -1) {
+            if (selectedRule?.new) {
                 setList([
                     selectedRule,
-                    ...list.splice(0, list.length - 1)
+                    ...list.splice(0, list.length)
                 ])
 
+                onSelect({
+                    ...selectedRule,
+                    new: false,
+                })
                 setTotalSize(prevState => prevState + 1)
             } else {
                 setList([
                     ...list.map(i => i.id === selectedRule.id ? ({
                         ...i,
                         name: selectedRule.name,
+                        active: selectedRule.active,
                         campaigns_count: selectedRule.campaigns_count || 0,
                         rules_count: selectedRule.rules_count || 0,
+                        interval: selectedRule.interval,
+                        period: selectedRule.period,
+                        type: selectedRule.type,
                     }) : i)
                 ])
             }
@@ -135,7 +143,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
                     <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name">{item.name}</div>
-                    <div className="description">{item.description}</div>
+                    <div className="description" title={item.description}>{item.description}</div>
                     <div className="details-row">
                         <SVG id={'calendar'}/>
 
@@ -147,6 +155,8 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                             Campaigns: <b>{item.campaigns_count}</b>
                         </div>
                     </div>
+
+                    {/*<button className="btn default" onClick={() => onDelete(item.id)}>delete</button>*/}
                 </div>
 
                 :

@@ -8,6 +8,7 @@ import {RuleSettings} from "./RuleSettings"
 import {CampaignsList} from "./CampaignsList"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import {Overview} from "./Overview"
+import moment from "moment"
 
 const createSteps = ['Information', 'Settings', 'Attach', 'Overview']
 
@@ -22,6 +23,7 @@ const defaultState = {
     actions: {
         type: undefined,
     },
+
     condition: {
         "type": "rule",
         "metric": "clicks",
@@ -46,7 +48,12 @@ export const CreateRulesWindow = ({
             page: 1,
             pageSize: 30,
             filters: [],
-            searchStr: ''
+            searchStr: '',
+            attributionWindow: '7',
+            selectedRangeDate: {
+                startDate: moment().add(-29, 'days').toISOString(),
+                endDate: moment().toISOString()
+            }
         })
 
     const changeCreateDataHandler = (data) => {
@@ -127,7 +134,7 @@ export const CreateRulesWindow = ({
                 requestParams={requestParams}
                 attachedList={createData.campaignsId}
                 processing={getProcessing}
-
+                widthAttributionWindow={true}
                 onChangeRequestParams={(data) => setRequestParams(prevState => ({...prevState, ...data}))}
                 onChangeAttachedList={(campaignsId) => changeCreateDataHandler({campaignsId})}
             />}

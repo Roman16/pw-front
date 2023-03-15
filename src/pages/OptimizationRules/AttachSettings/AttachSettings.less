@@ -6,7 +6,7 @@
   flex-direction: column;
   overflow: hidden;
 
-  .row {
+  & > .row {
     flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -24,22 +24,97 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    padding: 1.4285714285714286rem 0 0 0;
+
+    &.type-rules {
+      .list-filters-block > button,
+      .datepicker-block {
+        display: none;
+      }
+    }
+
+    .selected-count {
+      padding: 0 1.4285714285714286rem;
+      margin-bottom: 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: .2s;
+
+      &.visible {
+        max-height: 22px;
+      }
+
+      span {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.4285714285714286rem 10px;
+    }
 
     h2 {
       font-weight: 600;
       font-size: 1.7142857142857142rem;
       color: #353A3E;
-      margin: 1.4285714285714286rem 1.4285714285714286rem 0;
+      margin: 0;
+    }
+
+
+    .attribution-window-block {
+      height: max-content;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    .list-filters-block {
+      padding: 0;
+
+      .search-block {
+        width: 300px;
+      }
+    }
+
+    .datepicker-block {
+      width: 17.8rem;
+      padding: 0;
+
+      .DatePicker,
+      .ant-calendar-picker,
+      .ant-calendar-picker-input.ant-input {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .compare-date {
+        display: none;
+      }
     }
 
     .search-block {
       width: 40%;
-      padding: 1.4285714285714286rem;
+    }
+
+    .current-filters {
+      padding-left: 0;
     }
 
     .attach-campaigns {
       flex: 1;
+
+      .row {
+        align-items: flex-start;
+      }
     }
+  }
+
+  .custom-table .table-overflow .table-body .table-body__row > div:last-child {
+    justify-content: flex-start;
   }
 
   .save-actions {

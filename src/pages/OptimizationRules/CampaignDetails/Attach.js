@@ -142,6 +142,7 @@ export const Attach = ({id, onAttach, onDetach}) => {
             totalSize={totalSize}
             requestParams={requestParams}
             location={'rules'}
+            widthDateRange={false}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}
