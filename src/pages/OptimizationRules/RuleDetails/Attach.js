@@ -43,8 +43,8 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
                 setTotalSize(0)
             }
 
-            setAttachedCampaigns(result[id].map(i => `${i}`))
             attachedListFromRequest = result[id].map(i => `${i}`)
+            setAttachedCampaigns(result[id].map(i => `${i}`))
         } catch (e) {
             console.log(e)
         }
@@ -83,8 +83,8 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
 
         if (activeTab === tabs[0]) {
             onDetach({
-                rules: [id],
-                campaigns: differenceList,
+                rule_id: [id],
+                campaign_id: differenceList,
                 rulesNewLength: attachedCampaigns.length,
             }, () => {
                 setSaveProcessing(false)
@@ -94,15 +94,15 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
         } else {
             if (differenceList.length > 0) {
                 onDetach({
-                    rules: [id],
-                    campaigns: differenceList,
+                    rule_id: [id],
+                    campaign_id: differenceList,
                     rulesNewLength: attachedCampaigns.length,
                 })
             }
 
             onAttach({
-                rules: [id],
-                campaigns: attachedCampaigns
+                rule_id: [id],
+                campaign_id: attachedCampaigns
             }, () => {
                 setSaveProcessing(false)
                 notification.success({title: 'Rule success updated!'})
@@ -110,6 +110,12 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
         }
 
         attachedListFromRequest = [...attachedCampaigns]
+    }
+
+    const changeTabHandler = (tab) => {
+        setRequestParams(prevState => ({...prevState, page: 1}))
+
+        setActiveTab(tab)
     }
 
     useEffect(() => {
@@ -122,13 +128,14 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
 
     useEffect(() => {
         attachedListFromRequest = []
+        setAttachedCampaigns([])
     }, [id])
 
     return (<div className="attach-block">
         <div className="tabs">
             <div className="container">
                 {tabs.map((tab) => <div
-                    onClick={() => setActiveTab(tab)}
+                    onClick={() => changeTabHandler(tab)}
                     className={`tab ${tab === activeTab ? 'active' : ''}`}
                 >
                     {tab}

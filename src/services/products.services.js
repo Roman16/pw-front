@@ -28,15 +28,23 @@ export const productsServices = {
 }
 
 
-export const searchStrWrap = (searchStr) => {
+export const searchStrWrap = (searchStr, wrap) => {
     let searchParams = []
 
     if (searchStr) {
         if (typeof searchStr === 'string') {
-            searchParams.push(`&search[]=${encodeString(searchStr)}`)
+            if(wrap) {
+                searchParams.push(`&${wrap}[search][]=${encodeString(searchStr)}`)
+            } else {
+                searchParams.push(`&search[]=${encodeString(searchStr)}`)
+            }
         } else {
             searchStr.forEach(i => {
-                searchParams.push(`&search[]=${encodeString(i)}`)
+                if(wrap) {
+                    searchParams.push(`&${wrap}[search][]=${encodeString(i)}`)
+                } else {
+                    searchParams.push(`&search[]=${encodeString(i)}`)
+                }
             })
         }
     }

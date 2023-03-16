@@ -220,6 +220,7 @@ export const optimizationRulesUrls = {
     campaignsPreview: 'rules-based-optimization/campaigns/preview',
     rules: 'rules-based-optimization/rules',
     attach: 'rules-based-optimization/rules/attach',
+    attachWidthFilters: 'rules-based-optimization/rules/attach/vague',
     detach: 'rules-based-optimization/rules/detach',
     attachedCampaigns: 'rules-based-optimization/rules/campaigns',
     attachedRules: 'rules-based-optimization/campaigns/rules',

@@ -33,8 +33,12 @@ const ruleColumns = [
 
 ]
 
-export const CampaignsList = ({list, totalSize, filters = true, requestParams, widthAttributionWindow = false, widthDateRange = true, attachedList, processing, onChangeRequestParams, onChangeAttachedList, location = 'campaigns'}) => {
+export const CampaignsList = ({list, totalSize, filters = true, requestParams, widthAttributionWindow = false, widthDateRange = true, attachedList, processing, onChangeRequestParams, onChangeAttachedList, onChangeFilters, onChangeDateRange, location = 'campaigns'}) => {
     const changePagination = (data) => {
+        if (data.selectedRangeDate && onChangeDateRange) {
+            onChangeDateRange({...data.selectedRangeDate})
+        }
+
         onChangeRequestParams(data)
     }
 
@@ -43,6 +47,8 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
             page: 1,
             filters
         })
+
+        onChangeFilters && onChangeFilters(filters)
     }
 
     const rowSelection = {

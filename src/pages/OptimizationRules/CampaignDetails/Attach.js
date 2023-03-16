@@ -38,8 +38,8 @@ export const Attach = ({id, onAttach, onDetach}) => {
                 setTotalSize(0)
             }
 
-            setAttachedRules(result[id].map(i => `${i}`))
             attachedListFromRequest = result[id].map(i => `${i}`)
+            setAttachedRules(result[id].map(i => `${i}`))
         } catch (e) {
             console.log(e)
         }
@@ -78,9 +78,9 @@ export const Attach = ({id, onAttach, onDetach}) => {
 
         if (activeTab === tabs[0]) {
             onDetach({
-                rules: differenceList,
+                rule_id: differenceList,
                 rulesNewLength: attachedRules.length,
-                campaigns: [id]
+                campaign_id: [id]
             }, () => {
                 setSaveProcessing(false)
                 setCampaigns(campaigns.filter(i => attachedRules.includes(i.id)))
@@ -89,15 +89,15 @@ export const Attach = ({id, onAttach, onDetach}) => {
         } else {
             if (differenceList.length > 0) {
                 onDetach({
-                    rules: differenceList,
+                    rule_id: differenceList,
                     rulesNewLength: attachedRules.length,
-                    campaigns: [id]
+                    campaign_id: [id]
                 })
             }
 
             onAttach({
-                rules: attachedRules,
-                campaigns: [id]
+                rule_id: attachedRules,
+                campaign_id: [id]
             }, () => {
                 setSaveProcessing(false)
                 notification.success({title: 'Campaign success updated!'})
@@ -117,6 +117,7 @@ export const Attach = ({id, onAttach, onDetach}) => {
 
     useEffect(() => {
         attachedListFromRequest = []
+        setAttachedRules([])
     }, [id])
 
     return (<div className="attach-block">

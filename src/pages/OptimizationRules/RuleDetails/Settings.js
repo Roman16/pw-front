@@ -37,27 +37,27 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
 
     return (<>
         <section className="rule-info">
-            <div className="col">
+            <div className="row">
                 <h2>
                     {ruleData.name}
                 </h2>
 
-                {rule.description && <p>{rule.description}</p>}
+                <AttributionWindowSelect
+                    value={attributionWindow}
+                    onChange={onChangeAttributionWindow}
+                />
 
-                <div className="details-row">
-                    <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
-                    <div className="type">
-                        <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
-                    </div>
-                </div>
+                <button className="btn default" onClick={onEdit}>Edit</button>
             </div>
 
-            <AttributionWindowSelect
-                value={attributionWindow}
-                onChange={onChangeAttributionWindow}
-            />
+            {rule.description && <p>{rule.description}</p>}
 
-            <button className="btn default" onClick={onEdit}>Edit</button>
+            <div className="details-row">
+                <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
+                <div className="type">
+                    <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
+                </div>
+            </div>
         </section>
 
 

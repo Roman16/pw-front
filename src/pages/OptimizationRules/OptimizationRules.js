@@ -34,8 +34,8 @@ const OptimizationRules = () => {
 
             if (rule.campaignsId.length > 0) {
                 await attachRulesByCampaignsHandler({
-                    rules: [result.id],
-                    campaigns: rule.campaignsId
+                    rule_id: [result.id],
+                    campaign_id: rule.campaignsId
                 })
             }
             setSelectedRule({
@@ -79,8 +79,8 @@ const OptimizationRules = () => {
             await optimizationRulesServices.attachRules(data)
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: data.campaigns.length,
-                rules_count: data.rules.length,
+                campaigns_count: data.campaign_id.length,
+                rules_count: data.rule_id.length,
             })
         } catch (e) {
             console.log(e)
