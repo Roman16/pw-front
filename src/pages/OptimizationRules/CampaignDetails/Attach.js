@@ -84,6 +84,7 @@ export const Attach = ({id, onAttach, onDetach}) => {
             }, () => {
                 setSaveProcessing(false)
                 setCampaigns(campaigns.filter(i => attachedRules.includes(i.id)))
+                setTotalSize(attachedRules.length)
                 notification.success({title: 'Campaign success updated!'})
             })
         } else {

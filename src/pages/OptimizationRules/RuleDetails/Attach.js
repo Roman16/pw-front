@@ -10,7 +10,7 @@ const tabs = ['campaigns used it', 'all campaigns']
 
 let attachedListFromRequest = []
 
-export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
+export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
         [attachedCampaigns, setAttachedCampaigns] = useState([]),
         [campaigns, setCampaigns] = useState([]),
@@ -54,7 +54,11 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getCampaigns({...requestParams, campaignsId, attributionWindow})
+            const {result} = await optimizationRulesServices.getCampaigns({
+                ...requestParams,
+                campaignsId,
+                attributionWindow
+            })
             setCampaigns(result.data)
             setTotalSize(result.total_count)
         } catch (e) {
@@ -89,6 +93,7 @@ export const Attach = ({id,attributionWindow, onAttach, onDetach}) => {
             }, () => {
                 setSaveProcessing(false)
                 setCampaigns(campaigns.filter(i => attachedCampaigns.includes(i.campaignId)))
+                setTotalSize(attachedCampaigns.length)
                 notification.success({title: 'Rule success updated!'})
             })
         } else {
