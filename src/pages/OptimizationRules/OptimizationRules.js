@@ -108,7 +108,7 @@ const OptimizationRules = () => {
         setUpdateProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.updateRule(rule)
+            const {result} = await optimizationRulesServices.updateRule({...rule, period: rule.type === 'manual' ? undefined : rule.period})
             setSelectedRule({
                 ...result,
                 condition: JSON.parse(result.condition),
