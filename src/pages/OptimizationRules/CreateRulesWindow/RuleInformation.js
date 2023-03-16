@@ -77,13 +77,6 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
         </div>
 
         <div className="row form-group">
-            <label htmlFor="">{data.active ? 'Enabled' : 'Disabled'}</label>
-            <div className="switch-group">
-                <Switch checked={data.active} onChange={active => onChange({active})}/>
-            </div>
-        </div>
-
-        <div className="row form-group">
             <label htmlFor="">Automatic <SVG id='rotate-arrows-icon'/></label>
             <div className="switch-group">
                 <Switch
@@ -108,5 +101,11 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
             </p>
         </div>
 
+        {data.type === 'auto' && <div className="row form-group">
+            <label htmlFor="">{data.active ? 'Enabled' : 'Disabled'}</label>
+            <div className="switch-group">
+                <Switch checked={data.active} onChange={active => onChange({active})}/>
+            </div>
+        </div>}
     </div>)
 }
