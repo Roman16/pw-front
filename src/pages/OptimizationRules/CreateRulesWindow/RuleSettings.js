@@ -274,7 +274,7 @@ export const RuleSettings = ({data, onChange}) => {
                     value={data.interval}
                     onChange={interval => onChange({interval})}
                 >
-                    {[...intervalEnums, ...!data.automatic ? [{title: 'lifetime', key: ";"}] : []].map(i =>
+                    {[...intervalEnums, ...data.type ==='manual' ? [{title: 'lifetime', key: ";"}] : []].map(i =>
                         <Option value={i.key}>{i.title}</Option>)}
 
                 </CustomSelect>
@@ -369,7 +369,7 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
             </div>
 
             <div className="rules">
-                {rule.rules.map((i, index) => <RenderRules
+                {rule?.rules?.map((i, index) => <RenderRules
                     showActions={true}
                     showRemove={true}
                     rule={i}
