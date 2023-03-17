@@ -136,7 +136,7 @@ const OptimizationRules = () => {
 
                 <Link to={'/optimization-rules/attach-settings'} className="btn default">
                     <SVG id={'admin-panel-icon'}/>
-                    Attach Settings
+                    Quick Entity Pairing
                 </Link> </>}
         />
 

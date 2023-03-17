@@ -73,9 +73,9 @@ const AttachSettings = () => {
     return (<div className="optimization-rules-page">
         <Header
             title={'Quick Settings'}
-            actions={() => <Link to={'/optimization-rules'} className="btn default">
-                <SVG id={'optimization-rules-icon-sidebar'}/>
-                Optimization Rules
+            actions={() => <Link to={'/optimization-rules'} className="btn default back">
+                <SVG id={'down-white-arrow'}/>
+                Back to Rule-Based Optimization
             </Link>}
         />
 

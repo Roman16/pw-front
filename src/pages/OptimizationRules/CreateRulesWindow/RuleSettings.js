@@ -280,11 +280,12 @@ export const RuleSettings = ({data, onChange}) => {
                 </CustomSelect>
             </div>
 
-            {data.interval ? <p className={'active'}>Your rule will be executed within
-                    the <b>{_.find([...intervalEnums, {
-                        title: 'lifetime',
-                        key: 'lifetime'
-                    }], {key: data.interval}).title}</b></p> :
+            {data.interval ? <p className={'active'}>
+                    The rule uses data for the period of <b>{_.find([...intervalEnums, {
+                    title: 'lifetime',
+                    key: 'lifetime'
+                }], {key: data.interval}).title}</b> to check the conditions.
+                </p> :
                 <p>Please, select timeline</p>}
         </div>
 
