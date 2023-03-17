@@ -72,7 +72,7 @@ const AttachSettings = () => {
 
     return (<div className="optimization-rules-page">
         <Header
-            title={'Quick Settings'}
+            title={'Quick Entity Pairing'}
             actions={() => <Link to={'/optimization-rules'} className="btn default back">
                 <SVG id={'down-white-arrow'}/>
                 Back to Rule-Based Optimization
