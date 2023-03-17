@@ -99,12 +99,15 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                     ...list.map(i => i.id === selectedRule.id ? ({
                         ...i,
                         name: selectedRule.name,
+                        description: selectedRule.description,
                         active: selectedRule.active,
                         campaigns_count: selectedRule.campaigns_count || 0,
                         rules_count: selectedRule.rules_count || 0,
                         interval: selectedRule.interval,
                         period: selectedRule.period,
                         type: selectedRule.type,
+                        actions: JSON.stringify(selectedRule.actions),
+                        condition: JSON.stringify(selectedRule.condition),
                     }) : i)
                 ])
             }
