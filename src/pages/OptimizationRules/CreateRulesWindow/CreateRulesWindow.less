@@ -322,6 +322,13 @@
       }
     }
 
+    .table-head .th.fixed,
+    .table-body .table-body__field.fixed {
+      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+        left: 54.5px !important;
+      }
+    }
+
     .table-head {
       border-top: 0.5px solid #C9CBD4;
       border-bottom: 2px solid #C9CBD4;
@@ -347,6 +354,7 @@
       .table-body__row:last-of-type {
         border-bottom: 1px solid #c9cbd4;
       }
+
       .checked-row {
         .table-body__field.fixed,
         .table-body__field.checkbox-column {
