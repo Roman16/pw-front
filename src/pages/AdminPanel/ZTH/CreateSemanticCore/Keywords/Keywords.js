@@ -16,7 +16,7 @@ const Keywords = ({semanticData, onChange}) => {
     }
 
     return (<div className={'all-keywords'}>
-        <div className="row main-keywords-row">
+        <div className="row cols-5">
             <div className="form-group">
                 <label htmlFor="">Main keywords:</label>
                 <ExcelTable
@@ -40,9 +40,6 @@ const Keywords = ({semanticData, onChange}) => {
                     onChange={(data) => changeDataHandler(data, 'baseKeywords')}
                 />
             </div>
-        </div>
-
-        <div className="row cols-5">
             <div className="form-group">
                 <label htmlFor="">Product negative phrases:</label>
                 <ExcelTable
@@ -67,22 +64,22 @@ const Keywords = ({semanticData, onChange}) => {
                     onChange={(data) => changeDataHandler(data, 'negativeASINs')}
                 />
             </div>
-            <div className="form-group">
-                <label htmlFor="">Global negative phrases:</label>
-                <ExcelTable
-                    data={semanticData.creator.globalNegativePhrases?.length > 0 ? semanticData.creator.globalNegativePhrases : [{text: ''}]}
-                    columns={columns.globalNegativePhrases}
-                    onChange={(data) => changeDataHandler(data, 'globalNegativePhrases')}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="">Global negative exacts:</label>
-                <ExcelTable
-                    data={semanticData.creator.globalNegativeExacts?.length > 0 ? semanticData.creator.globalNegativeExacts : [{text: ''}]}
-                    columns={columns.globalNegativeExacts}
-                    onChange={(data) => changeDataHandler(data, 'globalNegativeExacts')}
-                />
-            </div>
+            {/*<div className="form-group">*/}
+            {/*    <label htmlFor="">Global negative phrases:</label>*/}
+            {/*    <ExcelTable*/}
+            {/*        data={semanticData.creator.globalNegativePhrases?.length > 0 ? semanticData.creator.globalNegativePhrases : [{text: ''}]}*/}
+            {/*        columns={columns.globalNegativePhrases}*/}
+            {/*        onChange={(data) => changeDataHandler(data, 'globalNegativePhrases')}*/}
+            {/*    />*/}
+            {/*</div>*/}
+            {/*<div className="form-group">*/}
+            {/*    <label htmlFor="">Global negative exacts:</label>*/}
+            {/*    <ExcelTable*/}
+            {/*        data={semanticData.creator.globalNegativeExacts?.length > 0 ? semanticData.creator.globalNegativeExacts : [{text: ''}]}*/}
+            {/*        columns={columns.globalNegativeExacts}*/}
+            {/*        onChange={(data) => changeDataHandler(data, 'globalNegativeExacts')}*/}
+            {/*    />*/}
+            {/*</div>*/}
         </div>
     </div>)
 }

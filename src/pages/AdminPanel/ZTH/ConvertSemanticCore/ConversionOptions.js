@@ -176,18 +176,18 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                 </div>
 
                 {semanticData.settings.actionType === 'convert' && <>
-                    <div className="form-group  w-25">
-                        <label htmlFor="">Output type</label>
-                        <CustomSelect
-                            getPopupContainer={trigger => trigger}
-                            value={semanticData.conversionOptions.saver.saveBulkUploadAs}
-                            onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}
-                        >
-                            <Option value={'xls'}>xls</Option>
-                            <Option value={'xlsx'}>xlsx</Option>
-                            <Option value={'csv'}>csv</Option>
-                        </CustomSelect>
-                    </div>
+                    {/*<div className="form-group  w-25">*/}
+                    {/*    <label htmlFor="">Output type</label>*/}
+                    {/*    <CustomSelect*/}
+                    {/*        getPopupContainer={trigger => trigger}*/}
+                    {/*        value={semanticData.conversionOptions.saver.saveBulkUploadAs}*/}
+                    {/*        onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}*/}
+                    {/*    >*/}
+                    {/*        <Option value={'xls'}>xls</Option>*/}
+                    {/*        <Option value={'xlsx'}>xlsx</Option>*/}
+                    {/*        <Option value={'csv'}>csv</Option>*/}
+                    {/*    </CustomSelect>*/}
+                    {/*</div>*/}
 
                     <div className="form-group w-25">
                         <label htmlFor="">Convert for Amazon region</label>
@@ -271,7 +271,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
             <ConfirmUploadWindow
                 visible={visibleConfirm}
                 user={_.find(usersList, {id: selectedUserId})}
-                semanticName={semanticData.conversionOptions.productInformation.productName}
+                semanticName={semanticData.conversionOptions.productInformation.mainProductName}
                 uploadProcessing={uploadProcessing}
 
                 onSubmit={() => onUpload(selectedUserId)}
