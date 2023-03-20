@@ -181,7 +181,6 @@ const CampaignsBids = ({
     }, [bidsConfig])
 
 
-    console.log(semanticData.conversionOptions.upload.bidsTemplate)
     return (
         <div className={'bids-budgets-section'}>
             <h2>{title}</h2>
