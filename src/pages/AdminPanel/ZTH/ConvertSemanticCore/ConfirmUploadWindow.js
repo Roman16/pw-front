@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react"
 import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {Spin} from "antd"
+import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 
 let intervalId
 
@@ -10,7 +11,15 @@ const ConfirmUploadWindow = ({
                                  user = {
                                      name: '',
                                      last_name: '',
-                                     email: ''
+                                     email: '',
+                                     ARA: {
+                                         alias: '',
+                                         seller_id: ''
+                                     },
+                                     ARAM: {
+                                         marketplace_name: '',
+                                         marketplace_id: ''
+                                     }
                                  },
                                  uploadProcessing,
 
@@ -46,12 +55,43 @@ const ConfirmUploadWindow = ({
         >
             <h1>Are You sure?</h1>
 
-            <p>Upload semantic: </p>
-            <b>{semanticName}</b>
-            <br/>
-            <p>for user: </p>
-            <b>{`${user.name} ${user.last_name}`}</b>
-            <b>{user.email}</b>
+            <p>Upload semantic:  <b>{semanticName}</b></p>
+
+
+            <div className="tr">
+                <div className="label">For user</div>
+
+                <div className="value">
+                    <b>{`${user.name} ${user.last_name}`}</b>
+                    <b>{user.email}</b>
+                </div>
+            </div>
+
+            <div className="tr">
+                <div className="label">For Amazon Account</div>
+
+                <div className="value">
+                    <b>{user.ARA.alias}</b>
+                    <b>{user.ARA.seller_id}</b>
+                </div>
+            </div>
+
+            <div className="tr">
+                <div className="label">For Marketplace</div>
+
+                <div className="value">
+                    <div className="row marketplace">
+                        <div className="flag">
+                            <img src={marketplaceIdValues[user.ARAM.marketplace_id].flag} alt=""/>
+                        </div>
+
+                        <div className="col">
+                            <b>{user.ARAM.marketplace_name}</b>
+                            <b>{user.ARAM.marketplace_id}</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div className="actions">
                 <button className={'btn white'} disabled={disableSubmit || uploadProcessing} onClick={onSubmit}>
