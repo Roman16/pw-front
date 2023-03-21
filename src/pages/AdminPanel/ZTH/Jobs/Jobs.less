@@ -28,6 +28,10 @@
     }
   }
 
+  .refresh {
+    min-height: 32px;
+  }
+
   &.zth-templates {
     .custom-table {
       max-height: 80vh;
@@ -107,6 +111,20 @@
 
             &:hover {
               text-decoration: underline;
+            }
+          }
+
+          .col {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            p {
+              margin: 0 0 5px;
+
+              &:last-of-type {
+                margin: 0;
+              }
             }
           }
 

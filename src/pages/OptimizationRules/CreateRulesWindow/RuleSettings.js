@@ -95,38 +95,38 @@ const conditionsByMetric = {
     ]
 }
 
-const intervalEnums = [
+export const intervalEnums = [
     {
-        title: 'today',
+        title: 'Today',
         key: "0;"
     },
     {
-        title: 'yesterday',
+        title: 'Yesterday',
         key: "1;1"
     },
     {
-        title: 'last 3 days',
+        title: 'Last 3 days',
         key: "3;1"
     },
     {
-        title: 'last 7 days',
+        title: 'Last 7 days',
         key: "7;1"
     },
     {
-        title: 'last 14 days',
+        title: 'Last 14 days',
         key: "14;1"
     },
     {
-        title: 'last 30 days',
+        title: 'Last 30 days',
         key: "30;1"
     },
     {
-        title: 'last 65 days',
+        title: 'Last 65 days',
         key: "65;1"
     },
 ]
 
-const actionsEnums = [
+export const actionsEnums = [
     {
         title: 'Set - Bid',
         key: 'set_bid'
@@ -160,7 +160,6 @@ const defaultGroup = {
         defaultRule
     ]
 }
-
 
 const addConditionHandler = (data) => {
     if (data.type === 'array') {
@@ -236,6 +235,19 @@ export const RuleSettings = ({data, onChange}) => {
         onChange({condition})
     }
 
+    const changeActionHandler = (type) => {
+        if (type === 'decrease_bid' || type === 'increase_bid') {
+            onChange({
+                actions: {
+                    type,
+                    units: 'exact'
+                }
+            })
+        } else {
+            onChange({actions: {type}})
+        }
+    }
+
     return (<div className="step rule-settings">
         <div className="when-line line active">
             <div>when</div>
@@ -255,33 +267,36 @@ export const RuleSettings = ({data, onChange}) => {
 
         <div className={`time-line line ${data.interval ? 'active' : ''}`}>
             <div>
+                <label htmlFor="">FOR:</label>
                 <CustomSelect
                     getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode}
                     placeholder={'SELECT TIMELINE'}
                     value={data.interval}
                     onChange={interval => onChange({interval})}
                 >
-                    {[...intervalEnums, ...!data.automatic ? [{title: 'lifetime', key: ";"}] : []].map(i =>
+                    {[...intervalEnums, ...data.type ==='manual' ? [{title: 'lifetime', key: ";"}] : []].map(i =>
                         <Option value={i.key}>{i.title}</Option>)}
 
                 </CustomSelect>
             </div>
 
-            {data.interval ? <p className={'active'}>Your rule will be executed within
-                    the <b>{_.find([...intervalEnums, {
-                        title: 'lifetime',
-                        key: 'lifetime'
-                    }], {key: data.interval}).title}</b></p> :
+            {data.interval ? <p className={'active'}>
+                    The rule uses data for the period of <b>{_.find([...intervalEnums, {
+                    title: 'lifetime',
+                    key: 'lifetime'
+                }], {key: data.interval}).title}</b> to check the conditions.
+                </p> :
                 <p>Please, select timeline</p>}
         </div>
 
         <div className={`action-line line ${data.actions.type ? 'active' : ''}`}>
             <div>
+                <label htmlFor="">ACTION:</label>
                 <CustomSelect
                     getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode}
                     placeholder={'SELECT ACTION'}
                     value={data.actions.type}
-                    onChange={type => onChange({actions: {type}})}
+                    onChange={changeActionHandler}
                 >
                     {actionsEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
                 </CustomSelect>
@@ -354,7 +369,7 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
             </div>
 
             <div className="rules">
-                {rule.rules.map((i, index) => <RenderRules
+                {rule?.rules?.map((i, index) => <RenderRules
                     showActions={true}
                     showRemove={true}
                     rule={i}
@@ -420,38 +435,66 @@ const ActionValue = ({actions, onChange}) => {
             </div>
         case 'decrease_bid':
             return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
+                <div className="form-group type">
+                    <label htmlFor="">Type</label>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        value={actions.units}
+                        onChange={units => onChange({actions: {...actions, units}})}
+                    >
+                        <Option value={'exact'}>$</Option>
+                        <Option value={'percent'}>%</Option>
+                    </CustomSelect>
+                </div>
+
+
                 <div className="form-group">
                     <label htmlFor="">Value</label>
                     <InputCurrency
-                        // value={min_bid}
-                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                        value={actions.value}
+                        onChange={(value) => onChange({actions: {...actions, value}})}
+                        typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="">Up to minimum</label>
                     <InputCurrency
-                        // value={min_bid}
-                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                        value={actions.up_limit}
+                        onChange={(up_limit) => onChange({actions: {...actions, up_limit}})}
                     />
                 </div>
             </div>
 
         default:
             return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
+                <div className="form-group type">
+                    <label htmlFor="">Type</label>
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        value={actions.units}
+                        onChange={units => onChange({actions: {...actions, units}})}
+                    >
+                        <Option value={'exact'}>$</Option>
+                        <Option value={'percent'}>%</Option>
+                    </CustomSelect>
+                </div>
+
+
                 <div className="form-group">
                     <label htmlFor="">Value</label>
                     <InputCurrency
-                        // value={min_bid}
-                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                        value={actions.value}
+                        onChange={(value) => onChange({actions: {...actions, value}})}
+                        typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="">Up to minimum</label>
+                    <label htmlFor="">Up to maximum</label>
                     <InputCurrency
-                        // value={min_bid}
-                        // onChange={(value) => changeSettingsHandler(item.campaign_id, 'min_bid', value)}
+                        value={actions.up_limit}
+                        onChange={(up_limit) => onChange({actions: {...actions, up_limit}})}
                     />
                 </div>
             </div>

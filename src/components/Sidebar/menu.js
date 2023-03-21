@@ -54,6 +54,12 @@ export const mainMenu = [
         icon: 'dayparting-icon-sidebar',
         link: 'dayparting'
     },
+    // {
+    //     title: 'Optimization Rules',
+    //     key: 'rules',
+    //     icon: 'optimization-rules-icon-sidebar',
+    //     link: 'optimization-rules'
+    // },
     {
         title: 'PPC Audit',
         key: 'scanner',

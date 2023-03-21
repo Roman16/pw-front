@@ -1,71 +1,25 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Settings} from "./Settings"
 import './RuleDetails.less'
-import {Compare} from "./Compare"
+import {Attach} from "./Attach"
 
-export const RuleDetails = ({}) => {
-    const [rule, setRule] = useState({
-        name: 'Only for big Campaigns rule',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut',
-        actions: {
-            type: undefined,
-        },
-        condition: {
-            "type": "array",
-            "glue": "AND",
-            "rules": [
-                {
-                    "type": "rule",
-                    "metric": "clicks",
-                    "operator": "eq",
-                    "value": 2
-                },
-                {
-                    "type": "array",
-                    "glue": "OR",
-                    "rules": [
-                        {
-                            "type": "rule",
-                            "metric": "clicks",
-                            "operator": "eq",
-                            "value": 3
-                        },
-                        {
-                            "type": "rule",
-                            "metric": "clicks",
-                            "operator": "eq",
-                            "value": 2
-                        },
-                        {
-                            "type": "array",
-                            "glue": "AND",
-                            "rules": [
-                                {
-                                    "type": "rule",
-                                    "metric": "clicks",
-                                    "operator": "eq",
-                                    "value": 1
-                                },
-                                {
-                                    "type": "rule",
-                                    "metric": "clicks",
-                                    "operator": "eq",
-                                    "value": 6
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-
-    })
-
+export const RuleDetails = ({rule, onUpdate, onAttach, onDetach, onEdit,onChangeAttributionWindow}) => {
     return (<div className="rule-details">
         <Settings
-            data={rule}
+            rule={rule}
+            attributionWindow={rule.attribution_window}
+
+            onUpdate={onUpdate}
+            onChangeAttributionWindow={onChangeAttributionWindow}
+            onEdit={onEdit}
         />
 
-        <Compare/>
+        <Attach
+            id={rule.id}
+            attributionWindow={rule.attribution_window}
+
+            onAttach={onAttach}
+            onDetach={onDetach}
+        />
     </div>)
 }

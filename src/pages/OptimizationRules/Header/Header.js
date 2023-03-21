@@ -1,12 +1,10 @@
 import React from "react"
 import './Header.less'
-import {SVG} from "../../../utils/icons"
 
-export const Header = ({onCreate}) => <div className="header">
-    Rule-Based Optimization
+export const Header = ({title='Rule-Based Optimization', actions}) => <div className="header">
+    <h2>
+        {title}
+    </h2>
 
-    <button className="btn default" onClick={onCreate}>
-        <SVG id={'plus-icon'}/>
-        Create Rule
-    </button>
+    {actions()}
 </div>

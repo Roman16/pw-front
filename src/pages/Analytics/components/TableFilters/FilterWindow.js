@@ -449,8 +449,8 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Views Remarketing', key: 'Views Remarketing', value: 'Views Remarketing'},
             {title: 'Audiences', key: 'Audiences', value: 'Audiences'},
             {title: 'Product Targeting', key: 'Product Targeting', value: 'Product Targeting'},
-            {title: 'Product Collection', key: 'Product Collection', value: 'Product Collection'},
-            {title: 'Video', key: 'Video', value: 'Video'},
+            // {title: 'Product Collection', key: 'Product Collection', value: 'Product Collection'},
+            // {title: 'Video', key: 'Video', value: 'Video'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [

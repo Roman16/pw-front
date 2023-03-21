@@ -1,37 +1,83 @@
-import React, {useState} from "react"
-import {RuleSettings} from "../CreateRulesWindow/RuleSettings"
+import React, {useEffect, useState} from "react"
+import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
+import _ from "lodash"
+import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import {Spin} from "antd"
+import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 
-export const Settings = ({data}) => {
 
+export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttributionWindow, onEdit}) => {
+    const [ruleData, setRuleData] = useState({...rule}),
+        [saveProcessing, setSaveProcessing] = useState(false)
 
-    return (<div className="settings">
-        <div className="rule-info">
-            <h2>{data.name}</h2>
-            <p>{data.description}</p>
+    const changeRuleDataHandler = (data) => {
+        setRuleData(prevState => ({...prevState, ...data}))
+    }
 
-            <div className="status-row">
-                Auto • Lifetime
+    const resetHandler = () => {
+        setRuleData({...rule})
+    }
 
-                <div className="status">
-                    <div/>
-                    Status
+    const saveHandler = () => {
+        setSaveProcessing(true)
+        onUpdate({
+            ...ruleData,
+            active: ruleData.active || false,
+            attribution_window: attributionWindow,
+            condition: JSON.stringify(ruleData.condition),
+            actions: JSON.stringify(ruleData.actions),
+        }, () => {
+            setSaveProcessing(false)
+        })
+    }
+
+    useEffect(() => {
+        setRuleData({...rule})
+    }, [rule])
+
+    return (<>
+        <section className="rule-info">
+            <div className="row">
+                <h2>
+                    {ruleData.name}
+                </h2>
+
+                <AttributionWindowSelect
+                    value={attributionWindow}
+                    onChange={onChangeAttributionWindow}
+                />
+
+                <button className="btn default" onClick={onEdit}>Edit</button>
+            </div>
+
+            {rule.description && <p>{rule.description}</p>}
+
+            <div className="details-row">
+                <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
+                <div className="type">
+                    <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
                 </div>
             </div>
-        </div>
+        </section>
 
 
-        <RuleSettings
-            data={data}
-        />
+        <section className="settings">
+            <RuleSettings
+                data={ruleData}
+                onChange={changeRuleDataHandler}
+            />
 
-        <div className="save-actions">
-            <button className="btn white">
-                Reset All
-            </button>
+            <div className={`save-actions ${JSON.stringify(rule) !== JSON.stringify(ruleData) ? 'visible' : ''}`}>
+                <button className="btn white" onClick={resetHandler}>
+                    Reset All
+                </button>
 
-            <button className="btn default">
-                Save Changes
-            </button>
-        </div>
-    </div>)
+                <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
+                    Save Changes
+
+                    {saveProcessing && <Spin size={'small'}/>}
+                </button>
+            </div>
+        </section>
+    </>)
 }

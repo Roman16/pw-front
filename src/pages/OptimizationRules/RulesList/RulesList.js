@@ -5,10 +5,18 @@ import {SearchField} from "../../../components/SearchField/SearchField"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import {Spin} from "antd"
 import Pagination from "../../../components/Pagination/Pagination"
+import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import _ from 'lodash'
+import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
+import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
+import axios from "axios"
 
 const navigationTabs = ['rules', 'campaigns']
 
-export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => {
+const CancelToken = axios.CancelToken
+let source = null
+
+export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, onDelete}) => {
     const [list, setList] = useState([]),
         [processing, setProcessing] = useState(true),
         [totalSize, setTotalSize] = useState(0),
@@ -18,44 +26,105 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
             searchStr: ''
         })
 
+    const selectRuleHandler = (rule) => {
+        onSelect({
+            ...rule,
+            condition: rule.condition && JSON.parse(rule.condition),
+            actions: rule.actions && JSON.parse(rule.actions)
+        })
+    }
+
     const getList = async () => {
         setProcessing(true)
         setList([])
+
+        source && source.cancel()
+        source = CancelToken.source()
 
         try {
             let arr = [],
                 totalSize = 0
 
             if (activeTab === 'rules') {
-                const {result} = await optimizationRulesServices.getRules(requestParams)
+                const {result} = await optimizationRulesServices.getRules(requestParams, source.token)
                 arr = result.data
                 totalSize = result.total_count
             } else {
-                const {result} = await optimizationRulesServices.getCampaigns(requestParams)
+
+                const {result} = await optimizationRulesServices.getCampaignsPreview(requestParams, source.token)
                 arr = result.data
                 totalSize = result.total_count
             }
 
             setList(arr)
             setTotalSize(totalSize)
-            onSelect(arr[0])
+            selectRuleHandler(arr[0] || {})
         } catch (e) {
-
+            console.log(e)
         }
 
         setProcessing(false)
     }
 
-    const changePaginationHandler = (data) => setRequestParams(prevState => ({...prevState, data}))
+    const changePaginationHandler = (data) => setRequestParams(prevState => ({...prevState, ...data}))
+
+    const changeTabHandler = (tab) => {
+        onSetActiveTab(tab)
+
+        changePaginationHandler({
+            page: 1,
+            searchStr: ''
+        })
+    }
 
     useEffect(() => {
         getList()
     }, [requestParams, activeTab])
 
+    useEffect(() => {
+        if (activeTab === navigationTabs[0]) {
+            if (selectedRule?.new) {
+                setList([
+                    selectedRule,
+                    ...list.splice(0, list.length)
+                ])
+
+                onSelect({
+                    ...selectedRule,
+                    new: false,
+                })
+                setTotalSize(prevState => prevState + 1)
+            } else {
+                setList([
+                    ...list.map(i => i.id === selectedRule.id ? ({
+                        ...i,
+                        name: selectedRule.name,
+                        description: selectedRule.description,
+                        active: selectedRule.active,
+                        campaigns_count: selectedRule.campaigns_count || 0,
+                        rules_count: selectedRule.rules_count || 0,
+                        interval: selectedRule.interval,
+                        period: selectedRule.period,
+                        type: selectedRule.type,
+                        actions: JSON.stringify(selectedRule.actions),
+                        condition: JSON.stringify(selectedRule.condition),
+                    }) : i)
+                ])
+            }
+        } else if (activeTab === navigationTabs[1] && selectedRule.campaignId) {
+            setList([
+                ...list.map(i => i.campaignId === selectedRule.campaignId ? ({
+                    ...i,
+                    rules_count: selectedRule.rules_count || 0,
+                }) : i)
+            ])
+        }
+    }, [selectedRule])
+
     return (<div className="rules-list">
         <div className="tabs">
             {navigationTabs.map(i => (<div
-                onClick={() => setActiveTab(i)}
+                onClick={() => changeTabHandler(i)}
                 className={`tab ${activeTab === i ? 'active' : ''}`}>
                 <SVG id={'list'}/>
                 {i}
@@ -65,36 +134,47 @@ export const RulesList = ({activeTab, setActiveTab, selectedRule, onSelect}) => 
         <div className="search-block">
             <SearchField
                 placeholder={activeTab === 'campaigns' ? 'Search by campaign name' : 'Search by rule’s name'}
-                // value={searchValue}
-                // onSearch={changeSearchHandler}
+                value={requestParams.searchStr}
+                onSearch={searchStr => changePaginationHandler({searchStr, page: 1})}
             />
         </div>
 
         <div className="list">
             {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-            {list.map(item => activeTab === 'rules' ? <div onClick={() => onSelect(item)}
+            {list.map(item => activeTab === 'rules' ? <div onClick={() => selectRuleHandler(item)}
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
+                    <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name">{item.name}</div>
-                    <div className="description">{item.description}</div>
+                    <div className="description" title={item.description}>{item.description}</div>
                     <div className="details-row">
-                        <div className="timeline">Last 3 days</div>
-                        <div className="status">Auto • Lifetime</div>
+                        <SVG id={'calendar'}/>
+
+                        <div className="timeline">{_.find(intervalEnums, {key: item.interval})?.title}</div>
+                        <div className="type">
+                            <span>{item.type}</span> {item.type === 'auto' && `• ${_.find(periodEnums, {key: item.period})?.title}`}
+                        </div>
                         <div className="campaigns-count">
-                            Campaigns: <b>76</b>
+                            Campaigns: <b>{item.campaigns_count}</b>
                         </div>
                     </div>
+
+                    {/*<button className="btn default" onClick={() => onDelete(item.id)}>delete</button>*/}
                 </div>
 
                 :
 
-                <div className={'item campaign'}>
-                    <div className="name">{item.name}</div>
-                    <div className="description">{item.description}</div>
+                <div className={`item campaign ${item.campaignId === selectedRule?.campaignId ? 'active' : ''}`}
+                     onClick={() => selectRuleHandler(item)}>
+                    <div className="row">
+                        <div className="name">{item.name}</div>
+
+                        <ParentStatus status={item.state} widthLabel={true}/>
+                    </div>
+
                     <div className="details-row">
-                        <div className="status">Auto • Lifetime</div>
                         <div className="campaigns-count">
-                            Rules: <b>76</b>
+                            Rules: <b>{item.rules_count}</b>
                         </div>
                     </div>
                 </div>

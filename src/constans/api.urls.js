@@ -116,6 +116,8 @@ export const adminUrls = {
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
     usersList: 'admin/support-manager/user/list',
+    userARAList: 'admin/users/amazon-region-accounts',
+    userARAMList: 'admin/users/amazon-region-account-marketplaces',
     impersonateById: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
     impersonateByEmail: `admin/support-manager/tokens-for-impersonate-by-email`,
     userProductsList: 'admin/support-manager/userProducts',
@@ -217,5 +219,11 @@ export const ppcAuditUrls = {
 
 export const optimizationRulesUrls = {
     campaigns: 'rules-based-optimization/campaigns',
+    campaignsPreview: 'rules-based-optimization/campaigns/preview',
     rules: 'rules-based-optimization/rules',
+    attach: 'rules-based-optimization/rules/attach',
+    attachWidthFilters: 'rules-based-optimization/rules/attach/vague',
+    detach: 'rules-based-optimization/rules/detach',
+    attachedCampaigns: 'rules-based-optimization/rules/campaigns',
+    attachedRules: 'rules-based-optimization/campaigns/rules',
 }
