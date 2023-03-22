@@ -74,7 +74,19 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
             >
                 {campaign}
             </Link></div>)
-    }] : [],
+    },
+        {
+            title: 'Campaign Status',
+            dataIndex: 'campaignState',
+            key: 'campaignState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        }] : [],
     ...!selectedAdGroup ? [{
         ...adGroupColumn,
         locked: false,
@@ -96,7 +108,19 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
                 </Link></div>
         )
 
-    }] : [],
+    },
+        {
+            title: 'Ad Group Status',
+            dataIndex: 'adGroupState',
+            key: 'adGroupState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        }] : [],
     {
         ...statusColumn,
     },

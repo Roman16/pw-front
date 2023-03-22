@@ -54,6 +54,18 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
             render: () => ''
         },
         {
+            title: 'Campaign Status',
+            dataIndex: 'campaignState',
+            key: 'campaignState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        },
+        {
             title: 'Ad Group',
             dataIndex: 'adGroupName',
             key: 'adGroupName',
@@ -62,6 +74,18 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
             filter: false,
             noTotal: true,
             render: () => ''
+        },
+        {
+            title: 'Ad Group Status',
+            dataIndex: 'adGroupState',
+            key: 'adGroupState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
         },
         {
             ...matchTypeColumn, filter: false, render: () => '', sorter: false,locked:false
@@ -83,7 +107,18 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
             render: () => ''
         },
     ] : [],
-
+    {
+        title: 'Portfolio',
+        dataIndex: 'portfolioName',
+        key: 'portfolioName',
+        width: '0',
+        visible: false,
+        sorter: false,
+        locked: false,
+        noTotal: true,
+        filter: true,
+        fastUpdating: false,
+    },
     impressionsColumn,
     clicksColumn,
     ctrColumn,

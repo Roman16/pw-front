@@ -207,6 +207,8 @@ const containsVariations = {
     'issueObjectType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'issueType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'state': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'campaignState': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'adGroupState': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'bidding_strategy': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'object_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'match_type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -269,6 +271,16 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Auto', key: 'auto', value: 'auto'},
         ],
         'state': [
+            {title: 'Enabled', key: 'enabled', value: 'enabled'},
+            {title: 'Paused', key: 'paused', value: 'paused'},
+            {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'campaignState': [
+            {title: 'Enabled', key: 'enabled', value: 'enabled'},
+            {title: 'Paused', key: 'paused', value: 'paused'},
+            {title: 'Archived', key: 'archived', value: 'archived'},
+        ],
+        'adGroupState': [
             {title: 'Enabled', key: 'enabled', value: 'enabled'},
             {title: 'Paused', key: 'paused', value: 'paused'},
             {title: 'Archived', key: 'archived', value: 'archived'},

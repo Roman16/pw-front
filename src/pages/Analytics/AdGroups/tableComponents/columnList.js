@@ -80,7 +80,31 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
                 </Link>
             </div>)
         },
+        {
+            title: 'Campaign Status',
+            dataIndex: 'campaignState',
+            key: 'campaignState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        },
         {...statusColumn, locked: false},
+        {
+            title: 'Portfolio',
+            dataIndex: 'portfolioName',
+            key: 'portfolioName',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        },
         {
             title: 'Default bid',
             dataIndex: 'defaultBid',
