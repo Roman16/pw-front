@@ -127,7 +127,7 @@ const ProductInformation = ({semanticData, allEnums, onChange}) => {
 
             <div className="row cols-3">
                 <div className="form-group">
-                    <label htmlFor="">Own brand name (first row is a main name, other rows are alias):</label>
+                    <label htmlFor="">Own brand name (first row is a main name, other rows are aliases):</label>
                     <ExcelTable
                         data={semanticData.productInformation.ownBrandNames?.length > 0 ? semanticData.productInformation.ownBrandNames.map(i => ({text: i})) : [{text: ''}]}
                         columns={ownBrandNamesColumns}
@@ -186,7 +186,7 @@ const ProductInformation = ({semanticData, allEnums, onChange}) => {
                         onChange={({target: {value}}) => changeDataHandler('zeroToHero', 'generationRules', {
                             campaigns: {
                                 keywordsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.keywordsCountRequiredToCreateNewCampaign,
-                                adGroupsCountRequiredToCreateNewCampaign: value
+                                adGroupsCountRequiredToCreateNewCampaign: +value
                             },
                             adGroups: {
                                 keywordsCountRequiredToCreateNewAdGroup: semanticData.zeroToHero.generationRules.adGroups.keywordsCountRequiredToCreateNewAdGroup
@@ -201,7 +201,7 @@ const ProductInformation = ({semanticData, allEnums, onChange}) => {
                         value={semanticData.zeroToHero.generationRules.campaigns.keywordsCountRequiredToCreateNewCampaign}
                         onChange={({target: {value}}) => changeDataHandler('zeroToHero', 'generationRules', {
                             campaigns: {
-                                keywordsCountRequiredToCreateNewCampaign: value,
+                                keywordsCountRequiredToCreateNewCampaign: +value,
                                 adGroupsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.adGroupsCountRequiredToCreateNewCampaign
                             },
                             adGroups: {
@@ -221,7 +221,7 @@ const ProductInformation = ({semanticData, allEnums, onChange}) => {
                                 adGroupsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.adGroupsCountRequiredToCreateNewCampaign
                             },
                             adGroups: {
-                                keywordsCountRequiredToCreateNewAdGroup: value
+                                keywordsCountRequiredToCreateNewAdGroup: +value
                             }
                         })}
                     />
