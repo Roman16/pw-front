@@ -1,0 +1,199 @@
+@import "../../../../style/variables.less";
+
+.placements-workplace {
+  .placements-area-statistics {
+    width: 100%;
+    min-width: 87.14285714rem;
+    display: flex;
+    position: relative;
+    background: #fff;
+    border-radius: 4px;
+    padding: 0 0 0 1.4285714285714286rem;
+    box-shadow: @default-section-shadow;
+
+    &.visible {
+      height: 320px;
+      min-height: 320px;
+      margin-bottom: 10px;
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 10px;
+
+      .custom-select {
+        width: 160px;
+        height: 2.2857142857142856rem;
+      }
+
+    }
+
+    .chart-block {
+      flex: 1;
+    }
+
+    & > .col {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin: 1.4285714285714286rem 1.4285714285714286rem 1.4285714285714286rem 0;
+    }
+
+    & > .cart-legend {
+      width: 60px;
+      min-width: 60px;
+      border-left: 0.5px solid #C9CBD4;
+      padding: 1.4285714285714286rem 0 0 0;
+      display: flex;
+      justify-content: center;
+
+      & > button {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: max-content;
+        text-transform: uppercase;
+        font-size: 10px;
+        color: #656A84;
+        margin: 0;
+
+
+        svg {
+          fill: #46435C;
+          stroke: #46435C;
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+        }
+
+        &:hover {
+          color: #FF5256;
+
+          svg {
+            fill: #FF5256;
+            stroke: #FF5256;
+          }
+        }
+      }
+
+      .overlay-legend-popover {
+        .chart-legend {
+          display: flex;
+          flex-direction: column;
+          padding: 0 10px;
+          margin: 0;
+          list-style: none;
+          grid-gap: 10px;
+
+          li {
+            font-size: 14px;
+            color: #38454F;
+            display: flex;
+            align-items: center;
+
+            &::before {
+              content: '';
+              width: 8px;
+              min-width: 8px;
+              height: 8px;
+              margin: 0 8px 0 0;
+              border-radius: 50%;
+            }
+
+            &:nth-child(1) {
+              &::before {
+                background: #FF5256;
+              }
+            }
+
+            &:nth-child(2) {
+              &::before {
+                background: #9464B9;
+              }
+            }
+
+            &:nth-child(3) {
+              &::before {
+                background: #FFAF52;
+              }
+            }
+
+            &:nth-child(4) {
+              &::before {
+                background: #7FD3A1;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .chart-block {
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      box-shadow: none;
+
+      .recharts-active-dot {
+        z-index: 10000000 !important;
+      }
+
+      .recharts-responsive-container.responsive-bar-container {
+        margin: 0;
+      }
+
+      .yAxis {
+        .recharts-cartesian-axis-tick-line {
+          display: none;
+        }
+
+        .recharts-cartesian-axis-line {
+          display: none;
+        }
+      }
+
+      .xAxis {
+        .recharts-cartesian-axis-line, .recharts-cartesian-axis-tick-line {
+          display: none;
+        }
+      }
+    }
+
+    .area-chart-tooltip {
+      display: flex;
+      flex-direction: column;
+      width: max-content;
+      padding: 15px;
+      background: #FFFFFF;
+      border-radius: 4px;
+      font-size: 1rem;
+      box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
+
+
+      &-header {
+        border-bottom: 1px solid #F5F5FF;
+        padding: 10px 0;
+        margin: 0 0 20px 0;
+        font-weight: bold;
+      }
+
+      .content {
+        display: flex;
+
+        .col {
+          grid-row-gap: 10px;
+          font-size: 1rem;
+        }
+
+        .value {
+          margin: 0 30px;
+        }
+      }
+    }
+  }
+}

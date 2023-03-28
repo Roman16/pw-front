@@ -1,0 +1,67 @@
+.create-product-ads-window {
+  max-width: 1250px;
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+
+    .col.w-p {
+      padding-right: 22%;
+    }
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+
+    &.w-50 {
+      width: 50%;
+    }
+
+    label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #343C5A;
+      margin-bottom: 5px;
+    }
+
+    .custom-select {
+      height: 2.2857142857142856rem;
+      font-size: 1rem;
+      transition: 0s !important;
+
+      & * {
+        transition: 0s !important;
+      }
+    }
+  }
+
+
+  .product-ads-details-step {
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  .added-keywords {
+    .text {
+      width: 45%!important;
+    }
+    .type {
+      width: 27%!important;
+    }
+    .InputCurrency {
+      width: 80px;
+      height: 1.71428571rem;
+      display: flex;
+    }
+  }
+
+  .campaign-overview-step {
+    .row {
+      grid-column-gap: 0;
+    }
+  }
+}

@@ -1,0 +1,137 @@
+.list-filters-block {
+  display: flex;
+  position: relative;
+  margin-bottom: 1.4285714285714286rem;
+  padding-left: 1.4285714285714286rem;
+
+  .row {
+    display: flex;
+    align-items: center;
+  }
+
+  & > button {
+    height: max-content;
+    display: flex;
+    align-items: center;
+    //margin: 0 0 0 15px;
+    padding: 0 10px 0 5px;
+    border-radius: 20px;
+    text-transform: uppercase;
+
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2142857142857142rem;
+    color: #46435C;
+
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 2.2857142857142856rem;
+      height: 2.2857142857142856rem;
+      border-radius: 50%;
+      padding-bottom: 2px;
+
+      svg {
+        width: 1.1428571428571428rem;
+        height: 1rem;
+        fill: #656A84;
+      }
+    }
+
+    span {
+      padding-bottom: 2px;
+    }
+
+
+    &:hover {
+      background: #FFFAFA;
+
+      svg {
+        fill: #FF5256;
+      }
+    }
+  }
+}
+
+.analytics-page .current-filters {
+  display: flex;
+  flex-wrap: wrap;
+  grid-row-gap: 10px;
+  border-top: 0.5px solid #C9CBD4;
+  padding: 12px 20px;
+
+
+  .filter-item {
+    width: max-content;
+    margin-bottom: 0;
+  }
+
+  .reset-filters {
+    height: 2.28571429rem;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #46435C;
+
+    &:hover {
+      color: #777391
+    }
+  }
+}
+
+.filter-popover.analytics-filter-popover {
+  z-index: 100000;
+  padding-left: 15px;
+
+  .ant-popover-arrow {
+    display: none !important;
+  }
+
+  .ant-popover-inner-content {
+    max-width: max-content;
+  }
+
+  .ant-select-selection__placeholder {
+    padding-left: 1.0714285714285714rem !important;
+  }
+
+  .filter-variables {
+    display: flex;
+    flex-direction: column;
+
+    .row, .buttons {
+      display: flex;
+    }
+
+    .form-group {
+      height: 2.28571429rem;
+      width: 14.285714285714286rem;
+      margin: 0 1.0714285714285714rem 0 0;
+
+      &:last-child {
+        margin: 0;
+      }
+
+      .pw-tree-select {
+        height: 100%;
+
+        li {
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .buttons {
+    margin: 15px 0 0 0;
+    justify-content: flex-end;
+
+    .btn {
+      width: max-content;
+      border-radius: 4px !important;
+      margin: 0 0 0 15px;
+    }
+  }
+}

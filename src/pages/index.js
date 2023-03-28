@@ -28,6 +28,7 @@ const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/Optimizatio
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 
 const Analytics = React.lazy(() => import('./Analytics'))
+const AnalyticsV3 = React.lazy(() => import('./AnalyticsV3'))
 
 const Account = React.lazy(() => import('./Account/Navigation/Navigation'))
 
@@ -244,6 +245,7 @@ const AuthorizedUser = (props) => {
                                 <Switch>
                                     {/*ANALYTICS*/}
                                     <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    <ConnectedAmazonRoute path="/analytics-v3" component={AnalyticsV3}/>
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}
                                     {(isAgencyUser) &&
