@@ -16,6 +16,7 @@ import {PColumnsList} from "./PTableComponents/columnsList"
 import SegmentFilter from "./PTableComponents/SegmentFilter"
 import {expandedRowRender} from "./PTableComponents/expandRowRender"
 import {chartAreaKeys} from "./PlacementsStatistics/Chart"
+import {diffPercent} from "../components/RenderPageParts/RenderPageParts"
 
 let prevActiveMetrics = undefined,
     sorterTimeoutId = null
@@ -37,7 +38,7 @@ const Placements = () => {
             chart: [],
             stacked_area_chart: [],
             table: {
-                response: []
+                data: []
             }
         }),
         [tableRequestParams, setTableRequestParams] = useState({
@@ -100,16 +101,43 @@ const Placements = () => {
                     },
                 ]
             }
+            const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
+            const [prevData, currentData] = await Promise.all([analyticsServices.fetchPageData(
+                location,
+                {
+                    ...tableRequestParams,
+                    sorterColumn: localSorterColumn,
+                    pageParts: ['metrics'],
+                    filtersWithState,
+                    activeMetrics,
+                    selectedRangeDate: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
+                },
+                undefined,
+            ), analyticsServices.fetchPageData(
+                location,
+                {
+                    ...tableRequestParams,
+                    sorterColumn: localSorterColumn,
+                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
+                    filtersWithState,
+                    activeMetrics,
+                    selectedRangeDate
+                },
+                undefined,
+            )])
 
-            const res = await analyticsServices.fetchPlacementData({
-                ...tableRequestParams,
-                sorterColumn: localSorterColumn,
-                segment: localSegmentValue,
-                pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
-                filtersWithState,
-                activeMetrics,
-                areaChartMetric
-            })
+           const res = {
+                ...currentData.result,
+                metrics: _.mapValues(currentData.result.metrics, (v, k) => ({
+                    value: v,
+                    value_diff: diffPercent(prevData.result.metrics[k], v),
+                    value_prev: prevData.result.metrics[k]
+                }))
+            }
+
 
             prevActiveMetrics = [...activeMetrics]
 
@@ -121,7 +149,7 @@ const Placements = () => {
                     table: res.table
                         ? {
                             ...res.table,
-                            response: res.table.response
+                            data: res.table.data
                                 .map(item => {
                                     item.segmentData = item.advertisingType_segmented.map((key, index) => {
                                         const targetObj = {advertisingType: key}
@@ -150,7 +178,7 @@ const Placements = () => {
                         stacked_area_chart: res.stacked_area_chart || prevState.stacked_area_chart,
                         table: {
                             ...res.table,
-                            response: res.table.response.map(item => {
+                            data: res.table.data.map(item => {
                                 item.compareWithPrevious = true
 
                                 return item
@@ -211,7 +239,6 @@ const Placements = () => {
         analyticsServices.downloadTableCSV('placements', filtersWithState)
     }
 
-
     const changeTableOptionsHandler = (data) => {
         localStorage.setItem('analyticsTableOptions', JSON.stringify({
             ...tableOptionsFromLocalStorage,
@@ -258,9 +285,9 @@ const Placements = () => {
                         ...prevState,
                         table: {
                             ...prevState.table,
-                            response: [...prevState.table.response.map(item => ({
+                            data: [...prevState.table.data.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.response, {placementName: item['placementName']}), (value, key) => {
+                                ..._.mapKeys(_.find(res.table.data, {placementName: item['placementName']}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
@@ -316,7 +343,7 @@ const Placements = () => {
 
         getPageData(['table'])
 
-        if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.response.map(i => i.queryCRC64))
+        if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.data.map(i => i.queryCRC64))
         else setOpenedSearchTerms([])
     }, [tableRequestParams, localSegmentValue, localTableOptions])
 
@@ -359,7 +386,7 @@ const Placements = () => {
                 fetching={tableFetchingStatus}
                 tableData={{
                     ...pageData.table,
-                    response: Object.values(chartAreaKeys).map(key => _.find(pageData.table.response, {placementName: key})).filter(i => !!i)
+                    data: Object.values(chartAreaKeys).map(key => _.find(pageData.table.data, {placementName: key})).filter(i => !!i)
                 }}
                 columns={columns}
                 fixedColumns={[0]}

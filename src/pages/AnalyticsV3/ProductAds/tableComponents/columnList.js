@@ -43,7 +43,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
         search: true,
         filter: true,
         render: (name, item) => {
-            if (name.split(':')[0] === 'Total') {
+            if (name && name.split(':')[0] === 'Total') {
                 return name
             } else {
                 return <RenderProduct

@@ -131,6 +131,9 @@ function fetchPageData(location, params, idList, cancelToken) {
         })]
     }
 
+    if(location === 'products') location = 'products/regular'
+    if(location === 'products-parents') location = 'products/parents'
+
     const attributionWindow = localStorage.getItem('attributionWindow') || '7'
 
     return api('get', `${analyticsUrls.pageData(`v3/${location}`)}?attribution_window=${+attributionWindow}${filtersHandler(filtersWithState)}&${dateRangeFormatting(selectedRangeDate)}&table[size]=${pageSize}&table[page]=${page}${sorterColumn && sorterColumn.column ? `&order_by:${sorterColumn.type}=${sorterColumn.column}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}${activeMetrics.length > 0 ? '&' : ''}${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${idList || ''}`, null, null, cancelToken)
