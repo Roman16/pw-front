@@ -6,6 +6,7 @@ import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {profitMetrics} from "./MetricItem"
 
 const RenderMetricValue = ({value, type}) => {
 
@@ -20,8 +21,6 @@ const RenderMetricValue = ({value, type}) => {
         } else if (type === 'roas') {
             return (`${round(value, 2)}x`)
         } else {
-            console.log(type)
-
             return ''
         }
     } else {
@@ -52,6 +51,8 @@ const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType
                                                        getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode.parentNode}
                                                        description={info}/>
                 }
+
+                {profitMetrics.includes(key) && <div className="beta-label">Beta</div>}
 
                 {listType === 'hidden' && <div className="action-btn add-item">
                     <SVG id='plus-green'/>

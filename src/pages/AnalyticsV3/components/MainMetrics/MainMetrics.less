@@ -1,5 +1,12 @@
 @import "../../../../style/variables.less";
 
+.beta-label {
+  margin: 0 5px 0 auto;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FF5256;
+}
+
 .analytics-page .main-metrics {
   display: grid;
   grid-template-columns: repeat(6, minmax(13.571428571428571rem, 1fr));
@@ -10,6 +17,10 @@
 
   .metric-item {
     .metric-item-default-style();
+
+    .beta-label {
+      margin: 0 20px 0 auto;
+    }
 
     .active-metric {
       &.position-0 {

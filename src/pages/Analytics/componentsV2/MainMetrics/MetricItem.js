@@ -9,7 +9,7 @@ import {metricKeys} from "./metricsList"
 import {roundTo} from "../../../ZeroToHero/Payment/Summary"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
 
-const DiffTooltip = ({currentValue,currencyCode, diff, type, prevValue, name, percentRow = true}) => {
+const DiffTooltip = ({currentValue, currencyCode, diff, type, prevValue, name, percentRow = true}) => {
     const diffValue = Math.abs(round(currentValue - prevValue, 2))
 
     return (
@@ -60,6 +60,12 @@ const metricsDifferentDiff = [
     metricKeys['cpm'],
     metricKeys['cpa'],
     metricKeys['cpc'],
+]
+
+export const profitMetrics = [
+    metricKeys['net_ad_profit'],
+    metricKeys['gross_profit'],
+    metricKeys['net_profit'],
 ]
 
 export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false, currencyCode}) => {
@@ -223,6 +229,8 @@ const MetricItem = ({
                 <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
 
                 {info && <Tooltip description={info}/>}
+
+                {profitMetrics.includes(key) && <div className="beta-label">Beta</div>}
 
                 <div className="close" onClick={handleRemoveItem}>
                     <SVG id='remove-filter-icon'/>

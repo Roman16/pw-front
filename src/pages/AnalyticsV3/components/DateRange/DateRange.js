@@ -32,7 +32,7 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
         startPrevDate
 
     if (tableOptions.comparePreviousPeriod) {
-        dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+        dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
         endPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days')
         startPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff)
     }

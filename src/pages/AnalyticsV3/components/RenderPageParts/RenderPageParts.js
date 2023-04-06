@@ -261,25 +261,11 @@ const RenderPageParts = (props) => {
                     filterBy: key,
                     type: 'eq',
                     value: queryParams[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
-        } else {
-            filtersWithState = [
-                ...filters,
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
+                })).filter(item => !!item.value)
             ]
         }
 
-        analyticsServices.downloadTableCSV(location, filtersWithState)
+        analyticsServices.downloadTableCSV(location, filtersWithState, selectedRangeDate)
     }
 
     const getPageData = debounce(100, false, async (pageParts, paginationParams, sorterParams) => {
@@ -357,11 +343,11 @@ const RenderPageParts = (props) => {
 
                 res = {
                     ...currentData.result,
-                    metrics: _.mapValues(currentData.result.metrics, (v, k) => ({
+                    metrics: currentData.result.metrics ? _.mapValues(currentData.result.metrics, (v, k) => ({
                         value: v,
                         value_diff: diffPercent(prevData.result.metrics[k], v),
                         value_prev: prevData.result.metrics[k]
-                    }))
+                    })) : pageData.metrics
                 }
             }
 
@@ -376,20 +362,19 @@ const RenderPageParts = (props) => {
                         pageParts: ['table'],
                         filtersWithState,
                         activeMetrics,
+                        selectedRangeDate
                     },
                     undefined,
                     source.token
                 )
 
-                res.table = parentResponse.table
+                res.table = parentResponse.result.table
             }
 
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
                 getPreviousPeriodData(res.table.data.map(item => item[idSelectors[location]]), paginationParams ? paginationParams : tableRequestParams)
-            }
 
-            if (localTableOptions.comparePreviousPeriod && res.table) {
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
                     chart: res.chart || prevState.chart,
@@ -428,7 +413,7 @@ const RenderPageParts = (props) => {
     })
 
     const getPreviousPeriodData = async (idList, paginationParams) => {
-        if (history.location.pathname === '/analytics/overview' && location === 'products-parents') {
+        if (history.location.pathname === '/analytics-v3/overview' && location === 'products-parents') {
             location = 'products'
         }
 
@@ -437,7 +422,7 @@ const RenderPageParts = (props) => {
 
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
-                const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+                const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
 
                 let filtersWithState = [
                     ...filters,
@@ -445,42 +430,36 @@ const RenderPageParts = (props) => {
                         filterBy: key,
                         type: 'eq',
                         value: queryParams[key]
-                    })).filter(item => !!item.value),
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: {
-                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff).format('YYYY-MM-DD'),
-                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days').format('YYYY-MM-DD')
-                        }
-                    },
+                    })).filter(item => !!item.value)
                 ]
 
-                const res = await analyticsServices.fetchPageData(location, {
+                const {result} = await analyticsServices.fetchPageData(location, {
                     sorterColumn: localSorterColumn,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
                     page: 1,
-                    pageSize: paginationParams.pageSize
+                    pageSize: paginationParams.pageSize,
+                    selectedRangeDate: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
                 }, `&${idSelectors[location]}:in=${idList.join(',')}`)
 
-                setPageData(prevState => {
-                    return {
-                        ...prevState,
-                        table: {
-                            ...prevState.table,
-                            response: [...prevState.table.data.map(item => ({
-                                ...item,
-                                ..._.mapKeys(_.find(res.table.data, {[idSelectors[location]]: item[idSelectors[location]]}), (value, key) => {
-                                    return `${key}_prev`
-                                })
-                            }))]
-                        }
+                setPageData(prevState => ({
+                    ...prevState,
+                    table: {
+                        ...prevState.table,
+                        response: [...prevState.table.data.map(item => ({
+                            ...item,
+                            ..._.mapKeys(_.find(result.table.data, {[idSelectors[location]]: item[idSelectors[location]]}), (value, key) => {
+                                return `${key}_prev`
+                            })
+                        }))]
                     }
-                })
+                }))
             } catch (e) {
-
+                console.log(e)
             }
         }
     }

@@ -166,9 +166,9 @@ const CustomTable = ({
 
                                 {!item.noTotal && dataSource[0].compareWithPrevious && columnIndex > 2 &&
                                 <RenderMetricChanges
-                                    value={totalDataSource[item.key].value}
-                                    prevValue={totalDataSource[item.key].value_prev}
-                                    diff={totalDataSource[item.key].value_diff}
+                                    value={totalDataSource[item.key]?.value}
+                                    prevValue={totalDataSource[item.key]?.value_prev}
+                                    diff={totalDataSource[item.key]?.value_diff}
                                     type={_.find(analyticsAvailableMetricsList, {key: item.key})?.type}
                                     name={item.key}
                                 />}

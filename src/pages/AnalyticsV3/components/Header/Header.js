@@ -100,7 +100,7 @@ const Header = ({location}) => {
         if (mainState.adGroupId && mainState.campaignId) {
             return (<>
                 <Link
-                    to={'/analytics/campaigns'}
+                    to={'/analytics-v3/campaigns'}
                     onClick={(e) => setMainState(undefined, 'campaigns', e)}>
                     Campaigns
 
@@ -110,7 +110,7 @@ const Header = ({location}) => {
                 </Link>
 
                 <Link
-                    to={`/analytics/ad-groups?campaignId=${mainState.campaignId}`}
+                    to={`/analytics-v3/ad-groups?campaignId=${mainState.campaignId}`}
                     onClick={(e) => setMainState({
                         campaignId: mainState.campaignId,
                         name: {campaignName: stateName.campaignName}
@@ -134,7 +134,7 @@ const Header = ({location}) => {
             return (
                 <>
                     <Link
-                        to={'/analytics/campaigns'}
+                        to={'/analytics-v3/campaigns'}
                         onClick={(e) => setMainState(undefined, undefined, e)}>
                         Campaigns
 
@@ -157,7 +157,7 @@ const Header = ({location}) => {
 
             return (<>
                 <Link
-                    to={queryParams.isParent === 'true' ? '/analytics/products/parents' : '/analytics/products/regular'}
+                    to={queryParams.isParent === 'true' ? '/analytics-v3/products/parents' : '/analytics-v3/products/regular'}
                     onClick={(e) => setMainState(undefined, undefined, e)}>
                     Products
 
@@ -177,7 +177,7 @@ const Header = ({location}) => {
         } else if (mainState.portfolioId) {
             return (<>
                 <Link
-                    to={'/analytics/portfolios'}
+                    to={'/analytics-v3/portfolios'}
                     onClick={(e) => setMainState(undefined, undefined, e)}>
                     Portfolios
 
@@ -209,7 +209,7 @@ const Header = ({location}) => {
 
     return (
         <section className={`analytics-header  ${visibleNavigation ? 'visible' : 'hidden'}`}>
-            <Link to={'/analytics/products/regular'} className="title"
+            <Link to={'/analytics-v3/products/regular'} className="title"
                   onClick={() => {
                       newState = {
                           state: undefined,
@@ -231,7 +231,7 @@ const Header = ({location}) => {
                 </h4>
             </div>
 
-            {(location.pathname !== '/analytics/negative-targetings' && location.pathname !== '/analytics/campaign-settings' && location.pathname !== '/analytics/portfolio-settings') &&
+            {(location.pathname !== '/analytics-v3/negative-targetings' && location.pathname !== '/analytics-v3/campaign-settings' && location.pathname !== '/analytics-v3/portfolio-settings') &&
             <AttributionWindow/>}
 
             <div className="marketplace-info">

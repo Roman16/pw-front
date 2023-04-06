@@ -162,7 +162,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                 <h3 className={'not-found'}>Product not found</h3> :
                 <div className="col">
                     <Link
-                        to={`/analytics/overview?productId=${product.productId}&isParent=${isParent}`}
+                        to={`/analytics-v3/overview?productId=${product.productId}&isParent=${isParent}`}
                         onClick={(e) => setStateHandler('ad-groups', {
                             name: {productName: product.product_name},
                             productId: product.productId
@@ -188,7 +188,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                         {[...product.childs_sku_array.slice(0, 5)].map((sku, index) => (
                             <li>
                                 <Link
-                                    to={`/analytics/overview?productId=${product.childs_product_id_array[index]}&isParent=${false}`}
+                                    to={`/analytics-v3/overview?productId=${product.childs_product_id_array[index]}&isParent=${false}`}
                                     onClick={(e) => setStateHandler('ad-groups', {
                                         name: {productName: product.childs_product_name_array[index]},
                                         productId: product.childs_product_id_array[index]
@@ -210,7 +210,7 @@ export const RenderProduct = ({product, isParent = false}) => {
                     {product.childs_sku_array.length > 5 && <p>And others</p>}
 
                     <Link
-                        to={`/analytics/overview?productId=${product.productId}&isParent=${true}`}
+                        to={`/analytics-v3/overview?productId=${product.productId}&isParent=${true}`}
                         className={'see-all-link'}
                         onClick={(e) => setStateHandler('ad-groups', {
                             name: {productName: product.product_name},
@@ -695,7 +695,7 @@ export const adGroupColumn = {
     filter: true,
     noTotal: true,
     render: (adGroup, item) => (
-        <Link to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}>
+        <Link to={`/analytics-v3/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}>
             {item.adGroupName}
         </Link>
     )

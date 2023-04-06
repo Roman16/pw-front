@@ -65,7 +65,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
             <ParentStatus status={item.campaignState}/>
 
             <Link
-                to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                to={`/analytics-v3/ad-groups?campaignId=${item.campaignId}`}
                 title={campaign}
                 onClick={(e) => setStateHandler('ad-groups', {
                     name: {campaignName: item.campaignName},
@@ -95,7 +95,7 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup) => ([
                 <ParentStatus status={item.adGroupState}/>
 
                 <Link
-                    to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                    to={`/analytics-v3/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                     title={item.adGroupName}
                     onClick={(e) => setStateHandler('products', {
                         name: {

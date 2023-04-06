@@ -1,3 +1,10 @@
+.beta-label {
+  margin: 0 5px 0 auto;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #FF5256;
+}
+
 .analytics-page .main-metrics {
   grid-template-columns: repeat(6, minmax(13.571428571428571rem, 1fr));
 
@@ -5,7 +12,11 @@
     margin: 0 3px 0 0 !important;
   }
 
+
   .metric-item {
+    .beta-label {
+      margin: 0 20px 0 auto;
+    }
     .active-metric {
       &.position-0 {
         background: #FF5256;
@@ -38,6 +49,13 @@
       font-size: 1.7142857142857142rem;
       line-height: 2.0714285714285716rem;
       color: #353A3E;
+    }
+
+    .close {
+      margin: 0;
+      position: absolute;
+      right: 8px;
+      top: 8px;
     }
 
     .metric-item__description {

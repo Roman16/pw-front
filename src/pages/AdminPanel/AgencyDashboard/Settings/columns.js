@@ -73,4 +73,16 @@ export const columns = (users, onChange) => [
             ))}
         </CustomSelect>
     },
+    {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        width: '300px',
+        render: (comment, item, rowIndex) => <div className="form-group">
+            <textarea
+                value={comment}
+                onChange={({target: {value}}) => onChange(rowIndex, {comment: value})}
+            />
+        </div>
+    },
 ]

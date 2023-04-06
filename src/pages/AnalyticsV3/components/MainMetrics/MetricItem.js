@@ -61,6 +61,12 @@ const metricsDifferentDiff = [
     metricKeys['cpc'],
 ]
 
+export const profitMetrics = [
+    metricKeys['net_ad_profit'],
+    metricKeys['gross_profit'],
+    metricKeys['net_profit'],
+]
+
 export const RenderMetricChanges = ({value, prevValue, diff, type, name, getPopupContainer = false, currencyCode}) => {
     if (diff != null) {
         value = +value
@@ -222,6 +228,8 @@ const MetricItem = ({
                 <span title={title} dangerouslySetInnerHTML={{__html: title}}/>
 
                 {info && <Tooltip description={info}/>}
+
+                {profitMetrics.includes(key) && <div className="beta-label">Beta</div>}
 
                 <div className="close" onClick={handleRemoveItem}>
                     <SVG id='remove-filter-icon'/>

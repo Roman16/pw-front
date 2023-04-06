@@ -24,6 +24,7 @@ const PlacementsStatistics = ({chartData, selectedMetric, processing, onSelectMe
                     selectedMetric={selectedMetric}
                     onChange={changeMetricHandler}
                 />
+
                 <Chart
                     data={chartData}
                     processing={processing}

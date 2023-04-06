@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react"
 import PlacementsStatistics from "./PlacementsStatistics/PlacementsStatistics"
 import {metricsKeysWithoutOrganic} from "../components/MainMetrics/metricsList"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsActions} from "../../../actions/analytics.actions"
 import queryString from "query-string"
 import {history} from "../../../utils/history"
-import {analyticsServices} from "../../../services/analytics.services"
+import {analyticsServices} from "../../../services/analytics.v3.services"
 import {debounce} from "throttle-debounce"
 import moment from "moment"
 import _ from "lodash"
@@ -83,27 +82,13 @@ const Placements = () => {
                         filterBy: key,
                         type: 'eq',
                         value: queryParams[key]
-                    })).filter(item => !!item.value),
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: selectedRangeDate
-                    },
+                    })).filter(item => !!item.value)
                 ]
 
-            } else {
-                filtersWithState = [
-                    ...filters,
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: selectedRangeDate
-                    },
-                ]
             }
+
             const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
-            const [prevData, currentData] = await Promise.all([analyticsServices.fetchPageData(
-                location,
+            const [prevData, currentData] = await Promise.all([analyticsServices.fetchPlacementData(
                 {
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
@@ -116,8 +101,7 @@ const Placements = () => {
                     }
                 },
                 undefined,
-            ), analyticsServices.fetchPageData(
-                location,
+            ), analyticsServices.fetchPlacementData(
                 {
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
@@ -203,7 +187,7 @@ const Placements = () => {
             setTableFetchingStatus(false)
             setAreaChartFetchingStatus(false)
         } catch (e) {
-
+            console.log(e)
         }
     })
 
@@ -219,24 +203,11 @@ const Placements = () => {
                     filterBy: key,
                     type: 'eq',
                     value: queryParams[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
-        } else {
-            filtersWithState = [
-                ...filters,
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
+                })).filter(item => !!item.value)
             ]
         }
-        analyticsServices.downloadTableCSV('placements', filtersWithState)
+
+        analyticsServices.downloadTableCSV('placements', filtersWithState, selectedRangeDate)
     }
 
     const changeTableOptionsHandler = (data) => {
@@ -333,10 +304,6 @@ const Placements = () => {
             }
         }
     }, [activeMetrics])
-
-    useEffect(() => {
-        getPageData(['stacked_area_chart'])
-    }, [areaChartMetric])
 
     useEffect(() => {
         localStorage.setItem('analyticsPageSize', tableRequestParams.pageSize)

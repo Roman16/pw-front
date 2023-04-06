@@ -45,7 +45,7 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
             search: true,
             filter: true,
             editType: 'text',
-            redirectLink: (item) => `/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
+            redirectLink: (item) => `/analytics-v3/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`,
             clickEvent: (item, e) => {
                 setStateHandler('products', {
                     name: {
@@ -69,7 +69,7 @@ export const columnList = (setStateHandler, selectedCampaign, setStateDetails) =
                 <ParentStatus status={item.campaignState}/>
 
                 <Link
-                    to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                    to={`/analytics-v3/ad-groups?campaignId=${item.campaignId}`}
                     title={campaign}
                     onClick={(e) => setStateHandler('ad-groups', {
                         name: {campaignName: item.campaignName},

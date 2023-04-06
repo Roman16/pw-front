@@ -3,7 +3,7 @@ import {metricKeys, metricsKeysWithoutOrganic} from "../components/MainMetrics/m
 import {STColumnsList} from "./STTableComponents/columnsList"
 import MainMetrics from "../components/MainMetrics/MainMetrics"
 import MainChart from "../components/MainChart/MainChart"
-import {analyticsServices} from "../../../services/analytics.services"
+import {analyticsServices} from "../../../services/analytics.v3.services"
 import {useDispatch, useSelector} from "react-redux"
 import TableList from "../components/TableList/TableList"
 import {debounce} from "throttle-debounce"
@@ -14,6 +14,7 @@ import moment from 'moment'
 import _ from 'lodash'
 import queryString from "query-string"
 import {history} from "../../../utils/history"
+import {diffPercent} from "../components/RenderPageParts/RenderPageParts"
 
 let prevActiveMetrics = undefined,
     sorterTimeoutId = null
@@ -34,7 +35,7 @@ const SearchTerms = () => {
             metrics: {},
             chart: [],
             table: {
-                response: []
+                data: []
             }
         }),
         [tableRequestParams, setTableRequestParams] = useState({
@@ -86,7 +87,7 @@ const SearchTerms = () => {
                 ...prevState,
                 table: {
                     ...prevState.table,
-                    response: prevState.table.response.map(item => {
+                    data: prevState.table.data.map(item => {
                         if (item.queryCRC64 === id) {
                             item.targetingsData = res.response
                         }
@@ -123,39 +124,53 @@ const SearchTerms = () => {
                         filterBy: key,
                         type: 'eq',
                         value: queryParams[key]
-                    })).filter(item => !!item.value),
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: selectedRangeDate
-                    },
+                    })).filter(item => !!item.value)
                 ]
 
-            } else {
-                filtersWithState = [
-                    ...filters,
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: selectedRangeDate
-                    },
-                ]
             }
 
+            const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
 
-            const res = await analyticsServices.fetchSearchTermsData({
-                ...paginationParams ? paginationParams : tableRequestParams,
-                sorterColumn: sorterParams ? sorterParams : localSorterColumn,
-                segment: localSegmentValue,
-                pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
-                filtersWithState,
-                activeMetrics,
-            })
+            const [prevData, currentData] = await Promise.all([analyticsServices.fetchSearchTermsData(
+                {
+                    ...tableRequestParams,
+                    sorterColumn: sorterParams ? sorterParams : localSorterColumn,
+                    pageParts: ['metrics'],
+                    filtersWithState,
+                    activeMetrics,
+                    segment: localSegmentValue,
+                    selectedRangeDate: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
+                },
+                undefined,
+            ), analyticsServices.fetchSearchTermsData(
+                {
+                    ...tableRequestParams,
+                    sorterColumn: sorterParams ? sorterParams : localSorterColumn,
+                    pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
+                    filtersWithState,
+                    activeMetrics,
+                    segment: localSegmentValue,
+                    selectedRangeDate
+                },
+                undefined,
+            )])
+
+            const res = {
+                ...currentData.result,
+                metrics: _.mapValues(currentData.result.metrics, (v, k) => ({
+                    value: v,
+                    value_diff: diffPercent(prevData.result.metrics[k], v),
+                    value_prev: prevData.result.metrics[k]
+                }))
+            }
 
             prevActiveMetrics = [...activeMetrics]
 
             if (localTableOptions.comparePreviousPeriod) {
-                getPreviousPeriodData(res.table.response.map(item => item['queryCRC64']))
+                getPreviousPeriodData(res.table.data.map(item => item['queryCRC64']))
             }
 
             if (localSegmentValue === 'targetings') {
@@ -165,7 +180,7 @@ const SearchTerms = () => {
                     table: res.table
                         ? {
                             ...res.table,
-                            response: res.table.response.map(item => {
+                            data: res.table.data.map(item => {
                                 item.targetingsData = item.targetingId.map((target, index) => {
                                     const targetObj = {targetingId: target}
 
@@ -199,7 +214,7 @@ const SearchTerms = () => {
                         chart: res.chart || prevState.chart,
                         table: {
                             ...res.table,
-                            response: res.table.response.map(item => {
+                            data: res.table.data.map(item => {
                                 item.compareWithPrevious = true
 
                                 return item
@@ -269,9 +284,9 @@ const SearchTerms = () => {
                         ...prevState,
                         table: {
                             ...prevState.table,
-                            response: [...prevState.table.response.map(item => ({
+                            data: [...prevState.table.data.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.response, {queryCRC64: item['queryCRC64']}), (value, key) => {
+                                ..._.mapKeys(_.find(res.table.data, {queryCRC64: item['queryCRC64']}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
@@ -316,24 +331,11 @@ const SearchTerms = () => {
                     filterBy: key,
                     type: 'eq',
                     value: queryParams[key]
-                })).filter(item => !!item.value),
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
-            ]
-        } else {
-            filtersWithState = [
-                ...filters,
-                {
-                    filterBy: 'datetime',
-                    type: 'range',
-                    value: selectedRangeDate
-                },
+                })).filter(item => !!item.value)
             ]
         }
-        analyticsServices.downloadTableCSV('search-terms', filtersWithState)
+
+        analyticsServices.downloadTableCSV('search-terms', filtersWithState, selectedRangeDate)
     }
 
 
@@ -355,7 +357,7 @@ const SearchTerms = () => {
 
         getPageData(['table'])
 
-        if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.response.map(i => i.queryCRC64))
+        if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.data.map(i => i.queryCRC64))
         else setOpenedSearchTerms([])
     }, [localSegmentValue, localTableOptions])
 

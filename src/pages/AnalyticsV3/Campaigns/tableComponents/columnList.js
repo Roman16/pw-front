@@ -54,7 +54,7 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
             }, e)
             setStateDetails(item)
         },
-        redirectLink: (item) => `/analytics/ad-groups?campaignId=${item.campaignId}`,
+        redirectLink: (item) => `/analytics-v3/ad-groups?campaignId=${item.campaignId}`,
         render: (campaign, item) => editable ? (<div
             className={'state-link'}
             title={campaign}
@@ -62,7 +62,7 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
             {campaign}
         </div>) : (<Link
             className={'state-link'}
-            to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+            to={`/analytics-v3/ad-groups?campaignId=${item.campaignId}`}
             title={campaign}
             onClick={(e) => {
                 setStateHandler('ad-groups', {
@@ -136,7 +136,7 @@ const getColumns = (setStateHandler, setStateDetails, selectedPortfolio, editabl
         fastUpdating: true,
         render: (portfolio, item) => (
             <Link
-                to={`/analytics/campaigns?portfolioId=${item.portfolioId}`}
+                to={`/analytics-v3/campaigns?portfolioId=${item.portfolioId}`}
                 title={item.portfolioName}
                 className={'state-link'}
                 onClick={(e) => setStateHandler('campaigns', {

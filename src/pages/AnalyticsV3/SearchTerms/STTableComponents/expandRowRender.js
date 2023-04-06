@@ -43,7 +43,7 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
                     <ParentStatus status={item.campaignState}/>
 
                     <Link
-                        to={`/analytics/ad-groups?campaignId=${item.campaignId}`}
+                        to={`/analytics-v3/ad-groups?campaignId=${item.campaignId}`}
                         title={campaign}
                         onClick={() => setStateHandler('ad-groups', {
                             name: {campaignName: item.campaignName},
@@ -60,7 +60,7 @@ export const expandedRowRender = (props, showTargetingsColumns, setStateHandler,
                         <ParentStatus status={item.adGroupState}/>
 
                         <Link
-                            to={`/analytics/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
+                            to={`/analytics-v3/product-ads?campaignId=${item.campaignId}&adGroupId=${item.adGroupId}`}
                             title={item.adGroupName}
                             onClick={() => setStateHandler('products', {
                                 name: {

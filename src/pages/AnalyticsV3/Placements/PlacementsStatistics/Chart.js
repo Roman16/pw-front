@@ -187,16 +187,10 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
 
 const Chart = ({processing, data = [], selectedMetric}) => {
 
-    const chartData = data.map(item => {
-        Object.keys(item).forEach(key => {
-
-            if (key !== 'eventDate') {
-                item[key] = +item[key]
-            }
-        })
-
-        return item
-    })
+    const chartData = data.map(item => ({
+        eventDate: item.eventDate,
+        ...item[selectedMetric]
+    }))
 
     return (<div className="chart-block">
         <ResponsiveContainer height='100%' width='100%'>
