@@ -129,7 +129,7 @@ const StrategiesDescription = ({visible, onClose}) => {
                             <i dangerouslySetInnerHTML={{__html: icons[item.value]}}/>
 
                             <div className="col">
-                                <b>{item.label}</b>
+                                <b>{item.label} <span>{item.value === 'AcosTargeting' ? 'Recommended' : 'Coming soon'}</span></b>
 
                                 <div className="row">
                                     <div className="sales">
@@ -168,48 +168,48 @@ const StrategiesDescription = ({visible, onClose}) => {
                             {item.description}
                         </p>
 
-                        <div className="values">
-                            <div>
-                                <Progress
-                                    type="circle"
-                                    percent={75}
-                                    trailColor={`#${item.fill}`}
-                                    strokeColor={`#${item.fill}`}
-                                    format={() => `${strategies[index].spendRevenue}%`}
-                                />
-                                <label htmlFor="">Spend/ <br/> Revenue</label>
-                            </div>
-                            <div>
-                                <Progress
-                                    type="circle"
-                                    percent={75}
-                                    trailColor={`#${item.fill}`}
-                                    strokeColor={`#${item.fill}`}
-                                    format={() => `${strategies[index].profitRevenue}%`}
-                                />
-                                <label htmlFor="">Profit/ <br/> Revenue</label>
-                            </div>
-                            <div>
-                                <Progress
-                                    type="circle"
-                                    percent={75}
-                                    trailColor={`#${item.fill}`}
-                                    strokeColor={`#${item.fill}`}
-                                    format={() => `${strategies[index].averageAcos}%`}
-                                />
-                                <label htmlFor="">Average <br/> ACoS</label>
-                            </div>
-                            <div>
-                                <Progress
-                                    type="circle"
-                                    percent={75}
-                                    trailColor={`#${item.fill}`}
-                                    strokeColor={`#${item.fill}`}
-                                    format={() => strategies[index].averageClicks}
-                                />
-                                <label htmlFor="">Average Daily <br/> Clicks</label>
-                            </div>
-                        </div>
+                        {/*<div className="values">*/}
+                        {/*    <div>*/}
+                        {/*        <Progress*/}
+                        {/*            type="circle"*/}
+                        {/*            percent={75}*/}
+                        {/*            trailColor={`#${item.fill}`}*/}
+                        {/*            strokeColor={`#${item.fill}`}*/}
+                        {/*            format={() => `${strategies[index].spendRevenue}%`}*/}
+                        {/*        />*/}
+                        {/*        <label htmlFor="">Spend/ <br/> Revenue</label>*/}
+                        {/*    </div>*/}
+                        {/*    <div>*/}
+                        {/*        <Progress*/}
+                        {/*            type="circle"*/}
+                        {/*            percent={75}*/}
+                        {/*            trailColor={`#${item.fill}`}*/}
+                        {/*            strokeColor={`#${item.fill}`}*/}
+                        {/*            format={() => `${strategies[index].profitRevenue}%`}*/}
+                        {/*        />*/}
+                        {/*        <label htmlFor="">Profit/ <br/> Revenue</label>*/}
+                        {/*    </div>*/}
+                        {/*    <div>*/}
+                        {/*        <Progress*/}
+                        {/*            type="circle"*/}
+                        {/*            percent={75}*/}
+                        {/*            trailColor={`#${item.fill}`}*/}
+                        {/*            strokeColor={`#${item.fill}`}*/}
+                        {/*            format={() => `${strategies[index].averageAcos}%`}*/}
+                        {/*        />*/}
+                        {/*        <label htmlFor="">Average <br/> ACoS</label>*/}
+                        {/*    </div>*/}
+                        {/*    <div>*/}
+                        {/*        <Progress*/}
+                        {/*            type="circle"*/}
+                        {/*            percent={75}*/}
+                        {/*            trailColor={`#${item.fill}`}*/}
+                        {/*            strokeColor={`#${item.fill}`}*/}
+                        {/*            format={() => strategies[index].averageClicks}*/}
+                        {/*        />*/}
+                        {/*        <label htmlFor="">Average Daily <br/> Clicks</label>*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </li>
                 ))}
             </ul>

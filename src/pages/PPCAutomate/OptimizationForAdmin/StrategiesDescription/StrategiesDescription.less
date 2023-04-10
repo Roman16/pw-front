@@ -64,11 +64,35 @@
       margin: 0 8px 0 0;
     }
 
+
+    li:first-of-type {
+      b {
+        span {
+          background: #7FD3A1;
+          color: #fff;
+        }
+      }
+    }
+
     b {
       font-size: 1rem;
       line-height: 1.2142857142857142rem;
       color: #353A3E;
       margin-bottom: 2px;
+      display: flex;
+
+      span {
+        height: max-content;
+        display: block;
+        font-size: 10px;
+        line-height: 12px;
+        font-weight: 400;
+        margin: -10px 0 0 5px;
+        background: #F3F3F3;
+        border-radius: 4px;
+        padding: 3px 5px;
+        color: #353A3E;
+      }
     }
 
     .sales, .acos {

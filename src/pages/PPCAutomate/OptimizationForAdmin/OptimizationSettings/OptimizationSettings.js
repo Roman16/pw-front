@@ -17,31 +17,36 @@ export const strategies = [
         name: 'ACoS Targeting',
         key: 'AchieveTargetACoS',
         icon: 'acos-targeting',
-        fill: '#EC7F5C'
+        fill: '#EC7F5C',
+        disabled: false,
     },
     {
         name: 'Product Launch',
         key: 'LaunchProduct',
         icon: 'product-launch',
-        fill: '#6D6DF6'
+        fill: '#6D6DF6',
+        disabled: true,
     },
     {
         name: 'Organic Sales Growth',
         key: 'BoostOverallProfit',
         icon: 'organic-sales-growth-icon',
-        fill: '#7DD4A1'
+        fill: '#7DD4A1',
+        disabled: true,
     },
     {
         name: 'Revenue Growth',
         key: 'GrowOverallSales',
         icon: 'revenue-growth-icon',
-        fill: '#F0B849'
+        fill: '#F0B849',
+        disabled: true,
     },
     {
         name: 'Profitable PPC',
         key: 'BoostPPCProfit',
         icon: 'profitable-ppc-icon',
-        fill: '#4DBEE1'
+        fill: '#4DBEE1',
+        disabled: true,
     },
 ]
 
@@ -108,7 +113,7 @@ const OptimizationSettings = ({product, isDisabled, onUpdateField, onShowDescrip
                         >
                             <Option value={null}>No Optimization</Option>
                             {strategies.map(item => (
-                                <Option value={item.key}>
+                                <Option value={item.key} disabled={item.disabled}>
                                     <i style={{fill: `${item.fill}`}}>
                                         <SVG id={item.icon}/>
                                     </i>
