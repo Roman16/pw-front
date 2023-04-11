@@ -252,7 +252,7 @@ const RenderPageParts = (props) => {
     const downloadCSVHandler = () => {
         const queryParams = queryString.parse(history.location.search)
 
-        let filtersWithState = []
+        let filtersWithState = [...filters]
 
         if (Object.keys(queryParams).length !== 0) {
             filtersWithState = [
@@ -288,7 +288,7 @@ const RenderPageParts = (props) => {
 
             const queryParams = queryString.parse(history.location.search)
 
-            let filtersWithState = []
+            let filtersWithState = [...filters]
 
             if (Object.keys(queryParams).length !== 0) {
                 filtersWithState = [

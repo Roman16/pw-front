@@ -73,7 +73,7 @@ const Placements = () => {
 
             const queryParams = queryString.parse(history.location.search)
 
-            let filtersWithState = []
+            let filtersWithState = [ ...filters]
 
             if (Object.keys(queryParams).length !== 0) {
                 filtersWithState = [
@@ -113,7 +113,7 @@ const Placements = () => {
                 undefined,
             )])
 
-           const res = {
+            const res = {
                 ...currentData.result,
                 metrics: _.mapValues(currentData.result.metrics, (v, k) => ({
                     value: v,
@@ -194,7 +194,7 @@ const Placements = () => {
     const downloadCSVHandler = () => {
         const queryParams = queryString.parse(history.location.search)
 
-        let filtersWithState = []
+        let filtersWithState = [...filters]
 
         if (Object.keys(queryParams).length !== 0) {
             filtersWithState = [

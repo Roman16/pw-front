@@ -115,7 +115,7 @@ const SearchTerms = () => {
 
             const queryParams = queryString.parse(history.location.search)
 
-            let filtersWithState = []
+            let filtersWithState = [...filters]
 
             if (Object.keys(queryParams).length !== 0) {
                 filtersWithState = [
@@ -322,7 +322,7 @@ const SearchTerms = () => {
     const downloadCSVHandler = () => {
         const queryParams = queryString.parse(history.location.search)
 
-        let filtersWithState = []
+        let filtersWithState = [...filters]
 
         if (Object.keys(queryParams).length !== 0) {
             filtersWithState = [
