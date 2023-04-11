@@ -213,6 +213,9 @@ function downloadTableCSV(location, filtersWithState, selectedRangeDate) {
         }
     }
 
+    if (location === 'products') location = 'products/regular'
+    if (location === 'products-parents') location = 'products/parents'
+
     const attributionWindow = localStorage.getItem('attributionWindow') || '7',
         marketplace = localStorage.getItem('activeMarketplace') && localStorage.getItem('activeMarketplace') !== 'undefined' ? JSON.parse(localStorage.getItem('activeMarketplace')) : null
 
