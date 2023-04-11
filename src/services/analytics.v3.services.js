@@ -75,9 +75,11 @@ export const filtersHandler = (f) => {
             if (value) {
                 if (typeof value === 'string') {
                     parameters.push(`&${filterBy}:like[]=${encodeString(value)}`)
+                    parameters.push(`&search[]=${encodeString(value)}`)
                 } else {
                     value.forEach(i => {
                         parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
+                        parameters.push(`&search[]=${encodeString(value)}`)
                     })
                 }
             }
