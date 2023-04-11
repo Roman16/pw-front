@@ -12,6 +12,8 @@ import {notification} from "../../../components/Notification"
 import BulkInformation from "./BulkInformation"
 import Summary from "./Summary"
 import {toast} from "react-toastify"
+import {PromoWindow} from "./PromoWindow"
+import {useSelector} from "react-redux"
 
 const stripeKey = process.env.REACT_APP_ENV === 'production'
     ? process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY_LIVE
@@ -40,12 +42,15 @@ const Payment = (props) => {
         [fetchProcessing, setFetchProcessing] = useState(true),
         [dontSaveCard, setDontSaveCard] = useState(false),
         [couponInfo, setCouponInfo] = useState(),
+        [visiblePromoWindow, setVisiblePromoWindow] = useState(true),
         [couponCheckProcessing, setCouponCheckProcessing] = useState(false),
         [newCard, setNewCard] = useState({
             card_number: false,
             expiry: false,
             cvc: false,
         })
+
+    const regionAccountId = useSelector(state => state.user.activeAmazonRegion.id)
 
     const stripeElementChangeHandler = (element, name) => {
         if (!element.empty && element.complete) {
@@ -207,15 +212,15 @@ const Payment = (props) => {
         try {
             setFetchProcessing(true)
 
-            const [batchInfo, paymentCards] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation()])
+            const [batchInfo, paymentCards, promo] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation(), userService.getAvailablePromo(regionAccountId)])
 
-            if(batchInfo.result.products[0].job.status === 'PAYMENT_IN_PROGRESS') {
+            if (batchInfo.result.products[0].job.status === 'PAYMENT_IN_PROGRESS') {
                 fetchIncompleteJobInfo()
             }
 
-            if (paymentCards.length > 0) setPaymentMethod('select')
+            if (paymentCards.result.length > 0) setPaymentMethod('select')
 
-            setCardList(paymentCards.sort((x, y) => {
+            setCardList(paymentCards.result.sort((x, y) => {
                 return x.default ? -1 : y.default ? 1 : 0
             }))
 
@@ -232,7 +237,7 @@ const Payment = (props) => {
         try {
             const {result} = await zthServices.getIncompleteJob(props.batchId)
 
-            if(result.coupon) {
+            if (result.coupon) {
                 setCouponInfo(result.coupon)
             }
 
@@ -310,6 +315,11 @@ const Payment = (props) => {
                     />
                 </form>
             </>}
+
+            {/*<PromoWindow*/}
+            {/*    visible={visiblePromoWindow}*/}
+            {/*    onClose={() => setVisiblePromoWindow(false)}*/}
+            {/*/>*/}
         </div>
     )
 }

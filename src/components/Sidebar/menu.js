@@ -16,14 +16,14 @@ export const mainMenu = [
             },
         ]
     },
+    // {
+    //     title: 'Analytics',
+    //     key: 'analytics',
+    //     icon: 'analytics-icon-sidebar',
+    //     link: 'analytics'
+    // },
     {
         title: 'Analytics',
-        key: 'analytics',
-        icon: 'analytics-icon-sidebar',
-        link: 'analytics'
-    },
-    {
-        title: 'Analytics v3',
         key: 'analyticsV3',
         icon: 'analytics-icon-sidebar',
         link: 'analytics-v3'

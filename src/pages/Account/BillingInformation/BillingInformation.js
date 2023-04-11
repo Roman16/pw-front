@@ -49,8 +49,8 @@ const BillingInformation = () => {
         setFetchingProcessing(true)
 
         try {
-            const res = await userService.fetchBillingInformation()
-            setAddedCardsList(mapCards(res))
+            const {result} = await userService.fetchBillingInformation()
+            setAddedCardsList(mapCards(result))
         } catch (e) {
             console.log(e)
         }

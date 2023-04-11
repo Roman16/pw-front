@@ -244,7 +244,7 @@ const AuthorizedUser = (props) => {
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>
                                     {/*ANALYTICS*/}
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    <ConnectedAmazonRoute path="/analytics" render={() => <Redirect to={'/analytics-v3'}/>}/>
                                     <ConnectedAmazonRoute path="/analytics-v3" component={AnalyticsV3}/>
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}

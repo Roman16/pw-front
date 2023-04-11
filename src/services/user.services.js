@@ -62,7 +62,9 @@ export const userService = {
     getNotifications,
     getAccountStatus,
 
-    updateAmazonAccount
+    updateAmazonAccount,
+
+    getAvailablePromo
 }
 
 function login(user) {
@@ -283,6 +285,13 @@ function getIndexHtml() {
 
 function getNotifications() {
     return api('get', `${userUrls.notifications}`)
+}
+
+
+//-------------------------------------
+
+function getAvailablePromo(id) {
+    return api('get', `${userUrls.availablePromo}?amazon_region_account_id=${id}`)
 }
 
 //-------------------------------------

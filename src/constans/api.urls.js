@@ -60,7 +60,8 @@ export const userUrls = {
 
     userPersonalInformation: 'user/me',
     notifications: 'notifications',
-    accountStatus: 'user/account/subscription/status'
+    accountStatus: 'user/account/subscription/status',
+    availablePromo: 'promo/zero-to-hero'
 }
 
 export const productsUrls = {
