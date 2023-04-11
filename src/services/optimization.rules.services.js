@@ -1,7 +1,7 @@
 import api from "./request"
 import {optimizationRulesUrls} from "../constans/api.urls"
 import {searchStrWrap} from "./products.services"
-import {filtersHandler} from "./analytics.services"
+import {filtersHandler} from "./analytics.v3.services"
 import moment from 'moment'
 
 export const optimizationRulesServices = {
