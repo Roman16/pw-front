@@ -72,6 +72,17 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
             >
                 {campaign}
             </Link></div>)
+    }, {
+        title: 'Campaign Status',
+        dataIndex: 'campaignState',
+        key: 'campaignState',
+        width: '0',
+        visible: false,
+        sorter: false,
+        locked: false,
+        noTotal: true,
+        filter: true,
+        fastUpdating: false,
     }] : [],
     ...!selectedAdGroup ? [{
         title: 'Ad Group',
@@ -98,11 +109,35 @@ const getColumns = (setStateHandler, selectedCampaign, selectedAdGroup, editable
                     {item.adGroupName}
                 </Link></div>
         )
-    }] : [],
+    },
+        {
+            title: 'Ad Group Status',
+            dataIndex: 'adGroupState',
+            key: 'adGroupState',
+            width: '0',
+            visible: false,
+            sorter: false,
+            locked: false,
+            noTotal: true,
+            filter: true,
+            fastUpdating: false,
+        },] : [],
     matchTypeColumn,
     {
         ...statusColumn,
         locked: false,
+    },
+    {
+        title: 'Portfolio',
+        dataIndex: 'portfolioName',
+        key: 'portfolioName',
+        width: '0',
+        visible: false,
+        sorter: false,
+        locked: false,
+        noTotal: true,
+        filter: true,
+        fastUpdating: false,
     },
     {
         title: 'Bid',

@@ -21,14 +21,15 @@ let lastError = null
 
 export const encodeString = (string) => encodeURIComponent(string)
 
-function handlerErrors(error, type = 'error') {
+function handlerErrors(error, type = 'error', request_id) {
     if (lastError !== error) {
         lastError = error
 
         notification[type]({
             title: error,
-            // autoClose: false
-        },)
+            autoClose: !(type === 'error' && request_id),
+            description: request_id ? `Request ID: ${request_id}` : ''
+        })
 
         setTimeout(() => {
             lastError = null
@@ -135,7 +136,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                     reject(error)
                 } else if (error.response && showNotifications) {
                     if (!error.response.data || !error.response.data.message) {
-                        handlerErrors('Something wrong!')
+                        handlerErrors('Something wrong!', 'error', error.response.data.request_id)
                         reject(error)
                     } else if (typeof error.response.data === 'object') {
                         reject(error)
@@ -145,7 +146,7 @@ const api = (method, url, data, type, abortToken, withDefaultUrl = true, showNot
                         } else if (error.response.data.message === 'Retry with' || (error.response.status === 402 && error.response.data.message === "Payment Required") || (error.response.status === 403 && (error.response.data.message === "Forbidden" || error.response.data.message === "Access denied"))) {
                         } else if (error.response.data.message !== 'Product not found') {
                             if (error.response.data) {
-                                handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error)
+                                handlerErrors(error.response.data.message ? error.response.data.message : error.response.data.error, 'error', error.response.data.request_id)
                             }
                         }
                     }

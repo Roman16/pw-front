@@ -4,15 +4,10 @@ import moment from "moment"
 import Pagination from "../../../components/Pagination/Pagination"
 import {SVG} from "../../../utils/icons"
 import {history} from "../../../utils/history"
-import {zthActions} from "../../../actions/zth.actions"
-import {useDispatch} from "react-redux"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
 import {amazonDefaultImageUrls} from "../../../components/ProductList/ProductItem"
 import noImage from '../../../assets/img/no-image-available.svg'
 import {Spin} from "antd"
-
-
-const DEV = process.env.REACT_APP_ENV !== 'production'
 
 
 const ProductItem = ({product, openedProduct, onOpenVariations, onDeleteJob}) => {
@@ -144,6 +139,10 @@ const jobStatus = ({job}) => {
 const jobActions = (item, onDeleteJob, deleteProcessing) => {
     const {job} = item
 
+    const goToOptimizationPage = () => {
+        history.push(`/ppc/automation?searchStr=${item.sku}`)
+    }
+
     if (job) {
         const status = job.status
 
@@ -189,6 +188,19 @@ const jobActions = (item, onDeleteJob, deleteProcessing) => {
                         Complete Payment
                     </button>
                 </div>
+            )
+        } else if (job.status === 'DONE') {
+            return (
+                <InformationTooltip
+                    type={'custom'}
+                    description={'Make your Zero To Hero more effective with automation!'}
+                >
+                    <button
+                        className={'btn default'}
+                        onClick={goToOptimizationPage}>
+                        Enable Automation
+                    </button>
+                </InformationTooltip>
             )
         } else {
             return (
@@ -349,6 +361,7 @@ const ProductsList = ({productsList, selectedTab, paginationOptions, processing,
         },
 
     ]
+
     const columns = {
         'zth-products': [
             ...defaultColumns,

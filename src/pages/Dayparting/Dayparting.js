@@ -91,6 +91,12 @@ const Dayparting = () => {
                             the bottom of this page.
                         </section>}
 
+                        {activeTab === 'campaigns' && <DaySwitches
+                            multiselect={multiselect}
+                            fetchingCampaignList={fetchingCampaignList}
+                            hasSubscriptions={subscription.access.optimization}
+                        />}
+
                         <HourDayStatistics
                             date={selectedDate}
                             campaignId={campaignId}
@@ -114,12 +120,6 @@ const Dayparting = () => {
                             attributionWindow={attributionWindow}
                             fetchingCampaignList={fetchingCampaignList}
                         />
-
-                        {activeTab === 'campaigns' && <DaySwitches
-                            multiselect={multiselect}
-                            fetchingCampaignList={fetchingCampaignList}
-                            hasSubscriptions={subscription.access.optimization}
-                        />}
                     </div>}
                 </div>
             </div>

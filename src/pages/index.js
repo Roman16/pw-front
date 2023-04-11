@@ -28,6 +28,7 @@ const OptimizationFormAdmin = React.lazy(() => import('./PPCAutomate/Optimizatio
 const Report = React.lazy(() => import('./PPCAutomate/Report/Report'))
 
 const Analytics = React.lazy(() => import('./Analytics'))
+const AnalyticsV3 = React.lazy(() => import('./AnalyticsV3'))
 
 const Account = React.lazy(() => import('./Account/Navigation/Navigation'))
 
@@ -243,7 +244,8 @@ const AuthorizedUser = (props) => {
                             <Suspense fallback={<RouteLoader/>}>
                                 <Switch>
                                     {/*ANALYTICS*/}
-                                    <ConnectedAmazonRoute path="/analytics" component={Analytics}/>
+                                    <ConnectedAmazonRoute path="/analytics" render={() => <Redirect to={'/analytics-v3'}/>}/>
+                                    <ConnectedAmazonRoute path="/analytics-v3" component={AnalyticsV3}/>
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}
                                     {(isAgencyUser) &&
@@ -343,8 +345,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
-                                    {/*<ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>*/}
-                                    {/*<ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>*/}
+                                    <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
+                                    <ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>
                                     {/*-------------------------------------------*/}
 
 

@@ -224,6 +224,8 @@ const columnTitle = (location) => ({
     'total_profit': 'Net Profit',
     'total_profit_gross': 'Gross Profit',
     'state': 'Status',
+    'campaignState': 'Campaign Status',
+    'adGroupState': 'Ad Group Status',
     'targetings_count': 'Total Targets',
     'product_ads_count': 'Products',
     'calculatedBid': 'Bid',

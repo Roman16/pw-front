@@ -12,6 +12,8 @@ import PaymentSuccessWindow from "./PaymentSuccessWindow"
 import {Link} from "react-router-dom"
 import {notification} from "../../../components/Notification"
 import {SearchField} from "../../../components/SearchField/SearchField"
+import {productsActions} from "../../../actions/products.actions"
+import {productsServices} from "../../../services/products.services"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -21,9 +23,9 @@ const {Search} = Input
 let intervalId = null
 
 let pagination = {
-        page: 1,
-        pageSize: 10
-    }
+    page: 1,
+    pageSize: 10
+}
 
 const Settings = (props) => {
     const [selectedTab, setTab] = useState('zth-products'),
@@ -93,6 +95,15 @@ const Settings = (props) => {
                 ungroupVariations: 0,
                 cancelToken: source.token
             })
+
+            // if (selectedTab === 'zth-products') {
+            //
+            //     productsServices.getProducts({
+            //         page: 1,
+            //         pageSize: paginationOptions.pageSize,
+            //         idList: res.result.products.filter(i => i.job.status === 'DONE')
+            //     })
+            // }
 
             setList(res.result.products || [])
             setTotalSize(res.result.totalSize)

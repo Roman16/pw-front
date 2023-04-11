@@ -198,10 +198,6 @@ const MetricItem = ({
                         onActivateMetric,
                         onDeactivateMetric
                     }) => {
-    const {hasMargin} = useSelector(state => ({
-        hasMargin: state.dashboard.hasMargin || false
-    }))
-
     const handleClick = () => {
         if (activeMetrics.includes(key)) {
             onDeactivateMetric(key, activeMetrics.findIndex(item => item === key))

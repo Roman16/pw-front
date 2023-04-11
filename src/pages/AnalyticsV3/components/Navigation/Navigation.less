@@ -1,0 +1,128 @@
+@import "../../../../style/variables.less";
+
+.analytics-page .navigation {
+  width: 15.428571428571429rem;
+  background: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  margin: 0 5px 10px 10px;
+  padding: 4px 0 0 0;
+  overflow-x: hidden;
+
+  &.hidden {
+    width: 0;
+    margin: 0 5px 10px 0;
+  }
+
+  ul {
+    list-style: none;
+    min-width: max-content;
+
+    li {
+      min-width: max-content;
+
+      a {
+        height: 3.5714285714285716rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1.4285714285714286rem;
+
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+        color: #353A3E;
+        font-weight: 600;
+        cursor: pointer;
+        border-bottom: 0.5px solid #C9CBD4;
+
+        &.active {
+          background: #FFFAFA;
+          padding-left: 1.1428571428571428rem;
+          border-left: 0.2857142857142857rem solid #FF5256;
+        }
+
+        &:hover {
+          background: #FFFAFA;
+        }
+
+        .switch-sub-menu {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+          border-radius: 50%;
+          margin: 0 -5px 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10;
+          padding: 3px 0 0 0;
+
+          svg {
+            width: 9px;
+            height: 6px;
+            transition: .2s;
+          }
+
+          &:hover {
+            background: rgba(109, 109, 246, 0.05);
+          }
+
+          &.opened {
+            svg {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+
+      .sub-menu {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.15s ease-out;
+
+        &.opened {
+          max-height: 130px;
+          transition: max-height 0.25s ease-in;
+        }
+
+        li {
+          display: flex;
+          align-items: center;
+
+          a {
+            width: 100%;
+            justify-content: flex-start;
+
+            &::before {
+              content: '';
+              width: 6px;
+              min-width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              margin: 0 10px 0 0;
+              background: #C9CBD4;
+            }
+
+            &.active {
+              border-left: none;
+              padding-left: 1.4285714285714286rem;
+
+              &::before {
+                background: #FF5256;
+              }
+            }
+
+            .custom-tooltip {
+              margin: 0 0 0 auto;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ant-popover {
+    .ant-popover-title, .ant-popover-inner-content {
+      font-size: 1rem;
+    }
+  }
+}

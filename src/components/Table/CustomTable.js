@@ -117,7 +117,7 @@ const CustomTable = ({
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                             leftStickyPosition = index === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + ${checkboxWith}px)` : columns[index - 1].width}
 
-                        return (
+                        return (item.visible === false ? '' :
                             <div
                                 className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
                                 key={`row_${item.dataIndex}_${index}`}
@@ -154,7 +154,7 @@ const CustomTable = ({
                         const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                             leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
-                        return (
+                        return (item.visible === false ? '' :
                             <div
                                 className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
                                 style={{
@@ -166,9 +166,9 @@ const CustomTable = ({
 
                                 {!item.noTotal && dataSource[0].compareWithPrevious && columnIndex > 2 &&
                                 <RenderMetricChanges
-                                    value={totalDataSource[item.key].value}
-                                    prevValue={totalDataSource[item.key].value_prev}
-                                    diff={totalDataSource[item.key].value_diff}
+                                    value={totalDataSource[item.key]?.value}
+                                    prevValue={totalDataSource[item.key]?.value_prev}
+                                    diff={totalDataSource[item.key]?.value_diff}
                                     type={_.find(analyticsAvailableMetricsList, {key: item.key})?.type}
                                     name={item.key}
                                 />}
@@ -208,7 +208,7 @@ const CustomTable = ({
                                     const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                                         leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
-                                    return (
+                                    return (item.visible === false ? '' :
                                         <div
                                             className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? item.disableField && item.disableField(report[item.key], report) ? 'editable-field disabled' : 'editable-field' : ''}`}
                                             style={{

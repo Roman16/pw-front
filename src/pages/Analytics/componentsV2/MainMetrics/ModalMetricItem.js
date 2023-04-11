@@ -6,7 +6,13 @@ import {numberMask} from "../../../../utils/numberMask";
 import {SVG} from "../../../../utils/icons";
 import {ProfitTooltipDescription} from "../../../PPCAutomate/Dashboard/ProductBreakdown/ProductsList"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {metricKeys} from "./metricsList"
 
+export const profitMetrics = [
+    metricKeys['net_ad_profit'],
+    metricKeys['gross_profit'],
+    metricKeys['net_profit'],
+]
 const RenderMetricValue = ({value, type}) => {
 
     if (value != null && !isNaN(value)) {
@@ -52,6 +58,8 @@ const ModalMetricItem = ({item: {title, info, key, value, type, label}, listType
                                                        getPopupContainer={trigger => trigger.parentNode.parentNode.parentNode.parentNode.parentNode}
                                                        description={info}/>
                 }
+
+                {profitMetrics.includes(key) && <div className="beta-label">Beta</div>}
 
                 {listType === 'hidden' && <div className="action-btn add-item">
                     <SVG id='plus-green'/>

@@ -40,6 +40,12 @@ export const columns = (onImpersonate) => [
         render: email => email ? <span title={email} className="trim-text">{email}</span> : '-'
     },
     {
+        title: 'Comment',
+        dataIndex: 'comment',
+        key: 'comment',
+        width: '300px',
+    },
+    {
         ...impressionsColumn,
     },
     {

@@ -16,11 +16,17 @@ export const mainMenu = [
             },
         ]
     },
+    // {
+    //     title: 'Analytics',
+    //     key: 'analytics',
+    //     icon: 'analytics-icon-sidebar',
+    //     link: 'analytics'
+    // },
     {
         title: 'Analytics',
-        key: 'analytics',
+        key: 'analyticsV3',
         icon: 'analytics-icon-sidebar',
-        link: 'analytics'
+        link: 'analytics-v3'
     },
     // {
     //     title: 'Tableau',
@@ -54,12 +60,12 @@ export const mainMenu = [
         icon: 'dayparting-icon-sidebar',
         link: 'dayparting'
     },
-    // {
-    //     title: 'Optimization Rules',
-    //     key: 'rules',
-    //     icon: 'optimization-rules-icon-sidebar',
-    //     link: 'optimization-rules'
-    // },
+    {
+        title: 'Optimization Rules',
+        key: 'rules',
+        icon: 'optimization-rules-icon-sidebar',
+        link: 'optimization-rules'
+    },
     {
         title: 'PPC Audit',
         key: 'scanner',
