@@ -212,7 +212,8 @@ const Payment = (props) => {
         try {
             setFetchProcessing(true)
 
-            const [batchInfo, paymentCards, promo] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation(), userService.getAvailablePromo(regionAccountId)])
+            // const [batchInfo, paymentCards, promo] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation(), userService.getAvailablePromo(regionAccountId)])
+            const [batchInfo, paymentCards] = await Promise.all([zthServices.fetchBatchInformation(props.batchId), userService.fetchBillingInformation()])
 
             if (batchInfo.result.products[0].job.status === 'PAYMENT_IN_PROGRESS') {
                 fetchIncompleteJobInfo()
