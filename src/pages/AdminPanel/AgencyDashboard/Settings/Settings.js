@@ -42,7 +42,8 @@ export const Settings = () => {
                     amazon_region_account_marketplace_id: data[indexRow].amazon_region_account_marketplace_id,
                     active: data[indexRow].active ? 1 : 0,
                     project_manager_id: data[indexRow].project_manager_id,
-                    ppc_manager_id: data[indexRow].ppc_manager_id
+                    ppc_manager_id: data[indexRow].ppc_manager_id,
+                    comment: data[indexRow].comment || ''
                 }))
             })
 
