@@ -33,14 +33,14 @@ export const searchStrWrap = (searchStr, wrap) => {
 
     if (searchStr) {
         if (typeof searchStr === 'string') {
-            if(wrap) {
+            if (wrap) {
                 searchParams.push(`&${wrap}[search][]=${encodeString(searchStr)}`)
             } else {
                 searchParams.push(`&search[]=${encodeString(searchStr)}`)
             }
         } else {
             searchStr.forEach(i => {
-                if(wrap) {
+                if (wrap) {
                     searchParams.push(`&${wrap}[search][]=${encodeString(i)}`)
                 } else {
                     searchParams.push(`&search[]=${encodeString(i)}`)
@@ -52,8 +52,8 @@ export const searchStrWrap = (searchStr, wrap) => {
     return searchParams
 }
 
-function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, cancelToken}) {
-    return api('get', `${productsUrls.allProducts}?page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
+function getProducts({pageSize, page, searchStr = '', onlyOptimization, onlyHasNew, ungroupVariations = 0, idList = [], cancelToken}) {
+    return api('get', `${productsUrls.allProducts}?page=${page}&size=${pageSize}&ungroup_variations=${ungroupVariations}&only_under_optimization=${onlyOptimization ? 1 : 0}&only_has_new=${onlyHasNew ? 1 : 0}${searchStrWrap(searchStr).join('')}${idList.length > 0 ? `&product_id[]=${idList.join('&product_id[]=')}` : ''}`, null, null, cancelToken)
 }
 
 function getProductDetails(id, cancelToken) {
@@ -135,7 +135,7 @@ function updateProductSettingsById(parameters) {
     })
 }
 
-function updateProductSettingsByIdList(params, searchStr='') {
+function updateProductSettingsByIdList(params, searchStr = '') {
     return api('post', `${productsUrls.updateSettings}?${searchStrWrap(searchStr).join('')}`.replace(/[^=&]+=(?:&|$)/g, ""), params)
 }
 

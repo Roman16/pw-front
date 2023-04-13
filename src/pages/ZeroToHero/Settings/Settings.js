@@ -14,6 +14,7 @@ import {notification} from "../../../components/Notification"
 import {SearchField} from "../../../components/SearchField/SearchField"
 import {productsActions} from "../../../actions/products.actions"
 import {productsServices} from "../../../services/products.services"
+import _ from 'lodash'
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -96,16 +97,21 @@ const Settings = (props) => {
                 cancelToken: source.token
             })
 
-            // if (selectedTab === 'zth-products') {
-            //
-            //     productsServices.getProducts({
-            //         page: 1,
-            //         pageSize: paginationOptions.pageSize,
-            //         idList: res.result.products.filter(i => i.job.status === 'DONE')
-            //     })
-            // }
+            if (selectedTab === 'zth-products') {
+                const {result} = await productsServices.getProducts({
+                    page: 1,
+                    pageSize: paginationOptions.pageSize,
+                    idList: res.result.products.filter(i => i.job.status === 'DONE').map(i => i.job.product_id)
+                })
 
-            setList(res.result.products || [])
+                setList(res.result.products.map(item => ({
+                    ...item,
+                    under_optimization: _.find(result.products, {id: item.job.product_id})?.under_optimization
+                })) || [])
+            } else {
+                setList(res.result.products || [])
+            }
+
             setTotalSize(res.result.totalSize)
 
             setProcessing(false)
@@ -136,7 +142,7 @@ const Settings = (props) => {
     useEffect(() => {
         return (() => clearInterval(intervalId))
     }, [])
-
+    console.log(productsList)
     return (
         <div className="zth-settings">
             <ul className="tabs">

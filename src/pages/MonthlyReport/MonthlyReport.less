@@ -1,0 +1,159 @@
+.monthly-report-page {
+  display: flex;
+  flex-direction: column;
+
+  section {
+    margin: 0 0 50px;
+  }
+
+  .metrics-list {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(13.57142857rem, 1fr));
+    grid-gap: 10px;
+  }
+
+  .line-chart-container {
+    height: 400px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .account-statistic {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+  }
+
+
+  .pie-charts-row {
+    display: flex;
+    justify-content: space-around;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .pie-chart-container {
+    height: 400px;
+    width: 400px;
+  }
+
+  .table-block {
+    width: 100%;
+    height: 400px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .tree-map-chart-container {
+    width: 100%;
+    height: 400px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.custom-line-chart-tooltip {
+  display: flex;
+  width: max-content;
+  padding: 15px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-shadow: 0px 5px 20px rgba(40, 62, 112, 0.1);
+
+  & > div {
+    flex: 1;
+    min-width: max-content;
+
+    //& > div:nth-child(2) {
+    //  color: #8FD39D;
+    //}
+    //
+    //& > div:nth-child(3) {
+    //  color: #6D6DF6;
+    //}
+
+    &:first-child {
+      div {
+        color: inherit;
+      }
+    }
+
+    img {
+      margin: 0 10px 0 0;
+    }
+  }
+
+  .title {
+    border-bottom: 1px solid #F5F5FF;
+    padding: 10px 0;
+    margin: 0 0 20px 0;
+
+
+    &.date {
+      font-weight: bold;
+      width: max-content;
+    }
+  }
+
+  & > .week-value,
+  & > .daily-value {
+    margin: 0 !important;
+  }
+
+  .name,
+  .week-value,
+  .daily-value {
+    margin: 0 0 10px 0;
+
+    br {
+      display: none;
+    }
+  }
+
+  .week-value {
+    text-align: left;
+
+    div {
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+
+      i {
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
+  .daily-value {
+    text-align: left;
+
+    div {
+      display: flex;
+      align-items: center;
+      padding-left: 20px;
+
+
+      svg {
+        margin: 0 10px 0 0;
+      }
+    }
+  }
+
+  //retina
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    & {
+      font-size: 1.1428571428571428rem;
+    }
+  }
+}

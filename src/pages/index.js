@@ -45,6 +45,7 @@ const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/Product
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 const OptimizationRules = React.lazy(() => import('./OptimizationRules/OptimizationRules.js'))
 const AttachSettings = React.lazy(() => import('./OptimizationRules/AttachSettings/AttachSettings.js'))
+const MonthlyReport = React.lazy(() => import('./MonthlyReport/MonthlyReport.js'))
 
 const localStorageVersion = '4.05'
 
@@ -106,7 +107,6 @@ const AdvancedRoute = (props) => {
     }
 }
 
-
 const ConnectedAmazonRoute = props => {
     const amazonRegionAccounts = useSelector(state => state.user.amazonRegionAccounts),
         activeAmazonRegion = useSelector(state => state.user.activeAmazonRegion)
@@ -121,7 +121,6 @@ const ConnectedAmazonRoute = props => {
         return <Route {...props} />
     }
 }
-
 
 const AuthorizedUser = (props) => {
     checkLocalStorageVersion()
@@ -348,6 +347,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
                                     <ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>
                                     {/*-------------------------------------------*/}
+                                    <ConnectedAmazonRoute exact path="/monthly-report" component={MonthlyReport}/>
 
 
                                     <Route path={'*'} render={() => (
