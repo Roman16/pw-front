@@ -30,14 +30,14 @@ const NegativeTargetings = () => {
                 availableParts={['table']}
 
                 columns={columnList(setStateHandler, selectedCampaign, selectedAdGroup)}
-                // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={location}/>}
+                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={location}/>}
                 showRowSelection={true}
                 dateRange={false}
                 showOptions={false}
                 rowKey={'targetingId'}
                 fixedColumns={[0]}
             >
-                {/*{successCreate => <CreateNegativeTargetingsWindow onReloadList={successCreate} location={location}/>}*/}
+                {successCreate => <CreateNegativeTargetingsWindow onReloadList={successCreate} location={location}/>}
             </RenderPageParts>
 
 
