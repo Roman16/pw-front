@@ -4,6 +4,8 @@ import {Checkbox} from 'antd'
 import {productsServices} from "../../../../services/products.services"
 import {notification} from "../../../../components/Notification"
 import {DescriptionDrawer} from "./DescriptionDrawer"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {SVG} from "../../../../utils/icons"
 
 
 export const optimizationOptions = [
@@ -25,7 +27,12 @@ const OptimizationVariations = ({product, onUpdateField}) => {
         <>
             <section className='optimization-variations'>
                 <div className="section-header">
-                    <h2>What do you want to automate <span onClick={() => setVisibleDrawer(true)}>?</span></h2>
+                    <h2>
+                        What do you want to automate?
+                        <span className="info-icon" onClick={() => setVisibleDrawer(true)}>
+                            <SVG id='information'/>
+                        </span>
+                    </h2>
                 </div>
 
                 <div className="variation-list">
