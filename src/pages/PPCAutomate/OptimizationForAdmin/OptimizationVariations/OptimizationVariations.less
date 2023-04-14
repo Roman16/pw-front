@@ -15,11 +15,24 @@
       font-weight: 600;
       color: #353A3E;
       margin-bottom: 1.4285714285714286rem;
+      display: flex;
+      align-items: center;
 
-      span {
-        color: #6959AB;
+      .info-icon {
+        margin: 0 0 0 8px;
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        width: 1.2857142857142858rem;
+        height: 1.2857142857142858rem;
+        fill: #C9CBD4;
         cursor: pointer;
-        font-size: 1.5714285714285714rem;
+
+        &:hover {
+          fill: #6959AB;
+        }
       }
     }
   }
