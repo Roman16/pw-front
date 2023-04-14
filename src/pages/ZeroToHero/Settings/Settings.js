@@ -97,12 +97,6 @@ const Settings = (props) => {
                 cancelToken: source.token
             })
 
-            setList(res.result.products.map(item => ({
-                ...item,
-                under_optimization: undefined
-            })) || [])
-
-
             if (selectedTab === 'zth-products') {
                 productsServices.getProducts({
                     page: 1,
@@ -114,15 +108,22 @@ const Settings = (props) => {
                             ...item,
                             under_optimization: _.find(result.products, {id: item.job.product_id})?.under_optimization
                         })) || [])
+                        setTotalSize(res.result.totalSize)
+                        setProcessing(false)
+                    })
+                    .catch(e => {
+                        setList(res.result.products.map(item => ({
+                            ...item,
+                            under_optimization: false
+                        })) || [])
+                        setTotalSize(res.result.totalSize)
+                        setProcessing(false)
                     })
             } else {
                 setList(res.result.products || [])
+                setTotalSize(res.result.totalSize)
+                setProcessing(false)
             }
-
-            setTotalSize(res.result.totalSize)
-
-            setProcessing(false)
-
         } catch (e) {
             setList([])
         }
