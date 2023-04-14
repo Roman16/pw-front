@@ -28,7 +28,7 @@ const defaultState = {
         "type": "rule",
         "metric": "clicks",
         "operator": "===",
-        "value": 1
+        "value": "1"
     },
     campaignsId: []
 }

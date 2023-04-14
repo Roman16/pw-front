@@ -149,7 +149,7 @@ const defaultRule = {
     "type": "rule",
     "metric": "impressions",
     "operator": "===",
-    "value": 1
+    "value": "1"
 }
 
 const defaultGroup = {
@@ -274,7 +274,7 @@ export const RuleSettings = ({data, onChange}) => {
                     value={data.interval}
                     onChange={interval => onChange({interval})}
                 >
-                    {[...intervalEnums, ...data.type ==='manual' ? [{title: 'lifetime', key: ";"}] : []].map(i =>
+                    {[...intervalEnums, ...data.type === 'manual' ? [{title: 'lifetime', key: ";"}] : []].map(i =>
                         <Option value={i.key}>{i.title}</Option>)}
 
                 </CustomSelect>
@@ -344,7 +344,7 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                     <label htmlFor="">Value</label>
                     <input
                         value={rule.value}
-                        onChange={({target: {value}}) => onChange({...rule, value})}
+                        onChange={({target: {value}}) => onChange({...rule, value: String(value)})}
                     />
                 </div>
 
@@ -414,7 +414,7 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Value</label>
                     <InputCurrency
                         value={actions.value}
-                        onChange={(value) => onChange({actions: {...actions, value}})}
+                        onChange={(value) => onChange({actions: {...actions, value: String(value)}})}
                     />
                 </div>
             </div>
@@ -452,7 +452,7 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Value</label>
                     <InputCurrency
                         value={actions.value}
-                        onChange={(value) => onChange({actions: {...actions, value}})}
+                        onChange={(value) => onChange({actions: {...actions, value: String(value)}})}
                         typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
@@ -461,7 +461,7 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Up to minimum</label>
                     <InputCurrency
                         value={actions.up_limit}
-                        onChange={(up_limit) => onChange({actions: {...actions, up_limit}})}
+                        onChange={(up_limit) => onChange({actions: {...actions, up_limit: +up_limit}})}
                     />
                 </div>
             </div>
@@ -485,7 +485,7 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Value</label>
                     <InputCurrency
                         value={actions.value}
-                        onChange={(value) => onChange({actions: {...actions, value}})}
+                        onChange={(value) => onChange({actions: {...actions, value: String(value)}})}
                         typeIcon={actions.units === 'exact' ? 'number' : 'percent'}
                     />
                 </div>
@@ -494,7 +494,7 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Up to maximum</label>
                     <InputCurrency
                         value={actions.up_limit}
-                        onChange={(up_limit) => onChange({actions: {...actions, up_limit}})}
+                        onChange={(up_limit) => onChange({actions: {...actions, up_limit: +up_limit}})}
                     />
                 </div>
             </div>
