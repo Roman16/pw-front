@@ -83,15 +83,15 @@ const metrics = [
 
 const conditionsByMetric = {
     number: [
-        {title: 'Equals', key: 'eq'},
-        {title: 'Greater than', key: 'gt'},
-        {title: 'Less than', key: 'lt'},
-        {title: 'Greater than or equal to', key: 'gte'},
-        {title: 'Less than or equal to', key: 'lte'},
+        {title: 'Equals', key: '==='},
+        {title: 'Greater than', key: '>'},
+        {title: 'Less than', key: '<'},
+        {title: 'Greater than or equal to', key: '>='},
+        {title: 'Less than or equal to', key: '<='},
     ],
     enums: [
-        {title: 'Equals', key: 'eq'},
-        {title: 'Not equals', key: 'neq'}
+        {title: 'Equals', key: '==='},
+        {title: 'Not equals', key: '!=='}
     ]
 }
 
@@ -148,7 +148,7 @@ export const actionsEnums = [
 const defaultRule = {
     "type": "rule",
     "metric": "impressions",
-    "operator": "eq",
+    "operator": "===",
     "value": 1
 }
 
