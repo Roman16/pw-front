@@ -39,7 +39,7 @@ const Targetings = () => {
                 fixedColumns={[0, 1]}
 
                 columns={columns}
-                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
                 showRowSelection={true}
                 rowKey={'targetingId'}
             >

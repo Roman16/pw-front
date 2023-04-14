@@ -77,11 +77,11 @@ const SearchTerms = () => {
             setProcessingRows(prevState => [...prevState, id])
             const queryParams = queryString.parse(history.location.search)
 
-            const res = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate, localSorterColumn, [...Object.keys(queryParams).map(key => ({
+            const {result} = await analyticsServices.fetchTargetingsDetails(id, selectedRangeDate, localSorterColumn, [...Object.keys(queryParams).map(key => ({
                 filterBy: key,
                 type: 'eq',
                 value: queryParams[key]
-            })).filter(item => !!item.value)])
+            })).filter(item => !!item.value)], attributionWindow)
 
             setPageData(prevState => ({
                 ...prevState,
@@ -89,7 +89,7 @@ const SearchTerms = () => {
                     ...prevState.table,
                     data: prevState.table.data.map(item => {
                         if (item.queryCRC64 === id) {
-                            item.targetingsData = res.response
+                            item.targetingsData = result.table.data
                         }
 
                         return item
@@ -297,11 +297,6 @@ const SearchTerms = () => {
 
             }
         }
-    }
-
-    const changeSegmentHandler = (value) => {
-        localStorage.setItem('analyticsSTSegmentValue', value)
-        setLocalSegmentValue(value)
     }
 
     const changeSorterColumnHandler = (data) => {

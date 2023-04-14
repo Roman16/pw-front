@@ -108,6 +108,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                         type: selectedRule.type,
                         actions: JSON.stringify(selectedRule.actions),
                         condition: JSON.stringify(selectedRule.condition),
+                        new: false,
                     }) : i)
                 ])
             }
@@ -142,7 +143,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
         <div className="list">
             {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-            {list.map(item => activeTab === 'rules' ? <div onClick={() => selectRuleHandler(item)}
+            {list.map(item => activeTab === 'rules' ? <div onClick={() => selectedRule?.id !== item.id ? selectRuleHandler(item) : ''}
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
                     <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name">{item.name}</div>

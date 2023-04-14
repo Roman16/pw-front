@@ -122,6 +122,8 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
 
             if (failed + notApplicable === 0) {
                 dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
+                setCurrentStep(0)
+
                 if (mainState.adGroupId) {
                     setCreateData({
                         ...defaultState,
