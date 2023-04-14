@@ -27,7 +27,7 @@ const defaultState = {
     condition: {
         "type": "rule",
         "metric": "clicks",
-        "operator": "eq",
+        "operator": "===",
         "value": 1
     },
     campaignsId: []
