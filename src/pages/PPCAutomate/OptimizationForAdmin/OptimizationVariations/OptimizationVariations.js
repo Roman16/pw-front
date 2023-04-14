@@ -3,6 +3,7 @@ import './OptimizationVariations.less'
 import {Checkbox} from 'antd'
 import {productsServices} from "../../../../services/products.services"
 import {notification} from "../../../../components/Notification"
+import {DescriptionDrawer} from "./DescriptionDrawer"
 
 
 export const optimizationOptions = [
@@ -18,24 +19,32 @@ export const optimizationOptions = [
 ]
 
 const OptimizationVariations = ({product, onUpdateField}) => {
+    const [visibleDrawer, setVisibleDrawer] = useState(false)
 
     return (
-        <section className='optimization-variations'>
-            <div className="section-header">
-                <h2>What do you want to automate?</h2>
-            </div>
+        <>
+            <section className='optimization-variations'>
+                <div className="section-header">
+                    <h2>What do you want to automate <span onClick={() => setVisibleDrawer(true)}>?</span></h2>
+                </div>
 
-            <div className="variation-list">
-                {optimizationOptions.map(item => (
-                    <Checkbox
-                        onChange={(e) => onUpdateField(item.value, e.target.checked)}
-                        checked={product[item.value]}
-                    >
-                        {item.label}
-                    </Checkbox>
-                ))}
-            </div>
-        </section>
+                <div className="variation-list">
+                    {optimizationOptions.map(item => (
+                        <Checkbox
+                            onChange={(e) => onUpdateField(item.value, e.target.checked)}
+                            checked={product[item.value]}
+                        >
+                            {item.label}
+                        </Checkbox>
+                    ))}
+                </div>
+            </section>
+
+            <DescriptionDrawer
+                visible={visibleDrawer}
+                onSetVisible={setVisibleDrawer}
+            />
+        </>
     )
 }
 
