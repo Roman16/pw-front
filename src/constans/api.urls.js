@@ -189,7 +189,7 @@ export const analyticsUrls = {
 
     searchTermsData: 'analytics/search-terms',
     placementData: 'analytics/placements',
-    targetingsDetails: 'analytics/search-terms/targetings-data',
+    targetingsDetails: 'analytics/v3/targetings',
     pageData: (location) => `analytics/${location}`,
     portfolios: 'analytics/entities/portfolios',
     campaigns: 'analytics/entities/campaigns',

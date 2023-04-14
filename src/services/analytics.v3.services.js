@@ -131,8 +131,8 @@ function fetchPlacementData(params, idList) {
     return api('get', `${`analytics/v3/placements`}?attribution_window=${+attributionWindow}${filtersHandler(filtersWithState)}&${dateRangeFormatting(selectedRangeDate)}&table[size]=${pageSize}&table[page]=${page}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}${idList || ''}`)
 }
 
-function fetchTargetingsDetails(id, date, sorterColumn, filters) {
-    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${rangeWrap(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
+function fetchTargetingsDetails(id, date, sorterColumn, filters, attributionWindow) {
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64[]=${id}&retrieve[]=table&attribution_window=${+attributionWindow}&table[size]=100&table[page]=1&${dateRangeFormatting(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
 }
 
 function fetchPageData(location, params, idList, cancelToken) {
