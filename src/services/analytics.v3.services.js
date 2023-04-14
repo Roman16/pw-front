@@ -3,6 +3,7 @@ import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
 import {metricKeys} from "../pages/Analytics/componentsV2/MainMetrics/metricsList"
+import {dateRangeFormatting as rangeWrap} from './analytics.services'
 
 export const analyticsServices = {
     fetchStateInformation,
@@ -131,7 +132,7 @@ function fetchPlacementData(params, idList) {
 }
 
 function fetchTargetingsDetails(id, date, sorterColumn, filters) {
-    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${dateRangeFormatting(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64:eq=${id}&datetime:range=${rangeWrap(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
 }
 
 function fetchPageData(location, params, idList, cancelToken) {

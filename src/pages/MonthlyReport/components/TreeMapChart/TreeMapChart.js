@@ -1,5 +1,5 @@
 import React from 'react'
-import {Treemap, ResponsiveContainer, Pie} from 'recharts'
+import {Treemap, ResponsiveContainer, Pie, Tooltip} from 'recharts'
 
 const data = [
     {
@@ -145,7 +145,9 @@ export const TreeMapChart = () => {
                     aspectRatio={4 / 3}
                     stroke="#fff"
                     fill="#8884d8"
-                />
+                >
+                    <Tooltip />
+                </Treemap>
             </ResponsiveContainer>
         </div>
 

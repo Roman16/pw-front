@@ -72,10 +72,10 @@ export const mainMenu = [
         icon: 'scanner-icon-sidebar',
         link: 'ppc-audit'
     },
-    {
-        title: 'Report',
-        key: 'report',
-        icon: 'scanner-icon-sidebar',
-        link: 'monthly-report'
-    }
+    // {
+    //     title: 'Report',
+    //     key: 'report',
+    //     icon: 'scanner-icon-sidebar',
+    //     link: 'monthly-report'
+    // }
 ]

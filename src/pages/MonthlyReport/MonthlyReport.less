@@ -41,10 +41,80 @@
 
   .table-block {
     width: 100%;
-    height: 400px;
+    height: 450px;
     background: #fff;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+
+    .custom-table {
+      .table-head .th {
+        border-right: 0.5px solid #C9CBD4;
+
+        &:last-of-type {
+          border: 0;
+        }
+
+        .title {
+          font-weight: 600;
+          font-size: 1rem;
+          line-height: 17px;
+          color: #353A3E;
+        }
+      }
+
+      .table-body {
+        .table-body__field {
+          border-right: 0.5px solid #C9CBD4;
+
+          &:last-of-type {
+            border: 0;
+          }
+
+          .status {
+            display: flex;
+            align-items: center;
+            color: #353A3E;
+
+            i {
+              width: 12px;
+              height: 12px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 7px 0 0;
+            }
+
+            &.active {
+              //color: #259B25;
+
+              svg {
+                fill: #7FD3A1;
+              }
+            }
+
+            &.inactive {
+              //color: #D66744;
+            }
+
+            &.paused {
+              //color: #EEBB81;
+
+              svg {
+                fill: #353A3E;
+              }
+            }
+
+            &.archived {
+              //color: #656A84;
+              svg {
+                fill: #C9CBD4;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   .tree-map-chart-container {
