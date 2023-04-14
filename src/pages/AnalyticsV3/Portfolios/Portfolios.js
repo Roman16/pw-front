@@ -39,9 +39,9 @@ const Portfolios = () => {
                 showRowSelection={false}
 
                 columns={columnList(setStateHandler, setStateDetails)}
-                // moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
+                moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             >
-                {/*{successCreate => <CreatePortfolioWindow onReloadList={successCreate}/>}*/}
+                {successCreate => <CreatePortfolioWindow onReloadList={successCreate}/>}
             </RenderPageParts>
         </div>
     )

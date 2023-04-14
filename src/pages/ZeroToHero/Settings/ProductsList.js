@@ -189,7 +189,7 @@ const jobActions = (item, onDeleteJob, deleteProcessing) => {
                     </button>
                 </div>
             )
-        } else if (job.status === 'DONE') {
+        } else if (job.status === 'DONE' && item.under_optimization === false) {
             return (
                 <InformationTooltip
                     type={'custom'}

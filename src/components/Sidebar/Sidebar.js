@@ -204,6 +204,7 @@ const Sidebar = () => {
                         {mainMenu
                             .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i)
                             .filter(i => isAdmin ? i : i.key !== 'rules')
+                            .filter(i => isAdmin ? i : i.key !== 'report')
                             .filter(i => DEMO ? i.key !== 'scanner' : i)
                             .map(item => {
                                 return (

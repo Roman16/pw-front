@@ -38,7 +38,7 @@ const stateIdValues = {
     portfolioId: 'portfolios',
 }
 
-const dateRangeFormatting = (dateRange) => {
+export const dateRangeFormatting = (dateRange) => {
     const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
 
     if (dateRange.startDate === 'lifetime') {
