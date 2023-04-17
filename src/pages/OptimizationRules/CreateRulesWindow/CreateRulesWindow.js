@@ -70,7 +70,7 @@ export const CreateRulesWindow = ({
         onCreate({
             ...createData,
             condition: JSON.stringify(createData.condition),
-            actions: JSON.stringify(createData.actions),
+            actions: JSON.stringify([createData.actions]),
         })
     }
 

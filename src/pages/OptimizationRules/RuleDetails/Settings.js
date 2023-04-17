@@ -25,14 +25,14 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
             active: ruleData.active || false,
             attribution_window: attributionWindow,
             condition: JSON.stringify(ruleData.condition),
-            actions: JSON.stringify(ruleData.actions),
+            actions: ruleData.actions ? JSON.stringify(Array.isArray(ruleData.actions) ? ruleData.actions : [ruleData.actions]) : null,
         }, () => {
             setSaveProcessing(false)
         })
     }
 
     useEffect(() => {
-        setRuleData({...rule})
+        setRuleData({...rule, actions: rule.actions[0] || rule.actions})
     }, [rule])
 
     return (<>
