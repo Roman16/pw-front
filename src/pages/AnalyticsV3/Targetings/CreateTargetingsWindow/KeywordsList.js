@@ -205,7 +205,7 @@ const KeywordsList = ({keywords, onUpdate, targetingType, createData, onValidate
 
                         <button className={'btn default p15 add'} disabled={validationProcessing || disabled}>
                             <SVG id={'plus-icon'}/>
-                            Add Keywords
+                            Add
 
                             {validationProcessing && <Spin/>}
                         </button>

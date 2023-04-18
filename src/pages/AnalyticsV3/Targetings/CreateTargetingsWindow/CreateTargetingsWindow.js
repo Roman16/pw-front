@@ -123,6 +123,8 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
             if (failed + notApplicable === 0) {
                 dispatch(analyticsActions.setVisibleCreateWindow({targetings: false}))
                 setCurrentStep(0)
+                setProcessSteps([])
+                setFinishedSteps([])
 
                 if (mainState.adGroupId) {
                     setCreateData({
@@ -204,7 +206,6 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
 
         setFetchAdGroupDetailsProcessing(false)
     }
-
 
 
     const changeAdvertisingTypeHandler = value => {
@@ -308,7 +309,7 @@ const CreateTargetingsWindow = ({onReloadList, location}) => {
     }, [createData.campaignId])
 
     useEffect(() => {
-        if(createData.adGroupId) getAdGroupDetails(createData.adGroupId)
+        if (createData.adGroupId) getAdGroupDetails(createData.adGroupId)
     }, [createData.adGroupId])
 
     const nextStepValidation = () => {
@@ -533,7 +534,7 @@ export const InfinitySelect = React.memo((props) => {
         setSelectList([...props.children])
     }, [props.children])
 
-    return (<div className="form-group">
+    return (<div className="form-group infinity-select">
             <label htmlFor="">{props.label}</label>
             <CustomSelect
                 showSearch
