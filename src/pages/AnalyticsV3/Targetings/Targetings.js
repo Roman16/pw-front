@@ -37,11 +37,11 @@ const Targetings = () => {
                 availableMetrics={availableMetrics}
                 availableParts={['metrics', 'chart', 'table']}
                 fixedColumns={[0, 1]}
-
                 columns={columns}
-                // moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
                 showRowSelection={true}
                 rowKey={'targetingId'}
+
+                moreActions={<OpenCreateWindowButton title={'Add Targetings'} window={'targetings'}/>}
             >
                 {successCreate => <CreateTargetingsWindow onReloadList={successCreate} location={location}/>}
             </RenderPageParts>

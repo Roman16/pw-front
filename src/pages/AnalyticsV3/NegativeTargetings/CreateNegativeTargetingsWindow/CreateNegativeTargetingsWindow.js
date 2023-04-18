@@ -288,6 +288,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
                                         label={'Select Campaign'}
                                         placeholder={'Select campaign'}
                                         value={createData.campaignId}
+                                        getPopupContainer={trigger => trigger.parentNode}
                                         onChange={changeCampaignHandler}
                                         disabled={!createData.advertisingType}
                                         children={campaigns}
@@ -311,6 +312,7 @@ const CreateNegativeTargetingsWindow = ({location, onReloadList}) => {
                                     placeholder={'Select ad group'}
                                     value={createData.adGroupId}
                                     onChange={changeAdGroupHandler}
+                                    getPopupContainer={trigger => trigger.parentNode}
                                     disabled={!createData.campaignId}
                                     reloadPage={createData.campaignId}
                                     children={adGroups}

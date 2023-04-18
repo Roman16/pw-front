@@ -56,14 +56,19 @@ export const filtersHandler = (f) => {
             parameters.unshift(`?${dateRangeFormatting(value)}`)
         } else if (filterBy === 'campaignId') {
             parameters.push(`&campaign_id[]=${value}`)
+            parameters.push(`&campaignId:eq=${value}`)
         } else if (filterBy === 'adGroupId') {
             parameters.push(`&ad_group_id[]=${value}`)
+            parameters.push(`&adGroupId:eq=${value}`)
         } else if (filterBy === 'productId') {
             parameters.push(`&product_id[]=${value}`)
+            parameters.push(`&productId:eq=${value}`)
         } else if (filterBy ==='parent_productId') {
             parameters.push(`&parent_product_id[]=${value}`)
+            parameters.push(`&parent_productId:eq=${value}`)
         } else if (filterBy === 'portfolioId') {
             parameters.push(`&portfolio_id[]=${value}`)
+            parameters.push(`&portfolioId:eq=${value}`)
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'productView') {
@@ -75,11 +80,11 @@ export const filtersHandler = (f) => {
         } else if (type === 'search' && value) {
             if (value) {
                 if (typeof value === 'string') {
-                    // parameters.push(`&${filterBy}:like[]=${encodeString(value)}`)
+                    parameters.push(`&${filterBy}:like[]=${encodeString(value)}`)
                     parameters.push(`&search[]=${encodeString(value)}`)
                 } else {
                     value.forEach(i => {
-                        // parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
+                        parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
                         parameters.push(`&search[]=${encodeString(i)}`)
                     })
                 }

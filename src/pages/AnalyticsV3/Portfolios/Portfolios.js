@@ -37,8 +37,8 @@ const Portfolios = () => {
                 availableParts={['metrics', 'chart', 'table']}
                 fixedColumns={[0]}
                 showRowSelection={false}
-
                 columns={columnList(setStateHandler, setStateDetails)}
+
                 // moreActions={<OpenCreateWindowButton title={'Add Portfolio'} window={'portfolio'}/>}
             >
                 {successCreate => <CreatePortfolioWindow onReloadList={successCreate}/>}

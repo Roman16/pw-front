@@ -179,10 +179,20 @@
   max-width: 1000px;
 }
 
-.infinity-select-popup {
-  .ant-spin {
-    width: 100%;
-    display: flex;
-    justify-content: center;
+.form-group.infinity-select {
+  position: relative;
+
+  .infinity-select-popup {
+    .ant-select-dropdown-menu {
+      max-height: 150px;
+    }
+
+    .ant-spin {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
 }
+
+

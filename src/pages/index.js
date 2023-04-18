@@ -244,6 +244,7 @@ const AuthorizedUser = (props) => {
                                 <Switch>
                                     {/*ANALYTICS*/}
                                     <ConnectedAmazonRoute path="/analytics" render={() => <Redirect to={'/analytics-v3'}/>}/>
+                                    {/*<ConnectedAmazonRoute path="/analytics" component={Analytics}/>*/}
                                     <ConnectedAmazonRoute path="/analytics-v3" component={AnalyticsV3}/>
                                     {/*-------------------------------------------*/}
                                     {/*tableau*/}

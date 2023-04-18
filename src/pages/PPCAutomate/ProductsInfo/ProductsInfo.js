@@ -78,7 +78,7 @@ const ProductsInfo = () => {
             error()
         }
 
-        if (column === PRICE_FROM_USER && value <= 0) {
+        if (column === PRICE_FROM_USER && value <= 0 && value !== null) {
             breakSubmit('Price should be greater than 0')
         } else if ((column === MIN_BID_MANUAL_CAMPING || column === MAX_BID_MANUAL_CAMPING || column === MIN_BID_AUTO_CAMPING || column === MAX_BID_AUTO_CAMPING) && value < 0.02 && value !== null) {
             breakSubmit('Bids should be greater than or equal to 0.02$')

@@ -36,7 +36,6 @@ const ProductAds = () => {
                 fixedColumns={[0, 1]}
                 showRowSelection={true}
                 rowKey={'adId'}
-
                 columns={columns}
 
                 // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
