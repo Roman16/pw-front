@@ -12,7 +12,7 @@ export const MetricItem = ({
                                activeMetrics,
                                onSelect
                            }) =>
-    <div className='metric-item' onClick={onSelect}>
+    <div className='metric-item' onClick={() => onSelect(key)}>
         {activeMetrics.length > 0 &&
         <div className={`active-metric position-${activeMetrics.findIndex(item => item === key)}`}/>}
 

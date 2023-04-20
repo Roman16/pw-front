@@ -45,7 +45,7 @@ const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/Product
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
 const OptimizationRules = React.lazy(() => import('./OptimizationRules/OptimizationRules.js'))
 const AttachSettings = React.lazy(() => import('./OptimizationRules/AttachSettings/AttachSettings.js'))
-const MonthlyReport = React.lazy(() => import('./MonthlyReport/MonthlyReport.js'))
+const JungleScoutReport = React.lazy(() => import('./JungleScoutReport/JungleScoutReport.js'))
 
 const localStorageVersion = '4.05'
 
@@ -348,7 +348,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
                                     <ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>
                                     {/*-------------------------------------------*/}
-                                    <ConnectedAmazonRoute exact path="/monthly-report" component={MonthlyReport}/>
+                                    <ConnectedAmazonRoute exact path="/monthly-report" component={JungleScoutReport}/>
 
 
                                     <Route path={'*'} render={() => (

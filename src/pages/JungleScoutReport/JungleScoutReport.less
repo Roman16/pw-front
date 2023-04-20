@@ -1,14 +1,30 @@
 .monthly-report-page {
   display: flex;
-  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+
+  .work-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+  }
+
 
   section {
     margin: 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 10px;
+
+    &:last-of-type {
+      margin: 0;
+    }
   }
 
   .metrics-list {
     display: grid;
-    grid-template-columns: repeat(6, minmax(13.57142857rem, 1fr));
+    grid-template-columns: repeat(5, minmax(13.57142857rem, 1fr));
     grid-gap: 10px;
   }
 
@@ -19,10 +35,27 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
   }
 
-  .account-statistic {
+  .stacked-area-percent-chart-container {
+    height: 450px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
-    grid-gap: 10px;
+    padding: 20px;
+
+    .metrics {
+      margin: 0 0 20px;
+
+      .custom-select {
+        width: 200px;
+        height: 2.28571429rem;
+      }
+    }
+
+    .chart-responsive {
+      flex: 1;
+    }
   }
 
 

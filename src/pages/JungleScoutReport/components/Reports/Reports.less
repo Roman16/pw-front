@@ -1,0 +1,62 @@
+.monthly-report-page .reports-list {
+  width: 395px;
+  min-width: 395px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px 0 0;
+  position: relative;
+  transition: all 0.2s ease-in;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 10;
+  background: #fff;
+
+  @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
+    width: 305px;
+    min-width: 305px;
+  }
+
+  .report-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.42857143rem;
+    border-bottom: 1px solid #C9CBD4;
+    cursor: pointer;
+    position: relative;
+    font-size: 1rem;
+    font-weight: bold;
+
+    &:hover {
+      background: #FFFAFA;
+    }
+
+    &.active {
+      background: #FFFAFA;
+
+      &:before {
+        content: '';
+        width: 4px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #FF5256;
+      }
+    }
+  }
+
+  .pw-pagination {
+    margin: auto 0 0 0;
+    padding: 1.07142857rem 1.42857143rem;
+    border-radius: 0 0 4px 4px;
+    border-top: 1px solid #C9CBD4;
+    z-index: 20;
+  }
+
+  .route-loader {
+    position: absolute;
+    z-index: 111;
+  }
+}

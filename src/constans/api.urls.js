@@ -228,3 +228,11 @@ export const optimizationRulesUrls = {
     attachedCampaigns: 'rules-based-optimization/rules/campaigns',
     attachedRules: 'rules-based-optimization/campaigns/rules',
 }
+
+
+export const jungleScoutReportsUrls = {
+    allReports: 'monthly-reports',
+    reportData: (reportId) => `monthly-reports/${reportId}/data`,
+}
+
+
