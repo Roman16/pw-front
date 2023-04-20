@@ -23,7 +23,11 @@ export const Reports = ({selectedReport, onSelect}) => {
             setReports(data)
             setTotalSize(total_count)
 
-            data[0] && onSelect(data[0])
+            if(data[0]) {
+                onSelect(data[0])
+            } else {
+                onSelect({id: null})
+            }
         } catch (e) {
             console.log(e)
         }
@@ -43,11 +47,7 @@ export const Reports = ({selectedReport, onSelect}) => {
         {reports.map(report => (
             <div className={`report-item ${selectedReport?.id === report.id ? 'active' : ''}`}>
                 <div className="comment">
-                    {report.comment}
-                </div>
-
-                <div className="date">
-                    {moment(report.month, 'M').format('MM')}.{report.year}
+                   Report for {moment(report.year_month, 'YYYY-MM').format('MM.YYYY')}
                 </div>
             </div>
         ))}

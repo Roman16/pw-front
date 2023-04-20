@@ -2,9 +2,7 @@ import React, {useState} from "react"
 import {SVG} from "../../../../utils/icons"
 import './Comment.less'
 
-const loremText = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquid amet aspernatur atque deleniti deserunt exercitationem expedita labore maiores maxime necessitatibus omnis porro, quisquam saepe sit temporibus ut vel voluptatem.'
-
-export const Comment = ({text = loremText}) => {
+export const Comment = ({text}) => {
     const [visible, setVisible] = useState(false)
 
     return (<div className={`section-comment ${visible ? 'visible' : ''}`}>
@@ -16,7 +14,7 @@ export const Comment = ({text = loremText}) => {
             </button>
         </div>
         <div className="comment-body">
-            {text}
+            {text || "No comments"}
         </div>
     </div>)
 }

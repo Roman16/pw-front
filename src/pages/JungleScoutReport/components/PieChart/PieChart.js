@@ -1,32 +1,35 @@
 import React from "react"
-import {PieChart as Chart, Pie, Sector, Cell, ResponsiveContainer} from 'recharts'
+import {PieChart as Chart, Pie, Cell, ResponsiveContainer, Tooltip, AreaChart} from 'recharts'
 
-const data = [
-    {name: 'Group A', value: 400},
-    {name: 'Group B', value: 300},
-    {name: 'Group C', value: 300},
-    {name: 'Group D', value: 200},
-]
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
 
-export const PieChart = () => {
+export const PieChart = ({ data, dataKey}) => {
     return (<div className="pie-chart-container">
         <ResponsiveContainer height='100%' width='100%'>
             <Chart>
                 <Pie
                     isAnimationActive={false}
                     data={data}
-                    cx={200}
-                    cy={200}
                     innerRadius={60}
-                    outerRadius={100}
+                    outerRadius={150}
                     fill="#8884d8"
                     paddingAngle={5}
-                    dataKey="value"
+                    dataKey={dataKey}
                 >
                     {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>
+                        <Cell key={`cell-${index}`} fill={getRandomColor()}/>
                     ))}
+
+                    <Tooltip
+                        isAnimationActive={false}
+                    />
                 </Pie>
             </Chart>
         </ResponsiveContainer>

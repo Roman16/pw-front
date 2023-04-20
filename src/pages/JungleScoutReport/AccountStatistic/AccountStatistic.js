@@ -5,8 +5,9 @@ import _ from "lodash"
 import {LineChart} from "../components/LineChart/LineChart"
 import {PieChart} from "../components/PieChart/PieChart"
 import {Comment} from "../components/Comment/Comment"
+import {diffPercent} from "../../AnalyticsV3/components/RenderPageParts/RenderPageParts"
 
-const metrics = [
+const availableMetrics = [
     metricKeys['total_sales'],
     metricKeys['total_orders'],
     metricKeys['cost'],
@@ -17,8 +18,11 @@ const metrics = [
 ]
 
 
-export const AccountStatistic = ({data}) => {
-    const [activeMetrics, setActiveMetric] = useState([metrics[0], metrics[1]])
+export const AccountStatistic = ({
+                                     data: {metrics, previous_month_metrics, chart, total_orders_count, total_sales},
+                                     comments: {common_metrics_comment, product_distribution_comment}
+                                 }) => {
+    const [activeMetrics, setActiveMetric] = useState([availableMetrics[0], availableMetrics[1]])
 
     const selectMetricHandler = (metric) => {
         if (activeMetrics.includes(metric)) {
@@ -29,13 +33,16 @@ export const AccountStatistic = ({data}) => {
     }
 
     return (<section className={'account-statistic'}>
-        <Comment/>
+        <Comment text={common_metrics_comment}/>
 
         <div className="metrics-list">
-            {metrics.map(i => <MetricItem
+            {availableMetrics.map(i => <MetricItem
                 key={i}
                 metric={{
                     ..._.find(analyticsAvailableMetricsList, {key: i}),
+                    value: metrics[i],
+                    value_prev: previous_month_metrics[i],
+                    value_diff: diffPercent(previous_month_metrics[i], metrics[i])
                 }}
                 activeMetrics={activeMetrics}
 
@@ -43,21 +50,25 @@ export const AccountStatistic = ({data}) => {
             />)}
         </div>
 
-        <Comment/>
-
         <LineChart
-            data={data.chart}
+            data={chart}
             activeMetrics={activeMetrics}
             showWeekChart={true}
-            showDailyChart={false}
+            showDailyChart={true}
         />
 
-        <Comment/>
+        <Comment text={product_distribution_comment}/>
 
         <div className="pie-charts-row">
-            <PieChart/>
+            <PieChart
+                data={total_orders_count}
+                dataKey={'total_orders_count'}
+            />
 
-            <PieChart/>
+            <PieChart
+                data={total_sales}
+                dataKey={'total_sales'}
+            />
         </div>
     </section>)
 }
