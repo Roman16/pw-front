@@ -62,11 +62,13 @@ export const AccountStatistic = ({
         <div className="pie-charts-row">
             <PieChart
                 data={total_orders_count}
+                nameKey={'product_name'}
                 dataKey={'total_orders_count'}
             />
 
             <PieChart
                 data={total_sales}
+                nameKey={'product_name'}
                 dataKey={'total_sales'}
             />
         </div>

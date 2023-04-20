@@ -65,6 +65,7 @@ export const AdsStatistic = ({
             <PieChart
                 data={advertising_type_distribution}
                 dataKey={'attributedConversions'}
+                nameKey={'advertisingType'}
             />
         </div>
 

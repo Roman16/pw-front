@@ -31,6 +31,7 @@ export const LineChart = ({
                               showOptimizationChart,
                               selectedRangeDate,
                               productOptimizationDateList,
+                              dataKey = 'eventDate'
                           }) => {
 
     return (
@@ -67,7 +68,7 @@ export const LineChart = ({
                     />
 
                     <XAxis
-                        dataKey="eventDate"
+                        dataKey={dataKey}
                         axisLine={false}
                         // interval={2}
                         // angle={50}
@@ -75,7 +76,7 @@ export const LineChart = ({
                         dy={15}
                         // height={60}
                         // tick={<CustomizedAxisTick/>}
-                        tickFormatter={(date) => moment(date).format('MMM DD')}
+                        tickFormatter={(date) => dataKey === 'year_month' ? moment(date, 'YYYY-MM').format('MMM') : moment(date).format('MMM DD')}
                     />
 
                     {activeMetrics && activeMetrics.map((item, index) => (

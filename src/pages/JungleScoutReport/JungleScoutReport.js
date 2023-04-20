@@ -89,6 +89,7 @@ const JungleScoutReport = () => {
 
                 <JungleScoutStatistic
                     data={reportData}
+                    comments={reportData.comments}
                 />
 
                 {processing && <RouteLoader/>}

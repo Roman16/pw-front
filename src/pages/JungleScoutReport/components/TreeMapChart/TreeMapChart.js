@@ -134,22 +134,18 @@ const data = [
     },
 ]
 
-export const TreeMapChart = () => {
-    return (
-        <div className="tree-map-chart-container">
-            <ResponsiveContainer width="100%" height="100%">
-                <Treemap
-                    isAnimationActive={false}
-                    data={data}
-                    dataKey="size"
-                    aspectRatio={4 / 3}
-                    stroke="#fff"
-                    fill="#8884d8"
-                >
-                    <Tooltip />
-                </Treemap>
-            </ResponsiveContainer>
-        </div>
-
-    )
-}
+export const TreeMapChart = ({data}) =>
+    <div className="tree-map-chart-container">
+        <ResponsiveContainer width="100%" height="100%">
+            <Treemap
+                isAnimationActive={false}
+                data={data.map(i => ({name: i.product_name, revenue: i.revenue}))}
+                dataKey="revenue"
+                aspectRatio={4 / 3}
+                stroke="#fff"
+                fill="#8884d8"
+            >
+                <Tooltip/>
+            </Treemap>
+        </ResponsiveContainer>
+    </div>

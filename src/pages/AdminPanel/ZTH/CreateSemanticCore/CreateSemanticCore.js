@@ -49,7 +49,6 @@ const CreateSemanticCore = () => {
             competitorBrandsArr = semanticData.productInformation.competitorBrands.filter(x => x.mainName && x.mainName.trim().length > 0),
             competitorBrandsOffAmazonArr = semanticData.productInformation.competitorBrandsOffAmazon.filter(x => x.mainName && x.mainName.trim().length > 0)
 
-
         return ({
             keywordsProvider: {
                 maxNewKeywords: +semanticData.keywordsProvider.maxNewKeywords,
@@ -71,11 +70,11 @@ const CreateSemanticCore = () => {
                 } : null,
                 competitorBrands: competitorBrandsArr.map(i => ({
                     mainName: i.mainName,
-                    aliases: i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
                 })),
                 competitorBrandsOffAmazon: competitorBrandsOffAmazonArr.map(i => ({
                     mainName: i.mainName,
-                    aliases: i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
                 })),
 
                 variations: semanticData.productInformation.variations.map(i => {

@@ -4,28 +4,38 @@ import {LineChart} from "../components/LineChart/LineChart"
 import {StackedAreaPercentChart} from "../components/StackedAreaPercentChart/StackedAreaPercentChart"
 import {Comment} from "../components/Comment/Comment"
 
-export const JungleScoutStatistic = ({data}) => {
+export const JungleScoutStatistic = ({
+                                         data: {revenue_trend, brand_sales, products_revenue},
+                                         comments: {revenue_trend_comment, brand_sales_comment, products_revenue_comment}
+                                     }) => {
 
     return (
         <section className={'jungle-scout-statistic'}>
-            <Comment/>
+            <Comment text={revenue_trend_comment}/>
 
             <LineChart
-                data={data.revenue_trend}
-                activeMetrics={['product_units', 'Revenue']}
+                data={revenue_trend.map(i => ({
+                    ...i,
+                    'monthly_unit_sales_7d': i.monthly_unit_sales,
+                    'total_revenue_7d': i.total_revenue,
+                }))}
+                activeMetrics={['monthly_unit_sales', 'total_revenue']}
+                dataKey={'year_month'}
                 showWeekChart={true}
                 showDailyChart={false}
             />
 
-            <Comment/>
+            <Comment text={brand_sales_comment}/>
 
             <StackedAreaPercentChart
-                data={data.brand_sales}
+                data={brand_sales}
             />
 
-            <Comment/>
+            <Comment text={products_revenue_comment}/>
 
-            <TreeMapChart/>
+            <TreeMapChart
+                data={products_revenue}
+            />
         </section>
     )
 }

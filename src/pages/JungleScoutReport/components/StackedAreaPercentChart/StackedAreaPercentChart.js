@@ -1,16 +1,16 @@
 import React from "react"
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
+import {Select, Spin} from "antd"
 import moment from "moment"
-import {chartAreaKeys} from "../../../AnalyticsV3/Placements/PlacementsStatistics/Chart"
+import _ from 'lodash'
 import {round} from "../../../../utils/round"
-import {days} from "../../../AnalyticsV3/components/MainChart/ChartTooltip"
-import _ from "lodash"
 import {RenderMetricValue} from "../../../AnalyticsV3/components/TableList/tableColumns"
 import {analyticsAvailableMetricsList} from "../../../AnalyticsV3/components/MainMetrics/metricsList"
+import {days} from "../../../AnalyticsV3/components/MainChart/ChartTooltip"
 import CustomSelect from "../../../../components/Select/Select"
-import {Select} from "antd"
 
 const Option = Select.Option
+
 
 const chartColors = [
     {
@@ -31,6 +31,11 @@ const chartColors = [
     }
 ]
 
+export const chartAreaKeys = {
+    asin_count: 'asin_count',
+    revenue: 'revenue',
+    unit_sales: 'unit_sales',
+}
 
 const toPercent = (decimal, fixed = 0) => `${round((decimal * 100), fixed)}%`
 
@@ -52,7 +57,7 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
             <div className='area-chart-tooltip'>
                 <div className='area-chart-tooltip-header'>
                     <div className='date title'>
-                        {days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}
+                        {moment(label, 'YYYY-MM').format('MMMM')}
                     </div>
                 </div>
 
@@ -64,10 +69,10 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
                     <div className="col value">
                         {Object.values(chartAreaKeys).map((name) => <div
                             style={{color: _.find(payload, {dataKey: name}).stroke}}>
-                            <RenderMetricValue
-                                number={payload[0].payload[name]}
-                                type={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}
-                            />
+                            {/*<RenderMetricValue*/}
+                            {/*    number={payload[0].payload[name]}*/}
+                            {/*    type={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}*/}
+                            {/*/>*/}
                         </div>)}
                     </div>
 
@@ -86,19 +91,27 @@ const ChartTooltip = ({payload, label, selectedMetric}) => {
     }
 }
 
-export const StackedAreaPercentChart = ({data, selectedMetric}) => {
 
+export const StackedAreaPercentChart = ({data = [], selectedMetric}) => {
+
+    const chartData = data.map(item => ({
+        eventDate: item.eventDate,
+        ...item[selectedMetric]
+    }))
 
     return (<div className="stacked-area-percent-chart-container">
         <div className="metrics">
             <CustomSelect>
-                <Option value={'Revenue'}>Revenue</Option>
+                <Option value={'f'}>Clicks</Option>
             </CustomSelect>
+
         </div>
 
-        <div className={'chart-responsive'}>
+        <div className="chart-responsive">
             <ResponsiveContainer height='100%' width='100%'>
                 <AreaChart
+                    width={400}
+                    height={400}
                     data={data}
                     stackOffset="expand"
                     isAnimationActive={false}
@@ -140,9 +153,9 @@ export const StackedAreaPercentChart = ({data, selectedMetric}) => {
                     />
 
                     <XAxis
-                        dataKey="eventDate"
+                        dataKey="year_month"
                         dy={15}
-                        tickFormatter={(date) => moment(date).format('MMM DD')}
+                        tickFormatter={(date) => moment(date, 'YYYY-MM').format('MMM')}
                     />
 
                     <Tooltip
@@ -152,20 +165,20 @@ export const StackedAreaPercentChart = ({data, selectedMetric}) => {
                         }
                     />
 
-                    <Area
-                        type="linear"
-                        dataKey={chartAreaKeys.remarketing}
-                        stackId="1"
-                        stroke={chartColors[3].stroke}
-                        fill="url(#remarketingGradient)"
-                        fillOpacity={1}
-                        isAnimationActive={false}
-                        activeDot={{stroke: chartColors[3].stroke, strokeWidth: 2}}
-                    />
+                    {/*<Area*/}
+                    {/*    type="linear"*/}
+                    {/*    dataKey={chartAreaKeys.asin_count}*/}
+                    {/*    stackId="1"*/}
+                    {/*    stroke={chartColors[3].stroke}*/}
+                    {/*    fill="url(#remarketingGradient)"*/}
+                    {/*    fillOpacity={1}*/}
+                    {/*    isAnimationActive={false}*/}
+                    {/*    activeDot={{stroke: chartColors[3].stroke, strokeWidth: 2}}*/}
+                    {/*/>*/}
 
                     <Area
                         type="linear"
-                        dataKey={chartAreaKeys.other}
+                        dataKey={chartAreaKeys.asin_count}
                         stackId="1"
                         stroke={chartColors[2].stroke}
                         fill="url(#otherGradient)"
@@ -176,7 +189,7 @@ export const StackedAreaPercentChart = ({data, selectedMetric}) => {
 
                     <Area
                         type="linear"
-                        dataKey={chartAreaKeys.detailPage}
+                        dataKey={chartAreaKeys.revenue}
                         stackId="1"
                         stroke={chartColors[1].stroke}
                         fill="url(#detailPageGradient)"
@@ -187,7 +200,7 @@ export const StackedAreaPercentChart = ({data, selectedMetric}) => {
 
                     <Area
                         type="linear"
-                        dataKey={chartAreaKeys.topSearch}
+                        dataKey={chartAreaKeys.unit_sales}
                         stackId="1"
                         stroke={chartColors[0].stroke}
                         fill="url(#topSearchGradient)"
@@ -195,6 +208,8 @@ export const StackedAreaPercentChart = ({data, selectedMetric}) => {
                         isAnimationActive={false}
                         activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
                     />
+
+
                 </AreaChart>
             </ResponsiveContainer>
         </div>
