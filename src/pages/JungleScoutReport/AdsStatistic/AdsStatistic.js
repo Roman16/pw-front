@@ -18,7 +18,10 @@ const availableMetrics = [
     metricKeys['conversion_rate']
 ]
 
-export const AdsStatistic = ({data: {metrics, previous_month_metrics, chart}, comments: {advertising_metrics_comment}}) => {
+export const AdsStatistic = ({
+                                 data: {metrics, previous_month_metrics, chart, advertising_type_distribution, top_sales_campaigns},
+                                 comments: {advertising_metrics_comment, advertising_type_distribution_comment, top_sales_campaigns_comment}
+                             }) => {
     const [activeMetrics, setActiveMetric] = useState([availableMetrics[0], availableMetrics[1]])
 
 
@@ -56,22 +59,17 @@ export const AdsStatistic = ({data: {metrics, previous_month_metrics, chart}, co
             showDailyChart={true}
         />
 
-        <Comment/>
+        <Comment text={advertising_type_distribution_comment}/>
 
         <div className="pie-charts-row">
             <PieChart
-                data={[]}
-                dataKey={''}
-            />
-
-            <PieChart
-                data={[]}
-                dataKey={''}
+                data={advertising_type_distribution}
+                dataKey={'attributedConversions'}
             />
         </div>
 
-        <Comment/>
+        <Comment text={top_sales_campaigns_comment}/>
 
-        <TopCampaigns/>
+        <TopCampaigns data={top_sales_campaigns}/>
     </section>)
 }

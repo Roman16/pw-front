@@ -28,6 +28,7 @@ const JungleScoutReport = () => {
                 chart: []
             },
             advertising_type_distribution: [],
+            top_sales_campaigns: [],
             //3 section
             revenue_trend: [],
             brand_sales: [],
@@ -82,7 +83,7 @@ const JungleScoutReport = () => {
                 />
 
                 <AdsStatistic
-                    data={{...reportData.advertising_metrics}}
+                    data={{...reportData.advertising_metrics, ...reportData}}
                     comments={reportData.comments}
                 />
 
