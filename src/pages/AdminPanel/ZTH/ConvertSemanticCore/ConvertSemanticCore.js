@@ -415,7 +415,7 @@ const ConvertSemanticCore = ({admin}) => {
                         mainProductAsin: semanticData.conversionOptions.productInformation.mainProductAsin || undefined,
                         mainProductSku: semanticData.conversionOptions.productInformation.mainProductSku || undefined,
 
-                        variations: _.mapValues(semanticData.conversionOptions.productInformation.variations, (item) => ({
+                        variations:  semanticData.conversionOptions.productInformation.variations.map((item) => ({
                             ...item,
                             themeValues: item.themeValues.map(value => ({
                                 ...value,
