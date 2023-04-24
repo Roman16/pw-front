@@ -1,7 +1,9 @@
 import React from 'react'
-import {Treemap, ResponsiveContainer, Pie, Tooltip} from 'recharts'
+import {Treemap, ResponsiveContainer, Pie, Tooltip, AreaChart} from 'recharts'
+import moment from "moment"
+import {RenderMetricValue} from "../../../AnalyticsV3/components/TableList/tableColumns"
 
-const COLORS = ['#9464B9', 'rgba(148,100,185,0.85)', 'rgba(148,100,185,0.75)', 'rgba(148,100,185,0.65)', 'rgba(148,100,185,0.55)', 'rgba(148,100,185,0.45)'];
+const COLORS = ['#9464B9', 'rgba(148,100,185,0.85)', 'rgba(148,100,185,0.75)', 'rgba(148,100,185,0.65)', 'rgba(148,100,185,0.55)', 'rgba(148,100,185,0.45)']
 
 const CustomizedContent = ({root, depth, x, y, width, height, index, payload, colors, rank, name}) => {
     return (
@@ -27,6 +29,30 @@ const CustomizedContent = ({root, depth, x, y, width, height, index, payload, co
     )
 }
 
+const ChartTooltip = ({payload, label}) => {
+    console.log(payload)
+
+    if (payload && payload.length > 0) {
+        const product = payload[0].payload
+
+        return (
+            <div className='tree-map-chart-tooltip'>
+                <div className="content">
+                    <div className="name">
+                        {product.name}:
+                    </div>
+
+                    <div className="value">
+                        {product.value}
+                    </div>
+                </div>
+            </div>
+        )
+    } else {
+        return ''
+    }
+}
+
 
 export const TreeMapChart = ({data}) =>
     <div className="tree-map-chart-container">
@@ -38,9 +64,14 @@ export const TreeMapChart = ({data}) =>
                 aspectRatio={4 / 3}
                 stroke="#fff"
                 fill="#9464B9"
-                content={<CustomizedContent colors={COLORS} />}
+                content={<CustomizedContent colors={COLORS}/>}
             >
-                <Tooltip/>
+                <Tooltip
+                    isAnimationActive={false}
+                    content={
+                        <ChartTooltip/>
+                    }
+                />
             </Treemap>
         </ResponsiveContainer>
     </div>

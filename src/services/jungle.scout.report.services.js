@@ -3,12 +3,16 @@ import {jungleScoutReportsUrls} from "../constans/api.urls"
 
 export const jungleScoutReportServices = {
     getReports,
-    getReportData
+    getSegments,
+    getReportData,
 }
 
 
-function getReports({page, size}) {
-    return api('get', `${jungleScoutReportsUrls.allReports}?page=${page}&size=${size}`)
+function getReports({page, size}, segment) {
+    return api('get', `${jungleScoutReportsUrls.allReports}?page=${page}&size=${size}${segment ? `&segment_id[]=${segment}` : ''}`)
+}
+function getSegments() {
+    return api('get', `${jungleScoutReportsUrls.allSegments}`)
 }
 
 function getReportData(id, attributionWindow) {

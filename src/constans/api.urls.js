@@ -232,6 +232,7 @@ export const optimizationRulesUrls = {
 
 export const jungleScoutReportsUrls = {
     allReports: 'monthly-reports',
+    allSegments: 'monthly-reports/segments',
     reportData: (reportId) => `monthly-reports/${reportId}/data`,
 }
 
