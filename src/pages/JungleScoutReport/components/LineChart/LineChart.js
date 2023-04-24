@@ -13,7 +13,7 @@ import {
 import moment from "moment"
 import _ from "lodash"
 import {activeTimezone} from "../../../index"
-import {analyticsAvailableMetricsList} from "../../../AnalyticsV3/components/MainMetrics/metricsList"
+import {analyticsAvailableMetricsList, metricKeys} from "../../../AnalyticsV3/components/MainMetrics/metricsList"
 import ChartTooltip from "../../../AnalyticsV3/components/MainChart/ChartTooltip"
 
 const animationDuration = 1000,
@@ -93,7 +93,21 @@ export const LineChart = ({
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                activeMetrics={activeMetrics.map(key => _.find(analyticsAvailableMetricsList, {key: key}))}
+                                activeMetrics={activeMetrics.map(key => _.find([
+                                    ...analyticsAvailableMetricsList,
+                                    {
+                                        title: 'Product units',
+                                        key: 'monthly_unit_sales',
+                                        label: 'Total',
+                                        type: 'number',
+                                    },
+                                    {
+                                        title: 'Revenue',
+                                        key: 'total_revenue',
+                                        label: 'Total',
+                                        type: 'number',
+                                    },
+                                ], {key: key}))}
                                 showWeekChart={showWeekChart}
                                 showDailyChart={showDailyChart}
                                 chartColors={chartColors}

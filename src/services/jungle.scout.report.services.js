@@ -11,6 +11,6 @@ function getReports({page, size}) {
     return api('get', `${jungleScoutReportsUrls.allReports}?page=${page}&size=${size}`)
 }
 
-function getReportData(id) {
-    return api('get', `${jungleScoutReportsUrls.reportData(id)}?attribution_window=7`)
+function getReportData(id, attributionWindow) {
+    return api('get', `${jungleScoutReportsUrls.reportData(id)}?attribution_window=${attributionWindow}`)
 }

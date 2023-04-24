@@ -6,9 +6,11 @@ import {JungleScoutStatistic} from "./JungleScoutStatistic/JungleScoutStatistic"
 import {Reports} from "./components/Reports/Reports"
 import {jungleScoutReportServices} from "../../services/jungle.scout.report.services"
 import RouteLoader from "../../components/RouteLoader/RouteLoader"
+import {Header} from "./components/Header/Header"
 
 const JungleScoutReport = () => {
     const [selectedReport, setSelectedReport] = useState({id: undefined}),
+        [attributionWindow, setAttributionWindow] = useState(7),
         [processing, setProcessing] = useState(true),
         [reportData, setReportData] = useState({
             //1 section
@@ -51,7 +53,7 @@ const JungleScoutReport = () => {
         setProcessing(true)
 
         try {
-            const {result} = await jungleScoutReportServices.getReportData(selectedReport.id)
+            const {result} = await jungleScoutReportServices.getReportData(selectedReport.id, attributionWindow)
             setReportData(result)
         } catch (e) {
             console.log(e)
@@ -66,33 +68,41 @@ const JungleScoutReport = () => {
         } else if (selectedReport.id === null) {
             setProcessing(false)
         }
-    }, [selectedReport])
+    }, [selectedReport, attributionWindow])
 
     return (<div className={'monthly-report-page'}>
-        <Reports
-            selectedReport={selectedReport}
-
-            onSelect={setSelectedReport}
+        <Header
+            attributionWindow={attributionWindow}
+            onChange={setAttributionWindow}
         />
 
-        <div className="work-section">
-            <div className="container">
-                <AccountStatistic
-                    data={{...reportData.common_metrics, ...reportData.product_distribution}}
-                    comments={reportData.comments}
-                />
+        <div className="page-row">
+            <Reports
+                selectedReport={selectedReport}
 
-                <AdsStatistic
-                    data={{...reportData.advertising_metrics, ...reportData}}
-                    comments={reportData.comments}
-                />
+                onSelect={setSelectedReport}
+            />
 
-                <JungleScoutStatistic
-                    data={reportData}
-                    comments={reportData.comments}
-                />
+            <div className="work-section">
+                <div className="container">
 
-                {processing && <RouteLoader/>}
+                    <AccountStatistic
+                        data={{...reportData.common_metrics, ...reportData.product_distribution}}
+                        comments={reportData.comments}
+                    />
+
+                    <AdsStatistic
+                        data={{...reportData.advertising_metrics, ...reportData}}
+                        comments={reportData.comments}
+                    />
+
+                    <JungleScoutStatistic
+                        data={reportData}
+                        comments={reportData.comments}
+                    />
+
+                    {processing && <RouteLoader/>}
+                </div>
             </div>
         </div>
     </div>)

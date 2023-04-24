@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import {Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
 import {Select, Spin} from "antd"
 import moment from "moment"
@@ -45,66 +45,102 @@ const getPercent = (value, total) => {
     return toPercent(ratio, 2)
 }
 
-const ChartTooltip = ({payload, label, selectedMetric}) => {
-    if (payload && payload.length > 0) {
-        let total = 0
+export const StackedAreaPercentChart = ({data = []}) => {
+    const [selectedMetric, setSelectedMetric] = useState('asin_count'),
+        [chartData, setChartData] = useState([]),
+        [brands, setBrands] = useState([])
 
-        Object.values(chartAreaKeys).forEach(key => {
-            total = total + +payload[0].payload[key]
-        })
 
-        return (
-            <div className='area-chart-tooltip'>
-                <div className='area-chart-tooltip-header'>
-                    <div className='date title'>
-                        {moment(label, 'YYYY-MM').format('MMMM')}
+    const ChartTooltip = ({payload, label}) => {
+        if (payload && payload.length > 0) {
+            let total = 0
+
+            payload.forEach(i => {
+                total = total + +payload[0].payload[i.name]
+            })
+
+            return (
+                <div className='area-chart-tooltip'>
+                    <div className='area-chart-tooltip-header'>
+                        <div className='date title'>
+                            {moment(label, 'YYYY-MM').format('MMMM YYYY')}
+                        </div>
                     </div>
+
+                    <div className="content">
+                        <div className="col name">
+                            {payload.map(i => <div>{i.name.split(`_${selectedMetric}`)[0]}</div>)}
+                        </div>
+
+                        <div className="col value">
+                            {payload.map(({stroke, value}) => <div
+                                style={{color: stroke}}>
+                                <RenderMetricValue
+                                    number={value}
+                                    type={'number'}
+                                />
+                            </div>)}
+
+                        </div>
+
+                        <div className="col percent">
+                            {payload.map(({ stroke, value}) => <div
+                                style={{color: stroke}}>
+                                {getPercent(value, total)}
+                            </div>)}
+                        </div>
+                    </div>
+
                 </div>
-
-                <div className="content">
-                    <div className="col name">
-                        {Object.values(chartAreaKeys).map(name => <div>{name}</div>)}
-                    </div>
-
-                    <div className="col value">
-                        {Object.values(chartAreaKeys).map((name) => <div
-                            style={{color: _.find(payload, {dataKey: name}).stroke}}>
-                            {/*<RenderMetricValue*/}
-                            {/*    number={payload[0].payload[name]}*/}
-                            {/*    type={_.find(analyticsAvailableMetricsList, {key: selectedMetric}).type}*/}
-                            {/*/>*/}
-                        </div>)}
-                    </div>
-
-                    <div className="col percent">
-                        {Object.values(chartAreaKeys).map((name) => <div
-                            style={{color: _.find(payload, {dataKey: name}).stroke}}>
-                            {getPercent(payload[0].payload[name], total)}
-                        </div>)}
-                    </div>
-                </div>
-
-            </div>
-        )
-    } else {
-        return ''
+            )
+        } else {
+            return ''
+        }
     }
-}
 
+    useEffect(() => {
+        let b = []
 
-export const StackedAreaPercentChart = ({data = [], selectedMetric}) => {
+        setChartData(_.chain(data)
+            .groupBy("year_month")
+            .map((value, key) => {
+                const res = {
+                    year_month: key,
+                }
 
-    const chartData = data.map(item => ({
-        eventDate: item.eventDate,
-        ...item[selectedMetric]
-    }))
+                b = value
+
+                value.forEach(i => {
+                    res[`${i.brand_name}_${selectedMetric}`] = i[selectedMetric]
+                })
+
+                return res
+            })
+            .sortBy('year_month')
+            .value()
+        )
+
+        setBrands(b)
+    }, [data, selectedMetric])
 
     return (<div className="stacked-area-percent-chart-container">
         <div className="metrics">
-            <CustomSelect>
-                <Option value={'f'}>Clicks</Option>
+            <CustomSelect
+                value={selectedMetric}
+                onChange={setSelectedMetric}
+            >
+                <Option value={'asin_count'}>ASIN count</Option>
+                <Option value={'revenue'}>Revenue</Option>
+                <Option value={'unit_sales'}>Unit sales</Option>
             </CustomSelect>
 
+            <div className="legend">
+                {brands.map((brand, index) => <div className="brand">
+                    <div style={{background: chartColors[index].stroke}}/>
+
+                    {brand.brand_name}
+                </div>)}
+            </div>
         </div>
 
         <div className="chart-responsive">
@@ -112,7 +148,7 @@ export const StackedAreaPercentChart = ({data = [], selectedMetric}) => {
                 <AreaChart
                     width={400}
                     height={400}
-                    data={data}
+                    data={chartData}
                     stackOffset="expand"
                     isAnimationActive={false}
                     margin={{
@@ -120,25 +156,25 @@ export const StackedAreaPercentChart = ({data = [], selectedMetric}) => {
                     }}
                 >
                     <defs>
-                        <linearGradient spreadMethod="pad" id="topSearchGradient" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient spreadMethod="pad" id="brandGradient_0" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor='#FF5256' stopOpacity='0.23'/>
                             {/*<stop offset="45%" stopColor="#FF5256" stopOpacity='0.2'/>*/}
                             <stop offset="100%" stopColor='#FF5256' stopOpacity='0'/>
                         </linearGradient>
 
-                        <linearGradient id="detailPageGradient" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="brandGradient_1" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="#9464B9" stopOpacity='0.23'/>
                             {/*<stop offset="45%" stopColor="#9464B9" stopOpacity='0.2'/>*/}
                             <stop offset="100%" stopColor="#9464B9" stopOpacity='0'/>
                         </linearGradient>
 
-                        <linearGradient id="otherGradient" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="brandGradient_2" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="#FFAF52" stopOpacity='0.23'/>
                             {/*<stop offset="45%" stopColor="#FFAF52" stopOpacity='0.2'/>*/}
                             <stop offset="100%" stopColor="#FFAF52" stopOpacity='0'/>
                         </linearGradient>
 
-                        <linearGradient id="remarketingGradient" x1="0" y1="0" x2="0" y2="1">
+                        <linearGradient id="brandGradient_3" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="0%" stopColor="#7FD3A1" stopOpacity='0.23'/>
                             {/*<stop offset="45%" stopColor="#7FD3A1" stopOpacity='0.2'/>*/}
                             <stop offset="100%" stopColor="#7FD3A1" stopOpacity='0'/>
@@ -165,51 +201,19 @@ export const StackedAreaPercentChart = ({data = [], selectedMetric}) => {
                         }
                     />
 
-                    {/*<Area*/}
-                    {/*    type="linear"*/}
-                    {/*    dataKey={chartAreaKeys.asin_count}*/}
-                    {/*    stackId="1"*/}
-                    {/*    stroke={chartColors[3].stroke}*/}
-                    {/*    fill="url(#remarketingGradient)"*/}
-                    {/*    fillOpacity={1}*/}
-                    {/*    isAnimationActive={false}*/}
-                    {/*    activeDot={{stroke: chartColors[3].stroke, strokeWidth: 2}}*/}
-                    {/*/>*/}
+                    {brands.map((brand, index) => (
+                        <Area
+                            type="linear"
+                            dataKey={`${brand.brand_name}_${selectedMetric}`}
+                            stackId="1"
+                            stroke={chartColors[index].stroke}
+                            fill={`url(#brandGradient_${index})`}
+                            fillOpacity={1}
+                            isAnimationActive={false}
+                            activeDot={{stroke: chartColors[index].stroke, strokeWidth: 2}}
+                        />
 
-                    <Area
-                        type="linear"
-                        dataKey={chartAreaKeys.asin_count}
-                        stackId="1"
-                        stroke={chartColors[2].stroke}
-                        fill="url(#otherGradient)"
-                        fillOpacity={1}
-                        isAnimationActive={false}
-                        activeDot={{stroke: chartColors[2].stroke, strokeWidth: 2}}
-                    />
-
-                    <Area
-                        type="linear"
-                        dataKey={chartAreaKeys.revenue}
-                        stackId="1"
-                        stroke={chartColors[1].stroke}
-                        fill="url(#detailPageGradient)"
-                        fillOpacity={1}
-                        isAnimationActive={false}
-                        activeDot={{stroke: chartColors[1].stroke, strokeWidth: 2}}
-                    />
-
-                    <Area
-                        type="linear"
-                        dataKey={chartAreaKeys.unit_sales}
-                        stackId="1"
-                        stroke={chartColors[0].stroke}
-                        fill="url(#topSearchGradient)"
-                        fillOpacity={1}
-                        isAnimationActive={false}
-                        activeDot={{stroke: chartColors[0].stroke, strokeWidth: 2}}
-                    />
-
-
+                    ))}
                 </AreaChart>
             </ResponsiveContainer>
         </div>
