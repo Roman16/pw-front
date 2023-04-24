@@ -30,8 +30,6 @@ const CustomizedContent = ({root, depth, x, y, width, height, index, payload, co
 }
 
 const ChartTooltip = ({payload, label}) => {
-    console.log(payload)
-
     if (payload && payload.length > 0) {
         const product = payload[0].payload
 
