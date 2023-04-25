@@ -257,6 +257,7 @@ const columnTitle = (location) => ({
     'margin_percent': 'Margin Percent',
     'name': location === 'ad-groups' ? 'Ad Group' : 'Campaign',
     'product_name_sku_asin': 'Product',
+    'product_name': 'Product',
     'calculatedTargetingText': 'Keyword / PT',
     'query': 'Query',
     'margin': 'Margin',

@@ -141,6 +141,7 @@ const containsVariations = {
 
     'name': stringVariations,
     'product_name_sku_asin': stringVariations,
+    'product_name': stringVariations,
     'calculatedTargetingText': stringVariations,
     'query': stringVariations,
 
