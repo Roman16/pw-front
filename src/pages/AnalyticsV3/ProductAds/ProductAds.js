@@ -38,7 +38,7 @@ const ProductAds = () => {
                 rowKey={'adId'}
                 columns={columns}
 
-                // moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
+                moreActions={<OpenCreateWindowButton title={'Add Product Ads'} window={'productAds'}/>}
             >
                 {successCreate => <CreateProductAdsWindow
                     location={location}

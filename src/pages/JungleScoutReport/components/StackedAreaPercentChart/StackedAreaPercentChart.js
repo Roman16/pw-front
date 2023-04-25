@@ -8,34 +8,10 @@ import {RenderMetricValue} from "../../../AnalyticsV3/components/TableList/table
 import {analyticsAvailableMetricsList} from "../../../AnalyticsV3/components/MainMetrics/metricsList"
 import {days} from "../../../AnalyticsV3/components/MainChart/ChartTooltip"
 import CustomSelect from "../../../../components/Select/Select"
+import {getRandomColor} from "../PieChart/PieChart"
 
 const Option = Select.Option
 
-
-const chartColors = [
-    {
-        stroke: '#FF5256',
-        fill: 'rgba(255,82,86,0.23)'
-    },
-    {
-        stroke: '#9464B9',
-        fill: 'rgba(148,100,185,0.23)'
-    },
-    {
-        stroke: '#FFAF52',
-        fill: 'rgba(255,175,82,0.23)'
-    },
-    {
-        stroke: '#7FD3A1',
-        fill: 'rgba(127,211,161,0.23)'
-    }
-]
-
-export const chartAreaKeys = {
-    asin_count: 'asin_count',
-    revenue: 'revenue',
-    unit_sales: 'unit_sales',
-}
 
 const toPercent = (decimal, fixed = 0) => `${round((decimal * 100), fixed)}%`
 
@@ -44,6 +20,9 @@ const getPercent = (value, total) => {
 
     return toPercent(ratio, 2)
 }
+
+const chartColors = []
+
 
 export const StackedAreaPercentChart = ({data = []}) => {
     const [selectedMetric, setSelectedMetric] = useState('asin_count'),
@@ -80,7 +59,6 @@ export const StackedAreaPercentChart = ({data = []}) => {
                                     type={'number'}
                                 />
                             </div>)}
-
                         </div>
 
                         <div className="col percent">
@@ -90,7 +68,6 @@ export const StackedAreaPercentChart = ({data = []}) => {
                             </div>)}
                         </div>
                     </div>
-
                 </div>
             )
         } else {
@@ -121,7 +98,15 @@ export const StackedAreaPercentChart = ({data = []}) => {
         )
 
         setBrands(b)
+
+        b.forEach(() => {
+            chartColors.push(getRandomColor())
+        })
+
     }, [data, selectedMetric])
+
+
+
 
     return (<div className="stacked-area-percent-chart-container">
         <div className="metrics">
@@ -136,7 +121,7 @@ export const StackedAreaPercentChart = ({data = []}) => {
 
             <div className="legend">
                 {brands.map((brand, index) => <div className="brand">
-                    <div style={{background: chartColors[index].stroke}}/>
+                    <div style={{background: chartColors[index]}}/>
 
                     {brand.brand_name}
                 </div>)}
@@ -156,29 +141,12 @@ export const StackedAreaPercentChart = ({data = []}) => {
                     }}
                 >
                     <defs>
-                        <linearGradient spreadMethod="pad" id="brandGradient_0" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor='#FF5256' stopOpacity='0.23'/>
-                            {/*<stop offset="45%" stopColor="#FF5256" stopOpacity='0.2'/>*/}
-                            <stop offset="100%" stopColor='#FF5256' stopOpacity='0'/>
-                        </linearGradient>
-
-                        <linearGradient id="brandGradient_1" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#9464B9" stopOpacity='0.23'/>
-                            {/*<stop offset="45%" stopColor="#9464B9" stopOpacity='0.2'/>*/}
-                            <stop offset="100%" stopColor="#9464B9" stopOpacity='0'/>
-                        </linearGradient>
-
-                        <linearGradient id="brandGradient_2" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#FFAF52" stopOpacity='0.23'/>
-                            {/*<stop offset="45%" stopColor="#FFAF52" stopOpacity='0.2'/>*/}
-                            <stop offset="100%" stopColor="#FFAF52" stopOpacity='0'/>
-                        </linearGradient>
-
-                        <linearGradient id="brandGradient_3" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#7FD3A1" stopOpacity='0.23'/>
-                            {/*<stop offset="45%" stopColor="#7FD3A1" stopOpacity='0.2'/>*/}
-                            <stop offset="100%" stopColor="#7FD3A1" stopOpacity='0'/>
-                        </linearGradient>
+                        {brands.map((i, index) => (
+                            <linearGradient spreadMethod="pad" id={`brandGradient_${index}`} x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor={chartColors[index]} stopOpacity='0.23'/>
+                                <stop offset="100%" stopColor={chartColors[index]} stopOpacity='0'/>
+                            </linearGradient>
+                        ))}
                     </defs>
 
                     <CartesianGrid vertical={false} stroke={'rgba(101, 106, 132, 0.2)'}/>
@@ -206,11 +174,11 @@ export const StackedAreaPercentChart = ({data = []}) => {
                             type="linear"
                             dataKey={`${brand.brand_name}_${selectedMetric}`}
                             stackId="1"
-                            stroke={chartColors[index].stroke}
+                            stroke={chartColors[index]}
                             fill={`url(#brandGradient_${index})`}
                             fillOpacity={1}
                             isAnimationActive={false}
-                            activeDot={{stroke: chartColors[index].stroke, strokeWidth: 2}}
+                            activeDot={{stroke: chartColors[index], strokeWidth: 2}}
                         />
 
                     ))}
