@@ -30,6 +30,7 @@ export const valueTile = {
     'negativePhrase': 'Negative Phrase',
     'campaign_negativeExact': 'Campaign Negative Exact',
     'campaign_negativePhrase': 'Campaign Negative Phrase',
+    'expandedASIN': 'Expanded ASIN',
     //---------------------------
     //reason
     'adjusted_bid': 'Adjusted bid',

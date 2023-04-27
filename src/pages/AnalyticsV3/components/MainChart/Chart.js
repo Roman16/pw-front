@@ -30,6 +30,7 @@ const Chart = ({
                    showOptimizationChart,
                    selectedRangeDate,
                    productOptimizationDateList,
+                   tooltipOpacity,
                }) => {
 
     const [chartData, setChartData] = useState([])
@@ -123,6 +124,7 @@ const Chart = ({
                                 showWeekChart={showWeekChart}
                                 showDailyChart={showDailyChart}
                                 chartColors={chartColors}
+                                tooltipOpacity={tooltipOpacity}
                             />
                         }/>}
 

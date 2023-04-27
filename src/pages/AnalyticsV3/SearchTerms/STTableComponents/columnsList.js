@@ -21,7 +21,7 @@ import {
 import {SVG} from "../../../../utils/icons"
 import {Spin} from "antd"
 
-const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[], processingRows) => ([
+const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms = [], processingRows) => ([
     {
         title: 'Query',
         dataIndex: 'query',
@@ -88,7 +88,7 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
             fastUpdating: false,
         },
         {
-            ...matchTypeColumn, filter: false, render: () => '', sorter: false,locked:false
+            ...matchTypeColumn, filter: false, render: () => '', sorter: false, locked: false
         },
         {
             ...statusColumn,
@@ -119,6 +119,10 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
         filter: true,
         fastUpdating: false,
     },
+    {
+        ...matchTypeColumn,
+        visible: false
+    },
     impressionsColumn,
     clicksColumn,
     ctrColumn,
@@ -141,4 +145,7 @@ const getColumns = (segment, setStateHandler, getTargetings, openedSearchTerms=[
     salesShareColumn,
 ])
 
-export const STColumnsList = (...args) => ({columnsWithFilters: getColumns(...args), allColumns: getColumns('targetings')})
+export const STColumnsList = (...args) => ({
+    columnsWithFilters: getColumns(...args),
+    allColumns: getColumns('targetings')
+})

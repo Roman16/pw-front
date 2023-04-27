@@ -29,6 +29,13 @@ const DiffTooltip = ({currentValue,currencyCode, diff, type, prevValue, name, pe
                     currencyCode={currencyCode}
                 /></b>
             </p>
+            {type === 'percent' && <p>
+                ({diff < 0 ? 'down  ' : 'up  '} {round(Math.abs((currentValue - prevValue)*100), 2)} p.p. or  <RenderMetricValue
+                value={Math.abs(diff)}
+                type={'percent'}
+                id={name}
+            />)
+            </p> }
 
             {(type !== 'percent' && +currentValue > 0 && +prevValue > 0 && percentRow) && <p>
                 ({diff < 0 ? 'down  ' : 'up  '}

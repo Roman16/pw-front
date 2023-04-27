@@ -17,7 +17,7 @@ export const days = [
 ]
 
 
-const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload, chartColors}) => {
+const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payload, chartColors, tooltipOpacity}) => {
     const getChartValue = (payload, key, metric) => {
         if (payload[key] !== null) {
             if (metric.type === 'percent') {
@@ -36,7 +36,7 @@ const ChartTooltip = ({activeMetrics, showWeekChart, showDailyChart, label, payl
 
     if (payload) {
         return (
-            <div className='custom-line-chart-tooltip'>
+            <div className='custom-line-chart-tooltip' style={{opacity: tooltipOpacity/100}}>
                 <div className='label'>
                     <div className='date title'>
                         {days[moment(label).weekday()] + ', ' + moment(label).format('DD MMM YY')}
