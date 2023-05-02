@@ -55,10 +55,14 @@ const ChartHeader = ({chartState, activeMetrics, tooltipOpacity, setVisibleToolt
                     <span>Allow select up to 4 metrics</span>
                 </div>
 
-                <Slider
-                    defaultValue={tooltipOpacity}
-                    onAfterChange={onChangeOpacity}
-                />
+                <div className="slider-block">
+                    <span>Chart tooltip opacity</span>
+
+                    <Slider
+                        defaultValue={tooltipOpacity}
+                        onAfterChange={onChangeOpacity}
+                    />
+                </div>
             </div>
         )
     }
