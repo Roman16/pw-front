@@ -21,9 +21,9 @@ export const SearchField = ({
         textAreaRef.current.focus()
     }
 
-    const searchHandler = () => {
+    const searchHandler = ({strictSearchForce}) => {
         onSearch({
-            strictSearch: strictSearch,
+            strictSearch: strictSearchForce !== undefined ?  strictSearchForce : strictSearch,
             multiSearch: multiSearch,
             value: multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue
         })
@@ -36,6 +36,11 @@ export const SearchField = ({
     const changeInputTypeHandler = (value) => {
         setSearchValue()
         setMultiSearch(value)
+    }
+
+    const changeStrict = (value) => {
+        setStrictSearch(value)
+        searchHandler({strictSearchForce: value})
     }
 
     useEffect(() => {
@@ -109,7 +114,7 @@ export const SearchField = ({
                 <div className='switch-block optimization-switch'>
                     <Switch
                         checked={strictSearch}
-                        onChange={() => setStrictSearch(prevState => !prevState)}
+                        onChange={checked => changeStrict(checked)}
                     />
                     <span>Strict search</span>
                 </div>

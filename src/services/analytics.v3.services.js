@@ -78,7 +78,7 @@ export const filtersHandler = (f) => {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
-            if (value) {
+            if (value.value) {
                 if(value.strictSearch) {
                     parameters.push(`&search_strict=1`)
                 }
