@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from "react"
 import {SVG} from "../../utils/icons"
-import {Input} from "antd"
+import {Input, Popover, Switch} from "antd"
 import './SearchField.less'
 
 const {TextArea} = Input
@@ -11,6 +11,7 @@ export const SearchField = ({
                                 value
                             }) => {
     const [multiSearch, setMultiSearch] = useState(false),
+        [strictSearch, setStrictSearch] = useState(false),
         [searchValue, setSearchValue] = useState()
 
     const textAreaRef = useRef(null)
@@ -21,26 +22,33 @@ export const SearchField = ({
     }
 
     const searchHandler = () => {
-        if(value && value.join) {
-            if (searchValue !== value.join('\r\n')) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
-        } else {
-            if (searchValue !== value) onSearch(multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue)
-        }
+        onSearch({
+            strictSearch: strictSearch,
+            multiSearch: multiSearch,
+            value: multiSearch ? searchValue.split('\n').map(i => i.trim()).filter(item => item !== '') : searchValue
+        })
     }
 
     const keydownHandler = (e) => {
         if (e.keyCode === 13 && e.ctrlKey) searchHandler()
     }
 
-    const changeInputTypeHandler = (e) => {
-        e.stopPropagation()
-        e.preventDefault()
-
+    const changeInputTypeHandler = (value) => {
         setSearchValue()
-        setMultiSearch(prevState => !prevState)
+        setMultiSearch(value)
     }
 
     useEffect(() => {
+
+        if (value?.strictSearch) {
+            setStrictSearch(true)
+        }
+        if (value?.multiSearch) {
+            setMultiSearch(true)
+        }
+
+        value = value?.value || ''
+
         if (value) {
             if (typeof value === 'string') {
                 setSearchValue(value)
@@ -84,10 +92,34 @@ export const SearchField = ({
 
         {<button className="btn icon on-search-btn" onClick={searchHandler}><SVG id={'search'}/></button>}
 
-        {<button className={`btn icon switch-multi-search ${multiSearch ? 'active' : ''}`}
-                 onClick={changeInputTypeHandler}>
-            <SVG id={'multi-search-icon'}/>
-        </button>}
+        <Popover
+            trigger="click"
+            placement="bottomRight"
+            overlayClassName={'search-field-options-popover'}
+            getPopupContainer={(node) => node.parentNode}
+            content={<div className="switches">
+                <div className='switch-block optimization-switch'>
+                    <Switch
+                        checked={multiSearch}
+                        onChange={() => changeInputTypeHandler(!multiSearch)}
+                    />
+                    <span>Multisearch</span>
+                </div>
+
+                <div className='switch-block optimization-switch'>
+                    <Switch
+                        checked={strictSearch}
+                        onChange={() => setStrictSearch(prevState => !prevState)}
+                    />
+                    <span>Strict search</span>
+                </div>
+            </div>}
+        >
+            <button className={`btn icon switch-multi-search ${(multiSearch || strictSearch) ? 'active' : ''}`}>
+                <SVG id={'multi-search-icon'}/>
+            </button>
+        </Popover>
+
 
         {multiSearch && <button className="btn icon line-break" onClick={addNevLine}><SVG id={'line-break'}/></button>}
     </div>)

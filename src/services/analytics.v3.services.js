@@ -78,15 +78,21 @@ export const filtersHandler = (f) => {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
+            console.log(value)
+
             if (value) {
-                if (typeof value === 'string') {
-                    parameters.push(`&${filterBy}:like[]=${encodeString(value)}`)
-                    parameters.push(`&search[]=${encodeString(value)}`)
-                } else {
-                    value.forEach(i => {
+                if(value.strictSearch) {
+                    parameters.push(`&search_strict=1`)
+                }
+
+                if(value.multiSearch) {
+                    value.value.forEach(i => {
                         parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
                         parameters.push(`&search[]=${encodeString(i)}`)
                     })
+                } else {
+                    parameters.push(`&${filterBy}:like[]=${encodeString(value.value)}`)
+                    parameters.push(`&search[]=${encodeString(value.value)}`)
                 }
             }
         } else if (type.key === 'one_of') {

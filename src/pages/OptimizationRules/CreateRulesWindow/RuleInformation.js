@@ -96,8 +96,8 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
             </div>
 
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Urna netus consequat ornare laoreet duis tellus
-                digni
+                When you turn off this switch, the created rule will not run automatically. This way, you limit the
+                Software and adjust it to your convenience. You can run this rule manually from the interface.
             </p>
         </div>
 

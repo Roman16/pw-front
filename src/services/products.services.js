@@ -32,20 +32,24 @@ export const searchStrWrap = (searchStr, wrap) => {
     let searchParams = []
 
     if (searchStr) {
-        if (typeof searchStr === 'string') {
-            if (wrap) {
-                searchParams.push(`&${wrap}[search][]=${encodeString(searchStr)}`)
-            } else {
-                searchParams.push(`&search[]=${encodeString(searchStr)}`)
-            }
-        } else {
-            searchStr.forEach(i => {
+        if(searchStr?.strictSearch) {
+            searchParams.push(`&search_strict=1`)
+        }
+
+        if(searchStr?.multiSearch) {
+            searchStr.value.forEach(i => {
                 if (wrap) {
                     searchParams.push(`&${wrap}[search][]=${encodeString(i)}`)
                 } else {
                     searchParams.push(`&search[]=${encodeString(i)}`)
                 }
             })
+        } else {
+            if (wrap) {
+                searchParams.push(`&${wrap}[search][]=${encodeString(searchStr.value)}`)
+            } else {
+                searchParams.push(`&search[]=${encodeString(searchStr.value)}`)
+            }
         }
     }
 

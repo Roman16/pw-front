@@ -79,6 +79,11 @@ const metrics = [
         key: 'matchType',
         type: 'enums'
     },
+    {
+        title: 'State',
+        key: 'state',
+        type: 'enums'
+    },
 ]
 
 const conditionsByMetric = {
@@ -143,6 +148,33 @@ export const actionsEnums = [
         title: 'Increase - Bid',
         key: 'increase_bid'
     },
+]
+
+export const stateEnums = [
+    {
+        title: 'Enabled',
+        key: 'enabled'
+    },
+    {
+        title: 'Paused',
+        key: 'paused'
+    },
+    {
+        title: 'Archived',
+        key: 'archived'
+    },
+]
+
+export const matchTypeEnums = [
+    {title: 'Exact', key: 'exact', value: 'exact'},
+    {title: 'Phrase', key: 'phrase', value: 'phrase'},
+    {title: 'Broad', key: 'broad', value: 'broad'},
+    {title: 'ASIN', key: 'asin', value: 'asin'},
+    {title: 'Expanded ASIN', key: 'expandedASIN', value: 'expandedASIN'},
+    {title: 'Category', key: 'category', value: 'category'},
+    {title: 'Brand', key: 'brand', value: 'brand'},
+    {title: 'Views', key: 'views', value: 'views'},
+    {title: 'Auto', key: 'auto', value: 'auto'},
 ]
 
 const defaultRule = {
@@ -322,7 +354,11 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                     <CustomSelect
                         getPopupContainer={trigger => trigger}
                         value={rule.metric}
-                        onChange={metric => onChange({...rule, metric})}
+                        onChange={metric => onChange({
+                            ...rule,
+                            metric,
+                            value: metric === 'state' ? stateEnums[0].key : metric === 'matchType' ? matchTypeEnums[0].key : '1'
+                        })}
                     >
                         {metrics.map(metric => <Option value={metric.key}>{metric.title}</Option>)}
                     </CustomSelect>
@@ -342,10 +378,19 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
 
                 <div className="form-group">
                     <label htmlFor="">Value</label>
-                    <input
-                        value={rule.value}
-                        onChange={({target: {value}}) => onChange({...rule, value: String(value)})}
-                    />
+                    {_.find(metrics, {key: rule.metric}).type === 'enums' ? <CustomSelect
+                            getPopupContainer={trigger => trigger}
+                            value={rule.value}
+                            onChange={value => onChange({...rule, value})}
+                        >
+                            {[...rule.metric === 'state' ? stateEnums : matchTypeEnums].map(i =>
+                                <Option value={i.key}>{i.title}</Option>)}
+                        </CustomSelect>
+                        : <input
+                            value={rule.value}
+                            onChange={({target: {value}}) => onChange({...rule, value: String(value)})}
+                        />
+                    }
                 </div>
 
                 {showRemove && <button className="btn icon" onClick={onRemove}>

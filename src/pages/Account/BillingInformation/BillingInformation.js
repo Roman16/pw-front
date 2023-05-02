@@ -103,8 +103,8 @@ const BillingInformation = () => {
         setUpdateProcessing(true)
 
         try {
-            const res = await userService.addPaymentMethod(card)
-            setAddedCardsList(mapCards(res.map((i, index) => {
+            const {result} = await userService.addPaymentMethod(card)
+            setAddedCardsList(mapCards(result.map((i, index) => {
                 if (index === 0 && isDefault) i.default = true
                 return i
             })))
