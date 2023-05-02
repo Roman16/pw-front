@@ -231,25 +231,21 @@ export const keywordPTColumn = {
     render: (text, item) => {
         if (text && (item.calculatedTargetingMatchType === 'asin' || item.calculatedTargetingMatchType === 'negativeAsin' || item.calculatedTargetingMatchType === 'negativeASIN')) {
             const asin = text.replace('asin="', '').replace('"', '')
-            return (<div className="asin-link"><span>asin="</span>
-                <a
+            return (<div className="asin-link"><a
                     href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     target={'_blank'}
                 >
-                    {asin}
+                asin="{asin}"
                 </a>
-                "
             </div>)
         } else if(text && item.calculatedTargetingMatchType === 'expandedASIN') {
             const asin = text.replace('asinExpandedFrom="', '').replace('"', '')
-            return (<div className="asin-link"><span>asinExpandedFrom="</span>
-                <a
+            return (<div className="asin-link"><span></span><a
                     href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
                     target={'_blank'}
                 >
-                    {asin}
+                asinExpandedFrom="{asin}"
                 </a>
-                "
             </div>)
         } else {
             return (<>

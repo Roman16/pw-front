@@ -40,7 +40,11 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
         setProcessing(true)
 
         try {
-            const {result} = await zthServices.getAllProducts({...requestParams, searchStr})
+            const {result} = await zthServices.getAllProducts({
+                ...requestParams, searchStr: {
+                    value: searchStr
+                }
+            })
 
             setProducts(result.products || [])
             setTotalSize(result.totalSize)
@@ -141,7 +145,8 @@ const SelectProduct = ({visible, selectedProduct, openedSteps, onAddProducts, on
                     <h2>Choose a product</h2>
                     <p>
                         Choose a product you wish to create advertising campaigns for. <br/>
-                        For parent products, we recommend to create Zero to Hero campaigns structure for a parent product itself, not for each variation separately.
+                        For parent products, we recommend to create Zero to Hero campaigns structure for a parent
+                        product itself, not for each variation separately.
                     </p>
                 </div>
 
@@ -285,7 +290,7 @@ const NoFound = () => <div className="empty no-f0und">
     <p>Please select products you want to create <br/> campaigns for</p>
 </div>
 
-export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disabled, nextBtnText = 'NEXT', nextBtnArrow = true, nextBtnProcessing=false}) => (
+export const NavigationButtons = ({prevStep = true, onNextStep, onPrevStep, disabled, nextBtnText = 'NEXT', nextBtnArrow = true, nextBtnProcessing = false}) => (
     <div className="nav-buttons">
         {prevStep && <button className="btn grey" onClick={onPrevStep}>
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
