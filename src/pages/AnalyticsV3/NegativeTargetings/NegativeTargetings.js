@@ -35,7 +35,7 @@ const NegativeTargetings = () => {
                 rowKey={'targetingId'}
                 fixedColumns={[0]}
 
-                moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={location}/>}
+                // moreActions={<OpenCreateWindowButton title={'Add Negative Targetings'} window={location}/>}
             >
                 {successCreate => <CreateNegativeTargetingsWindow onReloadList={successCreate} location={location}/>}
             </RenderPageParts>

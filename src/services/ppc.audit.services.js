@@ -1,6 +1,7 @@
 import api, {encodeString} from "./request"
 import {ppcAuditUrls} from "../constans/api.urls"
 import {filtersHandler} from "./analytics.services"
+import {searchStrWrap} from "./products.services"
 
 export const ppcAuditServices = {
     getProducts,
@@ -16,19 +17,7 @@ const columnsKey = {
 }
 
 function getProducts({pageSize, page, searchStr = '', onlyOptimization, cancelToken}) {
-    let searchParams = []
-
-    if (searchStr) {
-        if (typeof searchStr === 'string') {
-            searchParams.push(`&search[]=${encodeString(searchStr)}`)
-        } else {
-            searchStr.forEach(i => {
-                searchParams.push(`&search[]=${encodeString(i)}`)
-            })
-        }
-    }
-
-    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchParams.join('')}`, null, null, cancelToken)
+    return api('get', `${ppcAuditUrls.products}?page=${page}&size=${pageSize}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
 }
 
 function getAuditIssues({id, page, pageSize, sorterColumn, filters}, cancelToken) {
