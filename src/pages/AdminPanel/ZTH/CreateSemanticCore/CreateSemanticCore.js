@@ -49,7 +49,6 @@ const CreateSemanticCore = () => {
             competitorBrandsArr = semanticData.productInformation.competitorBrands.filter(x => x.mainName && x.mainName.trim().length > 0),
             competitorBrandsOffAmazonArr = semanticData.productInformation.competitorBrandsOffAmazon.filter(x => x.mainName && x.mainName.trim().length > 0)
 
-
         return ({
             keywordsProvider: {
                 maxNewKeywords: +semanticData.keywordsProvider.maxNewKeywords,

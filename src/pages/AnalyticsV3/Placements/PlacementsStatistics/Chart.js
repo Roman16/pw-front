@@ -120,7 +120,6 @@ const chartColors = [
         stroke: '#7FD3A1',
         fill: 'rgba(127,211,161,0.23)'
     }
-
 ]
 
 export const chartAreaKeys = {

@@ -320,7 +320,9 @@ const fakeData = [
 
 
 const MainChart = ({activeMetrics, selectedRangeDate, location, chartData, fetching}) => {
-    const [productOptimizationDateList, setProductOptimizationDateList] = useState([])
+    const [productOptimizationDateList, setProductOptimizationDateList] = useState([]),
+        [tooltipOpacity, setTooltipOpacity] = useState(100)
+
 
     const {chartState, visibleChart} = useSelector(state => ({
         chartState: state.analytics.chartState[location],
@@ -332,6 +334,7 @@ const MainChart = ({activeMetrics, selectedRangeDate, location, chartData, fetch
             showWeekChart={chartState.showWeekChart}
             showDailyChart={chartState.showDailyChart}
             showOptimizationChart={false}
+            tooltipOpacity={tooltipOpacity}
             activeMetrics={activeMetrics}
             data={chartData}
             selectedRangeDate={selectedRangeDate}
@@ -341,6 +344,9 @@ const MainChart = ({activeMetrics, selectedRangeDate, location, chartData, fetch
         <ChartHeader
             chartState={chartState}
             activeMetrics={activeMetrics}
+            tooltipOpacity={tooltipOpacity}
+
+            onChangeOpacity={setTooltipOpacity}
         />
 
         {fetching && <div className="loading">

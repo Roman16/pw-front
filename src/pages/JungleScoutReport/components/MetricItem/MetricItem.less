@@ -1,0 +1,104 @@
+.monthly-report-page .metric-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 140px;
+  height: 100px;
+  padding: 8px 12px 8px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  margin-right: 0.5%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+  .active-metric {
+    width: 100%;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &.position-0 {
+      background: #FF5256;
+    }
+
+    &.position-1 {
+      background: #9464B9;
+    }
+
+    &.position-2 {
+      background: #FFAF52;
+    }
+
+    &.position-3 {
+      background: #7FD3A1;
+    }
+  }
+
+  .title-info {
+    span {
+      width: max-content;
+      font-size: 1rem;
+      line-height: 1.2142857142857142rem;
+      color: #353A3E;
+    }
+  }
+
+  .value {
+    font-weight: 600;
+    font-size: 1.7142857142857142rem;
+    line-height: 2.0714285714285716rem;
+    color: #353A3E;
+  }
+
+  .metric-item__description {
+    display: flex;
+    justify-content: space-between;
+
+    .label {
+      font-size: 1rem;
+      line-height: 1.2142857142857142rem;
+      color: #353A3E;
+    }
+
+    .metric-item__changes {
+      div {
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1.2142857142857142rem;
+
+        i {
+          display: flex;
+          align-items: center;
+          margin: 0 5px 0 0;
+        }
+      }
+    }
+  }
+
+  .downward-changes {
+    color: #EC7F5C;
+
+    svg {
+      fill: #EC7F5C;
+    }
+  }
+
+  .upward-changes {
+    color: #7DD4A1;
+
+    svg {
+      fill: #7DD4A1;
+    }
+  }
+}
+
+.diff-tooltip {
+  p {
+    margin: 0;
+  }
+}

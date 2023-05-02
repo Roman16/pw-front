@@ -416,6 +416,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     {title: 'Phrase', key: 'phrase', value: 'phrase'},
                     {title: 'Broad', key: 'broad', value: 'broad'},
                     {title: 'ASIN', key: 'asin', value: 'asin'},
+                    {title: 'Expanded ASIN', key: 'expandedASIN', value: 'expandedASIN'},
                     {title: 'Category', key: 'category', value: 'category'},
                     {title: 'Brand', key: 'brand', value: 'brand'},
                     {title: 'Views', key: 'views', value: 'views'},

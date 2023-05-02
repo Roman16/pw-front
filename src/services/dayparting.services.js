@@ -2,6 +2,7 @@ import api, {encodeString} from './request'
 import {daypartingUrls} from '../constans/api.urls'
 import moment from "moment"
 import {store} from '../store/store'
+import {searchStrWrap} from "./products.services"
 
 export const daypartingServices = {
     getDayPartingParams,
@@ -68,35 +69,11 @@ function deactivateMultiDayparting(data) {
 //-----------------
 
 function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting}) {
-    let searchParams = []
-
-    if (searchStr) {
-        if (typeof searchStr === 'string') {
-            searchParams.push(`&search[]=${encodeString(searchStr)}`)
-        } else {
-            searchStr.forEach(i => {
-                searchParams.push(`&search[]=${encodeString(i)}`)
-            })
-        }
-    }
-
-    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${searchParams.join('')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
 }
 
 function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
-    let searchParams = []
-
-    if (searchStr) {
-        if (typeof searchStr === 'string') {
-            searchParams.push(`&search[]=${encodeString(searchStr)}`)
-        } else {
-            searchStr.forEach(i => {
-                searchParams.push(`&search[]=${encodeString(i)}`)
-            })
-        }
-    }
-
-    return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${searchParams.join('')}`, null, null, cancelToken)
+    return api('get', `${daypartingUrls.products}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
 }
 
 function getStatisticDayByHour({cancelToken, campaignId, date, attributionWindow}) {

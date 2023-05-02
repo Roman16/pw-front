@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {
-    LineChart,
+    LineChart as Chart,
     Line,
     XAxis,
     YAxis,
@@ -10,11 +10,11 @@ import {
     ReferenceLine,
     ReferenceArea,
 } from 'recharts'
-import ChartTooltip from "./ChartTooltip"
 import moment from "moment"
-import {analyticsAvailableMetricsList} from '../../components/MainMetrics/metricsList'
 import _ from "lodash"
 import {activeTimezone} from "../../../index"
+import {analyticsAvailableMetricsList, metricKeys} from "../../../AnalyticsV3/components/MainMetrics/metricsList"
+import ChartTooltip from "../../../AnalyticsV3/components/MainChart/ChartTooltip"
 
 const animationDuration = 1000,
     animationEasing = 'linear',
@@ -22,50 +22,23 @@ const animationDuration = 1000,
 
 const chartColors = ['#FF5256', '#9464B9', '#FFAF52', '#7FD3A1']
 
-const Chart = ({
-                   data,
-                   activeMetrics = [],
-                   showWeekChart,
-                   showDailyChart,
-                   showOptimizationChart,
-                   selectedRangeDate,
-                   productOptimizationDateList,
-                   tooltipOpacity,
-               }) => {
 
-    const [chartData, setChartData] = useState([])
-
-    useEffect(() => {
-        setChartData([...data.map(item => {
-            let event = {
-                eventDate: item.eventDate,
-            }
-
-            activeMetrics.forEach(metric => {
-                if (metric) {
-                    const metricType = _.find(analyticsAvailableMetricsList, {key: metric}).type
-
-                    event[metric] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
-                    event[`${metric}_7d`] = metricType === 'percent' ? +item[`${metric}_7d`] * 100 : +item[`${metric}_7d`]
-
-                    if (`${moment().tz(activeTimezone).format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz(activeTimezone).subtract(1, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z` || `${moment().tz(activeTimezone).subtract(2, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
-                        event[metric] = null
-                        event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
-                    } else if (`${moment().tz(activeTimezone).subtract(3, "days").format('YYYY-MM-DD')}T00:00:00.000Z` === `${moment(item.eventDate).format('YYYY-MM-DD')}T00:00:00.000Z`) {
-                        event[`dashed_${metric}`] = metricType === 'percent' ? +item[metric] * 100 : +item[metric]
-                    }
-                }
-            })
-
-            return event
-        })])
-    }, [data])
+export const LineChart = ({
+                              data,
+                              activeMetrics = [],
+                              showWeekChart,
+                              showDailyChart,
+                              showOptimizationChart,
+                              selectedRangeDate,
+                              productOptimizationDateList,
+                              dataKey = 'eventDate'
+                          }) => {
 
     return (
-        <div className='main-chart-container'>
+        <div className='line-chart-container'>
             <ResponsiveContainer height='100%' width='100%'>
-                <LineChart
-                    data={chartData}
+                <Chart
+                    data={data}
                     margin={activeMetrics.filter(item => item !== null).length === 0 ?
                         {top: 30, bottom: 20, left: 50, right: 50}
                         :
@@ -95,7 +68,7 @@ const Chart = ({
                     />
 
                     <XAxis
-                        dataKey="eventDate"
+                        dataKey={dataKey}
                         axisLine={false}
                         // interval={2}
                         // angle={50}
@@ -103,7 +76,7 @@ const Chart = ({
                         dy={15}
                         // height={60}
                         // tick={<CustomizedAxisTick/>}
-                        tickFormatter={(date) => moment(date).format('MMM DD')}
+                        tickFormatter={(date) => dataKey === 'year_month' ? moment(date, 'YYYY-MM').format('MMM') : moment(date).format('MMM DD')}
                     />
 
                     {activeMetrics && activeMetrics.map((item, index) => (
@@ -120,11 +93,24 @@ const Chart = ({
                         isAnimationActive={false}
                         content={
                             <ChartTooltip
-                                activeMetrics={activeMetrics.map(key => _.find(analyticsAvailableMetricsList, {key: key}))}
+                                activeMetrics={activeMetrics.map(key => _.find([
+                                    ...analyticsAvailableMetricsList,
+                                    {
+                                        title: 'Product units',
+                                        key: 'monthly_unit_sales',
+                                        label: 'Total',
+                                        type: 'number',
+                                    },
+                                    {
+                                        title: 'Revenue',
+                                        key: 'total_revenue',
+                                        label: 'Total',
+                                        type: 'number',
+                                    },
+                                ], {key: key}))}
                                 showWeekChart={showWeekChart}
                                 showDailyChart={showDailyChart}
                                 chartColors={chartColors}
-                                tooltipOpacity={tooltipOpacity}
                             />
                         }/>}
 
@@ -206,29 +192,8 @@ const Chart = ({
                         />
                     ))}
                     {/*--------------------------------------------------------------*/}
-
-                    {/*---------------------------daily dashed line-----------------------*/}
-                    {activeMetrics && activeMetrics.map((metric, index) => (
-                        showDailyChart && <Line
-                            yAxisId={`YAxis-${index}`}
-                            type="linear"
-                            strokeOpacity={0.75}
-                            dataKey={`dashed_${metric}`}
-                            stroke={chartColors[index]}
-                            strokeWidth={2}
-                            strokeDasharray="7 5"
-                            activeDot={{r: 5}}
-                            dot={{r: 2}}
-                            animationEasing={animationEasing}
-                            animationDuration={animationDuration}
-                            isAnimationActive={isAnimationActive}
-                        />
-                    ))}
-                    {/*--------------------------------------------------------------*/}
-                </LineChart>
+                </Chart>
             </ResponsiveContainer>
         </div>
     )
 }
-
-export default Chart

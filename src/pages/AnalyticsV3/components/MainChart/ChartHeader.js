@@ -1,10 +1,10 @@
-import React, {Fragment, useState} from "react"
-import {Popover, Switch} from "antd"
+import React, {Fragment, useRef, useState} from "react"
+import {Popover, Slider, Switch} from "antd"
 import {SVG} from "../../../../utils/icons"
 import {useDispatch} from "react-redux"
 import {analyticsActions} from "../../../../actions/analytics.actions"
 
-const ChartHeader = ({chartState, activeMetrics}) => {
+const ChartHeader = ({chartState, activeMetrics, tooltipOpacity, setVisibleTooltip, onChangeOpacity}) => {
     const [visiblePopover, setVisiblePopover] = useState(undefined)
 
     const dispatch = useDispatch()
@@ -54,6 +54,15 @@ const ChartHeader = ({chartState, activeMetrics}) => {
                     />
                     <span>Allow select up to 4 metrics</span>
                 </div>
+
+                <div className="slider-block">
+                    <span>Chart tooltip opacity</span>
+
+                    <Slider
+                        defaultValue={tooltipOpacity}
+                        onAfterChange={onChangeOpacity}
+                    />
+                </div>
             </div>
         )
     }
@@ -63,7 +72,7 @@ const ChartHeader = ({chartState, activeMetrics}) => {
             <div className='chart-legend'>
                 <div className="first-line">
                     <span className={`dashed-line ${chartState.selectFourMetrics ? 'four-metrics' : ''}`}>
-                        <svg    fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg fill="none" xmlns="http://www.w3.org/2000/svg">
                             {chartState.selectFourMetrics && <>
                                 <rect xmlns="http://www.w3.org/2000/svg" width="7" height="3" y="18" fill="#7FD3A1"
                                       rx="1.5" opacity={0.5}/>

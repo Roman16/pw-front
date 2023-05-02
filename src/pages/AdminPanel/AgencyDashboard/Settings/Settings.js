@@ -4,7 +4,6 @@ import {columns} from "./columns"
 import {adminServices} from "../../../../services/admin.services"
 import {Spin} from "antd"
 import {userTypeEnums} from "../../../../constans/userTypeEnums"
-import _ from 'lodash'
 import {notification} from "../../../../components/Notification"
 
 

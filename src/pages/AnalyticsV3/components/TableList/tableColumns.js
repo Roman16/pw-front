@@ -240,6 +240,17 @@ export const keywordPTColumn = {
                 </a>
                 "
             </div>)
+        } else if(text && item.calculatedTargetingMatchType === 'expandedASIN') {
+            const asin = text.replace('asinExpandedFrom="', '').replace('"', '')
+            return (<div className="asin-link"><span>asinExpandedFrom="</span>
+                <a
+                    href={`https://www.amazon.${amazonDomain()}/dp/${asin}`}
+                    target={'_blank'}
+                >
+                    {asin}
+                </a>
+                "
+            </div>)
         } else {
             return (<>
                     <span className={'overflow-text'} title={text}>

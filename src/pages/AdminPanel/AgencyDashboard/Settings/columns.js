@@ -4,7 +4,7 @@ import {Select, Switch} from "antd"
 
 const Option = Select.Option
 
-export const columns = (users, onChange) => [
+export const columns = (users, onChange, onSearch) => [
     {
         title: 'Account Name',
         dataIndex: 'marketplace_name',
@@ -39,6 +39,9 @@ export const columns = (users, onChange) => [
         render: (id, item, rowIndex) => <CustomSelect
             getPopupContainer={trigger => trigger}
             value={id}
+            showSearch
+            optionFilterProp="children"
+
             onChange={(value) => onChange(rowIndex, {project_manager_id: value})}
         >
             <Option value={null}><b>No Manager</b></Option>
@@ -60,6 +63,9 @@ export const columns = (users, onChange) => [
         render: (id, item, rowIndex) => <CustomSelect
             getPopupContainer={trigger => trigger}
             value={id}
+            showSearch
+            optionFilterProp="children"
+
             onChange={(value) => onChange(rowIndex, {ppc_manager_id: value})}
         >
             <Option value={null}><b>No Manager</b></Option>

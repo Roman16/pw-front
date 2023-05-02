@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useDispatch, useSelector} from "react-redux"
-import {analyticsAvailableMetricsList} from "./metricsList"
+import {analyticsAvailableMetricsList, metricKeys} from "./metricsList"
 import MetricItem from "./MetricItem"
 import './MainMetrics.less'
 import {SVG} from "../../../../utils/icons"
@@ -16,6 +16,37 @@ let prevActivatedIndex = undefined
 
 export const AVAILABLE_METRICS_LENGTH = 12
 
+
+const metricsOrder = {
+    products: [
+        metricKeys['total_orders'],
+        metricKeys['organic_orders'],
+        metricKeys['ad_orders'],
+        metricKeys['macos'],
+        metricKeys['conversion_rate'],
+        metricKeys['cpa'],
+        metricKeys['total_units'],
+        metricKeys['cost'],
+        metricKeys['ad_sales'],
+        metricKeys['acos'],
+        metricKeys['net_profit'],
+        metricKeys['adSalesOtherSKU']],
+    all: [
+        metricKeys['impressions'],
+        metricKeys['clicks'],
+        metricKeys['ctr'],
+        metricKeys['cpc'],
+        metricKeys['cost'],
+        metricKeys['ad_sales'],
+        metricKeys['acos'],
+        metricKeys['roas'],
+        metricKeys['conversion_rate'],
+        metricKeys['cpa'],
+        metricKeys['ad_orders'],
+        metricKeys['adSalesOtherSKU']
+    ]
+}
+
 const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const dispatch = useDispatch()
 
@@ -24,8 +55,8 @@ const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false)
 
-    const selectedMetrics = metricsState.selectedMetrics || allMetrics.slice(0, 5),
-        activeMetrics = metricsState.activeMetrics || allMetrics.slice(0, 2)
+    const selectedMetrics = metricsState.selectedMetrics || ((location === 'products' || location === 'products-parents') ? metricsOrder.products : metricsOrder.all),
+        activeMetrics = metricsState.activeMetrics || ((location === 'products' || location === 'products-parents') ? metricsOrder.products : metricsOrder.all).slice(0, 2)
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)
     const [hiddenItems, updateHiddenList] = useState([])
