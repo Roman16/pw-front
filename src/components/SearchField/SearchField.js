@@ -30,7 +30,7 @@ export const SearchField = ({
     }
 
     const keydownHandler = (e) => {
-        if (e.keyCode === 13 && e.ctrlKey) searchHandler()
+        if (e.keyCode === 13 && e.ctrlKey) searchHandler(({strictSearchForce: strictSearch}))
     }
 
     const changeInputTypeHandler = (value) => {

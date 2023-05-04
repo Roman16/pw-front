@@ -87,7 +87,7 @@ const JungleScoutReport = () => {
                 <div className="container">
 
                     <AccountStatistic
-                        data={{...reportData.common_metrics, ...reportData.product_distribution}}
+                        data={{...reportData.common_metrics, ...reportData.product_distribution, advertising_type_distribution: reportData.advertising_type_distribution}}
                         comments={reportData.comments}
                     />
 
