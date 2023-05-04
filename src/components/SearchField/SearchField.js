@@ -95,7 +95,13 @@ export const SearchField = ({
                 // onBlur={searchHandler}
             />}
 
-        {<button className="btn icon on-search-btn" onClick={searchHandler}><SVG id={'search'}/></button>}
+        <button
+            title={multiSearch ?'Or press "CTRL+Enter" to start multisearch' : 'Or press "Enter" to start search'}
+            className="btn icon on-search-btn"
+            onClick={searchHandler}
+        >
+            <SVG id={'search'}/>
+        </button>
 
         <Popover
             trigger="click"

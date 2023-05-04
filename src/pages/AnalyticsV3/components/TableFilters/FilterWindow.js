@@ -411,14 +411,14 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Too Much Broad Keywords', key: 'TooMuchBroadKeywords', value: 'TooMuchBroadKeywords'},
         ],
         'calculatedTargetingMatchType': [
-            ...locationKey === 'targetings' ? [
+            ...(locationKey === 'targetings' || locationKey === 'searchTerms') ? [
                     {title: 'Exact', key: 'exact', value: 'exact'},
                     {title: 'Phrase', key: 'phrase', value: 'phrase'},
                     {title: 'Broad', key: 'broad', value: 'broad'},
                     {title: 'ASIN', key: 'asin', value: 'asin'},
                     {title: 'Expanded ASIN', key: 'expandedASIN', value: 'expandedASIN'},
                     {title: 'Category', key: 'category', value: 'category'},
-                    {title: 'Brand', key: 'brand', value: 'brand'},
+                    // {title: 'Brand', key: 'brand', value: 'brand'},
                     {title: 'Views', key: 'views', value: 'views'},
                     {title: 'Auto', key: 'auto', value: 'auto'},
                 ]
@@ -691,7 +691,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     value={filterValue}
                     treeCheckable={true}
                     showSearch={false}
-                    placeholder={'Type'}
                     onChange={changeValueHandler}
                     disabled={!filterType?.key}
                 />}
