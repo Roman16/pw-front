@@ -19,7 +19,7 @@ const availableMetrics = [
 
 
 export const AccountStatistic = ({
-                                     data: {metrics, previous_month_metrics, chart, total_orders_count, total_sales},
+                                     data: {metrics, previous_month_metrics, chart, total_orders_count, total_sales, advertising_type_distribution},
                                      comments: {common_metrics_comment, product_distribution_comment}
                                  }) => {
     const [activeMetrics, setActiveMetric] = useState([availableMetrics[0], availableMetrics[1]])
@@ -70,6 +70,12 @@ export const AccountStatistic = ({
                 data={total_sales}
                 nameKey={'product_name'}
                 dataKey={'total_sales'}
+            />
+
+            <PieChart
+                data={advertising_type_distribution}
+                dataKey={'attributedConversions'}
+                nameKey={'advertisingType'}
             />
         </div>
     </section>)

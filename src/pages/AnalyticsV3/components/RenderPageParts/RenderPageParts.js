@@ -46,13 +46,19 @@ export const updateResponseHandler = (res) => {
     }
 }
 
-export const diffPercent = (prevValue, value) => {
+export const diffPercent = (prevValue = 0, value) => {
+    if (prevValue === null) prevValue = 0
+
     if (prevValue != 0 && value / prevValue != Math.abs(value) / Math.abs(prevValue)) {
         return null
     }
 
     if (value > prevValue) {
-        return prevValue != 0 ? ((value / prevValue) - 1) : null
+        if(prevValue === 0 && value > 0) {
+           return 1
+        } else {
+            return prevValue != 0 ? ((value / prevValue) - 1) : null
+        }
     }
 
     return prevValue != 0 ? -(1 - (value / prevValue)) : null

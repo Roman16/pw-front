@@ -411,14 +411,14 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Too Much Broad Keywords', key: 'TooMuchBroadKeywords', value: 'TooMuchBroadKeywords'},
         ],
         'calculatedTargetingMatchType': [
-            ...locationKey === 'targetings' ? [
+            ...(locationKey === 'targetings' || locationKey === 'searchTerms') ? [
                     {title: 'Exact', key: 'exact', value: 'exact'},
                     {title: 'Phrase', key: 'phrase', value: 'phrase'},
                     {title: 'Broad', key: 'broad', value: 'broad'},
                     {title: 'ASIN', key: 'asin', value: 'asin'},
                     {title: 'Expanded ASIN', key: 'expandedASIN', value: 'expandedASIN'},
                     {title: 'Category', key: 'category', value: 'category'},
-                    {title: 'Brand', key: 'brand', value: 'brand'},
+                    // {title: 'Brand', key: 'brand', value: 'brand'},
                     {title: 'Views', key: 'views', value: 'views'},
                     {title: 'Auto', key: 'auto', value: 'auto'},
                 ]
@@ -562,7 +562,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 <CustomSelect
                     required
                     value={filterBy && filterType.key}
-                    placeholder={'Contains'}
                     onChange={changeTypeHandler}
                     getPopupContainer={trigger => trigger.parentNode}
                     disabled={!filterBy}
@@ -582,7 +581,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {!filterType?.key ? <div className="form-group">
                 <Input
                     disabled
-                    placeholder={'Type'}
                 />
             </div> : <div className="form-group">
                 {filterBy === 'datetime' &&
@@ -603,7 +601,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 ) &&
                 <Input
                     disabled={!filterType?.key}
-                    placeholder={'Type'}
                     value={filterValue}
                     onChange={(e) => changeValueHandler(e.target.value)}
                 />}
@@ -629,7 +626,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 <Input
                     disabled={!filterType?.key}
                     value={filterValue}
-                    placeholder={'Enter number'}
                     type={'number'}
                     onChange={(e) => changeValueHandler(e.target.value)}
                 />}
@@ -646,7 +642,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 ) &&
                 <InputCurrency
                     typeIcon='percent'
-                    placeholder={'Enter number'}
                     value={filterValue}
                     onChange={changeValueHandler}
                     step={0.01}
@@ -684,7 +679,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                 ) &&
                 <InputCurrency
                     value={filterValue}
-                    placeholder={'Enter number'}
                     onChange={changeValueHandler}
                     step={0.01}
                     disabled={!filterType?.key}
@@ -697,7 +691,6 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     value={filterValue}
                     treeCheckable={true}
                     showSearch={false}
-                    placeholder={'Type'}
                     onChange={changeValueHandler}
                     disabled={!filterType?.key}
                 />}

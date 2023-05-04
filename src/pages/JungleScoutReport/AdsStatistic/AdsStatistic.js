@@ -59,15 +59,15 @@ export const AdsStatistic = ({
             showDailyChart={true}
         />
 
-        <Comment text={advertising_type_distribution_comment}/>
+        {/*<Comment text={advertising_type_distribution_comment}/>*/}
 
-        <div className="pie-charts-row">
-            <PieChart
-                data={advertising_type_distribution}
-                dataKey={'attributedConversions'}
-                nameKey={'advertisingType'}
-            />
-        </div>
+        {/*<div className="pie-charts-row">*/}
+        {/*    <PieChart*/}
+        {/*        data={advertising_type_distribution}*/}
+        {/*        dataKey={'attributedConversions'}*/}
+        {/*        nameKey={'advertisingType'}*/}
+        {/*    />*/}
+        {/*</div>*/}
 
         <Comment text={top_sales_campaigns_comment}/>
 
