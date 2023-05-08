@@ -133,7 +133,7 @@ const SearchTerms = () => {
 
             const [prevData, currentData] = await Promise.all([analyticsServices.fetchSearchTermsData(
                 {
-                    ...tableRequestParams,
+                    ...paginationParams ? paginationParams : tableRequestParams,
                     sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                     pageParts: ['metrics'],
                     filtersWithState,
@@ -147,7 +147,7 @@ const SearchTerms = () => {
                 undefined,
             ), analyticsServices.fetchSearchTermsData(
                 {
-                    ...tableRequestParams,
+                    ...paginationParams ? paginationParams : tableRequestParams,
                     sorterColumn: sorterParams ? sorterParams : localSorterColumn,
                     pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                     filtersWithState,
