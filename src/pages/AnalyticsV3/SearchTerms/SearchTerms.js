@@ -89,7 +89,7 @@ const SearchTerms = () => {
                     ...prevState.table,
                     data: prevState.table.data.map(item => {
                         if (item.queryCRC64 === id) {
-                            item.targetingsData = result.table.data
+                            item.targetingsData = result.table
                         }
 
                         return item
