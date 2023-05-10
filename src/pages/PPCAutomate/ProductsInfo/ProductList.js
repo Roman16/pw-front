@@ -240,23 +240,23 @@ const ProductList = ({
                     </div>
                 )
             },
-            // {
-            //     width: '175px',
-            //     render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
-            //
-            // },
-            // {
-            //     width: '175px',
-            //     render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
-            // },
-            // {
-            //     width: '175px',
-            //     render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
-            // },
-            // {
-            //     width: '175px',
-            //     render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
-            // },
+            {
+                width: '175px',
+                render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
+
+            },
+            {
+                width: '175px',
+                render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
+            },
+            {
+                width: '175px',
+                render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
+            },
+            {
+                width: '175px',
+                render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
+            },
             ...(isAdmin || isAgencyClient) ? [{
                 width: '160px',
                 render: (item, parent) => (parent[DESIRED_ACOS] ? `${parent[DESIRED_ACOS]}%` : '-')
@@ -418,40 +418,40 @@ const ProductList = ({
             width: '200px',
             render: () => ('')
         }] : [],
-        // {
-        //     title: <>Min Bid <br/> (Manual Campaign)</>,
-        //     dataIndex: MIN_BID_MANUAL_CAMPING,
-        //     key: MIN_BID_MANUAL_CAMPING,
-        //     width: '175px',
-        //     editType: 'currency',
-        //     saveValidation: () =>  false,
-        //     render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
-        // },
-        // {
-        //     title: <>Max Bid <br/> (Manual Campaign)</>,
-        //     dataIndex: MAX_BID_MANUAL_CAMPING,
-        //     key: MAX_BID_MANUAL_CAMPING,
-        //     width: '175px',
-        //     editType: 'currency',
-        //     saveValidation: () =>  false,
-        //     render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
-        // },
-        // {
-        //     title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
-        //     dataIndex: MIN_BID_AUTO_CAMPING,
-        //     key: MIN_BID_AUTO_CAMPING,
-        //     width: '175px',
-        //     editType: 'currency',
-        //     render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
-        // },
-        // {
-        //     title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
-        //     dataIndex: MAX_BID_AUTO_CAMPING,
-        //     key: MAX_BID_AUTO_CAMPING,
-        //     width: '175px',
-        //     editType: 'currency',
-        //     render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
-        // },
+        {
+            title: <>Min Bid <br/> (Manual Campaign)</>,
+            dataIndex: MIN_BID_MANUAL_CAMPING,
+            key: MIN_BID_MANUAL_CAMPING,
+            width: '175px',
+            editType: 'currency',
+            saveValidation: () =>  false,
+            render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
+        },
+        {
+            title: <>Max Bid <br/> (Manual Campaign)</>,
+            dataIndex: MAX_BID_MANUAL_CAMPING,
+            key: MAX_BID_MANUAL_CAMPING,
+            width: '175px',
+            editType: 'currency',
+            saveValidation: () =>  false,
+            render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
+        },
+        {
+            title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
+            dataIndex: MIN_BID_AUTO_CAMPING,
+            key: MIN_BID_AUTO_CAMPING,
+            width: '175px',
+            editType: 'currency',
+            render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
+        },
+        {
+            title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
+            dataIndex: MAX_BID_AUTO_CAMPING,
+            key: MAX_BID_AUTO_CAMPING,
+            width: '175px',
+            editType: 'currency',
+            render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
+        },
         ...(isAdmin || isAgencyClient) ? [{
             title: () => (<span>Desired ACoS</span>),
             dataIndex: DESIRED_ACOS,
