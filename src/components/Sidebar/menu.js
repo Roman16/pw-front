@@ -77,5 +77,11 @@ export const mainMenu = [
         key: 'report',
         icon: 'scanner-icon-sidebar',
         link: 'monthly-report'
-    }
+    },
+    // {
+    //     title: 'Product Settings',
+    //     key: 'settings',
+    //     icon: 'product-settings-icon-sidebar',
+    //     link: 'product-settings'
+    // },
 ]

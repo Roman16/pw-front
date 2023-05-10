@@ -116,6 +116,75 @@ export const filtersHandler = (f) => {
     return parameters.join('')
 }
 
+const dynamicFiltersHandler = (f) => {
+    let filters = [...f]
+    const parameters = []
+
+    filters.forEach(({filterBy, type, value, requestValue}) => {
+        if (filterBy === 'datetime') {
+            parameters.unshift(`?${dateRangeFormatting(value)}`)
+        } else if (filterBy === 'campaignId') {
+            parameters.push(`&campaign_id[]=${value}`)
+            parameters.push(`&campaignId:eq=${value}`)
+        } else if (filterBy === 'adGroupId') {
+            parameters.push(`&ad_group_id[]=${value}`)
+            parameters.push(`&adGroupId:eq=${value}`)
+        } else if (filterBy === 'productId') {
+            parameters.push(`&product_id[]=${value}`)
+            parameters.push(`&productId:eq=${value}`)
+        } else if (filterBy ==='parent_productId') {
+            parameters.push(`&parent_product_id[]=${value}`)
+            parameters.push(`&parent_productId:eq=${value}`)
+        } else if (filterBy === 'portfolioId') {
+            parameters.push(`&portfolio_id[]=${value}`)
+            parameters.push(`&portfolioId:eq=${value}`)
+        } else if (type.key === 'except') {
+            parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
+        } else if (filterBy === 'productView') {
+
+        } else if (filterBy === 'segment') {
+            if (value !== null && !_.find(filters, {filterBy: "campaignId"})) {
+                parameters.push(`&segment_by:eq=${value}`)
+            }
+        } else if (type === 'search' && value) {
+            if (value.value) {
+                if(value.strictSearch) {
+                    parameters.push(`&search_strict=1`)
+                }
+
+                if(value.multiSearch) {
+                    value.value.forEach(i => {
+                        parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
+                        parameters.push(`&search[]=${encodeString(i)}`)
+                    })
+                } else {
+                    parameters.push(`&${filterBy}:like[]=${encodeString(value.value)}`)
+                    parameters.push(`&search[]=${encodeString(value.value)}`)
+                }
+            }
+        } else if (type.key === 'one_of') {
+            parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
+        } else if (filterBy === 'budget_allocation' ||
+            filterBy === 'sales_share' ||
+            filterBy === 'conversion_rate' ||
+            filterBy === 'acos' ||
+            filterBy === 'macos' ||
+            filterBy === 'ctr' ||
+            filterBy === metricKeys['icvr'] ||
+            filterBy === metricKeys['margin'] ||
+            filterBy === 'ctr'
+        ) {
+            parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
+        } else if (typeof type === 'object') {
+            parameters.push(`&${filterBy}:${type.key}=${value}`)
+        } else if (filterBy !== 'name' && type !== 'search') {
+            parameters.push(`&${filterBy}:${type}=${encodeString(value)}`)
+        }
+    })
+
+    return parameters.join('')
+}
+
 function fetchStateInformation(state, id) {
     return api('get', `${analyticsUrls.stateInformation(stateIdValues[state], id)}`)
 }
@@ -141,7 +210,7 @@ function fetchPlacementData(params, idList) {
 }
 
 function fetchTargetingsDetails(id, date, sorterColumn, filters, attributionWindow) {
-    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64[]=${id}&retrieve[]=table&attribution_window=${+attributionWindow}&table[size]=100&table[page]=1&${dateRangeFormatting(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
+    return api('get', `${analyticsUrls.targetingsDetails}?queryCRC64[]=${id}&attribution_window=${+attributionWindow}&${dateRangeFormatting(date)}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}${filtersHandler(filters)}`)
 }
 
 function fetchPageData(location, params, idList, cancelToken) {

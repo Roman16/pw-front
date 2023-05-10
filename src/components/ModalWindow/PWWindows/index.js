@@ -143,6 +143,7 @@ const PWWindows = ({pathname}) => {
             (pathname.includes('/dayparting') && !importStatus.dayparting.required_parts_ready) ||
             (pathname.includes('/ppc-audit') && importStatus.ppc_audit && !importStatus.ppc_audit.required_parts_ready) ||
             (pathname.includes('/ppc/') && !importStatus.ppc_automate.required_parts_ready) ||
+            (pathname.includes('/product-settings') && !importStatus.ppc_automate.required_parts_ready) ||
             (pathname.includes('/ppc/product-settings') && !importStatus.products_info.required_parts_ready) ||
             (pathname.includes('/zero-to-hero') && !importStatus.zth.required_parts_ready)) {
             setVisibleWindow('loadingAmazon')
@@ -163,7 +164,7 @@ const PWWindows = ({pathname}) => {
 
     return (
         <>
-            {(pathname.includes('/ppc/') || pathname.includes('/dayparting') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics') || pathname.includes('/ppc-audit')) &&
+            {(pathname.includes('/ppc/') || pathname.includes('/product-settings')|| pathname.includes('/dayparting') || pathname.includes('/zero-to-hero') || pathname.includes('/analytics') || pathname.includes('/ppc-audit')) &&
             <>
                 <LoadingAmazonAccount
                     pathname={pathname}
