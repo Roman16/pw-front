@@ -63,8 +63,13 @@ export const Attach = ({id, onAttach, onDetach}) => {
         setRequestParams(prevState => ({...prevState, ...data}))
     }
 
-    const changeAttachedList = (list) => {
-        setAttachedRules(list)
+    const changeAttachedList = (list, attachList, detachList) => {
+        if (detachList.length > 0) {
+            setAttachedRules(prevState => [...prevState.filter(i => !detachList.includes(i))])
+        } else {
+            setAttachedRules(prevState => [...new Set([...prevState, ...list])])
+        }
+
     }
 
     const resetHandler = () => {

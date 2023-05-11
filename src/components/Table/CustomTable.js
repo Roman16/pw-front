@@ -56,27 +56,30 @@ const CustomTable = ({
 
 
     const checkAllRowsHandler = ({target: {checked}}) => {
+        const allItems = dataSource
+            .filter(item => !disabledRows.includes(item[rowKey]))
+            .map(item => item[rowKey])
+
         if (checked) {
             rowSelection.onChange(
-                dataSource
-                    .filter(item => !disabledRows.includes(item[rowKey]))
-                    .map(item => item[rowKey]),
-                true
+                allItems,
+                allItems,
+                []
             )
         } else {
-            rowSelection.onChange([])
+            rowSelection.onChange([], [], allItems)
         }
     }
 
     const checkRowHandler = (id, value) => {
         if (value) {
             if ([...selectedRows, id].length === dataSource.filter(item => !disabledRows.includes(item[rowKey])).length) {
-                rowSelection.onChange([...selectedRows, id])
+                rowSelection.onChange([...selectedRows, id], [id], [])
             } else {
-                rowSelection.onChange([...selectedRows, id])
+                rowSelection.onChange([...selectedRows, id], [id], [])
             }
         } else {
-            rowSelection.onChange(selectedRows.filter(item => item !== id))
+            rowSelection.onChange(selectedRows.filter(item => item !== id), [], [id])
         }
     }
 
@@ -118,27 +121,27 @@ const CustomTable = ({
                             leftStickyPosition = index === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + ${checkboxWith}px)` : columns[index - 1].width}
 
                         return (item.visible === false ? '' :
-                            <div
-                                className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
-                                key={`row_${item.dataIndex}_${index}`}
-                                style={{
-                                    ...fieldWidth,
-                                    minWidth: item.minWidth || '0',
-                                    ...fixedColumns.includes(index) && leftStickyPosition
-                                }}
-                                onClick={() => item.sorter && onChangeSorter(item.key)}
-                            >
-                                <div className={`title ${item.align ? `align-${item.align}` : ''}`}>
-                                    {typeof item.title === 'function' ? item.title() : item.title}
+                                <div
+                                    className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
+                                    key={`row_${item.dataIndex}_${index}`}
+                                    style={{
+                                        ...fieldWidth,
+                                        minWidth: item.minWidth || '0',
+                                        ...fixedColumns.includes(index) && leftStickyPosition
+                                    }}
+                                    onClick={() => item.sorter && onChangeSorter(item.key)}
+                                >
+                                    <div className={`title ${item.align ? `align-${item.align}` : ''}`}>
+                                        {typeof item.title === 'function' ? item.title() : item.title}
 
-                                    {item.sorter && <div
-                                        className={`sorter-buttons
+                                        {item.sorter && <div
+                                            className={`sorter-buttons
                                         ${revertSortingColumns.includes(item.dataIndex) ? 'revert' : ''}
                                          ${sorterColumn && sorterColumn.column === item.key ? sorterColumn.type === 'desc' ? 'is-sorter desc' : 'is-sorter asc' : ''}`}>
-                                        <SVG id={'sorter-arrow'}/>
-                                    </div>}
+                                            <SVG id={'sorter-arrow'}/>
+                                        </div>}
+                                    </div>
                                 </div>
-                            </div>
                         )
                     })}
                 </div>
@@ -155,24 +158,24 @@ const CustomTable = ({
                             leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                         return (item.visible === false ? '' :
-                            <div
-                                className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
-                                style={{
-                                    ...fieldWidth,
-                                    minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
-                                }}
-                            >
-                                {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(+totalDataSource[item.key].value, item, columnIndex) : item.render((typeof totalDataSource[item.key] === 'object' ? +totalDataSource[item.key].value : totalDataSource[item.key]), item, columnIndex, item.key) : (totalDataSource[item.key].value || totalDataSource[item.key]))}
+                                <div
+                                    className={`table-body__field ${item.align || ''} ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''} ${item.align ? `align-${item.align}` : ''}`}
+                                    style={{
+                                        ...fieldWidth,
+                                        minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
+                                    }}
+                                >
+                                    {!item.noTotal && (item.render && columnIndex !== 0 ? item.totalRender ? item.totalRender(+totalDataSource[item.key].value, item, columnIndex) : item.render((typeof totalDataSource[item.key] === 'object' ? +totalDataSource[item.key].value : totalDataSource[item.key]), item, columnIndex, item.key) : (totalDataSource[item.key].value || totalDataSource[item.key]))}
 
-                                {!item.noTotal && dataSource[0].compareWithPrevious && columnIndex > 2 &&
-                                <RenderMetricChanges
-                                    value={totalDataSource[item.key]?.value}
-                                    prevValue={totalDataSource[item.key]?.value_prev}
-                                    diff={totalDataSource[item.key]?.value_diff}
-                                    type={_.find(analyticsAvailableMetricsList, {key: item.key})?.type}
-                                    name={item.key}
-                                />}
-                            </div>
+                                    {!item.noTotal && dataSource[0].compareWithPrevious && columnIndex > 2 &&
+                                    <RenderMetricChanges
+                                        value={totalDataSource[item.key]?.value}
+                                        prevValue={totalDataSource[item.key]?.value_prev}
+                                        diff={totalDataSource[item.key]?.value_diff}
+                                        type={_.find(analyticsAvailableMetricsList, {key: item.key})?.type}
+                                        name={item.key}
+                                    />}
+                                </div>
                         )
                     })}
                 </div>}
@@ -209,26 +212,26 @@ const CustomTable = ({
                                         leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                                     return (item.visible === false ? '' :
-                                        <div
-                                            className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? item.disableField && item.disableField(report[item.key], report) ? 'editable-field disabled' : 'editable-field' : ''}`}
-                                            style={{
-                                                ...fieldWidth,
-                                                minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
-                                            }}
-                                        >
-                                            {(typeof item.editType === 'function' ? item.editType(report) : item.editType) ?
-                                                <EditableField
-                                                    item={report}
-                                                    columnParams={item}
-                                                    type={item.editType}
-                                                    value={report[item.key]}
-                                                    column={item.dataIndex}
-                                                    columnInfo={item}
-                                                    onUpdateField={onUpdateField}
-                                                    render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
-                                                    disabled={(report.state && report.state === 'archived') || isDisabledRow || (item.disableField && (item.disableField(report[item.key], report) || false))}
-                                                /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
-                                        </div>
+                                            <div
+                                                className={`table-body__field ${fixedColumns.includes(columnIndex) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === columnIndex ? 'with-shadow' : ''}  ${item.align ? `align-${item.align}` : ''} ${item.editType && item.editType !== 'switch' ? item.disableField && item.disableField(report[item.key], report) ? 'editable-field disabled' : 'editable-field' : ''}`}
+                                                style={{
+                                                    ...fieldWidth,
+                                                    minWidth: item.minWidth || '0', ...fixedColumns.includes(columnIndex) && leftStickyPosition
+                                                }}
+                                            >
+                                                {(typeof item.editType === 'function' ? item.editType(report) : item.editType) ?
+                                                    <EditableField
+                                                        item={report}
+                                                        columnParams={item}
+                                                        type={item.editType}
+                                                        value={report[item.key]}
+                                                        column={item.dataIndex}
+                                                        columnInfo={item}
+                                                        onUpdateField={onUpdateField}
+                                                        render={item.render ? () => item.render(report[item.key], report, index, item.dataIndex) : undefined}
+                                                        disabled={(report.state && report.state === 'archived') || isDisabledRow || (item.disableField && (item.disableField(report[item.key], report) || false))}
+                                                    /> : item.render ? item.render(report[item.key], report, index, item.dataIndex) : report[item.key]}
+                                            </div>
                                     )
                                 })}
                             </div>

@@ -16,7 +16,7 @@ const metrics = [
     },
     {
         title: 'Ad Spend',
-        key: 'cost',
+        key: 'spend',
         type: 'number'
         // type: 'currency'
     },
@@ -28,7 +28,7 @@ const metrics = [
     },
     {
         title: 'Ad Orders',
-        key: 'attributedConversions',
+        key: 'orders',
         type: 'number'
         // type: 'number'
     },
@@ -40,7 +40,7 @@ const metrics = [
     },
     {
         title: 'Ad Sales',
-        key: 'attributedSales',
+        key: 'sales',
         type: 'number'
         // type: 'currency'
     },
@@ -52,7 +52,7 @@ const metrics = [
     },
     {
         title: 'Ad CVR',
-        key: 'conversion_rate',
+        key: 'cvr',
         type: 'number'
         // type: 'percent'
     },
@@ -70,7 +70,7 @@ const metrics = [
     },
     {
         title: 'Bid - CPC',
-        key: 'bid_cpc',
+        key: 'bidMinusCPC',
         type: 'number'
         // type: 'currency'
     },
@@ -371,14 +371,14 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                         value={rule.operator}
                         onChange={operator => onChange({...rule, operator})}
                     >
-                        {conditionsByMetric[_.find(metrics, {key: rule.metric}).type].map(i =>
+                        {conditionsByMetric[_.find(metrics, {key: rule.metric})?.type]?.map(i =>
                             <Option value={i.key}>{i.title}</Option>)}
                     </CustomSelect>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="">Value</label>
-                    {_.find(metrics, {key: rule.metric}).type === 'enums' ? <CustomSelect
+                    {_.find(metrics, {key: rule.metric})?.type === 'enums' ? <CustomSelect
                             getPopupContainer={trigger => trigger}
                             value={rule.value}
                             onChange={value => onChange({...rule, value})}
@@ -488,7 +488,7 @@ const ActionValue = ({actions, onChange}) => {
                         onChange={units => onChange({actions: {...actions, units}})}
                     >
                         <Option value={'exact'}>$</Option>
-                        <Option value={'percent'}>%</Option>
+                        <Option value={'percents'}>%</Option>
                     </CustomSelect>
                 </div>
 
@@ -521,7 +521,7 @@ const ActionValue = ({actions, onChange}) => {
                         onChange={units => onChange({actions: {...actions, units}})}
                     >
                         <Option value={'exact'}>$</Option>
-                        <Option value={'percent'}>%</Option>
+                        <Option value={'percents'}>%</Option>
                     </CustomSelect>
                 </div>
 

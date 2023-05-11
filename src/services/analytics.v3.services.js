@@ -63,7 +63,7 @@ export const filtersHandler = (f) => {
         } else if (filterBy === 'productId') {
             parameters.push(`&product_id[]=${value}`)
             parameters.push(`&productId:eq=${value}`)
-        } else if (filterBy ==='parent_productId') {
+        } else if (filterBy === 'parent_productId') {
             parameters.push(`&parent_product_id[]=${value}`)
             parameters.push(`&parent_productId:eq=${value}`)
         } else if (filterBy === 'portfolioId') {
@@ -79,11 +79,11 @@ export const filtersHandler = (f) => {
             }
         } else if (type === 'search' && value) {
             if (value.value) {
-                if(value.strictSearch) {
+                if (value.strictSearch) {
                     parameters.push(`&search_strict=1`)
                 }
 
-                if(value.multiSearch) {
+                if (value.multiSearch) {
                     value.value.forEach(i => {
                         parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
                         parameters.push(`&search[]=${encodeString(i)}`)
@@ -116,28 +116,28 @@ export const filtersHandler = (f) => {
     return parameters.join('')
 }
 
-const dynamicFiltersHandler = (f) => {
+const dynamicFiltersHandler = (f = []) => {
     let filters = [...f]
     const parameters = []
 
+    const dateRangeFormatting = (dateRange) => {
+        const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
+
+        if (dateRange.startDate === 'lifetime') {
+            return ''
+        } else {
+            dateRange.startDate = moment(dateRange.startDate).format('YYYY-MM-DD')
+            dateRange.endDate = moment(dateRange.endDate).format('YYYY-MM-DD')
+
+            return encodeURIComponent(`${dateRange.startDate}${moment().tz(timezone).format('T00:00:00.000Z')},${dateRange.endDate}${moment().tz(timezone).format('T23:59:59.999Z')}`)
+        }
+    }
+
     filters.forEach(({filterBy, type, value, requestValue}) => {
+        console.log(filterBy)
+        console.log(value)
         if (filterBy === 'datetime') {
-            parameters.unshift(`?${dateRangeFormatting(value)}`)
-        } else if (filterBy === 'campaignId') {
-            parameters.push(`&campaign_id[]=${value}`)
-            parameters.push(`&campaignId:eq=${value}`)
-        } else if (filterBy === 'adGroupId') {
-            parameters.push(`&ad_group_id[]=${value}`)
-            parameters.push(`&adGroupId:eq=${value}`)
-        } else if (filterBy === 'productId') {
-            parameters.push(`&product_id[]=${value}`)
-            parameters.push(`&productId:eq=${value}`)
-        } else if (filterBy ==='parent_productId') {
-            parameters.push(`&parent_product_id[]=${value}`)
-            parameters.push(`&parent_productId:eq=${value}`)
-        } else if (filterBy === 'portfolioId') {
-            parameters.push(`&portfolio_id[]=${value}`)
-            parameters.push(`&portfolioId:eq=${value}`)
+            parameters.unshift(`?datetime:range=${dateRangeFormatting(value)}`)
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'productView') {
@@ -147,19 +147,18 @@ const dynamicFiltersHandler = (f) => {
                 parameters.push(`&segment_by:eq=${value}`)
             }
         } else if (type === 'search' && value) {
-            if (value.value) {
-                if(value.strictSearch) {
+            const searchStr = value
+            if (searchStr.value) {
+                if (searchStr?.strictSearch) {
                     parameters.push(`&search_strict=1`)
                 }
 
-                if(value.multiSearch) {
-                    value.value.forEach(i => {
+                if (searchStr?.multiSearch) {
+                    searchStr.value.forEach(i => {
                         parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
-                        parameters.push(`&search[]=${encodeString(i)}`)
                     })
                 } else {
-                    parameters.push(`&${filterBy}:like[]=${encodeString(value.value)}`)
-                    parameters.push(`&search[]=${encodeString(value.value)}`)
+                    parameters.push(`&${filterBy}:like[]=${encodeString(searchStr.value)}`)
                 }
             }
         } else if (type.key === 'one_of') {
@@ -273,7 +272,7 @@ function exactUpdateField(entity, data) {
 
 function bulkUpdate(entity, data, idList, filters) {
 
-    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
+    return api('post', `${analyticsUrls.bulkUpdate(entity)}${dynamicFiltersHandler(filters)}${idList || ''}`, data)
 }
 
 function downloadTableCSV(location, filtersWithState, selectedRangeDate) {

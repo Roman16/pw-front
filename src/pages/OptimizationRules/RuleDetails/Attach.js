@@ -72,8 +72,12 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
         setRequestParams(prevState => ({...prevState, ...data}))
     }
 
-    const changeAttachedList = (list) => {
-        setAttachedCampaigns(list)
+    const changeAttachedList = (list, attachList, detachList) => {
+        if (detachList.length > 0) {
+            setAttachedCampaigns(prevState => [...prevState.filter(i => !detachList.includes(i))])
+        } else {
+            setAttachedCampaigns(prevState => [...new Set([...prevState, ...list])])
+        }
     }
 
     const resetHandler = () => {
