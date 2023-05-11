@@ -134,8 +134,6 @@ const dynamicFiltersHandler = (f = []) => {
     }
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
-        console.log(filterBy)
-        console.log(value)
         if (filterBy === 'datetime') {
             parameters.unshift(`?datetime:range=${dateRangeFormatting(value)}`)
         } else if (type.key === 'except') {
@@ -149,16 +147,12 @@ const dynamicFiltersHandler = (f = []) => {
         } else if (type === 'search' && value) {
             const searchStr = value
             if (searchStr.value) {
-                if (searchStr?.strictSearch) {
-                    parameters.push(`&search_strict=1`)
-                }
-
                 if (searchStr?.multiSearch) {
                     searchStr.value.forEach(i => {
-                        parameters.push(`&${filterBy}:like[]=${encodeString(i)}`)
+                        parameters.push(`&${filterBy}:${searchStr?.strictSearch ? 'matches' : 'like'}[]=${encodeString(i)}`)
                     })
                 } else {
-                    parameters.push(`&${filterBy}:like[]=${encodeString(searchStr.value)}`)
+                    parameters.push(`&${filterBy}:${searchStr?.strictSearch ? 'matches' : 'like'}[]=${encodeString(searchStr.value)}`)
                 }
             }
         } else if (type.key === 'one_of') {

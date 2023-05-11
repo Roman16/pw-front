@@ -315,7 +315,7 @@ export const RuleSettings = ({data, onChange}) => {
             {data.interval ? <p className={'active'}>
                     The rule uses data for the period of <b>{_.find([...intervalEnums, {
                     title: 'lifetime',
-                    key: 'lifetime'
+                    key: ';'
                 }], {key: data.interval}).title}</b> to check the conditions.
                 </p> :
                 <p>Please, select timeline</p>}
