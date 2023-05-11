@@ -118,7 +118,6 @@ const TableList = ({
         }
     }
 
-
     const dateRangeHandler = (startDate, endDate) => {
         deselectAllRows()
 
@@ -142,7 +141,6 @@ const TableList = ({
         })
 
     }
-
 
     const paginationChangeHandler = (params) => {
         onChange({
@@ -198,6 +196,7 @@ const TableList = ({
                         selectedRows={selectedRows}
                         selectedAll={selectedAllRows}
                         columns={columns.columnsWithFilters}
+                        disabled={filters.find(filter => filter.type === 'search')?.value?.multiSearch}
 
                         onClose={() => {
                             setSelectedAllRows(false)

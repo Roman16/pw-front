@@ -61,7 +61,8 @@ const FastUpdateBlock = ({
                              onClose,
                              onSelectAll,
                              onSetChanges,
-                             selectedAll
+                             selectedAll,
+                             disabled
                          }) => {
 
     const
@@ -189,7 +190,8 @@ const FastUpdateBlock = ({
                 </div>
 
                 <button className={'btn default'}
-                        disabled={(changingValue === undefined) || submitProcessing}
+                        disabled={(changingValue === undefined) || submitProcessing || disabled}
+                        title={disabled ? '' : ''}
                 >
                     Apply
 
