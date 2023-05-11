@@ -371,14 +371,14 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                         value={rule.operator}
                         onChange={operator => onChange({...rule, operator})}
                     >
-                        {conditionsByMetric[_.find(metrics, {key: rule.metric}).type].map(i =>
+                        {conditionsByMetric[_.find(metrics, {key: rule.metric})?.type]?.map(i =>
                             <Option value={i.key}>{i.title}</Option>)}
                     </CustomSelect>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="">Value</label>
-                    {_.find(metrics, {key: rule.metric}).type === 'enums' ? <CustomSelect
+                    {_.find(metrics, {key: rule.metric})?.type === 'enums' ? <CustomSelect
                             getPopupContainer={trigger => trigger}
                             value={rule.value}
                             onChange={value => onChange({...rule, value})}

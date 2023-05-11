@@ -52,11 +52,10 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
     }
 
     const rowSelection = {
-        onChange: (rowsList) => {
-            onChangeAttachedList(rowsList)
+        onChange: (rowsList, attachList, detachList) => {
+            onChangeAttachedList(rowsList, attachList, detachList)
         }
     }
-
 
     return (<div className="attach-campaigns">
         <div className="row">
@@ -95,7 +94,7 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
                 })) : ruleColumns}
                 loading={processing}
                 fixedColumns={[0]}
-                selectedRows={attachedList === 'all' ? [] : attachedList}
+                selectedRows={attachedList === 'all' ? [] : attachedList.filter(i => _.find(list, {[location === 'campaigns' ? "campaignId" : 'id']: i}))}
                 rowSelection={rowSelection}
                 selectedAll={attachedList === 'all'}
             />
