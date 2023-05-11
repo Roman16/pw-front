@@ -14,6 +14,7 @@ import {disabledStartDate} from "../../../Campaigns/CreateCampaignWindow/CreateS
 import {notification} from "../../../../../components/Notification"
 import locale from 'antd/lib/locale/en_US.js.map'
 import {activeTimezone} from "../../../../index"
+import InformationTooltip from "../../../../../components/Tooltip/Tooltip"
 
 const Option = Select.Option
 
@@ -189,14 +190,26 @@ const FastUpdateBlock = ({
                     />
                 </div>
 
-                <button className={'btn default'}
-                        disabled={(changingValue === undefined) || submitProcessing || disabled}
-                        title={disabled ? '' : ''}
+                {disabled ? <InformationTooltip
+                    description={'Bulk updates do not support the multisearch feature.'}
+                    type={'custom'}
+                    position={'bottomLeft'}
+                    className={'not-arrow'}
+                >
+                    <button className={'btn default'}
+                            disabled
+                    >
+                        Apply
+                    </button>
+                </InformationTooltip> : <button className={'btn default'}
+                                                disabled={(changingValue === undefined) || submitProcessing}
                 >
                     Apply
 
                     {submitProcessing && <Spin size={'small'}/>}
                 </button>
+                }
+
             </form>
 
             <button className={`btn icon close ${submitProcessing ? 'disabled' : ''}`} onClick={onClose}>
