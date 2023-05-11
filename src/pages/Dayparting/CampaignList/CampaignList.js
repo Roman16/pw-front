@@ -24,7 +24,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     const dispatch = useDispatch()
 
     const [isOpenList, setIsOpenList] = useState(true),
-        [searchStr, setSearchStr] = useState(''),
+        [searchStr, setSearchStr] = useState(),
         [onlyOnDayparting, setOnlyOnDayparting] = useState(false),
         [filterParams, setFilterParams] = useState({
             campaign_status: 'all',

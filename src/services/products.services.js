@@ -31,7 +31,7 @@ export const productsServices = {
 export const searchStrWrap = (searchStr, wrap) => {
     let searchParams = []
 
-    if (searchStr.value) {
+    if (searchStr?.value) {
         if(searchStr?.strictSearch) {
             searchParams.push(`&search_strict=1`)
         }
