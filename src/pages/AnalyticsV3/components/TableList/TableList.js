@@ -196,7 +196,7 @@ const TableList = ({
                         selectedRows={selectedRows}
                         selectedAll={selectedAllRows}
                         columns={columns.columnsWithFilters}
-                        disabled={filters.find(filter => filter.type === 'search')?.value?.multiSearch}
+                        disabled={filters.find(filter => filter.type === 'search')?.value?.multiSearch && selectedAllRows}
 
                         onClose={() => {
                             setSelectedAllRows(false)
