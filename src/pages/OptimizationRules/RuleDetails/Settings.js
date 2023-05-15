@@ -50,7 +50,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                 <button className="btn default" onClick={onEdit}>Edit</button>
             </div>
 
-            {rule.description && <p>{rule.description}</p>}
+            {rule.description && <p title={rule.description}>{rule.description}</p>}
 
             <div className="details-row">
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>

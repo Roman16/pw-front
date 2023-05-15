@@ -76,11 +76,11 @@ const OptimizationRules = () => {
 
     const attachRulesByCampaignsHandler = async (data, cb) => {
         try {
-            await optimizationRulesServices.attachRules(data)
+           const {result} =  await optimizationRulesServices.attachRules(data)
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: data.campaign_id.length,
-                rules_count: data.rule_id.length,
+                campaigns_count: result.updated,
+                rules_count: result.updated,
             })
         } catch (e) {
             console.log(e)

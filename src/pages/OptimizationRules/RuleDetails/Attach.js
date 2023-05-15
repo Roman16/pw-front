@@ -6,7 +6,7 @@ import _ from 'lodash'
 import {notification} from "../../../components/Notification"
 import moment from "moment"
 
-const tabs = ['campaigns used it', 'all campaigns']
+export const tabs = ['campaigns used it', 'all campaigns']
 
 let attachedListFromRequest = []
 
@@ -73,10 +73,12 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
     }
 
     const changeAttachedList = (list, attachList, detachList) => {
-        if (detachList.length > 0) {
+        if (list === 'all') {
+            setAttachedCampaigns('all')
+        } else if (detachList.length > 0) {
             setAttachedCampaigns(prevState => [...prevState.filter(i => !detachList.includes(i))])
         } else {
-            setAttachedCampaigns(prevState => [...new Set([...prevState, ...list])])
+            setAttachedCampaigns(prevState => prevState === 'all' ? [...list] : [...new Set([...prevState, ...list])])
         }
     }
 
@@ -90,35 +92,63 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
         const differenceList = _.difference(attachedListFromRequest, attachedCampaigns)
 
         if (activeTab === tabs[0]) {
-            onDetach({
-                rule_id: [id],
-                campaign_id: differenceList,
-                rulesNewLength: attachedCampaigns.length,
-            }, () => {
-                setSaveProcessing(false)
-                setCampaigns(campaigns.filter(i => attachedCampaigns.includes(i.campaignId)))
-                setTotalSize(attachedCampaigns.length)
-                notification.success({title: 'Rule success updated!'})
-            })
-        } else {
-            if (differenceList.length > 0) {
+            if (attachedCampaigns === 'all') {
+                onDetach({
+                    rule_id: [id],
+                    all_campaigns: 1,
+                    rulesNewLength: 0,
+                }, () => {
+                    attachedListFromRequest = 0
+                    setSaveProcessing(false)
+                    setCampaigns([])
+                    setTotalSize(0)
+                    notification.success({title: 'Rule success updated!'})
+                    setAttachedCampaigns([])
+                })
+            } else {
                 onDetach({
                     rule_id: [id],
                     campaign_id: differenceList,
                     rulesNewLength: attachedCampaigns.length,
+                }, () => {
+                    attachedListFromRequest = [...attachedCampaigns]
+                    setSaveProcessing(false)
+                    setCampaigns(campaigns.filter(i => attachedCampaigns.includes(i.campaignId)))
+                    setTotalSize(attachedCampaigns.length)
+                    notification.success({title: 'Rule success updated!'})
+                })
+
+            }
+        } else {
+            if (attachedCampaigns === 'all') {
+                onAttach({
+                    rule_id: [id],
+                    all_campaigns: 1,
+                }, () => {
+                    attachedListFromRequest = Array(totalSize).fill(0)
+                    setSaveProcessing(false)
+                    notification.success({title: 'Rule success updated!'})
+                })
+            } else {
+                if (differenceList.length > 0) {
+                    onDetach({
+                        rule_id: [id],
+                        campaign_id: differenceList,
+                        rulesNewLength: attachedCampaigns.length,
+                    })
+                }
+
+                onAttach({
+                    rule_id: [id],
+                    campaign_id: attachedCampaigns
+                }, () => {
+                    attachedListFromRequest = [...attachedCampaigns]
+                    setSaveProcessing(false)
+                    notification.success({title: 'Rule success updated!'})
                 })
             }
-
-            onAttach({
-                rule_id: [id],
-                campaign_id: attachedCampaigns
-            }, () => {
-                setSaveProcessing(false)
-                notification.success({title: 'Rule success updated!'})
-            })
         }
 
-        attachedListFromRequest = [...attachedCampaigns]
     }
 
     const changeTabHandler = (tab) => {
@@ -162,6 +192,8 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
             processing={processing}
             totalSize={totalSize}
             requestParams={requestParams}
+            selectAllBtn={_.difference(attachedListFromRequest, attachedCampaigns).length > 0}
+            activeTab={activeTab}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}
