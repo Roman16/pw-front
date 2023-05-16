@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React from "react"
 import CustomSelect from "../../../../components/Select/Select"
 import {Select} from "antd"
 import {SVG} from "../../../../utils/icons"

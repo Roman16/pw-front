@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import CustomTable from "../../../../components/Table/CustomTable"
 import {columnList} from "../../../Analytics/Campaigns/tableComponents/columnList"
-import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../../components/Pagination/Pagination"
 import _ from "lodash"

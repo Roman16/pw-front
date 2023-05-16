@@ -3,9 +3,7 @@ import './RuleDetails.less'
 import {SVG} from "../../../../utils/icons"
 import moment from "moment"
 import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
-import {columnList} from "../../../Analytics/Campaigns/tableComponents/columnList"
 import CustomTable from "../../../../components/Table/CustomTable"
-import _ from "lodash"
 import Pagination from "../../../../components/Pagination/Pagination"
 
 const tabs = ['logs', 'statuses']

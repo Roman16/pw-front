@@ -3,7 +3,7 @@ import {Header} from "../components/Header/Header"
 import {Link} from "react-router-dom"
 import {SVG} from "../../../utils/icons"
 import '../RuleSettings/OptimizationRules.less'
-import '../CreateRulesWindow/CreateRulesWindow.less'
+import '../RuleSettings/CreateRulesWindow/CreateRulesWindow.less'
 import './AttachSettings.less'
 import {Spin} from "antd"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
