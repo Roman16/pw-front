@@ -1,5 +1,5 @@
 import React from "react"
-import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
+import {ParentStatus} from "../../../Analytics/components/TableList/tableColumns"
 import './CampaignDetails.less'
 import {Attach} from "./Attach"
 

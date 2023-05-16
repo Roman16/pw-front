@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
-import ModalWindow from "../../../components/ModalWindow/ModalWindow"
-import WindowHeader from "../../Analytics/Campaigns/CreateCampaignWindow/WindowHeader"
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import WindowHeader from "../../../Analytics/Campaigns/CreateCampaignWindow/WindowHeader"
 import {RuleInformation} from "../CreateRulesWindow/RuleInformation"
-import WindowFooter from "../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
+import WindowFooter from "../../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
 
 export const EditRuleWindow = ({visible, rule, processing, onClose, onSave}) => {
     const [editRule, setEditRule] = useState({...rule})

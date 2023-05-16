@@ -1,8 +1,8 @@
 import React, {useState} from "react"
-import {Header} from "../Header/Header"
+import {Header} from "../components/Header/Header"
 import {Link} from "react-router-dom"
 import {SVG} from "../../../utils/icons"
-import '../OptimizationRules.less'
+import '../RuleSettings/OptimizationRules.less'
 import '../CreateRulesWindow/CreateRulesWindow.less'
 import './AttachSettings.less'
 import {Spin} from "antd"
@@ -73,7 +73,7 @@ const AttachSettings = () => {
     return (<div className="optimization-rules-page">
         <Header
             title={'Quick Entity Pairing'}
-            actions={() => <Link to={'/optimization-rules'} className="btn default back">
+            actions={() => <Link to={'/optimization-rules/settings'} className="btn default back">
                 <SVG id={'down-white-arrow'}/>
                 Back to Rule-Based Optimization
             </Link>}

@@ -1,9 +1,9 @@
 import React, {useState} from "react"
-import CustomSelect from "../../../components/Select/Select"
+import CustomSelect from "../../../../components/Select/Select"
 import {Select} from "antd"
-import {SVG} from "../../../utils/icons"
+import {SVG} from "../../../../utils/icons"
 import _ from 'lodash'
-import InputCurrency from "../../../components/Inputs/InputCurrency"
+import InputCurrency from "../../../../components/Inputs/InputCurrency"
 
 const Option = Select.Option
 

@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from "react"
 import './RulesList.less'
-import {SVG} from "../../../utils/icons"
-import {SearchField} from "../../../components/SearchField/SearchField"
-import {optimizationRulesServices} from "../../../services/optimization.rules.services"
+import {SVG} from "../../../../utils/icons"
+import {SearchField} from "../../../../components/SearchField/SearchField"
+import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import {Spin} from "antd"
-import Pagination from "../../../components/Pagination/Pagination"
-import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import Pagination from "../../../../components/Pagination/Pagination"
+import {periodEnums} from "../../RuleSettings/CreateRulesWindow/RuleInformation"
 import _ from 'lodash'
-import {intervalEnums} from "../CreateRulesWindow/RuleSettings"
-import {ParentStatus} from "../../Analytics/components/TableList/tableColumns"
+import {intervalEnums} from "../../RuleSettings/CreateRulesWindow/RuleSettings"
+import {ParentStatus} from "../../../Analytics/components/TableList/tableColumns"
 import axios from "axios"
 
 const navigationTabs = ['rules', 'campaigns']

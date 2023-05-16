@@ -3,7 +3,7 @@ import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
 import _ from "lodash"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
-import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
+import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 
 
 export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttributionWindow, onEdit}) => {

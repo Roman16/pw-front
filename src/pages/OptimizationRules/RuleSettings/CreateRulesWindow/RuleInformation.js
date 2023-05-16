@@ -1,8 +1,8 @@
 import React from "react"
 import {Select, Switch} from "antd"
-import CustomSelect from "../../../components/Select/Select"
-import {SVG} from "../../../utils/icons"
-import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
+import CustomSelect from "../../../../components/Select/Select"
+import {SVG} from "../../../../utils/icons"
+import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 
 const Option = Select.Option
 

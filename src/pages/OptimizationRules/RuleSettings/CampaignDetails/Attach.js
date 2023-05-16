@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
 import {CampaignsList} from "../CreateRulesWindow/CampaignsList"
-import {optimizationRulesServices} from "../../../services/optimization.rules.services"
+import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import {Spin} from "antd"
 import _ from 'lodash'
-import {notification} from "../../../components/Notification"
+import {notification} from "../../../../components/Notification"
 
 const tabs = ['rules used it', 'all rules']
 

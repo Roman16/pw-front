@@ -43,8 +43,9 @@ const ConnectAdsApiJourney = React.lazy(() => import('./authentication/AccountBi
 const Tableau = React.lazy(() => import('./Tableau/Tableau'))
 const ProductsInfo = React.lazy(() => import('./PPCAutomate/ProductsInfo/ProductsInfo'))
 const PPCAudit = React.lazy(() => import('./PPCAudit/PPCAudit'))
-const OptimizationRules = React.lazy(() => import('./OptimizationRules/OptimizationRules.js'))
+const OptimizationRules = React.lazy(() => import('./OptimizationRules/RuleSettings/OptimizationRules.js'))
 const AttachSettings = React.lazy(() => import('./OptimizationRules/AttachSettings/AttachSettings.js'))
+const RuleStatuses = React.lazy(() => import('./OptimizationRules/RuleStatuses/RuleStatuses.js'))
 const JungleScoutReport = React.lazy(() => import('./JungleScoutReport/JungleScoutReport.js'))
 
 const localStorageVersion = '4.05'
@@ -346,7 +347,8 @@ const AuthorizedUser = (props) => {
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
-                                    <ConnectedAmazonRoute exact path="/optimization-rules" component={OptimizationRules}/>
+                                    <ConnectedAmazonRoute exact path="/optimization-rules/settings" component={OptimizationRules}/>
+                                    <ConnectedAmazonRoute exact path="/optimization-rules/statuses" component={RuleStatuses}/>
                                     <ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/monthly-report" component={JungleScoutReport}/>

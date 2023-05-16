@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react"
-import CustomTable from "../../../components/Table/CustomTable"
-import {columnList} from "../../Analytics/Campaigns/tableComponents/columnList"
-import {optimizationRulesServices} from "../../../services/optimization.rules.services"
-import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
-import Pagination from "../../../components/Pagination/Pagination"
+import CustomTable from "../../../../components/Table/CustomTable"
+import {columnList} from "../../../Analytics/Campaigns/tableComponents/columnList"
+import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
+import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
+import Pagination from "../../../../components/Pagination/Pagination"
 import _ from "lodash"
 import {periodEnums} from "./RuleInformation"
-import DateRange from "../../Analytics/components/DateRange/DateRange"
-import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
+import DateRange from "../../../Analytics/components/DateRange/DateRange"
+import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 import {tabs} from "../RuleDetails/Attach"
 
 const ruleColumns = [
@@ -78,8 +78,6 @@ export const CampaignsList = ({
     const selectAllHandler = () => {
         onChangeAttachedList('all')
     }
-
-    console.log(attachedList)
 
     return (<div className="attach-campaigns">
         <div className="row">
