@@ -17,6 +17,10 @@ export const optimizationRulesServices = {
     getAttachedCampaigns,
     getAttachedRules,
 
+    getRuleLogs,
+    getRuleStatuses,
+    activateRule,
+
 }
 
 const dateFormat = (date) => moment(date).format('YYYY-MM-DD')
@@ -51,11 +55,11 @@ function attachRules(data) {
     return api('post', `${optimizationRulesUrls.attach}`, data)
 }
 
-function attachRulesWidthFilters({attributionWindow, selectedRangeDate, rules=[], campaigns=[],campaignFilters = [], rulesFilters = []}) {
+function attachRulesWidthFilters({attributionWindow, selectedRangeDate, rules = [], campaigns = [], campaignFilters = [], rulesFilters = []}) {
     const rulesList = rules.length > 0 ? `&rules[id][]=${rules.join('&rules[id][]=')}` : ''
     const campaignsList = campaigns.length > 0 ? `&campaign_id[]=${campaigns.join('&campaign_id[]=')}` : ''
 
-    return api('post', `${optimizationRulesUrls.attachWidthFilters}?attribution_window=${attributionWindow}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${campaignFilters.length > 0 ? filtersHandler(campaignFilters) : ''}${rulesFilters.length > 0 ? searchStrWrap(rulesFilters[0].value, 'rules'): ''}${campaignsList}${rulesList}`)
+    return api('post', `${optimizationRulesUrls.attachWidthFilters}?attribution_window=${attributionWindow}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${campaignFilters.length > 0 ? filtersHandler(campaignFilters) : ''}${rulesFilters.length > 0 ? searchStrWrap(rulesFilters[0].value, 'rules') : ''}${campaignsList}${rulesList}`)
 }
 
 function detachRules(data) {
@@ -68,4 +72,16 @@ function getAttachedCampaigns(rulesId) {
 
 function getAttachedRules(campaignId) {
     return api('get', `${optimizationRulesUrls.attachedRules}?campaign_id[]=${campaignId.join('&campaign_id[]=')}`)
+}
+
+function getRuleLogs({ruleId, page, pageSize}) {
+    return api('get', `${optimizationRulesUrls.ruleLogs}?rule_id[]=${ruleId}&page=${page}&size=${pageSize}`)
+}
+
+function getRuleStatuses({ruleId, page, pageSize}) {
+    return api('get', `${optimizationRulesUrls.ruleStatuses}?rule_id[]=${ruleId}&page=${page}&size=${pageSize}`)
+}
+
+function activateRule(ruleId) {
+    return api('post', `${optimizationRulesUrls.activateRule(ruleId)}`)
 }

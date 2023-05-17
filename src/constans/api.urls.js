@@ -227,6 +227,10 @@ export const optimizationRulesUrls = {
     detach: 'rules-based-optimization/rules/detach',
     attachedCampaigns: 'rules-based-optimization/rules/campaigns',
     attachedRules: 'rules-based-optimization/campaigns/rules',
+
+    ruleLogs: 'rules-based-optimization/logs',
+    ruleStatuses: 'rules-based-optimization/rules/launches',
+    activateRule: id => `rules-based-optimization/rules/${id}/launch`
 }
 
 

@@ -27,12 +27,31 @@
       }
 
       .btn {
+        width: 100px;
         padding: 0 20px;
 
         svg {
           width: 10px;
           height: 10px;
           margin: 0 5px 0 0;
+        }
+
+        &.grey {
+          svg {
+            width: 14px;
+            height: 14px;
+          }
+        }
+
+        .ant-spin {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
       }
     }
@@ -93,7 +112,6 @@
         height: 4.28571429rem;
         min-height: 4.28571429rem;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
-        margin-bottom: 20px;
 
         .container {
           width: 100%;
@@ -211,6 +229,7 @@
 
               &:last-of-type {
                 border: 0;
+                justify-content: flex-start!important;
               }
 
               i.edit {
