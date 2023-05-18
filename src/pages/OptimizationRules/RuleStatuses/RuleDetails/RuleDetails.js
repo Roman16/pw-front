@@ -158,44 +158,44 @@ export const RuleDetails = ({
                 : ''}
         </div>
 
-        <ul className="statuses">
-            <li>
-                <SVG id={`optimization-changes`}/>
+        {/*<ul className="statuses">*/}
+        {/*    <li>*/}
+        {/*        <SVG id={`optimization-changes`}/>*/}
 
-                <div>
-                    <h5>Total Changes</h5>
-                    <h4>{0}</h4>
-                </div>
-            </li>
+        {/*        <div>*/}
+        {/*            <h5>Total Changes</h5>*/}
+        {/*            <h4>{0}</h4>*/}
+        {/*        </div>*/}
+        {/*    </li>*/}
 
-            <li>
-                <SVG id={`optimization-Status`}/>
+        {/*    <li>*/}
+        {/*        <SVG id={`optimization-Status`}/>*/}
 
-                <div>
-                    <h5>Status</h5>
-                    <h4>{'Active'}</h4>
-                </div>
-            </li>
+        {/*        <div>*/}
+        {/*            <h5>Status</h5>*/}
+        {/*            <h4>{'Active'}</h4>*/}
+        {/*        </div>*/}
+        {/*    </li>*/}
 
-            <li>
-                <SVG id={`optimization-start-date`}/>
+        {/*    <li>*/}
+        {/*        <SVG id={`optimization-start-date`}/>*/}
 
-                <div>
-                    <h5>Start Date</h5>
-                    <h4>{moment().format('DD.MM.YYYY')}</h4>
-                </div>
-            </li>
+        {/*        <div>*/}
+        {/*            <h5>Start Date</h5>*/}
+        {/*            <h4>{moment().format('DD.MM.YYYY')}</h4>*/}
+        {/*        </div>*/}
+        {/*    </li>*/}
 
 
-            <li>
-                <SVG id={`optimization-changes2`}/>
+        {/*    <li>*/}
+        {/*        <SVG id={`optimization-changes2`}/>*/}
 
-                <div>
-                    <h5>Today Changes</h5>
-                    <h4>{0}</h4>
-                </div>
-            </li>
-        </ul>
+        {/*        <div>*/}
+        {/*            <h5>Today Changes</h5>*/}
+        {/*            <h4>{0}</h4>*/}
+        {/*        </div>*/}
+        {/*    </li>*/}
+        {/*</ul>*/}
 
         <div className="logs">
             <div className="tabs">
