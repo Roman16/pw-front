@@ -17,8 +17,8 @@ export const optimizationRulesServices = {
     getAttachedCampaigns,
     getAttachedRules,
 
-    getRuleLogs,
-    getRuleStatuses,
+    getLogs,
+    getStatuses,
     activateRule,
 
 }
@@ -74,12 +74,12 @@ function getAttachedRules(campaignId) {
     return api('get', `${optimizationRulesUrls.attachedRules}?campaign_id[]=${campaignId.join('&campaign_id[]=')}`)
 }
 
-function getRuleLogs({ruleId, page, pageSize}) {
-    return api('get', `${optimizationRulesUrls.ruleLogs}?rule_id[]=${ruleId}&page=${page}&size=${pageSize}`)
+function getLogs({ruleId,campaignId, page, pageSize}) {
+    return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
 }
 
-function getRuleStatuses({ruleId, page, pageSize}) {
-    return api('get', `${optimizationRulesUrls.ruleStatuses}?rule_id[]=${ruleId}&page=${page}&size=${pageSize}`)
+function getStatuses({ruleId,campaignId, page, pageSize}) {
+    return api('get', `${optimizationRulesUrls.ruleStatuses}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
 }
 
 function activateRule(ruleId) {

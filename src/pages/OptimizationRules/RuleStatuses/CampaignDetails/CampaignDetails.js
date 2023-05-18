@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import './RuleDetails.less'
+import '../RuleDetails/RuleDetails.less'
 import {SVG} from "../../../../utils/icons"
 import moment from "moment"
 import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
@@ -38,7 +38,7 @@ const columns = {
     ],
     'statuses': [
         {
-            title: 'Name',
+            title: 'Rule Name',
             key: 'rule_name',
             dataIndex: 'rule_name',
             search: true
@@ -64,12 +64,9 @@ const columns = {
     ]
 }
 
-export const RuleDetails = ({
-                                selectedRule,
-
-                                onActivate,
-                                onPause
-                            }) => {
+export const CampaignDetails = ({
+                                    selectedCampaign,
+                                }) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
         [requestParams, setRequestParams] = useState({
             page: 1,
@@ -78,9 +75,7 @@ export const RuleDetails = ({
         }),
         [processing, setProcessing] = useState(true),
         [ruleData, setRuleData] = useState([]),
-        [totalSize, setTotalSize] = useState(0),
-        [activateProcessing, setActivateProcessing] = useState(false),
-        [pauseProcessing, setPauseProcessing] = useState(false)
+        [totalSize, setTotalSize] = useState(0)
 
 
     const changeFiltersHandler = () => {
@@ -91,29 +86,13 @@ export const RuleDetails = ({
         setRequestParams({...requestParams, ...params})
     }
 
-    const activateRuleHandler = () => {
-        setActivateProcessing(true)
-
-        onActivate(selectedRule.id, () => {
-            setActivateProcessing(false)
-        })
-    }
-
-    const pauseRuleHandler = () => {
-        setPauseProcessing(true)
-
-        onPause(selectedRule.id, () => {
-            setPauseProcessing(false)
-        })
-    }
-
     const getRuleData = async () => {
         setProcessing(true)
 
         try {
             const {result} = await optimizationRulesServices[activeTab === tabs[0] ? 'getLogs' : 'getStatuses']({
                 ...requestParams,
-                ruleId: selectedRule.id
+                campaignId: selectedCampaign.campaignId
             })
 
             setRuleData(result.data)
@@ -128,74 +107,13 @@ export const RuleDetails = ({
     useEffect(() => {
         setRuleData([])
 
-        selectedRule.id && getRuleData()
-    }, [selectedRule.id, requestParams, activeTab])
+        selectedCampaign.campaignId && getRuleData()
+    }, [selectedCampaign.campaignId, requestParams, activeTab])
 
     return (<div className="rule-details">
         <div className="actions">
-            <h2>{selectedRule?.name}</h2>
-
-            {selectedRule.id ? selectedRule.active ? <button
-                    className="btn grey"
-                    onClick={pauseRuleHandler}
-                >
-                    <SVG id={'pause'}/>
-                    Pause
-
-                    {pauseProcessing && <Spin size={'small'}/>}
-                </button>
-                :
-                <button
-                    disabled={activateProcessing}
-                    className="btn default"
-                    onClick={activateRuleHandler}
-                >
-                    <SVG id={'play-icon'}/>
-                    Run
-
-                    {activateProcessing && <Spin size={'small'}/>}
-                </button>
-                : ''}
+            <h2>{selectedCampaign?.name}</h2>
         </div>
-
-        <ul className="statuses">
-            <li>
-                <SVG id={`optimization-changes`}/>
-
-                <div>
-                    <h5>Total Changes</h5>
-                    <h4>{0}</h4>
-                </div>
-            </li>
-
-            <li>
-                <SVG id={`optimization-Status`}/>
-
-                <div>
-                    <h5>Status</h5>
-                    <h4>{'Active'}</h4>
-                </div>
-            </li>
-
-            <li>
-                <SVG id={`optimization-start-date`}/>
-
-                <div>
-                    <h5>Start Date</h5>
-                    <h4>{moment().format('DD.MM.YYYY')}</h4>
-                </div>
-            </li>
-
-
-            <li>
-                <SVG id={`optimization-changes2`}/>
-
-                <div>
-                    <h5>Today Changes</h5>
-                    <h4>{0}</h4>
-                </div>
-            </li>
-        </ul>
 
         <div className="logs">
             <div className="tabs">

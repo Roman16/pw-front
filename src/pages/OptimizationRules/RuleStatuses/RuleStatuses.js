@@ -4,6 +4,7 @@ import {RulesList} from "../components/RulesList/RulesList"
 import './RuleStatuses.less'
 import {RuleDetails} from "./RuleDetails/RuleDetails"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
+import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
 
 const RuleStatuses = () => {
     const [activeTab, setActiveTab] = useState('rules'),
@@ -30,6 +31,20 @@ const RuleStatuses = () => {
         cb()
     }
 
+    const pauseRuleHandler = async (id, cb) => {
+        try {
+            await optimizationRulesServices.updateRule({
+                id,
+                active: false
+            })
+            setSelectedRule(prevState => ({...prevState, active: false}))
+        } catch (e) {
+            console.log(e)
+        }
+
+        cb()
+    }
+
 
     return (<div className={'optimization-rules-page rule-statuses'}>
         <Header
@@ -47,12 +62,16 @@ const RuleStatuses = () => {
             />
 
             <div className="work-container">
-                <RuleDetails
+                {activeTab === 'rules' && <RuleDetails
                     selectedRule={selectedRule}
 
                     onActivate={activateRuleHandler}
-                />
+                    onPause={pauseRuleHandler}
+                />}
 
+                {activeTab === 'campaigns' && <CampaignDetails
+                    selectedCampaign={selectedRule}
+                />}
             </div>
         </div>
 
