@@ -137,6 +137,8 @@ export const CreateRulesWindow = ({
                 widthAttributionWindow={true}
                 onChangeRequestParams={(data) => setRequestParams(prevState => ({...prevState, ...data}))}
                 onChangeAttachedList={(campaignsId) => changeCreateDataHandler({campaignsId})}
+
+                pageSizeOptions={[10, 30, 50, 300]}
             />}
 
             {currentStep === 3 && <Overview

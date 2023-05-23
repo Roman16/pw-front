@@ -62,7 +62,7 @@ export const StackedAreaPercentChart = ({data = []}) => {
                         </div>
 
                         <div className="col percent">
-                            {payload.map(({ stroke, value}) => <div
+                            {payload.map(({stroke, value}) => <div
                                 style={{color: stroke}}>
                                 {getPercent(value, total)}
                             </div>)}
@@ -106,8 +106,6 @@ export const StackedAreaPercentChart = ({data = []}) => {
     }, [data, selectedMetric])
 
 
-
-
     return (<div className="stacked-area-percent-chart-container">
         <div className="metrics">
             <CustomSelect
@@ -142,7 +140,8 @@ export const StackedAreaPercentChart = ({data = []}) => {
                 >
                     <defs>
                         {brands.map((i, index) => (
-                            <linearGradient spreadMethod="pad" id={`brandGradient_${index}`} x1="0" y1="0" x2="0" y2="1">
+                            <linearGradient spreadMethod="pad" id={`brandGradient_${index}`} x1="0" y1="0" x2="0"
+                                            y2="1">
                                 <stop offset="0%" stopColor={chartColors[index]} stopOpacity='0.23'/>
                                 <stop offset="100%" stopColor={chartColors[index]} stopOpacity='0'/>
                             </linearGradient>

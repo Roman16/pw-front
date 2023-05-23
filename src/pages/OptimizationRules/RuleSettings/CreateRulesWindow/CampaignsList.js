@@ -48,7 +48,8 @@ export const CampaignsList = ({
                                   onChangeFilters,
                                   onChangeDateRange,
                                   location = 'campaigns',
-                                  activeTab
+                                  activeTab,
+                                  pageSizeOptions
                               }) => {
 
     const changePagination = (data) => {
@@ -138,7 +139,7 @@ export const CampaignsList = ({
             <Pagination
                 onChange={changePagination}
                 page={requestParams.page}
-                pageSizeOptions={[10, 30, 50]}
+                pageSizeOptions={pageSizeOptions || [10, 30, 50]}
                 pageSize={requestParams.pageSize}
                 totalSize={totalSize}
                 listLength={list.length}

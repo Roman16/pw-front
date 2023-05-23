@@ -42,12 +42,12 @@ const ProductsInfo = () => {
         setProcessing(true)
 
         try {
-            const {result, totalSize} = await productsServices.getProductsSettingsList({
+            const {result: {data, total_count}} = await productsServices.getProductsSettingsList({
                 ...requestParams,
                 cancelToken: source.token
             })
-            setProductsList(result || [])
-            setTotalSize(totalSize)
+            setProductsList(data || [])
+            setTotalSize(total_count)
         } catch (e) {
             console.log(e)
             setProductsList([])

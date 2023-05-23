@@ -279,7 +279,7 @@ const AuthorizedUser = (props) => {
 
                                     <ConnectedAmazonRoute
                                         exact
-                                        path="/ppc/product-settings"
+                                        path="/product-settings"
                                         component={ProductsInfo}
                                     />
 

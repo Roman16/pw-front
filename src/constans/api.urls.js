@@ -66,6 +66,7 @@ export const userUrls = {
 
 export const productsUrls = {
     productsSettingsList: 'products/settings/list',
+    productList: 'settings/products',
     updateSettings: 'products/settings',
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
