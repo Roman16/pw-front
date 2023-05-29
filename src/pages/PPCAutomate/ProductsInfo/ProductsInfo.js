@@ -58,12 +58,13 @@ const ProductsInfo = () => {
 
     const setCogsHandler = async () => {
         try {
-            const {result, totalSize} = await productsServices.getProductsSettingsList({
+            const {result: {data, total_count}} = await productsServices.getProductsSettingsList({
                 ...requestParams,
                 cancelToken: source.token
             })
-            setProductsList(result || [])
-            setTotalSize(totalSize)
+
+            setProductsList(data || [])
+            setTotalSize(total_count)
         } catch (e) {
             console.log(e)
         }
@@ -103,7 +104,7 @@ const ProductsInfo = () => {
 
                 setProductsList([...productsList.map(product => {
                     if (parentId) {
-                        if (product.id === parentId) product.product.variations = [...product.product.variations.map(child => {
+                        if (product.id === parentId) product.variations = [...product.variations.map(child => {
                             if (child.id === item.id) child.item_price_from_user = value
                             return child
                         })]
@@ -115,6 +116,12 @@ const ProductsInfo = () => {
                 })])
             } catch (e) {
                 console.log(e)
+
+                if(e.response?.data?.message) {
+                    notification.error({title: e.response?.data?.message})
+                }
+
+                error()
             }
         }
     }
@@ -127,7 +134,7 @@ const ProductsInfo = () => {
 
             setProductsList([...productsList.map(item => {
                 if (item.id === data.parent_product_id) {
-                    item.product.variations = [...item.product.variations.map(variation => {
+                    item.variations = [...item.variations.map(variation => {
                         variation.is_default_variation = false
                         if (variation.id === data.variation_product_id) variation.is_default_variation = true
                         return variation
