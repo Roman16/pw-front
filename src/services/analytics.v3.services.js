@@ -113,6 +113,10 @@ export const filtersHandler = (f) => {
         }
     })
 
+    if(localStorage.getItem('use_ldp') && localStorage.getItem('use_ldp') === 'true') {
+        parameters.push(`&use_ldp=true`)
+    }
+
     return parameters.join('')
 }
 
