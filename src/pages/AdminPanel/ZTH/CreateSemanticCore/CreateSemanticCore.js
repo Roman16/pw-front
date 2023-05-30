@@ -70,11 +70,11 @@ const CreateSemanticCore = () => {
                 } : null,
                 competitorBrands: competitorBrandsArr.map(i => ({
                     mainName: i.mainName,
-                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                    aliases: i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
                 })),
                 competitorBrandsOffAmazon: competitorBrandsOffAmazonArr.map(i => ({
                     mainName: i.mainName,
-                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                    aliases: i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
                 })),
 
                 variations: semanticData.productInformation.variations.map(i => {
