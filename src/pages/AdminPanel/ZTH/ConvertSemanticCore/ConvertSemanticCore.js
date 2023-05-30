@@ -441,13 +441,13 @@ const ConvertSemanticCore = ({admin}) => {
         }
     }
 
-    const uploadSemanticHandler = async (user) => {
+    const uploadSemanticHandler = async (userId) => {
         setUploadProcessing(true)
 
         try {
             const requestData = {
                 url: semanticData.url,
-                amazonRegionAccountMarketplaceId: user.ARAM,
+                userId: userId,
                 conversionOptions: {
                     converter: {
                         campaignsStatus: semanticData.conversionOptions.converter.campaignsStatus,
@@ -455,10 +455,6 @@ const ConvertSemanticCore = ({admin}) => {
                     },
                     productInformation: {
                         ...semanticData.conversionOptions.productInformation,
-                        mainProductName: semanticData.conversionOptions.productInformation.mainProductName || undefined,
-                        mainProductAsin: semanticData.conversionOptions.productInformation.mainProductAsin || undefined,
-                        mainProductSku: semanticData.conversionOptions.productInformation.mainProductSku || undefined,
-
                         variations: _.mapValues(semanticData.conversionOptions.productInformation.variations, (item) => ({
                             ...item,
                             themeValues: item.themeValues.map(value => ({

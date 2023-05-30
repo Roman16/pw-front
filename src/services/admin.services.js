@@ -20,8 +20,6 @@ export const adminServices = {
     generateReport,
 
     fetchUsers,
-    fetchUserARA,
-    fetchUserARAM,
     impersonateUser,
     fetchUserProducts,
     changeUserPassword,
@@ -133,14 +131,6 @@ function generateReport(data) {
 
 function fetchUsers(isAgencyClient = true) {
     return api('get', `${adminUrls.usersList}?page=1&size=50000${isAgencyClient ? '&is_agency_client=1' : ''}`)
-}
-
-function fetchUserARA(userId) {
-    return api('get', `${adminUrls.userARAList}?user_id[]=${userId}`)
-}
-
-function fetchUserARAM( ARAId) {
-    return api('get', `${adminUrls.userARAMList}?amazon_region_account_id[]=${ARAId}`)
 }
 
 function impersonateUser(value, type) {

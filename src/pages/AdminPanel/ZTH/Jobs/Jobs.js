@@ -35,29 +35,23 @@ const columns = [
             <br/> {moment.utc(date).local().format('YYYY HH:mm:ss')}</span>
     },
     {
-        title: 'User',
+        title: 'User Id',
         dataIndex: 'userId',
         key: 'userId',
-        width: '300px',
-        render: (id, item) => (<div className="col">
-            <p> Id: <b>{id}</b></p>
-            <p>Email: <b title={item.userEmail}>{item.userEmail}</b></p>
-            <p>Username: <b title={item.userName}>{item.userName}</b></p>
-        </div>)
+        width: '80px',
     },
     {
-        title: 'Amazon Account',
-        dataIndex: 'userId',
-        key: 'userId',
-        width: '300px',
-        render: (id, item) => (<div className="col">
-            <p>Alias: <b title={item.amazonAccountAlias}>{item.amazonAccountAlias}</b> </p>
-            <p>Seller Id: <b title={item.sellerId}>{item.sellerId}</b> </p>
-            <p>Marketplace: <b title={item.marketplace}>{item.marketplace}</b></p>
-            <p>Marketplace Id: <b title={item.marketplaceId}>{item.marketplaceId}</b></p>
-        </div>)
+        title: 'User Email',
+        dataIndex: 'userEmail',
+        key: 'userEmail',
+        width: '200px',
     },
-
+    {
+        title: 'Username',
+        dataIndex: 'userName',
+        key: 'userName',
+        width: '200px',
+    },
     {
         title: 'Title',
         dataIndex: 'title',
