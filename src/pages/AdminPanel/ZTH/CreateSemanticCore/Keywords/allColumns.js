@@ -2,12 +2,12 @@ import {keyColumn, textColumn} from "react-datasheet-grid"
 
 export const columns = {
     mainKeywords: [
-        {...keyColumn('text', textColumn), title: 'Keyword text', width: 4},
-        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 3},
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 5},
+        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 2},
     ],
     baseKeywords: [
-        {...keyColumn('text', textColumn), title: 'Keyword text', width: 4},
-        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 3},
+        {...keyColumn('text', textColumn), title: 'Keyword text', width: 5},
+        {...keyColumn('searchVolume', textColumn), title: 'Search volume', width: 2},
     ],
     negativePhrases: [
         {...keyColumn('text', textColumn), title: 'Keyword text', width: 1},
@@ -18,11 +18,11 @@ export const columns = {
     negativeAsins: [
         {...keyColumn('text', textColumn), title: 'ASIN'},
     ],
-    // globalNegativePhrases: [
-    //     {...keyColumn('text', textColumn), title: 'Keyword text'},
-    // ],
-    // globalNegativeExacts: [
-    //     {...keyColumn('text', textColumn), title: 'Keyword text'},
-    // ],
+    globalNegativePhrases: [
+        {...keyColumn('text', textColumn), title: 'Keyword text'},
+    ],
+    globalNegativeExacts: [
+        {...keyColumn('text', textColumn), title: 'Keyword text'},
+    ],
 }
 

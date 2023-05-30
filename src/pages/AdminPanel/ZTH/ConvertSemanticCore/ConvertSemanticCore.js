@@ -20,14 +20,18 @@ import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 //     convertToAmazonBulkUpload: boolean;
 //     conversionOptions: {
 //         converter: {
+//             useInputParametersProductName: boolean; // <- should always be true
 //             campaignsStatus: Status;
 //             convertForMarketplace: MarketplaceType;
 //             semanticCoreUrls: string[];
 //             generateBulkUploadForCampaignTypes: CampaignType[];
 //         };
 //         productInformation: {
-//             mainProductName: string;
+//             productName: string;
 //             variations: IVariationInputParameters[];
+//         };
+//         saver: {
+//             saveBulkUploadAs: FileExtension;
 //         };
 //         upload: {
 //             bidsTemplate: BidsTemplate;
@@ -338,20 +342,11 @@ const ConvertSemanticCore = ({admin}) => {
 
             await setSemanticData({
                 settings: {
-                    sp: {
-                        manuallySetExactBid: false,
-                        manuallyBudgets: false,
-                        exactBid: 1,
-                        ppcPlan: semanticData.ppcPlan,
-                        budgetMultiplier: 1,
-                    },
-                    sd: {
-                        manuallySetExactBid: false,
-                        manuallyBudgets: false,
-                        exactBid: 1,
-                        ppcPlan: semanticData.ppcPlan,
-                        budgetMultiplier: 1,
-                    },
+                    manuallySetExactBid: false,
+                    manuallyBudgets: false,
+                    exactBid: 1,
+                    ppcPlan: semanticData.ppcPlan,
+                    budgetMultiplier: 1,
                     actionType: 'convert'
                 },
 
@@ -361,16 +356,18 @@ const ConvertSemanticCore = ({admin}) => {
                 convertToAmazonBulkUpload: true,
                 conversionOptions: {
                     converter: {
+                        useInputParametersProductName: true,
                         campaignsStatus: zthEnums.enums.Status[0],
                         convertForAmazonRegion: zthEnums.enums.AmazonRegion[0],
                         semanticCoreUrls: [semanticUrl],
                         generateBulkUploadForCampaignTypes: [...zthEnums.aggregates.spCampaignTypesOrdered]
                     },
                     productInformation: {
-                        mainProductName: semanticData.mainProductName,
-                        variations: semanticData.variations,
-                        mainProductAsin: semanticData.mainProductAsin,
-                        mainProductSku: semanticData.mainProductSku
+                        productName: semanticData.productName,
+                        variations: semanticData.variations
+                    },
+                    saver: {
+                        saveBulkUploadAs: 'xlsx'
                     },
                     upload: {
                         bidsTemplate: {
@@ -381,7 +378,6 @@ const ConvertSemanticCore = ({admin}) => {
                     },
                     zeroToHero: {
                         campaignsCompressionStrategy: semanticData.campaignsCompressionStrategy,
-                        campaignNameGenerationStrategyType: semanticData.campaignNameGenerationStrategyType,
                         ppcPlan: semanticData.ppcPlan,
                         createSponsoredProductsSemanticCore: true,
                         createSponsoredDisplaySemanticCore: true
@@ -425,7 +421,7 @@ const ConvertSemanticCore = ({admin}) => {
             semanticData.convertToXLSXWorkBook && saveGoogleSpreadsheet(res)
 
             res.bulksheets && res.bulksheets.forEach(doc => {
-                saveFile(doc, 'xlsx')
+                saveFile(doc, semanticData.conversionOptions.saver.saveBulkUploadAs)
             })
 
             setConvertProcessing(false)
@@ -446,6 +442,7 @@ const ConvertSemanticCore = ({admin}) => {
                 userId: userId,
                 conversionOptions: {
                     converter: {
+                        useInputParametersProductName: true, // <- should always be true
                         campaignsStatus: semanticData.conversionOptions.converter.campaignsStatus,
                         semanticCoreUrls: semanticData.conversionOptions.converter.semanticCoreUrls
                     },
@@ -514,6 +511,8 @@ const ConvertSemanticCore = ({admin}) => {
 
     return (
         <section className={'convert-semantic-core'}>
+            {/*{parseProcessing && <RouteLoader/>}*/}
+
             <h2>Convert Semantic Core</h2>
 
             <form className="step step-1" onSubmit={loadSemanticInformation}>
@@ -542,29 +541,14 @@ const ConvertSemanticCore = ({admin}) => {
                 <SemanticInformation
                     semanticInfo={semanticInformation}
                     semanticData={semanticData}
-                    allEnums={zthEnums}
+                    campaignsCompressionStrategyEnums={zthEnums.enums.CampaignsCompressionStrategy}
 
                     onChange={setSemanticData}
                 />
 
                 <CampaignsBids
-                    title={'Sponsored Products Campaigns Bids and Budgets'}
-                    campaignTypes={zthEnums.aggregates.spCampaignTypesOrdered}
-                    adGroupTypes={zthEnums.aggregates.spAdGroupTypesOrdered}
                     zthEnums={zthEnums}
                     semanticData={semanticData}
-                    type={'sp'}
-
-                    onChange={setSemanticData}
-                />
-
-                <CampaignsBids
-                    title={'Sponsored Display Campaigns Bids and Budgets'}
-                    campaignTypes={zthEnums.aggregates.sdCampaignTypesOrdered}
-                    adGroupTypes={zthEnums.aggregates.sdAdGroupTypesOrdered}
-                    zthEnums={zthEnums}
-                    semanticData={semanticData}
-                    type={'sd'}
 
                     onChange={setSemanticData}
                 />
