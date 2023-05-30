@@ -8,24 +8,13 @@ import {keyColumn, textColumn} from "react-datasheet-grid"
 const ProductInformation = ({semanticData, onChange}) => {
 
     const changeDataHandler = (obg, name, value) => {
-        if (obg === 'zeroToHero' && name === 'createTCACampaign' && !value) {
-            onChange({
-                ...semanticData,
-                [obg]: {
-                    ...semanticData[obg],
-                    [name]: value,
-                    'createTCACampaignUsingManuallyProvidedASINsInstead': false
-                }
-            })
-        } else {
-            onChange({
-                ...semanticData,
-                [obg]: {
-                    ...semanticData[obg],
-                    [name]: value
-                }
-            })
-        }
+        onChange({
+            ...semanticData,
+            [obg]: {
+                ...semanticData[obg],
+                [name]: value
+            }
+        })
     }
 
     const changeTableHandler = (data, name, object = 'zeroToHero') => {
@@ -120,7 +109,6 @@ const ProductInformation = ({semanticData, onChange}) => {
             >
                 Gather variations for found ASINs
             </Checkbox>
-
             <Checkbox
                 checked={semanticData.zeroToHero.createTCACampaign}
                 onChange={({target: {checked}}) => changeDataHandler('zeroToHero', 'createTCACampaign', checked)}
@@ -128,20 +116,12 @@ const ProductInformation = ({semanticData, onChange}) => {
                 Create "TCA" campaign (will use top 10 ASINs from subcategories for products)
             </Checkbox>
 
-            {semanticData.zeroToHero.createTCACampaign && <Checkbox
-                checked={semanticData.zeroToHero.createTCACampaignUsingManuallyProvidedASINsInstead}
-                onChange={({target: {checked}}) => changeDataHandler('zeroToHero', 'createTCACampaignUsingManuallyProvidedASINsInstead', checked)}
-            >
-                Create "TCA" campaign using manually provided ASINs instead
-            </Checkbox>}
-
-            {semanticData.zeroToHero.createTCACampaignUsingManuallyProvidedASINsInstead &&
-            <div className="form-group w-25">
-                <label htmlFor="">Manually provided Top Competitors ASINs:</label>
+            {semanticData.zeroToHero.createTCACampaign && <div className="form-group w-25">
+                <label htmlFor="">Add additional Top Competitors ASINs:</label>
                 <ExcelTable
-                    data={semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs?.length > 0 ? semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs.map(i => ({text: i})) : [{text: ''}]}
+                    data={semanticData.zeroToHero.additionalTopCompetitorASINs?.length > 0 ? semanticData.zeroToHero.additionalTopCompetitorASINs.map(i => ({text: i})) : [{text: ''}]}
                     columns={TCAColumns}
-                    onChange={(data) => changeTableHandler(data, 'manuallyProvidedTopCompetitorASINs')}
+                    onChange={(data) => changeTableHandler(data, 'additionalTopCompetitorASINs')}
                 />
             </div>}
 
