@@ -1,9 +1,10 @@
 import React from "react"
 import CustomSelect from "../../../../components/Select/Select"
-import {Select} from "antd"
+import {Input, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
 import _ from 'lodash'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
+import {round} from '../../../../utils/round'
 
 const Option = Select.Option
 
@@ -386,9 +387,19 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                             {[...rule.metric === 'state' ? stateEnums : matchTypeEnums].map(i =>
                                 <Option value={i.key}>{i.title}</Option>)}
                         </CustomSelect>
-                        : <input
+                        : <Input
                             value={rule.value}
-                            onChange={({target: {value}}) => onChange({...rule, value: String(value)})}
+                            onChange={({target: {value}}) => {
+                                if (value.split('.')[1] && value.split('.')[1].length > 2) {
+                                    onChange({
+                                        ...rule,
+                                        value: `${value.split('.')[0]}.${value.split('.')[1].slice(0, 2)}`
+                                    })
+                                } else {
+                                    onChange({...rule, value: String(value)})
+                                }
+                            }
+                            }
                         />
                     }
                 </div>
