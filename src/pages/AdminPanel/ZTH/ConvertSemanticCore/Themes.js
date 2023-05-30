@@ -48,7 +48,7 @@ const Themes = ({themes = [], setThemes, variationIndex}) => {
 
     return (
         <div className="themes">
-            <h3>Themes</h3>
+            <h2>Themes</h2>
             <button className={'btn default'} onClick={add}>Add new theme</button>
             <br/>
 

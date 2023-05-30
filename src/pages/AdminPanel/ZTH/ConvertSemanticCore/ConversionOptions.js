@@ -265,7 +265,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="">Amazon Account</label>
+                        <label htmlFor="">ARA</label>
 
                         <CustomSelect
                             disabled={!selectedUserId}
@@ -283,7 +283,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     </div>
 
                     <div className="form-group">
-                        <label htmlFor="">Marketplace</label>
+                        <label htmlFor="">ARAM</label>
 
                         <CustomSelect
                             disabled={!selectedARA}
