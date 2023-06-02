@@ -15,7 +15,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
     }
 
     const resetHandler = () => {
-        setRuleData({...rule})
+        setRuleData({...rule, actions: rule.actions[0] || rule.actions})
     }
 
     const saveHandler = () => {
@@ -67,7 +67,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                 onChange={changeRuleDataHandler}
             />
 
-            <div className={`save-actions ${JSON.stringify(rule) !== JSON.stringify(ruleData) ? 'visible' : ''}`}>
+            <div className={`save-actions ${JSON.stringify({...rule, actions: rule.actions[0] || rule.actions}) !== JSON.stringify({...ruleData}) ? 'visible' : ''}`}>
                 <button className="btn white" onClick={resetHandler}>
                     Reset All
                 </button>
