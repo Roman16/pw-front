@@ -161,7 +161,7 @@ const AdminPanel = ({admin = true}) => {
                 </NavLink>
 
                 {/*<NavLink*/}
-                {/*    to={'/admin-panel/reports'}*/}
+                {/*    to={'/admin-panel/jungle-scout-report'}*/}
                 {/*>*/}
                 {/*    Reports*/}
                 {/*</NavLink>*/}
@@ -223,7 +223,7 @@ const AdminPanel = ({admin = true}) => {
             <Route path="/advanced/zth" render={() => <ZTH admin={admin}/>}/>
             {admin && <Route path="/admin-panel/registration-links" component={AgencyUsers}/>}
             {admin && <Route path="/admin-panel/agency-dashboard" component={AgencyDashboard}/>}
-            {/*{admin && <Route path="/admin-panel/reports" component={JungleScoutReport}/>}*/}
+            {/*{admin && <Route path="/admin-panel/jungle-scout-report" component={JungleScoutReport}/>}*/}
         </div>
     )
 }

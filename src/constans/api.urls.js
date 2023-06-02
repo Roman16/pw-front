@@ -63,7 +63,7 @@ export const userUrls = {
     accountStatus: 'user/account/subscription/status',
     availablePromo: 'promo/zero-to-hero',
 
-    setPaymentMethodForSubscription: 'user/account/subscription/activate/set-default-payment-method'
+    setPaymentMethodForSubscription: 'user/account/subscription/set-default-payment-method'
 }
 
 export const productsUrls = {

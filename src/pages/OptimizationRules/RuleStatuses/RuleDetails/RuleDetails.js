@@ -16,7 +16,8 @@ const columns = {
             title: 'Campaign Name',
             key: 'campaignName',
             dataIndex: 'campaignName',
-            search: true
+            search: true,
+            render: text => <div title={text} className="cut-text">{text}</div>
         },
         {
             title: 'Status',
@@ -42,7 +43,8 @@ const columns = {
             title: 'Name',
             key: 'rule_name',
             dataIndex: 'rule_name',
-            search: true
+            search: true,
+            render: text => <div title={text} className="cut-text">{text}</div>
         },
         {
             title: 'Launch date',

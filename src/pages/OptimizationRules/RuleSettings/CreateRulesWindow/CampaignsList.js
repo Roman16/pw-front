@@ -14,7 +14,8 @@ const ruleColumns = [
         title: 'Rule name',
         key: 'name',
         dataIndex: 'name',
-        search: true
+        search: true,
+        render: text => <div title={text} className="cut-text">{text}</div>
     },
 
     {
@@ -125,10 +126,32 @@ export const CampaignsList = ({
                 key={'table'}
                 rowKey={location === 'campaigns' ? "campaignId" : 'id'}
                 dataSource={list}
-                columns={location === 'campaigns' ? columnList().allColumns.map(i => ({
-                    ...i,
-                    sorter: false
-                })) : ruleColumns}
+                columns={location === 'campaigns' ? columnList().allColumns.map(i => {
+
+                    if (i.uniqueIndex === 'campaignName') {
+                        i = {
+                            title: 'Campaign',
+                            dataIndex: 'name',
+                            key: 'name',
+                            uniqueIndex: 'campaignName',
+                            width: '350px',
+                            locked: true,
+                            filter: true,
+                            search: true,
+                            render: (campaign) => <div
+                                className={'state-link'}
+                                title={campaign}
+                            >
+                                {campaign}
+                            </div>
+                        }
+                    }
+
+                    return ({
+                        ...i,
+                        sorter: false
+                    })
+                }) : ruleColumns}
                 loading={processing}
                 fixedColumns={[0]}
                 selectedRows={(attachedList === 'all' && activeTab === tabs[0]) ? [] : attachedList === 'all' ? list.map(i => i[location === 'campaigns' ? "campaignId" : 'id']) : attachedList.filter(i => _.find(list, {[location === 'campaigns' ? "campaignId" : 'id']: i}))}
