@@ -33,18 +33,24 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getAttachedCampaigns([id])
+            const {result} = await optimizationRulesServices.getCampaigns({
+                ...requestParams,
+                attributionWindow,
+                ruleId: id
+            })
 
-            if (result[id].length > 0 && activeTab === tabs[0]) {
-                getCampaigns(result[id])
-            } else if (activeTab === tabs[0]) {
+
+            if (activeTab === tabs[0]) {
                 setProcessing(false)
                 setCampaigns([])
                 setTotalSize(0)
             }
 
-            attachedListFromRequest = result[id].map(i => `${i}`)
-            setAttachedCampaigns(result[id].map(i => `${i}`))
+            attachedListFromRequest = result.data.map(i => `${i.campaignId}`)
+            setAttachedCampaigns(result.data.map(i => `${i.campaignId}`))
+
+            setCampaigns(result.data)
+            setTotalSize(result.total_count)
         } catch (e) {
             console.log(e)
         }
@@ -57,8 +63,9 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
             const {result} = await optimizationRulesServices.getCampaigns({
                 ...requestParams,
                 campaignsId,
-                attributionWindow
+                attributionWindow,
             })
+
             setCampaigns(result.data)
             setTotalSize(result.total_count)
         } catch (e) {
@@ -76,7 +83,7 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
         if (list === 'all') {
             setAttachedCampaigns('all')
         } else if (detachList.length > 0) {
-            setAttachedCampaigns(prevState => [...prevState.filter(i => !detachList.includes(i))])
+            setAttachedCampaigns(prevState => prevState === 'all' ? [...list] : [...prevState.filter(i => !detachList.includes(i))])
         } else {
             setAttachedCampaigns(prevState => prevState === 'all' ? [...list] : [...new Set([...prevState, ...list])])
         }
@@ -192,8 +199,9 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
             processing={processing}
             totalSize={totalSize}
             requestParams={requestParams}
-            selectAllBtn={_.difference(attachedListFromRequest, attachedCampaigns).length > 0}
+            selectAllBtn={_.difference(attachedListFromRequest, attachedCampaigns).length > 0 || attachedCampaigns.length > attachedListFromRequest.length}
             activeTab={activeTab}
+            attachedListFromRequest={attachedListFromRequest}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}

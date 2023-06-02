@@ -50,7 +50,8 @@ export const CampaignsList = ({
                                   onChangeDateRange,
                                   location = 'campaigns',
                                   activeTab,
-                                  pageSizeOptions
+                                  pageSizeOptions,
+                                  attachedListFromRequest
                               }) => {
 
     const changePagination = (data) => {
@@ -110,14 +111,13 @@ export const CampaignsList = ({
                 {attachedList === 'all' ?
                     <p><b>All {totalSize}</b> selected</p>
                     :
-                    <p><b>{attachedList.length}</b> selected {totalSize > 1 && <>(
+                    <p><b>{attachedList.length}</b> selected {(totalSize > 1) && <>(
                         <button className={'select-all-btn'} onClick={selectAllHandler}>or select
                             all {totalSize}</button>
                         )</>}
                     </p>
                 }
-            </div>
-            }
+            </div>}
         </div>
 
 

@@ -387,7 +387,8 @@ const RenderRules = ({rule, onChange, showActions = false, showRemove = false, o
                             {[...rule.metric === 'state' ? stateEnums : matchTypeEnums].map(i =>
                                 <Option value={i.key}>{i.title}</Option>)}
                         </CustomSelect>
-                        : <Input
+                        : <input
+                            type="number"
                             value={rule.value}
                             onChange={({target: {value}}) => {
                                 if (value.split('.')[1] && value.split('.')[1].length > 2) {
