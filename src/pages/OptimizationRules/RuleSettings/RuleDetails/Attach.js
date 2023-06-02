@@ -8,7 +8,8 @@ import moment from "moment"
 
 export const tabs = ['campaigns used it', 'all campaigns']
 
-let attachedListFromRequest = []
+let attachedListFromRequest = [],
+    totalAttached = 0
 
 export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
@@ -39,6 +40,7 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
                 ruleId: id
             })
 
+            totalAttached = result.total_count
 
             if (activeTab === tabs[0]) {
                 setProcessing(false)
@@ -187,11 +189,10 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
                     {tab}
 
                     {tab === tabs[0] && attachedListFromRequest.length > 0 &&
-                    <div className="count">{attachedListFromRequest.length}</div>}
+                    <div className="count">{totalAttached}</div>}
                 </div>)}
             </div>
         </div>
-
 
         <CampaignsList
             attachedList={attachedCampaigns}
@@ -202,6 +203,7 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
             selectAllBtn={_.difference(attachedListFromRequest, attachedCampaigns).length > 0 || attachedCampaigns.length > attachedListFromRequest.length}
             activeTab={activeTab}
             attachedListFromRequest={attachedListFromRequest}
+            totalAttached={totalAttached}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}
