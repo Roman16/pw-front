@@ -15,7 +15,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
     }
 
     const resetHandler = () => {
-        setRuleData({...rule})
+        setRuleData({...rule, actions: rule.actions[0] || rule.actions})
     }
 
     const saveHandler = () => {
