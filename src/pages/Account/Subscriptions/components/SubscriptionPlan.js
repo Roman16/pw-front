@@ -314,7 +314,6 @@ const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrent
             {/*        /!*{subscriptionStateCurrentPlan.default_payment_method === null && <p>Default card</p>}*!/*/}
             {/*    </div>*/}
             {/*</div>*/}
-
         </div>
     </div>)
 }

@@ -108,12 +108,13 @@ const Subscriptions = (props) => {
         setRetryProcessing(false)
     }
 
-    const subscribeHandler = async (coupon, plan) => {
+    const subscribeHandler = async (coupon, plan, card) => {
         setActivateProcessing(true)
 
         try {
             await userService.activateSubscription({
                 type: plan || selectedPlan,
+                payment_method_id: card,
                 coupon: coupon || subscriptionState.subscriptions[subscriptionState.active_subscription_type]?.coupon?.code || undefined
             }, activeRegion.id)
 
@@ -228,9 +229,25 @@ const Subscriptions = (props) => {
 
     const changePaymentMethodHandler = async (payment_method_id, cb) => {
         try {
-            await userService.setPaymentMethodForSubscription({payment_method_id, amazon_region_account_id: activeRegion.id})
+            await userService.setPaymentMethodForSubscription({
+                payment_method_id,
+                amazon_region_account_id: activeRegion.id
+            })
 
             notification.success({title: 'Default payment method changed'})
+
+            setSubscriptionState(prevState => ({
+                ...prevState,
+                subscriptions: {
+                    ...prevState.subscriptions,
+                    [prevState.active_subscription_type]: {
+                        ...prevState.subscriptions[prevState.active_subscription_type],
+                        default_payment_method: {
+                            payment_method_id: payment_method_id
+                        }
+                    }
+                }
+            }))
         } catch (e) {
             console.log(e)
         }
