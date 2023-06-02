@@ -657,31 +657,31 @@ const PriceRow = ({couponInfo, activateInfoSelectedPlan, trial = false}) => {
 
 export const getTotalActual = ({total = 0, rebate = 0, balance = 0}) => Math.max(total - rebate - balance, 0)
 
-// const PaymentMethodRow = ({data,paymentMethodList=[], onChange}) => {
-//     return (<div className="row with-field">
-//         <div className="label">PAYMENT METHOD</div>
-//         <div className="value payment-method">
-//             {data.next_invoice.payment.card_last_4 ?
-//                 <CustomSelect
-//                     getPopupContainer={trigger => trigger.parentNode}
-//                     defaultValue={null}
-//                     onChange={onChange}
-//                 >
-//                     <Option value={null}>Default card</Option>
-//                     {paymentMethodList.map(i => <Option value={i.id}>**** {i.last4}</Option>)}
-//                 </CustomSelect>
-//                 : <><b>No card added</b>
-//                     <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
-//     </div>)
-// }
-
-const PaymentMethodRow = ({data}) => <div className="row">
-    <div className="label">PAYMENT METHOD</div>
-    <div
-        className="value payment-method">{data.next_invoice.payment.card_last_4 ?
-        <b>**** {data.next_invoice.payment.card_last_4}</b> : <><b>No card added</b>
-            <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
-</div>
+const PaymentMethodRow = ({data,paymentMethodList=[], onChange}) => {
+    return (<div className="row with-field">
+        <div className="label">PAYMENT METHOD</div>
+        <div className="value payment-method">
+            {data.next_invoice.payment.card_last_4 ?
+                <CustomSelect
+                    getPopupContainer={trigger => trigger.parentNode}
+                    defaultValue={null}
+                    onChange={onChange}
+                >
+                    <Option value={null}>Default card</Option>
+                    {paymentMethodList.map(i => <Option value={i.id}>**** {i.last4}</Option>)}
+                </CustomSelect>
+                : <><b>No card added</b>
+                    <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
+    </div>)
+}
+//
+// const PaymentMethodRow = ({data}) => <div className="row">
+//     <div className="label">PAYMENT METHOD</div>
+//     <div
+//         className="value payment-method">{data.next_invoice.payment.card_last_4 ?
+//         <b>**** {data.next_invoice.payment.card_last_4}</b> : <><b>No card added</b>
+//             <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
+// </div>
 
 
 const CloseWindowButton = ({onClick}) => <button className="btn icon close-button" onClick={onClick}>
