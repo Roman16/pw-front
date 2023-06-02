@@ -102,7 +102,7 @@ function stopProductOptimization(productId) {
 }
 
 function getProductsSettingsList({pageSize, page, searchStr = '', onlyActive, onlyOptimization, cancelToken}) {
-    return api('get', `${productsUrls.productList}?page=${page}&size=${pageSize}&is_active=${onlyActive ? 1 : 0}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchStrWrap(searchStr).join('')}`, false, false, cancelToken)
+    return api('get', `${productsUrls.productsSettingsList}?page=${page}&size=${pageSize}&is_active=${onlyActive ? 1 : 0}&only_under_optimization=${onlyOptimization ? 1 : 0}${searchStrWrap(searchStr).join('')}`, false, false, cancelToken)
 }
 
 function updateProductSettings(parameters) {

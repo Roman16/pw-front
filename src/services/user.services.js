@@ -64,7 +64,9 @@ export const userService = {
 
     updateAmazonAccount,
 
-    getAvailablePromo
+    getAvailablePromo,
+
+    setPaymentMethodForSubscription
 }
 
 function login(user) {
@@ -169,6 +171,10 @@ function fetchBillingHistory({page, pageSize}) {
 
 function confirmPayment(data) {
     return api('post', userUrls.confirm, data, undefined, undefined, undefined, undefined, false)
+}
+
+function setPaymentMethodForSubscription(data) {
+    return api('post', userUrls.setPaymentMethodForSubscription, data, undefined, undefined, undefined, undefined, false)
 }
 
 //-------------------------------

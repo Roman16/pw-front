@@ -17,6 +17,7 @@ import {marketplaceIdValues} from "../../../constans/amazonMarketplaceIdValues"
 import $ from "jquery"
 import {amazonDomain} from "../../../utils/amazonDomain"
 import {currencyWithCode} from "../../../components/CurrencyCode/CurrencyCode"
+import {numberMask} from "../../../utils/numberMask"
 
 
 export const ACTIVE = 'RUNNING'
@@ -144,9 +145,9 @@ const ProductList = ({
     const getValueFromDefaultVariation = (variations, key) => _.find(variations, {is_default_variation: true}) ? _.find(variations, {is_default_variation: true})[key] : variations[0][key]
 
     const getValue = (product, key, fromVariation = false, type = 'currency') => {
-        const value = (fromVariation && product.product.variations) ? getValueFromDefaultVariation(product.product.variations, key) : product[key]
+        const value = (fromVariation && product.variations.length > 0) ? getValueFromDefaultVariation(product.variations, key) : product[key]
 
-        return value ? type === 'currency' ? currencyWithCode(value): `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
+        return value ? type === 'currency' ? currencyWithCode(numberMask(value, 2)) : `${round(value * 100, 2)}%` : key === NET_MARGIN ? 'Can’t calculate' : '-'
     }
 
     const openEditableWindow = (key, product) => {
@@ -197,7 +198,7 @@ const ProductList = ({
                 width: '170px',
                 key: PRICE_FROM_USER,
                 editType: 'currency',
-                saveValidation: () =>  false,
+                saveValidation: () => false,
                 render: (item) => getValue(item, PRICE_FROM_USER)
             },
             {
@@ -240,23 +241,23 @@ const ProductList = ({
                     </div>
                 )
             },
-            {
-                width: '175px',
-                render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
-
-            },
-            {
-                width: '175px',
-                render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
-            },
-            {
-                width: '175px',
-                render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
-            },
-            {
-                width: '175px',
-                render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
-            },
+            // {
+            //     width: '175px',
+            //     render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
+            //
+            // },
+            // {
+            //     width: '175px',
+            //     render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
+            // },
+            // {
+            //     width: '175px',
+            //     render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
+            // },
+            // {
+            //     width: '175px',
+            //     render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
+            // },
             ...(isAdmin || isAgencyClient) ? [{
                 width: '160px',
                 render: (item, parent) => (parent[DESIRED_ACOS] ? `${parent[DESIRED_ACOS]}%` : '-')
@@ -293,7 +294,7 @@ const ProductList = ({
         ]
 
         return (
-            props.product.variations && props.product.variations.map((productVariation, i) => (
+            props.variations && props.variations.map((productVariation, i) => (
                     <div>
                         {columns.map((item, index) => {
                                 const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1}
@@ -335,7 +336,7 @@ const ProductList = ({
             dataIndex: PRODUCT,
             key: PRODUCT,
             width: '400px',
-            render: (item) => <ProductItem
+            render: (i, item) => <ProductItem
                 product={item}
                 openedProduct={openedProduct}
                 onOpenVariations={setOpenedProduct}
@@ -346,7 +347,7 @@ const ProductList = ({
             dataIndex: 'sku_asin',
             key: 'sku_asin',
             width: '200px',
-            render: (text, {product: {sku, asin}}) => <div className={'sku-asin'}>
+            render: (text, {sku, asin}) => <div className={'sku-asin'}>
                 <div title={sku}><b>SKU:</b>{sku}</div>
                 <div title={asin}><b>ASIN:</b>
                     <a
@@ -371,8 +372,8 @@ const ProductList = ({
             dataIndex: PRICE_FROM_USER,
             key: PRICE_FROM_USER,
             width: '170px',
-            editType: (item) => item.product.variations ? false : 'currency',
-            saveValidation: () =>  false,
+            editType: (item) => item.variations.length > 0 ? false : 'currency',
+            saveValidation: () => false,
             render: (index, item) => getValue(item, PRICE_FROM_USER, true)
         },
         {
@@ -380,10 +381,11 @@ const ProductList = ({
             dataIndex: COGS,
             key: COGS,
             width: '130px',
-            render: (index, item) => <div className={`field-with-window ${item.product.variations ? 'disabled' : ''}`}
-                                          onClick={() => item.product.variations ? false : openEditableWindow('cogs', item)}>
+            render: (index, item) => <div
+                className={`field-with-window ${item.variations.length > 0 ? 'disabled' : ''}`}
+                onClick={() => item.variations.length > 0 ? false : openEditableWindow('cogs', item)}>
                 {getValue(item, COGS, true)}
-                {(item.product.variations === null || !item.product.variations) &&
+                {item.variations.length === 0 &&
                 <button className="btn icon edit-btn">
                     <SVG id={'edit-pen-icon'}/>
                 </button>}
@@ -394,11 +396,12 @@ const ProductList = ({
             dataIndex: AMAZON_FEES,
             key: AMAZON_FEES,
             width: '130px',
-            render: (index, item) => <div className={`field-with-window ${item.product.variations ? 'disabled' : ''}`}
-                                          onClick={() => item.product.variations ? false : openEditableWindow('amazonFees', item)}>
+            render: (index, item) => <div
+                className={`field-with-window ${item.variations.length > 0 ? 'disabled' : ''}`}
+                onClick={() => item.variations.length > 0 ? false : openEditableWindow('amazonFees', item)}>
                 {getValue(item, AMAZON_FEES, true)}
 
-                {(item.product.variations === null || !item.product.variations) &&
+                {item.variations.length === 0 &&
                 <button className="btn icon edit-btn question-icon">
                     <SVG id={'question-mark-icon'}/>
                 </button>}
@@ -418,40 +421,40 @@ const ProductList = ({
             width: '200px',
             render: () => ('')
         }] : [],
-        {
-            title: <>Min Bid <br/> (Manual Campaign)</>,
-            dataIndex: MIN_BID_MANUAL_CAMPING,
-            key: MIN_BID_MANUAL_CAMPING,
-            width: '175px',
-            editType: 'currency',
-            saveValidation: () =>  false,
-            render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
-        },
-        {
-            title: <>Max Bid <br/> (Manual Campaign)</>,
-            dataIndex: MAX_BID_MANUAL_CAMPING,
-            key: MAX_BID_MANUAL_CAMPING,
-            width: '175px',
-            editType: 'currency',
-            saveValidation: () =>  false,
-            render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
-        },
-        {
-            title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
-            dataIndex: MIN_BID_AUTO_CAMPING,
-            key: MIN_BID_AUTO_CAMPING,
-            width: '175px',
-            editType: 'currency',
-            render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
-        },
-        {
-            title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
-            dataIndex: MAX_BID_AUTO_CAMPING,
-            key: MAX_BID_AUTO_CAMPING,
-            width: '175px',
-            editType: 'currency',
-            render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
-        },
+        // {
+        //     title: <>Min Bid <br/> (Manual Campaign)</>,
+        //     dataIndex: MIN_BID_MANUAL_CAMPING,
+        //     key: MIN_BID_MANUAL_CAMPING,
+        //     width: '175px',
+        //     editType: 'currency',
+        //     saveValidation: () =>  false,
+        //     render: (index, item) => getValue(item, MIN_BID_MANUAL_CAMPING)
+        // },
+        // {
+        //     title: <>Max Bid <br/> (Manual Campaign)</>,
+        //     dataIndex: MAX_BID_MANUAL_CAMPING,
+        //     key: MAX_BID_MANUAL_CAMPING,
+        //     width: '175px',
+        //     editType: 'currency',
+        //     saveValidation: () =>  false,
+        //     render: (index, item) => getValue(item, MAX_BID_MANUAL_CAMPING)
+        // },
+        // {
+        //     title: () => (<span>Min Bid <br/> (Auto Campaign)</span>),
+        //     dataIndex: MIN_BID_AUTO_CAMPING,
+        //     key: MIN_BID_AUTO_CAMPING,
+        //     width: '175px',
+        //     editType: 'currency',
+        //     render: (index, item) => getValue(item, MIN_BID_AUTO_CAMPING)
+        // },
+        // {
+        //     title: () => (<span>Max Bid <br/> (Auto Campaign)</span>),
+        //     dataIndex: MAX_BID_AUTO_CAMPING,
+        //     key: MAX_BID_AUTO_CAMPING,
+        //     width: '175px',
+        //     editType: 'currency',
+        //     render: (index, item) => getValue(item, MAX_BID_AUTO_CAMPING)
+        // },
         ...(isAdmin || isAgencyClient) ? [{
             title: () => (<span>Desired ACoS</span>),
             dataIndex: DESIRED_ACOS,
@@ -652,10 +655,10 @@ const ProductList = ({
     )
 }
 
-const ProductItem = ({product: {image_url, asin, name, id, variations}, openedProduct, onOpenVariations}) => {
+const ProductItem = ({product: {product_image, asin, name, id, variations=[]}, openedProduct, onOpenVariations}) => {
     return (<div className="product">
         <div className="image">
-            <img src={amazonDefaultImageUrls.includes(image_url) ? noImage : image_url}/>
+            <img src={amazonDefaultImageUrls.includes(product_image) ? noImage : product_image}/>
         </div>
 
         <a
@@ -668,10 +671,10 @@ const ProductItem = ({product: {image_url, asin, name, id, variations}, openedPr
         </a>
 
         <div
-            className={`open-children-list-button ${variations ? 'has-variations' : ''} ${openedProduct === id ? 'opened' : ''}`}
-            onClick={variations ? () => onOpenVariations(openedProduct === id ? undefined : id) : false}
+            className={`open-children-list-button ${variations.length > 0 ? 'has-variations' : ''} ${openedProduct === id ? 'opened' : ''}`}
+            onClick={variations.length > 0 ? () => onOpenVariations(openedProduct === id ? undefined : id) : false}
         >
-            {variations && <SVG id='select-icon'/>}
+            {variations.length > 0 && <SVG id='select-icon'/>}
         </div>
     </div>)
 }

@@ -15,6 +15,7 @@ import {NavLink, Route, Redirect} from "react-router-dom"
 import ZTH from "./ZTH/ZTH"
 import AgencyUsers from "./AgencyUsers/AgencyUsers"
 import {AgencyDashboard} from "./AgencyDashboard/AgencyDashboard"
+import {JungleScoutReport} from "./JungleScoutReport/JungleScoutReport"
 
 const AdminPanel = ({admin = true}) => {
     const [selectedTab, setSelectedTab] = useState('genInfo')
@@ -159,6 +160,12 @@ const AdminPanel = ({admin = true}) => {
                     Dashboard
                 </NavLink>
 
+                {/*<NavLink*/}
+                {/*    to={'/admin-panel/reports'}*/}
+                {/*>*/}
+                {/*    Reports*/}
+                {/*</NavLink>*/}
+
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
                 {/*    onClick={() => setSelectedTab('products')}>*/}
@@ -216,6 +223,7 @@ const AdminPanel = ({admin = true}) => {
             <Route path="/advanced/zth" render={() => <ZTH admin={admin}/>}/>
             {admin && <Route path="/admin-panel/registration-links" component={AgencyUsers}/>}
             {admin && <Route path="/admin-panel/agency-dashboard" component={AgencyDashboard}/>}
+            {/*{admin && <Route path="/admin-panel/reports" component={JungleScoutReport}/>}*/}
         </div>
     )
 }

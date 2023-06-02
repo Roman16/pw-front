@@ -34,6 +34,7 @@ const columns = {
             title: 'Result',
             key: 'result',
             dataIndex: 'result',
+            render: text => <div title={text} className="cut-text">{text}</div>
         },
     ],
     'statuses': [

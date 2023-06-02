@@ -1,10 +1,14 @@
-import React from "react"
-import {Spin} from "antd"
+import React, {useState} from "react"
+import {Select, Spin} from "antd"
 import moment from 'moment'
 import {numberMask} from "../../../../utils/numberMask"
 import {SVG} from "../../../../utils/icons"
 import {getTotalActual} from "../modalWindows"
 import {CouponDetails} from "./CouponField"
+import CustomSelect from "../../../../components/Select/Select"
+import _ from 'lodash'
+
+const Option = Select.Option
 
 const defaultPrice = {
     optimization: {
@@ -28,10 +32,12 @@ export const SubscriptionPlan = ({
                                      adSpend,
                                      processingCancelSubscription,
                                      retryProcessing,
+                                     paymentMethodList,
 
                                      onSelect,
                                      onSetVisibleCancelWindow,
                                      onRetryPayment,
+                                     onChangePaymentMethod
                                  }) => {
 
     const activeSubscriptionType = subscriptionState.active_subscription_type,
@@ -95,6 +101,9 @@ export const SubscriptionPlan = ({
                     subscriptionState={subscriptionState}
                     subscriptionStateCurrentPlan={subscriptionStateCurrentPlan}
                     adSpend={adSpend}
+                    paymentMethodList={paymentMethodList}
+
+                    onChangePaymentMethod={onChangePaymentMethod}
                 /> : ''}
         </li>)
 }
@@ -235,7 +244,9 @@ const Price = ({isActivePlan, plan, subscriptionState}) => {
     </div>
 }
 
-const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrentPlan}) => {
+const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrentPlan, paymentMethodList, onChangePaymentMethod}) => {
+    const [saveProcessing, setSaveProcessing] = useState(false)
+
     const statusValue = () => {
         if (subscriptionStateCurrentPlan.status === 'trialing') {
             return `Trialing, ${subscriptionState.trial.days_before_trial_end_date} days left`
@@ -271,6 +282,7 @@ const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrent
                 <div className="label">Last 30-days Ad Spend</div>
                 <div className="value">${numberMask(adSpend, 2)}</div>
             </div>
+
             <div className="row coupon-row">
                 <div className="label">Coupon</div>
                 <div className="value">
@@ -281,6 +293,28 @@ const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrent
                         </>}
                 </div>
             </div>
+
+            {/*<div className="row payment-method-row">*/}
+            {/*    <div className="label">Payment method</div>*/}
+            {/*    <div className="value">*/}
+            {/*        <CustomSelect*/}
+            {/*            getPopupContainer={trigger => trigger.parentNode}*/}
+            {/*            onChange={(value) => {*/}
+            {/*                setSaveProcessing(true)*/}
+            {/*                onChangePaymentMethod(value, () => setSaveProcessing(false))*/}
+            {/*            }}*/}
+
+            {/*            value={subscriptionStateCurrentPlan.default_payment_method === null ? null : subscriptionStateCurrentPlan.default_payment_method.payment_method_id}*/}
+            {/*        >*/}
+            {/*            <Option value={null}>Default card</Option>*/}
+            {/*            {paymentMethodList.map(i => <Option value={i.id}>**** {i.last4}</Option>)}*/}
+            {/*        </CustomSelect>*/}
+            {/*        {saveProcessing && <Spin size={'small'}/>}*/}
+
+            {/*        /!*{subscriptionStateCurrentPlan.default_payment_method === null && <p>Default card</p>}*!/*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+
         </div>
     </div>)
 }
