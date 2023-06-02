@@ -25,7 +25,7 @@ const metricsOrder = {
         metricKeys['macos'],
         metricKeys['conversion_rate'],
         metricKeys['cpa'],
-        metricKeys['total_units'],
+        metricKeys['total_sales'],
         metricKeys['cost'],
         metricKeys['ad_sales'],
         metricKeys['acos'],

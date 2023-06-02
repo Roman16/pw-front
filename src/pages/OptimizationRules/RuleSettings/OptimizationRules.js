@@ -1,17 +1,16 @@
 import React, {useState} from "react"
 import './OptimizationRules.less'
-import {Header} from "./Header/Header"
+import {Header} from "../components/Header/Header"
 import {CreateRulesWindow} from "./CreateRulesWindow/CreateRulesWindow"
-import {RulesList} from "./RulesList/RulesList"
-import {optimizationRulesServices} from "../../services/optimization.rules.services"
+import {RulesList} from "../components/RulesList/RulesList"
+import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import {RuleDetails} from "./RuleDetails/RuleDetails"
-import {notification} from "../../components/Notification"
-import RouteLoader from "../../components/RouteLoader/RouteLoader"
+import {notification} from "../../../components/Notification"
+import RouteLoader from "../../../components/RouteLoader/RouteLoader"
 import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
-import {NoFoundData} from "../../components/Table/CustomTable"
-import {SVG} from "../../utils/icons"
+import {NoFoundData} from "../../../components/Table/CustomTable"
+import {SVG} from "../../../utils/icons"
 import {Link} from "react-router-dom"
-import {AttachSettings} from "./AttachSettings/AttachSettings"
 import {EditRuleWindow} from "./EditRuleWindow/EditRuleWindow"
 
 
@@ -76,11 +75,11 @@ const OptimizationRules = () => {
 
     const attachRulesByCampaignsHandler = async (data, cb) => {
         try {
-            await optimizationRulesServices.attachRules(data)
+           const {result} =  await optimizationRulesServices.attachRules(data)
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: data.campaign_id.length,
-                rules_count: data.rule_id.length,
+                campaigns_count: result.updated,
+                rules_count: result.updated,
             })
         } catch (e) {
             console.log(e)

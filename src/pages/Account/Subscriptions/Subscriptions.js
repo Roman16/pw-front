@@ -47,7 +47,8 @@ const Subscriptions = (props) => {
         [visibleActivateSubscriptionsWindow, setVisibleActivateSubscriptionsWindow] = useState(false),
         [visibleSomethingWrongWindow, setVisibleSomethingWrongWindow] = useState(false),
 
-        [processingCancelSubscription, setProcessingCancelSubscription] = useState(false)
+        [processingCancelSubscription, setProcessingCancelSubscription] = useState(false),
+        [paymentMethodList, setPaymentMethodList] = useState([])
 
     const user = useSelector(state => state.user)
     const importStatus = useSelector(state => state.user.importStatus)
@@ -215,6 +216,28 @@ const Subscriptions = (props) => {
         setActivateCouponProcessing(false)
     }
 
+
+    const getPaymentMethod = async () => {
+        try {
+            const {result} = await userService.fetchBillingInformation()
+            setPaymentMethodList(result)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const changePaymentMethodHandler = async (payment_method_id, cb) => {
+        try {
+            await userService.setPaymentMethodForSubscription({payment_method_id, amazon_region_account_id: activeRegion.id})
+
+            notification.success({title: 'Default payment method changed'})
+        } catch (e) {
+            console.log(e)
+        }
+
+        cb()
+    }
+
     const selectPlanHandler = (plan, type) => {
         setSelectedPlan(plan)
         setActivateType(type)
@@ -230,6 +253,10 @@ const Subscriptions = (props) => {
     useEffect(() => {
         amazonIsConnected && activeRegion && getSubscriptionsState()
     }, [activeRegion])
+
+    useEffect(() => {
+        getPaymentMethod()
+    }, [])
 
     return (<>
         {amazonIsConnected && <PageHeader activeRegion={activeRegion}/>}
@@ -249,6 +276,7 @@ const Subscriptions = (props) => {
                     subscriptionState={subscriptionState}
                     disabledPage={disabledPage}
                     adSpend={adSpend}
+                    paymentMethodList={paymentMethodList}
 
                     loadStateProcessing={loadStateProcessing}
                     retryProcessing={retryProcessing}
@@ -258,6 +286,7 @@ const Subscriptions = (props) => {
                     onSelect={selectPlanHandler}
                     onSetVisibleCancelWindow={setVisibleCancelSubscriptionsWindow}
                     onRetryPayment={retryPaymentHandler}
+                    onChangePaymentMethod={changePaymentMethodHandler}
                 />)}
             </ul>
 
@@ -293,6 +322,7 @@ const Subscriptions = (props) => {
             processing={activateProcessing}
             adSpend={adSpend}
             regionId={activeRegion.id}
+            paymentMethodList={paymentMethodList}
 
             onClose={closeActivateWindowHandler}
             onActivate={subscribeHandler}

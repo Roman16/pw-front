@@ -258,6 +258,52 @@
                 }
               }
             }
+
+            &.payment-method-row {
+              align-items: flex-start;
+
+              .value {
+                position: relative;
+
+                .ant-spin {
+                  position: absolute;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  bottom: 0;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: rgba(105, 89, 171, 0.1);
+                }
+              }
+
+              .label {
+                margin: 5px 0 0 0;
+              }
+
+              .custom-select {
+                width: 130px;
+                height: 28px;
+
+                .ant-select-arrow {
+                  right: 10px;
+                }
+
+                .ant-select-selection__rendered {
+                  margin-right: 20px;
+                }
+
+                .ant-select-selection-selected-value {
+                  padding-left: 10px;
+                }
+              }
+
+              p {
+                margin: 2px 0 0 0;
+                font-weight: 400;
+              }
+            }
           }
         }
       }

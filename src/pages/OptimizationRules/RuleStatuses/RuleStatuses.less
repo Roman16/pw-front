@@ -1,0 +1,26 @@
+.main-pages .main-container .page > div.optimization-rules-page.rule-statuses {
+  height: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+
+  & > .container {
+    flex: 1;
+    padding: 10px 0 10px 10px;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .work-container {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: auto;
+  }
+
+  .cut-text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}

@@ -7,6 +7,7 @@ import {PieChart} from "../components/PieChart/PieChart"
 import {TopCampaigns} from "./TopCampaigns"
 import {Comment} from "../components/Comment/Comment"
 import {diffPercent} from "../../AnalyticsV3/components/RenderPageParts/RenderPageParts"
+import {SectionName} from "../components/SectionName/SectionName"
 
 const availableMetrics = [
     metricKeys['impressions'],
@@ -14,8 +15,8 @@ const availableMetrics = [
     metricKeys['ctr'],
     metricKeys['cpc'],
     metricKeys['cost'],
-    metricKeys['acos'],
-    metricKeys['conversion_rate']
+    // metricKeys['acos'],
+    // metricKeys['conversion_rate']
 ]
 
 export const AdsStatistic = ({
@@ -35,6 +36,11 @@ export const AdsStatistic = ({
 
 
     return (<section className={'account-statistic'}>
+        <SectionName
+            name={'Advertising Performance'}
+            description={' In this section, you can track the effectiveness of advertising metrics'}
+        />
+
         <Comment text={advertising_metrics_comment}/>
 
         <div className="metrics-list">

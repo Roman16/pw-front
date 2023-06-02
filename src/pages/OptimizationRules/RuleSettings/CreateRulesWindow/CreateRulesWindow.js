@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react"
 import './CreateRulesWindow.less'
-import ModalWindow from "../../../components/ModalWindow/ModalWindow"
-import WindowHeader from "../../Analytics/Campaigns/CreateCampaignWindow/WindowHeader"
+import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
+import WindowHeader from "../../../Analytics/Campaigns/CreateCampaignWindow/WindowHeader"
 import {RuleInformation} from "./RuleInformation"
-import WindowFooter from "../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
+import WindowFooter from "../../../Analytics/Campaigns/CreateCampaignWindow/WindowFooter"
 import {RuleSettings} from "./RuleSettings"
 import {CampaignsList} from "./CampaignsList"
-import {optimizationRulesServices} from "../../../services/optimization.rules.services"
+import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import {Overview} from "./Overview"
 import moment from "moment"
 
@@ -137,6 +137,8 @@ export const CreateRulesWindow = ({
                 widthAttributionWindow={true}
                 onChangeRequestParams={(data) => setRequestParams(prevState => ({...prevState, ...data}))}
                 onChangeAttachedList={(campaignsId) => changeCreateDataHandler({campaignsId})}
+
+                pageSizeOptions={[10, 30, 50, 300]}
             />}
 
             {currentStep === 3 && <Overview

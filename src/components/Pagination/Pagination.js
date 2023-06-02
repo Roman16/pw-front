@@ -87,6 +87,7 @@ const Pagination = ({
                     value={pageSize}
                     dropdownClassName={'pagination-select'}
                     disabled={disabled}
+                    getPopupContainer={trigger => trigger.parentNode}
                 >
                     {pageSizeOptions.map(item => (
                         <Option value={item} key={item}>{item}</Option>

@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from "react"
-import CustomTable from "../../../components/Table/CustomTable"
-import {columnList} from "../../Analytics/Campaigns/tableComponents/columnList"
-import {optimizationRulesServices} from "../../../services/optimization.rules.services"
-import TableFilters from "../../Analytics/components/TableFilters/TableFilters"
-import Pagination from "../../../components/Pagination/Pagination"
+import React from "react"
+import CustomTable from "../../../../components/Table/CustomTable"
+import {columnList} from "../../../Analytics/Campaigns/tableComponents/columnList"
+import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
+import Pagination from "../../../../components/Pagination/Pagination"
 import _ from "lodash"
 import {periodEnums} from "./RuleInformation"
-import DateRange from "../../Analytics/components/DateRange/DateRange"
-import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
+import DateRange from "../../../Analytics/components/DateRange/DateRange"
+import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
+import {tabs} from "../RuleDetails/Attach"
 
 const ruleColumns = [
     {
@@ -33,7 +33,25 @@ const ruleColumns = [
 
 ]
 
-export const CampaignsList = ({list, totalSize, filters = true, requestParams, widthAttributionWindow = false, widthDateRange = true, attachedList, processing, onChangeRequestParams, onChangeAttachedList, onChangeFilters, onChangeDateRange, location = 'campaigns'}) => {
+export const CampaignsList = ({
+                                  list,
+                                  totalSize,
+                                  filters = true,
+                                  requestParams,
+                                  widthAttributionWindow = false,
+                                  widthDateRange = true,
+                                  selectAllBtn = false,
+                                  attachedList,
+                                  processing,
+                                  onChangeRequestParams,
+                                  onChangeAttachedList,
+                                  onChangeFilters,
+                                  onChangeDateRange,
+                                  location = 'campaigns',
+                                  activeTab,
+                                  pageSizeOptions
+                              }) => {
+
     const changePagination = (data) => {
         if (data.selectedRangeDate && onChangeDateRange) {
             onChangeDateRange({...data.selectedRangeDate})
@@ -55,6 +73,10 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
         onChange: (rowsList, attachList, detachList) => {
             onChangeAttachedList(rowsList, attachList, detachList)
         }
+    }
+
+    const selectAllHandler = () => {
+        onChangeAttachedList('all')
     }
 
     return (<div className="attach-campaigns">
@@ -82,7 +104,22 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
                 onChange={(startDate, endDate) => changePagination({selectedRangeDate: {startDate, endDate}})}
                 selectedRangeDate={requestParams.selectedRangeDate}
             />}
+
+            {selectAllBtn && <div className="select-all-block">
+                {attachedList === 'all' ?
+                    <p><b>All {totalSize}</b> selected</p>
+                    :
+                    <p><b>{attachedList.length}</b> selected {totalSize > 1 && <>(
+                        <button className={'select-all-btn'} onClick={selectAllHandler}>or select
+                            all {totalSize}</button>
+                        )</>}
+                    </p>
+                }
+            </div>
+            }
         </div>
+
+
         <div className="table-block">
             <CustomTable
                 key={'table'}
@@ -94,15 +131,15 @@ export const CampaignsList = ({list, totalSize, filters = true, requestParams, w
                 })) : ruleColumns}
                 loading={processing}
                 fixedColumns={[0]}
-                selectedRows={attachedList === 'all' ? [] : attachedList.filter(i => _.find(list, {[location === 'campaigns' ? "campaignId" : 'id']: i}))}
+                selectedRows={(attachedList === 'all' && activeTab === tabs[0]) ? [] : attachedList === 'all' ? list.map(i => i[location === 'campaigns' ? "campaignId" : 'id']) : attachedList.filter(i => _.find(list, {[location === 'campaigns' ? "campaignId" : 'id']: i}))}
                 rowSelection={rowSelection}
-                selectedAll={attachedList === 'all'}
+                selectedAll={attachedList === 'all' && activeTab !== tabs[0]}
             />
 
             <Pagination
                 onChange={changePagination}
                 page={requestParams.page}
-                pageSizeOptions={[10, 30, 50]}
+                pageSizeOptions={pageSizeOptions || [10, 30, 50]}
                 pageSize={requestParams.pageSize}
                 totalSize={totalSize}
                 listLength={list.length}

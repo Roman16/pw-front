@@ -236,6 +236,8 @@
   overflow: hidden;
 
   .filters {
+    padding-top: 1.42857143rem;
+
     .search-block {
       width: 300px;
     }
@@ -277,12 +279,15 @@
   & > .row {
     display: flex;
     justify-content: space-between;
+    position: relative;
 
     .attribution-window-block {
       height: max-content;
+      margin-top: 1.42857143rem;
     }
 
     .datepicker-block {
+      padding-top: 1.42857143rem;
       padding-right: 1.42857143rem;
 
       .compare-date {
@@ -290,6 +295,33 @@
       }
     }
   }
+
+  .select-all-block {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background: #6959AB;
+    padding: 0 20px;
+    color: #fff;
+    z-index: 10000;
+
+
+    p {
+      margin: 0;
+    }
+
+    button:hover {
+        text-decoration: underline;
+    }
+  }
+
 
   .table-block {
     height: inherit;

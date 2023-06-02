@@ -3,13 +3,18 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import {subscriptionPlans} from "../../../../constans/subscription.plans"
 import _ from 'lodash'
 import {userService} from "../../../../services/user.services"
-import {Spin} from "antd"
+import {Select, Spin} from "antd"
 import {numberMask} from "../../../../utils/numberMask"
 import RouteLoader from "../../../../components/RouteLoader/RouteLoader"
 import moment from 'moment'
 import {Link} from "react-router-dom"
 import {CouponField} from "../components/CouponField"
 import {notification} from "../../../../components/Notification"
+import CustomSelect from "../../../../components/Select/Select"
+
+
+const Option = Select.Option
+
 
 export const ActivateSubscription = ({
                                          visible,
@@ -19,6 +24,7 @@ export const ActivateSubscription = ({
                                          activateType,
                                          adSpend,
                                          regionId,
+                                         paymentMethodList,
 
                                          onClose,
                                          onActivate
@@ -144,7 +150,6 @@ export const ActivateSubscription = ({
                         <div className="label">AD SPEND</div>
                         <div className="value"><b>${numberMask(adSpend, 2)}</b></div>
                     </div>
-
 
                     <PriceRow
                         couponInfo={couponInfo}
@@ -547,6 +552,7 @@ export const ActivateSubscription = ({
                     />
 
                     <PaymentMethodRow
+                        paymentMethodList={paymentMethodList}
                         data={activateInfoSelectedPlan}
                     />
 
@@ -638,6 +644,23 @@ const PriceRow = ({couponInfo, activateInfoSelectedPlan, trial = false}) => {
 
 export const getTotalActual = ({total = 0, rebate = 0, balance = 0}) => Math.max(total - rebate - balance, 0)
 
+// const PaymentMethodRow = ({data,paymentMethodList}) => {
+//
+//     return (<div className="row with-field">
+//         <div className="label">PAYMENT METHOD</div>
+//         <div className="value payment-method">
+//             {data.next_invoice.payment.card_last_4 ?
+//                 <CustomSelect
+//                     getPopupContainer={trigger => trigger.parentNode}
+//                     value={data.next_invoice.payment.card_last_4}
+//                 >
+//                     {paymentMethodList.map(i => <Option value={i.last4}>**** {i.last4}</Option>)}
+//                 </CustomSelect>
+//                 : <><b>No card added</b>
+//                     <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
+//     </div>)
+// }
+
 const PaymentMethodRow = ({data}) => <div className="row">
     <div className="label">PAYMENT METHOD</div>
     <div
@@ -645,6 +668,7 @@ const PaymentMethodRow = ({data}) => <div className="row">
         <b>**** {data.next_invoice.payment.card_last_4}</b> : <><b>No card added</b>
             <Link to={'/account/billing-information'}>Change payment method</Link> </>}</div>
 </div>
+
 
 const CloseWindowButton = ({onClick}) => <button className="btn icon close-button" onClick={onClick}>
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -61,11 +61,14 @@ export const userUrls = {
     userPersonalInformation: 'user/me',
     notifications: 'notifications',
     accountStatus: 'user/account/subscription/status',
-    availablePromo: 'promo/zero-to-hero'
+    availablePromo: 'promo/zero-to-hero',
+
+    setPaymentMethodForSubscription: 'user/account/subscription/activate/set-default-payment-method'
 }
 
 export const productsUrls = {
     productsSettingsList: 'products/settings/list',
+    productList: 'settings/products',
     updateSettings: 'products/settings',
     updateSettingsByProducts: 'products/settings/bulk',
     saveProductData: 'ppc-automation/start',
@@ -225,6 +228,10 @@ export const optimizationRulesUrls = {
     detach: 'rules-based-optimization/rules/detach',
     attachedCampaigns: 'rules-based-optimization/rules/campaigns',
     attachedRules: 'rules-based-optimization/campaigns/rules',
+
+    ruleLogs: 'rules-based-optimization/logs',
+    ruleStatuses: 'rules-based-optimization/rules/launches',
+    activateRule: id => `rules-based-optimization/rules/${id}/launch`
 }
 
 

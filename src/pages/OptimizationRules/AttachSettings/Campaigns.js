@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {CampaignsList} from "../CreateRulesWindow/CampaignsList"
+import {CampaignsList} from "../RuleSettings/CreateRulesWindow/CampaignsList"
 import {optimizationRulesServices} from "../../../services/optimization.rules.services"
 import {AttributionWindowSelect} from "../../Analytics/components/Header/AttributionWindow"
 

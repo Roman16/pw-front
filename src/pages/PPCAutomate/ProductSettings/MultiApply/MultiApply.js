@@ -13,7 +13,7 @@ import {notification} from "../../../../components/Notification"
 const Option = Select.Option
 
 const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll, onSubmit}) => {
-    const [fieldType, setFieldType] = useState('min_bid_manual_campaign'),
+    const [fieldType, setFieldType] = useState('desired_acos'),
         [settingValue, setSettingValue] = useState(),
         [submitProcessing, setSubmitProcessing] = useState(false)
 
@@ -58,10 +58,10 @@ const MultiApply = ({visible, selectedRows, totalSize, onSelectAll, selectedAll,
                 <div className="form-group">
                     <CustomSelect value={fieldType} onChange={e => setFieldType(e)}>
                         {/*<Option value={'item_price_from_user'}>Overwrite Product Price</Option>*/}
-                        <Option value={'min_bid_manual_campaign'}>Min Bid (Manual Campaign)</Option>
-                        <Option value={'max_bid_manual_campaign'}>Max Bid (Manual Campaign)</Option>
-                        <Option value={'min_bid_auto_campaign'}>Min Bid (Auto Campaign)</Option>
-                        <Option value={'max_bid_auto_campaign'}>Max Bid (Auto Campaign)</Option>
+                        {/*<Option value={'min_bid_manual_campaign'}>Min Bid (Manual Campaign)</Option>*/}
+                        {/*<Option value={'max_bid_manual_campaign'}>Max Bid (Manual Campaign)</Option>*/}
+                        {/*<Option value={'min_bid_auto_campaign'}>Min Bid (Auto Campaign)</Option>*/}
+                        {/*<Option value={'max_bid_auto_campaign'}>Max Bid (Auto Campaign)</Option>*/}
                         <Option value={'desired_acos'}>Desired ACoS</Option>
                         <Option value={'break_even_acos'}>Break-even ACoS</Option>
                         {/*<Option value={'cogs'}>CoGS</Option>*/}

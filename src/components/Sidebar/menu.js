@@ -64,7 +64,17 @@ export const mainMenu = [
         title: 'Optimization Rules',
         key: 'rules',
         icon: 'optimization-rules-icon-sidebar',
-        link: 'optimization-rules'
+        link: 'optimization-rules',
+        subMenu: [
+            {
+                title: 'Rule settings',
+                link: 'settings'
+            },
+            {
+                title: 'Rule statuses',
+                link: 'statuses'
+            }
+        ]
     },
     {
         title: 'PPC Audit',

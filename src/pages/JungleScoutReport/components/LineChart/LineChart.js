@@ -31,7 +31,7 @@ export const LineChart = ({
                               showOptimizationChart,
                               selectedRangeDate,
                               productOptimizationDateList,
-                              dataKey = 'eventDate'
+                              dataKey = 'eventDate',
                           }) => {
 
     return (

@@ -9,6 +9,7 @@ import DatePicker from "../../../../components/DatePicker/DatePicker"
 import {productsServices} from "../../../../services/products.services"
 import {Spin} from "antd"
 import {currencyWithCode} from "../../../../components/CurrencyCode/CurrencyCode"
+import {notification} from "../../../../components/Notification"
 
 let hasChanges = false,
     cogsFromApi = []
@@ -96,6 +97,12 @@ const CogsWindow = ({visible, productId, product, onClose, onSetCogs}) => {
             getCogs()
         } catch (e) {
             console.log(e)
+
+            if(e.response?.data?.message) {
+                notification.error({title: e.response?.data?.message})
+            }
+
+            setCogsList([...cogsFromApi])
         }
 
         setActiveIndex(undefined)

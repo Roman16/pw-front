@@ -32,7 +32,7 @@ const ChartTooltip = ({payload}) => {
     }
 }
 
-export const PieChart = ({data, dataKey, nameKey}) =>
+export const PieChart = ({data, dataKey, nameKey, fill}) =>
     <div className="pie-chart-container">
         <ResponsiveContainer height='100%' width='100%'>
             <Chart>
@@ -45,9 +45,11 @@ export const PieChart = ({data, dataKey, nameKey}) =>
                     outerRadius={150}
                     fill={'#9464B9'}
                 >
-                    {data.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={getRandomColor()} />
-                    ))}
+                    {data.map((entry, index) => {
+                        return(
+                            <Cell key={`cell-${index}`} fill={fill} opacity={(100 - index) / 100}/>
+                        )
+                    } )}
                 </Pie>
 
                 <Tooltip

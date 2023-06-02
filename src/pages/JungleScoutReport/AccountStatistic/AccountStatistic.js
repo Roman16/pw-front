@@ -6,6 +6,7 @@ import {LineChart} from "../components/LineChart/LineChart"
 import {PieChart} from "../components/PieChart/PieChart"
 import {Comment} from "../components/Comment/Comment"
 import {diffPercent} from "../../AnalyticsV3/components/RenderPageParts/RenderPageParts"
+import {SectionName} from "../components/SectionName/SectionName"
 
 const availableMetrics = [
     metricKeys['total_sales'],
@@ -13,8 +14,8 @@ const availableMetrics = [
     metricKeys['cost'],
     metricKeys['ad_orders'],
     metricKeys['cpa'],
-    metricKeys['macos'],
-    metricKeys['acos']
+    // metricKeys['macos'],
+    // metricKeys['acos']
 ]
 
 
@@ -33,6 +34,11 @@ export const AccountStatistic = ({
     }
 
     return (<section className={'account-statistic'}>
+        <SectionName
+            name={'Total Metrics'}
+            description={'Overall productivity and efficiency indicators of your business'}
+        />
+
         <Comment text={common_metrics_comment}/>
 
         <div className="metrics-list">
@@ -57,6 +63,11 @@ export const AccountStatistic = ({
             showDailyChart={true}
         />
 
+        <SectionName
+            name={'Revenue Share by Product'}
+            description={'Watch the performance of own products compared to Total Sales.(Watch which products require the most attention to increase their effectiveness.)'}
+        />
+
         <Comment text={product_distribution_comment}/>
 
         <div className="pie-charts-row">
@@ -64,18 +75,21 @@ export const AccountStatistic = ({
                 data={total_orders_count}
                 nameKey={'product_name'}
                 dataKey={'total_orders_count'}
+                fill={'#6959AB'}
             />
 
             <PieChart
                 data={total_sales}
                 nameKey={'product_name'}
                 dataKey={'total_sales'}
+                fill={'#46435C'}
             />
 
             <PieChart
                 data={advertising_type_distribution}
                 dataKey={'attributedConversions'}
                 nameKey={'advertisingType'}
+                fill={'#FFAF52'}
             />
         </div>
     </section>)
