@@ -151,7 +151,6 @@ export const RuleDetails = ({
             <h2>{selectedRule?.name}</h2>
 
             {selectedRule.id && (selectedRule.launch_status === statusEnums['CHECK_FAILED'] || selectedRule.launch_status === statusEnums['APPLY_FAILED'] || selectedRule.launch_status === statusEnums['COMPLETE'] || selectedRule.launch_status === null) ?
-
                 <button
                     disabled={activateProcessing}
                     className="btn default"
@@ -256,6 +255,7 @@ const Status = ({status}) => {
     switch (status) {
         case statusEnums['CHECK_IN_PROGRESS']:
         case statusEnums['CHECK_COMPLETE']:
+        case statusEnums['CREATED']:
         case statusEnums['APPLY_IN_PROGRESS']:
             return (<div>Processing</div>)
         case statusEnums['CHECK_FAILED']:
@@ -263,7 +263,7 @@ const Status = ({status}) => {
         case statusEnums['FAILED']:
             return (<div style={{color: '#FF5256'}}>Failed</div>)
         case statusEnums['COMPLETE']:
-        case statusEnums['CREATED']:
+        case null:
             return (<div style={{color: '#7FD3A1'}}>Done</div>)
         case statusEnums['SUCCESS']:
             return (<div style={{color: '#7FD3A1'}}>Success</div>)
