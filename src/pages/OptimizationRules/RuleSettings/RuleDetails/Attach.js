@@ -8,10 +8,9 @@ import moment from "moment"
 
 export const tabs = ['campaigns used it', 'all campaigns']
 
-let attachedListFromRequest = [],
-    totalAttached = 0
+let attachedListFromRequest = []
 
-export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
+export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
     const [activeTab, setActiveTab] = useState(tabs[0]),
         [attachedCampaigns, setAttachedCampaigns] = useState([]),
         [campaigns, setCampaigns] = useState([]),
@@ -34,28 +33,30 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getCampaigns({
-                ...requestParams,
-                attributionWindow,
-                ruleId: id
-            })
+            const [allAttachedCampaigns, attachCampaignsPage] = await Promise.all([
+                optimizationRulesServices.getCampaigns({
+                    page: 1,
+                    pageSize: rule.campaigns_count,
+                    selectedRangeDate: requestParams.selectedRangeDate,
+                    attributionWindow,
+                    ruleId: id
+                }),
+                optimizationRulesServices.getCampaigns({
+                    ...requestParams,
+                    attributionWindow,
+                    ruleId: id
+                })])
 
-            totalAttached = result.total_count
+            attachedListFromRequest = allAttachedCampaigns.result.data.map(i => `${i.campaignId}`)
+            setAttachedCampaigns(allAttachedCampaigns.result.data.map(i => `${i.campaignId}`))
 
-            if (activeTab === tabs[0]) {
-                setProcessing(false)
-                setCampaigns([])
-                setTotalSize(0)
-            }
-
-            attachedListFromRequest = result.data.map(i => `${i.campaignId}`)
-            setAttachedCampaigns(result.data.map(i => `${i.campaignId}`))
-
-            setCampaigns(result.data)
-            setTotalSize(result.total_count)
+            setCampaigns(attachCampaignsPage.result.data)
+            setTotalSize(attachCampaignsPage.result.total_count)
         } catch (e) {
             console.log(e)
         }
+
+        setProcessing(false)
     }
 
     const getCampaigns = async (campaignsId = []) => {
@@ -167,9 +168,9 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
     }
 
     useEffect(() => {
-        getAttachedCampaigns()
-
-        if (activeTab === tabs[1]) {
+        if (activeTab === tabs[0]) {
+            getAttachedCampaigns()
+        } else {
             getCampaigns()
         }
     }, [activeTab, id, requestParams, attributionWindow])
@@ -189,7 +190,7 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
                     {tab}
 
                     {tab === tabs[0] && attachedListFromRequest.length > 0 &&
-                    <div className="count">{totalAttached}</div>}
+                    <div className="count">{attachedListFromRequest.length}</div>}
                 </div>)}
             </div>
         </div>
@@ -203,7 +204,6 @@ export const Attach = ({id, attributionWindow, onAttach, onDetach}) => {
             selectAllBtn={_.difference(attachedListFromRequest, attachedCampaigns).length > 0 || attachedCampaigns.length > attachedListFromRequest.length}
             activeTab={activeTab}
             attachedListFromRequest={attachedListFromRequest}
-            totalAttached={totalAttached}
 
             onChangeRequestParams={changeRequestParamsHandler}
             onChangeAttachedList={changeAttachedList}
