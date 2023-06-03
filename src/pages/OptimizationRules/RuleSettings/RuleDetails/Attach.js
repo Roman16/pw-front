@@ -136,8 +136,23 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
                     all_campaigns: 1,
                 }, () => {
                     attachedListFromRequest = Array(totalSize).fill(0)
-                    setSaveProcessing(false)
-                    notification.success({title: 'Rule success updated!'})
+
+                    optimizationRulesServices.getCampaigns({
+                        page: 1,
+                        pageSize: rule.campaigns_count,
+                        selectedRangeDate: requestParams.selectedRangeDate,
+                        attributionWindow,
+                        ruleId: id
+                    })
+                        .then(res => {
+                            attachedListFromRequest = res.result.data.map(i => `${i.campaignId}`)
+                            setAttachedCampaigns(res.result.data.map(i => `${i.campaignId}`))
+                            setSaveProcessing(false)
+                            notification.success({title: 'Rule success updated!'})
+                        })
+                        .catch(e => {
+                            console.log(e)
+                        })
                 })
             } else {
                 if (differenceList.length > 0) {
