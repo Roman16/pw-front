@@ -51,7 +51,8 @@ export const CampaignsList = ({
                                   location = 'campaigns',
                                   activeTab,
                                   pageSizeOptions,
-                                  attachedListFromRequest
+                                  attachedListFromRequest,
+                                  totalAttached
                               }) => {
 
     const changePagination = (data) => {

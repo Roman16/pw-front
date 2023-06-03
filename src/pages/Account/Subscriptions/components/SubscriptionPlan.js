@@ -294,26 +294,26 @@ const ActivePlanDetails = ({subscriptionState, adSpend, subscriptionStateCurrent
                 </div>
             </div>
 
-            {/*<div className="row payment-method-row">*/}
-            {/*    <div className="label">Payment method</div>*/}
-            {/*    <div className="value">*/}
-            {/*        <CustomSelect*/}
-            {/*            getPopupContainer={trigger => trigger.parentNode}*/}
-            {/*            onChange={(value) => {*/}
-            {/*                setSaveProcessing(true)*/}
-            {/*                onChangePaymentMethod(value, () => setSaveProcessing(false))*/}
-            {/*            }}*/}
+            <div className="row payment-method-row">
+                <div className="label">Payment method</div>
+                <div className="value">
+                    <CustomSelect
+                        getPopupContainer={trigger => trigger.parentNode}
+                        onChange={(value) => {
+                            setSaveProcessing(true)
+                            onChangePaymentMethod(value, () => setSaveProcessing(false))
+                        }}
 
-            {/*            value={subscriptionStateCurrentPlan.default_payment_method === null ? null : subscriptionStateCurrentPlan.default_payment_method.payment_method_id}*/}
-            {/*        >*/}
-            {/*            <Option value={null}>Default card</Option>*/}
-            {/*            {paymentMethodList.map(i => <Option value={i.id}>**** {i.last4}</Option>)}*/}
-            {/*        </CustomSelect>*/}
-            {/*        {saveProcessing && <Spin size={'small'}/>}*/}
+                        value={subscriptionStateCurrentPlan.default_payment_method === null ? null : subscriptionStateCurrentPlan.default_payment_method.payment_method_id}
+                    >
+                        <Option value={null}>Default card</Option>
+                        {paymentMethodList.map(i => <Option value={i.id}>**** {i.last4}</Option>)}
+                    </CustomSelect>
+                    {saveProcessing && <Spin size={'small'}/>}
 
-            {/*        /!*{subscriptionStateCurrentPlan.default_payment_method === null && <p>Default card</p>}*!/*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+                    {/*{subscriptionStateCurrentPlan.default_payment_method === null && <p>Default card</p>}*/}
+                </div>
+            </div>
         </div>
     </div>)
 }

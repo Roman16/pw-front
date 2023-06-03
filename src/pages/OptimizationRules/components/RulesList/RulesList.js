@@ -146,7 +146,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
             {list.map(item => activeTab === 'rules' ? <div onClick={() => selectedRule?.id !== item.id ? selectRuleHandler(item) : ''}
                                                            className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
                     <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
-                    <div className="name">{item.name}</div>
+                    <div className="name" title={item.name}>{item.name}</div>
                     <div className="description" title={item.description}>{item.description}</div>
                     <div className="details-row">
                         <SVG id={'calendar'}/>
@@ -168,7 +168,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                 <div className={`item campaign ${item.campaignId === selectedRule?.campaignId ? 'active' : ''}`}
                      onClick={() => selectRuleHandler(item)}>
                     <div className="row">
-                        <div className="name">{item.name}</div>
+                        <div className="name" title={item.name}>{item.name}</div>
 
                         <ParentStatus status={item.state} widthLabel={true}/>
                     </div>

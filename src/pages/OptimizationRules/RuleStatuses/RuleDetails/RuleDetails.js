@@ -10,6 +10,18 @@ import {Spin} from "antd"
 
 const tabs = ['logs', 'statuses']
 
+const statusEnums = {
+    'CHECK_IN_PROGRESS': 'CHECK_IN_PROGRESS',
+    'CHECK_COMPLETE': 'CHECK_COMPLETE',
+    'CHECK_FAILED': 'CHECK_FAILED',
+    'APPLY_IN_PROGRESS': 'APPLY_IN_PROGRESS',
+    'APPLY_FAILED': 'APPLY_FAILED',
+    'COMPLETE': 'COMPLETE',
+    'CREATED': 'CREATED',
+    'SUCCESS': 'SUCCESS',
+    'FAILED': 'FAILED',
+}
+
 const columns = {
     'logs': [
         {
@@ -138,16 +150,7 @@ export const RuleDetails = ({
         <div className="actions">
             <h2>{selectedRule?.name}</h2>
 
-            {selectedRule.id ? selectedRule.active ? <button
-                    className="btn grey"
-                    onClick={pauseRuleHandler}
-                >
-                    <SVG id={'pause'}/>
-                    Pause
-
-                    {pauseProcessing && <Spin size={'small'}/>}
-                </button>
-                :
+            {selectedRule.id && (selectedRule.launch_status === statusEnums['CHECK_FAILED'] || selectedRule.launch_status === statusEnums['APPLY_FAILED'] || selectedRule.launch_status === statusEnums['COMPLETE'] || selectedRule.launch_status === null) ?
                 <button
                     disabled={activateProcessing}
                     className="btn default"
@@ -158,7 +161,14 @@ export const RuleDetails = ({
 
                     {activateProcessing && <Spin size={'small'}/>}
                 </button>
-                : ''}
+                :
+                <button
+                    className="btn grey"
+                    disabled
+                >
+                    Processing
+                </button>
+            }
         </div>
 
         {/*<ul className="statuses">*/}
@@ -243,17 +253,19 @@ export const RuleDetails = ({
 
 const Status = ({status}) => {
     switch (status) {
-        case 'CHECK_IN_PROGRESS':
-        case 'APPLY_IN_PROGRESS':
+        case statusEnums['CHECK_IN_PROGRESS']:
+        case statusEnums['CHECK_COMPLETE']:
+        case statusEnums['CREATED']:
+        case statusEnums['APPLY_IN_PROGRESS']:
             return (<div>Processing</div>)
-        case 'FAILED':
-        case 'CHECK_FAILED':
-        case 'APPLY_FAILED':
+        case statusEnums['CHECK_FAILED']:
+        case statusEnums['APPLY_FAILED']:
+        case statusEnums['FAILED']:
             return (<div style={{color: '#FF5256'}}>Failed</div>)
-        case 'CREATED':
-        case 'COMPLETE':
+        case statusEnums['COMPLETE']:
+        case null:
             return (<div style={{color: '#7FD3A1'}}>Done</div>)
-        case 'SUCCESS':
+        case statusEnums['SUCCESS']:
             return (<div style={{color: '#7FD3A1'}}>Success</div>)
         default:
             return (<div>{status}</div>)

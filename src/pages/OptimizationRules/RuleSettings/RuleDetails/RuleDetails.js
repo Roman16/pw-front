@@ -16,6 +16,7 @@ export const RuleDetails = ({rule, onUpdate, onAttach, onDetach, onEdit,onChange
 
         <Attach
             id={rule.id}
+            rule={rule}
             attributionWindow={rule.attribution_window}
 
             onAttach={onAttach}
