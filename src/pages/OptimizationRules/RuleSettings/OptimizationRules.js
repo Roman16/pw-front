@@ -74,18 +74,26 @@ const OptimizationRules = () => {
     }
 
     const attachRulesByCampaignsHandler = async (data, cb) => {
+        let res
+
         try {
-           const {result} =  await optimizationRulesServices.attachRules(data)
+
+            if (data.all_campaigns) {
+                res = await optimizationRulesServices.attachRulesWidthFilters(data)
+            } else {
+                res = await optimizationRulesServices.attachRules(data)
+            }
+
             setSelectedRule({
                 ...selectedRule,
-                campaigns_count: result.updated,
-                rules_count: result.updated,
+                campaigns_count: res.result.updated,
+                rules_count: res.result.updated,
             })
         } catch (e) {
             console.log(e)
         }
 
-        cb && cb()
+        cb && cb(res?.result?.updated)
     }
 
     const detachRulesByCampaignsHandler = async (data, cb) => {
@@ -107,7 +115,10 @@ const OptimizationRules = () => {
         setUpdateProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.updateRule({...rule, period: rule.type === 'manual' ? undefined : rule.period})
+            const {result} = await optimizationRulesServices.updateRule({
+                ...rule,
+                period: rule.type === 'manual' ? undefined : rule.period
+            })
             setSelectedRule({
                 ...result,
                 condition: JSON.parse(result.condition),

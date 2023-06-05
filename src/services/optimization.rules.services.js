@@ -55,11 +55,13 @@ function attachRules(data) {
     return api('post', `${optimizationRulesUrls.attach}`, data)
 }
 
-function attachRulesWidthFilters({attributionWindow, selectedRangeDate, rules = [], campaigns = [], campaignFilters = [], rulesFilters = []}) {
+function attachRulesWidthFilters({attributionWindow, selectedRangeDate, searchStr, rules = [], campaigns = [], campaignFilters = [], rulesFilters = []}) {
     const rulesList = rules.length > 0 ? `&rules[id][]=${rules.join('&rules[id][]=')}` : ''
     const campaignsList = campaigns.length > 0 ? `&campaign_id[]=${campaigns.join('&campaign_id[]=')}` : ''
+    if (campaignFilters?.[0]?.type === "search") searchStr = campaignFilters[0].value
+    campaignFilters = campaignFilters.filter(i => i.type !== 'search')
 
-    return api('post', `${optimizationRulesUrls.attachWidthFilters}?attribution_window=${attributionWindow}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${campaignFilters.length > 0 ? filtersHandler(campaignFilters) : ''}${rulesFilters.length > 0 ? searchStrWrap(rulesFilters[0].value, 'rules') : ''}${campaignsList}${rulesList}`)
+    return api('post', `${optimizationRulesUrls.attachWidthFilters}?attribution_window=${attributionWindow}${searchStrWrap(searchStr).join('')}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${campaignFilters.length > 0 ? filtersHandler(campaignFilters) : ''}${rulesFilters.length > 0 ? searchStrWrap(rulesFilters[0].value, 'rules') : ''}${campaignsList}${rulesList}`)
 }
 
 function detachRules(data) {
@@ -74,11 +76,11 @@ function getAttachedRules(campaignId) {
     return api('get', `${optimizationRulesUrls.attachedRules}?campaign_id[]=${campaignId.join('&campaign_id[]=')}`)
 }
 
-function getLogs({ruleId,campaignId, page, pageSize}) {
+function getLogs({ruleId, campaignId, page, pageSize}) {
     return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
 }
 
-function getStatuses({ruleId,campaignId, page, pageSize}) {
+function getStatuses({ruleId, campaignId, page, pageSize}) {
     return api('get', `${optimizationRulesUrls.ruleStatuses}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
 }
 
