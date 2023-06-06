@@ -26,6 +26,9 @@ export const optimizationRulesServices = {
 const dateFormat = (date) => moment(date).format('YYYY-MM-DD')
 
 function getCampaigns({pageSize, page, searchStr, attributionWindow = 7, filters = [], campaignsId = [], selectedRangeDate, ruleId}) {
+    if (filters?.[0]?.type === "search") searchStr = filters[0].value
+    filters = filters.filter(i => i.type !== 'search')
+
     return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=${attributionWindow}&table[page]=${page}&table[size]=${pageSize}${searchStrWrap(searchStr).join('')}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaign_id[]=${campaignsId.join('&campaign_id[]=')}` : ''}${ruleId ? `&rule_id[]=${ruleId}` : ''}`)
 }
 
