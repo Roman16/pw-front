@@ -33,25 +33,27 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const [allAttachedCampaigns, attachCampaignsPage] = await Promise.all([
-                optimizationRulesServices.getCampaigns({
-                    page: 1,
-                    pageSize: rule.campaigns_count,
-                    selectedRangeDate: requestParams.selectedRangeDate,
-                    attributionWindow,
-                    ruleId: id
-                }),
-                optimizationRulesServices.getCampaigns({
-                    ...requestParams,
-                    attributionWindow,
-                    ruleId: id
-                })])
+            if (rule.campaigns_count > 0) {
+                const [allAttachedCampaigns, attachCampaignsPage] = await Promise.all([
+                    optimizationRulesServices.getCampaigns({
+                        page: 1,
+                        pageSize: rule.campaigns_count,
+                        selectedRangeDate: requestParams.selectedRangeDate,
+                        attributionWindow,
+                        ruleId: id
+                    }),
+                    optimizationRulesServices.getCampaigns({
+                        ...requestParams,
+                        attributionWindow,
+                        ruleId: id
+                    })])
 
-            attachedListFromRequest = allAttachedCampaigns.result.data.map(i => `${i.campaignId}`)
-            setAttachedCampaigns(allAttachedCampaigns.result.data.map(i => `${i.campaignId}`))
+                attachedListFromRequest = allAttachedCampaigns.result.data.map(i => `${i.campaignId}`)
+                setAttachedCampaigns(allAttachedCampaigns.result.data.map(i => `${i.campaignId}`))
 
-            setCampaigns(attachCampaignsPage.result.data)
-            setTotalSize(attachCampaignsPage.result.total_count)
+                setCampaigns(attachCampaignsPage.result.data)
+                setTotalSize(attachCampaignsPage.result.total_count)
+            }
         } catch (e) {
             console.log(e)
         }
@@ -132,14 +134,18 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
         } else {
             if (attachedCampaigns === 'all') {
                 onAttach({
-                    rule_id: [id],
+                    rules: [id],
                     all_campaigns: 1,
-                }, () => {
+                    campaignFilters: requestParams.filters,
+                    searchStr: requestParams.searchStr,
+                    selectedRangeDate: requestParams.selectedRangeDate,
+                    attributionWindow,
+                }, (campaignsCount) => {
                     attachedListFromRequest = Array(totalSize).fill(0)
 
                     optimizationRulesServices.getCampaigns({
                         page: 1,
-                        pageSize: rule.campaigns_count,
+                        pageSize: campaignsCount || rule.campaigns_count,
                         selectedRangeDate: requestParams.selectedRangeDate,
                         attributionWindow,
                         ruleId: id
