@@ -203,7 +203,7 @@ function fetchPlacementData(params, idList) {
 
     const attributionWindow = localStorage.getItem('attributionWindow') || '7'
 
-    return api('get', `${`analytics/v3/placements`}?attribution_window=${+attributionWindow}${filtersHandler(filtersWithState)}&${dateRangeFormatting(selectedRangeDate)}&table[size]=${pageSize}&table[page]=${page}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${segment !== 'none' ? `&segment_by:eq=${segment}` : ''}${idList || ''}`)
+    return api('get', `${`analytics/v3/placements`}?attribution_window=${+attributionWindow}${filtersHandler(filtersWithState)}&${dateRangeFormatting(selectedRangeDate)}&table[size]=${pageSize}&table[page]=${page}${sorterColumn && sorterColumn.column ? `&table[order_by][]=${sorterColumn.column}:${sorterColumn.type}` : ''}&${pageParts.map(i => `retrieve[]=${i}`).join('&')}&${activeMetrics.filter(item => !!item).map(i => `metric[]=${i}`).join('&')}${(segment && segment !== 'none') ? `&segment_by:eq=${segment}` : ''}${idList || ''}`)
 }
 
 function fetchTargetingsDetails(id, date, sorterColumn, filters, attributionWindow) {
@@ -270,7 +270,7 @@ function exactUpdateField(entity, data) {
 
 function bulkUpdate(entity, data, idList, filters) {
 
-    return api('post', `${analyticsUrls.bulkUpdate(entity)}${dynamicFiltersHandler(filters)}${idList || ''}`, data)
+    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
 }
 
 function downloadTableCSV(location, filtersWithState, selectedRangeDate) {

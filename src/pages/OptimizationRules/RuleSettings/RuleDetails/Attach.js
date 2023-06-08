@@ -34,7 +34,7 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
 
         try {
             if (rule.campaigns_count > 0) {
-                const [allAttachedCampaigns, attachCampaignsPage] = await Promise.all([
+                const [allAttachedCampaigns, attachedCampaigns] = await Promise.all([
                     optimizationRulesServices.getCampaigns({
                         page: 1,
                         pageSize: rule.campaigns_count,
@@ -46,13 +46,14 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
                         ...requestParams,
                         attributionWindow,
                         ruleId: id
-                    })])
+                    })
+                ])
 
                 attachedListFromRequest = allAttachedCampaigns.result.data.map(i => `${i.campaignId}`)
                 setAttachedCampaigns(allAttachedCampaigns.result.data.map(i => `${i.campaignId}`))
 
-                setCampaigns(attachCampaignsPage.result.data)
-                setTotalSize(attachCampaignsPage.result.total_count)
+                setCampaigns(attachedCampaigns.result.data)
+                setTotalSize(attachedCampaigns.result.total_count)
             }
         } catch (e) {
             console.log(e)
@@ -65,14 +66,26 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices.getCampaigns({
-                ...requestParams,
-                campaignsId,
-                attributionWindow,
-            })
+            const [allAttachedCampaigns, allCampaigns] = await Promise.all([
+                optimizationRulesServices.getCampaigns({
+                    page: 1,
+                    pageSize: rule.campaigns_count,
+                    selectedRangeDate: requestParams.selectedRangeDate,
+                    attributionWindow,
+                    ruleId: id
+                }),
+                optimizationRulesServices.getCampaigns({
+                    ...requestParams,
+                    campaignsId,
+                    attributionWindow,
+                })
+            ])
 
-            setCampaigns(result.data)
-            setTotalSize(result.total_count)
+            attachedListFromRequest = allAttachedCampaigns.result.data.map(i => `${i.campaignId}`)
+            setAttachedCampaigns(allAttachedCampaigns.result.data.map(i => `${i.campaignId}`))
+
+            setCampaigns(allCampaigns.result.data)
+            setTotalSize(allCampaigns.result.total_count)
         } catch (e) {
             console.log(e)
         }

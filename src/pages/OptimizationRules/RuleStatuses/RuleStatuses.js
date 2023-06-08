@@ -26,8 +26,8 @@ const RuleStatuses = () => {
 
     const activateRuleHandler = async (id, cb) => {
         try {
-            await optimizationRulesServices.activateRule(id)
-            setSelectedRule(prevState => ({...prevState, active: true}))
+            const {result} = await optimizationRulesServices.activateRule(id)
+            setSelectedRule(prevState => ({...prevState, launch_status: result?.status}))
         } catch (e) {
             console.log(e)
         }

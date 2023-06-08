@@ -55,7 +55,7 @@ const MainMetrics = ({allMetrics, location, metricsData = {}}) => {
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location]),
         selectFourMetrics = useSelector(state => state.analytics.chartState[location].selectFourMetrics || false)
 
-    const selectedMetrics = metricsState.selectedMetrics || ((location === 'products' || location === 'products-parents') ? metricsOrder.products : metricsOrder.all),
+    const selectedMetrics = metricsState.selectedMetrics || ((location === 'products' || location === 'products-parents' || location === 'overview') ? metricsOrder.products : metricsOrder.all),
         activeMetrics = metricsState.activeMetrics || ((location === 'products' || location === 'products-parents') ? metricsOrder.products : metricsOrder.all).slice(0, 2)
 
     const [visibleItems, updateVisibleList] = useState(selectedMetrics)

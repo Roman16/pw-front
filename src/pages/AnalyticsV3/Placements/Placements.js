@@ -88,6 +88,7 @@ const Placements = () => {
             }
 
             const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
+
             const [prevData, currentData] = await Promise.all([analyticsServices.fetchPlacementData(
                 {
                     ...tableRequestParams,
@@ -95,6 +96,7 @@ const Placements = () => {
                     pageParts: ['metrics'],
                     filtersWithState,
                     activeMetrics,
+                    segment: localSegmentValue,
                     selectedRangeDate: {
                         startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
                         endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
@@ -105,6 +107,7 @@ const Placements = () => {
                 {
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
+                    segment: localSegmentValue,
                     pageParts: activeMetrics.filter(i => i !== null).length === 0 ? pageParts.filter(i => i !== 'chart') : pageParts,
                     filtersWithState,
                     activeMetrics,
@@ -135,7 +138,7 @@ const Placements = () => {
                             ...res.table,
                             data: res.table.data
                                 .map(item => {
-                                    item.segmentData = item.advertisingType_segmented.map((key, index) => {
+                                    item.segmentData = item?.advertisingType_segmented?.map((key, index) => {
                                         const targetObj = {advertisingType: key}
 
                                         columns.columnsWithFilters.forEach(column => {
@@ -361,10 +364,6 @@ const Placements = () => {
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
                 localTableOptions={localTableOptions}
-                moreActions={<SegmentFilter
-                    segment={localSegmentValue}
-                    onChange={changeSegmentHandler}
-                />}
                 expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList, columnsOrder) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails, columnsOrder) : undefined}
 
                 onChange={(data) => setTableRequestParams(data)}
