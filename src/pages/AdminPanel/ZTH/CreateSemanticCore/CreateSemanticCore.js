@@ -77,7 +77,7 @@ const CreateSemanticCore = () => {
         zeroToHero: {
             ...semanticData.zeroToHero,
             keywordsToSearchForSuggestedASINs: semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.filter(x => x && x.length > 0),
-            additionalTopCompetitorASINs: semanticData.zeroToHero.additionalTopCompetitorASINs.filter(x => x && x.length > 0),
+            manuallyProvidedTopCompetitorASINs: semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs.filter(x => x && x.length > 0),
             categoryLinksToParseASINsFrom: semanticData.zeroToHero.categoryLinksToParseASINsFrom.filter(x => x && x.length > 0),
             keywordsForTPKPCampaign: semanticData.zeroToHero.keywordsForTPKPCampaign.filter(x => x && x.length > 0),
             asinsForDefenseCampaign: semanticData.zeroToHero.asinsForDefenseCampaign.filter(x => x && x.length > 0),
@@ -91,6 +91,8 @@ const CreateSemanticCore = () => {
 
     const createZeroToHeroHandler = async () => {
         const requestData = new FormData()
+
+        console.log(getInputParameters())
 
         const ips = JSON.stringify([{
             ...getInputParameters(),
