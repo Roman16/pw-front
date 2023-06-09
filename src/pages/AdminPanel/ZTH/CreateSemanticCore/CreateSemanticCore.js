@@ -154,7 +154,7 @@ const CreateSemanticCore = () => {
                     ...semanticData, ...ips,
                     productInformation: {
                         ...ips.productInformation,
-                        ownBrandNames: [ips.productInformation.ownBrandNames.mainName, ...ips.productInformation.ownBrandNames.aliases]
+                        ownBrandNames: ips.productInformation.ownBrandNames ? [ips.productInformation.ownBrandNames.mainName, ...ips.productInformation.ownBrandNames.aliases] : []
                     }
                 })
 
