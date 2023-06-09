@@ -120,6 +120,8 @@ export const adminUrls = {
     report: 'admin/support-manager/report',
     userReports: 'admin/support-manager/optimization-changes/list',
     usersList: 'admin/support-manager/user/list',
+    userARAList: 'admin/users/amazon-region-accounts',
+    userARAMList: 'admin/users/amazon-region-account-marketplaces',
     impersonateById: userId => `admin/support-manager/user/${userId}/tokens-for-impersonate`,
     impersonateByEmail: `admin/support-manager/tokens-for-impersonate-by-email`,
     userProductsList: 'admin/support-manager/userProducts',
