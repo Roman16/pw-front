@@ -241,7 +241,8 @@ const RenderPageParts = (props) => {
                 location,
                 changeData,
                 selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.join(',')}`,
-                filtersWithState
+                filtersWithState,
+                attributionWindow
             )
 
             updateResponseHandler(res)

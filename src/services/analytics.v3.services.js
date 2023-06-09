@@ -268,9 +268,8 @@ function exactUpdateField(entity, data) {
     return api('post', analyticsUrls.exactUpdate(entity), data)
 }
 
-function bulkUpdate(entity, data, idList, filters) {
-
-    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}`, data)
+function bulkUpdate(entity, data, idList, filters, attributionWindow) {
+    return api('post', `${analyticsUrls.bulkUpdate(entity)}${filtersHandler(filters)}${idList || ''}${`&attribution_window=${+attributionWindow}`}`, data)
 }
 
 function downloadTableCSV(location, filtersWithState, selectedRangeDate) {
