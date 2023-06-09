@@ -201,7 +201,7 @@ export const analyticsUrls = {
     createUrl: location => `dynamic-analytics/${location}/exact-create`,
     bulkCreateUrl: location => `dynamic-analytics/${location}/bulk-create`,
     exactUpdate: location => `dynamic-analytics/${location}/exact-update`,
-    bulkUpdate: location => `dynamic-analytics/${location}/bulk-update`,
+    bulkUpdate: location => `dynamic-analytics/v3/${location}/bulk-update`,
     keywordValidation: type => `dynamic-analytics/${type}/bulk-validate`,
 }
 
