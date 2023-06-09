@@ -420,7 +420,7 @@ const ConvertSemanticCore = ({admin}) => {
 
             semanticData.convertToXLSXWorkBook && saveGoogleSpreadsheet(res)
 
-            res.bulkUploadDocuments && res.bulkUploadDocuments.forEach(doc => {
+            res.bulksheets && res.bulksheets.forEach(doc => {
                 saveFile(doc, semanticData.conversionOptions.saver.saveBulkUploadAs)
             })
 
