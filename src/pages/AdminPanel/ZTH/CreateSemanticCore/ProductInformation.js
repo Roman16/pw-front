@@ -1,11 +1,12 @@
 import React from "react"
-import {Checkbox, Input} from "antd"
-import CustomTable from "../../../../components/Table/CustomTable"
+import {Checkbox, Input, Select} from "antd"
 import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
-import {columns} from "./Keywords/allColumns"
 import {keyColumn, textColumn} from "react-datasheet-grid"
+import CustomSelect from "../../../../components/Select/Select"
 
-const ProductInformation = ({semanticData, onChange}) => {
+const Option = Select.Option
+
+const ProductInformation = ({semanticData, allEnums, onChange}) => {
 
     const changeDataHandler = (obg, name, value) => {
         if (obg === 'zeroToHero' && name === 'createTCACampaign' && !value) {
@@ -33,7 +34,7 @@ const ProductInformation = ({semanticData, onChange}) => {
             ...semanticData,
             [object]: {
                 ...semanticData[object],
-                [name]: [...data.map(i => i.text)]
+                [name]: data
             }
         })
     }
@@ -53,8 +54,17 @@ const ProductInformation = ({semanticData, onChange}) => {
     const categoryLinksToParseASINsFromColumns = [
         {...keyColumn('text', textColumn), title: 'BSR category link', width: 1},
     ]
-    const brandNamesColumns = [
-        {...keyColumn('text', textColumn), title: 'Brand name', width: 1},
+
+    const ownBrandNamesColumns = [
+        {...keyColumn('text', textColumn), title: 'Own brand name and aliases', width: 1},
+    ]
+    const competitorBrandsColumns = [
+        {...keyColumn('mainName', textColumn), title: 'Main name', width: 1},
+        {...keyColumn('aliases', textColumn), title: 'Aliases separated by comma', width: 1},
+    ]
+    const competitorBrandsOffAmazonColumns = [
+        {...keyColumn('mainName', textColumn), title: 'Main name', width: 1},
+        {...keyColumn('aliases', textColumn), title: 'Aliases separated by comma', width: 1},
     ]
 
     return (
@@ -63,26 +73,93 @@ const ProductInformation = ({semanticData, onChange}) => {
 
             <div className="row cols-4">
                 <div className="form-group">
-                    <label htmlFor="">Product name:</label>
+                    <label htmlFor="">Main product name:</label>
                     <Input
                         type="text"
-                        value={semanticData.productInformation.productName}
-                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'productName', value)}
+                        value={semanticData.productInformation.mainProductName}
+                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'mainProductName', value)}
                     />
                 </div>
-                <div className="form-group padding-0">
-                    <label htmlFor="">Brand name and alises:</label>
 
-                    <ExcelTable
-                        data={semanticData.productInformation.brandNames?.length > 0 ? semanticData.productInformation.brandNames.map(i => ({text: i})) : [{text: ''}]}
-                        columns={brandNamesColumns}
-                        onChange={(data) => changeTableHandler(data, 'brandNames', 'productInformation')}
+                <div className="form-group">
+                    <label htmlFor="">Main product ASIN:</label>
+                    <Input
+                        type="text"
+                        value={semanticData.productInformation.mainProductAsin}
+                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'mainProductAsin', value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="">Main product SKU:</label>
+                    <Input
+                        type="text"
+                        value={semanticData.productInformation.mainProductSku}
+                        onChange={({target: {value}}) => changeDataHandler('productInformation', 'mainProductSku', value)}
                     />
                 </div>
             </div>
 
-            <h2>Limits:</h2>
             <div className="row cols-4">
+                <div className="form-group">
+                    <label htmlFor="">Choose campaign name generation strategy:</label>
+                    <CustomSelect
+                        value={semanticData.zeroToHero.campaignNameGenerationStrategyType}
+                        onChange={value => changeDataHandler('zeroToHero', 'campaignNameGenerationStrategyType', value)}
+                    >
+                        {allEnums.enums.CampaignNameGenerationStrategyType.map(type => (
+                            <Option value={type}>
+                                {type}
+                            </Option>
+                        ))}
+                    </CustomSelect>
+                </div>
+            </div>
+
+            <br/>
+
+            <Checkbox
+                checked={semanticData.zeroToHero.useManuallyProvidedCompetitorBrands}
+                onChange={({target: {checked}}) => changeDataHandler('zeroToHero', 'useManuallyProvidedCompetitorBrands', checked)}
+            >
+                Use manually provided competitor brands (instead of Software gathering them)
+            </Checkbox>
+
+
+            <div className="row cols-3">
+                <div className="form-group">
+                    <label htmlFor="">Own brand name (first row is a main name, other rows are alias):</label>
+                    <ExcelTable
+                        data={semanticData.productInformation.ownBrandNames?.length > 0 ? semanticData.productInformation.ownBrandNames.map(i => ({text: i})) : [{text: ''}]}
+                        columns={ownBrandNamesColumns}
+                        onChange={(data) => changeTableHandler(data.map(i => i.text), 'ownBrandNames', 'productInformation')}
+                    />
+                </div>
+
+                {semanticData.zeroToHero.useManuallyProvidedCompetitorBrands && <>
+                    <div className="form-group">
+                        <label htmlFor="">Competitor brands:</label>
+                        <ExcelTable
+                            data={semanticData.productInformation.competitorBrands?.length > 0 ? semanticData.productInformation.competitorBrands : [{mainName: '', aliases: ''}]}
+                            columns={competitorBrandsColumns}
+                            onChange={(data) => changeTableHandler(data, 'competitorBrands', 'productInformation')}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="">Competitor brands off Amazon:</label>
+                        <ExcelTable
+                            data={semanticData.productInformation.competitorBrandsOffAmazon?.length > 0 ? semanticData.productInformation.competitorBrandsOffAmazon : [{mainName: '', aliases: ''}]}
+                            columns={competitorBrandsOffAmazonColumns}
+                            onChange={(data) => changeTableHandler(data, 'competitorBrandsOffAmazon', 'productInformation')}
+                        />
+                    </div>
+                </>}
+            </div>
+
+            <br/>
+            <br/>
+
+            <h2>Limits:</h2>
+            <div className="row cols-5">
                 <div className="form-group">
                     <label htmlFor="">Max new keywords count:</label>
                     <Input
@@ -91,12 +168,62 @@ const ProductInformation = ({semanticData, onChange}) => {
                         onChange={({target: {value}}) => changeDataHandler('keywordsProvider', 'maxNewKeywords', value)}
                     />
                 </div>
+
                 <div className="form-group">
                     <label htmlFor="">TPK keywords count:</label>
                     <Input
                         type="number"
                         value={semanticData.keywordsProvider.tpkKeywordsCount}
                         onChange={({target: {value}}) => changeDataHandler('keywordsProvider', 'tpkKeywordsCount', value)}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Ad groups count to create new campaign:</label>
+                    <Input
+                        type="number"
+                        value={semanticData.zeroToHero.generationRules.campaigns.adGroupsCountRequiredToCreateNewCampaign}
+                        onChange={({target: {value}}) => changeDataHandler('zeroToHero', 'generationRules', {
+                            campaigns: {
+                                keywordsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.keywordsCountRequiredToCreateNewCampaign,
+                                adGroupsCountRequiredToCreateNewCampaign: value
+                            },
+                            adGroups: {
+                                keywordsCountRequiredToCreateNewAdGroup: semanticData.zeroToHero.generationRules.adGroups.keywordsCountRequiredToCreateNewAdGroup
+                            }
+                        })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="">Keywords count to create new campaign:</label>
+                    <Input
+                        type="number"
+                        value={semanticData.zeroToHero.generationRules.campaigns.keywordsCountRequiredToCreateNewCampaign}
+                        onChange={({target: {value}}) => changeDataHandler('zeroToHero', 'generationRules', {
+                            campaigns: {
+                                keywordsCountRequiredToCreateNewCampaign: value,
+                                adGroupsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.adGroupsCountRequiredToCreateNewCampaign
+                            },
+                            adGroups: {
+                                keywordsCountRequiredToCreateNewAdGroup: semanticData.zeroToHero.generationRules.adGroups.keywordsCountRequiredToCreateNewAdGroup
+                            }
+                        })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="">Keywords count to create new ad group:</label>
+                    <Input
+                        type="number"
+                        value={semanticData.zeroToHero.generationRules.adGroups.keywordsCountRequiredToCreateNewAdGroup}
+                        onChange={({target: {value}}) => changeDataHandler('zeroToHero', 'generationRules', {
+                            campaigns: {
+                                keywordsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.keywordsCountRequiredToCreateNewCampaign,
+                                adGroupsCountRequiredToCreateNewCampaign: semanticData.zeroToHero.generationRules.campaigns.adGroupsCountRequiredToCreateNewCampaign
+                            },
+                            adGroups: {
+                                keywordsCountRequiredToCreateNewAdGroup: value
+                            }
+                        })}
                     />
                 </div>
             </div>
@@ -141,7 +268,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <ExcelTable
                     data={semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs?.length > 0 ? semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs.map(i => ({text: i})) : [{text: ''}]}
                     columns={TCAColumns}
-                    onChange={(data) => changeTableHandler(data, 'manuallyProvidedTopCompetitorASINs')}
+                    onChange={(data) => changeTableHandler(data.map(i => i.text), 'manuallyProvidedTopCompetitorASINs')}
                 />
             </div>}
 
@@ -157,7 +284,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <ExcelTable
                     data={semanticData.zeroToHero.keywordsForTPKPCampaign?.length > 0 ? semanticData.zeroToHero.keywordsForTPKPCampaign.map(i => ({text: i})) : [{text: ''}]}
                     columns={TPKPColumns}
-                    onChange={(data) => changeTableHandler(data, 'keywordsForTPKPCampaign')}
+                    onChange={(data) => changeTableHandler(data.map(i => i.text), 'keywordsForTPKPCampaign')}
                 />
 
             </div>}
@@ -174,7 +301,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <ExcelTable
                     data={semanticData.zeroToHero.asinsForDefenseCampaign?.length > 0 ? semanticData.zeroToHero.asinsForDefenseCampaign.map(i => ({text: i})) : [{text: ''}]}
                     columns={defenseColumns}
-                    onChange={(data) => changeTableHandler(data, 'asinsForDefenseCampaign')}
+                    onChange={(data) => changeTableHandler(data.map(i => i.text), 'asinsForDefenseCampaign')}
                 />
             </div>}
 
@@ -198,7 +325,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <ExcelTable
                     data={semanticData.zeroToHero.keywordsToSearchForSuggestedASINs?.length > 0 ? semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.map(i => ({text: i})) : [{text: ''}]}
                     columns={keywordsToSearchForSuggestedASINsColumns}
-                    onChange={(data) => changeTableHandler(data, 'keywordsToSearchForSuggestedASINs')}
+                    onChange={(data) => changeTableHandler(data.map(i => i.text), 'keywordsToSearchForSuggestedASINs')}
                 />
             </div>
 
@@ -210,7 +337,7 @@ const ProductInformation = ({semanticData, onChange}) => {
                 <ExcelTable
                     data={semanticData.zeroToHero.categoryLinksToParseASINsFrom?.length > 0 ? semanticData.zeroToHero.categoryLinksToParseASINsFrom.map(i => ({text: i})) : [{text: ''}]}
                     columns={categoryLinksToParseASINsFromColumns}
-                    onChange={(data) => changeTableHandler(data, 'categoryLinksToParseASINsFrom')}
+                    onChange={(data) => changeTableHandler(data.map(i => i.text), 'categoryLinksToParseASINsFrom')}
                 />
             </div>
         </div>
