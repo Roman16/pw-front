@@ -3,7 +3,6 @@ import {analyticsUrls} from "../constans/api.urls"
 import moment from "moment"
 import _ from 'lodash'
 import {metricKeys} from "../pages/Analytics/componentsV2/MainMetrics/metricsList"
-import {dateRangeFormatting as rangeWrap} from './analytics.services'
 
 export const analyticsServices = {
     fetchStateInformation,
@@ -35,7 +34,7 @@ const stateIdValues = {
     portfolioId: 'portfolios',
 }
 
-const dateRangeFormatting = (dateRange) => {
+export const dateRangeFormatting = (dateRange) => {
 
     if (dateRange.startDate === 'lifetime') {
         return ''
@@ -69,6 +68,9 @@ export const filtersHandler = (f) => {
         } else if (filterBy === 'portfolioId') {
             parameters.push(`&portfolio_id[]=${value}`)
             parameters.push(`&portfolioId:eq=${value}`)
+        } else if (filterBy === 'adId') {
+            parameters.push(`&ad_id[]=${value}`)
+            parameters.push(`&ad_id:eq=${value}`)
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (filterBy === 'productView') {
@@ -116,68 +118,6 @@ export const filtersHandler = (f) => {
     if(localStorage.getItem('use_ldp') && localStorage.getItem('use_ldp') === 'true') {
         parameters.push(`&use_ldp=true`)
     }
-
-    return parameters.join('')
-}
-
-const dynamicFiltersHandler = (f = []) => {
-    let filters = [...f]
-    const parameters = []
-
-    const dateRangeFormatting = (dateRange) => {
-        const timezone = JSON.parse(localStorage.getItem('activeMarketplace')).timezone
-
-        if (dateRange.startDate === 'lifetime') {
-            return ''
-        } else {
-            dateRange.startDate = moment(dateRange.startDate).format('YYYY-MM-DD')
-            dateRange.endDate = moment(dateRange.endDate).format('YYYY-MM-DD')
-
-            return encodeURIComponent(`${dateRange.startDate}${moment().tz(timezone).format('T00:00:00.000Z')},${dateRange.endDate}${moment().tz(timezone).format('T23:59:59.999Z')}`)
-        }
-    }
-
-    filters.forEach(({filterBy, type, value, requestValue}) => {
-        if (filterBy === 'datetime') {
-            parameters.unshift(`?datetime:range=${dateRangeFormatting(value)}`)
-        } else if (type.key === 'except') {
-            parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        } else if (filterBy === 'productView') {
-
-        } else if (filterBy === 'segment') {
-            if (value !== null && !_.find(filters, {filterBy: "campaignId"})) {
-                parameters.push(`&segment_by:eq=${value}`)
-            }
-        } else if (type === 'search' && value) {
-            const searchStr = value
-            if (searchStr.value) {
-                if (searchStr?.multiSearch) {
-                    searchStr.value.forEach(i => {
-                        parameters.push(`&${filterBy}:${searchStr?.strictSearch ? 'matches' : 'like'}[]=${encodeString(i)}`)
-                    })
-                } else {
-                    parameters.push(`&${filterBy}:${searchStr?.strictSearch ? 'matches' : 'like'}[]=${encodeString(searchStr.value)}`)
-                }
-            }
-        } else if (type.key === 'one_of') {
-            parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        } else if (filterBy === 'budget_allocation' ||
-            filterBy === 'sales_share' ||
-            filterBy === 'conversion_rate' ||
-            filterBy === 'acos' ||
-            filterBy === 'macos' ||
-            filterBy === 'ctr' ||
-            filterBy === metricKeys['icvr'] ||
-            filterBy === metricKeys['margin'] ||
-            filterBy === 'ctr'
-        ) {
-            parameters.push(`&${filterBy}:${type.key}=${value / 100}`)
-        } else if (typeof type === 'object') {
-            parameters.push(`&${filterBy}:${type.key}=${value}`)
-        } else if (filterBy !== 'name' && type !== 'search') {
-            parameters.push(`&${filterBy}:${type}=${encodeString(value)}`)
-        }
-    })
 
     return parameters.join('')
 }

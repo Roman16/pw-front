@@ -20,6 +20,17 @@ const CancelToken = axios.CancelToken
 let source = null
 
 const idSelectors = {
+    'campaigns': 'campaign_id',
+    'ad-groups': 'ad_group_id',
+    'portfolios': 'portfolio_id',
+    'targetings': 'targeting_id',
+    'negative-targetings': 'targeting_id',
+    'product-ads': 'ad_id',
+    'products-parents': 'product_id',
+    'products': 'product_id',
+}
+
+const idSelectorsEntity = {
     'campaigns': 'campaignId',
     'ad-groups': 'adGroupId',
     'portfolios': 'portfolioId',
@@ -169,7 +180,7 @@ const RenderPageParts = (props) => {
         if (fieldsValidation(column, value)) {
             try {
                 const res = await analyticsServices.exactUpdateField(location, {
-                    [idSelectors[location]]: item[idSelectors[location]],
+                    [idSelectorsEntity[location]]: item[idSelectorsEntity[location]],
                     advertisingType: item.advertisingType,
                     [column]: value,
                     ...location === 'targetings' && {
@@ -192,7 +203,7 @@ const RenderPageParts = (props) => {
                     table: {
                         ...pageData.table,
                         response: [...pageData.table.data.map(i => {
-                            if (i[idSelectors[location]] === item[idSelectors[location]]) item[column] = value === 'null' ? undefined : value
+                            if (i[idSelectorsEntity[location]] === item[idSelectorsEntity[location]]) item[column] = value === 'null' ? undefined : value
 
                             return i
                         })]
@@ -240,7 +251,7 @@ const RenderPageParts = (props) => {
             const res = await analyticsServices.bulkUpdate(
                 location,
                 changeData,
-                selectedAllRows ? undefined : `&${idSelectors[location]}:in=${idList.join(',')}`,
+                selectedAllRows ? undefined : `&${idSelectors[location]}[]=${idList.join(`&${idSelectors[location]}[]=`)}`,
                 filtersWithState,
                 attributionWindow
             )
@@ -380,7 +391,7 @@ const RenderPageParts = (props) => {
 
 
             if (localTableOptions.comparePreviousPeriod && res.table) {
-                getPreviousPeriodData(res.table.data.map(item => item[idSelectors[location]]), paginationParams ? paginationParams : tableRequestParams)
+                getPreviousPeriodData(res.table.data.map(item => item[idSelectorsEntity[location]]), paginationParams ? paginationParams : tableRequestParams)
 
                 setPageData(prevState => ({
                     metrics: res.metrics || prevState.metrics,
@@ -451,7 +462,7 @@ const RenderPageParts = (props) => {
                         startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
                         endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
                     }
-                }, `&${idSelectors[location]}:in=${idList.join(',')}`)
+                }, `&${idSelectors[location]}[]=${idList.join(`&${idSelectors[location]}[]=`)}`)
 
                 setPageData(prevState => ({
                     ...prevState,
@@ -459,7 +470,7 @@ const RenderPageParts = (props) => {
                         ...prevState.table,
                         response: [...prevState.table.data.map(item => ({
                             ...item,
-                            ..._.mapKeys(_.find(result.table.data, {[idSelectors[location]]: item[idSelectors[location]]}), (value, key) => {
+                            ..._.mapKeys(_.find(result.table.data, {[idSelectorsEntity[location]]: item[idSelectorsEntity[location]]}), (value, key) => {
                                 return `${key}_prev`
                             })
                         }))]

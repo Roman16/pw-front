@@ -7,6 +7,7 @@ import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import {Spin} from "antd"
+import {activeTimezone} from "../../../index"
 
 const tabs = ['logs', 'statuses']
 
@@ -16,20 +17,23 @@ const columns = {
             title: 'Campaign Name',
             key: 'campaignName',
             dataIndex: 'campaignName',
-            search: true,
+            filter: true,
             render: text => <div title={text} className="cut-text">{text}</div>
         },
         {
             title: 'Status',
             key: 'code',
             dataIndex: 'code',
-            render: status => <Status status={status}/>
+            render: status => <Status status={status}/>,
+            filter: true,
+
         },
         {
             title: 'Date',
             key: 'generatedAtDateTime',
             dataIndex: 'generatedAtDateTime',
-            render: date => moment(date).format('DD-MM-YYYY HH:MM')
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
+            filter: true,
         },
         {
             title: 'Result',
@@ -44,25 +48,29 @@ const columns = {
             key: 'rule_name',
             dataIndex: 'rule_name',
             search: true,
-            render: text => <div title={text} className="cut-text">{text}</div>
+            render: text => <div title={text} className="cut-text">{text}</div>,
+            filter: true,
         },
         {
             title: 'Launch date',
             key: 'created_at',
             dataIndex: 'created_at',
-            render: date => moment(date).format('DD-MM-YYYY HH:MM')
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
+            filter: true,
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            render: status => <Status status={status}/>
+            render: status => <Status status={status}/>,
+            filter: true,
         },
         {
             title: 'Type',
             key: 'type',
             dataIndex: 'type',
-            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>
+            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
+            filter: true,
         },
     ]
 }

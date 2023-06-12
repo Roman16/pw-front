@@ -1,7 +1,6 @@
-import api from "./request"
+import api, {encodeString} from "./request"
 import {optimizationRulesUrls} from "../constans/api.urls"
 import {searchStrWrap} from "./products.services"
-import {filtersHandler} from "./analytics.v3.services"
 import moment from 'moment'
 
 export const optimizationRulesServices = {
@@ -24,6 +23,36 @@ export const optimizationRulesServices = {
 }
 
 const dateFormat = (date) => moment(date).format('YYYY-MM-DD')
+
+ const dateRangeFormatting = (dateRange) => {
+    if (dateRange.startDate === 'lifetime') {
+        return ''
+    } else {
+        dateRange.startDate = moment(dateRange.startDate).format('YYYY-MM-DD')
+        dateRange.endDate = moment(dateRange.endDate).format('YYYY-MM-DD')
+
+        return `generatedAtDateTime:from=${dateRange.startDate}&generatedAtDateTime:to=${dateRange.endDate}`
+    }
+}
+
+const filtersHandler = (f) => {
+    let filters = [...f]
+    const parameters = []
+
+    filters.forEach(({filterBy, type, value, requestValue}) => {
+        if (filterBy === 'datetime') {
+            parameters.unshift(`?${dateRangeFormatting(value)}`)
+        }  else if (type.key === 'except') {
+            parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
+        }  else if (type.key === 'one_of') {
+            parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
+        }  else if (filterBy !== 'name' && type !== 'search') {
+            parameters.push(`&${filterBy}:${type}=${encodeString(value)}`)
+        }
+    })
+
+    return parameters.join('')
+}
 
 function getCampaigns({pageSize, page, searchStr, attributionWindow = 7, filters = [], campaignsId = [], selectedRangeDate, ruleId}) {
     if (filters?.[0]?.type === "search") searchStr = filters[0].value
@@ -79,8 +108,8 @@ function getAttachedRules(campaignId) {
     return api('get', `${optimizationRulesUrls.attachedRules}?campaign_id[]=${campaignId.join('&campaign_id[]=')}`)
 }
 
-function getLogs({ruleId, campaignId, page, pageSize}) {
-    return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
+function getLogs({ruleId, campaignId, page, pageSize, filters}) {
+    return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}${filtersHandler(filters)}`)
 }
 
 function getStatuses({ruleId, campaignId, page, pageSize}) {
