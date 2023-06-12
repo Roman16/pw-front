@@ -6,8 +6,18 @@ import {getBidsTemplate, getBudgetsTemplateForExactBid} from './bidsProviderServ
 
 const Option = Select.Option
 
-const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
+const CampaignsBids = ({
+                           title,
+                           campaignTypes,
+                           adGroupTypes,
+                           onChange,
+                           semanticData,
+                           type,
+                           zthEnums
+                       }) => {
     const [bidsConfig, setBidsConfig] = useState()
+
+    const settings = semanticData.settings[type]
 
     const AdGroupType = zthEnums.enums.AdGroupType,
         CampaignType = zthEnums.enums.CampaignType
@@ -22,14 +32,50 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
         }
     }
 
+    // const mapBidsTemplates = () => {
+    //     onChange((prevValue) => ({
+    //         ...prevValue,
+    //         conversionOptions: {
+    //             ...prevValue.conversionOptions,
+    //             upload: {
+    //                 ...prevValue.conversionOptions.upload,
+    //                 bidsTemplate: {...getBidsTemplate(prevValue.settings.exactBid, bidsConfig, CampaignType, AdGroupType)}
+    //             }
+    //         }
+    //     }))
+    // }
+
+
     const mapBidsTemplates = () => {
+        const bidsTemplate = getBidsTemplate(settings.exactBid, bidsConfig, CampaignType, AdGroupType)
+
+        const campaignBids = {},
+            adGroupsBids = {}
+
+        campaignTypes.forEach(key => {
+            campaignBids[key] = bidsTemplate.campaigns[key]
+        })
+
+        adGroupTypes.forEach(key => {
+            adGroupsBids[key] = bidsTemplate.adGroups[key]
+        })
+
         onChange((prevValue) => ({
             ...prevValue,
             conversionOptions: {
                 ...prevValue.conversionOptions,
                 upload: {
                     ...prevValue.conversionOptions.upload,
-                    bidsTemplate: {...getBidsTemplate(prevValue.settings.exactBid, bidsConfig, CampaignType, AdGroupType)}
+                    bidsTemplate: {
+                        campaigns: {
+                            ...prevValue.conversionOptions.upload.bidsTemplate.campaigns,
+                            ...campaignBids
+                        },
+                        adGroups: {
+                            ...prevValue.conversionOptions.upload.bidsTemplate.adGroups,
+                            ...adGroupsBids
+                        }
+                    }
                 }
             }
         }))
@@ -59,13 +105,24 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
     }
 
     const mapBudgetsTemplates = () => {
+        const budgetTemplate = getBudgetsTemplateForExactBid(settings.exactBid, settings.ppcPlan, settings.budgetMultiplier, bidsConfig)
+
+        const campaignsBudget = {}
+
+        campaignTypes.forEach(key => {
+            campaignsBudget[key] = budgetTemplate[key]
+        })
+
         onChange((prevValue) => ({
             ...prevValue,
             conversionOptions: {
                 ...prevValue.conversionOptions,
                 upload: {
                     ...prevValue.conversionOptions.upload,
-                    budgetsTemplate: {...getBudgetsTemplateForExactBid(prevValue.settings.exactBid, prevValue.settings.ppcPlan, prevValue.settings.budgetMultiplier, bidsConfig)}
+                    budgetsTemplate: {
+                        ...prevValue.conversionOptions.upload.budgetsTemplate,
+                        ...campaignsBudget
+                    }
                 }
             }
         }))
@@ -90,7 +147,12 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
     const changeSettingsHandler = (key, value) => {
         onChange({
             ...semanticData,
-            settings: {...semanticData.settings, [key]: value}
+            settings: {
+                ...semanticData.settings, [type]: {
+                    ...semanticData.settings[type],
+                    [key]: value
+                }
+            }
         })
     }
 
@@ -103,34 +165,35 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
             mapBidsTemplates()
             mapBudgetsTemplates()
         }
-    }, [semanticData.settings.exactBid])
+    }, [settings.exactBid])
 
     useEffect(() => {
         if (bidsConfig) {
             mapBudgetsTemplates()
         }
-    }, [semanticData.settings.ppcPlan, semanticData.settings.budgetMultiplier])
+    }, [settings.ppcPlan, settings.budgetMultiplier])
 
     useEffect(() => {
-        if (bidsConfig && !semanticData.settings.manuallyBudgets) {
+        if (bidsConfig && !settings.manuallyBudgets) {
             mapBidsTemplates()
             mapBudgetsTemplates()
         }
     }, [bidsConfig])
 
+
     return (
         <div className={'bids-budgets-section'}>
-            <h2>Campaigns Bids and Budgets</h2>
+            <h2>{title}</h2>
 
             <Checkbox
-                checked={semanticData.settings.manuallySetExactBid}
+                checked={settings.manuallySetExactBid}
                 onChange={({target: {checked}}) => changeSettingsHandler('manuallySetExactBid', checked)}
             >
                 Set bids manually
             </Checkbox>
 
             <div className="row cols-4">
-                {semanticData.settings.manuallySetExactBid ? <div className="form-group">
+                {settings.manuallySetExactBid ? <div className="form-group">
                         <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Exact bid:</label>
                         <Input
                             placeholder=" Enter number"
@@ -138,14 +201,14 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
                             type="number"
                             className="form-control"
                             onChange={({target: {value}}) => changeSettingsHandler('exactBid', +value)}
-                            value={semanticData.settings.exactBid}
+                            value={settings.exactBid}
                         />
                     </div>
                     :
                     <div className="form-group">
                         <label htmlFor="{{'exactBidSelect-' + sheetData.id}}">Choose base exact bid:</label>
                         <CustomSelect
-                            value={semanticData.settings.exactBid}
+                            value={settings.exactBid}
                             onChange={value => changeSettingsHandler('exactBid', +value)}
                             getPopupContainer={trigger => trigger}
                             className="form-control"
@@ -162,7 +225,7 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
                     <CustomSelect
                         getPopupContainer={trigger => trigger}
                         onChange={value => changeSettingsHandler('ppcPlan', value)}
-                        value={semanticData.settings.ppcPlan}
+                        value={settings.ppcPlan}
                         className="form-control"
                     >
                         {zthEnums.enums.PPCPlan.map(item => (
@@ -179,13 +242,13 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
                         type="number"
                         className="form-control"
                         onChange={({target: {value}}) => changeSettingsHandler('budgetMultiplier', +value)}
-                        value={semanticData.settings.budgetMultiplier}
+                        value={settings.budgetMultiplier}
                     />
                 </div>
             </div>
 
             <Checkbox
-                checked={semanticData.settings.manuallyBudgets}
+                checked={settings.manuallyBudgets}
                 onChange={({target: {checked}}) => changeSettingsHandler('manuallyBudgets', checked)}
             >
                 Set bids and budgets manually
@@ -194,17 +257,17 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
             <h3>Campaign bids:</h3>
 
             <div className="bids-fields-list">
-                {zthEnums.aggregates.campaignTypesOrdered.map(key => (
+                {campaignTypes.map(key => (
                     semanticData.conversionOptions.upload.bidsTemplate.campaigns[key] && semanticData.conversionOptions.upload.bidsTemplate.campaigns[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
-                        <label>
+                        <label title={key}>
                             {key}:
                         </label>
                         <Input
                             placeholder="Enter number"
                             type="number"
                             className=" form-control"
-                            disabled={!semanticData.settings.manuallyBudgets}
+                            disabled={!settings.manuallyBudgets}
                             value={semanticData.conversionOptions.upload.bidsTemplate.campaigns[key].bid}
                             onChange={({target: {value}}) => changeBidHandler('campaigns', key, +value)}
                         />
@@ -215,17 +278,17 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
             <h3>Ad group bids:</h3>
 
             <div className="bids-fields-list">
-                {zthEnums.aggregates.adGroupTypesOrdered.map(key => (
+                {adGroupTypes.map(key => (
                     semanticData.conversionOptions.upload.bidsTemplate.adGroups[key] && semanticData.conversionOptions.upload.bidsTemplate.adGroups[key].shouldBeApplied &&
                     <div className="col-sm-3 form-group">
-                        <label>
+                        <label title={key}>
                             {key}:
                         </label>
                         <Input
                             placeholder="Enter number"
                             type="number"
                             className=" form-control"
-                            disabled={!semanticData.settings.manuallyBudgets}
+                            disabled={!settings.manuallyBudgets}
                             value={semanticData.conversionOptions.upload.bidsTemplate.adGroups[key].bid}
                             onChange={({target: {value}}) => changeBidHandler('adGroups', key, +value)}
                         />
@@ -236,23 +299,22 @@ const CampaignsBids = ({onChange, semanticData, zthEnums}) => {
             <h3>Campaign daily budgets:</h3>
 
             <div className="bids-fields-list">
-                {zthEnums.aggregates.campaignTypesForCompressionStrategy[semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy] && zthEnums.aggregates.campaignTypesForCompressionStrategy[semanticData.conversionOptions.zeroToHero.campaignsCompressionStrategy]
-                    .map(key => (
-                        <div className="col-sm-3 form-group">
-                            <label>
-                                {key}:
-                            </label>
+                {campaignTypes.map(key => (
+                    <div className="col-sm-3 form-group">
+                        <label title={key}>
+                            {key}:
+                        </label>
 
-                            <Input
-                                placeholder="Enter number"
-                                type="number"
-                                className=" form-control"
-                                disabled={!semanticData.settings.manuallyBudgets}
-                                value={semanticData.conversionOptions.upload.budgetsTemplate[key]}
-                                onChange={({target: {value}}) => changeBudgetHandler(key, value)}
-                            />
-                        </div>
-                    ))}
+                        <Input
+                            placeholder="Enter number"
+                            type="number"
+                            className=" form-control"
+                            disabled={!settings.manuallyBudgets}
+                            value={semanticData.conversionOptions.upload.budgetsTemplate[key]}
+                            onChange={({target: {value}}) => changeBudgetHandler(key, value)}
+                        />
+                    </div>
+                ))}
             </div>
         </div>
     )

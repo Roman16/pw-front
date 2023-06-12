@@ -1,4 +1,8 @@
 .create-semantic-core {
+  h2 {
+    font-weight: 600;
+  }
+
   .col {
     display: flex;
     flex-direction: column;
@@ -15,6 +19,12 @@
 
   .cols-5 {
 
+  }
+
+  .cols-3 {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 20px;
   }
 
   .main-keywords-row {

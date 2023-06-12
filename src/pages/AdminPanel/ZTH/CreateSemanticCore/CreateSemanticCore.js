@@ -44,45 +44,61 @@ const CreateSemanticCore = () => {
         setSemanticData(data)
     }
 
-    const getInputParameters = () => ({
-        keywordsProvider: {
-            maxNewKeywords: +semanticData.keywordsProvider.maxNewKeywords,
-            merchantWordsCategories: semanticData.keywordsProvider.merchantWordsCategories,
-            tpkKeywordsCount: +semanticData.keywordsProvider.tpkKeywordsCount,
-        },
-        creator: {
-            mainKeywords: semanticData.creator.mainKeywords.filter(x => x.text && x.text.length > 0),
-            baseKeywords: semanticData.creator.baseKeywords.filter(x => x.text && x.text.length > 0),
-            globalNegativePhrases: semanticData.creator.globalNegativePhrases.filter(x => x.text && x.text.length > 0),
-            globalNegativeExacts: semanticData.creator.globalNegativeExacts.filter(x => x.text && x.text.length > 0),
-            productNegativePhrases: semanticData.creator.productNegativePhrases.filter(x => x.text && x.text.length > 0),
-            productNegativeExacts: semanticData.creator.productNegativeExacts.filter(x => x.text && x.text.length > 0),
-            negativeASINs: semanticData.creator.negativeASINs.filter(x => x.text && x.text.length > 0)
-        },
-        productInformation: {
-            ...semanticData.productInformation,
-            brandNames: semanticData.productInformation.brandNames.filter(x => x && x.length > 0),
-            variations: semanticData.productInformation.variations.map(i => {
-                if (!i.listingUrl || i.listingUrl === null) i.listingUrl = ''
-                if (!i.sku || i.sku === null) i.sku = ''
+    const getInputParameters = () => {
+        const ownBrandNamesArr = semanticData.productInformation.ownBrandNames?.filter(x => x && x.trim().length > 0) || [],
+            competitorBrandsArr = semanticData.productInformation.competitorBrands.filter(x => x.mainName && x.mainName.trim().length > 0),
+            competitorBrandsOffAmazonArr = semanticData.productInformation.competitorBrandsOffAmazon.filter(x => x.mainName && x.mainName.trim().length > 0)
+
+        return ({
+            keywordsProvider: {
+                maxNewKeywords: +semanticData.keywordsProvider.maxNewKeywords,
+                merchantWordsCategories: semanticData.keywordsProvider.merchantWordsCategories,
+                tpkKeywordsCount: +semanticData.keywordsProvider.tpkKeywordsCount,
+            },
+            creator: {
+                mainKeywords: semanticData.creator.mainKeywords.filter(x => x.text && x.text.length > 0),
+                baseKeywords: semanticData.creator.baseKeywords.filter(x => x.text && x.text.length > 0),
+                productNegativePhrases: semanticData.creator.productNegativePhrases.filter(x => x.text && x.text.length > 0),
+                productNegativeExacts: semanticData.creator.productNegativeExacts.filter(x => x.text && x.text.length > 0),
+                negativeASINs: semanticData.creator.negativeASINs.filter(x => x.text && x.text.length > 0)
+            },
+            productInformation: {
+                ...semanticData.productInformation,
+                ownBrandNames: ownBrandNamesArr[0] ? {
+                    mainName: ownBrandNamesArr[0] || '',
+                    aliases: ownBrandNamesArr.filter((_, i) => i > 0)
+                } : null,
+                competitorBrands: competitorBrandsArr.map(i => ({
+                    mainName: i.mainName,
+                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                })),
+                competitorBrandsOffAmazon: competitorBrandsOffAmazonArr.map(i => ({
+                    mainName: i.mainName,
+                    aliases: (i.aliases && Array.isArray(i.aliases)) ? i.aliases : i.aliases?.split(',').map(i => i.trim()).filter(x => x && x.length > 0) || [],
+                })),
+
+                variations: semanticData.productInformation.variations.map(i => {
+                    if (!i.listingUrl || i.listingUrl === null) i.listingUrl = ''
+                    if (!i.sku || i.sku === null) i.sku = ''
 
                     i.themeValues = i.themeValues.map(t => {
                         t.relatedValues = t.relatedValues.filter(x => x && x.length > 0)
                         return t
                     })
 
-                return i
-            })
-        },
-        zeroToHero: {
-            ...semanticData.zeroToHero,
-            keywordsToSearchForSuggestedASINs: semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.filter(x => x && x.length > 0),
-            additionalTopCompetitorASINs: semanticData.zeroToHero.additionalTopCompetitorASINs.filter(x => x && x.length > 0),
-            categoryLinksToParseASINsFrom: semanticData.zeroToHero.categoryLinksToParseASINsFrom.filter(x => x && x.length > 0),
-            keywordsForTPKPCampaign: semanticData.zeroToHero.keywordsForTPKPCampaign.filter(x => x && x.length > 0),
-            asinsForDefenseCampaign: semanticData.zeroToHero.asinsForDefenseCampaign.filter(x => x && x.length > 0),
-        }
-    })
+                    return i
+                })
+            },
+            zeroToHero: {
+                ...semanticData.zeroToHero,
+                keywordsToSearchForSuggestedASINs: semanticData.zeroToHero.keywordsToSearchForSuggestedASINs.filter(x => x && x.length > 0),
+                manuallyProvidedTopCompetitorASINs: semanticData.zeroToHero.manuallyProvidedTopCompetitorASINs.filter(x => x && x.length > 0),
+                categoryLinksToParseASINsFrom: semanticData.zeroToHero.categoryLinksToParseASINsFrom.filter(x => x && x.length > 0),
+                keywordsForTPKPCampaign: semanticData.zeroToHero.keywordsForTPKPCampaign.filter(x => x && x.length > 0),
+                asinsForDefenseCampaign: semanticData.zeroToHero.asinsForDefenseCampaign.filter(x => x && x.length > 0),
+            }
+        })
+    }
 
 
     const downloadInputParams = () => {
@@ -92,14 +108,16 @@ const CreateSemanticCore = () => {
     const createZeroToHeroHandler = async () => {
         const requestData = new FormData()
 
-        const ips = JSON.stringify([{
+        const ips = JSON.stringify({
             ...getInputParameters(),
             apiClients: {
                 Amazon: {
                     marketplaceId: 'ATVPDKIKX0DER'
                 }
             },
-        }])
+        })
+
+        console.log(JSON.parse(ips))
 
         requestData.set(
             'inputParameters',
@@ -132,7 +150,13 @@ const CreateSemanticCore = () => {
             reader.onload = (event) => {
                 const ips = JSON.parse((event.target).result)
                 console.log(ips)
-                setSemanticData({...semanticData, ...ips})
+                setSemanticData({
+                    ...semanticData, ...ips,
+                    productInformation: {
+                        ...ips.productInformation,
+                        ownBrandNames: ips.productInformation.ownBrandNames ? [ips.productInformation.ownBrandNames.mainName, ...ips.productInformation.ownBrandNames.aliases] : []
+                    }
+                })
 
                 setLoading(false)
             }
@@ -168,6 +192,8 @@ const CreateSemanticCore = () => {
 
             <ProductInformation
                 semanticData={semanticData}
+                allEnums={allEnums}
+
                 onChange={changeSemanticDataHandler}
             />
 

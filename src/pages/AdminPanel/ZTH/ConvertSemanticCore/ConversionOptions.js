@@ -9,6 +9,7 @@ import ConfirmUploadWindow from "./ConfirmUploadWindow"
 import {adminServices} from "../../../../services/admin.services"
 import ExcelTable from "../../../../components/ExcelTable/ExcelTable"
 import {checkboxColumn, keyColumn, textColumn} from "react-datasheet-grid"
+import {marketplaceIdValues} from "../../../../constans/amazonMarketplaceIdValues"
 
 const Option = Select.Option
 
@@ -17,7 +18,11 @@ let fullUsersList = []
 const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, convertProcessing, zthEnums, onUpload, onChange, onGetParams}) => {
     const [visibleConfirm, setVisibleConfirm] = useState(false),
         [usersList, setUsersList] = useState([]),
-        [selectedUserId, setSelectedUserId] = useState()
+        [userARAList, setUserARAList] = useState([]),
+        [userARAMList, setUserARAMList] = useState([]),
+        [selectedUserId, setSelectedUserId] = useState(),
+        [selectedARA, setSelectedARA] = useState(),
+        [selectedARAM, setSelectedARAM] = useState()
 
     const getUsersList = async () => {
         try {
@@ -25,6 +30,24 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
 
             setUsersList(res.result.slice(0, 10))
             fullUsersList = res.result
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const getUserARA = async () => {
+        try {
+            const {result} = await adminServices.fetchUserARA(selectedUserId)
+
+            setUserARAList(result[selectedUserId])
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    const getUserARAM = async () => {
+        try {
+            const {result} = await adminServices.fetchUserARAM(selectedARA)
+            setUserARAMList(result[selectedARA])
         } catch (e) {
             console.log(e)
         }
@@ -89,6 +112,19 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
     useEffect(() => {
         admin && getUsersList()
     }, [])
+
+    useEffect(() => {
+        setSelectedARA()
+        setSelectedARAM()
+
+        selectedUserId && getUserARA()
+    }, [selectedUserId])
+
+    useEffect(() => {
+        setSelectedARAM()
+
+        selectedARA && getUserARAM()
+    }, [selectedARA])
 
     useEffect(() => {
         if (!uploadProcessing) setVisibleConfirm(false)
@@ -159,37 +195,39 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                     <br/>
                 </>}
 
-                <div className="form-group  w-25">
-                    <label htmlFor="">
-                        Campaigns
-                        status {semanticData.settings.actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
-                    </label>
-                    <CustomSelect
-                        getPopupContainer={trigger => trigger}
-                        value={semanticData.conversionOptions.converter.campaignsStatus}
-                        onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
-                    >
-                        {zthEnums.enums.Status.map(item => (
-                            <Option value={item}>{item}</Option>
-                        ))}
-                    </CustomSelect>
-                </div>
-
-                {semanticData.settings.actionType === 'convert' && <>
-                    <div className="form-group  w-25">
-                        <label htmlFor="">Output type</label>
+                <div className="row cols-4">
+                    <div className="form-group">
+                        <label htmlFor="">
+                            Campaigns
+                            status {semanticData.settings.actionType === 'convert' ? 'in Bulk Upload ' : 'after upload'}
+                        </label>
                         <CustomSelect
                             getPopupContainer={trigger => trigger}
-                            value={semanticData.conversionOptions.saver.saveBulkUploadAs}
-                            onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}
+                            value={semanticData.conversionOptions.converter.campaignsStatus}
+                            onChange={value => changeConversionOptionsHandler('converter', 'campaignsStatus', value)}
                         >
-                            <Option value={'xls'}>xls</Option>
-                            <Option value={'xlsx'}>xlsx</Option>
-                            <Option value={'csv'}>csv</Option>
+                            {zthEnums.enums.Status.map(item => (
+                                <Option value={item}>{item}</Option>
+                            ))}
                         </CustomSelect>
                     </div>
+                </div>
 
-                    <div className="form-group w-25">
+                {semanticData.settings.actionType === 'convert' && <div className={'row cols-4'}>
+                    {/*<div className="form-group  w-25">*/}
+                    {/*    <label htmlFor="">Output type</label>*/}
+                    {/*    <CustomSelect*/}
+                    {/*        getPopupContainer={trigger => trigger}*/}
+                    {/*        value={semanticData.conversionOptions.saver.saveBulkUploadAs}*/}
+                    {/*        onChange={value => changeConversionOptionsHandler('saver', 'saveBulkUploadAs', value)}*/}
+                    {/*    >*/}
+                    {/*        <Option value={'xls'}>xls</Option>*/}
+                    {/*        <Option value={'xlsx'}>xlsx</Option>*/}
+                    {/*        <Option value={'csv'}>csv</Option>*/}
+                    {/*    </CustomSelect>*/}
+                    {/*</div>*/}
+
+                    <div className="form-group">
                         <label htmlFor="">Convert for Amazon region</label>
                         <CustomSelect
                             getPopupContainer={trigger => trigger}
@@ -201,29 +239,76 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                             ))}
                         </CustomSelect>
                     </div>
-                </>}
-
-                {semanticData.settings.actionType === 'upload' && <div className="form-group  w-25 users">
-                    <label htmlFor="">Select a user</label>
-
-                    <CustomSelect
-                        showSearch
-                        optionFilterProp={false}
-                        onSearch={searchHandler}
-                        filterOption={false}
-                        onChange={value => setSelectedUserId(value)}
-                        value={selectedUserId}
-                        getPopupContainer={trigger => trigger}
-                    >
-                        {usersList.map(user => (
-                            <Option value={user.id}>
-                                <b>{`${user.name} ${user.last_name}`}</b>
-                                <br/>
-                                <span>{user.email}</span>
-                            </Option>
-                        ))}
-                    </CustomSelect>
                 </div>}
+
+                {semanticData.settings.actionType === 'upload' && <div className={'row cols-4'}>
+                    <div className="form-group">
+                        <label htmlFor="">Select a user</label>
+
+                        <CustomSelect
+                            showSearch
+                            optionFilterProp={false}
+                            onSearch={searchHandler}
+                            filterOption={false}
+                            onChange={value => setSelectedUserId(value)}
+                            value={selectedUserId}
+                            getPopupContainer={trigger => trigger}
+                        >
+                            {usersList.map(user => (
+                                <Option value={user.id}>
+                                    <b>{`${user.name} ${user.last_name}`}</b>
+                                    <br/>
+                                    <span>{user.email}</span>
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="">Amazon Account</label>
+
+                        <CustomSelect
+                            disabled={!selectedUserId}
+                            onChange={setSelectedARA}
+                            value={selectedARA}
+                            getPopupContainer={trigger => trigger}
+                        >
+                            {userARAList.map(item => (
+                                <Option value={item.id}>
+                                    <b>{item.alias}</b> <br/>
+                                    <span>{item.seller_id}</span>
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="">Marketplace</label>
+
+                        <CustomSelect
+                            disabled={!selectedARA}
+                            onChange={setSelectedARAM}
+                            value={selectedARAM}
+                            getPopupContainer={trigger => trigger}
+                        >
+                            {userARAMList.map(item => (
+                                <Option value={item.id}>
+                                    <div className="row">
+                                        <div className="flag">
+                                            <img src={marketplaceIdValues[item.marketplace_id].flag} alt=""/>
+                                        </div>
+
+                                        <div className="col">
+                                            <b>{item.marketplace_name}</b>
+                                            <span>{item.marketplace_id}</span>
+                                        </div>
+                                    </div>
+                                </Option>
+                            ))}
+                        </CustomSelect>
+                    </div>
+                </div>
+                }
 
                 {semanticData.settings.actionType === 'convert' && <>
                     <Checkbox
@@ -260,7 +345,7 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                         </button>
                         :
                         <button
-                            disabled={!selectedUserId}
+                            disabled={!selectedARAM}
                             className={'btn default submit'} onClick={() => setVisibleConfirm(true)}
                         >
                             Upload semantics
@@ -268,15 +353,19 @@ const ConversionOptions = ({semanticData, onConvert, uploadProcessing, admin, co
                 </div>
             </div>
 
-            <ConfirmUploadWindow
+            {selectedARAM && <ConfirmUploadWindow
                 visible={visibleConfirm}
-                user={_.find(usersList, {id: selectedUserId})}
-                semanticName={semanticData.conversionOptions.productInformation.productName}
+                user={{
+                    ..._.find(usersList, {id: selectedUserId}),
+                    ARA: _.find(userARAList, {id: selectedARA}),
+                    ARAM: _.find(userARAMList, {id: selectedARAM})
+                }}
+                semanticName={semanticData.conversionOptions.productInformation.mainProductName}
                 uploadProcessing={uploadProcessing}
 
-                onSubmit={() => onUpload(selectedUserId)}
+                onSubmit={() => onUpload({userId: selectedUserId, ARA: selectedARA, ARAM: selectedARAM})}
                 onCancel={() => setVisibleConfirm(false)}
-            />
+            />}
         </>
     )
 }
