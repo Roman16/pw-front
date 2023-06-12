@@ -2,11 +2,12 @@ import React, {useEffect, useState} from "react"
 import './RuleDetails.less'
 import {SVG} from "../../../../utils/icons"
 import moment from "moment"
-import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
+import TableFilters from "../../../AnalyticsV3/components/TableFilters/TableFilters"
 import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 import {Spin} from "antd"
+import {activeTimezone} from "../../../index"
 
 const tabs = ['logs', 'statuses']
 
@@ -28,26 +29,28 @@ const columns = {
             title: 'Campaign Name',
             key: 'campaignName',
             dataIndex: 'campaignName',
-            search: true,
-            render: text => <div title={text} className="cut-text">{text}</div>
+            render: text => <div title={text} className="cut-text">{text}</div>,
+            filter: true,
         },
         {
             title: 'Status',
             key: 'code',
             dataIndex: 'code',
-            render: status => <Status status={status}/>
+            render: status => <Status status={status}/>,
+            filter: true,
         },
         {
             title: 'Date',
             key: 'generatedAtDateTime',
             dataIndex: 'generatedAtDateTime',
-            render: date => moment(date).format('DD-MM-YYYY HH:MM')
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
+            filter: true,
         },
         {
             title: 'Result',
             key: 'result',
             dataIndex: 'result',
-            render: text => <div title={text} className="cut-text">{text}</div>
+            render: text => <div title={text} className="cut-text">{text}</div>,
         },
     ],
     'statuses': [
@@ -56,25 +59,29 @@ const columns = {
             key: 'rule_name',
             dataIndex: 'rule_name',
             search: true,
-            render: text => <div title={text} className="cut-text">{text}</div>
+            render: text => <div title={text} className="cut-text">{text}</div>,
+            filter: true,
         },
         {
             title: 'Launch date',
             key: 'created_at',
             dataIndex: 'created_at',
-            render: date => moment(date).format('DD-MM-YYYY HH:MM')
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
+            filter: true,
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            render: status => <Status status={status}/>
+            render: status => <Status status={status}/>,
+            filter: true,
         },
         {
             title: 'Type',
             key: 'type',
             dataIndex: 'type',
-            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>
+            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
+            filter: true,
         },
     ]
 }
@@ -98,9 +105,8 @@ export const RuleDetails = ({
         [pauseProcessing, setPauseProcessing] = useState(false)
 
 
-    const changeFiltersHandler = () => {
+    const changeFiltersHandler = (data) => setRequestParams(prevState => ({...prevState, filters: data, page: 1}))
 
-    }
 
     const changePagination = (params) => {
         setRequestParams({...requestParams, ...params})
@@ -120,6 +126,11 @@ export const RuleDetails = ({
         onPause(selectedRule.id, () => {
             setPauseProcessing(false)
         })
+    }
+
+    const changeTabHandler = (tab) => {
+        setRequestParams(prevState => ({...prevState, filters: [], page: 1}))
+        setActiveTab(tab)
     }
 
     const getRuleData = async () => {
@@ -146,6 +157,7 @@ export const RuleDetails = ({
         selectedRule.id && getRuleData()
     }, [selectedRule.id, requestParams, activeTab])
 
+
     return (<div className="rule-details">
         <div className="actions">
             <h2>{selectedRule?.name}</h2>
@@ -171,61 +183,23 @@ export const RuleDetails = ({
             }
         </div>
 
-        {/*<ul className="statuses">*/}
-        {/*    <li>*/}
-        {/*        <SVG id={`optimization-changes`}/>*/}
-
-        {/*        <div>*/}
-        {/*            <h5>Total Changes</h5>*/}
-        {/*            <h4>{0}</h4>*/}
-        {/*        </div>*/}
-        {/*    </li>*/}
-
-        {/*    <li>*/}
-        {/*        <SVG id={`optimization-Status`}/>*/}
-
-        {/*        <div>*/}
-        {/*            <h5>Status</h5>*/}
-        {/*            <h4>{'Active'}</h4>*/}
-        {/*        </div>*/}
-        {/*    </li>*/}
-
-        {/*    <li>*/}
-        {/*        <SVG id={`optimization-start-date`}/>*/}
-
-        {/*        <div>*/}
-        {/*            <h5>Start Date</h5>*/}
-        {/*            <h4>{moment().format('DD.MM.YYYY')}</h4>*/}
-        {/*        </div>*/}
-        {/*    </li>*/}
-
-
-        {/*    <li>*/}
-        {/*        <SVG id={`optimization-changes2`}/>*/}
-
-        {/*        <div>*/}
-        {/*            <h5>Today Changes</h5>*/}
-        {/*            <h4>{0}</h4>*/}
-        {/*        </div>*/}
-        {/*    </li>*/}
-        {/*</ul>*/}
 
         <div className="logs">
             <div className="tabs">
                 <div className="container">
-                    {tabs.map(i => <div onClick={() => setActiveTab(i)}
+                    {tabs.map(i => <div onClick={() => changeTabHandler(i)}
                                         className={`tab ${activeTab === i ? 'active' : ''}`}>{i}</div>)}
                 </div>
             </div>
 
-            {/*<div className="filters">*/}
-            {/*    <TableFilters*/}
-            {/*        columns={columns}*/}
-            {/*        filters={requestParams.filters}*/}
-            {/*        searchField={true}*/}
-            {/*        onChange={changeFiltersHandler}*/}
-            {/*    />*/}
-            {/*</div>*/}
+            <div className="filters">
+                {/*<TableFilters*/}
+                {/*    columns={columns[activeTab]}*/}
+                {/*    filters={requestParams.filters}*/}
+                {/*    searchField={false}*/}
+                {/*    onChange={changeFiltersHandler}*/}
+                {/*/>*/}
+            </div>
 
 
             <div className="table-block">

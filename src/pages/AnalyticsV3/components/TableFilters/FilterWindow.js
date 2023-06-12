@@ -5,6 +5,7 @@ import TreeSelect from "../../../../components/TreeSelect/TreeSelect"
 import {Input, Select} from "antd"
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {metricKeys} from "../MainMetrics/metricsList"
+import moment from "moment-timezone"
 
 const Option = Select.Option
 
@@ -130,6 +131,8 @@ const reasonList = [
 
 const containsVariations = {
     'datetime': [{label: 'In', key: 'in'}],
+    'generatedAtDateTime': [{label: 'In', key: 'in'}],
+    'created_at': [{label: 'In', key: 'in'}],
 
     'object': stringVariations,
     'keyword_pt': stringVariations,
@@ -219,6 +222,7 @@ const containsVariations = {
     'advertisingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'calculatedTargetingType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'calculatedCampaignSubType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'code': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
 
     'campaign': [{label: 'Contains', key: 'contains'}, {label: 'Matches', key: 'matches'}]
 }
@@ -457,6 +461,11 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Auto Targeting', key: 'autoTargeting', value: 'autoTargeting'},
             {title: 'Manual Targeting', key: 'manualTargeting', value: 'manualTargeting'},
         ],
+        'code': [
+            {title: 'Success', key: 'SUCCESS', value: 'SUCCESS'},
+            {title: 'Failed', key: 'FAILED,APPLY_FAILED,CHECK_FAILED', value: 'FAILED,APPLY_FAILED,CHECK_FAILED'},
+            {title: 'Processing', key: 'CHECK_IN_PROGRESS,APPLY_IN_PROGRESS', value: 'CHECK_IN_PROGRESS,APPLY_IN_PROGRESS'},
+        ],
         'calculatedCampaignSubType': [
             {title: 'Auto', key: 'Auto', value: 'Auto'},
             {title: 'Manual', key: 'Manual', value: 'Manual'},
@@ -583,9 +592,10 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
                     disabled
                 />
             </div> : <div className="form-group">
-                {filterBy === 'datetime' &&
+                {(filterBy === 'datetime' || filterBy === 'generatedAtDateTime' || filterBy === 'created_at') &&
                 <DatePicker
                     disabled={!filterType?.key}
+                    value={filterValue?.startDate ? [filterValue.startDate === 'lifetime' ? null : moment(filterValue.startDate), filterValue.endDate === 'lifetime' ? null : moment(filterValue.endDate)] : [undefined, undefined]}
                     timeRange={(startDate, endDate) => changeValueHandler({startDate, endDate})}
                 />}
 

@@ -81,6 +81,8 @@ export const valueTile = {
     'Keyword': 'Keyword',
     'ProductTargeting': 'Product Targeting',
     'CustomerSearchTerm': 'Customer Search Term',
+    'FAILED,APPLY_FAILED,CHECK_FAILED': 'Failed',
+    'SUCCESS': 'Success',
 }
 
 export const issuesTypeEnums = [
@@ -262,13 +264,14 @@ const columnTitle = (location) => ({
     'calculatedTargetingText': 'Keyword / PT',
     'query': 'Query',
     'margin': 'Margin',
+    'code': 'Status'
 })
 
 
 export const FilterItem = ({filter}) => {
     const location = useSelector(state => state.analytics.location)
 
-    if (filter.filterBy === 'datetime') {
+    if (filter.filterBy === 'datetime' || filter.filterBy === 'generatedAtDateTime') {
         return (
             <>
                 {`${filter.value.startDate === 'lifetime' ? 'lifetime' : moment(filter.value.startDate).format('MMM DD, YYYY')} - ${filter.value.endDate === 'lifetime' ? 'lifetime' : moment(filter.value.endDate).format('MMM DD, YYYY')}`}

@@ -41,6 +41,35 @@
     }
   }
 
+  .filters {
+    padding: 12px 0 0 0;
+    display: flex;
+    flex-direction: column;
+
+    .list-filters-block {
+      margin-bottom: 12px;
+    }
+
+    .current-filters {
+      display: flex;
+      flex-wrap: wrap;
+      grid-row-gap: 10px;
+      border-top: 0.5px solid #C9CBD4;
+      padding: 12px 20px;
+
+      .reset-filters {
+        height: 2.28571429rem;
+        font-weight: 600;
+        font-size: 1rem;
+        color: #46435C;
+
+        &:hover {
+          color: #777391;
+        }
+      }
+    }
+  }
+
   .table-body__row {
     .table-body__field:first-child {
       text-overflow: ellipsis;
