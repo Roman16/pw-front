@@ -24,29 +24,35 @@ export const optimizationRulesServices = {
 
 const dateFormat = (date) => moment(date).format('YYYY-MM-DD')
 
- const dateRangeFormatting = (dateRange) => {
+const dateRangeFormatting = (dateRange) => {
     if (dateRange.startDate === 'lifetime') {
         return ''
     } else {
         dateRange.startDate = moment(dateRange.startDate).format('YYYY-MM-DD')
         dateRange.endDate = moment(dateRange.endDate).format('YYYY-MM-DD')
 
-        return `generatedAtDateTime:from=${dateRange.startDate}&generatedAtDateTime:to=${dateRange.endDate}`
+        return `&generatedAtDateTime:from=${dateRange.startDate}&generatedAtDateTime:to=${dateRange.endDate}`
     }
 }
 
 const filtersHandler = (f) => {
     let filters = [...f]
     const parameters = []
+    console.log(filters)
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
-        if (filterBy === 'datetime') {
-            parameters.unshift(`?${dateRangeFormatting(value)}`)
-        }  else if (type.key === 'except') {
+        if (filterBy === 'generatedAtDateTime') {
+            console.log(value)
+            console.log(dateRangeFormatting(value))
+
+            parameters.unshift(`${dateRangeFormatting(value)}`)
+        } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        }  else if (type.key === 'one_of') {
+        } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
-        }  else if (filterBy !== 'name' && type !== 'search') {
+        } else if (typeof type === 'object') {
+            parameters.push(`&${filterBy}:${type.key}=${value}`)
+        } else if (filterBy !== 'name' && type !== 'search') {
             parameters.push(`&${filterBy}:${type}=${encodeString(value)}`)
         }
     })
@@ -108,12 +114,12 @@ function getAttachedRules(campaignId) {
     return api('get', `${optimizationRulesUrls.attachedRules}?campaign_id[]=${campaignId.join('&campaign_id[]=')}`)
 }
 
-function getLogs({ruleId, campaignId, page, pageSize, filters}) {
-    return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}${filtersHandler(filters)}`)
+function getLogs({ruleId, campaignId, page, pageSize, filters, sorterColumn}) {
+    return api('get', `${optimizationRulesUrls.ruleLogs}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}${filtersHandler(filters)}${sorterColumn && sorterColumn.column ? `&order_by[]=${sorterColumn.column}:${sorterColumn.type}` : ''}`)
 }
 
-function getStatuses({ruleId, campaignId, page, pageSize}) {
-    return api('get', `${optimizationRulesUrls.ruleStatuses}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}`)
+function getStatuses({ruleId, campaignId, page, pageSize, sorterColumn}) {
+    return api('get', `${optimizationRulesUrls.ruleStatuses}?page=${page}&size=${pageSize}${ruleId ? `&rule_id[]=${ruleId}` : ''}${campaignId ? `&campaign_id[]=${campaignId}` : ''}${sorterColumn && sorterColumn.column ? `&order_by[]=${sorterColumn.column}:${sorterColumn.type}` : ''}`)
 }
 
 function activateRule(ruleId) {

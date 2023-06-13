@@ -9,7 +9,7 @@ import {optimizationRulesServices} from "../../../../services/optimization.rules
 import {Spin} from "antd"
 import {activeTimezone} from "../../../index"
 
-const tabs = ['logs', 'statuses']
+const tabs = ['logs', 'launches']
 
 const statusEnums = {
     'CHECK_IN_PROGRESS': 'CHECK_IN_PROGRESS',
@@ -26,11 +26,12 @@ const statusEnums = {
 const columns = {
     'logs': [
         {
-            title: 'Campaign Name',
+            title: 'Campaign',
             key: 'campaignName',
             dataIndex: 'campaignName',
             render: text => <div title={text} className="cut-text">{text}</div>,
             filter: true,
+            sorter: true,
         },
         {
             title: 'Status',
@@ -45,6 +46,14 @@ const columns = {
             dataIndex: 'generatedAtDateTime',
             render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
             filter: true,
+            sorter: true,
+        },
+        {
+            title: 'Object Type',
+            key: 'logType',
+            dataIndex: 'logType',
+            filter: false,
+            visible: false
         },
         {
             title: 'Result',
@@ -53,14 +62,15 @@ const columns = {
             render: text => <div title={text} className="cut-text">{text}</div>,
         },
     ],
-    'statuses': [
+    'launches': [
         {
-            title: 'Name',
+            title: 'Rule',
             key: 'rule_name',
             dataIndex: 'rule_name',
             search: true,
             render: text => <div title={text} className="cut-text">{text}</div>,
             filter: true,
+            sorter: true,
         },
         {
             title: 'Launch date',
@@ -68,6 +78,7 @@ const columns = {
             dataIndex: 'created_at',
             render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
             filter: true,
+            sorter: true,
         },
         {
             title: 'Status',
@@ -81,7 +92,6 @@ const columns = {
             key: 'type',
             dataIndex: 'type',
             render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
-            filter: true,
         },
     ]
 }
@@ -98,6 +108,10 @@ export const RuleDetails = ({
             pageSize: 10,
             filters: []
         }),
+        [sorterColumn, setSorterColumn] = useState({
+            column: 'generatedAtDateTime',
+            type: 'desc'
+        }),
         [processing, setProcessing] = useState(true),
         [ruleData, setRuleData] = useState([]),
         [totalSize, setTotalSize] = useState(0),
@@ -106,7 +120,6 @@ export const RuleDetails = ({
 
 
     const changeFiltersHandler = (data) => setRequestParams(prevState => ({...prevState, filters: data, page: 1}))
-
 
     const changePagination = (params) => {
         setRequestParams({...requestParams, ...params})
@@ -117,18 +130,26 @@ export const RuleDetails = ({
 
         onActivate(selectedRule.id, () => {
             setActivateProcessing(false)
-        })
-    }
 
-    const pauseRuleHandler = () => {
-        setPauseProcessing(true)
-
-        onPause(selectedRule.id, () => {
-            setPauseProcessing(false)
+            if(activeTab=== tabs[1]) {
+                getRuleData()
+            }
         })
     }
 
     const changeTabHandler = (tab) => {
+        if(tab === tabs[0]){
+            setSorterColumn({
+                column: 'generatedAtDateTime',
+                type: 'desc'
+            })
+        } else{
+            setSorterColumn({
+                column: 'created_at',
+                type: 'desc'
+            })
+        }
+
         setRequestParams(prevState => ({...prevState, filters: [], page: 1}))
         setActiveTab(tab)
     }
@@ -139,6 +160,7 @@ export const RuleDetails = ({
         try {
             const {result} = await optimizationRulesServices[activeTab === tabs[0] ? 'getLogs' : 'getStatuses']({
                 ...requestParams,
+                sorterColumn,
                 ruleId: selectedRule.id
             })
 
@@ -150,6 +172,53 @@ export const RuleDetails = ({
 
         setProcessing(false)
     }
+
+    const sortChangeHandler = (column) => {
+        setRequestParams(prevState => ({...prevState, page: 1}))
+
+        if (column === 'generatedAtDateTime' || column === 'created_at') {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'asc'
+
+                    })
+                } else if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'desc'
+                    })
+                }
+            } else {
+                setSorterColumn({
+                    column: column,
+                    type: 'desc'
+                })
+            }
+        } else {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'desc'
+
+                    })
+                } else if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'asc'
+                    })
+                }
+            } else {
+                setSorterColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            }
+        }
+    }
+
 
     useEffect(() => {
         setRuleData([])
@@ -184,7 +253,7 @@ export const RuleDetails = ({
         </div>
 
 
-        <div className="logs">
+        <div className={`logs ${activeTab}`}>
             <div className="tabs">
                 <div className="container">
                     {tabs.map(i => <div onClick={() => changeTabHandler(i)}
@@ -192,14 +261,14 @@ export const RuleDetails = ({
                 </div>
             </div>
 
-            <div className="filters">
-                {/*<TableFilters*/}
-                {/*    columns={columns[activeTab]}*/}
-                {/*    filters={requestParams.filters}*/}
-                {/*    searchField={false}*/}
-                {/*    onChange={changeFiltersHandler}*/}
-                {/*/>*/}
-            </div>
+            {activeTab === tabs[0] && <div className="filters">
+                <TableFilters
+                    columns={columns[activeTab]}
+                    filters={requestParams.filters}
+                    searchField={false}
+                    onChange={changeFiltersHandler}
+                />
+            </div>}
 
 
             <div className="table-block">
@@ -208,6 +277,9 @@ export const RuleDetails = ({
                     dataSource={ruleData}
                     columns={columns[activeTab]}
                     loading={processing}
+                    sorterColumn={sorterColumn}
+
+                    onChangeSorter={sortChangeHandler}
                 />
 
                 <Pagination

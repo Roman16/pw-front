@@ -264,7 +264,8 @@ const columnTitle = (location) => ({
     'calculatedTargetingText': 'Keyword / PT',
     'query': 'Query',
     'margin': 'Margin',
-    'code': 'Status'
+    'code': 'Status',
+    'logType': 'Object Type'
 })
 
 

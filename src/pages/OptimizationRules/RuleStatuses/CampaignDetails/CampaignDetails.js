@@ -1,39 +1,39 @@
 import React, {useEffect, useState} from "react"
 import '../RuleDetails/RuleDetails.less'
-import {SVG} from "../../../../utils/icons"
 import moment from "moment"
-import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
+import TableFilters from "../../../AnalyticsV3/components/TableFilters/TableFilters"
 import CustomTable from "../../../../components/Table/CustomTable"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
-import {Spin} from "antd"
 import {activeTimezone} from "../../../index"
 
-const tabs = ['logs', 'statuses']
+const tabs = ['logs', 'launches']
 
 const columns = {
     'logs': [
         {
-            title: 'Campaign Name',
+            title: 'Campaign',
             key: 'campaignName',
             dataIndex: 'campaignName',
             filter: true,
+            sorter: true,
             render: text => <div title={text} className="cut-text">{text}</div>
         },
         {
             title: 'Status',
             key: 'code',
             dataIndex: 'code',
-            render: status => <Status status={status}/>,
             filter: true,
+            render: status => <Status status={status}/>,
 
         },
         {
             title: 'Date',
             key: 'generatedAtDateTime',
             dataIndex: 'generatedAtDateTime',
-            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
             filter: true,
+            sorter: true,
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
         },
         {
             title: 'Result',
@@ -42,35 +42,36 @@ const columns = {
             render: text => <div title={text} className="cut-text">{text}</div>
         },
     ],
-    'statuses': [
+    'launches': [
         {
-            title: 'Rule Name',
+            title: 'Rule',
             key: 'rule_name',
             dataIndex: 'rule_name',
-            search: true,
-            render: text => <div title={text} className="cut-text">{text}</div>,
             filter: true,
+            sorter: true,
+            render: text => <div title={text} className="cut-text">{text}</div>,
         },
         {
             title: 'Launch date',
             key: 'created_at',
             dataIndex: 'created_at',
-            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
             filter: true,
+            sorter: true,
+            render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
         },
         {
             title: 'Status',
             key: 'status',
             dataIndex: 'status',
-            render: status => <Status status={status}/>,
             filter: true,
+            render: status => <Status status={status}/>,
         },
         {
             title: 'Type',
             key: 'type',
             dataIndex: 'type',
-            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
             filter: true,
+            render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
         },
     ]
 }
@@ -84,18 +85,38 @@ export const CampaignDetails = ({
             pageSize: 10,
             filters: []
         }),
+        [sorterColumn, setSorterColumn] = useState({
+            column: 'generatedAtDateTime',
+            type: 'desc'
+        }),
         [processing, setProcessing] = useState(true),
         [ruleData, setRuleData] = useState([]),
         [totalSize, setTotalSize] = useState(0)
 
 
-    const changeFiltersHandler = () => {
-
-    }
+    const changeFiltersHandler = (data) => setRequestParams(prevState => ({...prevState, filters: data, page: 1}))
 
     const changePagination = (params) => {
         setRequestParams({...requestParams, ...params})
     }
+
+    const changeTabHandler = (tab) => {
+        if(tab === tabs[0]){
+            setSorterColumn({
+                column: 'generatedAtDateTime',
+                type: 'desc'
+            })
+        } else{
+            setSorterColumn({
+                column: 'created_at',
+                type: 'desc'
+            })
+        }
+
+        setRequestParams(prevState => ({...prevState, filters: [], page: 1}))
+        setActiveTab(tab)
+    }
+
 
     const getRuleData = async () => {
         setProcessing(true)
@@ -103,6 +124,7 @@ export const CampaignDetails = ({
         try {
             const {result} = await optimizationRulesServices[activeTab === tabs[0] ? 'getLogs' : 'getStatuses']({
                 ...requestParams,
+                sorterColumn,
                 campaignId: selectedCampaign.campaignId
             })
 
@@ -115,6 +137,53 @@ export const CampaignDetails = ({
         setProcessing(false)
     }
 
+    const sortChangeHandler = (column) => {
+        setRequestParams(prevState => ({...prevState, page: 1}))
+
+        if (column === 'generatedAtDateTime' || column === 'created_at') {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'asc'
+
+                    })
+                } else if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'desc'
+                    })
+                }
+            } else {
+                setSorterColumn({
+                    column: column,
+                    type: 'desc'
+                })
+            }
+        } else {
+            if (sorterColumn && sorterColumn.column === column) {
+                if (sorterColumn.type === 'asc') {
+                    setSorterColumn({
+                        column: column,
+                        type: 'desc'
+
+                    })
+                } else if (sorterColumn.type === 'desc') {
+                    setSorterColumn({
+                        column: null,
+                        type: 'asc'
+                    })
+                }
+            } else {
+                setSorterColumn({
+                    column: column,
+                    type: 'asc'
+                })
+            }
+        }
+    }
+
+
     useEffect(() => {
         setRuleData([])
 
@@ -126,22 +195,22 @@ export const CampaignDetails = ({
             <h2>{selectedCampaign?.name}</h2>
         </div>
 
-        <div className="logs">
+        <div className={`logs ${activeTab}`}>
             <div className="tabs">
                 <div className="container">
-                    {tabs.map(i => <div onClick={() => setActiveTab(i)}
+                    {tabs.map(i => <div onClick={() => changeTabHandler(i)}
                                         className={`tab ${activeTab === i ? 'active' : ''}`}>{i}</div>)}
                 </div>
             </div>
 
-            {/*<div className="filters">*/}
-            {/*    <TableFilters*/}
-            {/*        columns={columns}*/}
-            {/*        filters={requestParams.filters}*/}
-            {/*        searchField={true}*/}
-            {/*        onChange={changeFiltersHandler}*/}
-            {/*    />*/}
-            {/*</div>*/}
+            {activeTab === tabs[0] && <div className="filters">
+                <TableFilters
+                    columns={columns[activeTab]}
+                    filters={requestParams.filters}
+                    searchField={false}
+                    onChange={changeFiltersHandler}
+                />
+            </div>}
 
 
             <div className="table-block">
@@ -150,6 +219,9 @@ export const CampaignDetails = ({
                     dataSource={ruleData}
                     columns={columns[activeTab]}
                     loading={processing}
+                    sorterColumn={sorterColumn}
+
+                    onChangeSorter={sortChangeHandler}
                 />
 
                 <Pagination
