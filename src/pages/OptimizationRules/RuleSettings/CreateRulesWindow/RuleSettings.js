@@ -517,8 +517,8 @@ const ActionValue = ({actions, onChange}) => {
                 <div className="form-group">
                     <label htmlFor="">Up to minimum</label>
                     <InputCurrency
-                        value={actions.up_limit}
-                        onChange={(up_limit) => onChange({actions: {...actions, up_limit: up_limit ? +up_limit : undefined}})}
+                        value={actions.down_limit}
+                        onChange={(down_limit) => onChange({actions: {...actions, down_limit: down_limit ? +down_limit : undefined}})}
                     />
                 </div>
             </div>
