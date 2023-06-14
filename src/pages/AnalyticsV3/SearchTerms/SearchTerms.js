@@ -250,7 +250,7 @@ const SearchTerms = () => {
     const getPreviousPeriodData = async (idList) => {
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
-                const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+                const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
 
                 const filtersWithState = [
                     ...filters,
@@ -259,24 +259,20 @@ const SearchTerms = () => {
                         type: 'eq',
                         value: mainState[key]
                     })).filter(item => !!item.value),
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: {
-                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
-                        }
-                    },
                 ]
 
-                const res = await analyticsServices.fetchSearchTermsData({
+                const {result} = await analyticsServices.fetchSearchTermsData({
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
                     pageParts: ['table'],
                     filtersWithState,
                     activeMetrics,
                     page: 1,
-                    pageSize: 200
+                    pageSize: 200,
+                    selectedRangeDate: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
                 }, `&queryCRC64:in=${idList.join(',')}`)
 
                 setPageData(prevState => {
@@ -286,7 +282,7 @@ const SearchTerms = () => {
                             ...prevState.table,
                             data: [...prevState.table.data.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.data, {queryCRC64: item['queryCRC64']}), (value, key) => {
+                                ..._.mapKeys(_.find(result.table.data, {queryCRC64: item['queryCRC64']}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
@@ -294,7 +290,7 @@ const SearchTerms = () => {
                     }
                 })
             } catch (e) {
-
+                console.log(e)
             }
         }
     }

@@ -36,6 +36,13 @@ const columns = {
             render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
         },
         {
+            title: 'Object Type',
+            key: 'entityType',
+            dataIndex: 'entityType',
+            filter: true,
+            visible: false
+        },
+        {
             title: 'Result',
             key: 'result',
             dataIndex: 'result',

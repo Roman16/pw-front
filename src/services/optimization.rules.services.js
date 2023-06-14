@@ -38,16 +38,12 @@ const dateRangeFormatting = (dateRange) => {
 const filtersHandler = (f) => {
     let filters = [...f]
     const parameters = []
-    console.log(filters)
 
     filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'generatedAtDateTime') {
-            console.log(value)
-            console.log(dateRangeFormatting(value))
-
             parameters.unshift(`${dateRangeFormatting(value)}`)
         } else if (type.key === 'except') {
-            parameters.push(`&${filterBy}:in=${requestValue.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
+            parameters.push(`&${filterBy}:not_in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (type.key === 'one_of') {
             parameters.push(`&${filterBy}:in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (typeof type === 'object') {

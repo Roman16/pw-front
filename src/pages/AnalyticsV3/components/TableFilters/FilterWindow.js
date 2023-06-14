@@ -206,7 +206,7 @@ const containsVariations = {
     [metricKeys['margin']]: numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
-    'logType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'entityType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'severity': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'group': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'issueObjectType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -476,7 +476,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             // {title: 'Product Collection', key: 'Product Collection', value: 'Product Collection'},
             // {title: 'Video', key: 'Video', value: 'Video'},
         ],
-        'logType':[
+        'entityType':[
             {title: 'Keyword', key: 'KEYWORD', value: 'KEYWORD'},
             {title: 'Target', key: 'TARGET', value: 'TARGET'},
             {title: 'Product Ad', key: 'PRODUCT_AD', value: 'PRODUCT_AD'},

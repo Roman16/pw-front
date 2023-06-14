@@ -431,12 +431,7 @@ const RenderPageParts = (props) => {
     })
 
     const getPreviousPeriodData = async (idList, paginationParams) => {
-        if (history.location.pathname === '/analytics-v3/overview' && location === 'products-parents') {
-            location = 'products'
-        }
-
         const queryParams = queryString.parse(history.location.search)
-
 
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
@@ -468,7 +463,7 @@ const RenderPageParts = (props) => {
                     ...prevState,
                     table: {
                         ...prevState.table,
-                        response: [...prevState.table.data.map(item => ({
+                        data: [...prevState.table.data.map(item => ({
                             ...item,
                             ..._.mapKeys(_.find(result.table.data, {[idSelectorsEntity[location]]: item[idSelectorsEntity[location]]}), (value, key) => {
                                 return `${key}_prev`

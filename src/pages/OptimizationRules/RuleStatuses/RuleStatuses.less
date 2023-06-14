@@ -15,7 +15,20 @@
     flex: 1;
     display: flex;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
+
+    & > div {
+      height: 100%;
+      overflow: hidden;
+
+      .logs {
+        overflow: hidden;
+
+        .table-block {
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .cut-text {

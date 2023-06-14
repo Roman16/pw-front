@@ -50,9 +50,9 @@ const columns = {
         },
         {
             title: 'Object Type',
-            key: 'logType',
-            dataIndex: 'logType',
-            filter: false,
+            key: 'entityType',
+            dataIndex: 'entityType',
+            filter: true,
             visible: false
         },
         {

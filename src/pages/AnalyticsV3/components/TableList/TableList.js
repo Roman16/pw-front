@@ -51,7 +51,6 @@ const TableList = ({
                        disabledRow,
                        onDownloadCSV
                    }) => {
-
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAllRows, setSelectedAllRows] = useState(false)
 
