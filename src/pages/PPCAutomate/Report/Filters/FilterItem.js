@@ -83,6 +83,11 @@ export const valueTile = {
     'CustomerSearchTerm': 'Customer Search Term',
     'FAILED,APPLY_FAILED,CHECK_FAILED': 'Failed',
     'SUCCESS': 'Success',
+
+    'KEYWORD': 'Keyword',
+    'TARGET': 'Target',
+    'PRODUCT_AD': 'Product Ad',
+    'SEARCH_TERM': 'Search Term',
 }
 
 export const issuesTypeEnums = [
@@ -264,7 +269,8 @@ const columnTitle = (location) => ({
     'calculatedTargetingText': 'Keyword / PT',
     'query': 'Query',
     'margin': 'Margin',
-    'code': 'Status'
+    'code': 'Status',
+    'entityType': 'Object Type'
 })
 
 

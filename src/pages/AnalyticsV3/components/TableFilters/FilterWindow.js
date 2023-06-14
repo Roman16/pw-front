@@ -206,6 +206,7 @@ const containsVariations = {
     [metricKeys['margin']]: numberVariations,
 
     'type': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
+    'entityType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'severity': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'group': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
     'issueObjectType': [{label: 'Is one of', key: 'one_of'}, {label: 'Except', key: 'except'}],
@@ -474,6 +475,12 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
             {title: 'Product Targeting', key: 'Product Targeting', value: 'Product Targeting'},
             // {title: 'Product Collection', key: 'Product Collection', value: 'Product Collection'},
             // {title: 'Video', key: 'Video', value: 'Video'},
+        ],
+        'entityType':[
+            {title: 'Keyword', key: 'KEYWORD', value: 'KEYWORD'},
+            {title: 'Target', key: 'TARGET', value: 'TARGET'},
+            {title: 'Product Ad', key: 'PRODUCT_AD', value: 'PRODUCT_AD'},
+            {title: 'Search Term', key: 'SEARCH_TERM', value: 'SEARCH_TERM'},
         ],
         'type':
             currentTab === 'targeting-improvements' ? [

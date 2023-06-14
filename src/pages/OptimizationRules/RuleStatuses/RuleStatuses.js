@@ -54,11 +54,10 @@ const RuleStatuses = () => {
 
     return (<div className={'optimization-rules-page rule-statuses'}>
         <Header
-            title={'Statuses & Logs'}
+            title={'Logs & Launches'}
             marketplace={marketplace}
             timezone={true}
         />
-
 
         <div className="container">
             <RulesList

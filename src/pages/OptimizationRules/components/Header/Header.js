@@ -10,5 +10,5 @@ export const Header = ({title = 'Rule-Based Optimization', actions, marketplace,
 
     {actions && actions()}
 
-    {/*{timezone && <MarketplaceTimezone marketplace={marketplace}/>}*/}
+    {timezone && <MarketplaceTimezone marketplace={marketplace}/>}
 </div>

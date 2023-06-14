@@ -73,7 +73,7 @@ const Placements = () => {
 
             const queryParams = queryString.parse(history.location.search)
 
-            let filtersWithState = [ ...filters]
+            let filtersWithState = [...filters]
 
             if (Object.keys(queryParams).length !== 0) {
                 filtersWithState = [
@@ -182,6 +182,7 @@ const Placements = () => {
                 }
             }
 
+
             if (localTableOptions.comparePreviousPeriod) {
                 getPreviousPeriodData()
             }
@@ -225,7 +226,7 @@ const Placements = () => {
     const getPreviousPeriodData = async () => {
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
-                const dateDiff = moment.preciseDiff(selectedRangeDate.endDate, selectedRangeDate.startDate, true)
+                const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
 
                 const filtersWithState = [
                     ...filters,
@@ -234,17 +235,9 @@ const Placements = () => {
                         type: 'eq',
                         value: mainState[key]
                     })).filter(item => !!item.value),
-                    {
-                        filterBy: 'datetime',
-                        type: 'range',
-                        value: {
-                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
-                        }
-                    },
                 ]
 
-                const res = await analyticsServices.fetchPlacementData({
+                const {result} = await analyticsServices.fetchPlacementData({
                     ...tableRequestParams,
                     sorterColumn: localSorterColumn,
                     segment: localSegmentValue,
@@ -252,6 +245,10 @@ const Placements = () => {
                     filtersWithState,
                     activeMetrics,
                     areaChartMetric,
+                    selectedRangeDate: {
+                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                    }
                 })
 
                 setPageData(prevState => {
@@ -261,7 +258,7 @@ const Placements = () => {
                             ...prevState.table,
                             data: [...prevState.table.data.map(item => ({
                                 ...item,
-                                ..._.mapKeys(_.find(res.table.data, {placementName: item['placementName']}), (value, key) => {
+                                ..._.mapKeys(_.find(result.table.data, {placementName: item['placementName']}), (value, key) => {
                                     return `${key}_prev`
                                 })
                             }))]
@@ -269,14 +266,9 @@ const Placements = () => {
                     }
                 })
             } catch (e) {
-
+                console.log(e)
             }
         }
-    }
-
-    const changeSegmentHandler = (value) => {
-        localStorage.setItem('analyticsPSegmentValue', value)
-        setLocalSegmentValue(value)
     }
 
     const changeSorterColumnHandler = (data) => {
