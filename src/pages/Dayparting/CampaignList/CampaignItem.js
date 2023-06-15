@@ -1,8 +1,9 @@
 import React from "react"
 import _ from "lodash"
 import InformationTooltip from "../../../components/Tooltip/Tooltip"
+import {SVG} from "../../../utils/icons"
 
-export const CampaignItem = ({campaign, campaign: {id, name, has_active_dayparting}, selectedCampaign, onSelect}) => (
+export const CampaignItem = ({campaign, campaign: {id, name, has_active_dayparting, state}, selectedCampaign, onSelect}) => (
     <div
         key={id}
         className={`campaign-item ${_.find(selectedCampaign, {id: id}) || selectedCampaign.id === id ? 'active' : ''} ${has_active_dayparting ? 'enabled-dayparting' : ''}`}
@@ -18,6 +19,19 @@ export const CampaignItem = ({campaign, campaign: {id, name, has_active_dayparti
         >
             <div className='on-dayparting'/>
         </InformationTooltip>}
+
+        <Status state={state}/>
     </div>
 
 )
+
+const Status = ({state}) => <InformationTooltip
+    arrowPointAtCenter={true}
+    type={'custom'}
+    description={state}
+    position={'topRight'}
+    className={'status-tooltip'}
+    overlayClassName={'tooltip-popover'}
+>
+    <i className={`status ${state}`}><SVG id={`${state}-status`}/></i>
+</InformationTooltip>
