@@ -20,20 +20,20 @@ const columns = {
             render: text => <div title={text} className="cut-text">{text}</div>
         },
         {
-            title: 'Status',
-            key: 'code',
-            dataIndex: 'code',
-            filter: true,
-            render: status => <Status status={status}/>,
-
-        },
-        {
             title: 'Date',
             key: 'generatedAtDateTime',
             dataIndex: 'generatedAtDateTime',
             filter: true,
             sorter: true,
             render: date => moment(date).tz(activeTimezone).format('DD-MM-YYYY HH:mm'),
+        },
+        {
+            title: 'Status',
+            key: 'code',
+            dataIndex: 'code',
+            filter: true,
+            render: status => <Status status={status}/>,
+
         },
         {
             title: 'Object Type',
