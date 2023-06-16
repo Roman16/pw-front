@@ -160,11 +160,11 @@ const AdminPanel = ({admin = true}) => {
                     Dashboard
                 </NavLink>
 
-                {/*<NavLink*/}
-                {/*    to={'/admin-panel/jungle-scout-report'}*/}
-                {/*>*/}
-                {/*    Reports*/}
-                {/*</NavLink>*/}
+                <NavLink
+                    to={'/admin-panel/jungle-scout-report'}
+                >
+                    Reports
+                </NavLink>
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
@@ -223,7 +223,7 @@ const AdminPanel = ({admin = true}) => {
             <Route path="/advanced/zth" render={() => <ZTH admin={admin}/>}/>
             {admin && <Route path="/admin-panel/registration-links" component={AgencyUsers}/>}
             {admin && <Route path="/admin-panel/agency-dashboard" component={AgencyDashboard}/>}
-            {/*{admin && <Route path="/admin-panel/jungle-scout-report" component={JungleScoutReport}/>}*/}
+            {admin && <Route path="/admin-panel/jungle-scout-report" component={JungleScoutReport}/>}
         </div>
     )
 }

@@ -134,7 +134,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
 
         <div className="search-block">
             <SearchField
-                placeholder={activeTab === 'campaigns' ? 'Search by campaign' : 'Search by rule'}
+                placeholder={activeTab === 'campaigns' ? 'Search by Campaign' : 'Search by Rule'}
                 value={requestParams.searchStr}
                 onSearch={searchStr => changePaginationHandler({searchStr, page: 1})}
             />

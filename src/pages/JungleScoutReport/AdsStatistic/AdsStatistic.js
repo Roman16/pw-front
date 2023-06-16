@@ -21,7 +21,9 @@ const availableMetrics = [
 
 export const AdsStatistic = ({
                                  data: {metrics, previous_month_metrics, chart, advertising_type_distribution, top_sales_campaigns},
-                                 comments: {advertising_metrics_comment, advertising_type_distribution_comment, top_sales_campaigns_comment}
+                                 comments: {advertising_metrics_comment, advertising_type_distribution_comment, top_sales_campaigns_comment},
+                                 editable = false,
+                                 onChange
                              }) => {
     const [activeMetrics, setActiveMetric] = useState([availableMetrics[0], availableMetrics[1]])
 
@@ -41,7 +43,11 @@ export const AdsStatistic = ({
             description={' In this section, you can track the effectiveness of advertising metrics'}
         />
 
-        <Comment text={advertising_metrics_comment}/>
+        <Comment
+            text={advertising_metrics_comment}
+            editable={editable}
+            onChange={(value) => onChange({advertising_metrics_comment: value})}
+        />
 
         <div className="metrics-list">
             {availableMetrics.map(i => <MetricItem
@@ -75,7 +81,11 @@ export const AdsStatistic = ({
         {/*    />*/}
         {/*</div>*/}
 
-        <Comment text={top_sales_campaigns_comment}/>
+        <Comment
+            text={top_sales_campaigns_comment}
+            editable={editable}
+            onChange={(value) => onChange({top_sales_campaigns_comment: value})}
+        />
 
         <TopCampaigns data={top_sales_campaigns}/>
     </section>)

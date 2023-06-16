@@ -1,0 +1,46 @@
+.select-segment-section {
+  background: #fff;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 0 0 4px 4px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+
+  .form-group {
+    width: 300px;
+    display: flex;
+
+    .ant-select {
+      width: 100%;
+    }
+
+
+    &.report {
+      .ant-select-dropdown-menu-item {
+        display: flex;
+        align-items: center;
+
+        .status {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          margin: 0 0 0 auto;
+
+          &.approved {
+            background: #7DD4A1;
+          }
+
+          &.not-approved {
+            background: #FF5256;
+          }
+        }
+      }
+    }
+  }
+
+  .attribution-window-block {
+    margin: 0;
+    border: 0;
+    padding: 0;
+  }
+}
