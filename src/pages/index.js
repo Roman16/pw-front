@@ -348,7 +348,7 @@ const AuthorizedUser = (props) => {
                                     <ConnectedAmazonRoute exact path="/home" component={Home}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/optimization-rules/settings" component={OptimizationRules}/>
-                                    <ConnectedAmazonRoute exact path="/optimization-rules/statuses" component={RuleStatuses}/>
+                                    <ConnectedAmazonRoute exact path="/optimization-rules/statuses/:ruleName?" component={RuleStatuses}/>
                                     <ConnectedAmazonRoute exact path="/optimization-rules/attach-settings" component={AttachSettings}/>
                                     {/*-------------------------------------------*/}
                                     <ConnectedAmazonRoute exact path="/monthly-report" component={JungleScoutReport}/>

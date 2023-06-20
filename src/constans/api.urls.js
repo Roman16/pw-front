@@ -241,6 +241,10 @@ export const jungleScoutReportsUrls = {
     allReports: 'monthly-reports',
     allSegments: 'monthly-reports/segments',
     reportData: (reportId) => `monthly-reports/${reportId}/data`,
+
+    userSegments: 'monthly-reports/admin/segments',
+    userReports: 'monthly-reports/admin',
+    userReportData: id => `monthly-reports/admin/${id}/data`,
 }
 
 

@@ -64,7 +64,11 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     dispatch(daypartingActions.selectCampaign([...selectedCampaign.filter(i => i.id !== campaign.id)]))
                 }
             } else {
-                dispatch(daypartingActions.selectCampaign([...selectedCampaign, campaign]))
+                if(Array.isArray(selectedCampaign)) {
+                    dispatch(daypartingActions.selectCampaign([...selectedCampaign, campaign]))
+                } else {
+                    dispatch(daypartingActions.selectCampaign([selectedCampaign, campaign]))
+                }
             }
         } else {
             dispatch(daypartingActions.selectCampaign(campaign))

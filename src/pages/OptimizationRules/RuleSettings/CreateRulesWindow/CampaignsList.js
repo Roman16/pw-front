@@ -11,7 +11,7 @@ import {tabs} from "../RuleDetails/Attach"
 
 const ruleColumns = [
     {
-        title: 'Rule name',
+        title: 'Rule',
         key: 'name',
         dataIndex: 'name',
         search: true,

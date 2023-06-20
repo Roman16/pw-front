@@ -4,6 +4,8 @@ import _ from "lodash"
 import {periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
 import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
+import InformationTooltip from "../../../../components/Tooltip/Tooltip"
+import {Link} from "react-router-dom"
 
 
 export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttributionWindow, onEdit}) => {
@@ -56,6 +58,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
                 <div className="type">
                     <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
+                    {rule.type === 'manual' && <InformationTooltip description={<LaunchPageLink rule={ruleData.name}/>}/>}
                 </div>
             </div>
         </section>
@@ -81,3 +84,5 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
         </section>
     </>)
 }
+
+const LaunchPageLink = ({rule}) => <span className={'launch-page-link'}>This rule can only be launched manually. You can do this on the <Link to={`/optimization-rules/statuses/${rule}`}>launch page</Link></span>

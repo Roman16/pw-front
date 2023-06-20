@@ -21,7 +21,9 @@ const availableMetrics = [
 
 export const AccountStatistic = ({
                                      data: {metrics, previous_month_metrics, chart, total_orders_count, total_sales, advertising_type_distribution},
-                                     comments: {common_metrics_comment, product_distribution_comment}
+                                     comments: {common_metrics_comment, product_distribution_comment},
+                                     editable = false,
+                                     onChange
                                  }) => {
     const [activeMetrics, setActiveMetric] = useState([availableMetrics[0], availableMetrics[1]])
 
@@ -39,7 +41,11 @@ export const AccountStatistic = ({
             description={'Overall productivity and efficiency indicators of your business'}
         />
 
-        <Comment text={common_metrics_comment}/>
+        <Comment
+            text={common_metrics_comment}
+            editable={editable}
+            onChange={(value) => onChange({common_metrics_comment: value})}
+        />
 
         <div className="metrics-list">
             {availableMetrics.map(i => <MetricItem
@@ -68,7 +74,11 @@ export const AccountStatistic = ({
             description={'Watch the performance of own products compared to Total Sales.(Watch which products require the most attention to increase their effectiveness.)'}
         />
 
-        <Comment text={product_distribution_comment}/>
+        <Comment
+            text={product_distribution_comment}
+            editable={editable}
+            onChange={(value) => onChange({product_distribution_comment: value})}
+        />
 
         <div className="pie-charts-row">
             <PieChart

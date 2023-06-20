@@ -61,17 +61,17 @@ export const mainMenu = [
         link: 'dayparting'
     },
     {
-        title: 'Optimization Rules',
+        title: 'Rule-Based Optimization',
         key: 'rules',
         icon: 'optimization-rules-icon-sidebar',
         link: 'optimization-rules',
         subMenu: [
             {
-                title: 'Rule settings',
+                title: 'Optimization Settings',
                 link: 'settings'
             },
             {
-                title: 'Rule statuses',
+                title: 'Optimization Statuses',
                 link: 'statuses'
             }
         ]

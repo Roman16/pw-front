@@ -7,7 +7,9 @@ import {SectionName} from "../components/SectionName/SectionName"
 
 export const JungleScoutStatistic = ({
                                          data: {revenue_trend, brand_sales, products_revenue},
-                                         comments: {revenue_trend_comment, brand_sales_comment, products_revenue_comment}
+                                         comments: {revenue_trend_comment, brand_sales_comment, products_revenue_comment},
+                                         editable = false,
+                                         onChange
                                      }) => {
 
     return (
@@ -17,7 +19,11 @@ export const JungleScoutStatistic = ({
                 description={'Monitor the overall trend in your segment, how it evolves over time. (You can see what trends are present in the niche and whether the product has any seasonality.)'}
             />
 
-            <Comment text={revenue_trend_comment}/>
+            <Comment
+                text={revenue_trend_comment}
+                editable={editable}
+                onChange={(value) => onChange({revenue_trend_comment: value})}
+            />
 
             <LineChart
                 data={revenue_trend.map(i => ({
@@ -36,7 +42,11 @@ export const JungleScoutStatistic = ({
                 description={' Keep an eye for the market share of the competitors by monitoring the top brands within your segment.(Find out how effectively your brand is able to take away a share of sales from competitors.)'}
             />
 
-            <Comment text={brand_sales_comment}/>
+            <Comment
+                text={brand_sales_comment}
+                editable={editable}
+                onChange={(value) => onChange({brand_sales_comment: value})}
+            />
 
             <StackedAreaPercentChart
                 data={brand_sales}
@@ -47,7 +57,11 @@ export const JungleScoutStatistic = ({
                 description={'The top (number) products by revenue in your segment. (Find out which products of your direct competitors have the highest demand among consumers.)'}
             />
 
-            <Comment text={products_revenue_comment}/>
+            <Comment
+                text={products_revenue_comment}
+                editable={editable}
+                onChange={(value) => onChange({products_revenue_comment: value})}
+            />
 
             <TreeMapChart
                 data={products_revenue}

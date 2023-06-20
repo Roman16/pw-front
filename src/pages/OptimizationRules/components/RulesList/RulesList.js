@@ -16,14 +16,14 @@ const navigationTabs = ['rules', 'campaigns']
 const CancelToken = axios.CancelToken
 let source = null
 
-export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, onDelete}) => {
+export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, onDelete, searchParams}) => {
     const [list, setList] = useState([]),
         [processing, setProcessing] = useState(true),
         [totalSize, setTotalSize] = useState(0),
         [requestParams, setRequestParams] = useState({
             page: 1,
             pageSize: 10,
-            searchStr: ''
+            searchStr: searchParams ? {multiSearch: false, strictSearch: true, value: searchParams} : undefined
         })
 
     const selectRuleHandler = (rule) => {
@@ -134,7 +134,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
 
         <div className="search-block">
             <SearchField
-                placeholder={activeTab === 'campaigns' ? 'Search by campaign name' : 'Search by rule’s name'}
+                placeholder={activeTab === 'campaigns' ? 'Search by Campaign' : 'Search by Rule'}
                 value={requestParams.searchStr}
                 onSearch={searchStr => changePaginationHandler({searchStr, page: 1})}
             />
@@ -143,8 +143,9 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
         <div className="list">
             {processing && <div className='fetching-data'><Spin size={'large'}/></div>}
 
-            {list.map(item => activeTab === 'rules' ? <div onClick={() => selectedRule?.id !== item.id ? selectRuleHandler(item) : ''}
-                                                           className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
+            {list.map(item => activeTab === 'rules' ?
+                <div onClick={() => selectedRule?.id !== item.id ? selectRuleHandler(item) : ''}
+                     className={`item rule ${selectedRule?.id === item.id ? 'active' : ''}`}>
                     <div className={`status ${item.active ? 'enabled' : 'paused'}`}/>
                     <div className="name" title={item.name}>{item.name}</div>
                     <div className="description" title={item.description}>{item.description}</div>

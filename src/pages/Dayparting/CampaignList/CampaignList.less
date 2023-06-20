@@ -318,7 +318,7 @@
         .custom-tooltip {
           z-index: 10;
           position: absolute;
-          right: 0.7142857142857143rem;
+          right: 2.142857142857143rem;
           top: 0.7142857142857143rem;
 
           .on-dayparting {
@@ -327,6 +327,53 @@
             background: #A292E2;
             border-radius: 50%;
           }
+        }
+      }
+
+      .custom-tooltip.status-tooltip {
+        right: 0.7142857142857143rem !important;
+        z-index: 10;
+        position: absolute;
+        top: 0.7142857142857143rem;
+        display: flex;
+
+        i {
+          width: 10px;
+          height: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.enabled {
+            //color: #259B25;
+
+            svg {
+              fill: #7FD3A1;
+            }
+          }
+
+          &.inactive {
+            //color: #D66744;
+          }
+
+          &.paused {
+            //color: #EEBB81;
+
+            svg {
+              fill: #C9CBD4;
+            }
+          }
+
+          &.archived {
+            //color: #656A84;
+            svg {
+              fill: #C9CBD4;
+            }
+          }
+        }
+
+        svg {
+
         }
       }
 
@@ -879,6 +926,14 @@
         justify-content: flex-end;
         padding: 0 3px 0 0;
       }
+    }
+  }
+}
+
+.tooltip-popover {
+  .ant-popover-inner-content {
+    span {
+      text-transform: capitalize;
     }
   }
 }

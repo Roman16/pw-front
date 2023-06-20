@@ -7,8 +7,9 @@ import {optimizationRulesServices} from "../../../services/optimization.rules.se
 import {CampaignDetails} from "./CampaignDetails/CampaignDetails"
 import {NoFoundData} from "../../../components/Table/CustomTable"
 import {useSelector} from "react-redux"
+import {notification} from "../../../components/Notification"
 
-const RuleStatuses = () => {
+const RuleStatuses = (props) => {
     const [activeTab, setActiveTab] = useState('rules'),
         [selectedRule, setSelectedRule] = useState({}),
         [visibleRouteLoader, setVisibleRouteLoader] = useState(true)
@@ -30,6 +31,7 @@ const RuleStatuses = () => {
         try {
             const {result} = await optimizationRulesServices.activateRule(id)
             setSelectedRule(prevState => ({...prevState, launch_status: result?.status}))
+            notification.success({title: 'Rule run queued successfully'})
         } catch (e) {
             console.log(e)
         }
@@ -51,7 +53,6 @@ const RuleStatuses = () => {
         cb()
     }
 
-
     return (<div className={'optimization-rules-page rule-statuses'}>
         <Header
             title={'Logs & Launches'}
@@ -63,6 +64,7 @@ const RuleStatuses = () => {
             <RulesList
                 activeTab={activeTab}
                 selectedRule={selectedRule}
+                searchParams={props?.match?.params?.ruleName || ''}
 
                 onSelect={changeRuleHandler}
                 onSetActiveTab={changeActiveTabHandler}
