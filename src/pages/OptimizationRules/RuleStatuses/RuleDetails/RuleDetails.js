@@ -34,13 +34,6 @@ const columns = {
             sorter: true,
         },
         {
-            title: 'Status',
-            key: 'code',
-            dataIndex: 'code',
-            render: status => <Status status={status}/>,
-            filter: true,
-        },
-        {
             title: 'Date',
             key: 'generatedAtDateTime',
             dataIndex: 'generatedAtDateTime',
@@ -48,6 +41,14 @@ const columns = {
             filter: true,
             sorter: true,
         },
+        {
+            title: 'Status',
+            key: 'code',
+            dataIndex: 'code',
+            render: status => <Status status={status}/>,
+            filter: true,
+        },
+
         {
             title: 'Object Type',
             key: 'entityType',
