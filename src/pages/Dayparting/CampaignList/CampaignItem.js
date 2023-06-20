@@ -20,7 +20,7 @@ export const CampaignItem = ({campaign, campaign: {id, name, has_active_dayparti
             <div className='on-dayparting'/>
         </InformationTooltip>}
 
-        <Status state={state}/>
+        {state && <Status state={state}/>}
     </div>
 
 )

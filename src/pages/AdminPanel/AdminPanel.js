@@ -160,11 +160,11 @@ const AdminPanel = ({admin = true}) => {
                     Dashboard
                 </NavLink>
 
-                <NavLink
-                    to={'/admin-panel/jungle-scout-report'}
-                >
-                    Reports
-                </NavLink>
+                {/*<NavLink*/}
+                {/*    to={'/admin-panel/jungle-scout-report'}*/}
+                {/*>*/}
+                {/*    Reports*/}
+                {/*</NavLink>*/}
 
                 {/*<button*/}
                 {/*    className={`${selectedTab === 'products' ? 'active' : ''}`}*/}
