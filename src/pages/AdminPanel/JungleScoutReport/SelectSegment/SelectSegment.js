@@ -42,7 +42,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
     const getAccountsList = async () => {
         try {
             const {result} = await adminServices.fetchUserARA(selectedUserId)
-            setAccountsList(result[selectedUserId])
+            setAccountsList(result[selectedUserId] || [])
         } catch (e) {
             console.log(e)
         }
@@ -51,7 +51,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
     const getMarketplacesList = async () => {
         try {
             const {result} = await adminServices.fetchUserARAM(selectedAccountId)
-            setMarketplacesList(result[selectedAccountId])
+            setMarketplacesList(result[selectedAccountId] || [])
         } catch (e) {
             console.log(e)
         }
