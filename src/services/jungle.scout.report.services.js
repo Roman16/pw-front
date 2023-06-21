@@ -11,6 +11,7 @@ export const jungleScoutReportServices = {
     getUserReports,
     getUserReportData,
     saveUserReport,
+    addSegment
 }
 
 
@@ -27,8 +28,8 @@ function getReportData(id, attributionWindow) {
 }
 
 //
-function getUserSegments(userId) {
-    return api('get', `${jungleScoutReportsUrls.userSegments}?page=1&size=1000&user_id[]=${userId}`, undefined, undefined, undefined, undefined, undefined, false)
+function getUserSegments(aramId) {
+    return api('get', `${jungleScoutReportsUrls.userSegments}?page=1&size=1000&amazon_region_account_marketplace_id[]=${aramId}`, undefined, undefined, undefined, undefined, undefined, false)
 }
 
 function getUserReports(segmentId) {
@@ -41,4 +42,8 @@ function getUserReportData(id, attributionWindow) {
 
 function saveUserReport(id, data) {
     return api('put', `${jungleScoutReportsUrls.userReports}/${id}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+function addSegment(data) {
+    return api('post', `${jungleScoutReportsUrls.userSegments}`, data, undefined, undefined, undefined, undefined, false)
 }

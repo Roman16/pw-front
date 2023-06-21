@@ -244,6 +244,7 @@ export const jungleScoutReportsUrls = {
 
     userSegments: 'monthly-reports/admin/segments',
     userReports: 'monthly-reports/admin',
+    userAccounts: 'monthly-reports/admin',
     userReportData: id => `monthly-reports/admin/${id}/data`,
 }
 
