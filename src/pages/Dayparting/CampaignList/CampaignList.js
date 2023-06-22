@@ -26,10 +26,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
     const [isOpenList, setIsOpenList] = useState(true),
         [searchStr, setSearchStr] = useState(),
         [onlyOnDayparting, setOnlyOnDayparting] = useState(false),
-        [filterParams, setFilterParams] = useState({
-            campaign_status: 'all',
-            campaign_type: 'all'
-        }),
+        [filterParams, setFilterParams] = useState(),
         [openedVariations, setOpenedVariations] = useState(),
         [paginationParams, setPaginationParams] = useState({
             page: 1,
@@ -50,7 +47,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
 
         dispatch(daypartingActions.getDataList({
             ...paginationParams,
-            ...filterParams,
+            filterParams,
             onlyOnDayparting,
             searchStr,
             cancelToken: source.token
@@ -64,7 +61,7 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     dispatch(daypartingActions.selectCampaign([...selectedCampaign.filter(i => i.id !== campaign.id)]))
                 }
             } else {
-                if(Array.isArray(selectedCampaign)) {
+                if (Array.isArray(selectedCampaign)) {
                     dispatch(daypartingActions.selectCampaign([...selectedCampaign, campaign]))
                 } else {
                     dispatch(daypartingActions.selectCampaign([selectedCampaign, campaign]))
@@ -190,10 +187,12 @@ const CampaignList = ({multiselect, onSetMultiselect}) => {
                     selectedCampaign={selectedCampaign}
                     tab={activeTab}
                     searchStr={searchStr}
+                    filters={filterParams}
 
                     onApplyFilter={changeSelectHandler}
                     onChangeSwitch={changeSwitchHandler}
                     onSetMultiselect={setMultiselectHandler}
+                    onChangeFilters={setFilterParams}
                 />
 
                 {activeTab !== 'account' && <>

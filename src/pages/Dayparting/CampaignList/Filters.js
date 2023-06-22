@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from "react"
-import {Dropdown, Input, Menu, Switch, Select} from "antd"
+import {Switch, Popover, Checkbox} from "antd"
 import {SVG} from "../../../utils/icons"
 import CustomSelect from "../../../components/Select/Select"
 import {SearchField} from "../../../components/SearchField/SearchField"
+import {optimizationOptions} from "../../PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes"
 
-const {Search} = Input,
-    Option = Select.Option
+
+export const filtersOptions = [
+    {label: 'Enabled', value: 'enabled'},
+    {label: 'Paused', value: 'paused'},
+    {label: 'Archived', value: 'archived'},
+]
 
 const Filters = ({
                      onSearch,
@@ -16,56 +21,12 @@ const Filters = ({
                      onSetMultiselect,
                      multiselect,
                      selectedCampaign,
-                     searchStr
+                     searchStr,
+                     filters,
+                     onChangeFilters
                  }) => {
 
-    const [visibleDropdown, setVisibleDropdown] = useState(false),
-        [campaign_type, setCampaignType] = useState('all'),
-        [campaign_status, setCampaignStatus] = useState('all'),
-        [searchValue, setSearchValue] = useState('')
-
-    const applyFilterHandler = () => {
-        onApplyFilter({
-            campaign_type,
-            campaign_status
-        })
-
-        setVisibleDropdown(false)
-    }
-
-    const resetFilterHandler = () => {
-        if (campaign_type !== 'all' || campaign_status !== 'all') {
-            setCampaignType('all')
-            setCampaignStatus('all')
-            onApplyFilter({
-                campaign_type: 'all',
-                campaign_status: 'all'
-            })
-        }
-
-        setVisibleDropdown(false)
-    }
-
-    const dropdownWindow = (
-        <Menu className={'filter-dropdown-window'}>
-            <div className="row">
-                <div className="form-group">
-                    <label htmlFor="">Campaign Status</label>
-
-                    <CustomSelect value={campaign_status} onChange={value => setCampaignStatus(value)}>
-                        <Option value={'all'}>All</Option>
-                        <Option value={'enabled'}>Enabled</Option>
-                        <Option value={'paused'}>Paused</Option>
-                    </CustomSelect>
-                </div>
-            </div>
-
-            <div className="buttons">
-                <button className={'btn white'} onClick={resetFilterHandler}>Reset</button>
-                <button className={'btn default'} onClick={applyFilterHandler}>Apply</button>
-            </div>
-        </Menu>
-    )
+    const [searchValue, setSearchValue] = useState('')
 
     const changeSearchHandler = (value) => {
         onSearch(value)
@@ -86,23 +47,20 @@ const Filters = ({
                         onSearch={changeSearchHandler}
                     />
                 </div>
-                {/*<Dropdown*/}
-                {/*    visible={visibleDropdown}*/}
-                {/*    onVisibleChange={() => setVisibleDropdown(prevState => !prevState)}*/}
-
-                {/*    overlay={dropdownWindow}*/}
-                {/*    trigger={['click']}*/}
-                {/*    placement={'bottomRight'}*/}
-                {/*    getPopupContainer={triggerNode => triggerNode.parentNode}*/}
-                {/*>*/}
-                {/*    <button className={'filters'}>*/}
-                {/*        <SVG id={'filter-icon'}/>*/}
-                {/*    </button>*/}
-                {/*</Dropdown>*/}
             </div>}
 
 
             {tab === 'campaigns' && <div className="row buttons">
+                <div className="active-only">
+                    <Switch
+                        className={'dark'}
+                        checked={onlyOndayparting}
+                        onChange={onChangeSwitch}
+                    />
+
+                    <label htmlFor="">On dayparting only</label>
+                </div>
+
                 <div className={'multi-select-switch'}>
                     <button title={'Select all on this page'} className={`btn`} onClick={() => onSetMultiselect('all')}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,25 +150,27 @@ const Filters = ({
                     </div>}
                 </div>
 
-                <div className="active-only">
-                    <Switch
-                        className={'dark'}
-                        checked={onlyOndayparting}
-                        onChange={onChangeSwitch}
-                    />
+                <Popover
+                    trigger="click"
+                    placement="bottomRight"
+                    overlayClassName={'filter-options-popover'}
+                    getPopupContainer={(node) => node.parentNode}
+                    content={<div className="options">
+                        <Checkbox.Group
+                            options={filtersOptions}
+                            onChange={onChangeFilters}
+                            value={filters}
+                        />
+                    </div>}
+                >
+                    <button className={`btn icon filter-icon ${filters && filters.length > 0 ? 'active' : ''}`}>
+                        <SVG id={'filter-icon'}/>
+                    </button>
+                </Popover>
 
-                    <label htmlFor="">On dayparting only</label>
-                </div>
             </div>}
         </div>
     )
 }
-
-const SearchIcon = () => <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path
-        d="M13 13.5L9.32215 9.82215M9.32215 9.82215C10.2043 8.93994 10.75 7.72119 10.75 6.375C10.75 3.68261 8.56739 1.5 5.875 1.5C3.18261 1.5 1 3.68261 1 6.375C1 9.06739 3.18261 11.25 5.875 11.25C7.22119 11.25 8.43994 10.7043 9.32215 9.82215Z"
-        stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
 
 export default Filters

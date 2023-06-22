@@ -68,8 +68,8 @@ function deactivateMultiDayparting(data) {
 
 //-----------------
 
-function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting}) {
-    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${searchStrWrap(searchStr).join('')}`, null, null, cancelToken)
+function getCampaigns({pageSize = 25, page = 1, searchStr, cancelToken, onlyOnDayparting, filterParams}) {
+    return api('get', `${daypartingUrls.campaigns}?page=${page}&size=${pageSize}&with_only_active_dayparting=${onlyOnDayparting ? 1 : 0}${searchStrWrap(searchStr).join('')}${(filterParams && filterParams.length > 0) ? `&state:in=${filterParams.join(',')}` : ''}`, null, null, cancelToken)
 }
 
 function getProducts({pageSize = 25, page = 1, searchStr, cancelToken}) {
