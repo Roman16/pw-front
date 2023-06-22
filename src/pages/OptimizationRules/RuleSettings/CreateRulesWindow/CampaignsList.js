@@ -72,6 +72,10 @@ export const CampaignsList = ({
         onChangeFilters && onChangeFilters(filters)
     }
 
+    const cancelAllSelectedHandler = () => {
+        onChangeAttachedList(attachedListFromRequest, attachedListFromRequest, [])
+    }
+
     const rowSelection = {
         onChange: (rowsList, attachList, detachList) => {
             onChangeAttachedList(rowsList, attachList, detachList)
@@ -109,15 +113,26 @@ export const CampaignsList = ({
             />}
 
             {selectAllBtn && <div className="select-all-block">
-                {attachedList === 'all' ?
-                    <p><b>All {totalSize}</b> selected</p>
+                {activeTab === tabs[0] ? attachedList === 'all' ?
+                    <p><b>All {totalSize}</b> deselected <button className={'select-all-btn'}
+                                                               onClick={cancelAllSelectedHandler}>(Cancel)</button></p>
                     :
-                    <p><b>{attachedList.length}</b> selected {(totalSize > 1) && <>(
-                        <button className={'select-all-btn'} onClick={selectAllHandler}>or select
+                    <p><b>{totalSize - attachedList.length}</b> deselected {(totalSize > 1) && <>(
+                        <button className={'select-all-btn'} onClick={selectAllHandler}>or deselect
                             all {totalSize}</button>
                         )</>}
                     </p>
-                }
+                    :
+                    attachedList === 'all' ?
+                        <p><b>All {totalSize}</b> selected <button className={'select-all-btn'}
+                                                                   onClick={cancelAllSelectedHandler}>(Cancel)</button>
+                        </p>
+                        :
+                        <p><b>{attachedList.length}</b> selected {(totalSize > 1) && <>(
+                            <button className={'select-all-btn'} onClick={selectAllHandler}>or select
+                                all {totalSize}</button>
+                            )</>}
+                        </p>}
             </div>}
         </div>
 

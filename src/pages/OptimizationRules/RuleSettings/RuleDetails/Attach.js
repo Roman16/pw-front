@@ -114,7 +114,7 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
         if (list === 'all') {
             setAttachedCampaigns('all')
         } else if (detachList.length > 0) {
-            setAttachedCampaigns(prevState => prevState === 'all' ? [...list] : [...prevState.filter(i => !detachList.includes(i))])
+            setAttachedCampaigns(prevState => prevState === 'all' ? [...new Set([...attachedListFromRequest, ...list])].filter(i => !detachList.includes(i)) : [...prevState.filter(i => !detachList.includes(i))])
         } else {
             setAttachedCampaigns(prevState => prevState === 'all' ? [...list] : [...new Set([...prevState, ...list])])
         }
@@ -136,7 +136,7 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
                     all_campaigns: 1,
                     rulesNewLength: 0,
                 }, () => {
-                    attachedListFromRequest = 0
+                    attachedListFromRequest = []
                     setSaveProcessing(false)
                     setCampaigns([])
                     setTotalSize(0)
@@ -231,7 +231,7 @@ export const Attach = ({id, rule, attributionWindow, onAttach, onDetach}) => {
         <div className="tabs">
             <div className="container">
                 {tabs.map((tab) => <div
-                    onClick={() => changeTabHandler(tab)}
+                    onClick={() => tab !== activeTab && changeTabHandler(tab)}
                     className={`tab ${tab === activeTab ? 'active' : ''}`}
                 >
                     {tab}

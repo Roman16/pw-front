@@ -125,7 +125,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
     return (<div className="rules-list">
         <div className="tabs">
             {navigationTabs.map(i => (<div
-                onClick={() => changeTabHandler(i)}
+                onClick={() => activeTab !== i && changeTabHandler(i)}
                 className={`tab ${activeTab === i ? 'active' : ''}`}>
                 <SVG id={'list'}/>
                 {i}
