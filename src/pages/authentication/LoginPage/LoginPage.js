@@ -58,7 +58,7 @@ const LoginPage = (props) => {
                     history.push('/home')
                 }
 
-                seo({title: 'Sponsoreds'})
+                seo({title: 'Profit Whales'})
 
             } catch (e) {
                 console.log(e)
@@ -69,7 +69,7 @@ const LoginPage = (props) => {
     }
 
     useEffect(() => {
-        seo({title: 'Login Sponsoreds'})
+        seo({title: 'Login Profit Whales'})
 
         if (props.match.params.status === 'logout') {
             localStorage.removeItem('importStatus')
@@ -90,7 +90,7 @@ const LoginPage = (props) => {
 
 
         if (localStorage.getItem('token')) {
-            seo({title: 'Sponsoreds'})
+            seo({title: 'Profit Whales'})
             history.push('/home')
         }
     }, [])

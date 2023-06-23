@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
-import logo from "../../assets/img/logo/sds-sidebar-logo.svg"
+import logo from "../../assets/img/logo/pw-logo-white.svg"
 import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
