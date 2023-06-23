@@ -62,6 +62,10 @@ const Filters = ({
                 </div>
 
                 <div className={'multi-select-switch'}>
+                    {multiselect && <div className="select-count">
+                        <b>{selectedCampaign.length}</b> selected on <br/> <b>this page</b>
+                    </div>}
+
                     <button title={'Select all on this page'} className={`btn`} onClick={() => onSetMultiselect('all')}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd"
@@ -144,10 +148,6 @@ const Filters = ({
                                 d="M3.33301 4.3335C3.33301 3.78121 3.78072 3.3335 4.33301 3.3335H7.88841C8.4407 3.3335 8.88841 3.78121 8.88841 4.3335V7.8889C8.88841 8.44119 8.4407 8.8889 7.88841 8.8889H4.33301C3.78072 8.8889 3.33301 8.44119 3.33301 7.8889V4.3335Z"/>
                         </svg>
                     </button>
-
-                    {multiselect && <div className="select-count">
-                        <b>{selectedCampaign.length}</b> selected on <br/> <b>this page</b>
-                    </div>}
                 </div>
 
                 <Popover

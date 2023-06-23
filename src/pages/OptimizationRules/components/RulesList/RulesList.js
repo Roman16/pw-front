@@ -149,22 +149,33 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                 getPopupContainer={(node) => node.parentNode}
                 content={<div className="options">
                     <Radio.Group value={requestParams.sorting}
-                                 onChange={({target: {value}}) => setRequestParams(prevState => ({...prevState, sorting: value}))}>
-                        <Radio value={'name:asc'}>
-                            Name rules A-Z
-                        </Radio>
+                                 onChange={({target: {value}}) => setRequestParams(prevState => ({
+                                     ...prevState,
+                                     sorting: value
+                                 }))}>
+                        {activeTab === navigationTabs[0] ? <>
+                            <Radio value={'name:asc'}>
+                                Rule A-Z
+                            </Radio>
 
-                        <Radio value={'name:desc'}>
-                            Name rules Z-A
-                        </Radio>
+                            <Radio value={'name:desc'}>
+                                Rule Z-A
+                            </Radio>
 
-                        {activeTab === navigationTabs[0] && <>
                             <Radio value={'created_at:asc'}>
-                                Creation date increase
+                                Creation date older
                             </Radio>
 
                             <Radio value={'created_at:desc'}>
-                                Creation date decrease
+                                Creation date newer
+                            </Radio>
+                        </> : <>
+                            <Radio value={'name:asc'}>
+                                Campaign A-Z
+                            </Radio>
+
+                            <Radio value={'name:desc'}>
+                                Campaign Z-A
                             </Radio>
                         </>}
                     </Radio.Group>
