@@ -210,12 +210,56 @@
       .active-only {
         display: flex;
         align-items: center;
-        margin: 0 0 0 auto;
+        margin: 0 auto 0 0;
 
         label {
           font-size: 12px;
           color: #FFFFFF;
           margin: 0 0 0 5px;
+        }
+      }
+
+      .filter-options-popover {
+        .ant-popover-arrow {
+          margin: 0 3px 0 0;
+        }
+
+        .ant-popover-inner-content {
+          padding: 20px;
+
+          .ant-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            grid-gap: 15px;
+
+            .ant-checkbox {
+              width: 1.2857142857142858rem;
+              height: 1.2857142857142858rem;
+            }
+
+            span {
+              font-size: 0.8571428571428571rem;
+            }
+          }
+        }
+      }
+
+      .filter-icon {
+        width: 2.28571429rem;
+        height: 2.28571429rem;
+
+        svg {
+          fill: #fff;
+        }
+
+        &:hover,
+        &:focus,
+        &.active{
+          background: rgba(105, 89, 171, 0.15);
+
+          svg {
+            fill: #6959AB;
+          }
         }
       }
     }
@@ -322,8 +366,8 @@
           top: 0.7142857142857143rem;
 
           .on-dayparting {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: #A292E2;
             border-radius: 50%;
           }
@@ -338,8 +382,8 @@
         display: flex;
 
         i {
-          width: 10px;
-          height: 10px;
+          width: 8px;
+          height: 8px;
           display: flex;
           align-items: center;
           justify-content: center;

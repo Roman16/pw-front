@@ -3,7 +3,7 @@ import './RulesList.less'
 import {SVG} from "../../../../utils/icons"
 import {SearchField} from "../../../../components/SearchField/SearchField"
 import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
-import {Spin} from "antd"
+import {Popover, Radio, Spin, Switch} from "antd"
 import Pagination from "../../../../components/Pagination/Pagination"
 import {periodEnums} from "../../RuleSettings/CreateRulesWindow/RuleInformation"
 import _ from 'lodash'
@@ -23,7 +23,9 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
         [requestParams, setRequestParams] = useState({
             page: 1,
             pageSize: 10,
-            searchStr: searchParams ? {multiSearch: false, strictSearch: true, value: searchParams} : undefined
+            searchStr: searchParams ? {multiSearch: false, strictSearch: true, value: searchParams} : undefined,
+            sorting: 'created_at:desc',
+            onlyManual: false
         })
 
     const selectRuleHandler = (rule) => {
@@ -50,7 +52,6 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                 arr = result.data
                 totalSize = result.total_count
             } else {
-
                 const {result} = await optimizationRulesServices.getCampaignsPreview(requestParams, source.token)
                 arr = result.data
                 totalSize = result.total_count
@@ -73,13 +74,15 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
 
         changePaginationHandler({
             page: 1,
-            searchStr: ''
+            searchStr: '',
+            sorting: tab === navigationTabs[0] ? 'created_at:desc' : 'name:asc'
         })
     }
 
     useEffect(() => {
         getList()
     }, [requestParams, activeTab])
+
 
     useEffect(() => {
         if (activeTab === navigationTabs[0]) {
@@ -125,7 +128,7 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
     return (<div className="rules-list">
         <div className="tabs">
             {navigationTabs.map(i => (<div
-                onClick={() => changeTabHandler(i)}
+                onClick={() => activeTab !== i && changeTabHandler(i)}
                 className={`tab ${activeTab === i ? 'active' : ''}`}>
                 <SVG id={'list'}/>
                 {i}
@@ -138,6 +141,53 @@ export const RulesList = ({activeTab, onSetActiveTab, selectedRule, onSelect, on
                 value={requestParams.searchStr}
                 onSearch={searchStr => changePaginationHandler({searchStr, page: 1})}
             />
+
+            <Popover
+                trigger="click"
+                placement="bottomRight"
+                overlayClassName={'sorting-options-popover'}
+                getPopupContainer={(node) => node.parentNode}
+                content={<div className="options">
+                    <Radio.Group value={requestParams.sorting}
+                                 onChange={({target: {value}}) => setRequestParams(prevState => ({
+                                     ...prevState,
+                                     sorting: value
+                                 }))}>
+                        {activeTab === navigationTabs[0] ? <>
+                            <Radio value={'name:asc'}>
+                                Rule A-Z
+                            </Radio>
+
+                            <Radio value={'name:desc'}>
+                                Rule Z-A
+                            </Radio>
+
+                            <Radio value={'created_at:asc'}>
+                                Creation date older
+                            </Radio>
+
+                            <Radio value={'created_at:desc'}>
+                                Creation date newer
+                            </Radio>
+                        </> : <>
+                            <Radio value={'name:asc'}>
+                                Campaign A-Z
+                            </Radio>
+
+                            <Radio value={'name:desc'}>
+                                Campaign Z-A
+                            </Radio>
+                        </>}
+                    </Radio.Group>
+
+                </div>}
+            >
+                <div className="sort-btn">
+                    <button className={`btn icon sorting-icon`}>
+                        <SVG id={'sort-arrows'}/>
+                    </button>
+                </div>
+            </Popover>
         </div>
 
         <div className="list">

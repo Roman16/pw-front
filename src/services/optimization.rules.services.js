@@ -63,14 +63,14 @@ function getCampaigns({pageSize, page, searchStr, attributionWindow = 7, filters
     return api('get', `${optimizationRulesUrls.campaigns}?attribution_window=${attributionWindow}&table[page]=${page}&table[size]=${pageSize}${searchStrWrap(searchStr).join('')}&date_from=${dateFormat(selectedRangeDate.startDate)}&date_to=${dateFormat(selectedRangeDate.endDate)}${filters.length > 0 ? filtersHandler(filters) : ''}${campaignsId.length > 0 ? `&campaign_id[]=${campaignsId.join('&campaign_id[]=')}` : ''}${ruleId ? `&rule_id[]=${ruleId}` : ''}`)
 }
 
-function getCampaignsPreview({pageSize, page, searchStr}, cancelToken) {
-    return api('get', `${optimizationRulesUrls.campaignsPreview}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}`, undefined, undefined, cancelToken)
+function getCampaignsPreview({pageSize, page, searchStr, sorting}, cancelToken) {
+    return api('get', `${optimizationRulesUrls.campaignsPreview}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)
 }
 
-function getRules({pageSize, page, filters, searchStr, id = []}, cancelToken) {
+function getRules({pageSize, page, filters, searchStr, id = [], sorting}, cancelToken) {
     if (filters?.[0]?.type === "search") searchStr = filters[0].value
 
-    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}`, undefined, undefined, cancelToken)
+    return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)
 }
 
 function createRule(rule) {

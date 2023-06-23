@@ -94,6 +94,34 @@ const columns = {
             dataIndex: 'type',
             render: type => <div>{type === 'MANUAL' ? 'Manual' : 'Auto'}</div>,
         },
+        {
+            title: 'Processed Entities',
+            key: 'totalProcessedEntitiesCount',
+            dataIndex: 'totalProcessedEntitiesCount',
+            align: 'right',
+            width: '160px',
+        },
+        {
+            title: 'Total Changes',
+            key: 'totalChanges',
+            dataIndex: 'totalChanges',
+            align: 'right',
+            width: '140px',
+        },
+        {
+            title: 'Successful Changes',
+            key: 'successfulChanges',
+            dataIndex: 'successfulChanges',
+            align: 'right',
+            width: '170px',
+        },
+        {
+            title: 'Failed Changes',
+            key: 'failedChanges',
+            dataIndex: 'failedChanges',
+            align: 'right',
+            width: '150px',
+        },
     ]
 }
 
@@ -132,19 +160,19 @@ export const RuleDetails = ({
         onActivate(selectedRule.id, () => {
             setActivateProcessing(false)
 
-            if(activeTab=== tabs[1]) {
+            if (activeTab === tabs[1]) {
                 getRuleData()
             }
         })
     }
 
     const changeTabHandler = (tab) => {
-        if(tab === tabs[0]){
+        if (tab === tabs[0]) {
             setSorterColumn({
                 column: 'generatedAtDateTime',
                 type: 'desc'
             })
-        } else{
+        } else {
             setSorterColumn({
                 column: 'created_at',
                 type: 'desc'
@@ -257,8 +285,12 @@ export const RuleDetails = ({
         <div className={`logs ${activeTab}`}>
             <div className="tabs">
                 <div className="container">
-                    {tabs.map(i => <div onClick={() => changeTabHandler(i)}
-                                        className={`tab ${activeTab === i ? 'active' : ''}`}>{i}</div>)}
+                    {tabs.map(i => <div
+                        onClick={() => activeTab !== i && changeTabHandler(i)}
+                        className={`tab ${activeTab === i ? 'active' : ''}`}
+                    >
+                        {i}
+                    </div>)}
                 </div>
             </div>
 
