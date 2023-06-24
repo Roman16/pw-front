@@ -28,7 +28,7 @@ const RegistrationPage = (props) => {
         window.tap('create', tapfiliateKey, {integration: "javascript"})
         window.tap('detect')
 
-        seo({title: 'Registration Sponsoreds'})
+        seo({title: 'Registration Profit Whales'})
 
         if (urlParams.get('ref')) localStorage.setItem('refId', urlParams.get('ref'))
     }, [])

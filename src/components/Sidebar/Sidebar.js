@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux"
 import {Link, NavLink} from "react-router-dom"
 import {mainMenu} from "./menu"
 import {getClassNames} from "../../utils"
-import logo from "../../assets/img/logo/sds-sidebar-logo.svg"
+import logo from "../../assets/img/logo/pw-logo-white.svg"
 import "./Sidebar.less"
 import {SVG} from "../../utils/icons"
 import '../../style/variables.less'
@@ -358,7 +358,7 @@ export const SocialLinks = () => <div className="social-links">
 
     <ul>
         <li><a
-            href="https://www.facebook.com/Sponsoreds-103322802120393"
+            href="https://www.facebook.com/profitwhales"
             target="_blank"
             title="Facebook"
         >
@@ -370,7 +370,7 @@ export const SocialLinks = () => <div className="social-links">
         </a></li>
 
         <li><a
-            href="https://www.linkedin.com/company/76485296/admin"
+            href="https://www.linkedin.com/company/profitwhales/"
             target="_blank"
             title="LinkedIn"
         >
@@ -382,7 +382,7 @@ export const SocialLinks = () => <div className="social-links">
         </a></li>
 
         <li><a
-            href="https://www.instagram.com/sponsoreds_com/"
+            href="https://www.instagram.com/profit.whales/"
             target="_blank"
             title="Instagram"
         >
