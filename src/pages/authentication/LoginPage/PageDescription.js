@@ -18,7 +18,7 @@ const PageDescription = ({location}) => (
 
         <div className="social">
             <a
-                href="https://www.facebook.com/Sponsoreds-103322802120393"
+                href="https://www.facebook.com/profitwhales"
                 target="_blank"
                 title="Facebook"
             >
@@ -30,7 +30,7 @@ const PageDescription = ({location}) => (
             </a>
 
             <a
-                href="https://www.linkedin.com/company/76485296/admin"
+                href="https://www.linkedin.com/company/profitwhales/"
                 target="_blank"
                 title="LinkedIn"
             >
@@ -42,7 +42,7 @@ const PageDescription = ({location}) => (
             </a>
 
             <a
-                href="https://www.instagram.com/sponsoreds_com"
+                href="https://www.instagram.com/profit.whales/"
                 target="_blank"
                 title="Instagram"
             >
