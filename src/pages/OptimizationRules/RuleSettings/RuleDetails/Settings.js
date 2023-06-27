@@ -55,10 +55,13 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
             {rule.description && <p title={rule.description}>{rule.description}</p>}
 
             <div className="details-row">
+                {rule.rule_entity_type && <div
+                    className="rule-type">{rule.rule_entity_type === 'product_ads' ? 'Product Ads' : 'Targetings'}</div>}
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
                 <div className="type">
                     <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
-                    {rule.type === 'manual' && <InformationTooltip description={<LaunchPageLink rule={ruleData.name}/>}/>}
+                    {rule.type === 'manual' &&
+                    <InformationTooltip description={<LaunchPageLink rule={ruleData.name}/>}/>}
                 </div>
             </div>
         </section>
@@ -70,7 +73,10 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                 onChange={changeRuleDataHandler}
             />
 
-            <div className={`save-actions ${JSON.stringify({...rule, actions: rule.actions[0] || rule.actions}) !== JSON.stringify({...ruleData}) ? 'visible' : ''}`}>
+            <div className={`save-actions ${JSON.stringify({
+                ...rule,
+                actions: rule.actions[0] || rule.actions
+            }) !== JSON.stringify({...ruleData}) ? 'visible' : ''}`}>
                 <button className="btn white" onClick={resetHandler}>
                     Reset All
                 </button>
@@ -85,4 +91,5 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
     </>)
 }
 
-const LaunchPageLink = ({rule}) => <span className={'launch-page-link'}>This rule can only be launched manually. You can do this on the <Link to={`/optimization-rules/statuses/${rule}`}>launch page</Link></span>
+const LaunchPageLink = ({rule}) => <span className={'launch-page-link'}>This rule can only be launched manually. You can do this on the <Link
+    to={`/optimization-rules/statuses/${rule}`}>launch page</Link></span>

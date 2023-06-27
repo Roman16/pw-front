@@ -9,6 +9,11 @@ const fields = [
         fieldKey: 'name'
     },
     {
+        title: 'Rule Type',
+        fieldKey: 'rule_entity_type',
+        render: value => value === 'product_ads' ? 'Product Ads' : 'Targetings'
+    },
+    {
         title: 'Attribution window',
         fieldKey: 'attribution_window'
     },

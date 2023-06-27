@@ -3,6 +3,7 @@ import {Select, Switch} from "antd"
 import CustomSelect from "../../../../components/Select/Select"
 import {SVG} from "../../../../utils/icons"
 import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
+import {intervalEnums} from "./RuleSettings"
 
 const Option = Select.Option
 
@@ -57,6 +58,30 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                 value={data.name}
                 onChange={({target: {value}}) => onChange({'name': value})}
             />
+        </div>
+        <div className="row form-group">
+            <label htmlFor="">Rule type </label>
+
+            <CustomSelect
+                getPopupContainer={trigger => trigger.parentNode}
+                placeholder={'Select rule type'}
+                value={data.rule_entity_type}
+                disabled={disabledAutomaticSwitch}
+                onChange={rule_entity_type => onChange({
+                    rule_entity_type: rule_entity_type,
+                    actions: {
+                        type: undefined,
+                    }
+                })}
+            >
+                <Option value={'product_ads'}>Product Ads</Option>
+                <Option value={'targetings'}>Targetings</Option>
+            </CustomSelect>
+
+            <p>
+                Specifies which entities this rule can interact with. You can not change this after the rule has been
+                created.
+            </p>
         </div>
 
         <div className="row form-group">

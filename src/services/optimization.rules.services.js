@@ -67,7 +67,7 @@ function getCampaignsPreview({pageSize, page, searchStr, sorting}, cancelToken) 
     return api('get', `${optimizationRulesUrls.campaignsPreview}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)
 }
 
-function getRules({pageSize, page, filters, searchStr, id = [], sorting}, cancelToken) {
+function getRules({pageSize=10, page=1, filters, searchStr, id = [], sorting}, cancelToken) {
     if (filters?.[0]?.type === "search") searchStr = filters[0].value
 
     return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)

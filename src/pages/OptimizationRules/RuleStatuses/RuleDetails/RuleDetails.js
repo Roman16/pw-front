@@ -125,6 +125,8 @@ const columns = {
     ]
 }
 
+let timerId
+
 export const RuleDetails = ({
                                 selectedRule,
 
@@ -144,8 +146,7 @@ export const RuleDetails = ({
         [processing, setProcessing] = useState(true),
         [ruleData, setRuleData] = useState([]),
         [totalSize, setTotalSize] = useState(0),
-        [activateProcessing, setActivateProcessing] = useState(false),
-        [pauseProcessing, setPauseProcessing] = useState(false)
+        [activateProcessing, setActivateProcessing] = useState(false)
 
 
     const changeFiltersHandler = (data) => setRequestParams(prevState => ({...prevState, filters: data, page: 1}))
@@ -187,14 +188,16 @@ export const RuleDetails = ({
         setProcessing(true)
 
         try {
-            const {result} = await optimizationRulesServices[activeTab === tabs[0] ? 'getLogs' : 'getStatuses']({
+            const [ruleLogs, ruleDetails] = await Promise.all([optimizationRulesServices[activeTab === tabs[0] ? 'getLogs' : 'getStatuses']({
                 ...requestParams,
                 sorterColumn,
                 ruleId: selectedRule.id
-            })
+            }), optimizationRulesServices.getRules({id: [selectedRule.id]})])
 
-            setRuleData(result.data)
-            setTotalSize(result.total_count)
+            setRuleData(ruleLogs.result.data)
+            setTotalSize(ruleLogs.result.total_count)
+
+            selectedRule = {...selectedRule, ...ruleDetails.result.data[0]}
         } catch (e) {
             console.log(e)
         }
@@ -252,8 +255,17 @@ export const RuleDetails = ({
     useEffect(() => {
         setRuleData([])
 
-        selectedRule.id && getRuleData()
+        if (selectedRule.id) {
+            clearInterval(timerId)
+            timerId = setInterval(getRuleData, 30000)
+        }
     }, [selectedRule.id, requestParams, activeTab])
+
+    useEffect(() => {
+        return (() => {
+            clearInterval(timerId)
+        })
+    }, [])
 
 
     return (<div className="rule-details">

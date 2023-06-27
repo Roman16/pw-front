@@ -331,7 +331,8 @@ export const RuleSettings = ({data, onChange}) => {
                     value={data.actions.type}
                     onChange={changeActionHandler}
                 >
-                    {actionsEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
+                    {actionsEnums.filter(i => data.rule_entity_type === 'product_ads' ? i.key === 'set_status' : i)
+                        .map(i => <Option value={i.key}>{i.title}</Option>)}
                 </CustomSelect>
             </div>
 
@@ -518,7 +519,12 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Up to minimum</label>
                     <InputCurrency
                         value={actions.down_limit}
-                        onChange={(down_limit) => onChange({actions: {...actions, down_limit: down_limit ? +down_limit : undefined}})}
+                        onChange={(down_limit) => onChange({
+                            actions: {
+                                ...actions,
+                                down_limit: down_limit ? +down_limit : undefined
+                            }
+                        })}
                     />
                 </div>
             </div>
@@ -551,7 +557,12 @@ const ActionValue = ({actions, onChange}) => {
                     <label htmlFor="">Up to maximum</label>
                     <InputCurrency
                         value={actions.up_limit}
-                        onChange={(up_limit) => onChange({actions: {...actions, up_limit: up_limit ? +up_limit : undefined}})}
+                        onChange={(up_limit) => onChange({
+                            actions: {
+                                ...actions,
+                                up_limit: up_limit ? +up_limit : undefined
+                            }
+                        })}
                     />
                 </div>
             </div>

@@ -17,12 +17,17 @@ const ruleColumns = [
         search: true,
         render: text => <div title={text} className="cut-text">{text}</div>
     },
-
     {
         title: 'Description',
         key: 'description',
         dataIndex: 'description',
         render: (text) => <div className="description" title={text}>{text}</div>
+    },
+    {
+        title: 'Rule Type',
+        key: 'rule_entity_type',
+        dataIndex: 'rule_entity_type',
+        render: value => value ? value === 'product_ads' ? 'Product Ads' : 'Targetings' : ''
     },
     {
         title: 'Optimization type',
