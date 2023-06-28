@@ -15,6 +15,7 @@ const createSteps = ['Information', 'Settings', 'Attach', 'Overview']
 const defaultState = {
     attribution_window: '7',
     name: '',
+    rule_entity_type: undefined,
     description: '',
     type: 'manual',
     active: true,
@@ -61,7 +62,7 @@ export const CreateRulesWindow = ({
     }
 
     const createValidator = () => {
-        if (currentStep === 0 && !createData.name) return true
+        if (currentStep === 0 && (!createData.name || !createData.rule_entity_type)) return true
         else if (currentStep === 1 && (!createData.interval || !createData.actions.value)) return true
         else return false
     }
