@@ -59,7 +59,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                     className="rule-type">{rule.rule_entity_type === 'product_ads' ? 'Product Ads' : 'Targetings'}</div>}
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
                 <div className="type">
-                    <span>{rule.type}</span> {rule.type === 'auto' && `• ${_.find(periodEnums, {key: rule.period})?.title}`}
+                    <span>{rule.type}</span> {rule.type === 'auto' && ` • ${_.find(periodEnums, {key: rule.period})?.title}`}
                     {rule.type === 'manual' &&
                     <InformationTooltip description={<LaunchPageLink rule={ruleData.name}/>}/>}
                 </div>
