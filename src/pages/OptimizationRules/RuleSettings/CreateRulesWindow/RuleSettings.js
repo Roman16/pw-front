@@ -1,10 +1,12 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import CustomSelect from "../../../../components/Select/Select"
-import {Input, Select} from "antd"
+import {Checkbox, Input, Select} from "antd"
 import {SVG} from "../../../../utils/icons"
 import _ from 'lodash'
 import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {round} from '../../../../utils/round'
+import {InfinitySelect} from "../../../AnalyticsV3/Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
+import {analyticsServices} from "../../../../services/analytics.services"
 
 const Option = Select.Option
 
@@ -132,24 +134,77 @@ export const intervalEnums = [
     },
 ]
 
-export const actionsEnums = [
-    {
-        title: 'Set - Bid',
-        key: 'set_bid'
-    },
-    {
-        title: 'Set - Status',
-        key: 'set_status'
-    },
-    {
-        title: 'Decrease - Bid',
-        key: 'decrease_bid'
-    },
-    {
-        title: 'Increase - Bid',
-        key: 'increase_bid'
-    },
-]
+export const actionsEnums = {
+    targetings: [
+        {
+            title: 'Set - Bid',
+            key: 'set_bid'
+        },
+        {
+            title: 'Set - Status',
+            key: 'set_status'
+        },
+        {
+            title: 'Decrease - Bid',
+            key: 'decrease_bid'
+        },
+        {
+            title: 'Increase - Bid',
+            key: 'increase_bid'
+        },
+    ],
+    product_ads: [
+        {
+            title: 'Set - Status',
+            key: 'set_status'
+        }
+    ],
+    search_term_keywords: [
+        {
+            title: 'Add as - Keyword Exact',
+            key: 'add_as_keyword_exact'
+        },
+        {
+            title: 'Add as - Keyword Phrase',
+            key: 'add_as_keyword_phrase'
+        },
+        {
+            title: 'Add as - Keyword Broad',
+            key: 'add_as_keyword_broad'
+        },
+        {
+            title: 'Add as - Keyword Negative Exact',
+            key: 'add_as_keyword_negative_exact'
+        },
+        {
+            title: 'Add as - Keyword Negative Phrase',
+            key: 'add_as_keyword_negative_phrase'
+        },
+        {
+            title: 'Add as - Keyword Campaign Negative Exact',
+            key: 'add_as_keyword_campaign_negative_exact'
+        },
+        {
+            title: 'Add as - Keyword Campaign Negative Phrase',
+            key: 'add_as_keyword_campaign_negative_phrase'
+        },
+    ],
+    search_term_targets: [
+        {
+            title: 'Add as - Target ASIN',
+            key: 'add_as_target_asin'
+        },
+        {
+            title: 'Add as - Target ASIN Expaned',
+            key: 'add_as_target_asin_expaned'
+        },
+        {
+            title: 'Add as - Target Negative ASIN',
+            key: 'add_as_target_negative_asin'
+        },
+    ],
+
+}
 
 export const stateEnums = [
     {
@@ -322,7 +377,8 @@ export const RuleSettings = ({data, onChange}) => {
                 <p>Please, select timeline</p>}
         </div>
 
-        <div className={`action-line line ${data.actions.type ? 'active' : ''}`}>
+        <div
+            className={`action-line line ${data.actions.type ? 'active' : ''} ${data.rule_entity_type === 'search_term_keywords' || data.rule_entity_type === 'search_term_targets' ? 'large' : ''}`}>
             <div>
                 <label htmlFor="">ACTION:</label>
                 <CustomSelect
@@ -331,8 +387,7 @@ export const RuleSettings = ({data, onChange}) => {
                     value={data.actions.type}
                     onChange={changeActionHandler}
                 >
-                    {actionsEnums.filter(i => data.rule_entity_type === 'product_ads' ? i.key === 'set_status' : i)
-                        .map(i => <Option value={i.key}>{i.title}</Option>)}
+                    {actionsEnums[data.rule_entity_type].map(i => <Option value={i.key}>{i.title}</Option>)}
                 </CustomSelect>
             </div>
 
@@ -465,6 +520,51 @@ const AddActions = ({onAddCondition, onAddGroup, addGroupBtnText = 'Add group'})
 }
 
 const ActionValue = ({actions, onChange}) => {
+    const [campaigns, setCampaigns] = useState([]),
+        [adGroups, setAdGroups] = useState([])
+
+    const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
+        try {
+            const res = await analyticsServices.fetchCampaignsForTargeting({
+                page,
+                type: 'SponsoredProducts',
+                name: searchStr
+            })
+
+            if (page === 1) setCampaigns([...res.result])
+            else setCampaigns([...campaigns, ...res.result])
+            cb && cb(res.result.length !== 0)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const getAdGroups = async (id, page = 1, cb, searchStr = undefined) => {
+        try {
+            const res = await analyticsServices.fetchAdGroupsForTargeting({
+                page,
+                id,
+                name: searchStr
+            })
+
+            setAdGroups(res.result)
+
+            if (page === 1) setAdGroups([...res.result])
+            else setAdGroups([...adGroups, ...res.result])
+            cb && cb(res.result.length !== 0)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    useEffect(() => {
+        getCampaigns()
+    }, [actions.type])
+
+    useEffect(() => {
+        getAdGroups(actions.campaignId)
+    }, [actions.campaignId])
+
     switch (actions.type) {
         case 'set_bid':
             return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
@@ -476,6 +576,7 @@ const ActionValue = ({actions, onChange}) => {
                     />
                 </div>
             </div>
+
         case 'set_status':
             return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
                 <div className="form-group">
@@ -491,6 +592,7 @@ const ActionValue = ({actions, onChange}) => {
                     </CustomSelect>
                 </div>
             </div>
+
         case 'decrease_bid':
             return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
                 <div className="form-group type">
@@ -504,7 +606,6 @@ const ActionValue = ({actions, onChange}) => {
                         <Option value={'percents'}>%</Option>
                     </CustomSelect>
                 </div>
-
 
                 <div className="form-group">
                     <label htmlFor="">Value</label>
@@ -525,6 +626,104 @@ const ActionValue = ({actions, onChange}) => {
                                 down_limit: down_limit ? +down_limit : undefined
                             }
                         })}
+                    />
+                </div>
+            </div>
+
+        case 'add_as_keyword_exact':
+        case 'add_as_keyword_phrase':
+        case 'add_as_keyword_broad':
+        case 'add_as_target_asin':
+        case 'add_as_target_asin_expaned':
+            return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Campaign</label>
+                    <InfinitySelect
+                        value={actions.campaignId}
+                        onChange={campaignId => onChange({actions: {...actions, campaignId}})}
+                        onLoadMore={(page, cb, searchStr) => getCampaigns(actions.campaignId, page, cb, searchStr)}
+                        children={campaigns}
+                        dataKey={'campaignId'}
+                        notFoundContent={'No campaigns'}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Ad Group</label>
+                    <InfinitySelect
+                        value={actions.adGroupId}
+                        disabled={!actions.campaignId}
+                        onChange={adGroupId => onChange({actions: {...actions, adGroupId}})}
+                        onLoadMore={(page, cb, searchStr) => getAdGroups(actions.adGroupId, page, cb, searchStr)}
+                        children={adGroups}
+                        dataKey={'adGroupId'}
+                        notFoundContent={'No ad groups'}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Bid</label>
+                    <InputCurrency
+                        value={actions.bid}
+                        disabled={actions.useBidFromCpc || !actions.adGroupId}
+                        onChange={(value) => onChange({actions: {...actions, bid: String(value)}})}
+                        typeIcon={'number'}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <Checkbox
+                        checked={actions.useBidFromCpc}
+                        disabled={!actions.adGroupId}
+                        onChange={({target: {checked}}) => onChange({actions: {...actions, useBidFromCpc: checked}})}
+                    >
+                        Use bid from CPC
+                    </Checkbox>
+                </div>
+            </div>
+
+        case 'add_as_keyword_negative_exact':
+        case 'add_as_keyword_negative_phrase':
+        case 'add_as_target_negative_asin':
+            return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Campaign</label>
+                    <InfinitySelect
+                        value={actions.campaignId}
+                        onChange={campaignId => onChange({actions: {...actions, campaignId}})}
+                        onLoadMore={(page, cb, searchStr) => getCampaigns(actions.campaignId, page, cb, searchStr)}
+                        children={campaigns}
+                        dataKey={'campaignId'}
+                        notFoundContent={'No campaigns'}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="">Ad Group</label>
+                    <InfinitySelect
+                        value={actions.adGroupId}
+                        disabled={!actions.campaignId}
+                        onChange={adGroupId => onChange({actions: {...actions, adGroupId}})}
+                        onLoadMore={(page, cb, searchStr) => getAdGroups(actions.adGroupId, page, cb, searchStr)}
+                        children={adGroups}
+                        dataKey={'adGroupId'}
+                        notFoundContent={'No ad groups'}
+                    />
+                </div>
+            </div>
+
+        case 'add_as_keyword_campaign_negative_phrase':
+        case 'add_as_keyword_campaign_negative_exact':
+            return <div className={`action-value ${actions.type ? 'visible' : ''}`}>
+                <div className="form-group">
+                    <label htmlFor="">Campaign</label>
+                    <InfinitySelect
+                        value={actions.campaignId}
+                        onChange={campaignId => onChange({actions: {...actions, campaignId}})}
+                        onLoadMore={(page, cb, searchStr) => getCampaigns(actions.campaignId, page, cb, searchStr)}
+                        children={campaigns}
+                        dataKey={'campaignId'}
+                        notFoundContent={'No campaigns'}
                     />
                 </div>
             </div>
