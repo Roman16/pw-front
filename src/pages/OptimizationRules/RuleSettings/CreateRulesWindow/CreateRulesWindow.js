@@ -62,9 +62,44 @@ export const CreateRulesWindow = ({
     }
 
     const createValidator = () => {
+        console.log(createData)
+
         if (currentStep === 0 && (!createData.name || !createData.rule_entity_type)) return true
-        else if (currentStep === 1 && (!createData.interval || !createData.actions.value)) return true
-        else return false
+        else if (currentStep === 1) {
+            if (!createData.interval) {
+                return true
+            }
+
+            if ((createData.rule_entity_type === 'search_term_keywords' || createData.rule_entity_type === 'search_term_targets')) {
+                if (createData.actions?.type) {
+                    if (createData.actions?.type === 'add_as_keyword_exact' ||
+                        createData.actions?.type === 'add_as_keyword_phrase' ||
+                        createData.actions?.type === 'add_as_keyword_broad' ||
+                        createData.actions?.type === 'add_as_target_asin' ||
+                        createData.actions?.type === 'add_as_target_asin_expaned') {
+
+                        if (createData.actions.useBidFromCpc) {
+                            return false
+                        } else {
+                            return !createData.actions.bid
+                        }
+                    } else if (createData.actions?.type === 'add_as_keyword_negative_exact' ||
+                        createData.actions?.type === 'add_as_keyword_negative_phrase' ||
+                        createData.actions?.type === 'add_as_target_negative_asin') {
+                        return !createData.actions.adGroupId
+                    } else if (createData.actions?.type === 'add_as_keyword_campaign_negative_phrase' ||
+                        createData.actions?.type === 'add_as_keyword_campaign_negative_exact') {
+                        return !createData.actions.campaignId
+                    } else {
+
+                    }
+                } else {
+                    return true
+                }
+            } else {
+                return !createData.actions.value
+            }
+        } else return false
     }
 
     const createRuleHandler = () => {

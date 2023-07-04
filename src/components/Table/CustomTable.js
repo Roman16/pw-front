@@ -50,7 +50,10 @@ const CustomTable = ({
                          onUpdateField,
                          emptyTitle,
                          emptyDescription,
-                         emptyComponent
+                         emptyComponent,
+                         resizeColumns = false,
+                         onResizeColumn,
+                         columnsWidth
                      }) => {
     const devicePixelRatio = window.devicePixelRatio
 
@@ -98,6 +101,14 @@ const CustomTable = ({
         }
     }
 
+    const resizeHandler = (column, type, prevValue, e) => {
+        e.stopPropagation()
+        const width = prevValue.replace(/px/g, '')
+
+        onResizeColumn({
+            [column]: type === 'inc' ? `${+width + 10}px` : `${+width - 10}px`
+        })
+    }
 
     return (
         <div className={`custom-table ${rowSelection ? 'with-checkbox' : ''}`}>
@@ -117,12 +128,12 @@ const CustomTable = ({
                     {columns.map((item, index) => {
                         const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
 
-                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
+                        const fieldWidth = (columnsWidth && columnsWidth[item.key]) ? {width: columnsWidth[item.key]} : item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                             leftStickyPosition = index === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[index - 1].width && devicePixelRatio === 2 && (columns[index - 1].width.search('em') !== -1)) ? {left: `calc(${columns[index - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[index - 1].width} + ${checkboxWith}px)` : columns[index - 1].width}
 
                         return (item.visible === false ? '' :
                                 <div
-                                    className={`th ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
+                                    className={`th ${resizeColumns ? 'resize' : ''} ${item.filter ? 'filter-column' : ''} ${item.sorter ? 'sorter-column' : ''} ${fixedColumns.includes(index) ? 'fixed' : ''} ${fixedColumns[fixedColumns.length - 1] === index ? 'with-shadow' : ''} ${item.className ?? ''}`}
                                     key={`row_${item.dataIndex}_${index}`}
                                     style={{
                                         ...fieldWidth,
@@ -141,6 +152,15 @@ const CustomTable = ({
                                             <SVG id={'sorter-arrow'}/>
                                         </div>}
                                     </div>
+
+                                    {resizeColumns && <div className="resize-btn">
+                                        <button className={'left'}
+                                                onClick={(e) => resizeHandler(item.key, 'inc', fieldWidth.width, e)}>+
+                                        </button>
+                                        <button className={'right'}
+                                                onClick={(e) => resizeHandler(item.key, 'dec', fieldWidth.width, e)}>-
+                                        </button>
+                                    </div>}
                                 </div>
                         )
                     })}
@@ -154,7 +174,7 @@ const CustomTable = ({
                     {columns.map((item, columnIndex) => {
                         const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
 
-                        const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
+                        const fieldWidth = (columnsWidth && columnsWidth[item.key]) ? {width: columnsWidth[item.key]} : item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                             leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                         return (item.visible === false ? '' :
@@ -208,7 +228,7 @@ const CustomTable = ({
                                 {columns.map((item, columnIndex) => {
                                     const checkboxWith = devicePixelRatio === 2 ? 54.5 : 59
 
-                                    const fieldWidth = item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
+                                    const fieldWidth = (columnsWidth && columnsWidth[item.key]) ? {width: columnsWidth[item.key]} : item.width ? ((devicePixelRatio === 2 && (item.width.search('em') !== -1)) ? {width: `calc(${item.width} + 1.5em)`} : {width: item.width}) : {flex: 1},
                                         leftStickyPosition = columnIndex === 0 ? {left: rowSelection ? checkboxWith : 0} : (columns[columnIndex - 1].width && devicePixelRatio === 2 && (columns[columnIndex - 1].width.search('em') !== -1)) ? {left: `calc(${columns[columnIndex - 1].width} + 1.5em ${rowSelection ? `+ ${checkboxWith}px` : '+ 0'})`} : {left: rowSelection ? `calc(${columns[columnIndex - 1].width} + ${checkboxWith}px)` : columns[columnIndex - 1].width}
 
                                     return (item.visible === false ? '' :

@@ -46,6 +46,25 @@ export const periodEnums = [
     },
 ]
 
+export const ruleTypeEnums = [
+    {
+        title: 'Targetings',
+        key: 'targetings'
+    },
+    {
+        title: 'Product Ads',
+        key: 'product_ads'
+    },
+    // {
+    //     title: 'Search Terms Keywords',
+    //     key: 'search_term_keywords'
+    // },
+    // {
+    //     title: 'Search Terms Targets',
+    //     key: 'search_term_targets'
+    // },
+]
+
 export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange}) => {
 
     return (<div className="step rule-information">
@@ -74,8 +93,7 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                     }
                 })}
             >
-                <Option value={'product_ads'}>Product Ads</Option>
-                <Option value={'targetings'}>Targetings</Option>
+                {ruleTypeEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
             </CustomSelect>
 
             <p>

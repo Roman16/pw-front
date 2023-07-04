@@ -499,6 +499,7 @@
   padding: 0 2.857142857142857rem;
   z-index: 11;
   overflow: auto;
+  flex: 1;
 
   h3 {
     font-weight: 600;
@@ -640,11 +641,21 @@
         }
       }
     }
+
+    &.large {
+      .custom-select,
+      div label {
+        width: 300px;
+      }
+
+
+    }
   }
 
   .action-value {
     display: flex;
     justify-content: center;
+    align-items: center;
     margin: 20px 0;
     opacity: 0;
 
@@ -654,14 +665,17 @@
 
     .form-group {
       width: 12.857142857142858rem;
+      height: 2.85714286rem;
       margin: 0 8px;
       position: relative;
+      display: flex;
+      align-items: center;
 
       &.type {
         width: 80px;
       }
 
-      label {
+      label:not(.ant-checkbox-wrapper) {
         font-weight: 600;
         font-size: 0.5714285714285714rem;
         text-transform: uppercase;
@@ -670,6 +684,22 @@
         left: 1.1428571428571428rem;
         top: 0.42857142857142855rem;
         z-index: 1;
+      }
+
+      .ant-checkbox-wrapper {
+        display: flex;
+        font-size: 1rem;
+        color: #686868;
+
+        .ant-checkbox {
+          width: 1.4285714285714286rem;
+          height: 1.4285714285714286rem;
+        }
+      }
+
+      .ant-select-search__field {
+        font-size: 0.85714286rem;
+        padding-top: 1rem;
       }
 
       .InputCurrency {

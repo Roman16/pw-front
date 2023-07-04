@@ -16,6 +16,7 @@ import moment from "moment"
 import {SVG} from "../../../../utils/icons"
 
 import './TableList.less'
+import {userTypeEnums} from "../../../../constans/userTypeEnums"
 
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1)
@@ -52,7 +53,8 @@ const TableList = ({
                        onDownloadCSV
                    }) => {
     const [selectedRows, setSelectedRows] = useState([]),
-        [selectedAllRows, setSelectedAllRows] = useState(false)
+        [selectedAllRows, setSelectedAllRows] = useState(false),
+        [columnsWidth, setColumnsWidth] = useState(localStorage.getItem('analyticsColumnsWidth') ? JSON.parse(localStorage.getItem('analyticsColumnsWidth')) : {})
 
     const columnsBlackListFromLocalStorage = localStorage.getItem('analyticsColumnsBlackList') && JSON.parse(localStorage.getItem('analyticsColumnsBlackList'))
     const columnsOrderFromLocalStorage = localStorage.getItem('analyticsColumnsOrder') && JSON.parse(localStorage.getItem('analyticsColumnsOrder'))
@@ -65,6 +67,8 @@ const TableList = ({
     const {selectedRangeDate} = useSelector(state => ({
         selectedRangeDate: state.analytics.selectedRangeDate,
     }))
+
+    const user = useSelector(state => state.user)
 
     const localColumnBlackList = columnsBlackList[location] || [],
         filters = useSelector(state => state.analytics.filters[location] || [])
@@ -180,10 +184,23 @@ const TableList = ({
             setSelectedRows([])
         }, failed)
     }
+    const resizeColumnHandler = (data) => {
+        setColumnsWidth(prevState => ({
+            ...prevState,
+            [location]: {
+                ...prevState[location],
+                ...data
+            }
+        }))
+    }
 
     useEffect(() => {
         deselectAllRows()
     }, [filters, tableRequestParams, localSorterColumn])
+
+    useEffect(() => {
+        localStorage.setItem('analyticsColumnsWidth', JSON.stringify(columnsWidth))
+    }, [columnsWidth])
 
     return (
         <section className={'list-section'}>
@@ -259,18 +276,17 @@ const TableList = ({
                         }
                     }}
                     sorterColumn={localSorterColumn}
-
+                    resizeColumns={user.userDetails.user_type === userTypeEnums.ADMIN || user.userDetails.user_type === userTypeEnums.AGENCY_CLIENT || localStorage.getItem('adminToken')}
                     columns={columns.columnsWithFilters
                         .filter(column => !localColumnBlackList.includes(column.dataIndex))
                         .sort((firstColumn, secondColumn) => {
                             return columnsOrder[location] ? secondColumn.title === 'Active' ? 9999 : columnsOrder[location].findIndex(i => i === firstColumn.dataIndex) - columnsOrder[location].findIndex(i => i === secondColumn.dataIndex) : true
                         })
                     }
-
+                    columnsWidth={columnsWidth[location] || {}}
                     fixedColumns={fixedColumns}
                     expandedRowRender={expandedRowRender ? (props) => expandedRowRender(props, localColumnBlackList, columnsOrder) : undefined}
                     openedRow={openedRow}
-                    onChangeSorter={sortChangeHandler}
                     revertSortingColumns={numberColumns}
                     emptyText={'image'}
 
@@ -280,6 +296,9 @@ const TableList = ({
                     selectedRows={selectedRows}
                     disabledRow={disabledRow}
                     onUpdateField={onUpdateField}
+
+                    onChangeSorter={sortChangeHandler}
+                    onResizeColumn={resizeColumnHandler}
                 />
 
                 {tableData.total_count !== 0 && showPagination && <Pagination
