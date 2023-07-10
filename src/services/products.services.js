@@ -1,8 +1,9 @@
-import api, {encodeString} from './request'
+import api, {baseUrl, encodeString} from './request'
 import {productsUrls} from '../constans/api.urls'
 import {productsConstants} from '../constans/actions.type'
 import {optimizationOptions} from '../pages/PPCAutomate/Optimization/OptimizationIncludes/OptimizationIncludes'
 import {func} from "prop-types"
+import {dateRangeFormatting, filtersHandler} from "./analytics.v3.services"
 
 export const productsServices = {
     getProducts,
@@ -24,7 +25,10 @@ export const productsServices = {
     setDefaultVariation,
     getActualCogs,
 
-    startProductOptimization
+    startProductOptimization,
+
+    exportProducts,
+    importProducts
 }
 
 
@@ -176,4 +180,14 @@ function setDefaultVariation(data) {
 
 function getActualCogs(productId, cancelToken) {
     return api('get', `${productsUrls.actualCogs}?product_id=${productId}`, undefined, undefined, cancelToken)
+}
+
+function exportProducts() {
+    const token = localStorage.getItem('token')
+
+    window.open(`${baseUrl}/api/settings/products/csv?token=${token}`)
+}
+
+function importProducts(data) {
+    return api('post', `${productsUrls.importProducts}`, data)
 }

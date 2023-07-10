@@ -12,6 +12,7 @@ import {productsServices} from "../../../services/products.services"
 import axios from "axios"
 import {notification} from "../../../components/Notification"
 import {useSelector} from "react-redux"
+import {adminServices} from "../../../services/admin.services"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -28,7 +29,8 @@ const ProductsInfo = () => {
             pageSize: 10,
             ...localStorage.getItem('productsSettingsRequestParams') ? JSON.parse(localStorage.getItem('productsSettingsRequestParams')) : {}
         }),
-        [totalSize, setTotalSize] = useState(0)
+        [totalSize, setTotalSize] = useState(0),
+        [importProcessing, setImportProcessing] = useState(false)
 
     const isAgencyClient = useSelector(state => state.user.userDetails.is_agency_client)
 
@@ -180,6 +182,27 @@ const ProductsInfo = () => {
         }
     }
 
+    const exportProductsHandler = () => {
+        productsServices.exportProducts()
+    }
+    const importProductsHandler = async ({target: {files}}) => {
+        setImportProcessing(true)
+
+        try {
+            const requestData = new FormData()
+            const file = files.item(files.length - 1)
+
+            requestData.set('products', file)
+
+            await productsServices.importProducts(requestData)
+
+        } catch (e) {
+            console.log(e)
+        }
+
+        setImportProcessing(false)
+    }
+
     useEffect(() => {
         localStorage.setItem('productsSettingsRequestParams', JSON.stringify({
             searchStr: requestParams.searchStr,
@@ -196,7 +219,11 @@ const ProductsInfo = () => {
     return (<div className="product-info-page">
         <Filters
             requestParams={requestParams}
+            importProcessing={importProcessing}
+
             onChangeFilter={changeFiltersHandler}
+            onExportProducts={exportProductsHandler}
+            onImportProducts={importProductsHandler}
         />
 
         <ProductList
