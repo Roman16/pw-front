@@ -48,29 +48,29 @@ const Filters = ({requestParams,importProcessing, onChangeFilter, onImportProduc
                 </label>
             </div>
 
-            <div className="product-actions">
-                <button className="btn default" disabled onClick={onExportProducts}>
-                    Export products
-                </button>
+            {/*<div className="product-actions">*/}
+            {/*    <button className="btn default" onClick={onExportProducts}>*/}
+            {/*        Export products*/}
+            {/*    </button>*/}
 
 
-                <div className={'choose-file form-group'}>
-                    <label className={'label'} htmlFor="myFile">
-                        Import products
+            {/*    <div className={'choose-file form-group'}>*/}
+            {/*        <label className={`label ${importProcessing ? 'disabled' : ''}`} htmlFor="myFile">*/}
+            {/*            Import products*/}
 
-                        {true && <Spin size={'small'}/>}
-                    </label>
+            {/*            {importProcessing && <Spin size={'small'}/>}*/}
+            {/*        </label>*/}
 
-                    <input
-                        name="myFile"
-                        id={'myFile'}
-                        type="file"
-                        multiple={false}
-                        placeholder={'Import products'}
-                        onChange={onImportProducts}
-                    />
-                </div>
-            </div>
+            {/*        <input*/}
+            {/*            name="myFile"*/}
+            {/*            id={'myFile'}*/}
+            {/*            type="file"*/}
+            {/*            multiple={false}*/}
+            {/*            placeholder={'Import products'}*/}
+            {/*            onChange={onImportProducts}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     )
 }

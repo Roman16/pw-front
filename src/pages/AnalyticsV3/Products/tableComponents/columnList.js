@@ -26,8 +26,8 @@ import {metricKeys} from "../../components/MainMetrics/metricsList"
 const getColumns = (location) => [
     {
         title: 'Product',
-        dataIndex: 'product_name_sku_asin',
-        key: 'product_name_sku_asin',
+        dataIndex: 'product_name',
+        key: 'product_name',
         width: '300px',
         locked: true,
         sorter: true,
