@@ -83,6 +83,8 @@ export const productsUrls = {
     stopOptimization: (id) => `v2/ppc-automation/products/${id}/automation-stop`,
     startOptimization: (id) => `v2/ppc-automation/products/${id}/automation-start`,
     campaignsSettingList: (id) => `v2/ppc-automation/products/${id}/custom-campaign-settings`,
+
+    importProducts: 'settings/products/csv'
 }
 
 export const reportsUrls = {

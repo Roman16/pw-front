@@ -1,10 +1,10 @@
 import React, {useState} from "react"
-import {Switch} from "antd"
+import {Spin, Switch} from "antd"
 import {SearchField} from "../../../components/SearchField/SearchField"
 
 let timeoutId
 
-const Filters = ({requestParams, onChangeFilter}) => {
+const Filters = ({requestParams,importProcessing, onChangeFilter, onImportProducts, onExportProducts}) => {
     const [searchStr, setSearchStr] = useState(requestParams.searchStr)
 
     const changeSearchHandler = (value) => {
@@ -47,6 +47,30 @@ const Filters = ({requestParams, onChangeFilter}) => {
                     Products under optimization
                 </label>
             </div>
+
+            {/*<div className="product-actions">*/}
+            {/*    <button className="btn default" onClick={onExportProducts}>*/}
+            {/*        Export products*/}
+            {/*    </button>*/}
+
+
+            {/*    <div className={'choose-file form-group'}>*/}
+            {/*        <label className={`label ${importProcessing ? 'disabled' : ''}`} htmlFor="myFile">*/}
+            {/*            Import products*/}
+
+            {/*            {importProcessing && <Spin size={'small'}/>}*/}
+            {/*        </label>*/}
+
+            {/*        <input*/}
+            {/*            name="myFile"*/}
+            {/*            id={'myFile'}*/}
+            {/*            type="file"*/}
+            {/*            multiple={false}*/}
+            {/*            placeholder={'Import products'}*/}
+            {/*            onChange={onImportProducts}*/}
+            {/*        />*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     )
 }
