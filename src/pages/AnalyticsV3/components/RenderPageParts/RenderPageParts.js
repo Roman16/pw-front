@@ -65,8 +65,8 @@ export const diffPercent = (prevValue = 0, value) => {
     }
 
     if (value > prevValue) {
-        if(prevValue === 0 && value > 0) {
-           return 1
+        if (prevValue === 0 && value > 0) {
+            return 1
         } else {
             return prevValue != 0 ? ((value / prevValue) - 1) : null
         }
@@ -94,7 +94,6 @@ const RenderPageParts = (props) => {
     } = props
 
     const sorterColumnFromLocalStorage = localStorage.getItem('analyticsSorterColumn') ? JSON.parse(localStorage.getItem('analyticsSorterColumn')) : {},
-        tableOptionsFromLocalStorage = localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
         pageSizeFromLocalStorage = localStorage.getItem('analyticsPageSize') && JSON.parse(localStorage.getItem('analyticsPageSize'))
 
 
@@ -111,12 +110,13 @@ const RenderPageParts = (props) => {
         }),
         [chartFetchingStatus, setChartFetchingStatus] = useState(false),
         [tableFetchingStatus, setTableFetchingStatus] = useState(false),
-        [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location]),
-        [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false})
+        [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location])
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
+        tableOptions = useSelector(state => state.analytics.tableOptions[location] ? state.analytics.tableOptions[location] : {}),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
+        compareDate = useSelector(state => state.analytics.compareDate),
         stateInformation = useSelector(state => state.analytics.stateDetails),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
         user = useSelector(state => state.user.userDetails),
@@ -135,15 +135,6 @@ const RenderPageParts = (props) => {
         sorterTimeoutId = setTimeout(() => {
             getPageData(['table'], {...tableRequestParams, page: 1}, data)
         }, 300)
-    }
-
-    const changeTableOptionsHandler = (data) => {
-        localStorage.setItem('analyticsTableOptions', JSON.stringify({
-            ...tableOptionsFromLocalStorage,
-            [location]: data
-        }))
-
-        setLocalTableOptions(data)
     }
 
     const changePaginationHandler = (data) => {
@@ -390,28 +381,28 @@ const RenderPageParts = (props) => {
             }
 
 
-            if (localTableOptions.comparePreviousPeriod && res.table) {
-                getPreviousPeriodData(res.table.data.map(item => item[idSelectorsEntity[location]]), paginationParams ? paginationParams : tableRequestParams)
-
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: {
-                        ...res.table,
-                        response: res.table.data.map(item => {
-                            item.compareWithPrevious = true
-
-                            return item
-                        })
-                    }
-                }))
-            } else {
-                setPageData(prevState => ({
-                    metrics: res.metrics || prevState.metrics,
-                    chart: res.chart || prevState.chart,
-                    table: res.table || prevState.table
-                }))
-            }
+            // if (localTableOptions.comparePreviousPeriod && res.table) {
+            //     getPreviousPeriodData(res.table.data.map(item => item[idSelectorsEntity[location]]), paginationParams ? paginationParams : tableRequestParams)
+            //
+            //     setPageData(prevState => ({
+            //         metrics: res.metrics || prevState.metrics,
+            //         chart: res.chart || prevState.chart,
+            //         table: {
+            //             ...res.table,
+            //             response: res.table.data.map(item => {
+            //                 item.compareWithPrevious = true
+            //
+            //                 return item
+            //             })
+            //         }
+            //     }))
+            // } else {
+            //     setPageData(prevState => ({
+            //         metrics: res.metrics || prevState.metrics,
+            //         chart: res.chart || prevState.chart,
+            //         table: res.table || prevState.table
+            //     }))
+            // }
 
 
             setChartFetchingStatus(false)
@@ -490,9 +481,9 @@ const RenderPageParts = (props) => {
         }
     }, [activeMetrics])
 
-    useEffect(() => {
-        getPageData(['table'])
-    }, [localTableOptions])
+    // useEffect(() => {
+    //     getPageData(['table'])
+    // }, [localTableOptions])
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
@@ -528,17 +519,18 @@ const RenderPageParts = (props) => {
                 tableRequestParams={tableRequestParams}
                 showFilters={showFilters}
                 showOptions={showOptions}
+                selectedRangeDate={selectedRangeDate}
+                compareDate={compareDate}
+                tableOptions={tableOptions}
                 dateRange={dateRange}
 
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
-                localTableOptions={localTableOptions}
 
                 moreActions={moreActions}
 
                 onChange={changePaginationHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
-                onChangeTableOptions={changeTableOptionsHandler}
                 onUpdateField={updateFieldHandler}
                 onUpdateColumn={updateColumnHandler}
                 disabledRow={disabledRow}

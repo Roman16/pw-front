@@ -36,21 +36,23 @@ const TableList = ({
                        showOptions = true,
                        expandedRowRender,
                        metricsData,
-                       localTableOptions,
+                       tableOptions,
                        tableData,
                        tableRequestParams,
                        onChange,
                        fetching,
                        localSorterColumn,
                        onChangeSorterColumn,
-                       onChangeTableOptions,
                        openedRow,
                        showRowSelection,
                        rowKey,
                        onUpdateField,
                        onUpdateColumn,
                        disabledRow,
-                       onDownloadCSV
+                       onDownloadCSV,
+
+                       selectedRangeDate,
+                       compareDate
                    }) => {
     const [selectedRows, setSelectedRows] = useState([]),
         [selectedAllRows, setSelectedAllRows] = useState(false),
@@ -63,10 +65,6 @@ const TableList = ({
     const [columnsOrder, setColumnsOrder] = useState(columnsOrderFromLocalStorage ? columnsOrderFromLocalStorage : {})
 
     const dispatch = useDispatch()
-
-    const {selectedRangeDate} = useSelector(state => ({
-        selectedRangeDate: state.analytics.selectedRangeDate,
-    }))
 
     const user = useSelector(state => state.user)
 
@@ -130,6 +128,14 @@ const TableList = ({
         }))
     }
 
+    const selectCompareDateHandler = (startDate, endDate) => {
+        dispatch(analyticsActions.setCompareDate({
+            startDate: startDate != null ? moment(startDate).format('YYYY-MM-DD') : 'lifetime',
+            endDate: endDate != null ? moment(endDate).format('YYYY-MM-DD') : 'lifetime'
+        }))
+
+    }
+
     const changeBlackListHandler = (list) => {
         setColumnsBlackList({
             ...columnsBlackList,
@@ -175,6 +181,18 @@ const TableList = ({
         onChange: (rowsList) => {
             setSelectedRows(rowsList)
             setSelectedAllRows(false)
+        }
+    }
+
+    const changeTableOptionsHandler = (data) => {
+        dispatch(analyticsActions.setTableOptions({
+            [location]: data
+        }))
+
+        if (data.comparePreviousPeriod) {
+            const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
+
+            selectCompareDateHandler(moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff), moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days'))
         }
     }
 
@@ -243,9 +261,10 @@ const TableList = ({
                     <ExpandWorkplace/>
 
                     {showOptions && <TableOptions
-                        options={localTableOptions}
-                        onChange={onChangeTableOptions}
+                        options={tableOptions}
                         selectedRangeDate={selectedRangeDate}
+
+                        onChange={changeTableOptionsHandler}
                     />}
 
                     <button className={'icon-btn download-csv'} onClick={onDownloadCSV}>
@@ -257,9 +276,12 @@ const TableList = ({
                     </button>
 
                     {dateRange && <DateRange
-                        onChange={dateRangeHandler}
                         selectedRangeDate={selectedRangeDate}
-                        tableOptions={localTableOptions}
+                        compareDate={compareDate}
+                        tableOptions={tableOptions}
+
+                        onChange={dateRangeHandler}
+                        onChangeCompareDate={selectCompareDateHandler}
                     />}
 
                     <SwitchChartVisible/>

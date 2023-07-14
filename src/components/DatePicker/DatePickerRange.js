@@ -49,7 +49,7 @@ class DatePicker extends Component {
 
 
     disabledDate = (current) => {
-        if(this.props.disabled) {
+        if (this.props.disabled) {
             return current && this.props.disabled(current)
         } else {
             return current && moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
@@ -57,10 +57,10 @@ class DatePicker extends Component {
     }
 
     render() {
-        const {value, locale, ranges, allowClear=true, onCalendarChange, className,dropdownClassName, format='DD/MM/YY', placeholder='', renderExtraFooter, open, onOpenChange} = this.props
+        const {value, locale, ranges, allowClear = true, onCalendarChange, className, wrapClassName, dropdownClassName, format = 'DD/MM/YY', placeholder = '', renderExtraFooter, open, onOpenChange} = this.props
 
         return (
-            <div className="DatePicker">
+            <div className={`DatePicker ${wrapClassName || ''}`}>
                 <RangePicker
                     ranges={ranges || defaultRanges}
                     className={`pw-range-date-picker ${className || ''}`}

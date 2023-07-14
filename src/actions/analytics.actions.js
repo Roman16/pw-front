@@ -16,7 +16,10 @@ export const analyticsActions = {
     setSortingColumn,
     setVisibleCreateWindow,
     setPortfolioList,
-    setAttributionWindow
+    setAttributionWindow,
+
+    setCompareDate,
+    setTableOptions
 }
 
 function setMainState(state) {
@@ -41,6 +44,24 @@ function setDateRange(date) {
     return dispatch => {
         dispatch({
             type: analyticsConstants.SET_DATE_RANGE,
+            payload: date
+        })
+    }
+}
+
+function setCompareDate(date) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_COMPARE_DATE_RANGE,
+            payload: date
+        })
+    }
+}
+
+function setTableOptions(date) {
+    return dispatch => {
+        dispatch({
+            type: analyticsConstants.SET_TABLE_OPTIONS,
             payload: date
         })
     }
