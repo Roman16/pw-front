@@ -49,7 +49,6 @@ const Placements = () => {
         [areaChartFetchingStatus, setAreaChartFetchingStatus] = useState(false),
         [localSorterColumn, setLocalSorterColumn] = useState(sorterColumnFromLocalStorage[location]),
         [localSegmentValue, setLocalSegmentValue] = useState(segmentValueFromLocalStorage || 'none'),
-        [localTableOptions, setLocalTableOptions] = useState(tableOptionsFromLocalStorage[location] || {comparePreviousPeriod: false}),
         [openedSearchTerms, setOpenedSearchTerms] = useState([]),
         [areaChartMetric, setAreaChartMetric] = useState(localStorage.getItem('placementActiveMetric') || 'impressions')
 
@@ -57,6 +56,8 @@ const Placements = () => {
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
         mainState = useSelector(state => state.analytics.mainState),
         stateDetails = useSelector(state => state.analytics.stateDetails),
+        compareDate = useSelector(state => state.analytics.compareDate),
+        tableOptions = useSelector(state => state.analytics.tableOptions[location] ? state.analytics.tableOptions[location] : {}),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
         attributionWindow = useSelector(state => state.analytics.attributionWindow)
@@ -98,8 +99,8 @@ const Placements = () => {
                     activeMetrics,
                     segment: localSegmentValue,
                     selectedRangeDate: {
-                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                        startDate: compareDate.startDate ? compareDate.startDate : moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                        endDate: compareDate.startDate ? compareDate.endDate : moment(selectedRangeDate.startDate).subtract(1, 'days')
                     }
                 },
                 undefined,
@@ -148,7 +149,7 @@ const Placements = () => {
                                         return targetObj
                                     })
 
-                                    if (localTableOptions.comparePreviousPeriod) {
+                                    if (tableOptions.comparePreviousPeriod) {
                                         item.compareWithPrevious = true
                                     }
 
@@ -158,7 +159,7 @@ const Placements = () => {
                 }))
 
             } else {
-                if (localTableOptions.comparePreviousPeriod && res.table) {
+                if (tableOptions.comparePreviousPeriod && res.table) {
                     setPageData(prevState => ({
                         metrics: res.metrics || prevState.metrics,
                         chart: res.chart || prevState.chart,
@@ -183,7 +184,7 @@ const Placements = () => {
             }
 
 
-            if (localTableOptions.comparePreviousPeriod) {
+            if (tableOptions.comparePreviousPeriod) {
                 getPreviousPeriodData()
             }
 
@@ -212,15 +213,6 @@ const Placements = () => {
         }
 
         analyticsServices.downloadTableCSV('placements', filtersWithState, selectedRangeDate)
-    }
-
-    const changeTableOptionsHandler = (data) => {
-        localStorage.setItem('analyticsTableOptions', JSON.stringify({
-            ...tableOptionsFromLocalStorage,
-            [location]: data
-        }))
-
-        setLocalTableOptions(data)
     }
 
     const getPreviousPeriodData = async () => {
@@ -307,7 +299,7 @@ const Placements = () => {
 
         if (localSegmentValue === 'targetings') setOpenedSearchTerms(pageData.table.data.map(i => i.queryCRC64))
         else setOpenedSearchTerms([])
-    }, [tableRequestParams, localSegmentValue, localTableOptions])
+    }, [tableRequestParams, localSegmentValue])
 
     useEffect(() => {
         getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
@@ -316,6 +308,12 @@ const Placements = () => {
     useEffect(() => {
         return () => prevActiveMetrics = undefined
     }, [])
+
+    useEffect(() => {
+        if(tableOptions.comparePreviousPeriod) {
+            getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
+        }
+    }, [tableOptions, compareDate])
 
     return (
         <div className={'placements-workplace'}>
@@ -355,13 +353,14 @@ const Placements = () => {
                 location={location}
                 metricsData={pageData.metrics}
                 localSorterColumn={localSorterColumn}
-                localTableOptions={localTableOptions}
                 expandedRowRender={localSegmentValue === 'advertisingType' ? (props, columnsBlackList, columnsOrder) => expandedRowRender(props, columnsBlackList, !!mainState.campaignId, stateDetails, columnsOrder) : undefined}
+                compareDate={compareDate}
+                tableOptions={tableOptions}
+                selectedRangeDate={selectedRangeDate}
 
                 onChange={(data) => setTableRequestParams(data)}
                 onDownloadCSV={downloadCSVHandler}
                 onChangeSorterColumn={changeSorterColumnHandler}
-                onChangeTableOptions={changeTableOptionsHandler}
             />
         </div>
     )

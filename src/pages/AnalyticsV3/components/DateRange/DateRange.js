@@ -33,16 +33,6 @@ const DateRange = ({
                        compareDate,
                        onChangeCompareDate
 }) => {
-    let dateDiff,
-        endPrevDate,
-        startPrevDate
-
-    if (tableOptions.comparePreviousPeriod) {
-        dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
-        endPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days')
-        startPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff)
-    }
-
     const onCalendarChangeHandler = (date) => startDate = date[0]
 
     useEffect(() => {
@@ -103,8 +93,7 @@ const DateRange = ({
                 }}
                 onCalendarChange={onCalendarChangeHandler}
                 value={compareDate.startDate === 'lifetime' ? null : [moment(compareDate.startDate, 'YYYY-MM-DD'), moment(compareDate.endDate, 'YYYY-MM-DD')]}
-            />
-            }
+            />}
         </div>
     )
 }

@@ -119,7 +119,6 @@ const RenderPageParts = (props) => {
         compareDate = useSelector(state => state.analytics.compareDate),
         stateInformation = useSelector(state => state.analytics.stateDetails),
         activeMetrics = (metricsState && metricsState.activeMetrics) ? metricsState.activeMetrics : availableMetrics.slice(0, 2),
-        user = useSelector(state => state.user.userDetails),
         attributionWindow = useSelector(state => state.analytics.attributionWindow)
 
     const changeSorterColumnHandler = (data) => {
@@ -330,8 +329,8 @@ const RenderPageParts = (props) => {
                         filtersWithState,
                         activeMetrics,
                         selectedRangeDate: {
-                            startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                            endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                            startDate: compareDate.startDate ? compareDate.startDate : moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
+                            endDate: compareDate.startDate ? compareDate.endDate : moment(selectedRangeDate.startDate).subtract(1, 'days')
                         }
                     },
                     undefined,
@@ -381,28 +380,28 @@ const RenderPageParts = (props) => {
             }
 
 
-            // if (localTableOptions.comparePreviousPeriod && res.table) {
-            //     getPreviousPeriodData(res.table.data.map(item => item[idSelectorsEntity[location]]), paginationParams ? paginationParams : tableRequestParams)
-            //
-            //     setPageData(prevState => ({
-            //         metrics: res.metrics || prevState.metrics,
-            //         chart: res.chart || prevState.chart,
-            //         table: {
-            //             ...res.table,
-            //             response: res.table.data.map(item => {
-            //                 item.compareWithPrevious = true
-            //
-            //                 return item
-            //             })
-            //         }
-            //     }))
-            // } else {
-            //     setPageData(prevState => ({
-            //         metrics: res.metrics || prevState.metrics,
-            //         chart: res.chart || prevState.chart,
-            //         table: res.table || prevState.table
-            //     }))
-            // }
+            if (tableOptions.comparePreviousPeriod && res.table) {
+                getPreviousPeriodData(res.table.data.map(item => item[idSelectorsEntity[location]]), paginationParams ? paginationParams : tableRequestParams)
+
+                setPageData(prevState => ({
+                    metrics: res.metrics || prevState.metrics,
+                    chart: res.chart || prevState.chart,
+                    table: {
+                        ...res.table,
+                        response: res.table.data.map(item => {
+                            item.compareWithPrevious = true
+
+                            return item
+                        })
+                    }
+                }))
+            } else {
+                setPageData(prevState => ({
+                    metrics: res.metrics || prevState.metrics,
+                    chart: res.chart || prevState.chart,
+                    table: res.table || prevState.table
+                }))
+            }
 
 
             setChartFetchingStatus(false)
@@ -426,8 +425,6 @@ const RenderPageParts = (props) => {
 
         if (selectedRangeDate.startDate !== 'lifetime') {
             try {
-                const dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
-
                 let filtersWithState = [
                     ...filters,
                     ...Object.keys(queryParams).map(key => ({
@@ -445,8 +442,8 @@ const RenderPageParts = (props) => {
                     page: 1,
                     pageSize: paginationParams.pageSize,
                     selectedRangeDate: {
-                        startDate: moment(selectedRangeDate.startDate).subtract(1, 'days').subtract(dateDiff),
-                        endDate: moment(selectedRangeDate.startDate).subtract(1, 'days')
+                        startDate: compareDate.startDate,
+                        endDate: compareDate.endDate
                     }
                 }, `&${idSelectors[location]}[]=${idList.join(`&${idSelectors[location]}[]=`)}`)
 
@@ -481,9 +478,6 @@ const RenderPageParts = (props) => {
         }
     }, [activeMetrics])
 
-    // useEffect(() => {
-    //     getPageData(['table'])
-    // }, [localTableOptions])
 
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
@@ -492,6 +486,12 @@ const RenderPageParts = (props) => {
     useEffect(() => {
         prevActiveMetrics = undefined
     }, [location])
+
+    useEffect(() => {
+        if(tableOptions.comparePreviousPeriod) {
+            getPageData(availableParts)
+        }
+    }, [tableOptions, compareDate])
 
     return (
         <>
