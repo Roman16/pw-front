@@ -353,9 +353,7 @@ const SearchTerms = () => {
     }, [])
 
     useEffect(() => {
-        if(tableOptions.comparePreviousPeriod) {
-            getPageData(['metrics', 'table', 'chart'])
-        }
+        getPageData(['metrics', 'table', 'chart'])
     }, [tableOptions, compareDate])
 
     return (

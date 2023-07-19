@@ -310,9 +310,7 @@ const Placements = () => {
     }, [])
 
     useEffect(() => {
-        if(tableOptions.comparePreviousPeriod) {
-            getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
-        }
+        getPageData(['metrics', 'table', 'chart', 'stacked_area_chart'])
     }, [tableOptions, compareDate])
 
     return (

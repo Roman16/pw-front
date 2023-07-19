@@ -488,9 +488,7 @@ const RenderPageParts = (props) => {
     }, [location])
 
     useEffect(() => {
-        if(tableOptions.comparePreviousPeriod) {
             getPageData(availableParts)
-        }
     }, [tableOptions, compareDate])
 
     return (
