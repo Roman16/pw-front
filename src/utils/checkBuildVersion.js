@@ -18,11 +18,7 @@ export const checkBuildVersion = async () => {
         const res = await userService.getIndexHtml()
 
         if (res.data && (getMeta(res.data) !== getMeta()) && (window.location.host !== 'localhost:3000')) {
-            localStorage.removeItem('analyticsMetricsState')
-            localStorage.removeItem('analyticsFiltersList')
-            localStorage.removeItem('analyticsChartState')
-            localStorage.removeItem('analyticsColumnsOrder')
-            localStorage.removeItem('analyticsSorterColumn')
+            localStorage.clear();
 
             sessionStorage.setItem("reloading", "true")
             document.location.reload()
