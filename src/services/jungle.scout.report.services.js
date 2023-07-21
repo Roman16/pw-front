@@ -11,7 +11,9 @@ export const jungleScoutReportServices = {
     getUserReports,
     getUserReportData,
     saveUserReport,
-    addSegment
+    addSegment,
+    updateSegment,
+    deleteSegment,
 }
 
 
@@ -46,4 +48,15 @@ function saveUserReport(id, data) {
 
 function addSegment(data) {
     return api('post', `${jungleScoutReportsUrls.userSegments}`, data, undefined, undefined, undefined, undefined, false)
+}
+
+function deleteSegment(id) {
+    return api('delete', `${jungleScoutReportsUrls.userSegments}/${id}`, undefined, undefined, undefined, undefined, undefined, false)
+}
+
+function updateSegment(data) {
+    return api('put', `${jungleScoutReportsUrls.userSegments}/${data.id}`, {
+        name: data.name,
+        segment_id: data.segment_id
+    }, undefined, undefined, undefined, undefined, false)
 }

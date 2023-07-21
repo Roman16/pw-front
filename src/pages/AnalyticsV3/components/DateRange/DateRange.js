@@ -32,7 +32,7 @@ const DateRange = ({
                        selectedRangeDate,
                        compareDate,
                        onChangeCompareDate
-}) => {
+                   }) => {
     const onCalendarChangeHandler = (date) => startDate = date[0]
 
     useEffect(() => {

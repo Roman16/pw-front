@@ -114,7 +114,7 @@ const RenderPageParts = (props) => {
 
     const metricsState = useSelector(state => state.analytics.metricsState && state.analytics.metricsState[location] ? state.analytics.metricsState[location] : {}),
         filters = useSelector(state => state.analytics.filters[location] ? state.analytics.filters[location] : []),
-        tableOptions = useSelector(state => state.analytics.tableOptions[location] ? state.analytics.tableOptions[location] : {}),
+        tableOptions = useSelector(state => state.analytics.tableOptions[location] ? state.analytics.tableOptions[location] : {comparePreviousPeriod: false}),
         selectedRangeDate = useSelector(state => state.analytics.selectedRangeDate),
         compareDate = useSelector(state => state.analytics.compareDate),
         stateInformation = useSelector(state => state.analytics.stateDetails),
@@ -478,18 +478,17 @@ const RenderPageParts = (props) => {
         }
     }, [activeMetrics])
 
-
     useEffect(() => {
         getPageData(availableParts, {page: 1, pageSize: tableRequestParams.pageSize})
-    }, [selectedRangeDate, filters, history.location.search, attributionWindow])
+    }, [selectedRangeDate,compareDate, filters, history.location.search, attributionWindow])
 
     useEffect(() => {
         prevActiveMetrics = undefined
     }, [location])
 
     useEffect(() => {
-            getPageData(availableParts)
-    }, [tableOptions, compareDate])
+        getPageData(availableParts)
+    }, [tableOptions])
 
     return (
         <>

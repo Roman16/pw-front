@@ -67,7 +67,7 @@ const initialState = {
         startDate: undefined,
         endDate: undefined
     },
-    tableOptions: localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : {},
+    tableOptions: localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : _.mapValues(workplacesList, function (v) { return {comparePreviousPeriod: false} }),
     portfolioList: [],
     attributionWindow: localStorage.getItem('attributionWindow') || '7'
 }
