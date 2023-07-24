@@ -10,6 +10,7 @@ import {NewSegmentWindow} from "./NewSegmentWindow"
 import {notification} from "../../../../components/Notification"
 import {SVG} from "../../../../utils/icons"
 import {Popconfirm} from 'antd'
+import {ConfirmDeleteWindow} from "./ConfirmDeleteWindow"
 
 const {Option} = Select
 let fullUsersList = []
@@ -27,6 +28,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         [selectedSegmentId, setSelectedSegmentId] = useState(),
 
         [visibleWindow, setVisibleWindow] = useState(false),
+        [visibleDeleteWindow, setVisibleDeleteWindow] = useState(false),
         [saveProcessing, setSaveProcessing] = useState(false),
 
         [activeSegment, setActiveSegment] = useState({
@@ -143,11 +145,14 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         setSaveProcessing(false)
     }
 
-    const deleteSegmentHandler = async (id) => {
+    const deleteSegmentHandler = async () => {
+        setSaveProcessing(true)
+
         try {
-            await jungleScoutReportServices.deleteSegment(id)
+            await jungleScoutReportServices.deleteSegment(activeSegment.id)
             getUserSegments()
 
+            setVisibleDeleteWindow(false)
             setActiveSegment({
                 name: '',
                 segment_id: ''
@@ -156,16 +161,24 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         } catch (e) {
             console.log(e)
         }
+
+        setSaveProcessing(false)
     }
 
-    const editSegmentHandler = (s) => {
+    const selectSegmentHandler = (event, segment, actionType) => {
+        event.stopPropagation()
+
         setActiveSegment({
-            name: s.name,
-            segment_id: s.segment_id,
-            id: s.id
+            name: segment.name,
+            segment_id: segment.segment_id,
+            id: segment.id
         })
 
-        setVisibleWindow(true)
+        if (actionType === 'edit') {
+            setVisibleWindow(true)
+        } else {
+            setVisibleDeleteWindow(true)
+        }
     }
 
     useEffect(() => {
@@ -270,17 +283,13 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
                             <div className={'name'}>{segment.name}</div>
 
                             <div className="report-actions">
-                                <button className="btn icon" onClick={() => editSegmentHandler(segment)}><SVG
-                                    id={'edit-pen-icon'}/></button>
+                                <button className="btn icon" onClick={(e) => selectSegmentHandler(e, segment, 'edit')}>
+                                    <SVG id={'edit-pen-icon'}/>
+                                </button>
 
-                                <Popconfirm
-                                    title="Are you sure to delete this segment?"
-                                    onConfirm={() => deleteSegmentHandler(segment.id)}
-                                    okText="Yes"
-                                    cancelText="No"
-                                >
-                                    <button className="btn icon"><SVG id={'remove'}/></button>
-                                </Popconfirm>
+                                <button className="btn icon" onClick={(e) => selectSegmentHandler(e, segment, 'delete')}>
+                                    <SVG id={'remove'}/>
+                                </button>
                             </div>
                         </Option>
                     )}
@@ -327,6 +336,14 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             onClose={() => setVisibleWindow(false)}
             onSave={activeSegment.id ? updateSegmentHandler : addNewSegmentHandler}
             onChange={(value) => setActiveSegment(prevState => ({...prevState, ...value}))}
+        />
+
+        <ConfirmDeleteWindow
+            visible={visibleDeleteWindow}
+            processing={saveProcessing}
+
+            onClose={() => setVisibleDeleteWindow(false)}
+            onConfirm={deleteSegmentHandler}
         />
     </div>)
 }
