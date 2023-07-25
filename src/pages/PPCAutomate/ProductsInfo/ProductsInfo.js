@@ -13,6 +13,7 @@ import axios from "axios"
 import {notification} from "../../../components/Notification"
 import {useSelector} from "react-redux"
 import {adminServices} from "../../../services/admin.services"
+import {userTypeEnums} from "../../../constans/userTypeEnums"
 
 const CancelToken = axios.CancelToken
 let source = null
@@ -33,6 +34,9 @@ const ProductsInfo = () => {
         [importProcessing, setImportProcessing] = useState(false)
 
     const isAgencyClient = useSelector(state => state.user.userDetails.is_agency_client)
+    const user = useSelector(state => state.user)
+
+    const isAdminUser = user.userDetails.user_type === userTypeEnums.ADMIN || localStorage.getItem('adminToken')
 
     const fetchProducts = async () => {
         if (processing && source) {
@@ -220,6 +224,7 @@ const ProductsInfo = () => {
         <Filters
             requestParams={requestParams}
             importProcessing={importProcessing}
+            showProductsActions={isAdminUser}
 
             onChangeFilter={changeFiltersHandler}
             onExportProducts={exportProductsHandler}
