@@ -189,7 +189,7 @@ const ProductsInfo = () => {
     }
 
     const exportProductsHandler = () => {
-        productsServices.exportProducts(activeMarketplace.marketplace_id)
+        productsServices.exportProducts(activeMarketplace.id)
     }
     const importProductsHandler = async ({target: {files}}) => {
         setImportProcessing(true)
