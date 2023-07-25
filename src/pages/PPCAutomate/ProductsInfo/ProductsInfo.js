@@ -198,7 +198,7 @@ const ProductsInfo = () => {
             const requestData = new FormData()
             const file = files.item(files.length - 1)
 
-            requestData.set('products', file)
+            requestData.set('data', file)
 
             await productsServices.importProducts(requestData)
 
