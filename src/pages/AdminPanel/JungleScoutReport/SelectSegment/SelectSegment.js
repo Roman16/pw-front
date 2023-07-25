@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react"
-import {Input, Select, Spin} from "antd"
+import {Select, Spin} from "antd"
 import './SelectSegment.less'
 import {jungleScoutReportServices} from "../../../../services/jungle.scout.report.services"
 import {adminServices} from "../../../../services/admin.services"
 import CustomSelect from "../../../../components/Select/Select"
-import {intervalEnums} from "../../../OptimizationRules/RuleSettings/CreateRulesWindow/RuleSettings"
 import {AttributionWindowSelect} from "../../../AnalyticsV3/components/Header/AttributionWindow"
 import _ from 'lodash'
 import {NewSegmentWindow} from "./NewSegmentWindow"
 import {notification} from "../../../../components/Notification"
+import {SVG} from "../../../../utils/icons"
+import {Popconfirm} from 'antd'
+import {ConfirmDeleteWindow} from "./ConfirmDeleteWindow"
 
 const {Option} = Select
 let fullUsersList = []
@@ -25,8 +27,14 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         [selectedMarketplaceId, setSelectedMarketplaceId] = useState(),
         [selectedSegmentId, setSelectedSegmentId] = useState(),
 
-        [visibleWindow, setVisibleWindow] = useState(),
-        [saveProcessing, setSaveProcessing] = useState(false)
+        [visibleWindow, setVisibleWindow] = useState(false),
+        [visibleDeleteWindow, setVisibleDeleteWindow] = useState(false),
+        [saveProcessing, setSaveProcessing] = useState(false),
+
+        [activeSegment, setActiveSegment] = useState({
+            name: '',
+            junglescout_segment_id: ''
+        })
 
     const getUserList = async () => {
         try {
@@ -65,6 +73,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             console.log(e)
         }
     }
+
     const getUserReports = async () => {
         try {
             const {result} = await jungleScoutReportServices.getUserReports(selectedSegmentId)
@@ -90,24 +99,89 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         setSelectedUserId(value)
     }
 
-    const addNewSegmentHandler = async (data) => {
+    const addNewSegmentHandler = async () => {
         setSaveProcessing(true)
 
         try {
             await jungleScoutReportServices.addSegment({
-                ...data,
+                name: activeSegment.name,
+                junglescout_segment_id: activeSegment.junglescout_segment_id,
                 amazon_region_account_marketplace_id: selectedMarketplaceId
             })
 
             getUserSegments()
 
             setVisibleWindow(false)
+            setActiveSegment({
+                name: '',
+                junglescout_segment_id: ''
+            })
             notification.success({title: 'Segment success added'})
         } catch (e) {
             console.log(e)
         }
 
         setSaveProcessing(false)
+    }
+
+    const updateSegmentHandler = async () => {
+        setSaveProcessing(true)
+
+        try {
+            await jungleScoutReportServices.updateSegment(activeSegment)
+
+            getUserSegments()
+
+            setVisibleWindow(false)
+            setActiveSegment({
+                name: '',
+                junglescout_segment_id: ''
+            })
+            notification.success({title: 'Segment success updated'})
+        } catch (e) {
+            console.log(e)
+        }
+
+        setSaveProcessing(false)
+    }
+
+    const deleteSegmentHandler = async () => {
+        setSaveProcessing(true)
+
+        try {
+            await jungleScoutReportServices.deleteSegment(activeSegment.id)
+            getUserSegments()
+
+            setVisibleDeleteWindow(false)
+            if(activeSegment.id === selectedSegmentId) {
+                setSelectedSegmentId(undefined)
+            }
+            setActiveSegment({
+                name: '',
+                junglescout_segment_id: ''
+            })
+            notification.success({title: 'Segment success deleted'})
+        } catch (e) {
+            console.log(e)
+        }
+
+        setSaveProcessing(false)
+    }
+
+    const selectSegmentHandler = (event, segment, actionType) => {
+        event.stopPropagation()
+
+        setActiveSegment({
+            name: segment.name,
+            junglescout_segment_id: segment.junglescout_segment_id,
+            id: segment.id
+        })
+
+        if (actionType === 'edit') {
+            setVisibleWindow(true)
+        } else {
+            setVisibleDeleteWindow(true)
+        }
     }
 
     useEffect(() => {
@@ -206,9 +280,20 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
                     value={selectedSegmentId}
                     onChange={setSelectedSegmentId}
                     disabled={!selectedMarketplaceId}
+                    dropdownClassName={'segment-dropdown'}
                 >
                     {segmentsList.map(segment => <Option value={segment.id}>
-                            {segment.name}
+                            <div className={'name'}>{segment.name}</div>
+
+                            <div className="report-actions">
+                                <button className="btn icon" onClick={(e) => selectSegmentHandler(e, segment, 'edit')}>
+                                    <SVG id={'edit-pen-icon'}/>
+                                </button>
+
+                                <button className="btn icon" onClick={(e) => selectSegmentHandler(e, segment, 'delete')}>
+                                    <SVG id={'remove'}/>
+                                </button>
+                            </div>
                         </Option>
                     )}
                 </CustomSelect>
@@ -249,9 +334,20 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         <NewSegmentWindow
             visible={visibleWindow}
             processing={saveProcessing}
-
+            segment={activeSegment}
+            title={activeSegment.id ? 'Edit segment' : 'Add new segment'}
+            disabled={!!activeSegment.id}
             onClose={() => setVisibleWindow(false)}
-            onSave={addNewSegmentHandler}
+            onSave={activeSegment.id ? updateSegmentHandler : addNewSegmentHandler}
+            onChange={(value) => setActiveSegment(prevState => ({...prevState, ...value}))}
+        />
+
+        <ConfirmDeleteWindow
+            visible={visibleDeleteWindow}
+            processing={saveProcessing}
+
+            onClose={() => setVisibleDeleteWindow(false)}
+            onConfirm={deleteSegmentHandler}
         />
     </div>)
 }

@@ -26,17 +26,13 @@ const ranges = {
 
 let startDate
 
-const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
-    let dateDiff,
-        endPrevDate,
-        startPrevDate
-
-    if (tableOptions.comparePreviousPeriod) {
-        dateDiff = moment.duration(moment(selectedRangeDate.endDate).diff(moment(selectedRangeDate.startDate)))
-        endPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days')
-        startPrevDate = moment(selectedRangeDate.startDate, 'YYYY-MM-DD').subtract(1, 'days').subtract(dateDiff)
-    }
-
+const DateRange = ({
+                       tableOptions,
+                       onChange,
+                       selectedRangeDate,
+                       compareDate,
+                       onChangeCompareDate
+                   }) => {
     const onCalendarChangeHandler = (date) => startDate = date[0]
 
     useEffect(() => {
@@ -50,8 +46,9 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
 
     return (
         <div
-            className={`datepicker-block ${selectedRangeDate.startDate !== 'lifetime' && tableOptions.comparePreviousPeriod ? 'compare' : ''}`}>
+            className={`datepicker-block ${selectedRangeDate.startDate !== 'lifetime' && tableOptions.comparePreviousPeriod ? 'compared' : ''}`}>
             <DatePicker
+                wrapClassName={'main-datepicker'}
                 timeRange={(start, end) => {
                     startDate = undefined
 
@@ -75,9 +72,28 @@ const DateRange = ({tableOptions, onChange, selectedRangeDate}) => {
                 value={selectedRangeDate.startDate === 'lifetime' ? null : [moment(selectedRangeDate.startDate, 'YYYY-MM-DD'), moment(selectedRangeDate.endDate, 'YYYY-MM-DD')]}
             />
 
-            {selectedRangeDate.startDate !== 'lifetime' && <div className="compare-date">
-                Compared: {`${moment(startPrevDate).format('DD/MM/YY')} - ${moment(endPrevDate).format('DD/MM/YY')}`}
-            </div>}
+            {selectedRangeDate.startDate !== 'lifetime' && <DatePicker
+                wrapClassName={'compare-datepicker'}
+                timeRange={(start, end) => {
+                    startDate = undefined
+                    onChangeCompareDate(start, end)
+                }}
+
+                allowClear={false}
+                disabled={current => {
+                    if (current) {
+                        if (startDate) {
+                            return moment(current).endOf('day') > moment(startDate).tz(activeTimezone).add(62, 'days').endOf('day') || moment(current).endOf('day') < moment(startDate).tz(activeTimezone).subtract(61, 'days').endOf('day') || moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
+                        } else {
+                            return moment(current).endOf('day') > moment().tz(activeTimezone).endOf('day')
+                        }
+                    } else {
+                        return false
+                    }
+                }}
+                onCalendarChange={onCalendarChangeHandler}
+                value={compareDate.startDate === 'lifetime' ? null : [moment(compareDate.startDate, 'YYYY-MM-DD'), moment(compareDate.endDate, 'YYYY-MM-DD')]}
+            />}
         </div>
     )
 }

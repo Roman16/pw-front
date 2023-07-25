@@ -42,6 +42,25 @@ const filtersHandler = (f) => {
     filters.forEach(({filterBy, type, value, requestValue}) => {
         if (filterBy === 'generatedAtDateTime') {
             parameters.unshift(`${dateRangeFormatting(value)}`)
+        } else if (filterBy === 'code') {
+            if (type.key === 'one_of') {
+                if (value.length === 2) {
+
+                } else if (value[0] === 'SUCCESS') {
+                    parameters.push(`&code:in=SUCCESS`)
+                } else if (value[0] === 'FAILED') {
+                    parameters.push(`&code:not_in=SUCCESS`)
+                }
+            } else if (type.key === 'except') {
+                if (value.length === 2) {
+                    parameters.push(`&code:not_in=SUCCESS,FAILED`)
+                } else if (value[0] === 'SUCCESS') {
+                    parameters.push(`&code:not_in=SUCCESS`)
+                } else if (value[0] === 'FAILED') {
+                    parameters.push(`&code:in=SUCCESS`)
+                }
+            }
+            parameters.push(`&${filterBy}:`)
         } else if (type.key === 'except') {
             parameters.push(`&${filterBy}:not_in=${value.map(i => i === 'autoTargeting' ? 'auto' : i === 'manualTargeting' ? 'manual' : i).join(',')}`)
         } else if (type.key === 'one_of') {
@@ -67,7 +86,7 @@ function getCampaignsPreview({pageSize, page, searchStr, sorting}, cancelToken) 
     return api('get', `${optimizationRulesUrls.campaignsPreview}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)
 }
 
-function getRules({pageSize=10, page=1, filters, searchStr, id = [], sorting}, cancelToken) {
+function getRules({pageSize = 10, page = 1, filters, searchStr, id = [], sorting}, cancelToken) {
     if (filters?.[0]?.type === "search") searchStr = filters[0].value
 
     return api('get', `${optimizationRulesUrls.rules}?page=${page}&size=${pageSize}${searchStrWrap(searchStr).join('')}${id.length > 0 ? `&id[]=${id.join('&id[]=')}` : ''}${sorting ? `&order_by[]=${sorting}` : ''}`, undefined, undefined, cancelToken)

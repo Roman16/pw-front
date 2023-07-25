@@ -6,6 +6,7 @@ const metricsStateFromLocalStorage = localStorage.getItem('analyticsMetricsState
     filtersListFromLocalStorage = localStorage.getItem('analyticsFiltersList') && JSON.parse(localStorage.getItem('analyticsFiltersList')),
     chartStateFromLocalStorage = localStorage.getItem('analyticsChartState') && JSON.parse(localStorage.getItem('analyticsChartState')),
     rangeDateFromLocalStorage = localStorage.getItem('analyticsRangeDate') && JSON.parse(localStorage.getItem('analyticsRangeDate')),
+    compareDateFromLocalStorage = localStorage.getItem('analyticsCompareDate') && JSON.parse(localStorage.getItem('analyticsCompareDate')),
     sortingColumnFromLocalStorage = localStorage.getItem('analyticsSortingColumn') && JSON.parse(localStorage.getItem('analyticsSortingColumn'))
 
 const workplacesList = {
@@ -29,7 +30,6 @@ const defaultChartOptionsValues = {
     showOptimizationChart: true,
     selectFourMetrics: false,
 }
-
 
 const initialState = {
     location: undefined,
@@ -63,6 +63,11 @@ const initialState = {
         startDate: moment().add(-29, 'days').toISOString(),
         endDate: moment().toISOString()
     },
+    compareDate: compareDateFromLocalStorage ? compareDateFromLocalStorage : {
+        startDate: undefined,
+        endDate: undefined
+    },
+    tableOptions: localStorage.getItem('analyticsTableOptions') ? JSON.parse(localStorage.getItem('analyticsTableOptions')) : _.mapValues(workplacesList, function (v) { return {comparePreviousPeriod: false} }),
     portfolioList: [],
     attributionWindow: localStorage.getItem('attributionWindow') || '7'
 }
@@ -96,6 +101,14 @@ export function analytics(state = initialState, action) {
             return {
                 ...state,
                 selectedRangeDate: action.payload
+            }
+
+        case analyticsConstants.SET_COMPARE_DATE_RANGE:
+            localStorage.setItem('analyticsCompareDate', JSON.stringify(action.payload))
+
+            return {
+                ...state,
+                compareDate: action.payload
             }
 
         case analyticsConstants.SET_CHART_VIEW:
@@ -161,6 +174,20 @@ export function analytics(state = initialState, action) {
                         ...state.filters,
                         [state.location]: action.payload
                     }
+                }
+            }
+
+        case analyticsConstants.SET_TABLE_OPTIONS:
+            localStorage.setItem('analyticsTableOptions', JSON.stringify({
+                ...state.tableOptions,
+                ...action.payload
+            }))
+
+            return {
+                ...state,
+                tableOptions: {
+                    ...state.tableOptions,
+                    ...action.payload
                 }
             }
 

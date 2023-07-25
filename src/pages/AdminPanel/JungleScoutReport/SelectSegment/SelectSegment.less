@@ -41,6 +41,10 @@
       b {
         margin: 0 5px 0 0;
       }
+
+      .report-actions {
+        display: none;
+      }
     }
 
 
@@ -87,9 +91,55 @@
     border: 0;
     padding: 0;
   }
+
+  .segment-dropdown {
+    li {
+      display: flex;
+
+      .name {
+        flex: 1;
+
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      .report-actions {
+        display: flex;
+        background: none;
+        box-shadow: none;
+        margin: 0 0 0 auto;
+        padding: 0;
+        grid-gap: 5px;
+
+        .btn {
+          width: 20px;
+          height: 20px;
+
+          svg {
+            width: 14px;
+            height: 14px;
+            stroke: #46435C;
+          }
+
+          &:hover {
+            svg {
+              stroke: #FF5256;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .new-segment-window {
+.window-header {
+  .btn.close {
+    width: 32px;
+  }
+}
+
   .ant-modal-body {
     padding: 20px;
 

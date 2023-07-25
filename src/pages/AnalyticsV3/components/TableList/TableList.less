@@ -421,32 +421,40 @@
       align-items: flex-end;
       margin: 0 20px 0 0;
       transition: .2s;
+      position: relative;
 
-      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-        margin: 0 20px 16px 0;
+      .main-datepicker {
+        z-index: 1111;
       }
 
-
-      .compare-date {
-        font-size: 1rem;
-        margin-top: -20px;
-        transition: .2s;
-        color: #fff;
+      .DatePicker {
+        transition: .2s ease-in-out;
       }
 
+      .pw-range-date-picker, .ant-calendar-picker-input, .ant-calendar-range-picker-separator {
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
 
-      &.compare {
-        margin-top: -10px;
+      .compare-datepicker {
+        position: absolute;
+        z-index: 1110;
+        top: 0;
+        transition: .2s ease-in-out;
+      }
 
-        .compare-date {
-          margin: 0;
-          color: #656A84;
+      &.compared {
+        .DatePicker {
+          height: 20px;
         }
-      }
 
-      @media only screen and (min--moz-device-pixel-ratio: 2), only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2) {
-        &.compare {
-          margin-top: -4px;
+        .main-datepicker {
+          margin: -10px 0 0 0;
+        }
+
+        .compare-datepicker {
+          top: 20px;
         }
       }
     }

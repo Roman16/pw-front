@@ -403,16 +403,15 @@ const files = {
             width: 20,
             height: 20,
             viewBox: [0, 0, 20, 20],
-            data: '<mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0">\n' +
-                '<rect/>\n' +
-                '</mask>\n' +
-                '<g mask="url(#mask0)">\n' +
-                '<path d="M4.29419 5L15.706 5L15.706 18.0001C15.706 18.5524 15.2582 19.0001 14.706 19.0001H5.29419C4.7419 19.0001 4.29419 18.5524 4.29419 18.0001V5Z"  stroke-width="2"/>\n' +
-                '<path d="M3 2H17"  stroke-width="2" stroke-linecap="round"/>\n' +
-                '<path d="M8 8L8 16"  stroke-width="2" stroke-linecap="round"/>\n' +
-                '<path d="M12 8L12 16"  stroke-width="2" stroke-linecap="round"/>\n' +
-                '<path d="M7.76465 1L12.2352 1"  stroke-width="2" stroke-linecap="round"/>\n' +
-                '</g>'
+            data: '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                '<g>'+
+                    '<path d="M4.29419 5L15.706 5L15.706 18.0001C15.706 18.5524 15.2582 19.0001 14.706 19.0001H5.29419C4.7419 19.0001 4.29419 18.5524 4.29419 18.0001V5Z"  stroke-width="2"/>'+
+                    '<path d="M3 2H17"  stroke-width="2" stroke-linecap="round"/>'+
+                    '<path d="M8 8L8 16" stroke-width="2" stroke-linecap="round"/>'+
+                    '<path d="M12 8L12 16"  stroke-width="2" stroke-linecap="round"/>'+
+                    '<path d="M7.76465 1L12.2352 1"  stroke-width="2" stroke-linecap="round"/>'+
+                '</g>'+
+            '</svg>'
         },
         'right-icon': {
             width: 20,
