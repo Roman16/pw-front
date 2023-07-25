@@ -182,10 +182,10 @@ function getActualCogs(productId, cancelToken) {
     return api('get', `${productsUrls.actualCogs}?product_id=${productId}`, undefined, undefined, cancelToken)
 }
 
-function exportProducts() {
+function exportProducts(ARAM) {
     const token = localStorage.getItem('token')
 
-    window.open(`${baseUrl}/api/settings/products/csv?token=${token}`)
+    window.open(`${baseUrl}/api/settings/products/csv?token=${token}&amazon_region_account_marketplace_id=${ARAM}`)
 }
 
 function importProducts(data) {
