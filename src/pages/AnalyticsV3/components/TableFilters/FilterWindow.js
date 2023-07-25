@@ -464,8 +464,7 @@ const FilterWindow = ({columns, onClose, onAddFilter, filters, currentTab, editF
         ],
         'code': [
             {title: 'Success', key: 'SUCCESS', value: 'SUCCESS'},
-            {title: 'Failed', key: 'FAILED,APPLY_FAILED,CHECK_FAILED', value: 'FAILED,APPLY_FAILED,CHECK_FAILED'},
-            {title: 'Processing', key: 'CHECK_IN_PROGRESS,APPLY_IN_PROGRESS', value: 'CHECK_IN_PROGRESS,APPLY_IN_PROGRESS'},
+            {title: 'Failed', key: 'FAILED', value: 'FAILED'},
         ],
         'calculatedCampaignSubType': [
             {title: 'Auto', key: 'Auto', value: 'Auto'},
