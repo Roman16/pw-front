@@ -57,6 +57,5 @@ function deleteSegment(id) {
 function updateSegment(data) {
     return api('put', `${jungleScoutReportsUrls.userSegments}/${data.id}`, {
         name: data.name,
-        segment_id: data.segment_id
     }, undefined, undefined, undefined, undefined, false)
 }

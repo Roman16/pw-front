@@ -3,7 +3,7 @@ import ModalWindow from "../../../../components/ModalWindow/ModalWindow"
 import WindowHeader from "../../../Analytics/Campaigns/CreateCampaignWindow/WindowHeader"
 import {Spin} from "antd"
 
-export const NewSegmentWindow = ({visible, segment, processing, onChange, onClose, onSave}) => {
+export const NewSegmentWindow = ({visible,title,disabled, segment, processing, onChange, onClose, onSave}) => {
 
     return (<ModalWindow
             visible={visible}
@@ -11,7 +11,7 @@ export const NewSegmentWindow = ({visible, segment, processing, onChange, onClos
             className={'new-segment-window'}
         >
             <WindowHeader
-                title={'Add new segment'}
+                title={title}
 
                 onClose={onClose}
             />
@@ -30,8 +30,9 @@ export const NewSegmentWindow = ({visible, segment, processing, onChange, onClos
                     <label htmlFor="">Segment id</label>
                     <input
                         type="text"
-                        value={segment.segment_id}
-                        onChange={({target: {value}}) => onChange({segment_id: value})}
+                        disabled={disabled}
+                        value={segment.junglescout_segment_id}
+                        onChange={({target: {value}}) => onChange({junglescout_segment_id: value})}
                     />
                 </div>
             </div>

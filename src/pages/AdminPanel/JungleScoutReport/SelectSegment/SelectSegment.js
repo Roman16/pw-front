@@ -33,7 +33,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
 
         [activeSegment, setActiveSegment] = useState({
             name: '',
-            segment_id: ''
+            junglescout_segment_id: ''
         })
 
     const getUserList = async () => {
@@ -105,7 +105,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
         try {
             await jungleScoutReportServices.addSegment({
                 name: activeSegment.name,
-                segment_id: activeSegment.segment_id,
+                junglescout_segment_id: activeSegment.junglescout_segment_id,
                 amazon_region_account_marketplace_id: selectedMarketplaceId
             })
 
@@ -114,7 +114,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             setVisibleWindow(false)
             setActiveSegment({
                 name: '',
-                segment_id: ''
+                junglescout_segment_id: ''
             })
             notification.success({title: 'Segment success added'})
         } catch (e) {
@@ -135,7 +135,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             setVisibleWindow(false)
             setActiveSegment({
                 name: '',
-                segment_id: ''
+                junglescout_segment_id: ''
             })
             notification.success({title: 'Segment success updated'})
         } catch (e) {
@@ -153,9 +153,12 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             getUserSegments()
 
             setVisibleDeleteWindow(false)
+            if(activeSegment.id === selectedSegmentId) {
+                setSelectedSegmentId(undefined)
+            }
             setActiveSegment({
                 name: '',
-                segment_id: ''
+                junglescout_segment_id: ''
             })
             notification.success({title: 'Segment success deleted'})
         } catch (e) {
@@ -170,7 +173,7 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
 
         setActiveSegment({
             name: segment.name,
-            segment_id: segment.segment_id,
+            junglescout_segment_id: segment.junglescout_segment_id,
             id: segment.id
         })
 
@@ -332,7 +335,8 @@ export const SelectSegment = ({onChangeId, onChangeAW, reportId, attributionWind
             visible={visibleWindow}
             processing={saveProcessing}
             segment={activeSegment}
-
+            title={activeSegment.id ? 'Edit segment' : 'Add new segment'}
+            disabled={!!activeSegment.id}
             onClose={() => setVisibleWindow(false)}
             onSave={activeSegment.id ? updateSegmentHandler : addNewSegmentHandler}
             onChange={(value) => setActiveSegment(prevState => ({...prevState, ...value}))}
