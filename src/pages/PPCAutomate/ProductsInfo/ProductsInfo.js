@@ -34,7 +34,9 @@ const ProductsInfo = () => {
         [importProcessing, setImportProcessing] = useState(false)
 
     const isAgencyClient = useSelector(state => state.user.userDetails.is_agency_client)
-    const user = useSelector(state => state.user)
+    const user = useSelector(state => state.user),
+        activeMarketplace = useSelector(state => state.user.activeAmazonMarketplace)
+
 
     const isAdminUser = user.userDetails.user_type === userTypeEnums.ADMIN || localStorage.getItem('adminToken')
 
@@ -187,7 +189,7 @@ const ProductsInfo = () => {
     }
 
     const exportProductsHandler = () => {
-        productsServices.exportProducts()
+        productsServices.exportProducts(activeMarketplace.marketplace_id)
     }
     const importProductsHandler = async ({target: {files}}) => {
         setImportProcessing(true)
