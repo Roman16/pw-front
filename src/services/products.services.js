@@ -189,5 +189,5 @@ function exportProducts() {
 }
 
 function importProducts(data) {
-    return api('post', `${productsUrls.importProducts}`, data)
+    return api('post', `${productsUrls.importProducts}`, data, 'multipart/form-data')
 }
