@@ -3,6 +3,12 @@ import {optimizationRulesUrls} from "../constans/api.urls"
 import {searchStrWrap} from "./products.services"
 import moment from 'moment'
 
+const advertisingTypeEnums = {
+    'sponsored_products': 'SponsoredProducts',
+    'sponsored_brands': 'SponsoredBrands',
+    'sponsored_display': 'SponsoredDisplay',
+}
+
 export const optimizationRulesServices = {
     getCampaigns,
     getCampaignsPreview,
@@ -19,6 +25,9 @@ export const optimizationRulesServices = {
     getLogs,
     getStatuses,
     activateRule,
+
+    getCampaignsForST,
+    getAdGroupsForST
 
 }
 
@@ -139,4 +148,12 @@ function getStatuses({ruleId, campaignId, page, pageSize, sorterColumn}) {
 
 function activateRule(ruleId) {
     return api('post', `${optimizationRulesUrls.activateRule(ruleId)}`)
+}
+
+function getCampaignsForST({page, advertisingType, searchStr}) {
+    return api('get', `${optimizationRulesUrls.campaignsFroST}?size=100&page=${page}&advertisingType[]=${advertisingTypeEnums[advertisingType]}${searchStr ? `&search[]=${searchStr}` : ''}`)
+}
+
+function getAdGroupsForST({page,campaignId,advertisingType,type, searchStr}) {
+    return api('get', `${optimizationRulesUrls.adGroupsFroST}?size=100&page=${page}&campaign_id[]=${campaignId}&advertisingType[]=${advertisingTypeEnums[advertisingType]}&${type === 'search_term_keywords' ? 'ad_group_targeting_type[]=keywords&ad_group_targeting_type[]=any' : 'ad_group_targeting_type[]=targets&ad_group_targeting_type[]=any'}${searchStr ? `&search[]=${searchStr}` : ''}`)
 }

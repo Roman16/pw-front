@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
 import _ from "lodash"
-import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import {advertisingTypeEnums, periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
 import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
@@ -55,6 +55,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
             {rule.description && <p title={rule.description}>{rule.description}</p>}
 
             <div className="details-row">
+                {rule.advertising_type && <div className="advertising-type">{_.find(advertisingTypeEnums, {key: rule.advertising_type}).fullName}</div>}
                 {rule.rule_entity_type && <div
                     className="rule-type">{rule.rule_entity_type === 'product_ads' ? 'Product Ads' : 'Targetings'}</div>}
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>

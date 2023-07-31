@@ -15,6 +15,7 @@ const createSteps = ['Information', 'Settings', 'Attach', 'Overview']
 const defaultState = {
     attribution_window: '7',
     name: '',
+    advertising_type: undefined,
     rule_entity_type: undefined,
     description: '',
     type: 'manual',
@@ -62,8 +63,6 @@ export const CreateRulesWindow = ({
     }
 
     const createValidator = () => {
-        console.log(createData)
-
         if (currentStep === 0 && (!createData.name || !createData.rule_entity_type)) return true
         else if (currentStep === 1) {
             if (!createData.interval) {
@@ -103,11 +102,23 @@ export const CreateRulesWindow = ({
     }
 
     const createRuleHandler = () => {
-        onCreate({
-            ...createData,
-            condition: JSON.stringify(createData.condition),
-            actions: JSON.stringify([createData.actions]),
-        })
+        if (createData.actions.type === 'add_as_keyword_exact' || createData.actions.type === 'add_as_keyword_phrase' || createData.actions.type === 'add_as_keyword_broad' || createData.actions.type === 'add_as_target_asin' || createData.actions.type === 'add_as_target_asin_expaned') {
+            onCreate({
+                ...createData,
+                condition: JSON.stringify(createData.condition),
+                actions: JSON.stringify([{
+                    ...createData.actions,
+                    bid: !!createData.actions.useBidFromCpc ? undefined : createData.actions.bid,
+                    useBidFromCpc: !!createData.actions.useBidFromCpc ? createData.actions.useBidFromCpc : undefined
+                }]),
+            })
+        } else {
+            onCreate({
+                ...createData,
+                condition: JSON.stringify(createData.condition),
+                actions: JSON.stringify([createData.actions]),
+            })
+        }
     }
 
     const nextStepHandler = () => setCurrentStep(prevStep => prevStep + 1)

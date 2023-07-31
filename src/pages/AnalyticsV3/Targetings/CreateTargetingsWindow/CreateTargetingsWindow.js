@@ -550,7 +550,7 @@ export const InfinitySelect = React.memo((props) => {
                 {...props}
             >
                 {selectList.map(i => <Option value={i[props.dataKey]}>
-                    {i.name}
+                    {props.optionName ? i[props.optionName] : i.name}
                 </Option>)}
 
                 {loading && <Option key="loading"><Spin size={'small'}/></Option>}

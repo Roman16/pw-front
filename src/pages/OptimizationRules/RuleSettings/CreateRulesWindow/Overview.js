@@ -1,7 +1,7 @@
 import React from "react"
 import _ from "lodash"
 import {actionsEnums, intervalEnums} from "./RuleSettings"
-import {periodEnums, ruleTypeEnums} from "./RuleInformation"
+import {advertisingTypeEnums, periodEnums, ruleTypeEnums} from "./RuleInformation"
 
 
 export const Overview = ({data}) => {
@@ -12,9 +12,14 @@ export const Overview = ({data}) => {
             fieldKey: 'name'
         },
         {
+            title: 'Advertising type',
+            fieldKey: 'advertising_type',
+            render: value => _.find(advertisingTypeEnums, {key: value}).fullName
+        },
+        {
             title: 'Rule Type',
             fieldKey: 'rule_entity_type',
-            render: value => _.find(ruleTypeEnums, {key: value}).title
+            render: value => _.find(ruleTypeEnums[data.advertising_type], {key: value}).title
         },
         {
             title: 'Attribution window',
