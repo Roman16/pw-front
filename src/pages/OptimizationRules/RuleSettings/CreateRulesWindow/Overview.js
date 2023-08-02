@@ -14,7 +14,7 @@ export const Overview = ({data}) => {
         {
             title: 'Advertising type',
             fieldKey: 'advertising_type',
-            render: value => _.find(advertisingTypeEnums, {key: value}).fullName
+            render: value => _.find(advertisingTypeEnums, {key: value}).title
         },
         {
             title: 'Rule Type',

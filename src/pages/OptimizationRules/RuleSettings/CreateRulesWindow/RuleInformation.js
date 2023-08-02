@@ -47,7 +47,7 @@ export const periodEnums = [
 ]
 
 export const ruleTypeEnums = {
-    'sponsored_products': [
+    'sponsoredProducts': [
         {
             title: 'Targetings',
             key: 'targetings'
@@ -65,13 +65,13 @@ export const ruleTypeEnums = {
             key: 'search_term_targets'
         },
     ],
-    'sponsored_brands': [
+    'SponsoredBrands': [
         {
             title: 'Targetings',
             key: 'targetings'
         },
     ],
-    'sponsored_display': [
+    'SponsoredDisplay': [
         {
             title: 'Targetings',
             key: 'targetings'
@@ -86,19 +86,16 @@ export const ruleTypeEnums = {
 
 export const advertisingTypeEnums = [
     {
-        name: 'SP',
-        fullName: 'Sponsored Products',
-        key: 'sponsored_products'
+        title: 'Sponsored Products',
+        key: 'SponsoredProducts'
     },
     {
-        name: 'SB',
-        fullName: 'Sponsored Brands',
-        key: 'sponsored_brands'
+        title: 'Sponsored Brands',
+        key: 'SponsoredBrands'
     },
     {
-        name: 'SD',
-        fullName: 'Sponsored Display',
-        key: 'sponsored_display'
+        title: 'Sponsored Display',
+        key: 'SponsoredDisplay'
     },
 ]
 
@@ -132,7 +129,7 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                     }
                 })}
             >
-                {advertisingTypeEnums.map(i => <Option value={i.key}>{i.fullName}</Option>)}
+                {advertisingTypeEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
             </CustomSelect>
         </div>
 

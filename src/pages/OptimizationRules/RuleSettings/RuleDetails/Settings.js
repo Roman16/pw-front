@@ -55,7 +55,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
             {rule.description && <p title={rule.description}>{rule.description}</p>}
 
             <div className="details-row">
-                {rule.advertising_type && <div className="advertising-type">{_.find(advertisingTypeEnums, {key: rule.advertising_type}).fullName}</div>}
+                {rule.advertising_type && <div className="advertising-type">{_.find(advertisingTypeEnums, {key: rule.advertising_type}).title}</div>}
                 {rule.rule_entity_type && <div
                     className="rule-type">{rule.rule_entity_type === 'product_ads' ? 'Product Ads' : 'Targetings'}</div>}
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
