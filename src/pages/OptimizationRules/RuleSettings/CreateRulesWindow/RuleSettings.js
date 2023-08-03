@@ -7,6 +7,7 @@ import InputCurrency from "../../../../components/Inputs/InputCurrency"
 import {round} from '../../../../utils/round'
 import {InfinitySelect} from "../../../AnalyticsV3/Targetings/CreateTargetingsWindow/CreateTargetingsWindow"
 import {analyticsServices} from "../../../../services/analytics.services"
+import {optimizationRulesServices} from "../../../../services/optimization.rules.services"
 
 const Option = Select.Option
 
@@ -396,7 +397,9 @@ export const RuleSettings = ({data, onChange}) => {
 
         <ActionValue
             actions={data.actions}
+            advertisingType={data.advertising_type}
             onChange={onChange}
+            targetingType={data.rule_entity_type}
         />
     </div>)
 }
@@ -519,16 +522,15 @@ const AddActions = ({onAddCondition, onAddGroup, addGroupBtnText = 'Add group'})
     </div>)
 }
 
-const ActionValue = ({actions, onChange}) => {
+const ActionValue = ({actions, onChange,targetingType, advertisingType}) => {
     const [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([])
-
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         try {
-            const res = await analyticsServices.fetchCampaignsForTargeting({
+            const res = await optimizationRulesServices.getCampaignsForST({
                 page,
-                type: 'SponsoredProducts',
-                name: searchStr
+                advertisingType,
+                searchStr
             })
 
             if (page === 1) setCampaigns([...res.result])
@@ -541,10 +543,12 @@ const ActionValue = ({actions, onChange}) => {
 
     const getAdGroups = async (id, page = 1, cb, searchStr = undefined) => {
         try {
-            const res = await analyticsServices.fetchAdGroupsForTargeting({
+            const res = await optimizationRulesServices.getAdGroupsForST({
                 page,
-                id,
-                name: searchStr
+                campaignId: id,
+                advertisingType,
+                searchStr,
+                type: targetingType
             })
 
             setAdGroups(res.result)
@@ -558,11 +562,11 @@ const ActionValue = ({actions, onChange}) => {
     }
 
     useEffect(() => {
-        getCampaigns()
+        actions.type && advertisingType && getCampaigns()
     }, [actions.type])
 
     useEffect(() => {
-        getAdGroups(actions.campaignId)
+        actions.campaignId && getAdGroups(actions.campaignId)
     }, [actions.campaignId])
 
     switch (actions.type) {
@@ -645,6 +649,7 @@ const ActionValue = ({actions, onChange}) => {
                         children={campaigns}
                         dataKey={'campaignId'}
                         notFoundContent={'No campaigns'}
+                        optionName={'campaignName'}
                     />
                 </div>
 
@@ -658,6 +663,7 @@ const ActionValue = ({actions, onChange}) => {
                         children={adGroups}
                         dataKey={'adGroupId'}
                         notFoundContent={'No ad groups'}
+                        optionName={'adGroupName'}
                     />
                 </div>
 
@@ -695,6 +701,7 @@ const ActionValue = ({actions, onChange}) => {
                         children={campaigns}
                         dataKey={'campaignId'}
                         notFoundContent={'No campaigns'}
+                        optionName={'campaignName'}
                     />
                 </div>
 
@@ -708,6 +715,7 @@ const ActionValue = ({actions, onChange}) => {
                         children={adGroups}
                         dataKey={'adGroupId'}
                         notFoundContent={'No ad groups'}
+                        optionName={'adGroupName'}
                     />
                 </div>
             </div>
@@ -724,6 +732,7 @@ const ActionValue = ({actions, onChange}) => {
                         children={campaigns}
                         dataKey={'campaignId'}
                         notFoundContent={'No campaigns'}
+                        optionName={'campaignName'}
                     />
                 </div>
             </div>

@@ -201,6 +201,8 @@ const ProductsInfo = () => {
             requestData.set('data', file)
 
             await productsServices.importProducts(requestData)
+            fetchProducts()
+            notification.success({title: 'Data imported successfully'})
 
         } catch (e) {
             console.log(e)

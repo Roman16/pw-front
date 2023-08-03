@@ -65,6 +65,7 @@ const Filters = ({requestParams, importProcessing, showProductsActions, onChange
                         name="myFile"
                         id={'myFile'}
                         type="file"
+                        accept=".csv"
                         multiple={false}
                         placeholder={'Import products'}
                         onChange={onImportProducts}

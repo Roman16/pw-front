@@ -85,7 +85,7 @@ export const mainMenu = [
     {
         title: 'Report',
         key: 'report',
-        icon: 'scanner-icon-sidebar',
+        icon: 'jungleScout-icon-sidebar',
         link: 'monthly-report'
     },
     // {

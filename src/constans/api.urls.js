@@ -235,7 +235,11 @@ export const optimizationRulesUrls = {
 
     ruleLogs: 'rules-based-optimization/logs',
     ruleStatuses: 'rules-based-optimization/rules/launches',
-    activateRule: id => `rules-based-optimization/rules/${id}/launch`
+    activateRule: id => `rules-based-optimization/rules/${id}/launch`,
+
+    campaignsFroST: 'rules-based-optimization/entities/campaigns',
+    adGroupsFroST: 'rules-based-optimization/entities/ad-groups',
+
 }
 
 

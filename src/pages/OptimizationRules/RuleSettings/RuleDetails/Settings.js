@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import {intervalEnums, RuleSettings} from "../CreateRulesWindow/RuleSettings"
 import _ from "lodash"
-import {periodEnums} from "../CreateRulesWindow/RuleInformation"
+import {advertisingTypeEnums, periodEnums} from "../CreateRulesWindow/RuleInformation"
 import {Spin} from "antd"
 import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 import InformationTooltip from "../../../../components/Tooltip/Tooltip"
@@ -18,6 +18,42 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
 
     const resetHandler = () => {
         setRuleData({...rule, actions: rule.actions[0] || rule.actions})
+    }
+
+    const saveValidator = () => {
+        if (!ruleData.interval) {
+            return true
+        }
+
+        if ((ruleData.rule_entity_type === 'search_term_keywords' || ruleData.rule_entity_type === 'search_term_targets')) {
+            if (ruleData.actions?.type) {
+                if (ruleData.actions?.type === 'add_as_keyword_exact' ||
+                    ruleData.actions?.type === 'add_as_keyword_phrase' ||
+                    ruleData.actions?.type === 'add_as_keyword_broad' ||
+                    ruleData.actions?.type === 'add_as_target_asin' ||
+                    ruleData.actions?.type === 'add_as_target_asin_expaned') {
+
+                    if (ruleData.actions.useBidFromCpc) {
+                        return false
+                    } else {
+                        return !ruleData.actions.bid
+                    }
+                } else if (ruleData.actions?.type === 'add_as_keyword_negative_exact' ||
+                    ruleData.actions?.type === 'add_as_keyword_negative_phrase' ||
+                    ruleData.actions?.type === 'add_as_target_negative_asin') {
+                    return !ruleData.actions.adGroupId
+                } else if (ruleData.actions?.type === 'add_as_keyword_campaign_negative_phrase' ||
+                    ruleData.actions?.type === 'add_as_keyword_campaign_negative_exact') {
+                    return !ruleData.actions.campaignId
+                } else {
+
+                }
+            } else {
+                return true
+            }
+        } else {
+            return !ruleData.actions.value
+        }
     }
 
     const saveHandler = () => {
@@ -55,6 +91,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
             {rule.description && <p title={rule.description}>{rule.description}</p>}
 
             <div className="details-row">
+                {rule.advertising_type && <div className="advertising-type">{_.find(advertisingTypeEnums, {key: rule.advertising_type}).title}</div>}
                 {rule.rule_entity_type && <div
                     className="rule-type">{rule.rule_entity_type === 'product_ads' ? 'Product Ads' : 'Targetings'}</div>}
                 <div className="timeline">{_.find(intervalEnums, {key: rule.interval})?.title}</div>
@@ -81,7 +118,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                     Reset All
                 </button>
 
-                <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
+                <button disabled={saveProcessing || saveValidator()} className="btn default" onClick={saveHandler}>
                     Save Changes
 
                     {saveProcessing && <Spin size={'small'}/>}

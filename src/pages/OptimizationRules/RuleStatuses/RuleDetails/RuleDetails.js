@@ -257,6 +257,8 @@ export const RuleDetails = ({
 
         if (selectedRule.id) {
             clearInterval(timerId)
+
+            getRuleData()
             timerId = setInterval(getRuleData, 30000)
         }
     }, [selectedRule.id, requestParams, activeTab])
@@ -266,6 +268,8 @@ export const RuleDetails = ({
             clearInterval(timerId)
         })
     }, [])
+
+
 
 
     return (<div className="rule-details">

@@ -87,7 +87,7 @@ const Sidebar = () => {
         if (user.userDetails.user_type === userTypeEnums.ADMIN) setAdminStatus(true)
         else setAdminStatus(false)
 
-        if (user.userDetails.is_agency_client) setAgencyUser(true)
+        if (user.userDetails.user_type === userTypeEnums.AGENCY_CLIENT) setAgencyUser(true)
         else setAgencyUser(false)
 
 
@@ -204,7 +204,7 @@ const Sidebar = () => {
                         {mainMenu
                             .filter(i => isAdmin ? i : isAgencyUser ? i.key !== 'zth' : i)
                             .filter(i => (isAdminUser) ? i : i.key !== 'rules')
-                            .filter(i => isAdmin ? i : i.key !== 'report')
+                            .filter(i => (isAdmin || isAgencyUser) ? i : i.key !== 'report')
                             .filter(i => DEMO ? i.key !== 'scanner' : i)
                             .map(item => {
                                 return (
@@ -276,21 +276,21 @@ const Sidebar = () => {
                             </NavLink>
                         </li>
 
-                        <li className="bottom-nav-item">
-                            <a
-                                className="menu-link"
-                                href={'https://intercom.help/sponsoreds/en/'}
-                                target={'_blank'}
-                            >
-                                <div className="link-icon">
-                                    <SVG id='help-center'/>
-                                </div>
+                        {/*<li className="bottom-nav-item">*/}
+                        {/*    <a*/}
+                        {/*        className="menu-link"*/}
+                        {/*        href={'https://intercom.help/sponsoreds/en/'}*/}
+                        {/*        target={'_blank'}*/}
+                        {/*    >*/}
+                        {/*        <div className="link-icon">*/}
+                        {/*            <SVG id='help-center'/>*/}
+                        {/*        </div>*/}
 
-                                <label>
-                                    Help Center
-                                </label>
-                            </a>
-                        </li>
+                        {/*        <label>*/}
+                        {/*            Help Center*/}
+                        {/*        </label>*/}
+                        {/*    </a>*/}
+                        {/*</li>*/}
 
                         {isAdminUser ?
                             <li className="bottom-nav-item">

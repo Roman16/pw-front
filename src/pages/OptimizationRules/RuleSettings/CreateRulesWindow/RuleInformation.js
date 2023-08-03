@@ -46,27 +46,60 @@ export const periodEnums = [
     },
 ]
 
-export const ruleTypeEnums = [
+export const ruleTypeEnums = {
+    'SponsoredProducts': [
+        {
+            title: 'Targetings',
+            key: 'targetings'
+        },
+        {
+            title: 'Product Ads',
+            key: 'product_ads'
+        },
+        {
+            title: 'Search Terms Keywords',
+            key: 'search_term_keywords'
+        },
+        {
+            title: 'Search Terms Targets',
+            key: 'search_term_targets'
+        },
+    ],
+    'SponsoredBrands': [
+        {
+            title: 'Targetings',
+            key: 'targetings'
+        },
+    ],
+    'SponsoredDisplay': [
+        {
+            title: 'Targetings',
+            key: 'targetings'
+        },
+        {
+            title: 'Product Ads',
+            key: 'product_ads'
+        },
+    ]
+}
+
+
+export const advertisingTypeEnums = [
     {
-        title: 'Targetings',
-        key: 'targetings'
+        title: 'Sponsored Products',
+        key: 'SponsoredProducts'
     },
     {
-        title: 'Product Ads',
-        key: 'product_ads'
+        title: 'Sponsored Brands',
+        key: 'SponsoredBrands'
     },
-    // {
-    //     title: 'Search Terms Keywords',
-    //     key: 'search_term_keywords'
-    // },
-    // {
-    //     title: 'Search Terms Targets',
-    //     key: 'search_term_targets'
-    // },
+    {
+        title: 'Sponsored Display',
+        key: 'SponsoredDisplay'
+    },
 ]
 
 export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange}) => {
-
     return (<div className="step rule-information">
         <div className="row form-group">
             <label htmlFor="">Rule name</label>
@@ -78,6 +111,27 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                 onChange={({target: {value}}) => onChange({'name': value})}
             />
         </div>
+
+        <div className="row form-group">
+            <label htmlFor="">Advertising type </label>
+
+            <CustomSelect
+                getPopupContainer={trigger => trigger.parentNode}
+                placeholder={'Select advertising type'}
+                value={data.advertising_type}
+                disabled={disabledAutomaticSwitch}
+                onChange={advertising_type => onChange({
+                    advertising_type: advertising_type,
+                    rule_entity_type: undefined,
+                    actions: {
+                        type: undefined,
+                    }
+                })}
+            >
+                {advertisingTypeEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
+            </CustomSelect>
+        </div>
+
         <div className="row form-group">
             <label htmlFor="">Rule type </label>
 
@@ -85,7 +139,7 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                 getPopupContainer={trigger => trigger.parentNode}
                 placeholder={'Select rule type'}
                 value={data.rule_entity_type}
-                disabled={disabledAutomaticSwitch}
+                disabled={disabledAutomaticSwitch || !data.advertising_type}
                 onChange={rule_entity_type => onChange({
                     rule_entity_type: rule_entity_type,
                     actions: {
@@ -93,7 +147,7 @@ export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange
                     }
                 })}
             >
-                {ruleTypeEnums.map(i => <Option value={i.key}>{i.title}</Option>)}
+                {data.advertising_type ? ruleTypeEnums[data.advertising_type].map(i => <Option value={i.key}>{i.title}</Option>) : <Option value={null}></Option>}
             </CustomSelect>
 
             <p>
