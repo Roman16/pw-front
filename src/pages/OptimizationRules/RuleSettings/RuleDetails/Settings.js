@@ -20,6 +20,42 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
         setRuleData({...rule, actions: rule.actions[0] || rule.actions})
     }
 
+    const saveValidator = () => {
+        if (!ruleData.interval) {
+            return true
+        }
+
+        if ((ruleData.rule_entity_type === 'search_term_keywords' || ruleData.rule_entity_type === 'search_term_targets')) {
+            if (ruleData.actions?.type) {
+                if (ruleData.actions?.type === 'add_as_keyword_exact' ||
+                    ruleData.actions?.type === 'add_as_keyword_phrase' ||
+                    ruleData.actions?.type === 'add_as_keyword_broad' ||
+                    ruleData.actions?.type === 'add_as_target_asin' ||
+                    ruleData.actions?.type === 'add_as_target_asin_expaned') {
+
+                    if (ruleData.actions.useBidFromCpc) {
+                        return false
+                    } else {
+                        return !ruleData.actions.bid
+                    }
+                } else if (ruleData.actions?.type === 'add_as_keyword_negative_exact' ||
+                    ruleData.actions?.type === 'add_as_keyword_negative_phrase' ||
+                    ruleData.actions?.type === 'add_as_target_negative_asin') {
+                    return !ruleData.actions.adGroupId
+                } else if (ruleData.actions?.type === 'add_as_keyword_campaign_negative_phrase' ||
+                    ruleData.actions?.type === 'add_as_keyword_campaign_negative_exact') {
+                    return !ruleData.actions.campaignId
+                } else {
+
+                }
+            } else {
+                return true
+            }
+        } else {
+            return !ruleData.actions.value
+        }
+    }
+
     const saveHandler = () => {
         setSaveProcessing(true)
         onUpdate({
@@ -82,7 +118,7 @@ export const Settings = ({rule, attributionWindow, onUpdate, onChangeAttribution
                     Reset All
                 </button>
 
-                <button disabled={saveProcessing} className="btn default" onClick={saveHandler}>
+                <button disabled={saveProcessing || saveValidator()} className="btn default" onClick={saveHandler}>
                     Save Changes
 
                     {saveProcessing && <Spin size={'small'}/>}

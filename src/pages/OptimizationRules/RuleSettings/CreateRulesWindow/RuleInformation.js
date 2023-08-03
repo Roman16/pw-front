@@ -47,7 +47,7 @@ export const periodEnums = [
 ]
 
 export const ruleTypeEnums = {
-    'sponsoredProducts': [
+    'SponsoredProducts': [
         {
             title: 'Targetings',
             key: 'targetings'
@@ -100,7 +100,6 @@ export const advertisingTypeEnums = [
 ]
 
 export const RuleInformation = ({data, disabledAutomaticSwitch = false, onChange}) => {
-
     return (<div className="step rule-information">
         <div className="row form-group">
             <label htmlFor="">Rule name</label>

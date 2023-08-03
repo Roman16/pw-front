@@ -525,7 +525,6 @@ const AddActions = ({onAddCondition, onAddGroup, addGroupBtnText = 'Add group'})
 const ActionValue = ({actions, onChange,targetingType, advertisingType}) => {
     const [campaigns, setCampaigns] = useState([]),
         [adGroups, setAdGroups] = useState([])
-
     const getCampaigns = async (type, page = 1, cb, searchStr = undefined) => {
         try {
             const res = await optimizationRulesServices.getCampaignsForST({
