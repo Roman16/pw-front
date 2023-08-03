@@ -4,7 +4,7 @@ import {columnList} from "../../../Analytics/Campaigns/tableComponents/columnLis
 import TableFilters from "../../../Analytics/components/TableFilters/TableFilters"
 import Pagination from "../../../../components/Pagination/Pagination"
 import _ from "lodash"
-import {periodEnums} from "./RuleInformation"
+import {advertisingTypeEnums, periodEnums} from "./RuleInformation"
 import DateRange from "../../../Analytics/components/DateRange/DateRange"
 import {AttributionWindowSelect} from "../../../Analytics/components/Header/AttributionWindow"
 import {tabs} from "../RuleDetails/Attach"
@@ -22,6 +22,12 @@ const ruleColumns = [
         key: 'description',
         dataIndex: 'description',
         render: (text) => <div className="description" title={text}>{text}</div>
+    },
+    {
+        title: 'Advertising Type',
+        key: 'advertising_type',
+        dataIndex: 'advertising_type',
+        render: (value) => <div className="description" title={ _.find(advertisingTypeEnums, {key: value}).title}>{ _.find(advertisingTypeEnums, {key: value}).title}</div>
     },
     {
         title: 'Rule Type',
